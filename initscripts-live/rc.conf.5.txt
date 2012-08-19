@@ -1,0 +1,223 @@
+/////
+vim:set ts=4 sw=4 syntax=asciidoc noet:
+/////
+rc.conf(5)
+==========
+
+NAME
+----
+rc.conf - Chakra GNU/Linux main configuration file
+
+SYNOPSIS
+--------
+/etc/rc.conf
+
+DESCRIPTION
+-----------
+The /etc/rc.conf file is the system configuration file for Arch-specific
+settings. The format is bash. It contains several commonly-edited settings such
+as timezone; keymap; kernel modules; daemons to load at start-up; etc. It is
+split up in a few sections to categorize configuration settings: localization,
+hardware, networking and daemons.
+
+LOCALIZATION[[L]]
+-----------------
+*TIMEZONE=*
+
+Specifies the timezone. The setting takes effect on boot by ensuring that /etc/localtime is a symlink
+to the correct zoneinfo file. Possible timezones are the relative path to a zoneinfo file starting
+from the directory /usr/share/zoneinfo. For example, a German timezone would be Europe/Berlin,
+which refers to the file /usr/share/zoneinfo/Europe/Berlin.
+
+Note: if empty, /etc/localtime is not changed. This is useful if /etc/localtime is maintained manually
+or by a third-party tool; or if there is no reason to change it from what was set during install.
+
+Default: empty
+
+*HARDWARECLOCK=*
+
+How to interpret/update the hardware clock. (used by hwclock)
+
+Options:
+
+	- empty: fall back to the value in /var/lib/hwclock/adjtime, which defaults to UTC. This is recommended
+	  as other users of hwclock might change the adjtime file and hence cause rc.conf and adjtime to be out of sync.
+	- "UTC": most robust, allows operating systems to abstract local time and ease DST.
+	- "localtime": apply timezone (and DST) in hardwareclock: discouraged.
+	  Choose this if you dualboot with an OS which cannot handle UTC BIOS times correctly, like Windows (note
+	  that recent Windows'es can use UTC, which is preferable).
+	- any other value will result in the hardware clock being left untouched (useful for virtualization)
+
+Default: empty
+
+*KEYMAP=*
+
+Defines the keymap to load with the loadkeys program on boot. Possible keymaps are
+found in /usr/share/kbd/keymaps. Please note that this setting is only valid for
+your TTYs, not any graphical window managers or X. KEYMAP in /etc/vconsole.conf takes
+precedence.
+
+Default: empty
+
+*CONSOLEFONT=*
+
+Defines the console font to load with the setfont program on boot.
+Possible fonts are found in /usr/share/kbd/consolefonts (only needed for non-US).
+FONT in /etc/vconsole.conf takes precedence.
+
+Default: empty
+
+*CONSOLEMAP=*
+
+Defines the console map to load with the setfont program on boot. Possible maps are found in
+/usr/share/kbd/consoletrans. Set this to a map suitable for the appropriate locale (8859-1 for Latin1,
+for example) if you're using an UTF-8 locale and use programs that generate 8-bit output. If you're
+using X11 for everyday work, don't bother, as it only affects the output of Linux console applications.
+FONT_MAP in /etc/vconsole.conf takes precedence.
+
+Default: empty
+
+*LOCALE=*
+
+This sets your system language, which will be used by all i18n-friendly applications and utilities.
+See `locale -a` (or locale.gen) for available options. LANG in /etc/locale.conf takes precedence.
+If unset, it falls back to the C locale.
+
+Default: empty
+
+*DAEMON_LOCALE=*
+
+	- If set to 'yes', use $LOCALE as the locale during daemon startup and during the boot process.
+	- If set to 'no', the C locale is used.
+
+Default: "yes"
+
+*USECOLOR=*
+
+Use ANSI color sequences in startup messages
+
+Default: "yes"
+
+HARDWARE[[H]]
+-------------
+*MODULES=*
+
+Modules to load at boot-up.  To blacklist modules, see "man modprobe.d".
+
+Default: ().
+
+*USEDMRAID=*
+
+Scan for FakeRAID (dmraid) Volumes at startup.
+
+Default: "no"
+
+*USEBTRFS=*
+
+Scan for BTRFS volumes at startup.
+
+Default: "no"
+
+*USELVM=*
+
+Scan for LVM volume groups at startup, required if you use LVM.
+
+Default: "no"
+
+NETWORKING[[N]]
+---------------
+*HOSTNAME=*
+
+Hostname of machine. Should also be put in /etc/hosts. The contents of
+/etc/hostname (if not empty) takes precedence.
+
+Default: empty
+
+The following settings help you setting up a wired network.
+
+*interface=*
+
+Name of device. Use 'ip addr' or 'ls /sys/class/net/' to see all available interfaces.
+
+Default: empty
+
+Required for manual configuration as well as DHCP.
+
+*address=*
+
+IP address.
+
+Default: empty
+
+Required for manual configuration, empty for DHCP.
+
+*netmask=*
+
+Subnet mask.
+
+Default: empty (which means 255.255.255.0)
+
+Optional for manual configuration, ignored for DHCP.
+
+*broadcast=*
+
+Broadcast address.
+
+Default: empty
+
+Optional for manual configuration, ignored for DHCP.
+
+*gateway=*
+
+Default route.
+
+Default: empty
+
+Required for manual configuration, ignored for DHCP.
+
+*Static IP example*
+
+	interface=eth0
+	address=192.168.0.2
+	netmask=255.255.255.0
+	broadcast=192.168.0.255
+	gateway=192.168.0.1
+
+*DHCP example*
+
+	interface=eth0
+	address=
+	netmask=
+	gateway=
+
+The following options might be needed for advanced use-cases.
+
+*NETWORK_PERSIST=*
+
+Setting this to "yes" will skip network shutdown. This is required if your root device is on NFS.
+
+Default: "no"
+
+*NETWORKS=*
+
+This functionality is deprecated, please refer to the 'netcfg' documentation.
+
+DAEMONS[[D]]
+------------
+*DAEMONS=*
+
+Daemons to start at boot-up (in this order)
+	- prefix a daemon with a ! to disable it
+	- prefix a daemon with a @ to start it up in the background
+
+If you are sure nothing else touches your hardware clock (such as ntpd or
+a dual-boot), you might want to enable 'hwclock'. Note that this will only
+make a difference if the hwclock program has been calibrated correctly.
+
+If you use a network filesystem you should enable 'netfs'.
+
+Default: (syslog-ng network crond)
+
+AUTHORS
+-------
+Written by Dieter Plaetinck, Tom Gundersen and others.

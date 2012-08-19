@@ -1,0 +1,30 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer: abveritas@chakra-project.org
+
+pkgname=libusbx
+pkgver=1.0.11
+pkgrel=1
+depends=('glibc')
+pkgdesc="Library that provides generic access to USB device"
+arch=('i686' 'x86_64')
+url="http://libusbx.org"
+license=('LGPL')
+source=(http://sourceforge.net/projects/${pkgname}/files/releases/${pkgver}/source/${pkgname}-${pkgver}.tar.bz2)
+options=(!libtool)
+replaces=('libusb1' 'libusb')
+provides=("libusb=$pkgver")
+conflicts=("libusb")
+md5sums=('9aaab6aee72f65900cc731ecbffb4cf4')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  ./configure --prefix=/usr 
+  make
+}
+
+package () {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make DESTDIR="${pkgdir}" install
+}

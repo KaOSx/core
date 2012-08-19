@@ -1,0 +1,34 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+# include global config
+source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+
+pkgname=gnutls
+pkgver=2.12.7
+pkgrel=2
+pkgdesc="A library which provides a secure layer over a reliable transport layer"
+arch=('i686' 'x86_64')
+license=('GPL3' 'LGPL')
+url="http://www.gnu.org/software/gnutls/"
+install=gnutls.install
+options=('libtool')
+depends=('gcc-libs>=4.4.3' 'libtasn1>=2.5' 'readline>=6.0' 'zlib' 'libgcrypt>=1.4.5' 'texinfo' 'nettle')
+source=("ftp://ftp.gnu.org/gnu/gnutls/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('4b48aa3119f549d30d550bf4162c721b')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  ./configure --prefix=/usr --with-zlib --with-libgcrypt --disable-guile || return 1
+  make || return 1
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make DESTDIR="${pkgdir}" install || return 1
+}
+
+# vim:set ts=2 sw=2 et:

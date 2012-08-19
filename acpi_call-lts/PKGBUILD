@@ -1,0 +1,76 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer abveritas@chakra-project.org
+
+_kver="3.0.35-2-lts"
+
+pkgname=acpi_call-lts
+_pkgname=acpi_call
+pkgver=20120613
+pkgrel=4
+pkgdesc="A kernel module that enables you to call parameterless ACPI methods by writing the method name to /proc/acpi/call, e.g. to turn off discrete graphics card in a dual graphics environment (like NVIDIA Optimus)."
+arch=('i686' 'x86_64')
+url=("http://github.com/mkottman/acpi_call")
+license=('GPL')
+depends=('linux-lts>=3.0' 'linux-lts<3.1' 'linux-lts-headers')
+makedepends=('git')
+provides=('acpi_call')
+replaces=('acpi_call')
+conflicts=('acpi_call')
+install=acpi_call.install
+source=("http://chakra-linux.org/sources/acpi_call/acpi_call-${pkgver}.tar.xz")
+md5sums=('fcee74cba78ff644b43d60e046864b9e')
+
+
+# create tarball: source PKGBUILD && mksource
+
+mksource() {
+  git clone http://github.com/mkottman/acpi_call.git
+  pushd acpi_call
+  popd
+  tar -cvJf acpi_call-${pkgver}.tar.xz acpi_call/*
+  md5sum acpi_call-${pkgver}.tar.xz
+}
+
+build() {
+  cd ${srcdir}
+
+ ## Build
+  #rm -rf ${srcdir}/acpi_call-build
+  #cp -r ${srcdir}/acpi_call ${srcdir}/acpi_call-build
+  cd ${srcdir}/$_pkgname-${pkgver}
+
+  sed \
+    -e  's/$(shell uname -r)/3.0.35-2-lts/g' \
+    -i Makefile
+
+  make
+}
+package() {
+  cd ${srcdir}/$_pkgname-${pkgver}
+  install -d ${pkgdir}/usr/share/$_pkgname 
+  install -d ${pkgdir}/usr/bin  
+  install -Dm755  ${srcdir}/$_pkgname-${pkgver}/asus1215n.sh \
+    ${pkgdir}/usr/share/$_pkgname/asus1215n.sh 
+  install -Dm755  ${srcdir}/$_pkgname-${pkgver}/m11xr2.sh \
+    ${pkgdir}/usr/share/$_pkgname/m11xr2-lts.sh 
+  install -Dm755  ${srcdir}/$_pkgname-${pkgver}/query_dsdt.pl \
+    ${pkgdir}/usr/share/$_pkgname/query_dsdt.pl 
+  install -Dm755  ${srcdir}/$_pkgname-${pkgver}/test_off.sh \
+    ${pkgdir}/usr/share/$_pkgname/test_off.sh 
+  ln -s /usr/share/$_pkgname/test_off.sh \
+    ${pkgdir}/usr/bin/test_off.sh 
+  cp -R windump_hack \
+    ${pkgdir}/usr/share/$_pkgname/
+  install -Dm644 README \
+    ${pkgdir}/usr/share/$_pkgname/README
+
+  msg2 "Building module for $_kver..."
+
+  # KDIR is necessary even when cleaning
+  make KDIR=/usr/src/linux-${_kver} clean
+  make KDIR=/usr/src/linux-${_kver}
+
+  install -D -m644 acpi_call.ko $pkgdir/lib/modules/${_kver}/kernel/drivers/acpi/acpi_call.ko
+}

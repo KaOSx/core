@@ -1,0 +1,254 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# Maintainer: Daniele Cocca <jmc@chakra-project.org>
+
+pkgname=('grub2-common' 'grub2-bios' 'grub2-efi32')
+pkgbase=grub2
+
+if [ "${CARCH}" == 'x86_64' ]; then
+  pkgname+=('grub2-efi64')
+fi
+
+pkgver=2.00
+pkgrel=1
+arch=('i686' 'x86_64')
+url="http://www.gnu.org/software/grub/"
+license=('GPL3')
+
+makedepends=('xz' 'bdf-unifont' 'ttf-dejavu' 'python' 'autogen'
+             'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse'
+             'bzr')
+
+source=("ftp://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
+        'chakra_grub2_fixes.patch'
+        'grub.default'
+        '20_memtest86+'
+        'update-grub')
+md5sums=('a1043102fbc7bcedbf53e7ee3d17ab91'
+         'bc191bc9e298380c1d5995c0faafa75a'
+         '31e4c7414cef3db3fb26c40ac8da97f2'
+         '5a07e04c4ecb8ed145d54fec3043e0d5'
+         '9910bdfd42fa7d3e21e6961bfcc977f9')
+
+# Options common to all packages
+_common_options=('--prefix=/usr'
+                 '--sysconfdir=/etc'
+                 '--program-prefix='
+                 "--host=${CARCH}-unknown-linux-gnu"
+                 '--disable-werror'
+                 '--enable-mm-debug'
+                 '--enable-nls'
+                 '--enable-device-mapper'
+                 '--enable-cache-stats'
+                 '--enable-grub-mkfont'
+                 '--enable-grub-mount')
+
+if [ "${CARCH}" == 'x86_64' ]; then
+  _native_arch='x86_64'
+else
+  _native_arch='i386'
+fi
+
+# External sources
+_grub_extras='http://bzr.savannah.gnu.org/r/grub-extras'
+
+# Build code
+_build_dir() {
+  [ $# -lt 1 ] && return false
+  mkdir -p "${1}" && cd "${1}"
+}
+
+_build_prepare() {
+  msg2 "Fixing font paths in ./configure..."
+    sed -e 's,\(/usr/share/fonts/unifont\),\1 /usr/share/fonts/misc,g' \
+        -i "${srcdir}/grub-${pkgver}/configure"
+    sed -e 's,\(/usr/share/fonts/dejavu\),\1 /usr/share/fonts/TTF,g' \
+        -i "${srcdir}/grub-${pkgver}/configure"
+  msg2 "Done replacing."
+
+  msg2 "Applying patches..."
+    cd "${srcdir}/grub-${pkgver}"
+    patch -Np1 -i "${srcdir}/chakra_grub2_fixes.patch" || return 1
+  msg2 "Done patching."
+
+  msg2 "Cloning the grub-extras repositories..."
+    export GRUB_CONTRIB="${srcdir}/grub-${_pkgver}/grub-extras/"
+    _build_dir "grub-extras"
+
+    for branch in "lua" "zfs" "gpxe" "ntldr-img" "915resolution"; do
+      if ! bzr revno "${branch}" &>/dev/null; then
+        bzr branch "${_grub_extras}/${branch}" || return 1
+      else
+        bzr update "${branch}" || return 1
+      fi
+    done
+  msg2 "Done cloning."
+}
+
+_build_grub2-bios() {
+  cd "${srcdir}"
+  _build_dir "build-grub2-bios"
+
+  "${srcdir}/grub-${pkgver}/configure" \
+      "${_common_options[@]}" \
+      --with-platform="pc" \
+      --target="${_native_arch}" \
+  || return 1
+
+  make
+}
+
+_build_grub2-efi32() {
+  cd "${srcdir}"
+  _build_dir "build-grub2-efi32"
+
+  "${srcdir}/grub-${pkgver}/configure" \
+      "${_common_options[@]}" \
+      --with-platform="efi" \
+      --disable-efiemu \
+      --target="i386" \
+  || return 1
+
+  make
+}
+
+_build_grub2-efi64() {
+  cd "${srcdir}"
+  _build_dir "build-grub2-efi64"
+
+  "${srcdir}/grub-${pkgver}/configure" \
+      "${_common_options[@]}" \
+      --with-platform="efi" \
+      --disable-efiemu \
+      --target="x86_64" \
+  || return 1
+
+  make
+}
+
+build() {
+  _build_prepare     || return 1
+  _build_grub2-bios  || return 1
+  _build_grub2-efi32 || return 1
+
+  if [ "${CARCH}" == 'x86_64' ]; then
+    _build_grub2-efi64 || return 1
+  fi
+}
+
+package_grub2-common() {
+pkgdesc="GNU GRUB is a Multiboot boot loader. (Common files and utilities.)"
+depends=('xz' 'freetype2' 'gettext' 'device-mapper' 'fuse')
+conflicts=('grub')
+install="grub2.install"
+backup=('etc/default/grub' 'etc/grub.d/40_custom')
+optdepends=('libisoburn: provides xorriso for generating grub rescue iso using grub-mkrescue'
+            'os-prober: to detect other operating systems when generating grub.cfg in BIOS systems'
+            'mtools: for grub-mkrescue FAT FS support')
+options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
+
+  # install it
+  cd "${srcdir}/build-grub2-bios"
+  make install \
+       bashcompletiondir=/usr/share/bash-completion/completions \
+       DESTDIR="${pkgdir}"
+
+  # install Chakra files
+  install -D -m755 "${srcdir}/update-grub" "${pkgdir}/usr/sbin/update-grub"
+  install -D -m644 "${srcdir}/grub.default" "${pkgdir}/etc/default/grub"
+  install -D -m644 "${srcdir}/20_memtest86+" "${pkgdir}/etc/grub.d/20_memtest86+"
+
+  # remove the architecture-dependant binaries from the package
+  rm -rf "${pkgdir}/usr/lib/grub/i386-pc"
+}
+
+package_grub2-bios() {
+pkgdesc="GNU GRUB is a Multiboot boot loader. (BIOS support binaries.)"
+depends=("grub2-common=${pkgver}")
+options=('!strip' '!emptydirs')
+
+  local _bindir="${pkgdir}/usr/lib/grub/i386-pc"
+  local _tmpdir="/tmp/_grub2-bios_bindir"
+
+  # install it
+  cd "${srcdir}/build-grub2-bios"
+  make install \
+       bashcompletiondir=/usr/share/bash-completion/completions \
+       DESTDIR="${pkgdir}"
+
+  # save our binaries from the destruction!
+  mv "${_bindir}" "${_tmpdir}" || return 1
+  # remove the rest (which is provided by grub2-common)
+  rm -rf "${pkgdir}"/*         || return 1
+  # restore the binaries directory
+  install -d -m755 "${pkgdir}/usr/lib/grub"
+  mv "${_tmpdir}" "${_bindir}" || return 1
+
+  # remove gdb debugging related files
+  rm -f "${_bindir}"/*.module
+  rm -f "${_bindir}"/*.image
+  rm -f "${_bindir}"/{kernel.exec,gdb_grub,gmodule.pl}
+}
+
+package_grub2-efi32() {
+pkgdesc="GNU GRUB is a Multiboot boot loader. (EFI32 support binaries.)"
+depends=("grub2-common=${pkgver}" 'dosfstools' 'efibootmgr')
+conflicts=('grub2-efi-x32')
+replaces=('grub2-efi-x32')
+options=('!strip' '!emptydirs')
+
+  local _bindir="${pkgdir}/usr/lib/grub/i386-efi"
+  local _tmpdir="/tmp/_grub2-efi32_bindir"
+
+  # install it
+  cd "${srcdir}/build-grub2-efi32"
+  make install \
+       bashcompletiondir=/usr/share/bash-completion/completions \
+       DESTDIR="${pkgdir}"
+
+  # save our binaries from the destruction!
+  mv "${_bindir}" "${_tmpdir}" || return 1
+  # remove the rest (which is provided by grub2-common)
+  rm -rf "${pkgdir}"/*         || return 1
+  # restore the binaries directory
+  install -d -m755 "${pkgdir}/usr/lib/grub"
+  mv "${_tmpdir}" "${_bindir}" || return 1
+
+  # remove gdb debugging related files
+  rm -f "${_bindir}"/*.module
+  rm -f "${_bindir}"/*.image
+  rm -f "${_bindir}"/{kernel.exec,gdb_grub,gmodule.pl}
+}
+
+package_grub2-efi64() {
+pkgdesc="GNU GRUB is a Multiboot boot loader (EFI64 support binaries.)"
+depends=("grub2-common=${pkgver}" 'dosfstools' 'efibootmgr')
+conflicts=('grub2-efi-x64')
+replaces=('grub2-efi-x64')
+options=('!strip' '!emptydirs')
+
+  local _bindir="${pkgdir}/usr/lib/grub/x86_64-efi"
+  local _tmpdir="/tmp/_grub2-efi64_bindir"
+
+  # install it
+  cd "${srcdir}/build-grub2-efi64"
+  make install \
+       bashcompletiondir=/usr/share/bash-completion/completions \
+       DESTDIR="${pkgdir}"
+
+  # save our binaries from the destruction!
+  mv "${_bindir}" "${_tmpdir}" || return 1
+  # remove the rest (which is provided by grub2-common)
+  rm -rf "${pkgdir}"/*         || return 1
+  # restore the binaries directory
+  install -d -m755 "${pkgdir}/usr/lib/grub"
+  mv "${_tmpdir}" "${_bindir}" || return 1
+
+  # remove gdb debugging related files
+  rm -f "${_bindir}"/*.module
+  rm -f "${_bindir}"/*.image
+  rm -f "${_bindir}"/{kernel.exec,gdb_grub,gmodule.pl}
+}
+
+# vim:set ts=2 sw=2 et:

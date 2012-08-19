@@ -1,0 +1,34 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+# include global config
+source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+
+pkgname=initscripts-testing
+pkgver=2010.06
+pkgrel=2
+pkgdesc="System initialization/bootup scripts"
+arch=('i686' 'x86_64')
+url="http://www.chakra-project.org"
+license=('GPL')
+groups=('base')
+backup=(etc/inittab etc/rc.conf etc/rc.local etc/rc.local.shutdown)
+depends=('glibc' 'bash' 'awk' 'grep' 'coreutils' 'sed' 'udev>=157-1'
+         'net-tools' 'ncurses' 'kbd' 'findutils' 'sysvinit')
+optdepends=('bridge-utils: Network bridging support'
+            'dhcpcd: DHCP network configuration'
+            'wireless_tools: Wireless networking')
+replaces=('initscripts')
+conflicts=('initscripts')
+provides=("initscripts=${pkgver}")
+install=initscripts.install
+source=(http://chakra-project.org/sources/initscripts/initscripts-${pkgver}-${pkgrel}.tar.gz)
+md5sums=('6e2208b8040bba656ec1675069e713d1')
+
+build() {
+  cd ${srcdir}/initscripts-${pkgver}-${pkgrel}/
+  DESTDIR=${pkgdir} ./install.sh
+}

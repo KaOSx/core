@@ -1,0 +1,34 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+pkgname=squashfs-tools
+pkgver=4.1
+_gitcheckout=20101231
+pkgrel=4
+pkgdesc="Tools for squashfs, a highly compressed read-only filesystem for Linux."
+url="http://squashfs.sourceforge.net"
+license=("GPL")
+arch=('i686' 'x86_64')
+depends=('zlib' 'glibc' 'lzo2' 'xz')
+source=("http://chakra-project.org/sources/${pkgname}/squashfs-${pkgver}-${_gitcheckout}.tar.xz")
+md5sums=('98e880d4b3f2bc282f35a29116c6663a')
+
+build() {
+    cd ${srcdir}/squashfs-${pkgver}-${_gitcheckout}/${pkgname}
+    #reduce memory requirements of unsquashfs to support installation on systems with 256 MB RAM 
+    sed -i -e 's/BUFFER_DEFAULT [0-9]*/BUFFER_DEFAULT 32/' ${srcdir}/squashfs-${pkgver}-${_gitcheckout}/${pkgname}/unsquashfs.h
+    sed -i 's|^#XZ_SUPPORT = 1|XZ_SUPPORT = 1|' Makefile
+    sed -i 's|^#LZO_SUPPORT = 1|LZO_SUPPORT = 1|' Makefile
+    #set xz as default
+    sed -i 's|^COMP_DEFAULT = gzip|COMP_DEFAULT = xz|' Makefile
+    make
+}
+
+package() {
+    cd ${srcdir}/squashfs-${pkgver}-${_gitcheckout}/${pkgname}
+    install -Dm755 mksquashfs ${pkgdir}/sbin/mksquashfs
+    install -m755 unsquashfs ${pkgdir}/sbin/unsquashfs
+}

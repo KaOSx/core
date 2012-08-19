@@ -1,0 +1,34 @@
+/////
+vim:set ts=4 sw=4 syntax=asciidoc noet:
+/////
+hostname(5)
+===========
+
+NAME
+----
+hostname - Local host name configuration file
+
+SYNOPSIS
+--------
+*/etc/hostname*
+
+DESCRIPTION
+-----------
+The /etc/hostname file configures the name of the local system that is set during boot. It
+should contain a single newline-terminated host name string. The host name may be a free-form string up to 64 characters in length,
+however it is recommended that it consists only of 7bit ASCII lower-case characters and no spaces or dots, and limits itself to the
+format allowed for DNS domain name labels, even though this is not a strict requirement.
+
+In Chakra-Project GNU/Linux the HOSTNAME variable in /etc/rc.conf is checked for the host name as well, however only as fallback.
+
+HISTORY
+-------
+The simple configuration file format of /etc/hostname originates from Debian GNU/Linux.
+
+SEE ALSO
+--------
+systemd.hostname(5), hostname(1), hostname(7), rc.conf(5)
+
+AUTHORS
+-------
+Original by Lennart Poettering, adapted to Arch Linux by Tom Gundersen.

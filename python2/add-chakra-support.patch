@@ -1,0 +1,12 @@
+diff -Naur a/Lib/platform.py b/Lib/platform.py
+--- a/Lib/platform.py	2012-01-02 14:40:23.833135906 +0000
++++ b/Lib/platform.py	2012-01-02 14:40:50.002992154 +0000
+@@ -257,7 +257,7 @@
+ # and http://www.die.net/doc/linux/man/man1/lsb_release.1.html
+ 
+ _supported_dists = (
+-    'SuSE', 'debian', 'fedora', 'redhat', 'centos',
++    'chakra', 'SuSE', 'debian', 'fedora', 'redhat', 'centos',
+     'mandrake', 'mandriva', 'rocks', 'slackware', 'yellowdog', 'gentoo',
+     'UnitedLinux', 'turbolinux')
+ 

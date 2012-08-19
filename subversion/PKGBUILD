@@ -1,0 +1,75 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer abveritas@chakra-project.org
+
+pkgname=subversion
+pkgver=1.7.5
+pkgrel=1
+pkgdesc="A Modern Concurrent Version Control System"
+arch=('i686' 'x86_64')
+license=('apache' 'bsd')
+depends=('neon' 'apr-util' 'sqlite3' 'file')
+optdepends=('kdeutils-kwallet' 'bash-completion: for svn bash completion')
+makedepends=('krb5' 'apache' 'python2' 'perl' 'swig' 'ruby' 'java-runtime' 
+             'autoconf' 'db' 'e2fsprogs' 'kdelibs')
+backup=('etc/xinetd.d/svn' 'etc/conf.d/svnserve')
+url="http://subversion.apache.org/"
+provides=('svn')
+options=('!makeflags' '!libtool')
+source=(http://apache.mirror.rafal.ca/subversion/$pkgname-$pkgver.tar.bz2{,.asc}
+        svnserve svn svnserve.conf 
+        subversion.rpath.fix.patch)
+md5sums=('f6353b9b581081cdf97299300c9eada3'
+         'bc45359b2c002f56d4c5e23468d20392'
+         'a2b029e8385007ffb99b437b30521c90'
+         'a0db6dd43af33952739b6ec089852630'
+         'c459e299192552f61578f3438abf0664'
+         '6b4340ba9d8845cd8497e013ae01be3f')
+
+build() {
+   cd "${srcdir}/${pkgname}-${pkgver}"
+
+   export PYTHON=/usr/bin/python2
+
+   patch -p0 -i ../subversion.rpath.fix.patch
+   sed -i 's|/usr/bin/env python|/usr/bin/env python2|' tools/hook-scripts/{,mailer/{,tests/}}*.py
+
+   # configure
+   autoreconf
+   ./configure --prefix=/usr --with-apr=/usr --with-apr-util=/usr \
+               --with-zlib=/usr --with-neon=/usr --with-apxs \
+               --with-sqlite=/usr \
+               --enable-javahl --without-gnome-keyring --with-kwallet
+
+   make external-all
+   make LT_LDFLAGS="-L$Fdestdir/usr/lib" local-all
+   make swig_pydir=/usr/lib/python2.7/site-packages/libsvn \
+     swig_pydir_extra=/usr/lib/python2.7/site-packages/svn swig-py swig-pl javahl # swig-rb
+}
+
+package() {
+   cd "${srcdir}/${pkgname}-${pkgver}"
+
+   export LD_LIBRARY_PATH="${pkgdir}"/usr/lib:${LD_LIBRARY_PATH}
+   make DESTDIR="${pkgdir}" INSTALLDIRS=vendor \
+     swig_pydir=/usr/lib/python2.7/site-packages/libsvn \
+     swig_pydir_extra=/usr/lib/python2.7/site-packages/svn \
+     install install-swig-py install-swig-pl install-javahl # install-swig-rb
+
+   install -d "${pkgdir}"/usr/share/subversion
+   cp -a tools/hook-scripts "${pkgdir}"/usr/share/subversion/
+   rm "${pkgdir}"/usr/share/subversion/hook-scripts/*.in
+
+   rm "${pkgdir}"/usr/lib/perl5/vendor_perl/auto/SVN/_Core/.packlist
+   rm -r "${pkgdir}"/usr/lib/perl5/core_perl
+
+   install -D -m 755 "${srcdir}"/svnserve "${pkgdir}"/etc/rc.d/svnserve
+   install -D -m 644 "${srcdir}"/svn "${pkgdir}"/etc/xinetd.d/svn
+   install -D -m 644 "${srcdir}"/svnserve.conf "${pkgdir}"/etc/conf.d/svnserve
+
+   # bash completion
+   install -Dm 644 tools/client-side/bash_completion \
+     "${pkgdir}"/etc/bash_completion.d/subversion
+}
+

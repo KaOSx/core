@@ -1,0 +1,774 @@
+diff -Npur pkg.orig/etc/rc.d/functions pkg/etc/rc.d/functions
+--- pkg.orig/etc/rc.d/functions	2012-06-10 22:24:42.000000000 -0400
++++ pkg/etc/rc.d/functions	2012-06-14 02:13:37.827906645 -0400
+@@ -132,6 +132,14 @@
+ 	printf "${C_OTHER}${PREFIX_HL} ${C_H1}${1}${C_CLEAR} \n"
+ }
+ 
++printhl2() {
++	printf "${C_OTHER2}${PREFIX_HL} ${C_H1}${1}${C_CLEAR}\n"
++}
++
++printhl3() {
++	printf "${C_OTHER3}${PREFIX_HL} ${C_H1}${1}${C_CLEAR}\n"
++}
++
+ printsep() {
+ 	printf "\n${C_SEPARATOR}   ------------------------------\n"
+ }
+@@ -546,37 +554,6 @@
+ 	mount -a -t "nosysfs,no${NETFS//,/,no}" -O no_netdev
+ }
+ 
+-umount_all() {
+-	# $1: restrict to fstype
+-
+-	findmnt -mrunRo TARGET,FSTYPE,OPTIONS / | {
+-		while read -r target fstype options; do
+-			# match only targetted fstypes
+-			if [[ $1 && $1 != "$fstype" ]]; then
+-				continue
+-			fi
+-
+-			# don't unmount API filesystems
+-			if [[ $target = /@(proc|sys|run|dev|dev/pts) ]]; then
+-				continue
+-			fi
+-
+-			# avoid networked devices
+-			IFS=, read -ra opts <<< "$options"
+-			if in_array _netdev "${opts[@]}"; then
+-				continue
+-			fi
+-
+-			mounts=("$target" "${mounts[@]}")
+-		done
+-
+-		if (( ${#mounts[*]} )); then
+-			umount -r "${mounts[@]}"
+-		fi
+-	}
+-
+-}
+-
+ remove_leftover() {
+ 	stat_busy "Removing Leftover Files"
+ 		/usr/lib/initscripts/chakra-tmpfiles --create --remove && stat_done || stat_fail
+@@ -688,13 +665,15 @@
+ # set colors
+ if [[ $USECOLOR = [yY][eE][sS] ]]; then
+ 	if tput setaf 0 &>/dev/null; then
+-		C_CLEAR=$(tput sgr0)                      # clear text
++		C_CLEAR=$(tput sgr0)                 # clear text
+ 		C_MAIN=${C_CLEAR}$(tput bold)        # main text
+ 		C_OTHER=${C_MAIN}$(tput setaf 4)     # prefix & brackets
++		C_OTHER2=${C_MAIN}$(tput setaf 2)    # prefix & brackets (green)
++		C_OTHER3=${C_MAIN}$(tput setaf 1)    # prefix & brackets (red)
+ 		C_SEPARATOR=${C_MAIN}$(tput setaf 0) # separator
+ 		C_BUSY=${C_CLEAR}$(tput setaf 6)     # busy
+ 		C_FAIL=${C_MAIN}$(tput setaf 1)      # failed
+-		C_DONE=${C_MAIN}                          # completed
++		C_H1=${C_MAIN}                       # highlight text 1
+ 		C_BKGD=${C_MAIN}$(tput setaf 5)      # backgrounded
+ 		C_H1=${C_MAIN}                            # highlight text 1
+ 		C_H2=${C_MAIN}$(tput setaf 6)        # highlight text 2
+@@ -702,6 +681,8 @@
+ 		C_CLEAR="\e[m"          # clear text
+ 		C_MAIN="\e[;1m"         # main text
+ 		C_OTHER="\e[1;34m"      # prefix & brackets
++		C_OTHER2="\e[1;32m"     # prefix & brackets (green)
++		C_OTHER3="\e[1;31m"     # prefix & brackets (red)
+ 		C_SEPARATOR="\e[1;30m"  # separator
+ 		C_BUSY="\e[;36m"        # busy
+ 		C_FAIL="\e[1;31m"       # failed
+
+diff -Npur pkg.orig/etc/rc.d/functions.d/cmdline pkg/etc/rc.d/functions.d/cmdline
+--- pkg.orig/etc/rc.d/functions.d/cmdline	1970-01-01 01:00:00.000000000 +0100
++++ pkg/etc/rc.d/functions.d/cmdline	2012-01-22 13:26:17.000000000 +0100
+@@ -0,0 +1,52 @@
++get_bootparam_value()
++{
++	[ -z "$CMDLINE" ] && CMDLINE="$(< /proc/cmdline)"
++	case "$CMDLINE" in *\ $1=*) ;; *) return 1; ;; esac
++	local result="${CMDLINE##*$1=}"
++	echo ${result%%[     ]*}
++}
++
++get_country()
++{
++	local COUNTRY=`get_bootparam_value lang`
++	echo $COUNTRY
++}
++
++get_xmode()
++{
++	local XMODE=`get_bootparam_value xmode`
++	echo $XMODE
++}
++
++get_xdepth()
++{
++	local XDEPTH=`get_bootparam_value xdepth`
++	echo $XDEPTH
++}
++
++get_xres()
++{
++	local XRES=`get_bootparam_value xres`
++	echo $XRES
++}
++
++get_xdisplay()
++{
++	local XDISP=`get_bootparam_value xdisplay`
++	echo $XDISP
++}
++
++get_nonfree()
++{
++	local NONFREE=`get_bootparam_value nonfree`
++	echo $NONFREE
++}
++
++get_xdriver()
++{
++	local XDRIVER=`get_bootparam_value xdriver`
++	echo $XDRIVER
++}
++
++# End of file
++# vim: set ts=2 noet: 
+diff -Npur pkg.orig/etc/rc.local pkg/etc/rc.local
+--- pkg.orig/etc/rc.local	2012-01-22 13:12:50.000000000 +0100
++++ pkg/etc/rc.local	2012-01-22 13:26:17.000000000 +0100
+@@ -3,4 +3,15 @@
+ # /etc/rc.local: Local multi-user startup script.
+ #
+ 
++# set correct permissions for live user
++/bin/chown -R live:users /home/live
++# fix sudoers file
++/bin/chown root:root /etc/sudoers
++/bin/chmod 0440 /etc/sudoers
++
++# misc exports
++export KDE_NO_IPV6="TRUE"
++export OPERAPLUGINWRAPPER_PRIORITY=0
++export OOO_FORCE_DESKTOP=kde4
++export SAL_NOOPENGL=true
+ 
+diff -Npur pkg.orig/etc/rc.shutdown pkg/etc/rc.shutdown
+--- pkg.orig/etc/rc.shutdown	2012-01-22 13:12:50.000000000 +0100
++++ pkg/etc/rc.shutdown	2012-01-22 13:26:17.000000000 +0100
+@@ -52,16 +52,11 @@ run_hook shutdown_postkillall
+ 
+ run_hook shutdown_preumount
+ 
+-# unmount any non-api partitions that are backed by swap, we don't want to
+-# move their contents into memory (waste of time and might caues OOM).
+-status "Unmounting Swap-backed Filesystems" umount_all "tmpfs"
+ 
+ # almost everything is dead now, so the swap should hopefully be relatively
+ # empty, and quick to switch off
+ status "Deactivating Swap" swapoff -a
+ 
+-status "Unmounting Non-API Filesystems" umount_all
+-
+ run_hook shutdown_postumount
+ 
+ # Kill non-root encrypted partition mappings
+diff -Npur pkg.orig/etc/rc.sysinit pkg/etc/rc.sysinit
+--- pkg.orig/etc/rc.sysinit	2012-06-10 18:33:37.000000000 -0400
++++ pkg/etc/rc.sysinit	2012-06-14 01:57:23.682683596 -0400
+@@ -6,6 +6,10 @@
+ . /etc/rc.conf
+ . /etc/rc.d/functions
+ 
++# clear screen
++# (we can do that safely in the live system)
++/usr/bin/clear
++
+ echo " "
+ printhl "${C_CLEAR}CH${C_MAIN}A${C_OTHER}K${C_CLEAR}RA Linux\n"
+ printhl "${C_H2}http://www.chakra-project.org"
+@@ -24,18 +28,553 @@
+ mountpoint -q /dev/shm || mount /dev/shm &>/dev/null ||
+ 	mount -n -t tmpfs shm /dev/shm -o mode=1777,nosuid,nodev
+ 
+-if [[ ! -e /run/initramfs/fsck-root ]]; then
+-	# remount root ro to allow for fsck later on, we remount now to
+-	# make sure nothing can open files rw on root which would block a remount
+-	findmnt / --options ro &>/dev/null ||
+-		status "Mounting Root Read-Only" mount -o remount,ro /
+-fi
+ 
+ run_hook sysinit_start
+ 
+ # log all console messages
+ bootlogd -p /run/bootlogd.pid
+ 
++#
++# hack to be able to set the locale on bootup
++#
++COUNTRY=`get_country`
++[ -n "$COUNTRY" ] || COUNTRY="enus"
++
++               case "$COUNTRY" in
++               ast)
++               # Asturian
++               LOCALE="ast_ES.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Madrid"
++               KEYMAP="es"
++               XKEYMAP="es"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"es"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               at)
++               # Austrian
++               LOCALE="de_AT.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Vienna"
++               KEYMAP="de"
++               XKEYMAP="de"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"de"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               be)
++               # Belarusian
++               LOCALE="be_BY.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Brussels"
++               KEYMAP="be"
++               XKEYMAP="be"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"be"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               bg)
++               # Bulgarian
++               LOCALE="bg_BG.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Sofia"
++               KEYMAP="bg"
++               XKEYMAP="bg"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"bg"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               ca)
++               # Catalan
++               LOCALE="ca_ES.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Madrid"
++               KEYMAP="es"
++               XKEYMAP="es"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"es"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               cs)
++               # Czech
++               LOCALE="cs_CZ.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Prague"
++               KEYMAP="cz-lat2"
++               XKEYMAP="cz"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"cz"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               de)
++               # German
++               LOCALE="de_DE.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Berlin"
++               KEYMAP="de"
++               XKEYMAP="de"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"de"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               dk)
++               # Danish
++               LOCALE="da_DK.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++              TIMEZONE="Europe/Copenhagen"
++               KEYMAP="dk"
++               XKEYMAP="dk"
++               # add HAL config for Xorg input stuff
++              cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"dk"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               el)
++               # Greek
++               LOCALE="el_GR.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Athens"
++               KEYMAP="el"
++               XKEYMAP="el"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"el"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               engb)
++               # British
++               LOCALE="en_GB.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/London"
++               KEYMAP="gb"
++               XKEYMAP="uk"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"gb"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               ennz)
++               # New Zealand
++               LOCALE="en_NZ.utf"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARMEZONE="Pacific/Auckland"
++               KEYMAP="us"
++               XKEYMAP="us"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"us"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               enus)
++               # English
++               LOCALE="en_US.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Canada/Pacific"
++               KEYMAP="us"
++               XKEYMAP="us"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"us"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               es)
++               # Spain
++               LOCALE="es_ES.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Madrid"
++               KEYMAP="es"
++               XKEYMAP="es"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"es"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               esar)
++               # Argetina
++               LOCALE="es_AR.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="America/Argentina"
++               KEYMAP="la-latin1"
++               XKEYMAP="la-latin1"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"es"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               eu)
++               # Basque
++               LOCALE="eu_ES.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Madrid"
++               KEYMAP="es"
++               XKEYMAP="es"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"es"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               fi)
++               # Finland
++               LOCALE="fi_FI.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Helsinki"
++               KEYMAP="fi"
++               XKEYMAP="fi"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"fi"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               fr)
++               # France
++               LOCALE="fr_FR.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Paris"
++               KEYMAP="fr"
++               XKEYMAP="fr"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"fr"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               gl)
++               # Galician
++               LOCALE="gl_ES.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Madrid"
++               KEYMAP="es"
++               XKEYMAP="es"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"es"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               hu)
++               # Hungary
++               LOCALE="hu_HU.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Budapest"
++               KEYMAP="hu"
++               XKEYMAP="hu"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"hu"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               hr)
++               # Croatian
++               LOCALE="hr_HR.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Zagreb"
++               KEYMAP="hr"
++               XKEYMAP="hr"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"hr"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               it)
++               # Italy
++               LOCALE="it_IT.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Rome"
++               KEYMAP="it"
++               XKEYMAP="it"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"it"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               ja)
++               # Japanese
++               LOCALE="ja_JP.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Asia/Tokyo"
++               KEYMAP="us"
++               XKEYMAP="us"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"us"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               nl)
++               # Dutch
++               LOCALE="nl_NL.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Amsterdam"
++               KEYMAP="us"
++               XKEYMAP="us"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"us"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               nlbe)
++               # Belgium
++               LOCALE="nl_BE.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Brussels"
++               KEYMAP="be"
++               XKEYMAP="be"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"be"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               no)
++               # Norway
++               LOCALE="nb_NO.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Oslo"
++               KEYMAP="no"
++               XKEYMAP="no"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"no"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               pl)
++               # Poland
++               LOCALE="pl_PL.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Warsaw"
++               KEYMAP="pl"
++               XKEYMAP="pl"
++               CONSOLEFONT="lat2-16.psfu.gz"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"pl"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               ptbr)
++               # Brazilian Portuguese
++               LOCALE="pt_BR.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="America/Sao_Paulo"
++               KEYMAP="br-abnt2"
++               XKEYMAP="pt"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"br"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               ru)
++               # Russia
++               LOCALE="ru_RU.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Moscow"
++               KEYMAP="ru"
++               XKEYMAP="ru"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"ru"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               sk)
++               # Slovak
++               LOCALE="sk_SK.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Bratislava"
++               KEYMAP="sk"
++               XKEYMAP="sk"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"sk"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               sl)
++               # Slovenian
++               LOCALE="sl_SI.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Ljubljana"
++               KEYMAP="slovene"
++               XKEYMAP="si"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"si"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               sr)
++               # Serbian
++               LOCALE="sr_RS.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Belgrade"
++               KEYMAP="sr"
++               XKEYMAP="sr"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"sr"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               sv)
++               # Swedish
++               LOCALE="sv_SE.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Stockholm"
++               KEYMAP="se"
++               XKEYMAP="se"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"se"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               tr)
++               # Turkish
++               LOCALE="tr_TR.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Istanbul"
++               KEYMAP="tr"
++               XKEYMAP="trq"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"tr"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               vcia)
++               # Catalan (valencia)
++               LOCALE="ca_ES.utf8@valencia"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Europe/Madrid"
++               KEYMAP="es"
++               XKEYMAP="es"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"es"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               zhcn)
++               # Simplified Chinese
++               LOCALE="zh_CN.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Asia/Shanghai"
++               KEYMAP="us"
++               XKEYMAP="us"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"us"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               zhhk)
++               # Traditional Chinese (Hong Kong)
++               LOCALE="zh_HK.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Asia/Hong Kong"
++               KEYMAP="us"
++               XKEYMAP="us"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"us"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               zhtw)
++               # Traditional Chinese (Taiwan)
++               LOCALE="zh_TW.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Asia/Taipei"
++               KEYMAP="us"
++               XKEYMAP="us"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"us"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++               *)
++               # American
++               LOCALE="en_US.utf8"
++               sed -i -e "s/^LOCALE=.*/LOCALE=\"$LOCALE\"/" /etc/rc.conf
++               echo "LANG=$LOCALE" > /etc/locale.conf
++               echo "LC_MESSAGES=$LOCALE" >> /etc/locale.conf
++               HARDWARECLOCK="UTC"
++               TIMEZONE="Canada/Pacific"
++               KEYMAP="us"
++               XKEYMAP="us"
++               # add HAL config for Xorg input stuff
++               cp -f /etc/skel/10-keyboard.conf /etc/X11/xorg.conf.d/10-keyboard.conf
++               sed -i "/XkbLayout/ s/us/"us"/" /etc/X11/xorg.conf.d/10-keyboard.conf
++               ;;
++       esac
++
+ if [[ -s /etc/locale.conf ]]; then
+ 	parse_envfile /etc/locale.conf "LANG"
+ 	[[ $LANG ]] && LOCALE=$LANG
+@@ -147,9 +686,6 @@
+ # Single-user login and/or automatic reboot if needed
+ fsck_reboot $fsckret
+ 
+-status "Remounting Root" \
+-	mount -o remount /
+-
+ # now mount all the local filesystems
+ run_hook sysinit_premount
+ status "Mounting Local Filesystems" \
+
+diff -Npur pkg.orig/etc/skel/10-keyboard.conf pkg/etc/skel/10-keyboard.conf
+--- pkg.orig/etc/skel/10-keyboard.conf	1970-01-01 01:00:00.000000000 +0100
++++ pkg/etc/skel/10-keyboard.conf	2012-01-22 13:26:17.000000000 +0100
+@@ -0,0 +1,5 @@
++Section "InputClass"
++    Identifier             "Keyboard Defaults"
++    MatchIsKeyboard        "yes"
++    Option                 "XkbLayout" "us"
++EndSection
+\ Kein Zeilenumbruch am Dateiende.

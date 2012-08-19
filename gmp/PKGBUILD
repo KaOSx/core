@@ -1,0 +1,32 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer: Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+pkgname=gmp
+pkgver=5.0.4
+pkgrel=1
+pkgdesc="A free library for arbitrary precision arithmetic"
+arch=('i686' 'x86_64')
+url="http://gmplib.org/"
+depends=('gcc-libs' 'sh')
+license=('LGPL3')
+options=('!libtool' 'log')
+install=gmp.install
+source=(ftp://ftp.gnu.org/gnu/gmp/gmp-${pkgver}.tar.bz2)
+md5sums=('50c3edcb7c9438e04377ee9a1a061b79')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  [ "${CARCH}" = "i686" ] && export ABI="32"
+  ./configure --build=${CHOST} \
+    --prefix=/usr --infodir=/usr/share/info \
+    --enable-cxx
+  make
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make DESTDIR="${pkgdir}" install
+}
+

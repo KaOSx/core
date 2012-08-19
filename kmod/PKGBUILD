@@ -1,0 +1,69 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+pkgname=kmod
+pkgver=9
+pkgrel=2
+pkgdesc="Linux kernel module handling"
+arch=('i686' 'x86_64')
+url='http://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary'
+license=('GPL2')
+depends=('glibc' 'zlib')
+options=('!libtool')
+provides=('module-init-tools=3.16')
+conflicts=('module-init-tools')
+replaces=('module-init-tools')
+source=("ftp://ftp.kernel.org/pub/linux/utils/kernel/$pkgname/$pkgname-$pkgver.tar.xz"
+        "depmod-search.conf"
+        "0001-split-usr-read-configs-from-lib-depmod.d-modprobe.d.patch"
+        "0002-config-hardcode-the-path-to-modules-to-be-lib-module.patch"
+        "0001-libkmod-file-gracefully-handle-errors-from-zlib.patch"
+        "0002-depmod-report-failures-in-loading-symbols.patch")
+md5sums=('c8ae2d2694fbca2b28e238b30543a0cd'
+         '285fc738c220ff84419995fc8c6d6ca1'
+         '925cf8994139370113319e5ad7eeadc8'
+         '5fc146b486f4c164ad8316b90b6c9aec'
+         'ce4b6a0679a0c933251b20b848d6a524'
+         '1f443aba41dee586d46c3abb35912c6a')
+
+build() {
+  cd "$pkgname-$pkgver"
+
+  patch -p1 <"$srcdir"/0001-split-usr-read-configs-from-lib-depmod.d-modprobe.d.patch
+  patch -p1 <"$srcdir"/0002-config-hardcode-the-path-to-modules-to-be-lib-module.patch
+
+  # fix crash on corrupted zlib compression
+  #patch -Np1 <"$srcdir"/0001-libkmod-file-gracefully-handle-errors-from-zlib.patch
+  #patch -Np1 <"$srcdir"/0002-depmod-report-failures-in-loading-symbols.patch
+
+  ./configure \
+    --sysconfdir=/etc \
+    --with-zlib \
+    --with-rootprefix=/usr
+
+  make
+}
+
+check() {
+  make -C "$pkgname-$pkgver" check
+}
+
+package() {
+  make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
+
+  # extra directories
+  install -dm755 "$pkgdir"/{etc,usr/lib}/{depmod,modprobe}.d "$pkgdir/sbin"
+
+  # add symlinks to kmod
+  ln -s ../usr/bin/kmod "$pkgdir/sbin/modprobe"
+  ln -s ../usr/bin/kmod "$pkgdir/sbin/depmod"
+
+  for tool in {ins,ls,rm}mod modinfo; do
+    ln -s kmod "$pkgdir/usr/bin/$tool"
+  done
+
+  # install depmod.d file for search/ dir
+  install -Dm644 "$srcdir/depmod-search.conf" "$pkgdir/usr/lib/depmod.d/search.conf"
+}

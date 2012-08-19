@@ -1,0 +1,27 @@
+#
+# Packages for Chakra, part of chakra-project.org
+#
+# maintainer : abveritas[at]chakra-project[dog]org>
+# maintainer : Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+pkgname=pacman-mirrorlist
+pkgver=20120523
+pkgrel=1
+pkgdesc="Chakra Linux mirror list for use by pacman"
+arch=('i686' 'x86_64')
+url="http://www.archlinux.org/pacman/"
+license=('GPL')
+groups=('base')
+backup=(etc/pacman.d/mirrorlist)
+source=(mirrorlist)
+
+build() {
+  mkdir -p $pkgdir/etc/pacman.d
+  install -m644 $srcdir/mirrorlist $pkgdir/etc/pacman.d/
+  # customize mirrorlist to architecture
+  sed -i -e "s/@carch@/${CARCH}/g" $pkgdir/etc/pacman.d/mirrorlist
+}
+
+md5sums=('03f1a56e16277d7a831596952c68af7b')
+sha256sums=('9b07a75231ceb79ae99dce533a8eeb1915c8914be363256374aaa7514fca162c')
+

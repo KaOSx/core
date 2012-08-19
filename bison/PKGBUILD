@@ -1,0 +1,27 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+
+pkgname=bison
+pkgver=2.5
+pkgrel=3
+pkgdesc="The GNU general-purpose parser generator"
+arch=('i686' 'x86_64')
+license=('GPL3')
+url="http://www.gnu.org/software/bison/bison.html"
+depends=('glibc' 'm4' 'sh')
+groups=('base-devel')
+install=bison.install
+source=(ftp://ftp.gnu.org/gnu/bison/${pkgname}-${pkgver}.tar.bz2)
+md5sums=('9dba20116b13fc61a0846b0058fbe004')
+sha1sums=('907319624fe4f4c5f9e2c3e23601041ac636ae31')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  ./configure --prefix=/usr --datadir=/usr/share || return 1
+  make || return 1
+  make DESTDIR="${pkgdir}" install || return 1
+}

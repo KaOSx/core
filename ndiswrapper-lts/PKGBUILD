@@ -1,0 +1,42 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer abveritas@chakra-project.org
+
+# Find the kernel name inside the chroot
+_extramodules=extramodules-3.0-lts
+_kver="$(cat /lib/modules/${_extramodules}/version)"
+
+pkgname=ndiswrapper-lts
+_pkgname=ndiswrapper
+pkgver=1.57
+pkgrel=4
+pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors. For linux-testing."
+license=('GPL')
+arch=(i686 x86_64)
+url="http://ndiswrapper.sourceforge.net"
+install="ndiswrapper.install"
+depends=('linux-lts>=3.0' 'linux-lts<3.1' 'ndiswrapper')
+makedepends=('linux-lts-headers')
+source=(http://downloads.sourceforge.net/sourceforge/ndiswrapper/ndiswrapper-$pkgver.tar.gz)
+md5sums=('7a401dc540938bf07893c67f418b6152')
+
+build() {
+  cd "$srcdir/$_pkgname-$pkgver"
+
+  sed -i "/modinfo/s/s/usr\//" driver/Makefile
+
+  make KVERS=$_kver
+}
+
+package() {
+  cd "$srcdir/$_pkgname-$pkgver"
+
+  make INST_DIR="lib/modules/$_extramodules" \
+    KVERS=$_kver DESTDIR="$pkgdir/" install
+
+  # rm ndiswrapper
+  rm -R "$pkgdir/usr" "$pkgdir/sbin"
+
+  gzip "$pkgdir/lib/modules/$_extramodules/$_pkgname.ko"
+}

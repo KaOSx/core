@@ -1,0 +1,35 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# Contributer: Joshua L. Blocher <verbalshadow@gmail.com>
+
+pkgname=bzr
+pkgver=2.4.2
+pkgrel=1
+pkgdesc="A decentralized revision control system (bazaar)"
+arch=('i686' 'x86_64')
+url="http://bazaar.canonical.com/en/"
+license=('GPL')
+depends=('python2')
+optdepends=('python-paramiko: for sftp support')
+source=("http://launchpad.net/${pkgname}/${pkgver%.*}/${pkgver}/+download/${pkgname}-${pkgver}.tar.gz"{,.sig})
+md5sums=('cfc06fddd348445c65a247c0b33a05db'
+         '90294e34a45df20b16be47a32c800c89')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  sed -i 's|man/man1|share/man/man1|' setup.py
+  sed -i 's|/usr/bin/env python|/usr/bin/env python2|' \
+    bzrlib/{plugins/bash_completion/bashcomp.py,tests/ssl_certs/create_ssls.py,patiencediff.py,_patiencediff_py.py}
+  python2 setup.py build
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  python2 setup.py install --prefix=/usr --root="${pkgdir}" --optimize=1
+
+  # bash-completion
+  install -D -m644 contrib/bash/bzr "${pkgdir}/etc/bash_completion.d/bzr"
+}

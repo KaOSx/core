@@ -1,0 +1,4 @@
+332c332
+< 	.ndo_set_multicast_list = wl_set_multicast_list,
+---
+> 	.ndo_set_rx_mode = wl_set_multicast_list,

@@ -1,0 +1,32 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+# include global config
+source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+
+pkgname=sdparm
+pkgver=1.06
+pkgrel=2
+pkgdesc="An utility similar to hdparm but for SCSI devices"
+arch=('i686' 'x86_64')
+url="http://sg.danny.cz/sg/sdparm.html"
+license=('BSD')
+depends=('glibc')
+source=("http://sg.danny.cz/sg/p/$pkgname-$pkgver.tgz")
+md5sums=('5e19913658bb4f9849ddd909e0f47cde')
+
+build() {
+  cd ${srcdir}/${pkgname}-${pkgver}
+  ./configure --prefix=/usr
+  make || return 1
+}
+
+package() {
+  cd ${srcdir}/${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir}/ install || return 1
+
+  install -Dm644 COPYING $pkgdir/usr/share/licenses/${pkgname}/LICENSE
+}

@@ -1,0 +1,31 @@
+# Chakra Packages for Chakra, part of chakra-project.org
+
+pkgname=perl-error
+_realname=Error
+pkgver=0.17017
+pkgrel=1
+pkgdesc="Perl/CPAN Error module - Error/exception handling in an OO-ish way"
+url="http://search.cpan.org/dist/${_realname}/"
+arch=('any')
+license=('PerlArtistic' 'GPL')
+depends=('perl>=5.14.2')
+options=('!emptydirs')
+source=(http://search.cpan.org/CPAN/authors/id/S/SH/SHLOMIF/${_realname}-${pkgver}.tar.gz)
+md5sums=('d53e158fdb3d8fd54ddbed4dc2e44ad4')
+
+build() {
+  cd ${srcdir}/${_realname}-${pkgver}
+  # install module in vendor directories.
+  perl Makefile.PL INSTALLDIRS=vendor
+  make 
+}
+
+check() {
+  cd ${srcdir}/${_realname}-${pkgver}
+  make test
+}
+
+package() {
+  cd ${srcdir}/${_realname}-${pkgver}
+  make install DESTDIR=${pkgdir}
+}

@@ -1,0 +1,41 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer: Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+# toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
+
+pkgname=linux-api-headers
+pkgver=3.2.8
+_basever=3.2
+pkgrel=1
+pkgdesc="Kernel headers sanitized for use in userspace"
+arch=('i686' 'x86_64')
+url="http://www.gnu.org/software/libc"
+license=('GPL2')
+provides=("kernel-headers=${pkgver}")
+conflicts=('kernel-headers')
+replaces=('kernel-headers')
+source=(http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basever}.tar.xz
+	http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz)
+md5sums=('364066fa18767ec0ae5f4e4abcf9dc51'
+         '417b97cdd9e8b2664eb31260dbbcdc72')
+
+build() {
+  cd ${srcdir}/linux-${_basever}
+  [[ $pkgver != $_basever ]] && patch -Np1 -i ${srcdir}/patch-${pkgver}
+
+  make mrproper
+  make headers_check
+}
+
+package() {
+  cd ${srcdir}/linux-${_basever}
+  make INSTALL_HDR_PATH=${pkgdir}/usr headers_install
+
+  # use headers from libdrm
+  rm -rf ${pkgdir}/usr/include/drm
+  
+  # clean-up unnecessary files generated during install
+  find ${pkgdir} -name .install -or -name ..install.cmd -print0 | xargs -0 rm -f
+}

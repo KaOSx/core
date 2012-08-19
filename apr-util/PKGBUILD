@@ -1,0 +1,29 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer abveritas@chakra-project.org
+
+pkgname=apr-util
+pkgver=1.4.1
+pkgrel=1
+pkgdesc="The Apache Portable Runtime"
+arch=('i686' 'x86_64')
+url="http://apr.apache.org/"
+depends=('apr' 'gdbm' 'expat' 'db' 'libldap' 'unixodbc')
+options=('!libtool')
+license=('APACHE')
+source=("http://www.apache.org/dist/apr/apr-util-${pkgver}.tar.bz2")
+md5sums=('52b31b33fb1aa16e65ddaefc76e41151')
+
+build() {
+  cd "${srcdir}/apr-util-${pkgver}"
+  ./configure --prefix=/usr --with-apr=/usr \
+    --without-pgsql --without-mysql --without-sqlite2 --without-sqlite3 \
+    --with-berkeley-db=/usr --with-gdbm=/usr --with-ldap
+  make
+}
+
+package() {
+  cd "${srcdir}/apr-util-${pkgver}"
+  make DESTDIR="${pkgdir}" install
+}

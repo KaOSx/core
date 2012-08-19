@@ -1,0 +1,32 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+pkgname=libssh
+pkgver=0.5.2
+pkgrel=1
+pkgdesc="Library for accessing ssh client services through C libraries"
+url="http://www.libssh.org/"
+license=('LGPL')
+arch=('i686' 'x86_64')
+depends=('openssl')
+makedepends=('cmake' 'doxygen')
+source=("https://red.libssh.org/attachments/download/27/${pkgname}-${pkgver}.tar.gz")
+md5sums=('38b67c48af7a9204660a3e08f97ceba6')
+
+build() {
+  cd "${srcdir}"
+  mkdir build
+  cd build
+  cmake ../${pkgname}-${pkgver} \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release
+  make
+}
+
+package(){
+  cd "${srcdir}"/build
+  make DESTDIR="${pkgdir}" install
+}

@@ -1,0 +1,31 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+# include global config
+source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+
+pkgname=run-parts
+pkgver=3.4
+pkgrel=2
+pkgdesc='run scripts or programs in a directory'
+arch=('i686' 'x86_64')
+url='http://packages.qa.debian.org/d/debianutils.html'
+license=('GPL')
+depends=('glibc')
+source=("http://ftp.de.debian.org/debian/pool/main/d/debianutils/debianutils_${pkgver}.tar.gz") 
+md5sums=('0b37e6a6f318f146741a229ab4bfe93b')
+
+build() {
+	cd $srcdir/debianutils-$pkgver
+	./configure --prefix=/usr
+	make run-parts
+}
+
+package() {
+	cd $srcdir/debianutils-$pkgver
+	install -D -m755 run-parts $pkgdir/usr/bin/run-parts
+	install -D -m644 run-parts.8 $pkgdir/usr/share/man/man8/run-parts.8
+}

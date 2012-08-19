@@ -1,0 +1,25 @@
+# $Id: PKGBUILD 58465 2009-11-08 16:04:10Z jgc $
+# Maintainer: Eric Belanger <eric@archlinux.org>
+# Contributor: John Proctor <jproctor@prium.net>
+
+pkgname=libxslt
+pkgver=1.1.26
+pkgrel=3
+pkgdesc="XML stylesheet transformation library"
+arch=('i686' 'x86_64')
+url="http://xmlsoft.org/XSLT/"
+license=('custom')
+depends=('libxml2>=2.7.6' 'libgcrypt>=1.4.4')
+makedepends=('python2')
+options=('!libtool')
+source=(ftp://xmlsoft.org/libxslt/${pkgname}-${pkgver}.tar.gz)
+md5sums=('e61d0364a30146aaa3001296f853b2b9')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  ./configure --prefix=/usr || return 1
+  make || return 1
+  make DESTDIR="${pkgdir}" install || return 1
+  install -d "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -m644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/" || return 1
+}

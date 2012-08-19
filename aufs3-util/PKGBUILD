@@ -1,0 +1,30 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer abveritas@chakra-project.org
+
+pkgname=aufs3-util
+pkgver=20120607
+pkgrel=2
+pkgdesc="Another Unionfs Implementation that supports NFS branches"
+arch=('i686' 'x86_64')
+url="http://aufs.sourceforge.net/"
+license=('GPL2')
+depends=('glibc')
+makedepends=('linux-headers')
+conficts=('aufs-utils' 'aufs2-util')
+source=(http://chakra-linux.org/sources/aufs3-util/aufs3-util-$pkgver.tar.gz)
+md5sums=('a1012045b45ec13ccc1be231d5e76464')
+
+build() {
+  cd $srcdir/aufs3-util-$pkgver 
+
+  export CPPFLAGS="-I /usr/src/linux-3.4.2-1-CHAKRA/include/"
+  make 
+}
+
+package() {
+  cd $srcdir/aufs3-util-$pkgver
+
+  make DESTDIR=$pkgdir install 
+}

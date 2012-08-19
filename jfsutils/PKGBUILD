@@ -1,0 +1,27 @@
+# $Id: PKGBUILD 37639 2009-05-03 15:42:28Z tpowa $
+# Maintainer: Tobias Powalowski <tpowa@archlinux.org>
+pkgname=jfsutils
+pkgver=1.1.15
+pkgrel=1
+pkgdesc="JFS filesystem utilities"
+arch=('i686' 'x86_64')
+url="http://jfs.sourceforge.net"
+license=('GPL')
+groups=('base')
+depends=('e2fsprogs')
+source=("http://jfs.sourceforge.net/project/pub/${pkgname}-${pkgver}.tar.gz")
+md5sums=('8809465cd48a202895bc2a12e1923b5d')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make DESTDIR="${pkgdir}" install
+  mv "${pkgdir}/usr/sbin" "${pkgdir}"
+}
+
+# vim:set ts=2 sw=2 et:

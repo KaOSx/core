@@ -1,0 +1,39 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+pkgname=libunistring
+pkgver=0.9
+pkgrel=1
+# dash the next line if you want to skip the tests
+_test=1
+pkgdesc="Unicode string library for C"
+arch=('any')
+url="http://www.gnu.org/software/libunistring/"
+license=('GPL')
+makedepends=('dejagnu')
+options=('!libtool' 'log')
+source=(http://ftp.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.gz)
+md5sums=('3263ae4966e6e58b06d5d6d544bcf1a8')
+
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  ./configure --prefix=/usr
+  make
+
+  if [ -n "${_test}" ]; then
+     echo "<<< STARTING TESTS >>>"
+     make check
+     echo "<<< ENDING TESTS >>>"
+  fi
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  make -j1 DESTDIR="$pkgdir/" install
+}

@@ -1,0 +1,20 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer abveritas@chakra-project.org
+
+pkgname=hwids
+pkgver=20120512
+pkgrel=1
+pkgdesc="hardware identification databases"
+url=https://github.com/Flameeyes/hwids
+license=('GPL2')
+arch=('any')
+source=("https://github.com/Flameeyes/${pkgname}/tarball/${pkgname}-${pkgver}")
+md5sums=('d530009df4967b5ece996262f4e39851')
+
+package() {
+  cd ${srcdir}/*
+  mkdir -p "${pkgdir}/usr/share/hwdata"
+  cp pci.ids usb.ids "${pkgdir}/usr/share/hwdata/"
+}

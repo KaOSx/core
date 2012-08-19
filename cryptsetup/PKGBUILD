@@ -1,0 +1,38 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer abveritas@chakra-project.org
+
+pkgname=cryptsetup
+pkgver=1.4.2
+pkgrel=3
+pkgdesc="Userspace setup tool for transparent encryption of block devices using the Linux 2.6 cryptoapi"
+arch=('i686' 'x86_64')
+license=('GPL')
+url="http://code.google.com/p/cryptsetup/"
+groups=('base')
+depends=('device-mapper' 'libgcrypt' 'popt' 'util-linux')
+conflicts=('mkinitcpio<0.5.99')
+options=('!libtool' '!emptydirs')
+source=(http://cryptsetup.googlecode.com/files/${pkgname}-${pkgver}.tar.bz2
+        http://cryptsetup.googlecode.com/files/${pkgname}-${pkgver}.tar.bz2.asc
+        encrypt_hook
+	encrypt_install)
+sha256sums=('1fe80d7b19d24b3f65d2e446decfed859e2c4d17fdf7c19289d82dc7cd60dfe7'
+            '4e6dbece8d1baad861479aca70d0cf30887420da9b5eab45d65d064c656893ed'
+            '811bbea1337106ad811731c746d73ee81039bad00aef52398e3a377ad0766757'
+            '868fbc7ed1ff49803be06d78ff35b5f9a35dcc5ee820fd8cabe0dfcf74061182')
+build() {
+  cd "${srcdir}"/$pkgname-${pkgver}
+  ./configure --prefix=/usr --disable-static
+  make
+}
+
+package() {
+  cd "${srcdir}"/$pkgname-${pkgver}
+  make DESTDIR="${pkgdir}" install
+  # install hook
+  install -D -m644 "${srcdir}"/encrypt_hook "${pkgdir}"/usr/lib/initcpio/hooks/encrypt
+  install -D -m644 "${srcdir}"/encrypt_install "${pkgdir}"/usr/lib/initcpio/install/encrypt
+}
+

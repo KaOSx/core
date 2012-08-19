@@ -1,0 +1,41 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+pkgname=dejagnu
+pkgver=1.5
+pkgrel=2
+# dash the next line if you want to skip the tests
+_test=1
+pkgdesc="Framework for testing other programs"
+arch=('any')
+url="http://www.gnu.org/software/dejagnu/"
+license=('GPL')
+depends=('sh' 'expect')
+makedepends=('dejagnu')
+options=('!libtool' 'log')
+install=dejagnu.install
+source=(http://ftp.gnu.org/gnu/dejagnu/${pkgname}-${pkgver}.tar.gz)
+md5sums=('3df1cbca885e751e22d3ebd1ac64dc3c')
+
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  ./configure --prefix=/usr
+  make
+
+  if [ -n "${_test}" ]; then
+     echo "<<< STARTING TESTS >>>"
+     make check
+     echo "<<< ENDING TESTS >>>"
+  fi
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  make -j1 DESTDIR="$pkgdir/" install
+}

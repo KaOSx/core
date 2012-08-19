@@ -1,0 +1,28 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+pkgname=nano
+pkgver=2.2.6
+pkgrel=2
+pkgdesc="Pico editor clone with enhancements"
+arch=('i686' 'x86_64')
+license=('GPL')
+url="http://www.nano-editor.org"
+groups=('base')
+depends=('glibc' 'ncurses')
+source=(http://www.nano-editor.org/dist/v2.2/nano-${pkgver}.tar.gz)
+backup=(etc/nanorc)
+install=nano.install
+md5sums=('03233ae480689a008eb98feb1b599807')
+
+build() {
+  cd ${srcdir}/${pkgname}-${pkgver}
+  ./configure --prefix=/usr --sysconfdir=/etc --enable-color --enable-nanorc \
+	--enable-multibuffer --disable-wrapping-as-root
+  make || return 1
+  make DESTDIR=${pkgdir} install || return 1
+  install -DTm644 ${srcdir}/${pkgname}-${pkgver}/doc/nanorc.sample ${pkgdir}/etc/nanorc
+}

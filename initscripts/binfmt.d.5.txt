@@ -1,0 +1,57 @@
+/////
+vim:set ts=4 sw=4 syntax=asciidoc noet:
+/////
+binfmt.d(5)
+===========
+
+NAME
+----
+binfmt.d - Configure additional binary formats at boot
+
+SYNOPSIS
+--------
+/usr/lib/binfmt.d/*.conf
+
+/etc/binfmt.d/*.conf
+
+/run/binfmt.d/*.conf
+
+DESCRIPTION
+-----------
+*initscripts* uses files from the above directories to configure additional
+binary formats to register during boot in the kernel.
+
+CONFIGURATION FORMAT
+--------------------
+Each file contains a list of binfmt_misc kernel binary format rules.
+Consult *binfmt_misc.txt*[1] for more information on registration of
+additional binary formats and how to write rules.
+
+Empty lines and lines beginning with ; and # are ignored. Note that this
+means you may not use ; and # as delimiter in binary format rules.
+
+Each configuration file is named in the style of <program>.conf. Files in
+/etc/ overwrite files with the same name in /usr/lib/. Files in /run
+overwrite files with the same name in /etc/ and /usr/lib/. Packages
+should install their configuration files in /usr/lib/, files in /etc/ are
+reserved for the local administration, which possibly decides to
+overwrite the configurations installed from packages. All files are
+sorted by filename in alphabetical order, regardless in which of the
+directories they reside, to ensure that a specific configuration file
+takes precedence over another file with an alphabetically later name.
+
+EXAMPLE
+-------
+*Example 1. /etc/binfmt.d/wine.conf example:*
+
+	# Start WINE on Windows executables
+	:DOSWin:M::MZ::/usr/bin/wine:
+
+NOTES
+-----
+*1. binfmt_misc.txt:*
+	http://www.kernel.org/doc/Documentation/binfmt_misc.txt
+
+AUTHORS
+-------
+Original by Lennart Poettering, adapted to Arch Linux by Sébastien Luttringer.

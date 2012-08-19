@@ -1,0 +1,61 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+pkgname=udev
+pkgver=182
+pkgrel=4
+pkgdesc="The userspace dev tools (udev)"
+depends=('util-linux' 'libusb-compat' 'glib2' 'kmod' 'acl' 'hwids')
+install=udev.install
+arch=(i686 x86_64)
+license=('GPL')
+makedepends=('gobject-introspection' 'gperf' 'libxslt')
+source=(ftp://ftp.kernel.org/pub/linux/utils/kernel/hotplug/$pkgname-$pkgver.tar.xz
+	initcpio-hooks-udev
+	initcpio-install-udev)
+md5sums=('023877e6cc0d907994b8c648beab542b'
+         'a4dd853050bf2e0ae6b2e3d2c75499c2'
+         'd2b16edc6d806b5dafdbbad43ae5a3de')
+url="http://git.kernel.org/?p=linux/hotplug/udev.git;a=summary"
+backup=(etc/udev/udev.conf)
+groups=('base')
+options=(!makeflags !libtool)
+
+build() {
+  cd $srcdir/$pkgname-$pkgver
+
+  ./configure --prefix=/usr \
+              --with-rootprefix= \
+              --sysconfdir=/etc \
+              --libexecdir=/usr/lib \
+              --with-systemdsystemunitdir=/usr/lib/systemd/system \
+              --with-usb-ids-path=/usr/share/hwdata/usb.ids \
+              --with-pci-ids-path=/usr/share/hwdata/pci.ids \
+              --with-firmware-path=/usr/lib/firmware/updates:/lib/firmware/updates:/usr/lib/firmware:/lib/firmware
+
+  make
+}
+  
+package() {
+  cd $srcdir/$pkgname-$pkgver
+  make DESTDIR=${pkgdir} install
+
+  # udevd moved, symlink to make life easy for restarting udevd manually
+  ln -s ../../lib/udev/udevd ${pkgdir}/usr/bin/udevd
+
+  # the path to udevadm is hardcoded in some places
+  install -d ${pkgdir}/sbin
+  ln -s ../usr/bin/udevadm ${pkgdir}/sbin/udevadm
+
+  # Replace dialout/tape/cdrom group in rules with uucp/storage/optical group
+    sed -i 's#GROUP="dialout"#GROUP="uucp"#g;
+            s#GROUP="tape"#GROUP="storage"#g;
+            s#GROUP="cdrom"#GROUP="optical"#g' "$pkgdir"/usr/lib/udev/rules.d/*.rules
+
+  # install the mkinitpcio hook
+  install -Dm644 "$srcdir/initcpio-install-udev" "$pkgdir/usr/lib/initcpio/install/udev"
+  install -Dm644 "$srcdir/initcpio-hooks-udev" "$pkgdir/usr/lib/initcpio/hooks/udev"
+}
+

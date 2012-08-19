@@ -1,0 +1,44 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+# include global config
+source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+
+pkgname=gzip
+pkgver=1.4
+pkgrel=4
+pkgdesc="GNU compression utility"
+arch=('i686' 'x86_64')
+url="http://www.gnu.org/software/gzip/"
+license=('GPL3')
+groups=('base')
+depends=('glibc' 'bash')
+makedepends=('patch')
+install=gzip.install
+source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('e381b8506210c794278f5527cba0e765')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+   # By default Gzip uses assembly code. While this may preform better, 
+   # it is not position independent. The DEFS environment variable is 
+   # set to use only C code.
+   export DEFS="NO_ASM"
+  ./configure --prefix=/usr
+  make 
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+  make prefix="${pkgdir}/usr" install
+
+  cd "${pkgdir}/usr/bin"
+  ln -sf "${pkgname}" compress
+}
+
+# vim:set ts=2 sw=2 et:

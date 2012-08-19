@@ -1,0 +1,103 @@
+/////
+vim:set ts=4 sw=4 syntax=asciidoc noet:
+/////
+rc.d(8)
+=======
+
+Name
+----
+rc.d - Initscripts power tool
+
+Synopsis
+--------
+*rc.d <action> [options] [rc [rc] ...]*
+
+Description
+-----------
+The *rc.d* program controls and lists rc scripts on the system. An action may be
+invoked on one or more scripts using *rc.d action rc1 rc2...*. See <<A,Actions>>
+below for more information.
+Use *rc.d list* to get the list of all rc scripts on the system.
+
+Actions[[A]]
+------------
+The actions supported by a rc scripts may be different from script to script, but
+commonly supported actions include:
+
+*start*::
+	Starts the script if it's not already running.
+
+*stop*::
+	Stops a running script.
+
+*restart*::
+	Restarts a running script.
+
+More uncommon actions are:
+
+*reload*::
+	Signals the script to reload its configuration.
+
+*status*::
+	Shows the status of the script.
+
+Options[[O]]
+------------
+*-s, --started*::
+	Filter to started scripts.
+
+*-S, --stopped*::
+	Filter to stopped scripts.
+
+*-a, --auto*::
+	Filter to auto started scripts.
+
+*-A, --noauto*::
+	Filter to manually started scripts.
+
+Examples[[E]]
+-------------
+*rc.d list*::
+	List all scripts.
+
+*rc.d list sshd gpm*::
+	List only *sshd* and *gpm* scripts.
+
+*rc.d list --started gpm*::
+	List *gpm* script only if started.
+
+*rc.d list --started --auto*::
+	List all auto started scripts.
+
+*rc.d start sshd gpm*::
+	Starts *sshd* and *gpm* scripts.
+
+*rc.d start --auto --stopped*::
+	Starts all stopped scripts which are started at startup.
+
+*rc.d stop crond*::
+	Stops the *crond* script.
+
+*rc.d stop --noauto*::
+	Stop all script which are not runned at startup
+
+*rc.d restart crond*::
+	Restarts the *crond* script.
+
+*rc.d restart --stopped crond*::
+	Restarts the *crond* script only if stopped.
+
+*rc.d help*::
+	Display help.
+
+Directories[[D]]
+----------------
+'/etc/rc.d'::
+	Directory containing available daemons on the system.
+
+'/usr/lib/initscripts'::
+	Directory containing available initscripts plugins.
+
+Authors
+-------
+	Written by Sebastien Luttringer and Dave Reisner.

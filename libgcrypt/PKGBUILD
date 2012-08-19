@@ -1,0 +1,29 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer abveritas@chakra-project.org
+
+pkgname=libgcrypt
+pkgver=1.5.0
+pkgrel=3
+pkgdesc="a general purpose crypto library based on the code used"
+arch=('i686' 'x86_64')
+url="http://www.gnupg.org"
+license=('LGPL')
+depends=('libgpg-error>=1.8')
+options=(!libtool)
+source=("ftp://ftp.gnupg.org/gcrypt/${pkgname}/${pkgname}-${pkgver}.tar.bz2")
+sha1sums=('3e776d44375dc1a710560b98ae8437d5da6e32cf')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+  ./configure --prefix=/usr --disable-padlock-support --disable-static
+  make
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+  make DESTDIR="${pkgdir}" install
+}

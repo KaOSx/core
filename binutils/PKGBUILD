@@ -1,0 +1,65 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer: Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+# toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
+
+pkgname=binutils
+pkgver=2.22
+pkgrel=1
+_date=20120109
+pkgdesc="A set of programs to assemble and manipulate binary and object files."
+arch=('i686' 'x86_64')
+url="http://www.gnu.org/software/binutils/"
+license=('GPL')
+groups=('base')
+depends=('glibc>=2.15' 'zlib')
+checkdepends=('dejagnu')
+options=('!libtool' '!distcc' '!ccache')
+install="binutils.install"
+source=("http://chakra.sourceforge.net/sources/${pkgname}/${pkgname}-${pkgver}_${_date}.tar.bz2")
+md5sums=('d6df201cbf66394defc603e1318061fd')
+
+mksource() {
+  export _TAG="binutils-2_22-branch"
+  export CVSROOT=":pserver:anoncvs@sourceware.org:/cvs/src"
+
+  mkdir -p "${pkgname}-${_date}"
+  pushd "${pkgname}-${_date}" >/dev/null
+    cvs -z9 co -r "${_TAG}" binutils && \
+    mv src binutils                  && \
+    tar -cvjf "../binutils-${pkgver}_${_date}.tar.bz2" binutils/*
+  popd >/dev/null
+}
+
+build() {
+  cd "${srcdir}"
+  mkdir -p binutils-build && cd binutils-build
+
+  [ "${CARCH}" == 'x86_64' ] && CONFIGFLAGS=('--enable-64-bit-bfd' '--disable-multilib')
+
+  "${srcdir}/${pkgname}/configure" \
+  	--prefix=/usr \
+  	--enable-ld=default \
+  	--enable-gold \
+  	--enable-lto \
+  	--enable-plugins \
+  	--enable-threads \
+  	--enable-shared \
+	  "${CONFIGFLAGS[@]}"
+
+  # check the host environment and makes sure all the necessary tools are available
+  make configure-host
+
+  make tooldir="${pkgdir}/usr"
+}
+
+package() {
+  cd "${srcdir}/binutils-build"
+  make prefix="${pkgdir}/usr" tooldir="${pkgdir}/usr" install
+  
+  # Remove Windows/Novell specific man pages
+  rm -f "${pkgdir}/usr/share/man/man1"/{dlltool,nlmconv,windres,windmc}*
+}
+

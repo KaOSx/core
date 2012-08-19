@@ -1,0 +1,40 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+# include global config
+source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+
+pkgname=lsb-release
+pkgver=1.4
+pkgrel=4
+pkgdesc="LSB version query program."
+arch=('i686' 'x86_64')
+url="http://www.linuxbase.org/"
+makedepends=('perl') # to generate the man page
+license=('GPL2')
+source=("http://downloads.sourceforge.net/lsb/${pkgname}-${pkgver}.tar.gz")
+md5sums=('30537ef5a01e0ca94b7b8eb6a36bb1e4')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make prefix="${pkgdir}/usr" mandir="${pkgdir}/usr/share/man" install
+
+  # Create an /etc/lsb-release file suitable for Chakra
+  install -d -m755 "${pkgdir}/etc"
+  cat > "${pkgdir}/etc/lsb-release" <<-EOF
+DISTRIB_ID="Chakra"
+DISTRIB_RELEASE="2011.12"
+DISTRIB_CODENAME="Edn"
+DISTRIB_DESCRIPTION="Chakra Linux"
+EOF
+}
+
+# vim:set ts=2 sw=2 et:

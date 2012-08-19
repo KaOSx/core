@@ -1,0 +1,79 @@
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
+# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+pkgname=git
+pkgver=1.7.10.3
+pkgrel=1
+pkgdesc="the fast distributed version control system"
+arch=(i686 x86_64)
+url="http://git-scm.com/"
+license=('GPL2')
+depends=('curl' 'expat>=2.0' 'perl-error' 'perl')
+makedepends=('python2')
+optdepends=('tk: gitk and git gui'
+            'perl-libwww: git svn'
+            'perl-term-readkey: git svn'
+            'perl-net-smtp-ssl: git send-email TLS support'
+            'python2: various helper scripts'
+            'subversion: git svn'
+            'cvsps: git cvsimport')
+replaces=('git-core')
+provides=('git-core')
+backup=('etc/conf.d/git-daemon.conf')
+source=("http://git-core.googlecode.com/files/git-$pkgver.tar.gz"
+        "http://git-core.googlecode.com/files/git-manpages-$pkgver.tar.gz"
+        git-daemon
+        git-daemon.conf)
+
+sha1sums=('172c6ad5a55276213c5e40b83a4c270f6f931b3e'
+          '4ae4f9f0f0dc42ad5cb2de309049c953841bc413'
+          'f2b41828bd912b72e2cb3e14677739c4f370de66'
+          '149e2da1ecb48872ddb31c0945afeaad1f9653d7')
+
+build() {
+  export PYTHON_PATH='/usr/bin/python2'
+  cd "$srcdir/$pkgname-$pkgver"
+  make prefix=/usr gitexecdir=/usr/lib/git-core 
+}
+
+package() {
+  export PYTHON_PATH='/usr/bin/python2'
+  cd "$srcdir/$pkgname-$pkgver"
+  make prefix=/usr gitexecdir=/usr/lib/git-core \
+    NO_CROSS_DIRECTORY_HARDLINKS=1 \
+    INSTALLDIRS=vendor DESTDIR=${pkgdir} install 
+
+  # bash completion
+  mkdir -p $pkgdir/etc/bash_completion.d/
+  install -m644 ./contrib/completion/git-completion.bash $pkgdir/etc/bash_completion.d/git 
+  # more contrib stuff
+  cp -a ./contrib $pkgdir/usr/share/git/ 
+  # scripts are for python 2.x
+  sed -i 's|#![ ]*/usr/bin/env python|#!/usr/bin/env python2|' \
+    $(find "$pkgdir" -name '*.py') \
+    "$pkgdir"/usr/share/git/{fast-import/git-p4,gitview/gitview}
+
+  # emacs interface
+  mkdir -p $pkgdir/usr/share/emacs/site-lisp
+  mv $pkgdir/usr/share/git/emacs $pkgdir/usr/share/emacs/site-lisp/git
+  rm $pkgdir/usr/share/emacs/site-lisp/git/.gitignore
+
+  # how 'bout some manpages?
+  for mansect in man1 man5 man7; do
+    for manpage in $srcdir/$mansect/*; do
+      install -D -m644 $manpage $pkgdir/usr/share/man/$mansect/$(basename $manpage)
+    done
+  done
+
+  # remove perllocal.pod, .packlist, and empty directories.
+  rm -rf $pkgdir/usr/lib/perl5
+
+  # git daemon script
+  install -D -m755 $srcdir/git-daemon $pkgdir/etc/rc.d/git-daemon
+  install -D -m644 $srcdir/git-daemon.conf $pkgdir/etc/conf.d/git-daemon.conf
+}
+
+

@@ -1,0 +1,40 @@
+/////
+vim:set ts=4 sw=4 syntax=asciidoc noet:
+/////
+locale.conf(5)
+==============
+
+NAME
+----
+locale.conf - configuration file for locale settings
+
+SYNOPSIS
+--------
+*/etc/locale.conf*
+
+DESCRIPTION
+-----------
+The /etc/locale.conf file configures system-wide locale settings.
+
+The basic file format of locale.conf is a newline-separated list of environment-like shell-compatible variable assignments. It is
+possible to source the configuration from shell scripts, however, beyond mere variable assignments no shell features are supported,
+allowing applications to read the file without implementing a shell compatible execution engine.
+
+The locale settings configured in /etc/locale.conf are system-wide and are inherited by every service or user, unless overridden or
+unset by individual programs or individual users. To avoid services inheriting the locale settings on sysvinit systems, the
+DAEMON_LOCALE variable in rc.conf can be set to "no".
+
+In Chakra-Project /etc/rc.conf is checked for locale configuration as well, however only as fallback.
+
+OPTIONS
+-------
+The following locale settings may be set using /etc/locale.conf: *LANG=*, *LANGUAGE=*, *LC_CTYPE=*, *LC_NUMERIC=*, *LC_TIME=*, *LC_COLLATE=*,
+*LC_MONETARY=*, *LC_MESSAGES=*, *LC_PAPER=*, *LC_NAME=*, *LC_ADDRESS=*, *LC_TELEPHONE=*, *LC_MEASUREMENT=*, *LC_IDENTIFICATION=*. Note that *LC_ALL* may not be be configured in this file. For details about the meaning and semantics of these settings, refer to locale(7). The LANG variable overrides LOCALE from /etc/rc.conf.
+
+SEE ALSO
+--------
+systemd.locale.conf(5), locale(7), rc.conf(5)
+
+AUTHORS
+-------
+Original by Lennart Poettering, adapted to Arch Linux by Tom Gundersen.

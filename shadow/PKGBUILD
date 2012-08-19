@@ -1,0 +1,134 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer abveritas[at]chakra-project[dog]org>
+# maintainer Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+
+pkgname=shadow
+pkgver=4.1.5
+pkgrel=1
+pkgdesc="Password and account management tool suite with support for shadow files and PAM"
+arch=('i686' 'x86_64')
+url='http://pkg-shadow.alioth.debian.org/'
+license=('BSD')
+groups=('base')
+depends=('bash' 'pam' 'acl')
+backup=(etc/login.defs
+        etc/pam.d/{chage,login,passwd,shadow,useradd,usermod,userdel}
+        etc/pam.d/{chpasswd,newusers,groupadd,groupdel,groupmod}
+        etc/pam.d/{chfn,chgpasswd,groupmems,chsh}
+        etc/default/useradd)
+options=('!libtool')
+install='shadow.install'
+source=("http://pkg-shadow.alioth.debian.org/releases/$pkgname-$pkgver.tar.bz2"{,.sig}
+        LICENSE
+        adduser
+        chgpasswd
+        chpasswd
+        defaults.pam
+        login
+        login.defs
+        newusers
+        passwd
+        shadow.cron.daily
+        useradd.defaults
+        nscd-error-reporting.patch
+        xstrdup.patch
+        shadow-strncpy-usage.patch
+        shadow-add-missing-include.patch
+        userdel-avoid-bad-mem-access.patch
+        write-utmp-wtmp-entries.patch)
+sha1sums=('3ab1ae0e30af36d04445314fcb5a079bdf05de41'
+          '0a31aafceb948a91fe7370a6378cafd6fd883145'
+          '7ab316761036787c0cfcb53b7a6e82da7c373123'
+          'cdb0ec4dc094a091c1053d74b4b6cb89327362dc'
+          '6e8bf283fdd4e7abe33977e8592ace015e1e1258'
+          '87186f6e5e00d195cafba5e38400418481dce3af'
+          'b7ad3814f6efb69b4187963a9da4ba646a62cfbd'
+          '92fc47f8e4d15d51e7120b788eb53ed6340d2cf8'
+          'e5cab2118ecb1e61874cde842d7d04d1003f35cb'
+          '4fdcce75295b15c37368a0c0a41d9bdc15451dad'
+          '49cb1b18af9d2ae7cc4a2441f1a6951d313f7c60'
+          '5d83ba7e11c765c951867cbe00b0ae7ff57148fa'
+          '80e3d2ee8c990c2f7fbd0dcf406a9e41cbe66fe2'
+          '72ac0cca1905d5fd7e212833965f8a241f79f941'
+          '6010fffeed1fc6673ad9875492e1193b1a847b53'
+          '3bc0e0968ddec0e58b1e2de88d9d0065c93d60c9'
+          '0697a21f7519de30821da7772677035652df4ad2'
+          'cab01cf46f810074d84d246f28e5860f91d53078'
+          'b93db39a9f0b62b46a3765605c16786e61f0a545')
+
+build() {
+  cd "$pkgname-$pkgver"
+
+  # avoid transitive linking issues with binutils 2.22
+  sed -i '/^user\(mod\|add\)_LDADD/s|$| -lattr|' src/Makefile.am
+
+  # link to glibc's crypt(3)
+  LDFLAGS+=" -lcrypt"
+
+  # need to offer these upstream
+  patch -Np1 <"$srcdir/xstrdup.patch"
+  patch -Np1 <"$srcdir/shadow-strncpy-usage.patch"
+
+  # backports queued for 4.1.5.1
+  patch -Np1 <"$srcdir/shadow-add-missing-include.patch"
+  patch -Np1 <"$srcdir/nscd-error-reporting.patch"
+
+  # sent to ML
+  patch -Np0 <"$srcdir/userdel-avoid-bad-mem-access.patch"
+
+  # revert 
+  patch -RNp1 <"$srcdir/write-utmp-wtmp-entries.patch"
+
+  # supress etc/pam.d/*, we provide our own
+  sed -i '/^SUBDIRS/s/pam.d//' etc/Makefile.in
+
+  ./configure \
+    --prefix=/usr \
+    --libdir=/lib \
+    --mandir=/usr/share/man \
+    --sysconfdir=/etc \
+    --with-libpam \
+    --without-selinux
+
+  make
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+
+  make DESTDIR="$pkgdir" install
+
+  # license
+  install -Dm644 "$srcdir/LICENSE" "$pkgdir/usr/share/licenses/shadow/LICENSE"
+
+  # interactive useradd
+  install -Dm755 "$srcdir/adduser" "$pkgdir/usr/sbin/adduser"
+
+  # useradd defaults
+  install -Dm644 "$srcdir/useradd.defaults" "$pkgdir/etc/default/useradd"
+
+  # cron job
+  install -Dm744 "$srcdir/shadow.cron.daily" "$pkgdir/etc/cron.daily/shadow"
+
+  # login.defs
+  install -Dm644 "$srcdir/login.defs" "$pkgdir/etc/login.defs"
+
+  # PAM config - custom
+  install -dm755 "$pkgdir/etc/pam.d"
+  install -t "$pkgdir/etc/pam.d" -m644 "$srcdir"/{login,passwd,chgpasswd,chpasswd,newusers}
+
+  # PAM config - from tarball
+  install -Dm644 etc/pam.d/groupmems "$pkgdir/etc/pam.d/groupmems"
+
+  # we use the 'useradd' PAM file for other similar utilities
+  for file in chage chfn chsh groupadd groupdel groupmod shadow \
+      useradd usermod userdel; do
+    install -Dm644 "$srcdir/defaults.pam" "$pkgdir/etc/pam.d/$file"
+  done
+
+  # Remove su - using su from coreutils instead
+  rm "$pkgdir/bin/su"
+  find "$pkgdir/usr/share/man" -name 'su.1' -delete
+}

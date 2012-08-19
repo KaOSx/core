@@ -1,0 +1,47 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer abveritas@chakra-project.org
+
+pkgname=sudo
+pkgver="1.8.5p1"
+pkgrel=1
+pkgdesc="Give certain users the ability to run some commands as root."
+arch=('i686' 'x86_64')
+url="http://www.sudo.ws/sudo/"
+license=('custom')
+depends=('glibc' 'pam')
+backup=('etc/sudoers' 'etc/pam.d/sudo')
+options=('!libtool' '!makeflags')
+source=("ftp://ftp.sudo.ws/pub/sudo/${pkgname}-${pkgver}.tar.gz"
+        'sudo.pam')
+md5sums=('3b843e60e0bb226a24dd784345cbbba8'
+         '4e7ad4ec8f2fe6a40e12bcb2c0b256e3')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+  ./configure --prefix=/usr \
+              --with-pam \
+              --libexecdir=/usr/lib \
+              --with-env-editor \
+              --with-all-insults \
+              --with-logfac=auth
+
+  make
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+  # This is to ensure consistency with the permissions specified
+  # in the 'filesystem' package.
+  install -d -m755 "${pkgdir}/var/lib"
+
+  make DESTDIR="${pkgdir}" install
+  install -D -m644 "${srcdir}/sudo.pam" "${pkgdir}/etc/pam.d/sudo"
+
+  install -D -m644 doc/LICENSE "${pkgdir}/usr/share/licenses/sudo/LICENSE"
+}
+
+# vim:set ts=2 sw=2 et:
