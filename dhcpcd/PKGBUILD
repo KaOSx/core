@@ -1,15 +1,11 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=dhcpcd
-pkgver=5.2.12
-pkgrel=4
+pkgver=5.6.7
+pkgrel=2
 pkgdesc="RFC2131 compliant DHCP client daemon"
-url="http://roy.marples.name/dhcpcd/"
-arch=('i686' 'x86_64')
+url="http://roy.marples.name/projects/dhcpcd/"
+arch=('x86_64')
 license=('BSD')
 groups=('base')
 depends=('glibc' 'sh')
@@ -17,40 +13,43 @@ backup=('etc/conf.d/dhcpcd' 'etc/dhcpcd.conf')
 options=('emptydirs')  # We Need the Empty /var/lib/dhcpcd Directory
 source=("http://roy.marples.name/downloads/$pkgname/$pkgname-$pkgver.tar.bz2" \
         'dhcpcd.conf.d'
-	'dhcpcd@.service')
-sha1sums=('27378a251705c7888332e6d60eea7805d1f8aeb5'
+	'dhcpcd@.service'
+	'dhcpcd.service')
+sha1sums=('2f9f2f432e43181497c4909725e29239c9ff004a'
           'b67b9ce6a2faaca75fea356966a16be2283b7db0'
-          '3d0542eab1b89a88d56ca427128228ac72c40d1f')
+          '6245b8db7e6f39a0305571726bb693a53901c400'
+          'e49e01041f831281a1cd0c97ca21204e0aa07fda')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
 
   # configure variables
-  ./configure --libexecdir=/usr/lib/dhcpcd --dbdir=/var/lib/dhcpcd
+  ./configure --libexecdir=/usr/lib/dhcpcd --dbdir=/var/lib/dhcpcd --rundir=/run
 
   # Build
-  make || return 1
+  make
 }
 
 package() {
   cd ${srcdir}/${pkgname}-${pkgver}
-  make DESTDIR=${pkgdir} install || return 1
+  make DESTDIR=${pkgdir} install
 
   # Create Binary Symlink
-  install -d ${pkgdir}/usr/sbin || return 1
-  ln -sf /sbin/dhcpcd ${pkgdir}/usr/sbin/dhcpcd || return 1
+  install -d ${pkgdir}/usr/sbin
+  ln -sf /sbin/dhcpcd ${pkgdir}/usr/sbin/dhcpcd
 
   # Install Configuration File used in /etc/rc.d/network
-  install -D -m644 ../dhcpcd.conf.d $pkgdir/etc/conf.d/$pkgname || return 1
+  install -D -m644 ../dhcpcd.conf.d $pkgdir/etc/conf.d/$pkgname
 
   # Install License
-  install -d $pkgdir/usr/share/licenses/$pkgname || return 1
+  install -d $pkgdir/usr/share/licenses/$pkgname
   awk '{if(FNR<27)print $0}' ${srcdir}/${pkgname}-${pkgver}/configure.h \
-        >> ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE || return 1
+        >> ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 
   # Set Options in /etc/dhcpcd.conf
-  echo noipv4ll >> ${pkgdir}/etc/dhcpcd.conf || return 1 # Disable ip4vall
+  echo noipv4ll >> ${pkgdir}/etc/dhcpcd.conf # Disable ip4vall
 
   # install systemd unit
   install -Dm644 "$srcdir/dhcpcd@.service" "$pkgdir/usr/lib/systemd/system/dhcpcd@.service"
+  install -Dm644 "$srcdir/dhcpcd.service" "$pkgdir/usr/lib/systemd/system/dhcpcd.service"
 }

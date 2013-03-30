@@ -1,37 +1,21 @@
 #
 # Chakra Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=libarchive
-pkgver=3.0.3
+pkgver=3.0.4
 pkgrel=1
 pkgdesc="library that can create and read several streaming archive formats"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://libarchive.googlecode.com/"
 license=('BSD')
 depends=('zlib' 'bzip2' 'xz>=5.0.2' 'acl' 'openssl>=1.0.0' 'expat')
-source=("http://libarchive.googlecode.com/files/libarchive-${pkgver}.tar.gz"
-        'interpret-non-posix-zips.patch'
-        'test-with-zip-mtime.patch'
-        'skip-fiemap-on-unavail.patch')
-md5sums=('ca4090f0099432a9ac5a8b6618dc3892'
-         '20f211aa1c8408cd3868e14daed8fd72'
-         'dde1acb76b1b09b5e4bafc2c8045090c'
-         '259184139d8175dcd3a4081c9a9bfd67')
+source=("https://github.com/downloads/libarchive/libarchive/libarchive-${pkgver}.tar.gz")
+md5sums=('af443ca9a10ddbcbf00f7ae34ca7fc16')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
-
-  # http://code.google.com/p/libarchive/issues/detail?id=225
-  patch -Np0 <"$srcdir/interpret-non-posix-zips.patch"
-
-  # http://code.google.com/p/libarchive/issues/detail?id=231
-  patch -Np0 <"$srcdir/test-with-zip-mtime.patch"
-
-  # http://code.google.com/p/libarchive/issues/detail?id=238
-  patch -Np1 <"$srcdir/skip-fiemap-on-unavail.patch"
 
   ./configure --prefix=/usr --without-xml2
   make

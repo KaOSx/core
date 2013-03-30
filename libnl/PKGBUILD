@@ -1,28 +1,34 @@
-# $Id: PKGBUILD 77938 2010-04-19 05:37:53Z allan $
-# Maintainer: Jan de Groot <jgc@archlinux.org>
-# Contributor: William Rea <sillywilly@gmail.com>
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer abveritas[at]chakra-project[dot]org>
+# conributor Fabian Kosmale <0inkane@googlemail.com>
 
 pkgname=libnl
-pkgver=1.1
-pkgrel=3
+pkgver=3.2.21
+pkgrel=1
 pkgdesc="Library for applications dealing with netlink sockets"
-arch=('i686' 'x86_64')
-url="http://www.infradead.org/~tgr/libnl/"
+arch=('x86_64')
 license=('GPL')
 depends=('glibc')
-source=(ftp://ftp.archlinux.org/other/libnl/${pkgname}-${pkgver}.tar.gz
-        fix-compilation.patch)
-md5sums=('ae970ccd9144e132b68664f98e7ceeb1'
-         'e1f5e82c8aa1b3ad025c7b588178de1e')
+conflicts=('libnl3')
+backup=('etc/libnl/classid' 'etc/libnl/pktloc')
+options=(!libtool)
+source=("http://www.infradead.org/~tgr/libnl/files/$pkgname-$pkgver.tar.gz")
+md5sums=('6fe7136558a9071e70673dcda38545b3')
 
 build() {
-  cd ${srcdir}/libnl-${pkgver}
-  patch -Np1 -i ${srcdir}/fix-compilation.patch || return 1
-  ./configure --prefix=/usr || return 1
-  make || return 1
+  cd "$srcdir/$pkgname-$pkgver"
+  ./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --sbindir=/usr/bin \
+    --disable-static
+  make
 }
 
 package() {
-  cd ${srcdir}/libnl-${pkgver}
-  make DESTDIR=${pkgdir} install || return 1
+  cd "$srcdir/$pkgname-$pkgver"
+  make DESTDIR="$pkgdir" install
 }
+

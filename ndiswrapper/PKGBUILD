@@ -3,32 +3,35 @@
 #
 # maintainer abveritas@chakra-project.org
 
-_extramodules=extramodules-3.4-CHAKRA
+_extramodules=extramodules-3.7-CHAKRA
 _kver="$(cat /lib/modules/${_extramodules}/version)"
 
 pkgname=ndiswrapper
 pkgver=1.57
-pkgrel=7
+pkgrel=13
 pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors. For linux-testing."
 license=('GPL')
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://ndiswrapper.sourceforge.net"
 install="ndiswrapper.install"
-depends=('linux>=3.4' 'linux<3.5')
+depends=('linux>=3.7' 'linux<3.8')
 provides=("ndiswrapper-utils=$pkgver")
 replaces=('ndiswrapper-utils')
 conflicts=('ndiswrapper-utils')
 makedepends=('linux-headers')
 source=("http://downloads.sourceforge.net/sourceforge/ndiswrapper/ndiswrapper-$pkgver.tar.gz"
-        'linux34.patch')
+        'linux34.patch' 'linux37.patch')
 md5sums=('7a401dc540938bf07893c67f418b6152'
-         '46cb26e68de91dc3c650866fc1189c28')
+         '46cb26e68de91dc3c650866fc1189c28'
+         'd0dc483d2a1dfe59353b373c2c29c499')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
 
   sed -i "/modinfo/s/s/usr\//" driver/Makefile
   patch -p0 -i "$srcdir/linux34.patch"
+  sed -i "s|/include/linux/version.h|/include/generated/uapi/linux/version.h|g" driver/Makefile
+  patch -p1 -i "$srcdir/linux37.patch"
   make KVERS=$_kver
 }
 

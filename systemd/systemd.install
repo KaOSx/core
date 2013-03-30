@@ -3,33 +3,36 @@
 sd_booted() {
   [ -e sys/fs/cgroup/systemd ]
 }
-
+   
 post_install() {
-  # enable getty@tty1 by default, but don't track the file
-  systemctl enable getty@.service
+  udevadm hwdb --update 
+
+  if sd_booted; then
+    systemctl --system daemon-reexec
+  fi
 
 }
 
 post_upgrade() {
+  udevadm hwdb --update
+
+  journalctl --update-catalog
+  
+  if [ "$(pacman -Q systemd | cut -d " " -f2 | cut -d "-" -f1)" = "196" ] ; then
+    echo -e '\e[31;46m WARNING'
+    echo -e '\e[31;46m Systemd 197 has moved to persistent network naming, for most users this will have' 
+    echo -e '\e[31;46m no effect.  To check what the new name for your network device will be, run:'
+    echo -e '\e[31;46m hwinfo --network, and look for: Device File: xxxxx, were xxxx is your device.'
+    echo -e '\e[31;46m This will be used in /usr/lib/udev/rules.d/80-net-name-slot.rules '
+    echo -e '\e[31;46m If you use dhcpcd instead of networkmanager to connect, re-enable the service before rebooting'
+    echo -e '\e[31;46m Configuration files like conky.conf will need the new naming scheme too'
+    echo -e '\e[31;46m http://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames \e[0m'
+  fi
+  
   if sd_booted; then
-    # we moved the binary in 44-2 to /usr, so a reexec leads to a
-    # coredump. refuse this reexec and warn the user that they should
-    # reboot instead.
-    if [ "$(vercmp 44-2 "$2")" -eq 1 ]; then
-      echo "warning: refusing to reexec systemd. the system should be rebooted."
-    else
-      systemctl daemon-reload
-      systemctl daemon-reexec
-    fi
+    systemctl --system daemon-reexec
+    systemctl restart systemd-logind.service
   fi
 
-  # getty@tty1.service is no longer enabled by default, but we don't want to break
-  # existing setups.
-  if [ "$(vercmp 183 "$2")" -eq 1 ]; then
-    # systemctl seems to be whiny on sysvinit. this will succeed unless something
-    # horrific happens, so just mask the error.
-    systemctl -q enable getty@.service || true
-  fi
 }
 
-# vim:set ts=2 sw=2 et:

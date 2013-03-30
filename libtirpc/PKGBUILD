@@ -1,23 +1,22 @@
 #
 # Chakra Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=libtirpc
 pkgver=0.2.2
-pkgrel=4
+pkgrel=5
 pkgdesc="Transport Independent RPC library (SunRPC replacement)"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://libtirpc.sourceforge.net/"
 license=('BSD')
 depends=('libgssglue')
 backup=('etc/netconfig')
 options=('!libtool')
-source=(http://downloads.sourceforge.net/sourceforge/libtirpc/${pkgname}-${pkgver}.tar.bz2
-       libtirpc-0.2.1-fortify.patch
-       libtirpc-0.2.3rc1.patch
-       libtirpc-fix-segfault-0.2.2.patch)
+source=("http://downloads.sourceforge.net/sourceforge/libtirpc/${pkgname}-${pkgver}.tar.bz2"
+        'libtirpc-0.2.1-fortify.patch'
+        'libtirpc-0.2.3rc1.patch'
+        'libtirpc-fix-segfault-0.2.2.patch')
 md5sums=('74c41c15c2909f7d11d9c7bfa7db6273'
          '2e5c067f1651469dfbbdc91d3c9c60e8'
          'ac2a1657b44f4a99c37d8265b05b9133'
@@ -25,12 +24,11 @@ md5sums=('74c41c15c2909f7d11d9c7bfa7db6273'
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  # fix http://bugs.gentoo.org/293593
-  # https://bugs.archlinux.org/task/20082
-  patch -Np1 -i ../libtirpc-0.2.1-fortify.patch
-  # add patches from fedora git to make nfs-utils compile again
-  patch -Np1 -i ../libtirpc-0.2.3rc1.patch
-  patch -Np1 -i ../libtirpc-fix-segfault-0.2.2.patch
+  # from http://bugs.gentoo.org/293593
+  patch -p1 -i ../libtirpc-0.2.1-fortify.patch
+  # patches from fedora git for nfs-utils 
+  patch -p1 -i ../libtirpc-0.2.3rc1.patch
+  patch -p1 -i ../libtirpc-fix-segfault-0.2.2.patch
   sh autogen.sh
   autoreconf -fisv
   ./configure --prefix=/usr --enable-gss
@@ -39,6 +37,7 @@ build() {
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make DESTDIR="${pkgdir}" install
   install -D -m644 doc/etc_netconfig "${pkgdir}"/etc/netconfig
   install -D -m644 COPYING "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE

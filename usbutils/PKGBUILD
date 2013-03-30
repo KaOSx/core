@@ -1,29 +1,27 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
+
 # maintainer abveritas@chakra-project.org
 
 pkgname=usbutils
-pkgver=005
-pkgrel=2
+pkgver=006
+pkgrel=1
 pkgdesc="USB Device Utilities"
-arch=(i686 x86_64)
+arch=('x86_64')
 license=('GPL')
 groups=('base')
-depends=('libusb' 'hwids')
+depends=('libusbx' 'hwids')
 optdepends=('python2: for lsusb.py usage'
             'coreutils: for lsusb.py usage'
             'wget: for update-usbids.sh usage')
 url="http://linux-usb.sourceforge.net/"
-source=("http://chakra-linux.org/sources/${pkgname}/${pkgname}-${pkgver}.tar.bz2"
-        fix-python2.patch)
-md5sums=('6a21f7b6c02b76df5e8a7c208d746654'
+source=("https://www.kernel.org/pub/linux/utils/usb/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+        'fix-python2.patch')
+md5sums=('c9aa14ee3d6c991fda183f42cf72a8a8'
          '45766196895b4cc50b53cd56e1bbf3d1')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
   # patch lsusb.py to use correct usb.ids file and python2 interpreter
-  patch -Np1 -i $srcdir/fix-python2.patch
+  patch -p1 -i $srcdir/fix-python2.patch
   ./configure --prefix=/usr --datadir=/usr/share/hwdata --disable-zlib
   make
 }

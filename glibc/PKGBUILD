@@ -8,15 +8,15 @@
 
 pkgname=glibc
 pkgver=2.15
-pkgrel=1
+pkgrel=4
 _glibcdate=20120419
 pkgdesc="GNU C Library"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.gnu.org/software/libc"
 license=('GPL' 'LGPL')
 groups=('base')
-depends=('linux-api-headers>=3.2' 'tzdata')
-makedepends=('gcc>=4.6')
+depends=('linux-api-headers>=3.5' 'tzdata')
+makedepends=('gcc>=4.7')
 backup=(etc/gai.conf
         etc/locale.gen
         etc/nscd.conf)
@@ -31,6 +31,7 @@ source=(http://chakra.sourceforge.net/sources/${pkgname}/${pkgname}-${pkgver}_${
         glibc-2.14-reexport-rpc-interface.patch
         glibc-2.14-reinstall-nis-rpc-headers.patch
         glibc-2.15-fix-res_query-assert.patch
+	glibc-2.15-rpcgen-cpp-path.patch
         glibc-2.15-lddebug-scopes.patch
         glibc-2.15-revert-c5a0802a.patch
         glibc-2.15-scanf.patch
@@ -51,9 +52,11 @@ source=(http://chakra.sourceforge.net/sources/${pkgname}/${pkgname}-${pkgver}_${
         glibc-2.15-rintf-rounding.patch
         glibc-2.15-nearbyintf-rounding.patch
         glibc-2.15-confstr-local-buffer-extent.patch
-        nscd
+        nscd.service
+        nscd.tmpfiles
         locale.gen.txt
-        locale-gen)
+        locale-gen
+        glibc.conf)
 md5sums=('c0487f4e83db1b9b30d7989fc47dbead'
          '349227bcedb19cea008fbcb2c7e1a582'
          '880439de2c608177ed1d749722d26820'
@@ -63,6 +66,7 @@ md5sums=('c0487f4e83db1b9b30d7989fc47dbead'
          'c5de2a946215d647c8af5432ec4b0da0'
          '55febbb72139ac7b65757df085024b83'
          '684073467137906fb9411f4c7f00db10'
+         '8f26740c248d8b0de68eef8a00f09583'
          '207483814b5034d9841ad090c75bedf4'
          '62288103a28f5f779da4ee64621d81d1'
          '34baaa90a8fcd500adfbe8c609ed81f1'
@@ -83,9 +87,11 @@ md5sums=('c0487f4e83db1b9b30d7989fc47dbead'
          '104300a586580bb340bb70162a196c80'
          '50dc7006874cbd86ee436044752f5228'
          '4ed0bb09c3851cd9cb5e39c946a8a334'
-         'b587ee3a70c9b3713099295609afde49'
+         'f3fb741c73ae5fd46e03beae4e6948c9'
+         'bccbe5619e75cf1d97312ec3681c605c'
          '07ac979b6ab5eeb778d55f041529d623'
-         '476e9113489f93b348b21e144b6a8fcf')
+         '476e9113489f93b348b21e144b6a8fcf'
+         '8b3298de2392a10905a64ceccf56d2c1')
 
 mksource() {
     git clone git://sourceware.org/git/glibc.git
@@ -126,6 +132,10 @@ build() {
   # fix res_query assertion
   # http://sourceware.org/bugzilla/show_bug.cgi?id=13013
   patch -p1 -i ${srcdir}/glibc-2.15-fix-res_query-assert.patch
+
+  # prevent need for /lib/cpp symlink
+  # http://sourceware.org/git/?p=glibc.git;a=commit;h=bf9b740a
+  patch -p1 -i ${srcdir}/glibc-2.15-rpcgen-cpp-path.patch
 
   # propriety nvidia crash - https://bugzilla.redhat.com/show_bug.cgi?id=737223
   # http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=0c95ab64  (fedora branch)
@@ -212,18 +222,10 @@ build() {
   # http://sourceware.org/git/?p=glibc.git;a=commit;h=d6a403f9
   patch -p1 -i ${srcdir}/glibc-2.15-confstr-local-buffer-extent.patch
 
-  install -dm755 ${pkgdir}/etc
-  touch ${pkgdir}/etc/ld.so.conf
-
   cd ${srcdir}
   rm -vRf glibc-build
   mkdir glibc-build
   cd glibc-build
-
-  if [[ ${CARCH} = "i686" ]]; then
-    # Hack to fix NPTL issues with Xen, only required on 32bit platforms
-    export CFLAGS="${CFLAGS} -mno-tls-direct-seg-refs"
-  fi
 
   echo "slibdir=/lib" >> configparms
 
@@ -231,7 +233,8 @@ build() {
       --libdir=/usr/lib --libexecdir=/usr/lib \
       --with-headers=/usr/include \
       --enable-add-ons=nptl,libidn \
-      --enable-kernel=2.6.27 \
+      --enable-obsolete-rpc \
+      --enable-kernel=2.6.32 \
       --with-tls --with-__thread \
       --enable-bind-now --without-gd \
       --without-cvs --disable-profile \
@@ -249,19 +252,23 @@ check() {
 
 package() {
   cd ${srcdir}/glibc-build
+
+  install -dm755 ${pkgdir}/etc
+  touch ${pkgdir}/etc/ld.so.conf
+
   make install_root=${pkgdir} install
 
   rm -f ${pkgdir}/etc/ld.so.{cache,conf}
 
-  install -dm755 ${pkgdir}/etc/rc.d
-  install -dm755 ${pkgdir}/usr/sbin
-  install -dm755 ${pkgdir}/usr/lib/locale
+  install -dm755 ${pkgdir}/{,usr/{sbin,lib/{,locale,systemd/system,tmpfiles.d}}}
+
   install -m644 ${srcdir}/glibc/nscd/nscd.conf ${pkgdir}/etc/nscd.conf
-  install -m755 ${srcdir}/nscd ${pkgdir}/etc/rc.d/nscd
+  sed -i -e 's/^\tserver-user/#\tserver-user/' ${pkgdir}/etc/nscd.conf
+  install -m644 ${srcdir}/nscd.service ${pkgdir}/usr/lib/systemd/system
+  install -m644 ${srcdir}/nscd.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/nscd.conf
+
   install -m755 ${srcdir}/locale-gen ${pkgdir}/usr/sbin
   install -m644 ${srcdir}/glibc/posix/gai.conf ${pkgdir}/etc/gai.conf
-
-  sed -i -e 's/^\tserver-user/#\tserver-user/' ${pkgdir}/etc/nscd.conf
 
   # create /etc/locale.gen
   install -m644 ${srcdir}/locale.gen.txt ${pkgdir}/etc/locale.gen
@@ -271,33 +278,28 @@ package() {
   cat ${srcdir}/glibc/localedata/SUPPORTED >> ${pkgdir}/etc/locale.gen
   sed -i "s|^|#|g" ${pkgdir}/etc/locale.gen
 
-  if [[ ${CARCH} = "x86_64" ]]; then
-    # fix for the linker
-    sed -i '/RTLDLIST/s%lib64%lib%' ${pkgdir}/usr/bin/ldd
-    # Comply with multilib binaries, they look for the linker in /lib64
-    mkdir ${pkgdir}/lib64
-    cd ${pkgdir}/lib64
-    ln -v -s ../lib/ld* .
-  fi
-  
-  # manually strip files as stripping libpthread-*.so and libthread_db.so
-  # with the default $STRIP_SHARED breaks gdb and stripping ld-*.so breaks
-  # valgrind on x86_64
+  # fix for the linker
+  sed -i '/RTLDLIST/s%lib64%lib%' ${pkgdir}/usr/bin/ldd
+  # Comply with multilib binaries, they look for the linker in /lib64
+  mkdir ${pkgdir}/lib64
+  cd ${pkgdir}/lib64
+  ln -v -s ../lib/ld* .
 
-  cd $pkgdir
+  cd ${pkgdir}
   strip $STRIP_BINARIES sbin/{ldconfig,sln} \
                         usr/bin/{gencat,getconf,getent,iconv,locale} \
                         usr/bin/{localedef,pcprofiledump,rpcgen,sprof} \
                         usr/lib/getconf/* \
                         usr/sbin/{iconvconfig,nscd}
-  [[ $CARCH = "i686" ]] && strip $STRIP_BINARIES usr/bin/lddlibc4
 
-  strip $STRIP_STATIC usr/lib/*.a \
-                      lib/{{ld,libpthread}-${pkgver},libthread_db-1.0}.so
+  strip $STRIP_STATIC usr/lib/*.a 
 
-  strip $STRIP_SHARED lib/{libanl,libBrokenLocale,libc,libcidn,libcrypt}-${pkgver}.so \
+  strip $STRIP_SHARED lib/{libanl,libBrokenLocale,libcidn,libcrypt}-${pkgver}.so \
                       lib/libnss_{compat,dns,files,hesiod,nis,nisplus}-${pkgver}.so \
                       lib/{libdl,libm,libnsl,libresolv,librt,libutil}-${pkgver}.so \
                       lib/{libmemusage,libpcprofile,libSegFault}.so \
                       usr/lib/{pt_chown,{audit,gconv}/*.so}
+
+  # Add /usr/lib32 to the default library search path
+  install -Dm644 "$srcdir/glibc.conf" "$pkgdir/etc/ld.so.conf.d/glibc.conf"
 }

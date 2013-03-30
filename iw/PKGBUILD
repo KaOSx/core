@@ -1,31 +1,31 @@
 #
 # Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
-
-# include global config
-source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=iw
-pkgver=0.9.22
-pkgrel=2
+pkgver=3.8
+pkgrel=1
 pkgdesc="nl80211 based CLI configuration utility for wireless devices"
-arch=("i686" "x86_64")
+arch=('x86_64')
 url="http://wireless.kernel.org/en/users/Documentation/iw"
-license=("GPL")
-depends=("libnl")
-makedepends=("kernel-headers")
-source=(http://wireless.kernel.org/download/$pkgname/$pkgname-$pkgver.tar.bz2
-        version-sh.patch)
-sha256sums=('138ce4dc827d8b0af55fe1c444e749b985c1540d791b27922aad880d12908bb1'
-            '92a556cd1a958e45cf891223876c61150b937f1aacf6c8044a4ab53830efe21e')
+license=('GPL')
+depends=('libnl')
+makedepends=('linux-api-headers' 'pkg-config')
+source=("https://www.kernel.org/pub/software/network/$pkgname/$pkgname-$pkgver.tar.xz"
+        'version-sh.patch')
+md5sums=('2aae163b7c3b581b7d94f34a5d3e47d8'
+         '9e8d3294410721165571020a671121da')
 
 build() {
-  patch -Np0 -i ${srcdir}/version-sh.patch || return 1
-
   cd "$srcdir"/$pkgname-$pkgver
+  patch -p0 -i "${srcdir}"/version-sh.patch
+  
+  make
+}
 
-  make || return 1
-  make DESTDIR=$pkgdir install
+package() {
+  cd "$srcdir"/$pkgname-$pkgver
+  
+  make DESTDIR="$pkgdir" install
 }

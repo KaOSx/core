@@ -8,10 +8,10 @@ pkgname=('linux-lts' 'linux-lts-headers' 'linux-lts-docs') # Build stock -CHAKRA
 # pkgname=linux-custom       # Build kernel with a different name
 _kernelname=${pkgname#linux}
 _basekernel=3.0
-pkgver=${_basekernel}.35
-pkgrel=2
+pkgver=3.0.62
+pkgrel=1
 makedepends=('xmlto' 'docbook-xsl')
-arch=(i686 x86_64)
+arch=('x86_64')
 license=('GPL2')
 url="http://www.kernel.org"
 options=(!strip)
@@ -31,11 +31,13 @@ source=("ftp://ftp.kernel.org/pub/linux/kernel/v3.0/linux-$_basekernel.tar.bz2"
         'linux-lts.preset'
         'change-default-console-loglevel.patch'
         'i915-fix-ghost-tv-output.patch'
-        'ext4-options.patch')
+        'ext4-options.patch'
+        'module-symbol-waiting-3.0.patch'
+        'module-init-wait-3.0.patch')
 md5sums=('398e95866794def22b12dfbc15ce89c0'
-         '94b6dc172a30b3803bc6740fcd6e1dab'
-         'a881cd59474ed54c0582b15480b8f63a'
-         'f441ad868946ca2f34e739e5649985da'
+         'b0c86830c65280b02223fd8fff8aec08'
+         '2d787099d3a44531bcb3ab39aee5539e'
+         '4925d736212481eb1f7b318ef9e8b95f'
          '821e1112493f187dc70df9412e61f324'
          'b9248a75a3fe415a18d4730887daa339'
          '798336f60f73b1fb63331225b9c9c971'
@@ -43,10 +45,12 @@ md5sums=('398e95866794def22b12dfbc15ce89c0'
          '967195f0bf1d9a3b54ce8ae6173072d8'
          'fcb34283bfb627a15b31f3b3e3228c05'
          '52f4a2c7f6277774117c834d949d6b81'
-         '1277dd4aa587632fc27964edde49970f'
+         '232b52576a62c7a333e9fe7a1e1ca359'
          '9d3c56a4b999c8bfbd4018089a62f662'
          '263725f20c0b9eb9c353040792d644e5'
-         '74d2b710d6c97aee441d7566f8f68815')
+         '74d2b710d6c97aee441d7566f8f68815'
+         '670931649c60fcb3ef2e0119ed532bd4'
+         '8a71abc4224f575008f974a099b5cf6f')
 
 build() {
   cd ${srcdir}/linux-$_basekernel
@@ -67,6 +71,10 @@ build() {
 
   # fix ext4 module to mount ext3/2 correct
   patch -p1 -i "${srcdir}/ext4-options.patch"
+  
+  # module initialisation
+  patch -p1 -i "${srcdir}/module-symbol-waiting-3.0.patch"
+  patch -p1 -i "${srcdir}/module-init-wait-3.0.patch"
 
   #aufs patches for Live:
   patch -p1 -i "${srcdir}/aufs3.0.patch"
@@ -77,12 +85,7 @@ build() {
   #patch -p1 -i "${srcdir}/aufs3.0-fix-export-__devcgroup_inode_permission.patch"
   patch -p1 -i "${srcdir}/aufs3.0-standalone.patch"
 
-  # create .config
-  if [ "${CARCH}" = "x86_64" ]; then
     cat "${srcdir}/config.x86_64" > ./.config
-  else
-    cat "${srcdir}/config" > ./.config
-  fi
 
     cat "${srcdir}/config.aufs" >> ./.config
 
@@ -195,7 +198,7 @@ package_linux-lts-headers() {
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/include"
 
   for i in acpi asm-generic config crypto drm generated linux math-emu \
-    media net pcmcia scsi sound trace video xen; do
+    media mtd net pcmcia scsi sound trace video xen; do
     cp -a include/${i} "${pkgdir}/usr/src/linux-${_kernver}/include/"
   done
 
@@ -214,10 +217,6 @@ package_linux-lts-headers() {
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/arch/${KARCH}/kernel"
 
   cp arch/${KARCH}/Makefile "${pkgdir}/usr/src/linux-${_kernver}/arch/${KARCH}/"
-
-  if [ "${CARCH}" = "i686" ]; then
-    cp arch/${KARCH}/Makefile_32.cpu "${pkgdir}/usr/src/linux-${_kernver}/arch/${KARCH}/"
-  fi
 
   cp arch/${KARCH}/kernel/asm-offsets.s "${pkgdir}/usr/src/linux-${_kernver}/arch/${KARCH}/kernel/"
 

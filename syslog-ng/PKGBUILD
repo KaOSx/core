@@ -5,14 +5,13 @@
 
 
 pkgname=syslog-ng
-pkgver=3.3.5
+pkgver=3.3.7
 pkgrel=1
 pkgdesc="Next-generation syslogd with advanced networking and filtering capabilities"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 license=('GPL2')
-groups=('base')
 url="http://www.balabit.com/network-security/syslog-ng/"
-depends=('glib2' 'eventlog' 'openssl' 'libcap' 'awk')
+depends=('glib2' 'eventlog' 'openssl' 'libcap' 'awk' 'systemd')
 makedepends=('flex' 'pkg-config')
 optdepends=('logrotate: for rotating log files')
 provides=('logger')
@@ -22,13 +21,11 @@ backup=('etc/syslog-ng/modules.conf' 'etc/syslog-ng/scl.conf' \
 source=("http://www.balabit.com/downloads/files/syslog-ng/sources/$pkgver/source/${pkgname}_$pkgver.tar.gz"
         'syslog-ng.conf'
         'syslog-ng.conf.d'
-        'syslog-ng.logrotate'
-        'syslog-ng.rc')
-sha1sums=('0c8b85079b60c68c4279bcd4124b1e3c6358407b'
+        'syslog-ng.logrotate')
+sha1sums=('06f09057c3dfb84eba381e0141f92565673ec0c8'
           '98074e0facfc6ef036202662cc86d04b38a2c142'
           'eb2aa25737e0cb9453c7b058f0e2dcf16abf21cd'
-          '949128fe3d7f77a7aab99048061f885bc758000c'
-          '94af81a84e3add6653755122cdd5080694de059d')
+          '949128fe3d7f77a7aab99048061f885bc758000c')
 
 build() {
   cd "$pkgname-$pkgver"
@@ -53,12 +50,5 @@ package() {
   install -dm755 "$pkgdir/var/lib/syslog-ng" "$pkgdir/etc/syslog-ng/patterndb.d"
   install -Dm644 "$srcdir/syslog-ng.conf" "$pkgdir/etc/syslog-ng/syslog-ng.conf"
   install -Dm644 "$srcdir/syslog-ng.logrotate" "$pkgdir/etc/logrotate.d/syslog-ng"
-  install -Dm755 "$srcdir/syslog-ng.rc" "$pkgdir/etc/rc.d/syslog-ng"
   install -Dm644 "$srcdir/syslog-ng.conf.d" "$pkgdir/etc/conf.d/syslog-ng"
-
-  # location of systemctl
-  sed -e 's@/bin/systemctl@/usr&@' \
-      -e '$aAlias=syslog.service' \
-      -e '/^ExecStartPre/d' \
-      -i "$pkgdir/usr/lib/systemd/system/syslog-ng.service"
 }

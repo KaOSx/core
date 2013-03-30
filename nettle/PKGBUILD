@@ -1,36 +1,25 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
-
-# include global config
-source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+# Maintainer: abveritas[at]chakra-project[dot]org>
 
 pkgname=nettle
-pkgver=2.1
-pkgrel=3
+pkgver=2.6
+pkgrel=1
 pkgdesc="Nettle - a low-level cryptographic library."
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.lysator.liu.se/~nisse/nettle/"
 license=('GPL')
+depends=('gmp')
 source=("http://www.lysator.liu.se/~nisse/archive/${pkgname}-${pkgver}.tar.gz")
-md5sums=('2bfaf16234a5d8deb96cd23f53a682bb')
+md5sums=('02f76b668855c4da67186c04cd3a222f')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  ./configure --prefix=/usr
+  
+  ./configure --prefix=/usr --libdir=/usr/lib --enable-shared
   make
 }
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make DESTDIR="${pkgdir}" install
-  # Move stuff from lib64
-  if [ "$CARCH" = "x86_64" ]; then
-    cd ${pkgdir}/usr
-    mv lib64 lib
-  fi
 }
-
-# vim:set ts=2 sw=2 et:

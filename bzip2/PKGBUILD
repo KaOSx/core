@@ -1,22 +1,18 @@
 #
 # Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
-
-# include global config
-source ../_buildscripts/${current_repo}-${_arch}-cfg.conf 
+# maintainer abveritas@chakra-project.org
 
 pkgname=bzip2
 pkgver=1.0.6
-pkgrel=3
+pkgrel=4
 pkgdesc="A high-quality data compression program"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 license=('custom')
 url="http://sources.redhat.com/bzip2"
 groups=('base')
 depends=('glibc')
-source=(http://www.bzip.org/$pkgver/bzip2-$pkgver.tar.gz)
+source=("http://www.bzip.org/$pkgver/bzip2-$pkgver.tar.gz")
 md5sums=('00b516f4704d4a7cb50a1d97e6e8e15b')
 
 build() {
@@ -31,27 +27,32 @@ build() {
 
   make -f Makefile-libbz2_so
   make bzip2recover libbz2.a
+}
 
-  install -dm755 $pkgdir/bin
-  install -m755 bzip2-shared $pkgdir/bin/bzip2
-  install -m755 bzip2recover $pkgdir/bin
-  ln -sf bzip2 $pkgdir/bin/bunzip2
-  ln -sf bzip2 $pkgdir/bin/bzcat
+check() {
+  cd "$srcdir/$pkgname-$pkgver"
+  make test
+}
 
-  install -dm755 $pkgdir/usr/bin
-  install -m755 bzdiff bzgrep bzmore $pkgdir/usr/bin
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
 
-  install -Dm755 libbz2.so.1.0.6 $pkgdir/lib/libbz2.so.1.0.6
-  ln -s libbz2.so.1.0.6 $pkgdir/lib/libbz2.so
-  ln -s libbz2.so.1.0.6 $pkgdir/lib/libbz2.so.1
-  ln -s libbz2.so.1.0.6 $pkgdir/lib/libbz2.so.1.0
+  install -dm755 $pkgdir/usr/{bin,lib,include,share/man/man1}
 
-  install -Dm644 libbz2.a ${pkgdir}/usr/lib/libbz2.a
-  ln -sf ../../lib/libbz2.so ${pkgdir}/usr/lib/libbz2.so
+  install -m755 bzip2-shared $pkgdir/usr/bin/bzip2
+  install -m755 bzip2recover bzdiff bzgrep bzmore $pkgdir/usr/bin
+  ln -sf bzip2 $pkgdir/usr/bin/bunzip2
+  ln -sf bzip2 $pkgdir/usr/bin/bzcat
 
-  install -Dm644 bzlib.h $pkgdir/usr/include/bzlib.h
+  install -m755 libbz2.so.1.0.6 $pkgdir/usr/lib
+  ln -s libbz2.so.1.0.6 $pkgdir/usr/lib/libbz2.so
+  ln -s libbz2.so.1.0.6 $pkgdir/usr/lib/libbz2.so.1
+  ln -s libbz2.so.1.0.6 $pkgdir/usr/lib/libbz2.so.1.0
+  install -m644 libbz2.a ${pkgdir}/usr/lib/libbz2.a
 
-  install -Dm644 bzip2.1 $pkgdir/usr/share/man/man1/bzip2.1
+  install -m644 bzlib.h $pkgdir/usr/include/
+
+  install -m644 bzip2.1 $pkgdir/usr/share/man/man1/
   ln -sf bzip2.1 $pkgdir/usr/share/man/man1/bunzip2.1
   ln -sf bzip2.1 $pkgdir/usr/share/man/man1/bzcat.1
   ln -sf bzip2.1 $pkgdir/usr/share/man/man1/bzip2recover.1

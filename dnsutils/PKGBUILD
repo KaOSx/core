@@ -1,39 +1,44 @@
 #
 # Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
-
-# include global config
-source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+# maintainer: abveritas@chakra-project.org
 
 pkgname=dnsutils
-# Use a period and not a hyphen before the patch level for proper versioning.
-pkgver=9.8.0.P1
-_pkgver=9.8.0-P1
-pkgrel=2
+# _pkver when P version used.
+pkgver=9.9.2.1
+_pkgver=9.9.2-P1
+pkgrel=1
 pkgdesc="Various DNS utilities - dig host nslookup nsupdate"
-arch=(i686 x86_64)
+arch=('x86_64')
 url="https://www.isc.org/software/bind"
 license=('custom:ISC')
 depends=('openssl')
-replaces=('bind-tools' 'host')
 options=('makeflags')
-source=(http://ftp.isc.org/isc/bind9/${_pkgver}/bind-${_pkgver}.tar.gz
-	tools-only.patch)
-md5sums=('d97ecd8f62a4cf4a769742c79cd8f921'
-         'be0558f70ed81d90e68e6b6003ba12ed')
+source=("http://ftp.isc.org/isc/bind9/${_pkgver}/bind-${_pkgver}.tar.gz"
+	'tools-only.patch')
+md5sums=('44b9d1feb11de09811160775f94c2554'
+         'a7b414849b4fb2137e33f348c3cdd458')
 
 build() {
-  cd "${srcdir}/bind-${_pkgver}"
-  patch -Np1 -i "${srcdir}/tools-only.patch" || return 1
-  ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
-		--with-openssl=yes --disable-linux-caps || return 1
-  make || return 1
+	cd "${srcdir}/bind-${_pkgver}"
+
+	patch -p1 -i "${srcdir}/tools-only.patch"
+	export STD_CDEFINES='-DDIG_SIGCHASE'
+
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-static \
+		--disable-linux-caps \
+		--with-openssl  
+
+	make
 }
 
 package() {
-  cd "${srcdir}/bind-${_pkgver}/bin"
-  make DESTDIR="${pkgdir}" install || return 1
-  install -Dm644 ../COPYRIGHT "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE" || return 1
+	cd "${srcdir}/bind-${_pkgver}"
+	
+	install -Dm644 COPYRIGHT "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+	cd bin; make DESTDIR="${pkgdir}" install
 }

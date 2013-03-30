@@ -4,7 +4,7 @@
 # maintainer: abveritas@chakra-project.org
 
 pkgname=libusbx
-pkgver=1.0.12
+pkgver=1.0.14
 pkgrel=1
 depends=('glibc')
 pkgdesc="Library that provides generic access to USB device"
@@ -16,7 +16,7 @@ options=(!libtool)
 replaces=('libusb1' 'libusb')
 provides=("libusb=$pkgver")
 conflicts=("libusb")
-md5sums=('c41352ac755c7992edfcbb2ea4ad1349')
+md5sums=('0a6a75edb4b4eae7dc82c1dd71ddc470')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"

@@ -1,21 +1,20 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
 # maintainer: abveritas@chakra-project.org
 
 pkgname=hwids
-pkgver=20120730
+pkgver=20130328
 pkgrel=1
 pkgdesc="hardware identification databases"
-url=https://github.com/gentoo/hwids
+url="https://github.com/gentoo/hwids"
 license=('GPL2')
 arch=('any')
 source=("https://github.com/gentoo/${pkgname}/tarball/${pkgname}-${pkgver}")
-md5sums=('4522b801967ae8730d7269c0d881d8e5')
+md5sums=('d36b5a833347895e57b8b9c63c6692cf')
 
 package() {
   cd ${srcdir}/*
-  mkdir -p "${pkgdir}/usr/share/hwdata"
-  cp pci.ids usb.ids "${pkgdir}/usr/share/hwdata/"
+
+  for ids in pci.ids usb.ids; do
+    install -Dm644 "$ids" "${pkgdir}/usr/share/hwdata/${ids}"
+  done
 }
 

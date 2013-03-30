@@ -6,36 +6,42 @@
 
 pkgname=ppp
 pkgver=2.4.5
-pkgrel=3
+pkgrel=4
 pkgdesc="A daemon which implements the Point-to-Point Protocol for dial-up networking"
-arch=(i686 x86_64) 
+arch=('i686' 'x86_64') 
 url="http://www.samba.org/ppp/"
 license=('custom:GPL/BSD')
 groups=('base')
 depends=('glibc' 'libpcap>=1.0.0')
 backup=(etc/ppp/{chap-secrets,pap-secrets,options,ip-up,ip-down})
-source=(ftp://ftp.samba.org/pub/ppp/ppp-${pkgver}.tar.gz
-        options
-        pon
-        poff
-        ppp
-        plog
-        pon.1
-        ip-up
-        ip-down
-        ip-up.d.dns.sh
-        ip-down.d.dns.sh)
-md5sums=('4621bc56167b6953ec4071043fe0ec57'
-         '7a9259a8f038073eeea7e4552ff1849f'
-         '48c024f73a80c8b69c4def22f86902cc'
-         '2d811f8470ccdea3b8c4505a438483e9'
-         '7561c73b557292d5ba1a9c5dbd270fde'
-         '86cdaf133f7a79fb464f02d83afc7734'
-         '44cc662ba9aa61dd9add3ddd4c5ded57'
-         'e4beb16ed600b61336d50b2bd2df7cd5'
-         '2fa0671f40711e69194ccf60979f8b33'
-         '4a074d74c29625b254a1db720cb87b99'
-         '8d1be5af8e46393ba6eb273377831e38')
+source=("ftp://ftp.samba.org/pub/ppp/ppp-${pkgver}.tar.gz"
+        'options'
+        'pon'
+        'poff'
+        'plog'
+        'pon.1'
+        'ip-up'
+        'ip-down'
+        'ip-up.d.dns.sh'
+        'ip-down.d.dns.sh'
+        'ipv6-up'
+        'ipv6-down'
+        'ipv6-up.d.iface-config.sh'
+        'ppp.service')
+sha256sums=('43317afec9299f9920b96f840414c977f0385410202d48e56d2fdb8230003505'
+            '0933fecb9e0adaddd88ee1e049a5f3a0508e83b81dc1aa333df784e729ab4b6e'
+            'c92e0721c4f53987dd0a02fe7089d0f5a58cdb7bb9f26d1bddc28111406ce6c2'
+            'ee1e1e5f164effe49bc7ffab3fbde6efbd46d186c58192913f749257026d75e2'
+            '43608081ab9d6a755eb4e6fa2011f88b16b1702745d76bced6d546a7c579b39f'
+            '9bb35eac78898cdc75184bb70fea11fb2e2889e1e2cadf0b7bb8320d7cae0959'
+            'ddef42b2cc5d49e81556dc9dbacf5ee3bf8dc32704f3670c2233eed42c4a4efd'
+            'e89ff3fcba33a6bfd47f116f2dd48ff26651ee73ccacbd2f76419cc9d7e7d03d'
+            '133964c95ada7403deb41e6726a6b5c9f9b10e3e41bf367ac27caf8a41ff2544'
+            '7e73ef1953151258729ecc3129f08add52d6001960683b57a6eac147b5644e39'
+            '6fbd3fd6de2f444c85d062b37f21c63b4f8884e938089b1337b3702568cdcbc5'
+            'b6c6aba6d5be1ef9ea550638f391a9a927242ccd0b82f3787a04bf983e3b3fda'
+            '3e4e8e415adbae273f365e1fabaad4a92462c57519f719e6f4ce05bc312d3995'
+            '8c213f7ece2278bcde10195fc1b3252dcda7d4fc502ba4bde300304d4db71252')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
@@ -65,20 +71,25 @@ build() {
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   make DESTDIR="${pkgdir}/usr" install 
-  install -D -m644 ../options "${pkgdir}/etc/ppp/options"
-  install -D -m755 ../ip-up   "${pkgdir}/etc/ppp/ip-up"
-  install -D -m755 ../ip-down "${pkgdir}/etc/ppp/ip-down"
+  install -D -m644 "${srcdir}/options" "${pkgdir}/etc/ppp/options"
+  install -D -m755 "${srcdir}/ip-up"   "${pkgdir}/etc/ppp/ip-up"
+  install -D -m755 "${srcdir}/ip-down" "${pkgdir}/etc/ppp/ip-down"
   install -d -m755 "${pkgdir}/etc/ppp/ip-up.d"
   install -d -m755 "${pkgdir}/etc/ppp/ip-down.d"
-  install -m755 ../ip-up.d.dns.sh   "${pkgdir}/etc/ppp/ip-up.d/00-dns.sh"
-  install -m755 ../ip-down.d.dns.sh "${pkgdir}/etc/ppp/ip-down.d/00-dns.sh"
-  install -D -m755 ../pon  "${pkgdir}/usr/bin/pon"
-  install -D -m755 ../poff "${pkgdir}/usr/bin/poff"
-  install -D -m755 ../plog "${pkgdir}/usr/sbin/plog"
+  install -m755 "${srcdir}/ip-up.d.dns.sh"   "${pkgdir}/etc/ppp/ip-up.d/00-dns.sh"
+  install -m755 "${srcdir}/ip-down.d.dns.sh" "${pkgdir}/etc/ppp/ip-down.d/00-dns.sh"
+  install -D -m755 "${srcdir}/ipv6-up"   "${pkgdir}/etc/ppp/ipv6-up"
+  install -D -m755 "${srcdir}/ipv6-down" "${pkgdir}/etc/ppp/ipv6-down"
+  install -d -m755 "${pkgdir}/etc/ppp/ipv6-up.d"
+  install -d -m755 "${pkgdir}/etc/ppp/ipv6-down.d"
+  install -m755 "${srcdir}/ipv6-up.d.iface-config.sh" "${pkgdir}/etc/ppp/ipv6-up.d/00-iface-config.sh"
+  install -D -m755 "${srcdir}/pon"  "${pkgdir}/usr/bin/pon"
+  install -D -m755 "${srcdir}/poff" "${pkgdir}/usr/bin/poff"
+  install -D -m755 "${srcdir}/plog" "${pkgdir}/usr/sbin/plog"
   install -D -m600 etc.ppp/pap-secrets  "${pkgdir}/etc/ppp/pap-secrets"
   install -D -m600 etc.ppp/chap-secrets "${pkgdir}/etc/ppp/chap-secrets"
-  install -D -m755 ${srcdir}/ppp "${pkgdir}/etc/rc.d/ppp"
-  install -D -m644 ${srcdir}/pon.1 "${pkgdir}/usr/share/man/man1/pon.1"
+  install -D -m644 "${srcdir}/pon.1" "${pkgdir}/usr/share/man/man1/pon.1"
   install -d -m755 "${pkgdir}/etc/ppp/peers" 
   chmod 0755 "${pkgdir}/usr/lib/pppd/${pkgver}"/*.so
+  install -D -m644 "${srcdir}"/ppp.service "${pkgdir}"/usr/lib/systemd/system/ppp@.service
 }

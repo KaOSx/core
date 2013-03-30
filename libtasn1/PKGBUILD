@@ -1,37 +1,35 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# Maintainer: abveritas[at]chakra-project[dot]org>
 
 pkgname=libtasn1
-pkgver=2.9
-pkgrel=2
+pkgver=3.2
+pkgrel=1
 pkgdesc="The ASN.1 library used in GNUTLS"
-arch=(i686 x86_64)
+arch=('x86_64')
 license=('GPL3' 'LGPL')
 url="http://www.gnu.org/software/libtasn1/"
 depends=('glibc' 'texinfo')
 options=('!libtool')
 install=libtasn1.install
-source=(ftp://ftp.gnu.org/gnu/libtasn1/${pkgname}-${pkgver}.tar.gz)
-md5sums=('f4f4035b84550100ffeb8ad4b261dea9')
+source=("ftp://ftp.gnu.org/gnu/libtasn1/${pkgname}-${pkgver}.tar.gz")
+md5sums=('1b07629163025b9693aae9b8957842b2')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   ./configure --prefix=/usr \
       --with-packager=Chakra \
-      --with-packager-bug-reports="http://chakra-project.org/bugs/" \
-      --with-packager-version=${pkgver}-${pkgrel}
+      --with-packager-bug-reports="http://chakra-project.org/bugs/" 
   make
 }
 
 check() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make check
 }
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make DESTDIR="${pkgdir}" install
 }

@@ -9,9 +9,9 @@ _kver="$(cat /lib/modules/${_extramodules}/version)"
 
 pkgname=vhba-module-lts
 pkgver=20120422
-pkgrel=1
+pkgrel=4
 pkgdesc="Kernel module that emulates SCSI devices"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://cdemu.sourceforge.net/"
 license=('GPL2')
 depends=('linux-lts>=3.0' 'linux-lts<3.1')

@@ -1,5 +1,5 @@
 #
-# Chakra Packages for Chakra, part of chakra-project.org
+# Core Packages for Chakra, part of chakra-project.org
 #
 # Maintainer: Daniele Cocca <jmc@chakra-project.org>
 
@@ -11,8 +11,8 @@ if [ "${CARCH}" == 'x86_64' ]; then
 fi
 
 pkgver=2.00
-pkgrel=1
-arch=('i686' 'x86_64')
+pkgrel=5
+arch=('x86_64')
 url="http://www.gnu.org/software/grub/"
 license=('GPL3')
 
@@ -23,12 +23,11 @@ makedepends=('xz' 'bdf-unifont' 'ttf-dejavu' 'python' 'autogen'
 source=("ftp://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
         'chakra_grub2_fixes.patch'
         'grub.default'
-        '20_memtest86+'
         'update-grub')
 md5sums=('a1043102fbc7bcedbf53e7ee3d17ab91'
          'bc191bc9e298380c1d5995c0faafa75a'
+         '3ad276456daa36cf2a1de678827043f3'
          '31e4c7414cef3db3fb26c40ac8da97f2'
-         '5a07e04c4ecb8ed145d54fec3043e0d5'
          '9910bdfd42fa7d3e21e6961bfcc977f9')
 
 # Options common to all packages
@@ -70,6 +69,7 @@ _build_prepare() {
   msg2 "Applying patches..."
     cd "${srcdir}/grub-${pkgver}"
     patch -Np1 -i "${srcdir}/chakra_grub2_fixes.patch" || return 1
+    patch -Np0 -i "${srcdir}/quote-strings-in-grub.cfg.patch" || return 1
   msg2 "Done patching."
 
   msg2 "Cloning the grub-extras repositories..."
@@ -139,7 +139,7 @@ build() {
 
 package_grub2-common() {
 pkgdesc="GNU GRUB is a Multiboot boot loader. (Common files and utilities.)"
-depends=('xz' 'freetype2' 'gettext' 'device-mapper' 'fuse')
+depends=('xz' 'freetype2' 'gettext' 'device-mapper' 'fuse' 'os-prober')
 conflicts=('grub')
 install="grub2.install"
 backup=('etc/default/grub' 'etc/grub.d/40_custom')
@@ -157,7 +157,6 @@ options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
   # install Chakra files
   install -D -m755 "${srcdir}/update-grub" "${pkgdir}/usr/sbin/update-grub"
   install -D -m644 "${srcdir}/grub.default" "${pkgdir}/etc/default/grub"
-  install -D -m644 "${srcdir}/20_memtest86+" "${pkgdir}/etc/grub.d/20_memtest86+"
 
   # remove the architecture-dependant binaries from the package
   rm -rf "${pkgdir}/usr/lib/grub/i386-pc"

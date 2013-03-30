@@ -9,9 +9,9 @@ _kver="$(cat /lib/modules/${_extramodules}/version)"
 
 pkgname=tiacx-lts
 pkgver=20080210
-pkgrel=4
+pkgrel=7
 pkgdesc="OpenSource module for Texas Instruments ACX100/ACX111 wireless chips. For stock chakra kernel"
-arch=(i686 x86_64)
+arch=('x86_64')
 url="http://acx100.sourceforge.net/"
 license=('MPL')
 depends=('wireless_tools' 'linux-lts>=3.0' 'linux-lts<3.1' 'tiacx-firmware')

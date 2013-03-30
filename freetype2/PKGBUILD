@@ -1,35 +1,36 @@
 # Platform Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
-
-# include global config
-source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=freetype2
-pkgver=2.4.7
+pkgver=2.4.11
 pkgrel=1
 pkgdesc="TrueType font rendering library"
-arch=(i686 x86_64)
+arch=('x86_64')
 license=('GPL')
 url="http://freetype.sourceforge.net"
-depends=('zlib')
+depends=('zlib' 'sh' 'bzip2')
 options=('!libtool')
 source=("http://downloads.sourceforge.net/sourceforge/freetype/freetype-${pkgver}.tar.bz2"
-        freetype-2.3.0-enable-spr.patch
-        freetype-2.2.1-enable-valid.patch)
-md5sums=('dbadce8f0c5e70a0b7c51eadf2dd9394'
+        'freetype-2.3.0-enable-spr.patch'
+        'freetype-2.2.1-enable-valid.patch')
+md5sums=('b93435488942486c8d0ca22e8f768034'
          '816dc8619a6904a7385769433c0a8653'
          '214119610444c9b02766ccee5e220680')
 
 build() {
   cd "${srcdir}/freetype-${pkgver}"
 
-  patch -Np1 -i "${srcdir}/freetype-2.3.0-enable-spr.patch"
-  patch -Np1 -i "${srcdir}/freetype-2.2.1-enable-valid.patch"
+  patch -p1 -i "${srcdir}/freetype-2.3.0-enable-spr.patch"
+  patch -p1 -i "${srcdir}/freetype-2.2.1-enable-valid.patch"
 
   ./configure --prefix=/usr
   make
+}
+
+check() {
+  cd "${srcdir}/freetype-${pkgver}"
+  make -k check
 }
 
 package() {
@@ -38,4 +39,4 @@ package() {
   make DESTDIR="${pkgdir}" install
 }
 
-# vim:set ts=2 sw=2 et:
+

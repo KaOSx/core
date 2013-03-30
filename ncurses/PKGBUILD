@@ -1,14 +1,13 @@
 #
 # Chakra Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=ncurses
 pkgver=5.9
-pkgrel=3
+pkgrel=4
 pkgdesc="System V Release 4.0 curses emulation library"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.gnu.org/software/ncurses/"
 license=('MIT')
 depends=('glibc')
@@ -19,7 +18,7 @@ md5sums=('8cb9c412e5f2d96bc6f459aa8c6282a1'
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  patch -Np0 -i "${srcdir}/gentoo-ncurses-5.9-rxvt-unicode-9.15.patch"
+  patch -p0 -i "${srcdir}/gentoo-ncurses-5.9-rxvt-unicode-9.15.patch"
 
   cd "${srcdir}"
   rm -rf ncurses{,w}-build && mkdir -p ncurses{,w}-build
@@ -33,12 +32,13 @@ build() {
       --without-debug \
       --without-ada \
       --with-install-prefix="${pkgdir}" \
-      --enable-widec
-  make || return 1
+      --enable-widec \
+      --enable-pc-files
+  make 
 
   # libncurses.so.5 for external binary support 
   cd ${srcdir}/ncurses-build
-  [ "${CARCH}" = 'x86_64' ] && CONFIGFLAG="--with-chtype=long"
+  CONFIGFLAG="--with-chtype=long"
   "${srcdir}/${pkgname}-${pkgver}/configure" \
       --prefix=/usr \
       --with-shared \
@@ -47,35 +47,25 @@ build() {
       --without-ada \
       --with-install-prefix="${pkgdir}" \
       "${CONFIGFLAG}"
-  make || return 1
+  make 
 }
 
 package() {
   cd "${srcdir}/ncursesw-build"
   make install
 
-  # move libraries needed for boot to /lib (we call tput in initscripts)
-  install -d -m755 "${pkgdir}/lib"
-  mv "${pkgdir}/usr/lib"/libncursesw.so.5* "${pkgdir}/lib"
-  ln -sf ../../lib/libncursesw.so.5 "${pkgdir}/usr/lib/libncursesw.so"
-
   # Fool packages looking to link to non-wide-character ncurses libraries
   for lib in curses ncurses form panel menu ; do \
-    rm -f "${pkgdir}/usr/lib/lib${lib}.so" ; \
     echo "INPUT(-l${lib}w)" >"${pkgdir}/usr/lib/lib${lib}.so" ; \
-    ln -sf "lib${lib}w.a" "${pkgdir}/usr/lib/lib${lib}.a" ; \
+    ln -s "lib${lib}w.a" "${pkgdir}/usr/lib/lib${lib}.a" ; \
   done
-  ln -sf libncurses++w.a "${pkgdir}/usr/lib/libncurses++.a"
-
-  #############################################################################
-  # Commented out, the systemd move will require things in /usr/bin anyway.
-  #
-  ## install tput to /bin
-  # install -d -m755 "${pkgdir}/bin"
-  # mv "${pkgdir}/usr/bin/tput" "${pkgdir}/bin/tput"
+  ln -s libncurses++w.a "${pkgdir}/usr/lib/libncurses++.a"
+  
+  for lib in ncurses ncurses++ form panel menu; do
+    ln -s ${lib}w.pc ${pkgdir}/usr/lib/pkgconfig/${lib}.pc
+  done
 
   # Some packages look for -lcurses during build
-  rm -f "${pkgdir}/usr/lib/libcursesw.so"
   echo "INPUT(-lncursesw)" >"${pkgdir}/usr/lib/libcursesw.so"
   ln -sf libncurses.so "${pkgdir}/usr/lib/libcurses.so"
   ln -sf libncursesw.a "${pkgdir}/usr/lib/libcursesw.a"
@@ -93,4 +83,3 @@ package() {
   grep -B 100 '$Id' README > "${pkgdir}/usr/share/licenses/${pkgname}/license.txt"
 }
 
-# vim:set ts=2 sw=2 et:

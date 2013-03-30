@@ -4,35 +4,29 @@
 # maintainer abveritas@chakra-project.org
 
 # Find the kernel name inside the chroot
-_extramodules=extramodules-3.4-CHAKRA
+_extramodules=extramodules-3.7-CHAKRA
 _kver="$(cat /lib/modules/${_extramodules}/version)"
 
 pkgname=broadcom-wl
 pkgver=5.100.82.112
-pkgrel=9
+pkgrel=16
 pkgdesc='Broadcom 802.11abgn hybrid Linux networking device driver'
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url='http://www.broadcom.com/support/802.11/linux_sta.php'
 license=('custom')
-depends=('linux>=3.4' 'linux<3.5')
+depends=('linux>=3.7' 'linux<3.8')
 makedepends=('linux-headers')
 
-[[ $CARCH = x86_64 ]] && ARCH=x86_64 || ARCH=x86_32
-source=("http://www.broadcom.com/docs/linux_sta/hybrid-portsrc_${ARCH}-v${pkgver//./_}.tar.gz"
+source=("http://www.broadcom.com/docs/linux_sta/hybrid-portsrc_x86_64-v${pkgver//./_}.tar.gz"
         'modprobe.d'
-        'linux3.patch'
-        'linux3.2.patch'
         'license.patch'
-        'semaphore.patch'
-        'linux3.4.patch')
-sha1sums=('01aa32f9e85621253a3f15cf4361bb80d41da3e8'
+        'user-ioctl.patch'
+        'linux-recent.patch')
+sha1sums=('5bd78c20324e6a4aa9f3fafdc6f0155e884d5131'
           '89bf92286ede30dd85304c6c4e42e89cfdc0f60a'
-          '3e18f905bbe5e8b99a53d6ecb3b80a919f3531f2'
-          '229f41b7c371842bf9c1c81b03f34ee32fcb3310'
           'ea7b67982ddc0f56fd3becb9914fd4458fe7d373'
-          '105f8e1d48ebe1f25d53859e5ab9326a27435c66'
-          '4f902a8c0da2efd0fe9f6547c8d01f5325ca9fe8')
-[[ $CARCH = x86_64 ]] && sha1sums[0]='5bd78c20324e6a4aa9f3fafdc6f0155e884d5131'
+          'e0366dd15ea5b25aae0f61bec6be7a203dfca7e4'
+          'df3cd65e24beed349a40abcf476bdaa82bbc57d3')
 
 backup=('etc/modprobe.d/broadcom-wl.conf')
 install=install
@@ -40,11 +34,9 @@ install=install
 build() {
 	cd "${srcdir}"
 
-	patch -p1 -i linux3.patch
-	patch -p0 src/wl/sys/wl_linux.c < linux3.2.patch
 	patch -p1 -i license.patch
-	patch -p1 -i semaphore.patch
-	patch -p1 -i linux3.4.patch
+	patch -p1 -i linux-recent.patch
+	patch -p1 -i user-ioctl.patch
 
 	make -C /lib/modules/"${_kver}"/build M=`pwd`
 }

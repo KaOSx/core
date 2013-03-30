@@ -1,8 +1,10 @@
-# $Id$
-# Maintainer: Thomas Bächler <thomas@archlinux.org>
+#
+# Core Packages for Chakra, part of chakra-project.org
+#
+# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=wireless-regdb
-pkgver=2011.04.28
+pkgver=2013.02.13
 pkgrel=1
 pkgdesc="Central Regulatory Domain Database"
 arch=('any')
@@ -11,10 +13,10 @@ backup=(etc/conf.d/wireless-regdom)
 license=('custom')
 depends=('sh')
 install=wireless-regdb.install
-source=(http://wireless.kernel.org/download/${pkgname}/${pkgname}-${pkgver}.tar.bz2
-        crda.conf.d)
-sha256sums=('ed1c3e134e34ba5f93594f6f76b90861fe8d24359c064839a2bb78736416642b'
-            '192428fd959806705356107bffc97b8b379854e79bd013c4ee140e5202326e2b')
+source=("https://www.kernel.org/pub/software/network/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+        'crda.conf.d')
+md5sums=('46a4aa49282ea6713c3cf28cc2fc600f'
+         '2374dcf1c6530332f375e5362b80169b')
 
 package() {
   # Install and verify regulatory.bin file

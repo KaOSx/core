@@ -5,19 +5,19 @@
 
 pkgname=perl
 pkgver=5.14.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A highly capable, feature-rich programming language"
-arch=(i686 x86_64)
+arch=('x86_64')
 license=('GPL' 'PerlArtistic')
 url="http://www.perl.org"
 groups=('base')
 depends=('gdbm' 'db' 'coreutils' 'glibc' 'sh')
-source=(http://www.cpan.org/src/5.0/perl-${pkgver}.tar.bz2 
-perlbin.sh
-perlbin.csh
-provides.pl
-digest_eval_hole.diff
-0001-Append-CFLAGS-and-LDFLAGS-to-their-Config.pm-counter.patch)
+source=("http://www.cpan.org/src/5.0/perl-${pkgver}.tar.bz2"
+        'perlbin.sh'
+        'perlbin.csh'
+        'provides.pl'
+        'digest_eval_hole.diff'
+        '0001-Append-CFLAGS-and-LDFLAGS-to-their-Config.pm-counter.patch')
 install=perl.install
 options=('!makeflags' '!purge')
 md5sums=('04a4c5d3c1f9f19d77daff8e8cd19a26'
@@ -30,15 +30,7 @@ md5sums=('04a4c5d3c1f9f19d77daff8e8cd19a26'
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
 
-  if [ "${CARCH}" = "x86_64" ]; then
-    # for x86_64
-    arch_opts="-Dcccdlflags='-fPIC'"
-  else 
-    # for i686
-    arch_opts=""
-  fi
-
-  patch -Np1 -i $srcdir/digest_eval_hole.diff
+  patch -p1 -i $srcdir/digest_eval_hole.diff
 
   ./Configure -des -Dusethreads -Duseshrplib -Doptimize="${CFLAGS}" \
     -Dprefix=/usr -Dinstallprefix=${pkgdir}/usr -Dvendorprefix=/usr \
@@ -52,9 +44,9 @@ build() {
     -Dsitescript=/usr/bin/site_perl \
     -Dvendorscript=/usr/bin/vendor_perl \
     -Dinc_version_list=none \
-    -Dman1ext=1perl -Dman3ext=3perl ${arch_opts} \
+    -Dman1ext=1perl -Dman3ext=3perl -Dcccdlflags='-fPIC' \
     -Dlddlflags="-shared ${LDFLAGS}" -Dldflags="${LDFLAGS}"
-  patch -Np1 -i $srcdir/0001-Append-CFLAGS-and-LDFLAGS-to-their-Config.pm-counter.patch
+  patch -p1 -i $srcdir/0001-Append-CFLAGS-and-LDFLAGS-to-their-Config.pm-counter.patch
   make
 
   # check
@@ -96,7 +88,7 @@ package() {
   # Profile script to set paths to perl scripts.
   install -D -m755 ${srcdir}/perlbin.sh \
                    ${pkgdir}/etc/profile.d/perlbin.sh
-  # Profile script to set paths to perl scripts on csh. (FS#22441) 
+  # Profile script to set paths to perl scripts on csh.  
   install -D -m755 ${srcdir}/perlbin.csh \
                   ${pkgdir}/etc/profile.d/perlbin.csh
 

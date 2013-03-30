@@ -1,33 +1,27 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# Maintainer: abveritas[at]chakra-project[dot]org>
 
 pkgname=texinfo
-pkgver=4.13a
-pkgrel=6
+pkgver=5.1
+pkgrel=1
 pkgdesc="Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.gnu.org/software/texinfo/"
 license=('GPL3')
 groups=('base')
-depends=('ncurses' 'findutils' 'gzip')
+depends=('ncurses' 'findutils' 'gzip' 'sh' 'perl')
 install=texinfo.install
-source=(ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz)
-md5sums=('71ba711519209b5fb583fed2b3d86fcb')
-sha1sums=('a1533cf8e03ea4fa6c443b73f4c85e4da04dead0')
+source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
+md5sums=('52ee905a3b705020d2a1b6ec36d53ca6')
 
 build() {
-   cd ${srcdir}/${pkgname}-4.13
+   cd ${srcdir}/${pkgname}-${pkgver}
+   
    ./configure --prefix=/usr
    make
 }
 
 package() {
-   cd ${srcdir}/${pkgname}-4.13
+   cd ${srcdir}/${pkgname}-${pkgver}
+   
    make DESTDIR=${pkgdir} install
-
-   # fix this here as it prevent make from trying to rebuild manual pages
-   sed -i 's#A-z#A-Za-z#' ${pkgdir}/usr/bin/texi2dvi
 }

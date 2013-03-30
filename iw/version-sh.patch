@@ -1,5 +1,5 @@
---- iw-0.9.22/version.sh.orig	
-+++ iw-0.9.22/version.sh	
+--- version.sh.orig	
++++ version.sh	
 @@ -5,20 +5,20 @@
  
  echo '#include "iw.h"' > "$OUT"

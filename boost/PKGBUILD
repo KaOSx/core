@@ -1,12 +1,8 @@
 #
 # Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# maintainer abveritas[at]chakra-project[dot]org>
 # Contributor: Artyom Smirnov <smirnoffjr@gmail.com>
-
-# include global config
-source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
 
 # Note: you have to rebuild those pkgs
 # Core: repo-clean
@@ -15,52 +11,35 @@ source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
  
 pkgbase=boost
 pkgname=('boost-libs' 'boost')
-pkgver=1.48.0
+pkgver=1.52.0
 _boostver=${pkgver//./_}
-pkgrel=4
+pkgrel=1
 pkgdesc="Free peer-reviewed portable C++ source libraries"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.boost.org/"
 license=('custom')
-depends=('bzip2' 'zlib')
-makedepends=('icu' 'python2' 'bzip2' 'zlib' 'openmpi') # Add Python (3) whenever it is added to our repos.
-optdepends=('python: for python bindings')
-options=('!ccache')
-source=(http://downloads.sourceforge.net/${pkgbase}/${pkgbase}_${_boostver}.tar.gz
-        exceptions.patch
-        BOOST_FOREACH.patch
-        libstdcpp3.hpp.patch)
+makedepends=('icu' 'python2' 'python3' 'bzip2' 'zlib' 'openmpi') 
+source=("http://downloads.sourceforge.net/${pkgbase}/${pkgbase}_${_boostver}.tar.gz")
 license=('custom')
-md5sums=('313a11e97eb56eb7efd18325354631be'
-         'e12a237436bd9c18c4f7c1f55a7d0996'
-         'af2c30a290d2429b3e09788bcfa2210e'
-         'a493d2c5848198a3e8040646cfe358c8')
+md5sums=('f62451fa646ca392b0fbc08beb23ad12')
 
 _stagedir="${srcdir}/stagedir"
 
 build() {
   # set python path for bjam
   cd "${srcdir}/${pkgbase}_${_boostver}/tools"
-  echo "using python : 2.7 : /usr/bin/python2 : /usr/include/python2.7 : /usr/lib ;" >> build/v2/user-config.jam
-  #echo "using python : 3.2 : /usr/bin/python : /usr/include/python3.2mu : /usr/lib ;" >> build/v2/user-config.jam
+  echo "using python : 2.7 : /usr/bin/python2 ;" >> build/v2/user-config.jam
+  echo "using python : 3.3 : /usr/bin/python3 : /usr/include/python3.3m : /usr/lib ;" >> build/v2/user-config.jam
   echo "using mpi ;" >> build/v2/user-config.jam
 
   cd "${srcdir}"/${pkgbase}_${_boostver}
-  # https://svn.boost.org/trac/boost/ticket/5731
-  patch -p0 -i "${srcdir}/exceptions.patch"
-  # https://svn.boost.org/trac/boost/ticket/6131
-  patch -p2 -i "${srcdir}/BOOST_FOREACH.patch"
-  patch -p0 -i "${srcdir}/libstdcpp3.hpp.patch"
 
   # build bjam
   cd "${srcdir}/${pkgbase}_${_boostver}/tools/build/v2/engine"
   ./build.sh cc
 
-  _bindir="bin.linuxx86"
-  [ "${CARCH}" = "x86_64" ] && _bindir="bin.linuxx86_64"
-
   install -d "${_stagedir}"/usr/bin
-  install ${_bindir}/bjam "${_stagedir}"/usr/bin/bjam
+  install bin.linuxx86_64/bjam "${_stagedir}"/usr/bin/bjam
 
   # build tools
   cd "${srcdir}/${pkgbase}_${_boostver}/tools/"
@@ -101,7 +80,7 @@ build() {
 package_boost() {
     pkgdesc="Free peer-reviewed portable C++ source libraries - Development"
     depends=("boost-libs=${pkgver}")
-    optdepends=('python: for python bindings'
+    optdepends=('python3: for python3 bindings'
                 'python2: for python2 bindings')
 
     install -d "${pkgdir}"/usr/{include,lib,share}

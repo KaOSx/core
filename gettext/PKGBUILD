@@ -1,15 +1,14 @@
 #
 # Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# maintainer abveritas[at]chakra-project[dot]org>
 
 
 pkgname=gettext
-pkgver=0.18.1.1
-pkgrel=3
+pkgver=0.18.2
+pkgrel=1
 pkgdesc="GNU internationalization library"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.gnu.org/software/gettext"
 license=('GPL')
 groups=('base')
@@ -17,12 +16,13 @@ depends=('acl' 'gcc-libs' 'glib2' 'libcroco' 'sh')
 optdepends=('cvs: for autopoint tool')
 options=(!libtool)
 install=gettext.install
-source=(ftp://ftp.gnu.org/pub/gnu/gettext/${pkgname}-${pkgver}.tar.gz)
-md5sums=('3dd55b952826d2b32f51308f2f91aa89')
+source=(ftp://ftp.gnu.org/pub/gnu/gettext/${pkgname}-${pkgver}.tar.gz{,.sig})
+md5sums=('0c86e5af70c195ab8bd651d17d783928'
+         '1a658e29a03ab42da6d2d468b0583407')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  sed -i -e 's/libexpat.so.0/libexpat.so.1/' gettext-tools/src/x-glade.c
+
   ./configure --prefix=/usr --enable-csharp
   make
 }

@@ -1,24 +1,21 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# Maintainer: abveritas[at]chakra-project[dot]org>
 
 pkgname=guile
 pkgver=1.8.8
-pkgrel=2
-pkgdesc="a portable, embeddable Scheme implementation written in C"
+pkgrel=3
+pkgdesc="GNU Ubiquitous Intelligent Language for Extensions, the official extension language for the GNU operating system"
 url="http://www.gnu.org/software/guile/"
-arch=(i686 x86_64)
+arch=('x86_64')
 license=('GPL')
-depends=('gmp' 'libtool' 'ncurses>=5.7' 'texinfo')
+depends=('gmp' 'libltdl' 'ncurses>=5.7' 'texinfo')
 install=guile.install
-source=(ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz)
+source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz")
 options=('!libtool')
 md5sums=('18661a8fdfef13e2fcb7651720aa53f3')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   ./configure --prefix=/usr \
 	--disable-static  \
 	--disable-error-on-warning
@@ -27,5 +24,6 @@ build() {
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make DESTDIR="${pkgdir}" install
 }

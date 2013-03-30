@@ -2,19 +2,20 @@
 # Chakra Linux repository mirrorlist
 #
 
-## America ##
+#Australia
+#Server = http://mirror.aarnet.edu.au/pub/chakra/$repo/@carch@
+#Server = ftp://mirror.aarnet.edu.au/pub/chakra/$repo/@carch@
 
 # Brazil
 #Server = http://chakra.c3sl.ufpr.br/$repo/@carch@
 #Server = ftp://chakra.c3sl.ufpr.br/chakra/$repo/@carch@
+#Server = http://chakra.fis.unb.br/$repo/@carch@
+#Server = ftp://chakra.fis.unb.br/chakra/$repo/@carch@
 
-# United States
-#Server = http://mirror.rit.edu/kdemod/$repo/@carch@
-#Server = ftp://mirror.dacentec.com/chakra/$repo/@carch@
-#Server = http://mirror.dacentec.com/chakra/$repo/@carch@
-#Server = http://mirror.royg.biz/chakra/$repo/@carch@
-
-## Europa ##
+# China
+#Server = http://oss.ustc.edu.cn/kdemod/$repo/@carch@
+#Server = http://debian.cn99.com/kdemod/$repo/@carch@
+#Server = http://mirrors.163.com/kdemod/$repo/@carch@
 
 # Czech Republic
 #Server = http://ftp.sh.cvut.cz/MIRRORS/chakra/$repo/@carch@
@@ -33,7 +34,6 @@
 #Server = http://mirror.wh-stuttgart.net/mirrors/kdemod/$repo/@carch@
 #Server = http://ftp.halifax.rwth-aachen.de/chakra/$repo/@carch@
 #Server = ftp://ftp.halifax.rwth-aachen.de/chakra/$repo/@carch@
-#Server = http://metashell.de/mirror/chakra/$repo/@carch@
 
 # Greece
 #Server = http://ftp.cc.uoc.gr/mirrors/linux/chakra/$repo/@carch@
@@ -44,33 +44,22 @@
 # Italy
 #Server =  http://chakra.mirror.garr.it/mirrors/chakra/$repo/@carch@
 
-#Lithuania
-#Server = http://chakra.lelys.lt/$repo/@carch@
-
-# Switzerland
-#Server = http://archlinux.puzzle.ch/kdemod/$repo/@carch@
-
-# Spain
-#Server = http://ftp.caliu.cat/pub/distribucions/chakra/repo/$repo/@carch@
-
-## Russia  ##
-
 # Russia
 #Server = http://mirror.tspu.ru/chakra-project/$repo/@carch@
 #Server = http://mirror.yandex.ru/mirrors/chakra/$repo/@carch@
 #Server = ftp://mirror.yandex.ru/mirrors/chakra/$repo/@carch@
+#Server = http://chakra.softded.ru/chakra/$repo/@carch@
 
-##  Asia   ##
-
-# China
-#Server = http://oss.ustc.edu.cn/kdemod/$repo/@carch@
-#Server = http://debian.cn99.com/kdemod/$repo/@carch@
-#Server = http://mirrors.163.com/kdemod/$repo/@carch@
-
-# Japan
-#Server = http://ftp.yz.yamagata-u.ac.jp/pub/linux/chakra/$repo/@carch@
-#Server = ftp://ftp.yz.yamagata-u.ac.jp/pub/linux/chakra/$repo/@carch@
+# Switzerland
+#Server = http://archlinux.puzzle.ch/kdemod/$repo/@carch@
 
 #Taiwan
 #Server = http://free.nchc.org.tw/chakra/$repo/@carch@
 #Server = ftp://free.nchc.org.tw/chakra/$repo/@carch@
+
+# United States
+#Server = http://chakra.hostingxtreme.com/$repo/@carch@
+#Server = http://mirror.rit.edu/kdemod/$repo/@carch@
+#Server = ftp://mirror.dacentec.com/chakra/$repo/@carch@
+#Server = http://mirror.dacentec.com/chakra/$repo/@carch@
+

@@ -1,31 +1,28 @@
 #
 # Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
-
-# include global config
-source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+# maintainer abveritas@chakra-project.org
 
 pkgname=keyutils
-pkgver=1.4
-pkgrel=2
+pkgver=1.5.5
+pkgrel=1
 pkgdesc="Linux Key Management Utilities"
-arch=(i686 x86_64)
+arch=('x86_64')
 url="http://www.kernel.org"
 license=('GPL2' 'LGPL2.1')
 depends=('glibc' 'sh')
-backup=(etc/request-key.conf)
-source=(http://people.redhat.com/~dhowells/$pkgname/$pkgname-$pkgver.tar.bz2)
+backup=('etc/request-key.conf')
+source=("http://people.redhat.com/~dhowells/$pkgname/$pkgname-$pkgver.tar.bz2")
+md5sums=('d759680b2f23c99af95938f5026f25fb')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
-  sed -i -e '/CFLAGS/s|:= -g -O2|+=|' Makefile
+  
   make CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}"
 }
 
 package() {
   cd "$srcdir/$pkgname-$pkgver"
-  make DESTDIR="$pkgdir" install
+  
+  make DESTDIR="$pkgdir" LIBDIR="/usr/lib" USRLIBDIR="/usr/lib"  install
 }
-md5sums=('e168c1bdaf5aa93c2cbf8a5e7f8ef27b')

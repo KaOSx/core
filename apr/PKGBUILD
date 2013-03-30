@@ -1,34 +1,37 @@
 #
 # Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
-
-# include global config
-source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=apr
-pkgver=1.4.5
-pkgrel=2
+pkgver=1.4.6
+pkgrel=1
 pkgdesc="The Apache Portable Runtime"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://apr.apache.org/"
-depends=('util-linux-ng>=2.16')
+depends=('util-linux')
 options=('!libtool')
 license=('APACHE')
-source=(http://www.apache.org/dist/apr/apr-${pkgver}.tar.bz2)
-md5sums=('daf5487c82dd7bec9c005c96f8cb01b1')
-
-md5sums=('8b53f5a5669d0597f2da889a2f576eb6')
+source=("http://www.apache.org/dist/apr/apr-${pkgver}.tar.bz2")
+md5sums=('ffee70a111fd07372982b0550bbb14b7')
 
 build() {
   cd "${srcdir}/apr-${pkgver}"
-  export apr_cv_accept4=no
+
 
   ./configure --prefix=/usr --includedir=/usr/include/apr-1 \
     --with-installbuilddir=/usr/share/apr-1/build \
     --enable-nonportable-atomics \
     --with-devrandom=/dev/urandom
   make
+}
+
+check() {
+  cd "${srcdir}/apr-${pkgver}"
+  make -j1 check
+}
+
+package() {
+  cd "${srcdir}/apr-${pkgver}"
   make DESTDIR="${pkgdir}" install
 }

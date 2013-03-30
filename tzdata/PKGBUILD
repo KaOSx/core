@@ -1,19 +1,15 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
 # maintainer: Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=tzdata
-pkgver=2012c
+pkgver=2013b
 pkgrel=1
 pkgdesc="Sources for time zone and daylight saving time data"
 arch=('any')
 url="http://www.iana.org/time-zones"
 license=('GPL')
 options=('!emptydirs')
-source=(#http://www.iana.org/time-zones/repository/releases/${pkgname}${pkgver}.tar.gz
-        ftp://munnari.oz.au/pub/${pkgname}${pkgver}.tar.gz)
-sha1sums=('e0cd9c2cc0ac8d90ed842133b910d4bb3bc1a6dd')
+source=("http://www.iana.org/time-zones/repository/releases/${pkgname}${pkgver}.tar.gz")
+sha1sums=('b2c08566efdbd9efd7a84ab2ba11aa3465577daa')
 
 timezones=('africa' 'antarctica' 'asia' 'australasia'
            'europe' 'northamerica' 'southamerica'

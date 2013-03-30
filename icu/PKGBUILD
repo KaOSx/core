@@ -1,16 +1,12 @@
-# Platform Packages for Chakra, part of chakra-project.org
+# Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
-
-# include global config
-source ../_buildscripts/${current_repo}-${_arch}-cfg.conf
+# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=icu
-pkgver=4.6
-pkgrel=3
+pkgver=50.1.2
+pkgrel=1
 pkgdesc="International Components for Unicode library"
-arch=(i686 x86_64)
+arch=('x86_64')
 url="http://www.icu-project.org/"
 license=('custom:"icu"')
 depends=('gcc-libs' 'sh')
@@ -18,16 +14,25 @@ source=(http://download.icu-project.org/files/${pkgname}4c/${pkgver}/${pkgname}4
 	#http://download.icu-project.org/files/${pkgname}4c/${pkgver}/${pkgname}4c-${pkgver/./_}-src.tgz
         icu.8198.revert.icu5431.patch
 )
-md5sums=('43e56b71c407be5154de681eaa646a4a' 
-         '685f0c5ff76bc50f930ffb67bbd27eb3')
+md5sums=('beb98aa972219c9fcd9c8a71314943c9'
+         'ebd5470fc969c75e52baf4af94a9ee82')
 
 build() {
   cd ${srcdir}/icu/source
   # fix Malayalam encoding https://bugzilla.redhat.com/show_bug.cgi?id=654200
   patch -Rp3 -i ${srcdir}/icu.8198.revert.icu5431.patch
   ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
-  make || return 1
-  make -j1 DESTDIR=${pkgdir} install || return 1 
+  make 
+}
+
+check() {
+  cd "$srcdir/icu/source"
+  make -k check # passes all
+}
+
+package() {
+  cd ${srcdir}/icu/source
+  make -j1 DESTDIR=${pkgdir} install 
 
   # Install license
   install -Dm644 ${srcdir}/icu/license.html ${pkgdir}/usr/share/licenses/icu/license.html

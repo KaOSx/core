@@ -5,18 +5,18 @@
 # maintainer : Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=('ruby' 'ruby-docs')
-pkgver=1.9.3_p194
-_pkgver=1.9.3-p194
-pkgrel=2
+pkgver=1.9.3_p392
+_pkgver=1.9.3-p392
+pkgrel=1
 pkgdesc="An object-oriented language for quick and easy programming"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.ruby-lang.org/en/"
 license=('custom')
 makedepends=('gdbm' 'db' 'openssl' 'zlib' 'readline' 'tk' 'libffi'
              'doxygen' 'graphviz' 'libyaml')
 options=('!emptydirs')
 source=("ftp://ftp.ruby-lang.org/pub/ruby/1.9/${pkgname}-${_pkgver}.tar.bz2")
-md5sums=('2278eff4cfed3cbc0653bc73085caa34')
+md5sums=('a810d64e2255179d2f334eb61fb8519c')
 
 build() {
   cd "${srcdir}/${pkgname}-${_pkgver}"
@@ -28,8 +28,7 @@ build() {
   make
 }
 
-package_ruby()
-{
+package_ruby() {
   depends=('gdbm' 'db' 'openssl' 'zlib' 'readline' 'libffi' 'libyaml')
   provides=('rubygems' 'rake')
   conflicts=('rubygems' 'rake')
@@ -40,13 +39,13 @@ package_ruby()
   install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
 }
 
-package_ruby-docs()
-{
+package_ruby-docs() {
   pkgdesc="Documentation files for ruby"
-  #arch=('any')
+
   depends=('ruby')
 
-  cd "${srcdir}/${pkgname}-${_pkgver}"
+  cd "${srcdir}/ruby-${_pkgver}"
   make -j1 DESTDIR="${pkgdir}" install-doc install-capi
-  install -Dm644 COPYING "${pkgdir}/usr/share/licenses/ruby-docs/COPYING"
+  install -Dm644 COPYING "${pkgdir}/usr/share/licenses/ruby-docs/LICENSE"
+  install -D -m644 BSDL "${pkgdir}/usr/share/licenses/ruby-docs/BSDL"
 }

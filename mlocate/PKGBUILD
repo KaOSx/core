@@ -1,29 +1,24 @@
 #
-# Chakra Packages for Chakra, part of chakra-project.org
+# Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# maintainer: abveritas@chakra-project.org
 
 pkgname=mlocate
-pkgver=0.24
-pkgrel=2
+pkgver=0.26
+pkgrel=1
 pkgdesc="Faster merging drop-in for slocate"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://carolina.mff.cuni.cz/~trmac/blog/mlocate"
 license=('GPL')
-conflicts=('slocate')
-provides=('slocate')
-replaces=('slocate')
 depends=('glibc' 'coreutils' 'sh')
 backup=('etc/updatedb.conf'
         'etc/cron.daily/updatedb')
-install=mlocate.install
-source=(https://fedorahosted.org/releases/m/l/mlocate/mlocate-$pkgver.tar.xz
-	updatedb.conf
-	updatedb.cron.daily)
-md5sums=('a9c221e5bc489a2ed710c943990137bd'
+source=("https://fedorahosted.org/releases/m/l/mlocate/mlocate-$pkgver.tar.xz"
+	'updatedb.conf'
+	'updatedb.cron')
+md5sums=('539e6f86bf387358aa2b14d5f880e49a'
          '66898efb290eff4efd44a0b94fe3927d'
-         'cde5da81bebad2de556ef2e43d895e13')
+         '4298849f2cdfc43f5403fda15581e265')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
@@ -44,7 +39,7 @@ package() {
   
   # Set up a default updatedb.conf and a daily cronjob
   install -Dm644 ${srcdir}/updatedb.conf $pkgdir/etc/updatedb.conf
-  install -Dm744 ${srcdir}/updatedb.cron.daily $pkgdir/etc/cron.daily/updatedb
+  install -Dm744 ${srcdir}/updatedb.cron $pkgdir/etc/cron.daily/updatedb
 
   # Install Mlocate
   make DESTDIR=$pkgdir install

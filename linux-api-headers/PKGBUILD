@@ -6,8 +6,8 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=linux-api-headers
-pkgver=3.2.8
-_basever=3.2
+pkgver=3.5.6
+_basever=3.5
 pkgrel=1
 pkgdesc="Kernel headers sanitized for use in userspace"
 arch=('i686' 'x86_64')
@@ -18,12 +18,12 @@ conflicts=('kernel-headers')
 replaces=('kernel-headers')
 source=(http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basever}.tar.xz
 	http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz)
-md5sums=('364066fa18767ec0ae5f4e4abcf9dc51'
-         '417b97cdd9e8b2664eb31260dbbcdc72')
+md5sums=('24153eaaa81dedc9481ada8cd9c3b83d'
+         'e9502f047c251db3b0c911e53344bad5')
 
 build() {
   cd ${srcdir}/linux-${_basever}
-  [[ $pkgver != $_basever ]] && patch -Np1 -i ${srcdir}/patch-${pkgver}
+  [[ $pkgver != $_basever ]] && patch -p1 -i ${srcdir}/patch-${pkgver}
 
   make mrproper
   make headers_check
@@ -34,8 +34,8 @@ package() {
   make INSTALL_HDR_PATH=${pkgdir}/usr headers_install
 
   # use headers from libdrm
-  rm -rf ${pkgdir}/usr/include/drm
+  rm -r ${pkgdir}/usr/include/drm
   
   # clean-up unnecessary files generated during install
-  find ${pkgdir} -name .install -or -name ..install.cmd -print0 | xargs -0 rm -f
+  find ${pkgdir} \( -name .install -o -name ..install.cmd \) -delete
 }

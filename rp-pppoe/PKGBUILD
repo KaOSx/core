@@ -3,8 +3,8 @@
 # Maintainer:
 
 pkgname=rp-pppoe
-pkgver=3.10
-pkgrel=6
+pkgver=3.11
+pkgrel=1
 pkgdesc="Roaring Penguin's Point-to-Point Protocol over Ethernet client"
 arch=('i686' 'x86_64')
 url="http://www.roaringpenguin.com/pppoe/"
@@ -12,29 +12,23 @@ license=('GPL')
 groups=('base')
 depends=('ppp>=2.4.5' 'sh')
 options=('!makeflags')
-backup=(etc/ppp/pppoe.conf etc/ppp/firewall-standalone etc/ppp/firewall-masq etc/ppp/pppoe-server-options)
-source=(http://www.roaringpenguin.com/files/download/rp-pppoe-$pkgver.tar.gz adsl)
-install=rp-pppoe.install
-md5sums=('d58a13cc4185bca6121a606ff456dec0'
-         'adace1ad441aa88dcb3db52fb7f9c97f')
+backup=(etc/ppp/{pppoe.conf,firewall-standalone,firewall-masq,pppoe-server-options})
+source=("http://www.roaringpenguin.com/files/download/rp-pppoe-${pkgver}.tar.gz"
+        'adsl.service')
+install=${pkgname}.install
+sha256sums=('86a1a4d92fcea74fa6dd45516c5975933fa978b36fafe71f76ea70b4b4747720'
+            '0247cd38b933da5033cf5229e695b29514dfc13f4c65ebd8ba03da65f4b2cff0')
 
 build() {
-  cd $srcdir/$pkgname-$pkgver/src
-  ./configure --prefix=/usr --enable-plugin=/ppp-2.4.4
-  make || return 1
+  cd "${srcdir}/${pkgname}-${pkgver}/src"
+  ./configure --prefix=/usr \
+              --enable-plugin
+  make
 }
 
 package() {
-  cd $srcdir/$pkgname-$pkgver/src
-  make DESTDIR=$pkgdir install
+  cd "${srcdir}/${pkgname}-${pkgver}/src"
+  make PLUGIN_DIR="/usr/lib/rp-pppoe" DESTDIR="${pkgdir}" install
   
-  #moving .so files to /usr/lib according to FS#13876
-  mkdir -p ${pkgdir}/usr/lib/rp-pppoe
-  mv ${pkgdir}/etc/ppp/plugins/rp-pppoe.so ${pkgdir}/usr/lib/rp-pppoe/
-  #not necessary after moving the plugin
-  rm -rf ${pkgdir}/etc/ppp/plugins
-  #changing config to the new path
-  #sed -i 's/LINUX_PLUGIN=/LINUX_PLUGIN=\/usr\/lib\/rp-pppoe\/rp-pppoe.so/g' ${pkgdir}/etc/ppp/pppoe.conf
-  
-  install -Dm755 $srcdir/adsl $pkgdir/etc/rc.d/adsl
+  install -Dm755 "${srcdir}/adsl.service" "${pkgdir}/usr/lib/systemd/system/adsl.service"
 }

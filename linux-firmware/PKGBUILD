@@ -5,8 +5,8 @@
 # maintainer Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=linux-firmware
-pkgver=20120722
-_b43=4.178.10.4
+pkgver=20130221
+_b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
 pkgdesc="Firmware files for Linux"
@@ -18,6 +18,7 @@ provides=('kernel26-firmware=3.1.99' 'linux-firmware=3.1.99')
 conflicts=('linux-firmware-git'
            'kernel26-firmware'
            'ar9170-fw'
+           'carl9170-fw'
            'iwlwifi-1000-ucode'
            'iwlwifi-3945-ucode'
            'iwlwifi-4965-ucode'
@@ -31,6 +32,7 @@ conflicts=('linux-firmware-git'
            'b43-firmware-legacy')
 replaces=('kernel26-firmware'
            'ar9170-fw'
+           'carl9170'
            'iwlwifi-1000-ucode'
            'iwlwifi-3945-ucode'
            'iwlwifi-4965-ucode'
@@ -46,8 +48,8 @@ options=(!strip emptydirs)
 source=("http://chakra.sourceforge.net/sources/linux-firmware/$pkgname-$pkgver.tar.xz"
         "http://mirror2.openwrt.org/sources/broadcom-wl-${_b43}.tar.bz2"
         "http://downloads.openwrt.org/sources/wl_apsta-${_legacy}.o")
-sha256sums=('74e5d6cc89704a5b8d1e5848911ff330cdf20a19f6ccf0d8d4529c277314d8a6'
-            '32f6ad98facbb9045646fdc8b54bb03086d204153253f9c65d0234a5d90ae53f'
+sha256sums=('e1e47de6b9eb101994d269794ba8cb640e9ac01e15fa5c8e9c4f3ac22a07325f'
+            'f1e7067aac5b62b67b8b6e4c517990277804339ac16065eb13c731ff909ae46f'
             '7dba610b1d96dd14e901bcbce14cd6ecd1b1ac6f5c0035b0d6b6dc46a7c3ef90')
 
 # create tarball: source PKGBUILD && mksource

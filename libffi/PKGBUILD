@@ -4,17 +4,17 @@
 # maintainer abveritas@chakra-project.org
 
 pkgname=libffi
-pkgver=3.0.10
+pkgver=3.0.12
 pkgrel=1
 pkgdesc="A portable, high level programming interface to various calling conventions."
-arch=('i686' 'x86_64')
+arch=('x86_64')
 license=('MIT')
 url="http://sourceware.org/libffi"
 depends=('glibc')
 options=('!libtool')
 install=libffi.install
-source=(ftp://sourceware.org/pub/libffi/libffi-${pkgver}.tar.gz)
-md5sums=('79390673f5d07a8fb342bc09b5055b6f')
+source=("ftp://sourceware.org/pub/libffi/libffi-${pkgver}.tar.gz")
+md5sums=('da984c6756170d50f47925bb333cda71')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"

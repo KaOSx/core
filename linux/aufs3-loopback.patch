@@ -1,7 +1,7 @@
-aufs3 loopback patch
+aufs3.7 loopback patch
 
 diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index bbca966..8dfc881 100644
+index 54046e5..b0f8b8b 100644
 --- a/drivers/block/loop.c
 +++ b/drivers/block/loop.c
 @@ -500,7 +500,7 @@ out:
@@ -165,7 +165,7 @@ index bbca966..8dfc881 100644
  	gfp_t gfp = lo->old_gfp_mask;
  	struct block_device *bdev = lo->lo_device;
  
-@@ -990,6 +1023,7 @@ static int loop_clr_fd(struct loop_device *lo)
+@@ -1003,6 +1036,7 @@ static int loop_clr_fd(struct loop_device *lo)
  
  	spin_lock_irq(&lo->lo_lock);
  	lo->lo_backing_file = NULL;
@@ -173,7 +173,7 @@ index bbca966..8dfc881 100644
  	spin_unlock_irq(&lo->lo_lock);
  
  	loop_release_xfer(lo);
-@@ -1030,6 +1064,8 @@ static int loop_clr_fd(struct loop_device *lo)
+@@ -1043,6 +1077,8 @@ static int loop_clr_fd(struct loop_device *lo)
  	 * bd_mutex which is usually taken before lo_ctl_mutex.
  	 */
  	fput(filp);
@@ -183,10 +183,10 @@ index bbca966..8dfc881 100644
  }
  
 diff --git a/fs/aufs/f_op.c b/fs/aufs/f_op.c
-index 942e71a..3d6a919 100644
+index 5c35454..88f507b 100644
 --- a/fs/aufs/f_op.c
 +++ b/fs/aufs/f_op.c
-@@ -355,7 +355,7 @@ static ssize_t aufs_splice_read(struct file *file, loff_t *ppos,
+@@ -352,7 +352,7 @@ static ssize_t aufs_splice_read(struct file *file, loff_t *ppos,
  	err = -EINVAL;
  	h_file = au_hf_top(file);
  	get_file(h_file);
@@ -196,7 +196,7 @@ index 942e71a..3d6a919 100644
  		if (file->f_mapping != h_file->f_mapping) {
  			file->f_mapping = h_file->f_mapping;
 diff --git a/fs/aufs/loop.c b/fs/aufs/loop.c
-index 317f0e4..45215c2 100644
+index 4fa75a4..a923899 100644
 --- a/fs/aufs/loop.c
 +++ b/fs/aufs/loop.c
 @@ -131,3 +131,19 @@ void au_loopback_fin(void)
@@ -220,7 +220,7 @@ index 317f0e4..45215c2 100644
 +	return f;
 +}
 diff --git a/fs/aufs/loop.h b/fs/aufs/loop.h
-index b7af6a7..7a50e6e 100644
+index 88d019c..8707c3a 100644
 --- a/fs/aufs/loop.h
 +++ b/fs/aufs/loop.h
 @@ -36,6 +36,8 @@ void au_warn_loopback(struct super_block *h_sb);
@@ -242,13 +242,13 @@ index b7af6a7..7a50e6e 100644
  
  #endif /* __KERNEL__ */
 diff --git a/fs/aufs/super.c b/fs/aufs/super.c
-index 53ad4c2..aeca21f 100644
+index ab4c909..8e654b8 100644
 --- a/fs/aufs/super.c
 +++ b/fs/aufs/super.c
-@@ -780,7 +780,10 @@ static const struct super_operations aufs_sop = {
- 	.show_options	= aufs_show_options,
+@@ -811,7 +811,10 @@ static const struct super_operations aufs_sop = {
  	.statfs		= aufs_statfs,
  	.put_super	= aufs_put_super,
+ 	.sync_fs	= aufs_sync_fs,
 -	.remount_fs	= aufs_remount_fs
 +	.remount_fs	= aufs_remount_fs,
 +#ifdef CONFIG_AUFS_BDEV_LOOP
@@ -258,10 +258,10 @@ index 53ad4c2..aeca21f 100644
  
  /* ---------------------------------------------------------------------- */
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 25c40b9..32f80a0 100644
+index 70a766ae..31fcb91 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
-@@ -1709,6 +1709,10 @@ struct super_operations {
+@@ -1619,6 +1619,10 @@ struct super_operations {
  	int (*bdev_try_to_free_page)(struct super_block*, struct page*, gfp_t);
  	int (*nr_cached_objects)(struct super_block *);
  	void (*free_cached_objects)(struct super_block *, int);
@@ -273,10 +273,10 @@ index 25c40b9..32f80a0 100644
  
  /*
 diff --git a/include/linux/loop.h b/include/linux/loop.h
-index 11a41a8..c190b78 100644
+index 6492181..2b61d6a 100644
 --- a/include/linux/loop.h
 +++ b/include/linux/loop.h
-@@ -48,7 +48,7 @@ struct loop_device {
+@@ -44,7 +44,7 @@ struct loop_device {
  	int		(*ioctl)(struct loop_device *, int cmd, 
  				 unsigned long arg); 
  

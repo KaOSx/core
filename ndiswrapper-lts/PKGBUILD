@@ -10,15 +10,15 @@ _kver="$(cat /lib/modules/${_extramodules}/version)"
 pkgname=ndiswrapper-lts
 _pkgname=ndiswrapper
 pkgver=1.57
-pkgrel=4
+pkgrel=7
 pkgdesc="Module for NDIS (Windows Network Drivers) drivers supplied by vendors. For linux-testing."
 license=('GPL')
-arch=(i686 x86_64)
+arch=('x86_64')
 url="http://ndiswrapper.sourceforge.net"
 install="ndiswrapper.install"
 depends=('linux-lts>=3.0' 'linux-lts<3.1' 'ndiswrapper')
 makedepends=('linux-lts-headers')
-source=(http://downloads.sourceforge.net/sourceforge/ndiswrapper/ndiswrapper-$pkgver.tar.gz)
+source=("http://downloads.sourceforge.net/sourceforge/ndiswrapper/ndiswrapper-$pkgver.tar.gz")
 md5sums=('7a401dc540938bf07893c67f418b6152')
 
 build() {

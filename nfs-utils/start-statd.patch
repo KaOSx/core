@@ -19,5 +19,4 @@
 +[ -f /etc/conf.d/nfs-common.conf ] && . /etc/conf.d/nfs-common.conf
 +
 +exec /usr/sbin/rpc.statd $STATD_OPTS
-
  

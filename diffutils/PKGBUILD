@@ -1,22 +1,22 @@
 #
-# Chakra Packages for Chakra, part of chakra-project.org
+# Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Drake Justice <djustice[at]chakra-linux[dot]org>
+# maintainer: abveritas@chakra-project.org
 
 
 pkgname=diffutils
 pkgver=3.2
 pkgrel=1
 pkgdesc="Utility programs used for creating patch files"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.gnu.org/software/diffutils"
 license=('GPL3')
 groups=('base')
 depends=('glibc' 'sh')
 install=diffutils.install
-source=(ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz)
-md5sums=('26ff64c332429c830c154be46b393382')
+source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"{,.sig})
+md5sums=('26ff64c332429c830c154be46b393382'
+         '6f7560ae92525d3f2e64dbc8bf0e9023')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}

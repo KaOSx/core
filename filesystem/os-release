@@ -1,7 +1,8 @@
 NAME="The Chakra-Project"
+VERSION="Benz"
 ID=chakra
-PRETTY_NAME="The Chakra-Project"
+PRETTY_NAME="The Chakra-Project (Benz)"
 ANSI_COLOR="0;36"
-HOME_URL="https://www.chakra-project.org/"
-
+HOME_URL="http://www.chakra-linux.org/"
+BUG_REPORT_URL="http://chakra-linux.org/bugs/"
 

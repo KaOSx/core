@@ -1,29 +1,27 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# Maintainer: abveritas[at]chakra-project[dot]org>
 
 pkgname=autogen
-pkgver=5.12
+pkgver=5.17.2
 pkgrel=1
 pkgdesc="A tool designed to simplify the creation and maintenance of programs that contain large amounts of repetitious text"
-arch=(i686 x86_64)
+arch=('x86_64')
 url="http://autogen.sourceforge.net/"
 license=('GPL3')
-depends=('guile>=1.8.8' 'libxml2>=2.7.3' 'libtool>=2.2.6a')
-options=('!libtool' '!makeflags')
+depends=('guile>=1.8.8' 'libxml2' 'libtool')
+options=('!libtool')
 install=autogen.install
-source=(ftp://ftp.gnu.org/gnu/${pkgname}/rel${pkgver}/${pkgname}-${pkgver}.tar.bz2)
-md5sums=('126e56be629cda747390e8ba9be71e4b')
+source=("http://ftp.gnu.org/gnu/${pkgname}/rel${pkgver}/${pkgname}-${pkgver}.tar.xz")
+md5sums=('567dd065d24294c5c31517e399c2fcf5')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  ./configure --prefix=/usr || return 1
-  make || return 1
+  
+  ./configure --prefix=/usr 
+  make 
 }
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  make DESTDIR="${pkgdir}" install || return 1
+  
+  make DESTDIR="${pkgdir}" install 
 } 

@@ -5,9 +5,9 @@
 
 pkgname=cloog
 pkgver=0.17.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Library that generates loops for scanning polyhedra"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.bastoul.net/cloog/"
 license=('GPL')
 depends=('isl' 'gmp')
@@ -31,4 +31,3 @@ package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   make DESTDIR="${pkgdir}/" install
 }
-

@@ -1,23 +1,20 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# maintainer: <abveritas[at]chakra-project[dot]org>
 
 pkgname=gperf
 pkgver=3.0.4
-pkgrel=3
+pkgrel=4
 pkgdesc="Perfect hash function generator."
-arch=('x86_64' 'i686')
+arch=('x86_64')
 url="http://www.gnu.org/software/gperf/"
 license=('GPL3')
 depends=('gcc-libs' 'texinfo')
 install=gperf.install
-source=(ftp://ftp.gnu.org/gnu/gperf/${pkgname}-${pkgver}.tar.gz)
+source=("ftp://ftp.gnu.org/gnu/gperf/${pkgname}-${pkgver}.tar.gz")
 md5sums=('c1f1db32fb6598d6a93e6e88796a8632')
 
 build() {
   cd "${srcdir}"/${pkgname}-${pkgver}
+  
   ./configure --prefix=/usr \
     --docdir=/usr/share/gperf/doc/
   make
@@ -25,6 +22,6 @@ build() {
 
 package() {
   cd "${srcdir}"/${pkgname}-${pkgver}
+  
   make DESTDIR="${pkgdir}" install
-  gzip "${pkgdir}"/usr/share/info/gperf.info
 }

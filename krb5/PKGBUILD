@@ -1,12 +1,11 @@
 #
 # Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=krb5
-pkgver=1.9.3
-pkgrel=2
+pkgver=1.10.3
+pkgrel=1
 pkgdesc="The Kerberos network authentication system"
 arch=('i686' 'x86_64')
 url="http://web.mit.edu/kerberos/"
@@ -17,29 +16,31 @@ provides=('heimdal')
 replaces=('heimdal')
 conflicts=('heimdal')
 backup=('etc/krb5.conf' 'var/lib/krb5kdc/kdc.conf')
-source=(http://web.mit.edu/kerberos/dist/${pkgname}/1.9/${pkgname}-${pkgver}-signed.tar
-        krb5-kadmind
-        krb5-kadmind.service
-        krb5-kdc
-        krb5-kdc.service
-	krb5-kpropd
-	krb5-kpropd.service
-	krb5-kpropd@.service
-	krb5-kpropd.socket)
-sha1sums=('01a14c0cb59ae558451772d6700ea420ae8b0ab0'
-          '2aa229369079ed1bbb201a1ef72c47bf143f4dbe'
-          'a2a01e7077d9e89cda3457ea0e216debb3dc353c'
-          '77d2312ecd8bf12a6e72cc8fd871a8ac93b23393'
-          'f5e4fa073e11b0fcb4e3098a5d58a4f791ec841e'
-          '7f402078fa65bb9ff1beb6cbbbb017450df78560'
-          '614401dd4ac18e310153240bb26eb32ff1e8cf5b'
-          '023a8164f8ee7066ac814486a68bc605e79f6101'
-          'f3677d30dbbd7106c581379c2c6ebb1bf7738912')
+source=("http://web.mit.edu/kerberos/dist/${pkgname}/1.10/${pkgname}-${pkgver}-signed.tar"
+        'krb5-1.10.1-gcc47.patch'
+        'krb5-kadmind.service'
+        'krb5-kdc.service'
+	'krb5-kpropd.service'
+	'krb5-kpropd@.service'
+	'krb5-kpropd.socket')
+md5sums=('a31eaa949d663cccca6b790af4573368'
+         '88c7ffb6b2e28d1123eef2c94f42e7b1'
+         'd2c898d376ebe5c62b873da7cab0f7e7'
+         'f0245d33083337f95654f4caf1d32f57'
+         '3dddf2f79ef74c4e736711e41228ee91'
+         'babefac221331f7131a29faac33cc5bc'
+         '5b9cee689e4f8085d39ef4e05f1ddd9a')
 options=('!emptydirs')
 
 build() {
    tar zxvf ${pkgname}-${pkgver}.tar.gz
    cd "${srcdir}/${pkgname}-${pkgver}/src"
+   
+   # gcc47 build error messages
+   patch -p2 -i ../../krb5-1.10.1-gcc47.patch
+   rm lib/krb5/krb/deltat.c
+
+   sed -i "/KRB5ROOT=/s/\/local//" util/ac_check_krb5.m4
 
    export CFLAGS+=" -fPIC -fno-strict-aliasing -fstack-protector-all"
    export CPPFLAGS+=" -I/usr/include/et"
@@ -52,7 +53,8 @@ build() {
                --disable-rpath \
                --without-tcl \
                --enable-dns-for-realm \
-               --with-ldap
+               --with-ldap \
+               --without-system-verto
    make
 }
 
@@ -63,13 +65,12 @@ package() {
    # Sample KDC config file
    install -dm 755 "${pkgdir}"/var/lib/krb5kdc
    install -pm 644 config-files/kdc.conf "${pkgdir}"/var/lib/krb5kdc/kdc.conf
+   
+   install -m 644 plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} "${pkgdir}"/usr/share/doc/${pkgname}/examples
 
    # Default configuration file
    install -dm 755 "${pkgdir}"/etc
    install -pm 644 config-files/krb5.conf "${pkgdir}"/etc/krb5.conf
-
-   install -dm 755 "${pkgdir}"/etc/rc.d
-   install -m 755 ../../krb5-{kdc,kpropd,kadmind} "${pkgdir}"/etc/rc.d
 
    install -Dm644 "${srcdir}"/${pkgname}-${pkgver}/NOTICE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
 

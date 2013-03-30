@@ -1,23 +1,34 @@
 #
 # Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# maintainer abveritas[at]chakra-project[dot]org>
+
 pkgname=libevent
-pkgver=2.0.10
+pkgver=2.0.21
 pkgrel=2
 pkgdesc="An event notification library"
 license=('GPL2')
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.monkey.org/~provos/libevent/"
 depends=('openssl')
-source=("http://www.monkey.org/~provos/libevent-$pkgver-stable.tar.gz")
-options=(!libtool)
-md5sums=('a37401d26cbbf28185211d582741a3d4')
-
+source=(https://github.com/downloads/${pkgname}/${pkgname}/${pkgname}-$pkgver-stable.tar.gz{,.asc})
+md5sums=('b2405cc9ebf264aa47ff615d9de527a2'
+         '31ffa4efc611c452697bd120a3bf8f9e')
+         
 build() {
-  cd $srcdir/$pkgname-$pkgver-stable
+  cd "${srcdir}/${pkgname}-${pkgver}-stable"
+  sed -i 's#python#python2#' event_rpcgen.py
   ./configure --prefix=/usr --sysconfdir=/etc
-  make || return 1
-  make DESTDIR=$pkgdir install || return 1
+  make 
 }
+
+check() {
+  cd "${srcdir}/${pkgname}-${pkgver}-stable"
+  make check || true 
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}-stable"
+  make DESTDIR="${pkgdir}" install
+}
+

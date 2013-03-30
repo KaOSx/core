@@ -3,17 +3,17 @@
 #
 # maintainer abveritas@chakra-project.org
 
-_extramodules=extramodules-3.4-CHAKRA
+_extramodules=extramodules-3.7-CHAKRA
 _kver="$(cat /lib/modules/${_extramodules}/version)"
 
 pkgname=tiacx
 pkgver=20080210
-pkgrel=37
+pkgrel=43
 pkgdesc="OpenSource module for Texas Instruments ACX100/ACX111 wireless chips. For stock chakra kernel"
-arch=(i686 x86_64)
+arch=('x86_64')
 url="http://acx100.sourceforge.net/"
 license=('MPL')
-depends=('wireless_tools' 'linux>=3.4' 'linux<3.5' 'tiacx-firmware')
+depends=('wireless_tools' 'linux>=3.7' 'linux<3.8' 'tiacx-firmware')
 makedepends=('linux-headers')
 install=acx.install
 source=(http://downloads.sourceforge.net/sourceforge/acx100/acx-$pkgver.tar.bz2

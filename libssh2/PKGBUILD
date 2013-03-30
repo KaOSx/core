@@ -1,32 +1,32 @@
 #
 # Platform packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=libssh2
-pkgver=1.2.7
-pkgrel=2
+pkgver=1.4.3
+pkgrel=1
 pkgdesc="A library implementing the SSH2 protocol as defined by Internet Drafts"
 url="http://www.libssh2.org/"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 license=('BSD')
 depends=('openssl')
 makedepends=('zlib')
 options=('!libtool')
-source=("http://www.libssh2.org/download/$pkgname-$pkgver.tar.gz")
-md5sums=('a5d78344886f1282e4008c09bf568076')
+source=("http://www.libssh2.org/download/$pkgname-$pkgver.tar.gz"{,.asc})
+md5sums=('071004c60c5d6f90354ad1b701013a0b'
+         'bd01eca1e58c15233d69dae411dd2656')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
-  ./configure --prefix=/usr || return 1
-  make || return 1
+  ./configure --prefix=/usr 
+  make 
 }
 
 package() {
   cd ${srcdir}/${pkgname}-${pkgver}
-  make DESTDIR=${pkgdir} install || return 1
+  make DESTDIR=${pkgdir} install 
   
   install -Dm644 COPYING \
-    ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE || return 1
+    ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE 
 }

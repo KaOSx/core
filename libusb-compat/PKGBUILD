@@ -1,17 +1,14 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
 # maintainer: abveritas@chakra-project.org
 
 pkgname=libusb-compat
 pkgver=0.1.4
-pkgrel=1
+pkgrel=2
 depends=('libusbx' 'sh')
 pkgdesc="Library to enable user space application programs to communicate with USB devices."
-arch=(i686 x86_64)
+arch=('x86_64')
 url="http://libusb.sourceforge.net/"
 license=('LGPL')
-source=(http://downloads.sourceforge.net/libusb/libusb-compat-0.1/$pkgname-$pkgver/${pkgname}-${pkgver}.tar.bz2)
+source=("http://downloads.sourceforge.net/libusb/libusb-compat-0.1/$pkgname-$pkgver/${pkgname}-${pkgver}.tar.bz2")
 options=('!libtool')
 md5sums=('2ca521fffadd0c28fdf174e6ec73865b')
 

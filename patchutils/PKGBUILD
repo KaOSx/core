@@ -1,19 +1,19 @@
 #
-# Chakra Packages for Chakra, part of chakra-project.org
+# Core Packages for Chakra, part of chakra-project.org
 #
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
+# maintainer: abveritas@chakra-project.org
 
 pkgname=patchutils
 pkgver=0.3.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A small collection of programs that operate on patch files"
 license=('GPL')
 url="http://cyberelk.net/tim/patchutils/"
 depends=('perl')
-arch=('i686' 'x86_64')
-source=(http://cyberelk.net/tim/data/patchutils/stable/$pkgname-$pkgver.tar.bz2)
-md5sums=('74607b4a28c9009c6aeeed0e91098917')
+arch=('x86_64')
+source=("http://cyberelk.net/tim/data/patchutils/stable/$pkgname-$pkgver.tar.bz2"{,.sig})
+md5sums=('74607b4a28c9009c6aeeed0e91098917'
+         '3d6427d32ffd6642af4b740c55b9e736')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
