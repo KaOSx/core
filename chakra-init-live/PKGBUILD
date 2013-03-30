@@ -1,0 +1,23 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer: abveritas[at]chakra-project[dot]org>
+
+pkgname=chakra-init-live
+pkgver=2013.02
+pkgrel=6
+pkgdesc="Live-session systemd startup scripts"
+arch=('x86_64')
+url="http://www.chakra-project.org"
+license=('GPL2')
+source=('live' 'locale_setup.sh')
+md5sums=('e757dbe814a219709d616c146a7c26a9'
+         'b283b07b589f206d34d5579183affb24')
+
+package() {
+  cd ${srcdir}
+  # setup /etc
+  mkdir ${pkgdir}/etc
+  install -m755 -t ${pkgdir}/etc live
+  install -m755 -t ${pkgdir}/etc locale_setup.sh	
+}
