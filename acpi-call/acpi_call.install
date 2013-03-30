@@ -1,0 +1,23 @@
+post_install() {
+  depmod -a
+  echo ""
+  echo "[+] modprobe acpi_call"
+  echo ">>> run /usr/bin/turn_off_gpu.sh to test/view different acpi_call functions to see if it disables your secondary/hybrid video card"
+  echo ">>> There are a few scripts to use in /usr/share/acpi_call/ - some for specific laptops => asus1215n.sh, dellL702X.sh, m11xr2.sh"
+}
+
+post_upgrade() {
+  depmod -a
+  echo ""
+  echo "[+] modprobe acpi_call"
+  echo ">>> run /usr/bin/turn_off_gpu.sh to test/view different acpi_call functions to see if it disables your secondary/hybrid video card"
+  echo ">>> There are a few scripts to use in /usr/share/acpi_call/ - some for specific laptops => asus1215n.sh, dellL702X.sh, m11xr2.sh"
+}
+
+post_remove() {
+  depmod -a
+}
+
+op=$1
+shift
+$op $*
