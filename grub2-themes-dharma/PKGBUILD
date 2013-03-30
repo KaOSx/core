@@ -1,0 +1,25 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer: abveritas[at]chakra-project[dot]org>
+
+pkgname=grub2-themes-dharma
+_pkgname=Dharma
+pkgver=1.6
+pkgrel=2
+pkgdesc="Chakra Dharma Grub2-theme."
+url="http://chakra-project.org"
+screenshot="http://ext4.files.wordpress.com/2012/08/dharma-grub-theme.png"
+arch=('any')
+license=('CC-BY-ND')
+depends=('grub2-common')
+install=${pkgname}.install
+source=("http://chakra.sourceforge.net/sources/grub2-themes/$pkgver/$_pkgname.tar.xz")
+md5sums=('d708232349e14966304c3ee4c86e6687')
+ 
+build() {
+  cd "${srcdir}"
+  
+  install -dm755 "$pkgdir/usr/share/grub/themes"
+  cp -dpr --no-preserve=ownership "${_pkgname}" "$pkgdir/usr/share/grub/themes"
+}

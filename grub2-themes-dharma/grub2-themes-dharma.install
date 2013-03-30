@@ -1,0 +1,8 @@
+post_install() {
+  cat << _EOF 
+
+==> Installation: Add theme to your /etc/default/grub: GRUB_THEME="/usr/share/grub/themes/Dharma/theme.txt"
+==> Update grub:# grub-mkconfig -o /boot/grub/grub.cfg
+
+_EOF
+}
