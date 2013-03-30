@@ -1,0 +1,8 @@
+#!/bin/bash
+[Desktop Entry]
+Type=Application
+Version=2.0
+Name=MIrror-Check
+Icon=network-server-database
+Exec=/usr/bin/mirror-check --gui
+Categories=Network;

@@ -1,0 +1,10 @@
+--- init	2012-10-13 21:19:37.000000000 +0200
++++ init2	2013-02-01 15:51:34.572131734 +0100
+@@ -77,6 +77,6 @@
+ exec env -i \
+     "TERM=$TERM" \
+     "RD_TIMESTAMP=$RD_TIMESTAMP" \
+-    /usr/bin/switch_root /new_root $init "$@"
++    /usr/bin/switch_root /new_root $init "$@" 2&>/dev/null
+ 
+ # vim: set ft=sh ts=4 sw=4 et:

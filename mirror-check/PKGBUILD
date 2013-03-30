@@ -1,0 +1,23 @@
+#
+# Chakra Packages for Chakra, part of chakra-project.org
+#
+# maintainer: abveritas[at]chakra-project[dot]org>
+
+pkgname=mirror-check
+pkgver=1.0
+pkgrel=2
+pkgdesc="Checks whether the locally used mirror is synced with the main"
+arch=('x86_64')
+url="http://www.chakra-project.org"
+license=('GPL2')
+makedepends=('asciidoc')
+source=('mirror-check' 'mirror-check.desktop')
+md5sums=('a1e0ee4816084e448a929ebe0cd761b8'
+         '5a0a0a1774ecd4808827e4c3cd6eca7c')
+
+package() {
+  cd ${srcdir}
+
+  install -m 755 -D mirror-check "$pkgdir/usr/bin/mirror-check"
+  install -Dm644 "${srcdir}/mirror-check.desktop" "${pkgdir}/usr/share/applications/mirror-check.desktop"	
+}

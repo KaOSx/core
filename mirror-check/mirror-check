@@ -1,0 +1,129 @@
+#!/bin/bash
+#
+#  Chakra Mirror-Check - Version 1.0
+#  Copyright (c) 2013 - Manuel Tortosa <manutortosa@chakra-project.org>
+#
+#  This script is licensed under the GPLv3
+
+_title="Mirror-Check"
+_repos="$(cat /etc/pacman.conf | grep -v "#" | grep -v "options" | grep "\[" | cut -d[ -f2 | cut -d] -f1 | uniq | sed "{:q;N;s/\n/ /g;t q}")"
+_parse=""
+_count=0
+_errors=""
+_mode=$(echo ${1})
+
+function select_dialog() {
+  local repo=""
+  local repostring=""  
+   
+  for repo in ${_repos[@]}; do
+    repostring="${repostring} ${repo} ${repo} on "
+  done
+   
+  _parse=$(kdialog --title "${_title}" --checklist "Repositories being checked:" ${repostring})
+  _parse=$(echo ${_parse} | sed 's/"//g') 
+  
+  for repo in $_parse; do
+    ((_count++))
+  done
+}
+
+function get_database() {
+    # Get databases
+    local mirror="$(grep '^[^#]erver' /etc/pacman.d/mirrorlist | head -1 | cut -d' ' -f3 |sed 's,$repo.*,'"${1}/x86_64/${1}.db.tar.gz,")"
+    wget -qO /tmp/.${UID}mirrordb.tmp "$mirror" 
+    local cmirror="http://chakra-project.org/repo/${1}/x86_64/${1}.db.tar.gz"
+    wget -qO /tmp/.${UID}maindb.tmp "$cmirror" 
+}
+
+function progress_dialog() {
+  local repo=""
+  local count=1
+  local mirror=""
+  local cmirror=""
+   
+  local dbusRef=$(kdialog --title "${_title}" --progressbar "Initializing..." ${_count}) 
+  for repo in $_parse; do
+    qdbus $dbusRef Set "" value $count  &>/dev/null
+    qdbus $dbusRef setLabelText "Checking repository: ${repo}"  &>/dev/null
+    ((count++))
+     
+    get_database "${repo}"
+     
+    if [[ $? != 0 ]]; then
+      _errors=$(echo -e "${_errors} <strong>[${repo}]</strong> could not be found.<br />")
+    else
+      md5sum -b /tmp/.${UID}mirrordb.tmp | sed 's/mirror/main/' > /tmp/.${UID}checkmd5.tmp
+      md5sum -c /tmp/.${UID}checkmd5.tmp >/dev/null 2>/dev/null ||
+        _errors=$(echo -e "${_errors} <strong>[${repo}]</strong> is not synced.<br />")
+    fi
+  done
+  qdbus $dbusRef close &>/dev/null
+}
+
+function results_dialog(){  
+  if [ "${_errors}" != "" ]; then
+    kdialog --title "${_title}" --sorry "Warning:<br /><br />${_errors}"  &>/dev/null
+  else
+    kdialog --title "${_title}" --msgbox "Success. Checked mirrors are synced."  &>/dev/null
+  fi
+}
+
+function cli_mode() {
+  echo " "
+  
+  if [ ! -f "/etc/pacman.conf" ]; then
+    echo -e "\e[00;31mError. Could not find '/etc/pacman.conf'\e[00m"
+    echo " "
+    exit
+  fi
+  
+  echo -e "\e[01;33mChecking ${_repos[@]}...\e[00m"
+  echo " "
+  for repo in ${_repos[@]}; do
+
+    get_database "${repo}"
+
+    if [[ $? != 0 ]]; then
+      echo "Repo '$repo' could not be found" >&2
+      continue
+    fi
+    
+    md5sum -b /tmp/.${UID}mirrordb.tmp | sed 's/mirror/main/' > /tmp/.${UID}checkmd5.tmp
+    md5sum -c /tmp/.${UID}checkmd5.tmp >/dev/null 2>/dev/null &&
+        echo -e "\e[01;37m[$repo]\e[00m \e[00;32mis synced\e[00m." ||
+        echo -e "\e[01;37m[$repo]\e[00m \e[00;31mis not synced\e[00m."
+  done
+  echo " "
+}
+
+if [ "${_mode}" == "--gui" ]; then
+  
+  if [ ! -f "/etc/pacman.conf" ]; then
+    kdialog --title "${_title}" --error "Error. Could not find '/etc/pacman.conf'"  &>/dev/null
+    exit
+  fi
+  
+  select_dialog
+  
+  if [ "${_parse}" != "" ]; then
+    progress_dialog
+    results_dialog
+  fi
+  
+elif [ "${_mode}" == "--help" ]; then
+
+  echo "${_title}"
+  echo " "
+  echo "Usage: mirror-check <flag>"
+  echo " "
+  echo "--cli   Command Line Interface mode (default)"
+  echo "--gui   KDialog GUI"
+  echo "--help  This message"
+  echo " "
+  
+else
+
+  cli_mode
+  
+fi
