@@ -1,21 +1,21 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
 # maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=libarchive
-pkgver=3.0.4
+pkgver=3.1.2
 pkgrel=1
 pkgdesc="library that can create and read several streaming archive formats"
 arch=('x86_64')
-url="http://libarchive.googlecode.com/"
+url="http://libarchive.org/"
 license=('BSD')
-depends=('zlib' 'bzip2' 'xz>=5.0.2' 'acl' 'openssl>=1.0.0' 'expat')
-source=("https://github.com/downloads/libarchive/libarchive/libarchive-${pkgver}.tar.gz")
-md5sums=('af443ca9a10ddbcbf00f7ae34ca7fc16')
+depends=('zlib' 'bzip2' 'xz' 'acl' 'openssl' 'expat' 'lzo2' 'attr')
+source=("http://libarchive.org/downloads/$pkgname-$pkgver.tar.gz"
+        '0001-mtree-fix-line-filename-length-calculation.patch')
+md5sums=('efad5a503f66329bb9d2f4308b5de98a'
+         'fda89c145bbcd793a96b06b463ef6a72')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
+  patch -p1 -i "$srcdir/0001-mtree-fix-line-filename-length-calculation.patch"
 
   ./configure --prefix=/usr --without-xml2
   make

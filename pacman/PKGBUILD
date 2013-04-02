@@ -1,31 +1,25 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer <manutortosa[at]chakra-project[dot]org>
 
 pkgname=pacman
-pkgver=4.0.2
-pkgrel=10
+pkgver=4.1.0
+pkgrel=1
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="http://www.archlinux.org/pacman/"
 license=('GPL')
 groups=('base')
-depends=('bash' 'glibc' 'libarchive>=3.0.2' 'curl>=7.19.4'
+depends=('bash' 'glibc' 'libarchive' 'curl>=7.19.4'
          'gpgme' 'pacman-mirrorlist' 'pacman-helpme')
 makedepends=('asciidoc')
 optdepends=('fakeroot: for makepkg usage as normal user')
 backup=(etc/pacman.conf etc/makepkg.conf)
 install=pacman.install
 options=(!libtool)
-source=(ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz
-        pacman.conf.x86_64
-        pacman.conf
-        makepkg.conf
-        add_categories.patch)
-md5sums=('289ba4a19a16393096e065cec1cb9b0a'
-         '5b4f1048875e50226071edf7d71ce0fa'
-         '898941a2b58152c45b00a139847606c3'
+source=("ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz"
+        'pacman.conf'
+        'makepkg.conf'
+        'add_categories.patch')
+md5sums=('a0f2b3148bee4784f21cf373cf59a0bc'
+         '87993bb352fc87436a0e9a227d92d0f1'
          '5beebe36bfc1e1f677d5ae12fcff8083'
          'a5d5c520ed75311d1875e0835563af33')
 
@@ -33,23 +27,24 @@ build() {
   cd $srcdir/$pkgname-$pkgver
   
   # add categories array support
-  patch -Np1 -i ../add_categories.patch
+  #patch -Np1 -i ../add_categories.patch
 
   ./configure --prefix=/usr --sysconfdir=/etc \
     --localstatedir=/var --enable-doc
   make
+  make -C contrib
 }
 
-check() {
-  make -C "$pkgname-$pkgver" check
-}
+#check() {
+#  make -C "$pkgname-$pkgver" check
+#}
 
 package() {
   cd $srcdir/$pkgname-$pkgver
   make DESTDIR=$pkgdir install
 
   mkdir -p $pkgdir/etc
-  install -m644 $srcdir/pacman.conf.x86_64 $pkgdir/etc/pacman.conf
+  install -m644 $srcdir/pacman.conf $pkgdir/etc/pacman.conf
   mycarch="x86_64"
   mychost="x86_64-unknown-linux-gnu"
   myflags="-march=x86-64 "

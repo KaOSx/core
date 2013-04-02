@@ -1,11 +1,8 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
 # maintainer: abveritas@chakra-project.org
 
 pkgname=mkinitcpio
 pkgver=0.11.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Modular initramfs image creation utility"
 arch=('x86_64')
 url="http://www.archlinux.org/"
@@ -19,9 +16,9 @@ optdepends=('xz: Use lzma or xz compression for the initramfs image'
 backup=('etc/mkinitcpio.conf')
 source=("ftp://ftp.archlinux.org/other/$pkgname/$pkgname-$pkgver.tar.gz"{,.sig} init.diff)
 install=mkinitcpio.install
-sha256sums=('4d65ecb827b9c07955409cdfeab3b64ec2536306961f6050e1a4fbe7ea79d150'
-            '275afca3a4ac0cc5555b5a7d4b89c71ba14ea4a9fbf2dfce63eab6d6d70c831a'
-            'dcc41986dc719a4a46b05763aa8cf29f4368d6c2f1f4286b62b8a90688b59c33')
+md5sums=('69136fe1b19d9670619be5386e808a3f'
+         '5919eab5f57f990471a7ee74584ebcd1'
+         '068a76ad6315615a3850a6a3cd4592cd')
 
 build() {
   cd "$pkgname-$pkgver"
