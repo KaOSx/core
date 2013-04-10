@@ -1,12 +1,8 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer: Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=mpfr
-_pkgver=3.1.1
-_patchlevel=p2
-pkgver=${_pkgver}.${_patchlevel}
+_pkgver=3.1.2
+#_patchlevel=p2
+pkgver=${_pkgver}
 pkgrel=1
 pkgdesc="Multiple-precision floating-point library"
 arch=('x86_64')
@@ -15,11 +11,9 @@ license=('LGPL')
 depends=('gmp>=5.0')
 options=('!libtool')
 install=mpfr.install
-source=(http://www.mpfr.org/mpfr-current/mpfr-${_pkgver}.tar.xz{,.asc}
-	mpfr-${_pkgver}-${_patchlevel}.patch)
-md5sums=('91d51c41fcf2799e4ee7a7126fc95c17'
-         '91b187a2229211e543ba6fb82a079b2c'
-         '16cb87dad37d9405953756b544943ce9')
+source=(http://www.mpfr.org/mpfr-current/mpfr-${_pkgver}.tar.xz{,.asc})
+md5sums=('e3d203d188b8fe60bb6578dd3152e05c'
+         '63d1a00bedd4fed3717115297f70d029')
 
 build() {
   cd "${srcdir}/${pkgname}-${_pkgver}"

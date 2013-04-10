@@ -1,19 +1,13 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer: Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=libmpc
 pkgver=1.0.1
-pkgrel=1
-# dash the next line if you want to skip the tests
-_test=1
+pkgrel=2
 pkgdesc="Library for the arithmetic of complex numbers with arbitrarily high precision"
 arch=('x86_64')
 url="http://www.multiprecision.org"
 license=('LGPL')
-depends=('mpfr>=3.1.1')
-options=('!libtool' 'log')
+depends=('mpfr>=3.1.2')
+options=('!libtool')
 install=libmpc.install
 source=(http://www.multiprecision.org/mpc/download/mpc-${pkgver/_/-}.tar.gz{,.sig})
 md5sums=('b32a2e1a3daa392372fbd586d1ed3679'
@@ -23,12 +17,11 @@ build() {
   cd "${srcdir}/mpc-${pkgver}"
   ./configure --prefix=/usr
   make
+}
 
-  if [ -n "${_test}" ]; then
-     echo "<<< STARTING TESTS >>>"
-     make check
-     echo "<<< ENDING TESTS >>>"
-  fi
+check() {
+  cd "${srcdir}/mpc-${pkgver}"
+  make check
 }
 
 package() {

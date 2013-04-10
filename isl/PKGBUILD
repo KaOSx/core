@@ -1,18 +1,15 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer: Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=isl
-pkgver=0.10
+pkgver=0.11.1
 pkgrel=1
 pkgdesc="Library for manipulating sets and relations of integer points bounded by linear constraints"
 arch=('x86_64')
 url="http://www.kotnet.org/~skimo/isl/"
-license=('LGPL2.1')
-options=('!libtool' 'log')
-source=(http://www.kotnet.org/~skimo/isl/${pkgname}-${pkgver}.tar.bz2)
-md5sums=('c1ece653891bb2a5f55ca25e3f4e8f35')
+depends=('gmp')
+license=('MIT')
+options=('!libtool')
+source=("http://www.kotnet.org/~skimo/isl/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('bce1586384d8635a76d2f017fb067cd2')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
@@ -30,6 +27,8 @@ package() {
   make -j1 DESTDIR="${pkgdir}/" install
   
   install -dm755 $pkgdir/usr/share/gdb/auto-load/usr/lib/
-  mv $pkgdir/{,/usr/share/gdb/auto-load/}usr/lib/libisl.so.10.0.0-gdb.py
+  mv $pkgdir/{,/usr/share/gdb/auto-load/}usr/lib/libisl.so.10.1.1-gdb.py
+  
+  install -Dm644 LICENSE $pkgdir/usr/share/licenses/isl/LICENSE
 }
 

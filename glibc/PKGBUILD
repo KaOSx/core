@@ -1,92 +1,36 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer: Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
-
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.15
-pkgrel=4
+pkgver=2.17
+pkgrel=1
 _glibcdate=20120419
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="http://www.gnu.org/software/libc"
 license=('GPL' 'LGPL')
 groups=('base')
-depends=('linux-api-headers>=3.5' 'tzdata')
+depends=('linux-api-headers>=3.7' 'tzdata')
 makedepends=('gcc>=4.7')
 backup=(etc/gai.conf
         etc/locale.gen
         etc/nscd.conf)
 options=('!strip')
 install=glibc.install
-source=(http://chakra.sourceforge.net/sources/${pkgname}/${pkgname}-${pkgver}_${_glibcdate}.tar.xz
-        glibc-2.15-do-not-install-timezone-files.patch
-        glibc-2.15-do-not-install-timezone-files-2.patch
-        glibc-__i686.patch
-        glibc-2.12.2-ignore-origin-of-privileged-program.patch
-        glibc-2.14-libdl-crash.patch
-        glibc-2.14-reexport-rpc-interface.patch
-        glibc-2.14-reinstall-nis-rpc-headers.patch
-        glibc-2.15-fix-res_query-assert.patch
-	glibc-2.15-rpcgen-cpp-path.patch
-        glibc-2.15-lddebug-scopes.patch
-        glibc-2.15-revert-c5a0802a.patch
-        glibc-2.15-scanf.patch
-        glibc-2.15-ifunc.patch
-        glibc-2.15-avx.patch
-        glibc-2.15-strcasecmp-disable-avx.patch
-        glibc-2.15-gb18030.patch
-        glibc-2.15-revert-netlink-cache.patch
-        glibc-2.15-arena.patch
-        glibc-2.15-negative-result-cache.patch
-        glibc-2.15-multiarch-x86-strcmp.patch
-        glibc-2.15-vdso.patch
-        glibc-2.15-feraiseexcept-plt.patch
-        glibc-2.15-vfprintf-nargs.patch
-        glibc-2.15-__libc_res_nquerydomain-out-of-bounds.patch
-        glibc-2.15-fmtmsg-locking.patch
-        glibc-2.15-non-signalling-comparisons.patch
-        glibc-2.15-rintf-rounding.patch
-        glibc-2.15-nearbyintf-rounding.patch
-        glibc-2.15-confstr-local-buffer-extent.patch
+source=(http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz{,.sig}
+        glibc-2.17-sync-with-linux37.patch
+        glibc-2.17-getaddrinfo-stack-overflow.patch
+        glibc-2.17-regexp-matcher-overrun.patch
         nscd.service
         nscd.tmpfiles
         locale.gen.txt
         locale-gen
         glibc.conf)
-md5sums=('c0487f4e83db1b9b30d7989fc47dbead'
-         '349227bcedb19cea008fbcb2c7e1a582'
-         '880439de2c608177ed1d749722d26820'
-         '40cd342e21f71f5e49e32622b25acc52'
-         'b042647ea7d6f22ad319e12e796bd13e'
-         '6970bcfeb3bf88913436d5112d16f588'
-         'c5de2a946215d647c8af5432ec4b0da0'
-         '55febbb72139ac7b65757df085024b83'
-         '684073467137906fb9411f4c7f00db10'
-         '8f26740c248d8b0de68eef8a00f09583'
-         '207483814b5034d9841ad090c75bedf4'
-         '62288103a28f5f779da4ee64621d81d1'
-         '34baaa90a8fcd500adfbe8c609ed81f1'
-         '66898e99bf9279db25f1d9b058116c2e'
-         '92e797af8fb7d24c856916e04c382e6c'
-         'fccb89f6628f59752278e125c35941f8'
-         '5022c0c96c770fdaf5225aa44297f13c'
-         'f65fa79b4bd2b5e7ed5563a3d1beadd3'
-         '3eae060bc0eac2a85c07956d2b799f15'
-         'a55eadc2ed4ce869a1e193f0bfb72444'
-         'a0219bb48baf56b3085c118b6db2c1a6'
-         '3d9ca85e0e8507830b3fb67cdee0c04b'
-         '3168364ac51cc7ad479eb6390a5897ff'
-         'de9399a35a9c14f793c66f1230674d67'
-         '9ea0f925e508b58042f9c1f83871be6a'
-         '56e51cd17aa23af99cba46dfadedde38'
-         'f59bd7c9dd6330bfacb3334b09ef73db'
-         '104300a586580bb340bb70162a196c80'
-         '50dc7006874cbd86ee436044752f5228'
-         '4ed0bb09c3851cd9cb5e39c946a8a334'
+md5sums=('87bf675c8ee523ebda4803e8e1cec638'
+         'SKIP'
+         'fb99380d94598cc76d793deebf630022'
+         '56d5f2c09503a348281a20ae404b7de3'
+         '200acc05961b084ee00dde919e64f82d'
          'f3fb741c73ae5fd46e03beae4e6948c9'
          'bccbe5619e75cf1d97312ec3681c605c'
          '07ac979b6ab5eeb778d55f041529d623'
@@ -103,151 +47,57 @@ mksource() {
 }
 
 build() {
-  cd ${srcdir}/glibc
+  cd ${srcdir}/${pkgname}-${pkgver}
 
-  # timezone data is in separate package (tzdata)
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=482ff4da
-  patch -p1 -i ${srcdir}/glibc-2.15-do-not-install-timezone-files.patch
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=a458e7fe
-  patch -p1 -i ${srcdir}/glibc-2.15-do-not-install-timezone-files-2.patch
+  # combination of upstream commits 318cd0b, b540704 and fc1abbe
+  patch -p1 -i ${srcdir}/glibc-2.17-sync-with-linux37.patch
 
-  # undefine __i686
-  # http://sourceware.org/glibc/wiki/Release/2.15#Build_Failures
-  patch -p1 -i ${srcdir}/glibc-__i686.patch
+  # CVE-2013-1914 - upstream commit 1cef1b19
+  patch -p1 -i ${srcdir}/glibc-2.17-getaddrinfo-stack-overflow.patch
 
-  # http://www.exploit-db.com/exploits/15274/
-  # http://sourceware.org/git/?p=glibc.git;a=patch;h=d14e6b09  (fedora branch)
-  patch -p1 -i ${srcdir}/glibc-2.12.2-ignore-origin-of-privileged-program.patch
-
-  # http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=675155e9  (fedora branch)
-  # http://sourceware.org/ml/libc-alpha/2011-06/msg00006.html
-  patch -p1 -i ${srcdir}/glibc-2.14-libdl-crash.patch
-
-  # re-export RPC interface until libtirpc is ready as a replacement
-  # http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=acee4873  (fedora branch)
-  patch -p1 -i ${srcdir}/glibc-2.14-reexport-rpc-interface.patch
-  # http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=bdd816a3  (fedora branch)
-  patch -p1 -i ${srcdir}/glibc-2.14-reinstall-nis-rpc-headers.patch
-
-  # fix res_query assertion
-  # http://sourceware.org/bugzilla/show_bug.cgi?id=13013
-  patch -p1 -i ${srcdir}/glibc-2.15-fix-res_query-assert.patch
-
-  # prevent need for /lib/cpp symlink
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=bf9b740a
-  patch -p1 -i ${srcdir}/glibc-2.15-rpcgen-cpp-path.patch
-
-  # propriety nvidia crash - https://bugzilla.redhat.com/show_bug.cgi?id=737223
-  # http://sourceware.org/git/?p=glibc.git;a=commitdiff;h=0c95ab64  (fedora branch)
-  patch -p1 -i ${srcdir}/glibc-2.15-lddebug-scopes.patch
-
-  # revert commit c5a0802a - causes various hangs
-  # https://bugzilla.redhat.com/show_bug.cgi?id=769421
-  # Note: fedora may have actual fix (not submitted upstream yet...)
-  # http://pkgs.fedoraproject.org/gitweb/?p=glibc.git;a=blob_plain;f=glibc-rh552960-2.patch
-  patch -p1 -i ${srcdir}/glibc-2.15-revert-c5a0802a.patch
-
-  # fix realloc usage in vfscanf
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=20b38e03
-  patch -p1 -i ${srcdir}/glibc-2.15-scanf.patch
-
-  # fix ifunc relocations
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=6ee65ed6
-  patch -p1 -i ${srcdir}/glibc-2.15-ifunc.patch
-
-  # fix AVX detection
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=afc5ed09
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=08cf777f
-  patch -p1 -i ${srcdir}/glibc-2.15-avx.patch
-  # and "fix" strcasecmp
-  patch -p1 -i ${srcdir}/glibc-2.15-strcasecmp-disable-avx.patch
-
-  # fix GB18030 charmap
-  # http://sourceware.org/bugzilla/show_bug.cgi?id=11837
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=2a57bd79  (fedora branch)
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=3d828a61  (fedora branch)
-  patch -p1 -i ${srcdir}/glibc-2.15-gb18030.patch
-
-  # fix crash in __nscd_get_mapping if nscd not running
-  # http://sourceware.org/bugzilla/show_bug.cgi?id=13594 (potential "fix" in comment)
-  # reverts commit 3a2c0242 and other necessary following changes...
-  patch -p1 -i ${srcdir}/glibc-2.15-revert-netlink-cache.patch
-
-  # handle ARENA_TEST correctly
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=41b81892
-  patch -p1 -i ${srcdir}/glibc-2.15-arena.patch
-
-  # Do not cache negative results in nscd if these are transient
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=3e1aa84e
-  patch -p1 -i ${srcdir}/glibc-2.15-negative-result-cache.patch
-
-  # strcasecmp_l, strncasecmp_l act as strcmp for multiarch x86
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=0bab47b6
-  patch -p1 -i ${srcdir}/glibc-2.15-multiarch-x86-strcmp.patch
-
-  # always set l_used for vDSO.
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=1f393a11
-  patch -p1 -i ${srcdir}/glibc-2.15-vdso.patch
-
-  # fix x86 PLT slot usage for feraiseexcept
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=7c35ffed
-  patch -p1 -i ${srcdir}/glibc-2.15-feraiseexcept-plt.patch
-
-  # vfprintf nargs overflow - CVE-2012-0864
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=7c1f4834
-  patch -p1 -i ${srcdir}/glibc-2.15-vfprintf-nargs.patch
-
-  # avoid out ouf bounds read in __libc_res_nquerydomain
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=8fdceb2e
-  patch -p1 -i ${srcdir}/glibc-2.15-__libc_res_nquerydomain-out-of-bounds.patch
-
-  # make fmtmsg function thread-safe
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=7724defc
-  patch -p1 -i ${srcdir}/glibc-2.15-fmtmsg-locking.patch
-
-  # use non-signaling floating-point comparisons in math functions
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=92221550
-  patch -p1 -i ${srcdir}/glibc-2.15-non-signalling-comparisons.patch
-
-  # fix rintf rounding.
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=fe45ce09
-  patch -p1 -i ${srcdir}/glibc-2.15-rintf-rounding.patch
-
-  # fix nearbyintf rounding
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=6cbeae47
-  patch -p1 -i ${srcdir}/glibc-2.15-nearbyintf-rounding.patch
-
-  # fix varaible scope issue in confstr
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=ac4c54f0
-  # http://sourceware.org/git/?p=glibc.git;a=commit;h=d6a403f9
-  patch -p1 -i ${srcdir}/glibc-2.15-confstr-local-buffer-extent.patch
-
+  # CVE-2013-0242 - upstream commit a445af0b
+  patch -p1 -i ${srcdir}/glibc-2.17-regexp-matcher-overrun.patch
+  
   cd ${srcdir}
-  rm -vRf glibc-build
   mkdir glibc-build
   cd glibc-build
 
   echo "slibdir=/lib" >> configparms
+  
+  # remove hardening options for building libraries
+  CFLAGS=${CFLAGS/-fstack-protector/}
+  CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
 
-  ${srcdir}/glibc/configure --prefix=/usr \
+  ${srcdir}/glibc-${pkgver}/configure --prefix=/usr \
       --libdir=/usr/lib --libexecdir=/usr/lib \
       --with-headers=/usr/include \
       --enable-add-ons=nptl,libidn \
       --enable-obsolete-rpc \
       --enable-kernel=2.6.32 \
-      --with-tls --with-__thread \
-      --enable-bind-now --without-gd \
-      --without-cvs --disable-profile \
+      --enable-bind-now --disable-profile \
+      --enable-stackguard-randomization \
       --enable-multi-arch
 
+  # build libraries with hardening disabled
+  echo "build-programs=no" >> configparms
   make
+  
+  # re-enable hardening for programs
+  sed -i "/build-programs=/s#no#yes#" configparms
+  echo "CC += -fstack-protector -D_FORTIFY_SOURCE=2" >> configparms
+  echo "CXX += -fstack-protector -D_FORTIFY_SOURCE=2" >> configparms
+  make
+
+  # remove harding in preparation to run test-suite
+  sed -i '2,4d' configparms
 }
 
 check() {
-  cd ${srcdir}/glibc-build
+  # bug to file - the linker commands need to be reordered
+  LDFLAGS=${LDFLAGS/--as-needed,/}
 
-  # some errors are expected - manually check log files
-  make -k check || true
+  cd ${srcdir}/glibc-build
+  make check
 }
 
 package() {
@@ -262,21 +112,18 @@ package() {
 
   install -dm755 ${pkgdir}/{,usr/{sbin,lib/{,locale,systemd/system,tmpfiles.d}}}
 
-  install -m644 ${srcdir}/glibc/nscd/nscd.conf ${pkgdir}/etc/nscd.conf
+  install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.conf ${pkgdir}/etc/nscd.conf
   sed -i -e 's/^\tserver-user/#\tserver-user/' ${pkgdir}/etc/nscd.conf
   install -m644 ${srcdir}/nscd.service ${pkgdir}/usr/lib/systemd/system
   install -m644 ${srcdir}/nscd.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/nscd.conf
 
   install -m755 ${srcdir}/locale-gen ${pkgdir}/usr/sbin
-  install -m644 ${srcdir}/glibc/posix/gai.conf ${pkgdir}/etc/gai.conf
+  install -m644 ${srcdir}/glibc-${pkgver}/posix/gai.conf ${pkgdir}/etc/gai.conf
 
   # create /etc/locale.gen
   install -m644 ${srcdir}/locale.gen.txt ${pkgdir}/etc/locale.gen
-  sed -i "s|/| |g" ${srcdir}/glibc/localedata/SUPPORTED
-  sed -i 's|\\| |g' ${srcdir}/glibc/localedata/SUPPORTED
-  sed -i "s|SUPPORTED-LOCALES=||" ${srcdir}/glibc/localedata/SUPPORTED
-  cat ${srcdir}/glibc/localedata/SUPPORTED >> ${pkgdir}/etc/locale.gen
-  sed -i "s|^|#|g" ${pkgdir}/etc/locale.gen
+  sed -e '1,3d' -e 's|/| |g' -e 's|\\| |g' -e 's|^|#|g' \
+    ${srcdir}/glibc-${pkgver}/localedata/SUPPORTED >> ${pkgdir}/etc/locale.gen
 
   # fix for the linker
   sed -i '/RTLDLIST/s%lib64%lib%' ${pkgdir}/usr/bin/ldd

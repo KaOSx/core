@@ -1,16 +1,11 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer: Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
-
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=linux-api-headers
-pkgver=3.5.6
-_basever=3.5
+pkgver=3.8.6
+_basever=3.8
 pkgrel=1
 pkgdesc="Kernel headers sanitized for use in userspace"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.gnu.org/software/libc"
 license=('GPL2')
 provides=("kernel-headers=${pkgver}")
@@ -18,8 +13,8 @@ conflicts=('kernel-headers')
 replaces=('kernel-headers')
 source=(http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basever}.tar.xz
 	http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz)
-md5sums=('24153eaaa81dedc9481ada8cd9c3b83d'
-         'e9502f047c251db3b0c911e53344bad5')
+md5sums=('1c738edfc54e7c65faeb90c436104e2f'
+         'f11748a53d4ec0e2dcbfbb64526d6434')
 
 build() {
   cd ${srcdir}/linux-${_basever}

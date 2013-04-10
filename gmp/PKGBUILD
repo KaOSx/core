@@ -1,27 +1,27 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer: Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=gmp
-pkgver=5.0.5
+pkgver=5.1.1
 pkgrel=1
 pkgdesc="A free library for arbitrary precision arithmetic"
 arch=('x86_64')
 url="http://gmplib.org/"
 depends=('gcc-libs' 'sh')
 license=('LGPL3')
-options=('!libtool' 'log')
+options=('!libtool')
 install=gmp.install
-source=(ftp://ftp.gnu.org/gnu/gmp/gmp-${pkgver}.tar.xz)
-md5sums=('8aef50959acec2a1ad41d144ffe0f3b5')
+source=("ftp://ftp.gmplib.org/pub/gmp-${pkgver}/gmp-${pkgver}.tar.xz")
+md5sums=('485b1296e6287fa381e6015b19767989')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   ./configure --build=${CHOST} \
-    --prefix=/usr --infodir=/usr/share/info \
-    --enable-cxx
+    --prefix=/usr --enable-cxx
   make
+}
+
+check() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make check
 }
 
 package() {
