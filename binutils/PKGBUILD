@@ -18,13 +18,19 @@ md5sums=('cda9dcc08c86ff2fd3f27e4adb250f6f'
          'SKIP'
          '34e439ce23213a91e2af872dfbb5094c')
 
-build() {
+prepare() {
   cd ${srcdir}/binutils-${pkgver}
 
   patch -p1 -i ${srcdir}/binutils-2.23.2-texinfo-5.0.patch
+  
+  # libiberty configure tests for header files using "$CPP $CPPFLAGS"
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
 
-  cd ${srcdir}
-  mkdir binutils-build && cd binutils-build
+  mkdir ${srcdir}/binutils-build
+}
+
+build() {
+  cd ${srcdir}/binutils-build
 
   ${srcdir}/binutils-${pkgver}/configure --prefix=/usr \
     --with-lib-path=/usr/lib:/usr/local/lib \

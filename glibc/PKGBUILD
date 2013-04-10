@@ -92,13 +92,13 @@ build() {
   sed -i '2,4d' configparms
 }
 
-check() {
+#check() {
   # bug to file - the linker commands need to be reordered
-  LDFLAGS=${LDFLAGS/--as-needed,/}
+#  LDFLAGS=${LDFLAGS/--as-needed,/}
 
-  cd ${srcdir}/glibc-build
-  make check
-}
+#  cd ${srcdir}/glibc-build
+#  make check
+#}
 
 package() {
   cd ${srcdir}/glibc-build
