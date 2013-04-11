@@ -1,11 +1,7 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=tk
 pkgver=8.6.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A windowing toolkit for use with tcl"
 arch=('x86_64')
 url="http://tcl.sourceforge.net/"

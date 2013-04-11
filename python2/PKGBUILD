@@ -1,11 +1,7 @@
-#
-# Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=python2
-pkgver=2.7.3
-pkgrel=5
+pkgver=2.7.4
+pkgrel=1
 _pybasever=2.7
 pkgdesc="A high-level scripting language"
 arch=('x86_64')
@@ -18,7 +14,7 @@ replaces=('python-elementtree' 'python-ctypes' 'python')
 conflicts=('python')
 source=("http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.bz2"
         'add-chakra-support.patch')
-md5sums=('c57477edd6d18bd9eeca2f21add73919'
+md5sums=('62704ea0f125923208d84ff0568f7d50'
          '9b47a96ffa3d18cdc864481c178aef28')
 
 build() {
@@ -34,7 +30,7 @@ build() {
 
   # Make sure platform.linux_distribution() returns the correct info,
   # reading it from /etc/chakra-release
-  patch -p1 -i "${srcdir}/add-chakra-support.patch"
+  #patch -p1 -i "${srcdir}/add-chakra-support.patch"
 
   # Ensure that we are using the system copy of various libraries (expat, zlib and libffi),
   # rather than copies shipped in the tarball
