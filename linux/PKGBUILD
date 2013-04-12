@@ -1,21 +1,16 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dog]org>
-# maintainer Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.7
-pkgver=3.7.6
-pkgrel=2
+_basekernel=3.8
+pkgver=3.8.7
+pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.7.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config.x86_64'
@@ -29,29 +24,21 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.7.tar.xz"
         'config.aufs'
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
-        'change-default-console-loglevel.patch'
-        'fat-3.6.x.patch'
-        'sp5100_tco-Add-SB8x0-chipset-support2.patch'
-        'ath3k.patch'
-        'security.patch')
-md5sums=('21223369d682bcf44bcdfe1521095983'
-         'ec61c44f37585a768d41c0439101ef9c'
-         '05befa9b6c2a91015f89d6cda6802198'
-         '2e33819e859125ba0176072d2cd5ac81'
-         '6a1ffafeacb79be96c97e4638cea2452'
-         '3074dfe1c01219b1b005a4e5f00e25cd'
-         'f18131bd568796722284557193c3a3c0'
-         'cd0a193e702bf4d607190e5249c67da8'
-         '35a09afd2e995a88d36c342ade093c27'
+        'change-default-console-loglevel.patch')
+md5sums=('1c738edfc54e7c65faeb90c436104e2f'
+         'd166692330220c425d69db82c9d693b6'
+         '101a4e6f4f0acf44ca785b73dd42f54a'
+         '52690fe8baa6d6abd858f04c4531d437'
+         '94a873436f6c62580ac54c1b9f0e021a'
+         'a2678afaf5205f24c58affd4b1570503'
+         '7693e0258036ab1c6e6a42d7ee573666'
+         'f9d33aeebb5c637eeefc222643632035'
+         '5e73a0f39d73095bdff6a9168ecc05cd'
          '52f4a2c7f6277774117c834d949d6b81'
          'eb14dcfd80c00852ef81ded6e826826a'
-         '65cbe8e4c8efaf96dd162102e46ce81d'
-         '88d501404f172dac6fcb248978251560'
-         '57ee9aa09bdec07a5ce2b553b94c7039'
-         'd393a0bbd762bf9d6f42d770b89e6811'
-         'fc4928d107d638bb106901f1bfedd684')
+         '65cbe8e4c8efaf96dd162102e46ce81d')
 
-build() {
+prepare() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
@@ -59,18 +46,6 @@ build() {
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
-
-  # fix cosmetic fat issue
-  patch -p1 -i "${srcdir}/fat-3.6.x.patch"
-  # "kernel: sp5100_tco: mmio address 0xfec000f0 already in use" error
-  # https://bugzilla.kernel.org/show_bug.cgi?id=43176
-  #patch -p1 -i "${srcdir}/sp5100_tco-Add-SB8x0-chipset-support2.patch"
-  # bug http://chakra-linux.org/bugs/index.php?do=details&task_id=501
-  patch -p1 -i "${srcdir}/ath3k.patch"
-  # Fix out-of-bounds access to sock_diag_handlerscurrent, code does not test for
-  # this condition therefore is vulnerable to an out-of-bound access opening doors
-  # for a privilege escalation
-  patch -p1 -i "${srcdir}/security.patch"
 
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
@@ -95,7 +70,11 @@ build() {
 
   # set extraversion to pkgrel
   sed -ri "s|^(EXTRAVERSION =).*|\1 -${pkgrel}|" Makefile
+}
 
+build() {
+  cd "${srcdir}/linux-${_basekernel}"
+  
   # get kernel version
   make prepare
 
@@ -126,9 +105,9 @@ package_linux() {
   groups=('base')
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
   optdepends=('crda: to set the correct wireless channels of your country')
-  provides=('nouveau-drm' 'kernel26' 'acerhk=0.5.35' 'aufs3')
-  conflicts=('kernel26' 'nvidia-96xx=96.43.20-9' 'acerhk')
-  replaces=('kernel26' 'aufs3' 'nouveau-drm')
+  provides=('acerhk=0.5.35' 'aufs3')
+  conflicts=('acerhk')
+  replaces=('aufs3')
   backup=("etc/mkinitcpio.d/${pkgname}.preset")
   install=linux.install
 
@@ -168,18 +147,15 @@ package_linux() {
   # gzip -9 all modules to save 100MB of space
   find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
   # make room for external modules
-  ln -s "../extramodules-${_basekernel}${_kernelname:--CHAKRA}" "${pkgdir}/lib/modules/${_kernver}/extramodules"
+  ln -s "../extramodules-${_basekernel}${_kernelname:-}" "${pkgdir}/lib/modules/${_kernver}/extramodules"
   # add real version for building modules and running depmod from post_install/upgrade
-  mkdir -p "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--CHAKRA}"
-  echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--CHAKRA}/version"
+  mkdir -p "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:-}"
+  echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:-}/version"
   
 }
 
 package_linux-headers() {
   pkgdesc="Header files and scripts for building modules for linux kernel"
-  provides=('kernel26-headers')
-  conflicts=('kernel26-headers')
-  replaces=('kernel26-headers')
 
   install -dm755 "${pkgdir}/lib/modules/${_kernver}"
 
@@ -309,9 +285,6 @@ package_linux-headers() {
 
 package_linux-docs() {
   pkgdesc="Kernel hackers manual - HTML documentation that comes with the Linux kernel."
-  provides=('kernel26-docs')
-  conflicts=('kernel26-docs')
-  replaces=('kernel26-docs')
 
   cd "${srcdir}/linux-${_basekernel}"
 
