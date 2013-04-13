@@ -27,7 +27,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.tar.xz"
         'change-default-console-loglevel.patch')
 md5sums=('1c738edfc54e7c65faeb90c436104e2f'
          'd166692330220c425d69db82c9d693b6'
-         '101a4e6f4f0acf44ca785b73dd42f54a'
+         '7fc6a406e61301026183d38a07c42ce8'
          '52690fe8baa6d6abd858f04c4531d437'
          '94a873436f6c62580ac54c1b9f0e021a'
          'a2678afaf5205f24c58affd4b1570503'
