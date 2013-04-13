@@ -1,11 +1,7 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=ncurses
 pkgver=5.9
-pkgrel=4
+pkgrel=5
 pkgdesc="System V Release 4.0 curses emulation library"
 arch=('x86_64')
 url="http://www.gnu.org/software/ncurses/"
@@ -36,7 +32,7 @@ build() {
       --enable-pc-files
   make 
 
-  # libncurses.so.5 for external binary support 
+  # external binary support 
   cd ${srcdir}/ncurses-build
   CONFIGFLAG="--with-chtype=long"
   "${srcdir}/${pkgname}-${pkgver}/configure" \
@@ -54,7 +50,7 @@ package() {
   cd "${srcdir}/ncursesw-build"
   make install
 
-  # Fool packages looking to link to non-wide-character ncurses libraries
+  # link to non-wide-character ncurses libraries
   for lib in curses ncurses form panel menu ; do \
     echo "INPUT(-l${lib}w)" >"${pkgdir}/usr/lib/lib${lib}.so" ; \
     ln -s "lib${lib}w.a" "${pkgdir}/usr/lib/lib${lib}.a" ; \
@@ -65,19 +61,20 @@ package() {
     ln -s ${lib}w.pc ${pkgdir}/usr/lib/pkgconfig/${lib}.pc
   done
 
-  # Some packages look for -lcurses during build
+  # look for -lcurses during build
   echo "INPUT(-lncursesw)" >"${pkgdir}/usr/lib/libcursesw.so"
   ln -sf libncurses.so "${pkgdir}/usr/lib/libcurses.so"
   ln -sf libncursesw.a "${pkgdir}/usr/lib/libcursesw.a"
   ln -sf libncurses.a "${pkgdir}/usr/lib/libcurses.a"
 
-  # non-widec compatibility library
-  cd "${srcdir}/ncurses-build"
-  install -D -m755 "lib/libncurses.so.${pkgver}" \
-                   "${pkgdir}/usr/lib/libncurses.so.${pkgver}"
-  ln -sf "libncurses.so.${pkgver}" "${pkgdir}/usr/lib/libncurses.so.5"
+   # non-widec compatibility libraries
+  cd ${srcdir}/ncurses-build
+  for lib in ncurses form panel menu; do
+    install -Dm755 lib/lib${lib}.so.${pkgver} ${pkgdir}/usr/lib/lib${lib}.so.${pkgver}
+    ln -s lib${lib}.so.${pkgver} ${pkgdir}/usr/lib/lib${lib}.so.5
+  done
 
-  # install license, rip it from the readme
+  # install license
   cd "${srcdir}/${pkgname}-${pkgver}"
   install -d -m755 "${pkgdir}/usr/share/licenses/${pkgname}"
   grep -B 100 '$Id' README > "${pkgdir}/usr/share/licenses/${pkgname}/license.txt"

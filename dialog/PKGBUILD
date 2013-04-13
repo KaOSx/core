@@ -1,28 +1,25 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=dialog
-pkgver=1.1_20110302
-pkgrel=2
+pkgver=1.2_20121230
+pkgrel=1
 pkgdesc="A tool to display dialog boxes from shell scripts"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://invisible-island.net/dialog/"
 license=('LGPL2.1')
 depends=('ncurses')
-source=(ftp://invisible-island.net/${pkgname}/${pkgname}-${pkgver/_/-}.tgz)
-md5sums=('2eaa82055b86006e205d2c3f74d9b800')
-sha1sums=('ba4e79abaf579e0d23f247ae65196437f8d8e031')
+source=("ftp://invisible-island.net/${pkgname}/${pkgname}-${pkgver/_/-}.tgz")
+md5sums=('ef823b46a68d82c42620b42ffc0c04e7')
 
 build() {
   cd "${srcdir}/$pkgname-${pkgver/_/-}"
+  
   ./configure --prefix=/usr --mandir=/usr/share/man \
               --with-ncursesw --enable-nls
-  make || return 1
+  make 
 }
 
 package() {
   cd "${srcdir}/$pkgname-${pkgver/_/-}"
+  
   make DESTDIR=${pkgdir} install install-lib
 }
