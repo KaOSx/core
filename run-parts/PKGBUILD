@@ -1,18 +1,14 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=run-parts
-pkgver=3.4
-pkgrel=2
+pkgver=4.3.4
+pkgrel=1
 pkgdesc='run scripts or programs in a directory'
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url='http://packages.qa.debian.org/d/debianutils.html'
 license=('GPL')
 depends=('glibc')
-source=("http://ftp.de.debian.org/debian/pool/main/d/debianutils/debianutils_${pkgver}.tar.gz") 
-md5sums=('0b37e6a6f318f146741a229ab4bfe93b')
+source=("ftp://ftp.archlinux.org/other/run-parts/debianutils_${pkgver}.tar.gz") 
+md5sums=('98b782faccbdd4ff8a16e7174f85ed2e')
 
 build() {
 	cd $srcdir/debianutils-$pkgver
