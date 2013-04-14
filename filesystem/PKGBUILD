@@ -1,17 +1,12 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dog]org>
-# maintainer Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=filesystem
-pkgver=2013.03
+pkgver=2013.04
 pkgrel=1
-_codename=Benz
+_codename=2013
 pkgdesc='Base filesystem'
 arch=('x86_64')
 license=('GPL')
-url='http://www.chakra-project.org'
+url='http://www.veritasfarm.net'
 groups=('base')
 install='filesystem.install'
 depends=('iana-etc' 'bash' 'coreutils')
@@ -25,7 +20,7 @@ source=('group' 'issue' 'nsswitch.conf' 'securetty' 'host.conf' 'ld.so.conf'
         'gshadow' 'profile' 'modprobe.d.usb-load-ehci-first' 'machine-info' 'os-release'
         'vconsole.conf' 'locale.sh')
 md5sums=('3b1d2710d902b222bb345433f35b766a'
-         '8266bc7566e99f2b5f5e0b5b1ac17241'
+         '72cc4758203f8496415bec298ba13a73'
          '13753e4e0964f3652b0cc60a28528bdf'
          '4c4540eeb748bf1f71d631b8c1dcf0b3'
          'f28150d4c0b22a017be51b9f7f9977ed'
@@ -42,8 +37,8 @@ md5sums=('3b1d2710d902b222bb345433f35b766a'
          '677523dbe94b79299aa91b35ed8203b6'
          'f3b6ae7db8adffaaa4bffc6099dcbd50'
          'a8a962370cd0128465d514e6a1f74130'
-         '8aba0b33527e812211b9e5f9b87887ae'
-         '290d1cf12295c9c011cf2a112fdd5cf7'
+         '4e83f889774994f4c6c1530e92c2588d'
+         '7227cc4d37c547e681b10b1bc62840cf'
          '201bbb8b4734d2f46afe1e24d7cc6173'
          '45100e8a4a6d8d4b3a7dcd34b0fa4281')
 
@@ -72,7 +67,7 @@ package() {
 	for f in gshadow shadow crypttab; do
 		install -m600 ${srcdir}/${f} etc/
 	done
-	touch etc/chakra-release
+	touch etc/KdeOs-release
 	install -D -m644 ${srcdir}/modprobe.d.usb-load-ehci-first usr/lib/modprobe.d/usb-load-ehci-first.conf
 	install -m755 ${srcdir}/locale.sh etc/profile.d/locale.sh
 

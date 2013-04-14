@@ -1,8 +1,8 @@
-NAME="The Chakra-Project"
-VERSION="Benz"
-ID=chakra
-PRETTY_NAME="The Chakra-Project (Benz)"
+NAME="KdeOS"
+VERSION="2013"
+ID=kdeos
+PRETTY_NAME="KdeOs (2013)"
 ANSI_COLOR="0;36"
-HOME_URL="http://www.chakra-linux.org/"
-BUG_REPORT_URL="http://chakra-linux.org/bugs/"
+HOME_URL="http://www.veritasfarm.net/"
+
 
