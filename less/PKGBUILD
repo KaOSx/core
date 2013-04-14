@@ -1,26 +1,25 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=less
-pkgver=443
-pkgrel=2
+pkgver=451
+pkgrel=1
 pkgdesc="A terminal based program for viewing text files"
 license=('GPL3')
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.greenwoodsoftware.com/less"
 groups=('base')
 depends=('ncurses' 'pcre')
-source=(http://www.greenwoodsoftware.com/$pkgname/$pkgname-$pkgver.tar.gz)
-md5sums=('47db098fb3cdaf847b3c4be05ee954fc')
+source=("http://www.greenwoodsoftware.com/$pkgname/$pkgname-$pkgver.tar.gz")
+md5sums=('765f082658002b2b46b86af4a0da1842')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
-  ./configure --prefix=/usr --with-regex=pcre
-  make || return 1
+  
+  ./configure --prefix=/usr --sysconfdir=/etc --with-regex=pcre
+  make
+}
+
+package() {
+  cd $srcdir/$pkgname-$pkgver
+  
   make prefix=$pkgdir/usr install
-  install -dm755 $pkgdir/bin
-  mv $pkgdir/usr/bin/$pkgname $pkgdir/bin/
 }
