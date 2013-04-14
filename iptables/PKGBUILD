@@ -1,55 +1,84 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=iptables
-pkgver=1.4.10
-pkgrel=2
+pkgver=1.4.18
+pkgrel=1
 pkgdesc="A Linux kernel packet control tool"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 license=('GPL2')
-url="http://www.netfilter.org/"
+url='http://www.netfilter.org/projects/iptables/index.html'
 depends=('glibc' 'bash')
+makedepends=('linux-api-headers' 'chrpath')
 options=('!libtool')
-source=(http://www.iptables.org/projects/iptables/files/${pkgname}-${pkgver}.tar.bz2
-        iptables
-        ip6tables
-        empty.rules
-        simple_firewall.rules
-        iptables.conf.d)
+source=("http://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.tar.bz2"
+        'iptables'
+        'ip6tables'
+        'empty.rules'
+       'simple_firewall.rules'
+        'iptables.conf.d'
+        'empty-filter.rules'
+        'empty-mangle.rules'
+        'empty-nat.rules'
+        'empty-raw.rules'
+        'empty-security.rules'
+        '0503-extension_cppflags.patch'
+        'iptables.service'
+        'ip6tables.service'
+        'iptables-flush')
 backup=(etc/conf.d/iptables)
-sha1sums=('8190b8c9714a3eec825317e8ac1deeb3d11c6d29'
-          'd7540316581bb66c5594885882a14ba394e95098'
-          '70d70113e3a23f0fe99404c5536507a887a4ca5c'
-          '83b3363878e3660ce23b2ad325b53cbd6c796ecf'
-          '9907f9e815592837abc7fa3264a401567b7606ab'
-          '1c52444ffbecc09f56bb325db49e924dd32f9213')
+md5sums=('a819199d5ec013b82da13a8ffbba857e'
+         'b33866830b9f5bc7bd97bb47c3f30048'
+         '7bfa35a013b84a504d6baa41c66647a5'
+         '14186bbafe21bb0638c0cb8e0903c829'
+         '88fe330e810bb89b3aa08747bae3e3f9'
+         '34cc92ba5ff879ce7d26f59653623cd4'
+         '3ae6e25f397195611bab943945ff31ee'
+         '60a90471364984ef43fa750d02b19e6e'
+         '07f769473723984ecd1d13ef841c0222'
+         '0e202e7eaab6692d2dcf9ea04766db5c'
+         '07423e206c5c7a61689eebf12a1dbe52'
+         '7f75e269d7efd463a0d1e4456c6b3b35'
+         '0b63db98a863cb2050e3b4596605a8ca'
+         'af1ec8be985119b2a3e1b16f1a7f5968'
+         'a19e0630d200f066522f0baef815dd75')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
 
-  # http://bugs.archlinux.org/task/17046
-  sed -i '87 i libxt_RATEEST.so: libxt_RATEEST.oo' extensions/GNUmakefile.in
-  sed -i '88 i \\t${AM_VERBOSE_CCLD} ${CCLD} ${AM_LDFLAGS} -lm -shared ${LDFLAGS} -o $@ $<;\n' extensions/GNUmakefile.in
+  # use system one
+  rm include/linux/types.h
 
- ./configure --prefix=/usr --with-kernel=usr/src/linux-$(uname -r) \
-	--libexecdir=/usr/lib/iptables --sysconfdir=/etc \
-	--with-xtlibdir=/usr/lib/iptables \
-	--enable-devel --enable-libipq
+  patch -p1 -i ${srcdir}/0503-extension_cppflags.patch
 
+ ./configure --prefix=/usr \
+     --libexecdir=/usr/lib/iptables \
+     --sysconfdir=/etc \
+     --with-xtlibdir=/usr/lib/iptables \
+     --enable-devel \
+     --enable-shared
   make
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd "${srcdir}/${pkgname}-${pkgver}"
 
-  make DESTDIR=${pkgdir} install
+  make DESTDIR="${pkgdir}" install
 
-  install -D -m755 ../iptables ${pkgdir}/etc/rc.d/iptables
-  install -D -m755 ../ip6tables ${pkgdir}/etc/rc.d/ip6tables
-  install -D -m644 ../empty.rules ${pkgdir}/etc/iptables/empty.rules
-  install -D -m644 ../simple_firewall.rules ${pkgdir}/etc/iptables/simple_firewall.rules
-  install -D -m644 ../iptables.conf.d ${pkgdir}/etc/conf.d/iptables
+  # http://www.spinics.net/lists/netfilter-devel/msg24969.html
+  chrpath --delete "${pkgdir}"/usr/lib/iptables/*.so
+
+  cd "${srcdir}"
+  install -D -m755 iptables "${pkgdir}"/etc/rc.d/iptables
+  install -D -m755 ip6tables "${pkgdir}"/etc/rc.d/ip6tables
+  install -D -m644 empty.rules "${pkgdir}"/etc/iptables/empty.rules
+  install -D -m644 simple_firewall.rules "${pkgdir}"/etc/iptables/simple_firewall.rules
+  install -D -m644 iptables.conf.d "${pkgdir}"/etc/conf.d/iptables
+
+  mkdir -p "${pkgdir}"/var/lib/{iptables,ip6tables}
+  install -m644 empty-{filter,mangle,nat,raw,security}.rules "${pkgdir}"/var/lib/iptables
+  install -m644 empty-{filter,mangle,nat,raw,security}.rules "${pkgdir}"/var/lib/ip6tables
+
+  # systemd 
+  install -Dm644 ${srcdir}/iptables.service ${pkgdir}/usr/lib/systemd/system/iptables.service
+  install -Dm644 ${srcdir}/ip6tables.service ${pkgdir}/usr/lib/systemd/system/ip6tables.service
+  install -Dm755 ${srcdir}/iptables-flush ${pkgdir}/usr/lib/systemd/scripts/iptables-flush  
 }
