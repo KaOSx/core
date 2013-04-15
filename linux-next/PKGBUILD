@@ -3,9 +3,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.9-rc6
-_srcname=linux-3.9-rc6
-pkgver=3.9rc6
+_basekernel=3.9-rc7
+_srcname=linux-3.9-rc7
+pkgver=3.9rc7
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -29,7 +29,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/testing/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch'
         'kernel_usb_AlanStern.patch')
-md5sums=('826c560bc4c798dc6cdb4733117f5e13'
+md5sums=('65a72dabdfceb7123047cc6078de6ce7'
          'cb1abec36a434703e7f296bb5022744f'
          '52690fe8baa6d6abd858f04c4531d437'
          '94a873436f6c62580ac54c1b9f0e021a'
