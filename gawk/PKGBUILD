@@ -1,35 +1,36 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=gawk
-pkgver=4.0.1
+pkgver=4.0.2
 pkgrel=1
 pkgdesc="The GNU awk utility interprets a special-purpose programming language that makes it possible to handle simple data-reformatting jobs with just a few lines of code."
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.gnu.org/software/gawk/gawk.html"
 license=('GPL')
 groups=('base')
 provides=('awk')
 install="gawk.install"
-source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
 depends=('sh' 'glibc')
 makedepends=('gzip')
-md5sums=('bab2bda483e9f32be65b43b8dab39fa5')
+md5sums=('8a9b2f1170ac9dcd3eb13716b5ec4021')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
 
   ./configure --prefix=/usr
-
   make
 }
 
+check() {
+  cd ${srcdir}/${pkgname}-${pkgver}
+  
+  make check
+}
+
+
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make install DESTDIR="${pkgdir}"
 }
 
-# vim:set ts=2 sw=2 et:
