@@ -1,38 +1,31 @@
-# $Id: PKGBUILD 69734 2010-02-22 09:25:57Z giovanni $
-# Maintainer: Jan de Groot <jgc@archlinux.org>
-# Contributer: Sean Middleditch <elanthis@awesomeplay.com>
 
 pkgname=docbook-xsl
-pkgver=1.75.2
-pkgrel=3
+pkgver=1.78.1
+pkgrel=1
 pkgdesc="XML stylesheets for Docbook-xml transformations."
-arch=('any')
+arch=('x86_64')
 license=('custom')
 url="http://scrollkeeper.sourceforge.net/docbook.shtml"
 depends=('libxml2' 'libxslt' 'docbook-xml')
-source=(http://downloads.sourceforge.net/sourceforge/docbook/docbook-xsl-${pkgver}.tar.bz2)
+source=("http://downloads.sourceforge.net/sourceforge/docbook/docbook-xsl-${pkgver}.tar.bz2")
 install=docbook-xsl.install
-md5sums=('0c76a58a8e6cb5ab49f819e79917308f')
+md5sums=('6dd0f89131cc35bf4f2ed105a1c17771')
 groups=('base-devel')
 
-build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
-  install -dm755 ${pkgdir}/usr/share/xml/docbook/xsl-stylesheets-${pkgver}/common
-  install -m644 common/*.{xml,xsl,dtd,ent} ${pkgdir}/usr/share/xml/docbook/xsl-stylesheets-${pkgver}/common/
+package() {
+	cd ${srcdir}/${pkgname}-${pkgver}
 
-  install -dm755 ${pkgdir}/usr/share/xml/docbook/xsl-stylesheets-${pkgver}/params
-  install -m644 params/*.xml ${pkgdir}/usr/share/xml/docbook/xsl-stylesheets-${pkgver}/params/
+	_pkgroot=${pkgdir}/usr/share/xml/docbook/xsl-stylesheets-${pkgver}
 
-  for fn in fo highlighting html roundtrip; do
-    install -dm755 ${pkgdir}/usr/share/xml/docbook/xsl-stylesheets-${pkgver}/${fn}
-    install -m644 ${fn}/*.{xml,xsl} ${pkgdir}/usr/share/xml/docbook/xsl-stylesheets-${pkgver}/${fn}/
-  done
-  for fn in eclipse htmlhelp javahelp lib manpages profiling template website xhtml; do
-    install -dm755 ${pkgdir}/usr/share/xml/docbook/xsl-stylesheets-${pkgver}/${fn}
-    install -m644 ${fn}/*.xsl ${pkgdir}/usr/share/xml/docbook/xsl-stylesheets-${pkgver}/${fn}/
-  done
-  install -dm755 ${pkgdir}/etc/xml
-  install -m644 VERSION ${pkgdir}/usr/share/xml/docbook/xsl-stylesheets-${pkgver}/
+        install -dm755 ${_pkgroot}
+	install -m644 VERSION VERSION.xsl ${_pkgroot}
 
-  install -m644 -D COPYING ${pkgdir}/usr/share/licenses/${pkgname}/COPYING
+	for fn in assembly common eclipse epub epub3 fo highlighting html htmlhelp javahelp lib \
+                  manpages params profiling roundtrip template website xhtml xhtml-1_1 xhtml5; do
+		install -dm755 ${_pkgroot}/${fn}
+		install -m644 ${fn}/*.{xml,xsl,dtd,ent} ${_pkgroot}/${fn} || true  # ignore missing files
+	done
+
+	install -dm755 ${pkgdir}/etc/xml
+	install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }
