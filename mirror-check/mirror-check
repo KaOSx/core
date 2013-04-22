@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-#  Chakra Mirror-Check - Version 1.0
-#  Copyright (c) 2013 - Manuel Tortosa <manutortosa@chakra-project.org>
+#  Mirror-Check - Version 1.0
+#  Forked from: Copyright (c) 2013 - Manuel Tortosa <manutortosa@chakra-project.org>
 #
 #  This script is licensed under the GPLv3
 
@@ -30,9 +30,9 @@ function select_dialog() {
 
 function get_database() {
     # Get databases
-    local mirror="$(grep '^[^#]erver' /etc/pacman.d/mirrorlist | head -1 | cut -d' ' -f3 |sed 's,$repo.*,'"${1}/x86_64/${1}.db.tar.gz,")"
+    local mirror="$(grep '^[^#]erver' /etc/pacman.d/mirrorlist | head -1 | cut -d' ' -f3 |sed 's,$repo.*,'"${1}/${1}.db.tar.gz,")"
     wget -qO /tmp/.${UID}mirrordb.tmp "$mirror" 
-    local cmirror="http://chakra-project.org/repo/${1}/x86_64/${1}.db.tar.gz"
+    local cmirror="http://veritasfarm.net/kdeos/repo/${1}/${1}.db.tar.gz"
     wget -qO /tmp/.${UID}maindb.tmp "$cmirror" 
 }
 
