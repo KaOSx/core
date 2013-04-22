@@ -1,32 +1,29 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer (x86_64): Drake Justice <djustice[at]chakra-project[dot]org>
 
 pkgname=hwloc
-pkgver=1.3.1
+pkgver=1.6.2
 pkgrel=1
 pkgdesc="Portable Hardware Locality is a portable abstraction of hierarchical architectures"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.open-mpi.org/projects/hwloc/"
 license=('BSD')
-depends=('sh' 'pciutils')
+depends=('sh' 'pciutils' 'libxml2')
 makedepends=('pkg-config')
 optdepends=('cairo: Graphical output' 'libxml2: XML export')
 options=('!libtool' '!docs')
-source=(http://www.open-mpi.org/software/hwloc/v1.3/downloads/${pkgname}-${pkgver}.tar.bz2)
-sha1sums=('1051c937c3d2a4c98922903f313a1fa021bb35ba')
+source=("http://www.open-mpi.org/software/hwloc/v1.6/downloads/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('292862774d98818aa15d65e4c64286d5')
 
 build() {
    cd "${srcdir}/${pkgname}-${pkgver}"
+   
    ./configure --prefix=/usr
    make
 }
 
 package() {
    cd "${srcdir}/${pkgname}-${pkgver}"
+   
    make DESTDIR="${pkgdir}" install
-
    install -Dm644 COPYING "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
 }
 

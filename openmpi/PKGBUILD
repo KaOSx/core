@@ -1,27 +1,22 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
 
 pkgname=openmpi
-pkgver=1.5.5
+pkgver=1.6.2
 pkgrel=1
 pkgdesc="High performance message passing library (MPI)"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.open-mpi.org"
 license=('custom')
-depends=('gcc' 'gcc-fortran' 'openssh' 'valgrind' 'libtool' 'hwloc')
+depends=('gcc' 'gcc-fortran' 'openssh' 'valgrind' 'libltdl' 'hwloc')
 makedepends=('inetutils')
 options=(!libtool)
-source=(http://www.open-mpi.org/software/ompi/v1.5/downloads/${pkgname}-${pkgver}.tar.bz2
-        openmpi-1.5.4-fix-fakeroot-execution.patch)
-sha1sums=('206e555f6d376443f2342f721d944e67dd1a04ef'
-          '3161fce9870e02211dadbc0993b7805e2e811440')
+source=("http://www.open-mpi.org/software/ompi/v1.6/downloads/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('219754715a8e40beb468bbc8f0b3251a')
 
 build() {
    cd "${srcdir}/${pkgname}-${pkgver}"
-
-   # Fix fakeroot
-   patch -p1 -i $srcdir/openmpi-1.5.4-fix-fakeroot-execution.patch
+   
+   # use system libltdl
+   rm -r opal/libltdl
 
    ./configure --prefix=/usr \
                --sysconfdir=/etc/${pkgname} \
@@ -54,9 +49,6 @@ package() {
 
    # Openmpi's otfinfo conflicts with the one from texlive
    mv "${pkgdir}"/usr/bin/otfinfo{,mpi}
-
-   # Openmpi's otfdump conflicts with the one from libotf
-   mv "${pkgdir}"/usr/bin/otfdump{,ompi}
 
    # Remove dangling symlink
    rm "${pkgdir}"/usr/share/man/man1/orteCC.1
