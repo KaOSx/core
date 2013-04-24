@@ -1,4 +1,5 @@
-# package does not show as run dep, but all of phonon and KDE expect libwrap.so
+# package does not show as run dep, but all of phonon and KDE expect libwrap.so,
+# removed from base group
 pkgname=tcp_wrappers
 pkgver=7.6
 pkgrel=13
@@ -6,7 +7,6 @@ pkgdesc="Monitors and Controls incoming TCP connections"
 arch=('x86_64')
 url="ftp://ftp.porcupine.org/pub/security/index.html"
 license=('custom')
-groups=('base')
 backup=('etc/hosts.allow' 'etc/hosts.deny')
 depends=('bash' 'glibc')
 source=("ftp://ftp.porcupine.org/pub/security/${pkgname}_$pkgver.tar.gz"
