@@ -1,14 +1,9 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=ppp
 pkgver=2.4.5
-pkgrel=4
+pkgrel=5
 pkgdesc="A daemon which implements the Point-to-Point Protocol for dial-up networking"
-arch=('i686' 'x86_64') 
+arch=('x86_64') 
 url="http://www.samba.org/ppp/"
 license=('custom:GPL/BSD')
 groups=('base')
@@ -28,20 +23,20 @@ source=("ftp://ftp.samba.org/pub/ppp/ppp-${pkgver}.tar.gz"
         'ipv6-down'
         'ipv6-up.d.iface-config.sh'
         'ppp.service')
-sha256sums=('43317afec9299f9920b96f840414c977f0385410202d48e56d2fdb8230003505'
-            '0933fecb9e0adaddd88ee1e049a5f3a0508e83b81dc1aa333df784e729ab4b6e'
-            'c92e0721c4f53987dd0a02fe7089d0f5a58cdb7bb9f26d1bddc28111406ce6c2'
-            'ee1e1e5f164effe49bc7ffab3fbde6efbd46d186c58192913f749257026d75e2'
-            '43608081ab9d6a755eb4e6fa2011f88b16b1702745d76bced6d546a7c579b39f'
-            '9bb35eac78898cdc75184bb70fea11fb2e2889e1e2cadf0b7bb8320d7cae0959'
-            'ddef42b2cc5d49e81556dc9dbacf5ee3bf8dc32704f3670c2233eed42c4a4efd'
-            'e89ff3fcba33a6bfd47f116f2dd48ff26651ee73ccacbd2f76419cc9d7e7d03d'
-            '133964c95ada7403deb41e6726a6b5c9f9b10e3e41bf367ac27caf8a41ff2544'
-            '7e73ef1953151258729ecc3129f08add52d6001960683b57a6eac147b5644e39'
-            '6fbd3fd6de2f444c85d062b37f21c63b4f8884e938089b1337b3702568cdcbc5'
-            'b6c6aba6d5be1ef9ea550638f391a9a927242ccd0b82f3787a04bf983e3b3fda'
-            '3e4e8e415adbae273f365e1fabaad4a92462c57519f719e6f4ce05bc312d3995'
-            '8c213f7ece2278bcde10195fc1b3252dcda7d4fc502ba4bde300304d4db71252')
+md5sums=('4621bc56167b6953ec4071043fe0ec57'
+         '7a9259a8f038073eeea7e4552ff1849f'
+         '48c024f73a80c8b69c4def22f86902cc'
+         '2d811f8470ccdea3b8c4505a438483e9'
+         '86cdaf133f7a79fb464f02d83afc7734'
+         '44cc662ba9aa61dd9add3ddd4c5ded57'
+         'e4beb16ed600b61336d50b2bd2df7cd5'
+         '2fa0671f40711e69194ccf60979f8b33'
+         '4a074d74c29625b254a1db720cb87b99'
+         '8d1be5af8e46393ba6eb273377831e38'
+         '252d7aeed930135adbba2e9d142f6896'
+         '6709475ae49b5149f67209f3835d717e'
+         '6da32ca59ff9ef6ba31db47344c29300'
+         'ee9604daf0056e79e80817c76d1d9627')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
