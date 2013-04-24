@@ -1,23 +1,19 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=libedit
-pkgver=20110802_3.0
+pkgver=20121213_3.0
 pkgrel=1
 pkgdesc='Command line editor library providing generic line editing, history, and tokenization functions'
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url='http://www.thrysoee.dk/editline/'
 license=('BSD')
 depends=('ncurses')
 options=('!libtool')
 source=("http://www.thrysoee.dk/editline/libedit-${pkgver/_/-}.tar.gz")
-sha1sums=('b06e3cf248a4235617c71454e15ca3a54a61d467')
+md5sums=('f475f50fe7467c1074c0fbae8b5bca1a')
 
 build() {
 	cd "${srcdir}/${pkgname}-${pkgver/_/-}"
+	
 	./configure --prefix=/usr --enable-widec --enable-static=no
 	make
 }
@@ -27,5 +23,5 @@ package() {
 	make prefix="${pkgdir}"/usr install
 
 	cp "${pkgdir}"/usr/share/man/man3/editline.3 "${pkgdir}"/usr/share/man/man3/el.3
-	install -D -m0644 COPYING "${pkgdir}"/usr/share/licenses/libedit/LICENSE
+	install -Dm644 COPYING "${pkgdir}"/usr/share/licenses/libedit/LICENSE
 }
