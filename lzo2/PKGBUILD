@@ -1,15 +1,15 @@
 
 pkgname=lzo2
-pkgver=2.04
-pkgrel=2
+pkgver=2.06
+pkgrel=1
 pkgdesc="Portable lossless data compression library"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.oberhumer.com/opensource/lzo"
 license=('GPL')
 depends=('glibc')
-source=(http://www.oberhumer.com/opensource/lzo/download/lzo-${pkgver}.tar.gz)
+source=("http://www.oberhumer.com/opensource/lzo/download/lzo-${pkgver}.tar.gz")
 options=(!libtool)
-sha1sums=('f5bf5c7ae4116e60513e5788d156ef78946677e7')
+md5sums=('95380bd4081f85ef08c5209f4107e9f8')
 
 build() {
   cd "${srcdir}/lzo-${pkgver}"
@@ -20,6 +20,13 @@ build() {
   # build minilzo
   gcc $CFLAGS -fpic -Iinclude/lzo -o minilzo/minilzo.o -c minilzo/minilzo.c
   gcc -g -shared -o libminilzo.so.0 -Wl,-soname,libminilzo.so.0 minilzo/minilzo.o
+}
+
+check() {
+  cd "${srcdir}/lzo-${pkgver}"
+  
+  make test 
+  make check
 }
 
 package() {
