@@ -1,44 +1,29 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=iasl
-pkgver=20110527
-pkgrel=2
+pkgver=20130418
+pkgrel=1
 pkgdesc="Intel ACPI Source Language compiler"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://acpica.org"
 license=('custom')
 depends=('glibc')
 makedepends=('flex' 'bison')
 options=('!makeflags')
-install=iasl.install
-source=(http://acpica.org/download/acpica-unix-${pkgver}.tar.gz LICENSE iaslcompileparse.patch)
-md5sums=('82c507fec0dba78dc8562a019aaf6e23'
-         '8615526144f69ea4e870d9bc37df9b29'
-         'e2aa959b3da50ebd2146de9b47d9ecd6')
+source=("https://acpica.org/sites/acpica/files/acpica-unix-${pkgver}.tar.gz"
+        'LICENSE')
+md5sums=('53936808b460cb7963dc8e7f9e02a3bb'
+         '8615526144f69ea4e870d9bc37df9b29')
 
 build() {
-  cd "${srcdir}/acpica-unix-${pkgver}/compiler"
-  patch -Np2 -i ${srcdir}/iaslcompileparse.patch
-  make
-  install -D -m755 iasl "${pkgdir}/usr/bin/iasl"
+  cd "${srcdir}/acpica-unix-${pkgver}"/generate/unix
+  sed -i -e 's/_CYGWIN/_LINUX/g' -e 's/-Werror//g' Makefile.config
 
-  cd ../tools/acpisrc
+  make BITS=64
+}
 
-  make
-  install -m755 acpisrc "${pkgdir}/usr/bin"
+package() {
+  cd "${srcdir}/acpica-unix-${pkgver}"/generate/unix
 
-  #cd ../acpiexec
-  #make
-  #install -m755 acpiexec "${pkgdir}/usr/bin"
-
-  cd ../acpixtract
-
-  make
-  install -m755 acpixtract "${pkgdir}/usr/bin"
-
+  make DESTDIR=${pkgdir} install
   install -D -m644 "${srcdir}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
