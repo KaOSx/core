@@ -1,30 +1,46 @@
-# $Id: PKGBUILD 33080 2009-04-04 07:02:59Z allan $
-# Maintainer: judd <jvinet@zeroflux.org>
-# Committer: Judd Vinet <jvinet@zeroflux.org>
+
 pkgname=mailx
-pkgver=8.1.1
-pkgrel=8
+pkgver=12.4
+pkgrel=1
 pkgdesc="A commandline utility for sending email"
-arch=('i686' 'x86_64')
-url="http://www.opengroup.org/onlinepubs/007908799/xcu/mailx.html"
+arch=('x86_64')
+url="http://heirloom.sourceforge.net/mailx.html"
 license=('BSD')
 groups=('base')
-depends=('glibc')
+depends=('openssl' 'krb5')
 optdepends=('smtp-forwarder: for sending mail')
 backup=('etc/mail.rc')
-source=(ftp://ftp.archlinux.org/other/mailx/$pkgname-$pkgver-fixed.tar.gz \
-        mailx-$pkgver.patch mailx-gcc4.patch)
-md5sums=('63cad526ac64b57bcba2c0daaa1f3048' '905cfa35b5131524bfec0c677d456bd3'\
-         '8716c7c7b3f5d348443230e2fe543bf6')
+source=("http://sourceforge.net/projects/heirloom/files/heirloom-mailx/$pkgver/mailx-$pkgver.tar.bz2"
+        "http://www.linuxfromscratch.org/patches/blfs/svn/mailx-12.4-openssl_1.0.0_build_fix-1.patch")
+md5sums=('0c93759e34200eb56a0e7c464680a54a'
+         '7b7e904cfa99674aa4221fb231f5e94e')
 
 build() {
-  cd $srcdir/$pkgname-$pkgver-fixed
-  patch -Np1 -i $srcdir/mailx-$pkgver.patch || return 1
-  patch -Np0 -i $srcdir/mailx-gcc4.patch || return 1
-  sed -i 's#/man/#/share/man/#' Makefile
-  make all || return 1
-  make DESTDIR=$pkgdir install
-  
-  install -dm755 $pkgdir/usr/share/licenses/mailx/
-  head -35 main.c > $pkgdir/usr/share/licenses/mailx/LICENSE
+  cd $srcdir/$pkgname-$pkgver
+  patch -Np1 -i $srcdir/mailx-12.4-openssl_1.0.0_build_fix-1.patch
+
+  # For Linux and BSD, this should be set.
+  echo "set bsdcompat" >> nail.rc
+
+  sed -i "s/pg/less/" cmd1.c
+
+  echo PREFIX=/usr \
+       MAILRC=/etc/nail.rc \
+       SENDMAIL=/usr/sbin/sendmail \
+       MAILSPOOL=/var/spool/mail \
+       UCBINSTALL=/usr/bin/install > makeflags
+
+  make `cat makeflags` IPv6=-DHAVE_IPv6_FUNCS
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make DESTDIR="${pkgdir}" `cat makeflags` install
+
+  # For compatibility with the old mailx program
+  ln -sf mailx "${pkgdir}"/usr/bin/mail
+  ln -sf mailx "${pkgdir}"/usr/bin/nail
+  ln -sf mailx.1.gz "${pkgdir}"/usr/share/man/man1/mail.1.gz
+
+  install -D -m0644 COPYING "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
 }
