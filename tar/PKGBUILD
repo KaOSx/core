@@ -1,32 +1,40 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=tar
 pkgver=1.26
-pkgrel=2
+pkgrel=3
 pkgdesc="Utility used to store, backup, and transport files"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.gnu.org/software/tar/tar.html"
 license=('GPL3')
 groups=('base')
 depends=('glibc' 'sh')
 options=('!emptydirs')
 install=tar.install
-source=(ftp://ftp.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.bz2 tar.1)
+source=("ftp://ftp.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.bz2"
+        'tar.1')
 md5sums=('2cee42a2ff4f1cd4f9298eeeb2264519'
-         'e0538778516a284e3558c454b2576c2f')
+         'e97e7343f4e23724b4c48bca2f033e38')
 
 build() {
   cd ${srcdir}/$pkgname-$pkgver
-  ./configure --prefix=/usr --libexecdir=/usr/lib/tar --bindir=/bin
-  make || return 1
-}
   
+  # fix build failure with newer glibc
+   sed -i -e '/gets is a/d' gnu/stdio.in.h
+  
+  ./configure --prefix=/usr --libexecdir=/usr/lib/tar --bindir=/bin
+  make 
+}
+
+check() {
+  cd ${srcdir}/$pkgname-$pkgver
+  
+  make check
+}
+
 package() {
   cd ${srcdir}/$pkgname-$pkgver
+  
   make DESTDIR=${pkgdir} install
+  
   install -D -m644 ../tar.1 ${pkgdir}/usr/share/man/man1/tar.1
 }

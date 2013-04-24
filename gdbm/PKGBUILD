@@ -1,18 +1,14 @@
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=gdbm
 pkgver=1.10
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU database library"
 url="http://www.gnu.org/software/gdbm/gdbm.html"
 license=('GPL')
-arch=('i686' 'x86_64')
+arch=('x86_64')
 depends=('glibc' 'sh')
-source=(ftp://ftp.gnu.org/gnu/gdbm/${pkgname}-${pkgver}.tar.gz
-        gdbm-1.10-zeroheaders.patch)
+source=("ftp://ftp.gnu.org/gnu/gdbm/${pkgname}-${pkgver}.tar.gz"
+        'gdbm-1.10-zeroheaders.patch')
 options=('!libtool' '!makeflags')
 install=gdbm.install
 md5sums=('88770493c2559dc80b561293e39d3570'
@@ -26,7 +22,7 @@ build() {
   # from other applications.
   # https://bugzilla.redhat.com/show_bug.cgi?id=4457
   # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=208927
-  patch -Np1 -i ../gdbm-1.10-zeroheaders.patch
+  patch -p1 -i ../gdbm-1.10-zeroheaders.patch
 
   ./configure --prefix=/usr \
               --mandir=/usr/share/man \
@@ -38,6 +34,7 @@ build() {
 
 check() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make check
 }
 
