@@ -1,7 +1,3 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=bridge-utils
 pkgver=1.5

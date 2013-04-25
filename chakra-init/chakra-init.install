@@ -1,7 +1,0 @@
-post_install() {
-  grep "KEYMAP=" /etc/rc.conf.pacsave >> /etc/vconsole.conf
-  grep "HOSTNAME=" /etc/rc.conf.pacsave | awk -F'"' '{print $2}' > /etc/hostname
-  sed -i -e 's/halt/poweroff/' /usr/share/config/kdm/kdmrc
-  systemctl reenable NetworkManager.service
-  systemctl reenable kdm.service
-}
