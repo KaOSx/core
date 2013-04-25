@@ -1,0 +1,24 @@
+
+pkgname=traceroute
+pkgver=2.0.19
+pkgrel=1
+pkgdesc="Tracks the route taken by packets over an IP network"
+arch=('x86_64')
+url="http://traceroute.sourceforge.net/"
+license=('GPL2')
+groups=('base')
+depends=('glibc')
+source=("http://downloads.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('dd15d563993020d088ba02e8f987deaf')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  
+  make CFLAGS="$CFLAGS"
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  
+  make prefix=/usr DESTDIR="${pkgdir}" install
+}
