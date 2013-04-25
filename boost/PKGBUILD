@@ -1,19 +1,9 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
-# Contributor: Artyom Smirnov <smirnoffjr@gmail.com>
-
-# Note: you have to rebuild those pkgs
-# Core: repo-clean
-# Platform: akonadi (exempi uses boost just as makedep)
-# Desktop: kdeedu (kdenetwork, kdepimlibs, kdepim, kdesdk and koffice using boost just as makedep)
  
 pkgbase=boost
 pkgname=('boost-libs' 'boost')
 pkgver=1.52.0
 _boostver=${pkgver//./_}
-pkgrel=1
+pkgrel=2
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="http://www.boost.org/"
