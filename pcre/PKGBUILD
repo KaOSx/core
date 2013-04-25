@@ -1,11 +1,7 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=pcre
 pkgver=8.21
-pkgrel=1
+pkgrel=2
 pkgdesc="A library that implements Perl 5-style regular expressions"
 arch=('x86_64')
 url="http://www.pcre.org/"
