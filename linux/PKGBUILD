@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=3.8
-pkgver=3.8.8
+pkgver=3.8.9
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -26,7 +26,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.tar.xz"
         'linux.preset'
         'change-default-console-loglevel.patch')
 md5sums=('1c738edfc54e7c65faeb90c436104e2f'
-         '08cdcef928c2ca402adf1c444a3c43ac'
+         'b0c0861e8cb99273bfc4570535bbe076'
          '7fc6a406e61301026183d38a07c42ce8'
          '52690fe8baa6d6abd858f04c4531d437'
          '94a873436f6c62580ac54c1b9f0e021a'
@@ -147,10 +147,10 @@ package_linux() {
   # gzip -9 all modules to save 100MB of space
   find "${pkgdir}" -name '*.ko' -exec gzip -9 {} \;
   # make room for external modules
-  ln -s "../extramodules-${_basekernel}${_kernelname:-}" "${pkgdir}/lib/modules/${_kernver}/extramodules"
+  ln -s "../extramodules-${_basekernel}${_kernelname:--KdeOs}" "${pkgdir}/lib/modules/${_kernver}/extramodules"
   # add real version for building modules and running depmod from post_install/upgrade
-  mkdir -p "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:-}"
-  echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:-}/version"
+  mkdir -p "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--KdeOs}"
+  echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--KdeOs}/version"
   
 }
 
