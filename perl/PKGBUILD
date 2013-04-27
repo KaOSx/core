@@ -1,11 +1,7 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer: Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=perl
-pkgver=5.14.2
-pkgrel=2
+pkgver=5.16.3
+pkgrel=1
 pkgdesc="A highly capable, feature-rich programming language"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
@@ -16,24 +12,32 @@ source=("http://www.cpan.org/src/5.0/perl-${pkgver}.tar.bz2"
         'perlbin.sh'
         'perlbin.csh'
         'provides.pl'
-        'digest_eval_hole.diff'
-        '0001-Append-CFLAGS-and-LDFLAGS-to-their-Config.pm-counter.patch')
+        'cgi-cr-escaping.diff'
+        'CVE-2012-6329.patch')
 install=perl.install
 options=('!makeflags' '!purge')
-md5sums=('04a4c5d3c1f9f19d77daff8e8cd19a26'
+md5sums=('025102de0e4a597cf541e57da80c6aa3'
          'd42c73468e596309f85908ee94a633e5'
          '1f0cbbee783e8a6d32f01be5118e0d5e'
-         '31fc0b5bb4935414394c5cfbec2cb8e5'
-         '79cc7d76a208a6b935a08269434bfd04'
-         'a77c19a159b04f18f06c5a0ff9791b23')
+         '999c3eea6464860704abbb055a0f0896'
+         '0486659c9eefe682364a3e364d814296'
+         '5dc374e095d896fb30618e414aeb9017')
+         
+if [[ ${0##*/} = "parse_pkgbuilds.sh" ]]; then
+	true && provides=($(bsdtar -q -O -xf "/srv/ftp/pool/packages/$pkgname-$pkgver-$pkgrel-$CARCH.pkg.tar.xz" .PKGINFO | sed -rn 's#^provides = (.*)#\1#p'))
+fi
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
 
-  patch -p1 -i $srcdir/digest_eval_hole.diff
+  patch -p1 -i "$srcdir/cgi-cr-escaping.diff" 
+  patch -p1 -i "$srcdir/CVE-2012-6329.patch" 
+
+  # Fix in perl upstream 
+  sed -i "s/Is_dos/is_dos/" cpan/Pod-Perldoc/lib/Pod/Perldoc.pm
 
   ./Configure -des -Dusethreads -Duseshrplib -Doptimize="${CFLAGS}" \
-    -Dprefix=/usr -Dinstallprefix=${pkgdir}/usr -Dvendorprefix=/usr \
+    -Dprefix=/usr -Dvendorprefix=/usr \
     -Dprivlib=/usr/share/perl5/core_perl \
     -Darchlib=/usr/lib/perl5/core_perl \
     -Dsitelib=/usr/share/perl5/site_perl \
@@ -46,10 +50,8 @@ build() {
     -Dinc_version_list=none \
     -Dman1ext=1perl -Dman3ext=3perl -Dcccdlflags='-fPIC' \
     -Dlddlflags="-shared ${LDFLAGS}" -Dldflags="${LDFLAGS}"
-  patch -p1 -i $srcdir/0001-Append-CFLAGS-and-LDFLAGS-to-their-Config.pm-counter.patch
-  make
 
-  # check
+  make
 }
 
 check() {
@@ -59,18 +61,18 @@ check() {
 }
 
 package() {
-  # hack to work around makepkg running the subshell in check()
+  # hack to work around makepkg running the subshell
   new_provides=($(cd "$srcdir/perl-$pkgver"; LD_PRELOAD=./libperl.so ./perl -Ilib "$srcdir/provides.pl" .))
   provides=(${new_provides[@]})
 
   cd ${srcdir}/${pkgname}-${pkgver}
-  make install
+  make DESTDIR=$pkgdir install
 
   ### Perl Settings ###
-  # Change man page extensions for site and vendor module builds.
+  # Change man page extensions for site and vendor module builds, no email address
   sed -e '/^man1ext=/ s/1perl/1p/' -e '/^man3ext=/ s/3perl/3pm/' \
-      -e "/^cf_email=/ s/'.*'/'info@chakra-project.org'/" \
-      -e "/^perladmin=/ s/'.*'/'info@chakra-project.org'/" \
+      -e "/^cf_email=/ s/'.*'/''/" \
+      -e "/^perladmin=/ s/'.*'/''/" \
       -i ${pkgdir}/usr/lib/perl5/core_perl/Config_heavy.pl
 
   ### CPAN Settings ###
@@ -94,8 +96,6 @@ package() {
 
   (cd ${pkgdir}/usr/bin; mv perl${pkgver} perl)
   (cd ${pkgdir}/usr/bin/core_perl;  ln -sf c2ph pstruct; ln -sf s2p psed)
-  grep -Rl "${pkgdir}" ${pkgdir}/usr | \
-      xargs sed -i "s^${pkgdir}^^g"
 
   # Remove all pod files *except* those under /usr/share/perl5/core_perl/pod/
   rm -f $pkgdir/usr/share/perl5/core_perl/*.pod
@@ -107,6 +107,4 @@ package() {
 
   find $pkgdir/usr/lib -name *.pod -delete
   find $pkgdir -name .packlist -delete
-  install -dv ${pkgdir}/etc/ld.so.conf.d
-  echo "/usr/lib/perl5/core_perl/CORE" > ${pkgdir}/etc/ld.so.conf.d/perl.conf
 }
