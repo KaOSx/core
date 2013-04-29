@@ -1,14 +1,10 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas@chakra-project.org
 
 pkgname=subversion
-pkgver=1.7.8
-pkgrel=2
+pkgver=1.7.9
+pkgrel=1
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
-license=('apache' 'bsd')
+license=('APACHE')
 depends=('db' 'neon' 'apr-util' 'sqlite3' 'file')
 optdepends=('kdeutils-kwallet' 'bash-completion: for svn bash completion')
 makedepends=('krb5' 'apache' 'python2' 'perl' 'swig' 'ruby' 'java-runtime' 
@@ -17,13 +13,14 @@ makedepends=('krb5' 'apache' 'python2' 'perl' 'swig' 'ruby' 'java-runtime'
 url="http://subversion.apache.org/"
 provides=('svn')
 options=('!makeflags' '!libtool')
-source=(http://apache.mirror.rafal.ca/subversion/$pkgname-$pkgver.tar.bz2{,.asc}
-        svn svnserve.conf 
-	svnserve.tmpfiles
-	svnserve.service
-        subversion.rpath.fix.patch)
-md5sums=('454b9f398415c3504435bf8c3f6ed127'
-         '8fc10351ec75a103b0c0c69d8ed786b7'
+install=${pkgname}.install
+source=("http://apache.mirror.rafal.ca/subversion/$pkgname-$pkgver.tar.bz2"
+        'svn'
+        'svnserve.conf' 
+	'svnserve.tmpfiles'
+	'svnserve.service'
+        'subversion.rpath.fix.patch')
+md5sums=('8d532025771a67c06c23f299699f056f'
          'a0db6dd43af33952739b6ec089852630'
          'c459e299192552f61578f3438abf0664'
          'bb2857eceafcfac35dde39dcffad2314'
@@ -43,7 +40,8 @@ build() {
    ./configure --prefix=/usr --with-apr=/usr --with-apr-util=/usr \
                --with-zlib=/usr --with-neon=/usr --with-apxs \
                --with-sqlite=/usr \
-               --enable-javahl --without-gnome-keyring --with-kwallet
+               --enable-javahl --without-gnome-keyring --with-kwallet \
+               --disable-static
 
    make external-all
    make LT_LDFLAGS="-L$Fdestdir/usr/lib" local-all
