@@ -2,16 +2,16 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.9-rc8
-_srcname=linux-3.9-rc8
-pkgver=3.9rc8
+_basekernel=3.9
+_srcname=linux-3.9
+pkgver=3.9.0
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/testing/${_srcname}.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         #"http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.tar.xz"
         #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
@@ -28,7 +28,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/testing/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch'
         'kernel_usb_AlanStern.patch')
-md5sums=('1667915ed4c8a4521037e45e294f8585'
+md5sums=('4348c9b6b2eb3144d601e87c19d5d909'
          'cb1abec36a434703e7f296bb5022744f'
          '52690fe8baa6d6abd858f04c4531d437'
          '94a873436f6c62580ac54c1b9f0e021a'
