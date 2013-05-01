@@ -1,11 +1,10 @@
-# Chakra Packages for Chakra, part of chakra-project.org
 
 pkgname=perl-xml-parser
 _realname=XML-Parser
 pkgver=2.41
-pkgrel=2
+pkgrel=3
 pkgdesc="Expat-based XML parser module for perl"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 license=('GPL' 'PerlArtistic')
 url="http://search.cpan.org/dist/${_realname}/"
 depends=('perl' 'expat')
@@ -26,6 +25,7 @@ build() {
 
 check() {
   cd "${srcdir}/${_realname}-${pkgver}"
+  
   make test
 }
 
