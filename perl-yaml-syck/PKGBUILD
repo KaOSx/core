@@ -1,17 +1,16 @@
-# Platform Packages for Chakra, part of chakra-project.org
 
 pkgname=perl-yaml-syck
 _realname=YAML-Syck
-pkgver=1.20
+pkgver=1.25
 pkgrel=1
 pkgdesc="Fast, lightweight YAML loader and dumper"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 license=('custom')
 url="http://search.cpan.org/dist/${_realname}/"
-depends=('perl>=5.10.0')
+depends=('perl')
 options=('!emptydirs')
-source=(http://www.cpan.org/authors/id/T/TO/TODDR/${_realname}-$pkgver.tar.gz)
-md5sums=('8f6d04ee5817b8479e1234264a8d458d')
+source=("http://www.cpan.org/authors/id/T/TO/TODDR/${_realname}-$pkgver.tar.gz")
+md5sums=('847f315cbd074b42c44f360383ac13e9')
 
 build() {
   cd "${srcdir}/${_realname}-$pkgver"
