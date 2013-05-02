@@ -1,11 +1,6 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
-
 
 pkgname=file
-pkgver=5.11
+pkgver=5.14
 pkgrel=1
 pkgdesc="File type identification utility"
 arch=('x86_64')
@@ -15,7 +10,7 @@ url="http://www.darwinsys.com/file/"
 depends=('glibc' 'zlib')
 options=('!libtool')
 source=("ftp://ftp.astron.com/pub/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('16a407bd66d6c7a832f3a5c0d609c27b')
+md5sums=('c26625f1d6773ad4bc5a87c0e315632c')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
@@ -29,6 +24,6 @@ package() {
 
   make DESTDIR="${pkgdir}" install
   
-  install -D -m644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+  install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
 }
 
