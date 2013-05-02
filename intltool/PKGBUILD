@@ -1,18 +1,14 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas@chakra-project.org
 
 pkgname=intltool
 pkgver=0.50.2
-pkgrel=1
+pkgrel=2
 pkgdesc="The internationalization tool collection"
-arch=('any')
+arch=('x86_64')
 url="https://edge.launchpad.net/intltool"
 license=('GPL')
 depends=('perl-xml-parser')
-source=(http://edge.launchpad.net/intltool/trunk/${pkgver}/+download/${pkgname}-${pkgver}.tar.gz)
-sha1sums=('7fddbd8e1bf94adbf1bc947cbf3b8ddc2453f8ad')
+source=("http://edge.launchpad.net/intltool/trunk/${pkgver}/+download/${pkgname}-${pkgver}.tar.gz")
+md5sums=('23fbd879118253cb99aeac067da5f591')
 
 build() {
 	cd ${srcdir}/${pkgname}-${pkgver}
