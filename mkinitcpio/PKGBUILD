@@ -1,4 +1,3 @@
-# maintainer: abveritas@chakra-project.org
 
 pkgname=mkinitcpio
 pkgver=0.11.0

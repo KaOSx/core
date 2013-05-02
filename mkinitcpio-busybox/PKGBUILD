@@ -1,22 +1,19 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dog]org>
-# maintainer Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=mkinitcpio-busybox
-pkgver=1.19.4
-pkgrel=2
+pkgver=1.20.2
+pkgrel=1
 pkgdesc="base initramfs tools"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.busybox.net/"
 license=('GPL')
 depends=('glibc')
 options=('!buildflags')
 source=("http://busybox.net/downloads/busybox-$pkgver.tar.bz2"
-        'config')
-sha256sums=('9b853406da61ffb59eb488495fe99cbb7fb3dd29a31307fcfa9cf070543710ee'
-            '28dc775e12c40718b48e1dd6a63544ca9d8aa128f786577b27e4df73e1e8766a')
+        'config'
+        'glibc.patch')
+md5sums=('e025414bc6cd79579cc7a32a45d3ae1c'
+         'dd4c0fefe9bb9e65945a5b5525543fd7'
+         'bcaf2fa775b8c598a83a4765fc5d4bb3')
 
 build() {
   cd "$srcdir/busybox-$pkgver"
@@ -25,6 +22,8 @@ build() {
 
   sed 's|^\(CONFIG_EXTRA_CFLAGS\)=.*|\1="-march='"$safeflags"'"|' \
     "$srcdir/config" > .config
+    
+  patch -p1 -i "$srcdir/glibc.patch"
 
   make
 }
@@ -33,4 +32,3 @@ package() {
   install -Dm755 "$srcdir/busybox-$pkgver/busybox" "$pkgdir/usr/lib/initcpio/busybox"
 }
 
-# vim:set ts=2 sw=2 et:
