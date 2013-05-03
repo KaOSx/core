@@ -1,0 +1,64 @@
+
+pkgname='cronie'
+pkgver=1.4.9
+pkgrel=1
+pkgdesc='Daemon that runs specified programs at scheduled times and related tools'
+url='https://fedorahosted.org/cronie/'
+license=('custom:BSD')
+arch=('x86_64')
+depends=('pam' 'bash' 'run-parts')
+optdepends=('pm-utils: defer anacron on battery power')
+conflicts=('dcron')
+replaces=('dcron')
+provides=('cron')
+groups=('base')
+backup=('etc/anacrontab'
+        'etc/conf.d/crond'
+        'etc/pam.d/crond'
+        'etc/cron.deny')
+source=("https://fedorahosted.org/releases/c/r/${pkgname}/${pkgname}-${pkgver}.tar.gz"
+        'cron.deny'
+	'service'
+        'pam.d')
+md5sums=('9133195e5e6f824ef460f5ccc533f1b7'
+         '2962d9812fbbbdee1bd7f1c1ccb5e372'
+         'b4e1316eaa8f3806f20bad21a5101caa'
+         'ace2584e5467371e35acf5f5af8f3c29')
+
+
+
+
+build() {
+	cd "${srcdir}/${pkgname}-${pkgver}"
+
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--enable-anacron \
+		--with-inotify \
+		--with-pam \
+
+	make
+}
+
+package() {
+	cd "${srcdir}/${pkgname}-${pkgver}"
+
+	make DESTDIR="${pkgdir}" install
+
+	chmod u+s "${pkgdir}"/usr/bin/crontab
+	install -d "${pkgdir}"/var/spool/{ana,}cron
+	install -d "${pkgdir}"/etc/cron.{d,hourly,daily,weekly,monthly}
+
+	install -Dm644 ../pam.d "${pkgdir}"/etc/pam.d/crond
+	install -Dm644 ../cron.deny "${pkgdir}"/etc/cron.deny
+	install -Dm644 ../service "${pkgdir}"/usr/lib/systemd/system/cronie.service
+
+	install -Dm644 crond.sysconfig "${pkgdir}"/etc/conf.d/crond
+	install -Dm644 contrib/anacrontab "${pkgdir}"/etc/anacrontab
+	install -Dm644 contrib/0hourly "${pkgdir}"/etc/cron.d/0hourly
+	install -Dm755 contrib/0anacron "${pkgdir}"/etc/cron.hourly/0anacron
+
+	install -Dm644 COPYING "${pkgdir}"/usr/share/licenses/cronie/COPYING
+}
