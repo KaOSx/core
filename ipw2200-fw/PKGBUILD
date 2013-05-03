@@ -1,16 +1,13 @@
-# Core packages for Chakra
 
 pkgname=ipw2200-fw
 pkgver=3.1
-pkgrel=4
+pkgrel=5
 pkgdesc="Firmware for the Intel PRO/Wireless 2200BG"
 arch=('any')
 url='http://ipw2200.sourceforge.net/'
 license=('custom')
-depends=()
-source=(http://bughost.org/firmware/${pkgname}-${pkgver}.tgz)
-replaces=('ipw2200')
-md5sums=('eaba788643c7cc7483dd67ace70f6e99')
+source=("http://mirrors.slackware.com/slackware/slackware-current/source/n/$pkgname/$pkgname-$pkgver.tar.xz")
+md5sums=('7066e4cf1d94c319c53dfb2603edb757')
 
 package() {
   cd "${srcdir}/ipw2200-fw-${pkgver}"
