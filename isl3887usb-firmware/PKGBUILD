@@ -1,19 +1,16 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=isl3887usb-firmware
-pkgver=2
-pkgrel=3
+pkgver=2.13.25.0
+pkgrel=1
 pkgdesc="Firmware for wireless cards using isl3887usb"
-arch=('any')
+arch=('x86_64')
 url="http://wireless.kernel.org/en/users/Drivers/p54/devices"
 license=('GPL')
-source=('http://daemonizer.de/prism54/prism54-fw/fw-usb/2.13.25.0.lm87.arm')
+source=("http://daemonizer.de/prism54/prism54-fw/fw-usb/$pkgver.lm87.arm")
 md5sums=('39be687c87544b892e7a8ffe7ffd9371')
 
-build() {
+package() {
   mkdir -p $startdir/pkg/usr/lib/firmware
+  
   install -m644 * $startdir/pkg/usr/lib/firmware/isl3887usb
 }
