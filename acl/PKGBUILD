@@ -1,19 +1,15 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas@chakra-project.org
 
 pkgname=acl
 pkgver=2.2.51
-pkgrel=3
+pkgrel=4
 pkgdesc="Library for filesystem ACL support"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://savannah.nongnu.org/projects/acl"
 license=('LGPL')
 depends=('attr>=2.4.46')
 options=('!libtool')
-source=(http://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.src.tar.gz)
-sha256sums=('06854521cf5d396801af7e54b9636680edf8064355e51c07657ec7442a185225')
+source=("http://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.src.tar.gz")
+md5sums=('3fc0ce99dc5253bdcce4c9cd437bc267')
 
 build() {
   cd "${srcdir}"/${pkgname}-${pkgver}
@@ -27,8 +23,4 @@ package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
 
   make DIST_ROOT="${pkgdir}" install install-lib install-dev
-
-  # tidy up
-  rm -f ${pkgdir}/usr/lib/libacl.a
-  chmod 0755 ${pkgdir}/usr/lib/libacl.so.*.*.*
 }

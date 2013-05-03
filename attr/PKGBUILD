@@ -1,21 +1,17 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas@chakra-project.org
 
 pkgname=attr
 pkgver=2.4.46
-pkgrel=3
+pkgrel=4
 pkgdesc="Extended attribute support library for ACL support"
-arch=(i686 x86_64)
+arch=('x86_64')
 url="http://oss.sgi.com/projects/xfs/"
 license=('LGPL')
 groups=('base')
 depends=('glibc') 
 makedepends=('gettext')
 options=('!libtool')
-source=(http://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.src.tar.gz)
-sha256sums=('dcd69bdca7ff166bc45141eddbcf21967999a6b66b0544be12a1cc2fd6340e1f')
+source=("http://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.src.tar.gz")
+md5sums=('db557c17fdfa4f785333ecda08654010')
 
 build() {
   cd "${srcdir}"/${pkgname}-${pkgver}
