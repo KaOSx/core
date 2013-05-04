@@ -1,10 +1,6 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=libpcap
-pkgver=1.3.0
+pkgver=1.4.0
 pkgrel=1
 pkgdesc="A system-independent interface for user-level packet capture"
 arch=('x86_64')
@@ -12,16 +8,13 @@ url="http://www.tcpdump.org/"
 license=('BSD')
 depends=('glibc' 'libnl' 'sh' 'libusbx')
 makedepends=('flex')
-source=("http://www.tcpdump.org/release/libpcap-${pkgver}.tar.gz"
-        'libnl32.patch')
-md5sums=('f78455a92622b7a3c05c58b6ad1cec7e'
-         '7acddc109520a4f984805edb8b03a216')
+source=("http://www.tcpdump.org/release/libpcap-${pkgver}.tar.gz")
+md5sums=('56e88a5aabdd1e04414985ac24f7e76c')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
-  patch -p1 -i "${srcdir}/libnl32.patch"
   
-  ./configure --prefix=/usr --enable-ipv6 
+  ./configure --prefix=/usr --enable-ipv6 --with-libnl
   make
 }
 
