@@ -16,14 +16,21 @@ source=("http://www.kernel.org/pub/linux/utils/net/$pkgname/$pkgname-$pkgver.tar
 md5sums=('fd9db28e4f411a1e74de65c919ae590f'
          '034959fc89919633ee8542b9ab3d0e3c')
 
-build() {
+prepare() {
   cd $srcdir/iproute2-$pkgver
   patch -p1 -i ${srcdir}/iproute2-fhs.patch
 
-  ./configure --disable-werror
-  make
+  # do not treat warnings as errors
+  sed -i 's/-Werror//' Makefile
 }
 
+build() {
+  cd $srcdir/$pkgname-$pkgver
+
+  ./configure
+   make
+}
+   
 package() {
   cd $srcdir/iproute2-$pkgver
   make DESTDIR=$pkgdir install
