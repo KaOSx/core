@@ -1,21 +1,16 @@
-#
-# Core packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgbase=openldap
 pkgname=('libldap' 'openldap')
-pkgver=2.4.33
-pkgrel=2
+pkgver=2.4.35
+pkgrel=1
 arch=('x86_64')
 url="http://www.openldap.org/"
 license=('custom')
 makedepends=('libltdl' 'libsasl' 'e2fsprogs' 'util-linux' 'groff')
 options=('!makeflags')
 source=("ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/${pkgbase}-${pkgver}.tgz"
-        'slapd.default' 'slapd.service' 'slapd.tmpfiles' 'ntlm.patch')
-md5sums=('5adae44897647c15ce5abbff313bc85a'
-         '6be69f6b7e522cb64cce8703da81ed32'
+        'slapd.service' 'slapd.tmpfiles' 'ntlm.patch')
+md5sums=('cd75d82ca89fb0280cba66ca6bd97448'
          'cbe2bd85be8d98851f640d20930ca9ea'
          '13e622d1b6ce9ecc1c5c429b724c0cc2'
          '4258ddbef923d1f29f2843bc050f8c56')
@@ -29,7 +24,6 @@ build() {
   sed -i 's|%LOCALSTATEDIR%/run|/run/openldap|' servers/slapd/slapd.conf
   sed -i 's|-$(MKDIR) $(DESTDIR)$(localstatedir)/run|-$(MKDIR) $(DESTDIR)/run/openldap|' servers/slapd/Makefile.in
 
-  LDFLAGS="$LDFLAGS -L\"${pkgdir}\"/libldap/usr/lib" 
   ./configure --prefix=/usr \
     --mandir=/usr/share/man \
     --libexecdir=/usr/lib \
@@ -106,7 +100,6 @@ package_openldap() {
 
   install -dm700 -o 439 -g 439 "${pkgdir}"/var/lib/openldap
   install -dm700 -o 439 -g 439 "${pkgdir}"/etc/openldap/slapd.d
-  install -Dm644 "${srcdir}"/slapd.default "${pkgdir}"/etc/conf.d/slapd
   install -Dm644 "${srcdir}"/slapd.service "${pkgdir}"/usr/lib/systemd/system/slapd.service
   install -Dm644 "${srcdir}"/slapd.tmpfiles "${pkgdir}"/usr/lib/tmpfiles.d/slapd.conf
   install -Dm644 LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
