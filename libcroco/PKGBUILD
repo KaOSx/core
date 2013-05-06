@@ -1,10 +1,7 @@
-# Platform packages for Chakra
-# Maintainer: Neophytos Kolokotronis <tetris4@gmail.com>
-# Contributor from Arch: Jan de Groot <jgc@archlinux.org>
 
 pkgname=libcroco
 pkgver=0.6.8
-pkgrel=2
+pkgrel=3
 pkgdesc="A CSS parsing library"
 arch=('x86_64')
 depends=('glib2' 'libxml2')
@@ -17,11 +14,13 @@ md5sums=('767e73c4174f75b99695d4530fd9bb80')
 
 build() {
   cd $pkgname-$pkgver
+  
   ./configure --prefix=/usr --disable-static
   make
 }
 
 package() {
   cd $pkgname-$pkgver
+  
   make DESTDIR="$pkgdir" install
 }

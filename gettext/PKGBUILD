@@ -1,11 +1,6 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
-
 
 pkgname=gettext
-pkgver=0.18.2
+pkgver=0.18.2.1
 pkgrel=1
 pkgdesc="GNU internationalization library"
 arch=('x86_64')
@@ -17,8 +12,8 @@ optdepends=('cvs: for autopoint tool')
 options=(!libtool)
 install=gettext.install
 source=(ftp://ftp.gnu.org/pub/gnu/gettext/${pkgname}-${pkgver}.tar.gz{,.sig})
-md5sums=('0c86e5af70c195ab8bd651d17d783928'
-         '1a658e29a03ab42da6d2d468b0583407')
+md5sums=('034c8103b14654ebd300fadac44d6f14'
+         'e4658c307333395a12f8d0b4d95fbb0f')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
@@ -29,6 +24,7 @@ build() {
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make DESTDIR="${pkgdir}" install
 }
 

@@ -1,12 +1,7 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas@chakra-project.org
-
 
 pkgname=gobject-introspection
 pkgver=1.34.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Introspection system for GObject-based libraries"
 url="https://live.gnome.org/GObjectInstrospection"
 arch=('x86_64')
