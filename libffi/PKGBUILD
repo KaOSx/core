@@ -1,10 +1,6 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas@chakra-project.org
 
 pkgname=libffi
-pkgver=3.0.12
+pkgver=3.0.13
 pkgrel=1
 pkgdesc="A portable, high level programming interface to various calling conventions."
 arch=('x86_64')
@@ -14,17 +10,19 @@ depends=('glibc')
 options=('!libtool')
 install=libffi.install
 source=("ftp://sourceware.org/pub/libffi/libffi-${pkgver}.tar.gz")
-md5sums=('da984c6756170d50f47925bb333cda71')
+md5sums=('45f3b6dbc9ee7c7dfbbbc5feba571529')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  ./configure --prefix=/usr 
+  
+  ./configure --prefix=/usr --disable-static
   make 
 }
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   make DESTDIR="${pkgdir}" install 
+  
   install -m755 -d "${pkgdir}/usr/share/licenses/${pkgname}"
   install -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/" 
 }
