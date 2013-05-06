@@ -1,22 +1,17 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer : abveritas@chakra-project.org
-# maintainer : Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=('ruby' 'ruby-docs')
-pkgver=1.9.3_p392
-_pkgver=1.9.3-p392
+pkgver=2.0.0_p0
+_pkgver=2.0.0-p0
 pkgrel=1
 pkgdesc="An object-oriented language for quick and easy programming"
 arch=('x86_64')
 url="http://www.ruby-lang.org/en/"
 license=('custom')
 makedepends=('gdbm' 'db' 'openssl' 'zlib' 'readline' 'tk' 'libffi'
-             'doxygen' 'graphviz' 'libyaml')
+             'doxygen' 'libyaml')
 options=('!emptydirs')
-source=("ftp://ftp.ruby-lang.org/pub/ruby/1.9/${pkgname}-${_pkgver}.tar.bz2")
-md5sums=('a810d64e2255179d2f334eb61fb8519c')
+source=("ftp://ftp.ruby-lang.org/pub/ruby/2.0/${pkgname}-${_pkgver}.tar.bz2")
+md5sums=('895c1c581f8d28e8b3bb02472b2ccf6a')
 
 build() {
   cd "${srcdir}/${pkgname}-${_pkgver}"
