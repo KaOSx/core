@@ -1,7 +1,7 @@
 
 pkgname=pacman
-pkgver=4.1.0
-pkgrel=2
+pkgver=4.1.1
+pkgrel=1
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -18,9 +18,9 @@ options=(!libtool)
 source=("ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz"
         'pacman.conf'
         'makepkg.conf')
-md5sums=('a0f2b3148bee4784f21cf373cf59a0bc'
-         '87993bb352fc87436a0e9a227d92d0f1'
-         '883292a326d2b3e0d9e7c3ec576263f5')
+md5sums=('72a1688ff73c1c0b79d8f87b3793d446'
+         'bc8184d2677548881b0d34af09c2aa26'
+         '5f360e003e95f1a5cbd6e60d937dfd25')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
