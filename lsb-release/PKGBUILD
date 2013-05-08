@@ -1,13 +1,9 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=lsb-release
 pkgver=1.4
-pkgrel=6
+pkgrel=7
 pkgdesc="LSB version query program."
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.linuxbase.org/"
 makedepends=('perl') # to generate the man page
 license=('GPL2')
@@ -16,6 +12,7 @@ md5sums=('30537ef5a01e0ca94b7b8eb6a36bb1e4')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make
 }
 
@@ -23,14 +20,10 @@ package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   make prefix="${pkgdir}/usr" mandir="${pkgdir}/usr/share/man" install
 
-  # Create an /etc/lsb-release file suitable for Chakra
   install -d -m755 "${pkgdir}/etc"
-  cat > "${pkgdir}/etc/lsb-release" <<-EOF
-DISTRIB_ID="Chakra"
-DISTRIB_RELEASE="2013.02"
-DISTRIB_CODENAME="Benz"
-DISTRIB_DESCRIPTION="Chakra"
-EOF
+  echo "LSB_VERSION=$pkgver" >> "$pkgdir/etc/lsb-release"
+  echo "DISTRIB_ID=May2013" >> "$pkgdir/etc/lsb-release"
+  echo "DISTRIB_RELEASE=rolling" >> "$pkgdir/etc/lsb-release"
+  echo "DISTRIB_DESCRIPTION=\"KdeOS\"" >> "$pkgdir/etc/lsb-release" 
 }
 
-# vim:set ts=2 sw=2 et:

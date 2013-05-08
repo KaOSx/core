@@ -1,14 +1,13 @@
-# maintainer: abveritas@chakra-project.org
 
 pkgname=hwids
-pkgver=20130328
+pkgver=20130503
 pkgrel=1
 pkgdesc="hardware identification databases"
 url="https://github.com/gentoo/hwids"
 license=('GPL2')
-arch=('any')
+arch=('x86_64')
 source=("https://github.com/gentoo/${pkgname}/tarball/${pkgname}-${pkgver}")
-md5sums=('d36b5a833347895e57b8b9c63c6692cf')
+md5sums=('23170b624dfd7873a6d7abbf4bbcca09')
 
 package() {
   cd ${srcdir}/*
