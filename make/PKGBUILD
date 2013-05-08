@@ -1,8 +1,7 @@
-# Maintainer: abveritas@chakra-project.org>
 
 pkgname=make
 pkgver=3.82
-pkgrel=2
+pkgrel=3
 pkgdesc="GNU make utility to maintain groups of programs"
 arch=('x86_64')
 url="http://www.gnu.org/software/make"
