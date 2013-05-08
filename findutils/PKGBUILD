@@ -1,11 +1,7 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer: abveritas@chakra-project.org
 
 pkgname=findutils
 pkgver=4.4.2
-pkgrel=5
+pkgrel=6
 pkgdesc="GNU utilities to locate files"
 arch=('x86_64')
 license=('GPL3')
@@ -29,11 +25,13 @@ build() {
 
 check() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make check
 }
 
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make DESTDIR=$pkgdir install
 }
