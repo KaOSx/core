@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=3.9
 _srcname=linux-3.9
-pkgver=3.9.0
+pkgver=3.9.1
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'bc')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         #"http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.tar.xz"
-        #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config.x86_64'
         #aufs patches
@@ -29,7 +29,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch'
         'kernel_usb_AlanStern.patch')
 md5sums=('4348c9b6b2eb3144d601e87c19d5d909'
-         'cb1abec36a434703e7f296bb5022744f'
+         '66f171a17aa39b6dc6eb8bb51a4117c7'
+         '8856dc07ca69edc7ebd3aa5be93085e8'
          '52690fe8baa6d6abd858f04c4531d437'
          '94a873436f6c62580ac54c1b9f0e021a'
          'a2678afaf5205f24c58affd4b1570503'
@@ -45,7 +46,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  #patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
