@@ -1,16 +1,11 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dog]org>
-# maintainer Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=linux-firmware
-pkgver=20130221
+pkgver=20130508
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
 pkgdesc="Firmware files for Linux"
-arch=('any')
+arch=('x86_64')
 url="http://git.kernel.org/?p=linux/kernel/git/dwmw2/linux-firmware.git;a=summary"
 license=('GPL2' 'GPL3' 'custom')
 makedepends=('b43-fwcutter')
@@ -45,12 +40,12 @@ replaces=('kernel26-firmware'
            'b43-firmware'
            'b43-firmware-legacy')
 options=(!strip emptydirs)
-source=("http://chakra.sourceforge.net/sources/linux-firmware/$pkgname-$pkgver.tar.xz"
+source=("http://sourceforge.net/projects/kdeos/files/Sources/linux-firmware/$pkgname-$pkgver.tar.xz"
         "http://mirror2.openwrt.org/sources/broadcom-wl-${_b43}.tar.bz2"
         "http://downloads.openwrt.org/sources/wl_apsta-${_legacy}.o")
-sha256sums=('e1e47de6b9eb101994d269794ba8cb640e9ac01e15fa5c8e9c4f3ac22a07325f'
-            'f1e7067aac5b62b67b8b6e4c517990277804339ac16065eb13c731ff909ae46f'
-            '7dba610b1d96dd14e901bcbce14cd6ecd1b1ac6f5c0035b0d6b6dc46a7c3ef90')
+md5sums=('8596a033183e14953058e432e7ee8c34'
+         'f4e357b09eaf5d8b1f1920cf3493a555'
+         'e08665c5c5b66beb9c3b2dd54aa80cb3')
 
 # create tarball: source PKGBUILD && mksource
 
@@ -60,7 +55,7 @@ mksource() {
 	  pushd ${pkgname}
           git archive --format=tar --prefix linux-firmware-$(date +%Y%m%d)/ master | xz -9 > ../linux-firmware-$(date +%Y%m%d).tar.xz
 	  popd
-	  sha256sum linux-firmware-$(date +%Y%m%d).tar.xz
+	  md5sum linux-firmware-$(date +%Y%m%d).tar.xz
 }
 
 package() {
