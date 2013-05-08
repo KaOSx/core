@@ -1,12 +1,8 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer: abveritas@chakra-project.org
 
 pkgname=dnsutils
 # _pkver when P version used.
-pkgver=9.9.2.1
-_pkgver=9.9.2-P1
+pkgver=9.9.2.2
+_pkgver=9.9.2-P2
 pkgrel=1
 pkgdesc="Various DNS utilities - dig host nslookup nsupdate"
 arch=('x86_64')
@@ -16,7 +12,7 @@ depends=('openssl')
 options=('makeflags')
 source=("http://ftp.isc.org/isc/bind9/${_pkgver}/bind-${_pkgver}.tar.gz"
 	'tools-only.patch')
-md5sums=('44b9d1feb11de09811160775f94c2554'
+md5sums=('2be7763c99b7e7b42ac3a18a267ce1aa'
          'a7b414849b4fb2137e33f348c3cdd458')
 
 build() {

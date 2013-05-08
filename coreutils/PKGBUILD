@@ -1,11 +1,7 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas@chakra-project.org
 
 pkgname=coreutils
 pkgver=8.21
-pkgrel=1
+pkgrel=2
 pkgdesc="The basic file, shell and text manipulation utilities of the GNU operating system"
 arch=('x86_64')
 license=('GPL3')
@@ -13,9 +9,8 @@ url="http://www.gnu.org/software/coreutils"
 groups=('base')
 depends=('glibc' 'pam' 'acl' 'gmp' 'libcap')
 install=${pkgname}.install
-source=(ftp://ftp.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.xz{,.sig})
-md5sums=('065ba41828644eca5dd8163446de5d64'
-         '5d68aee0cfb701c13ec624ad8df142a9')
+source=("ftp://ftp.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.xz")
+md5sums=('065ba41828644eca5dd8163446de5d64')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
@@ -27,6 +22,7 @@ build() {
 
 check() {
   cd ${srcdir}/${pkgname}-${pkgver}
+  
   make RUN_EXPENSIVE_TESTS=yes check
 }
 
