@@ -1,11 +1,7 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer: abveritas@chakra-project.org
 
 pkgname=which
 pkgver=2.20
-pkgrel=6
+pkgrel=7
 pkgdesc="A utility to show the full path of commands"
 arch=('x86_64')
 url="http://www.xs4all.nl/~carlo17/which"

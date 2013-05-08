@@ -1,14 +1,9 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=fakeroot
 pkgver=1.18.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Gives a fake root environment, useful for building packages as a non-privileged user."
-arch=('i686' 'x86_64')
+arch=('x86_64')
 license=('GPL')
 url="http://packages.debian.org/fakeroot"
 groups=('base-devel')
@@ -25,7 +20,6 @@ build() {
               --libdir=/usr/lib/libfakeroot \
 	            --disable-static \
               --with-ipc=sysv
-	# --with-ipc=tcp is currently broken and no option on smp systems
 
   make
 }
@@ -41,4 +35,3 @@ package() {
   install -D -m644 "${srcdir}/${pkgname}-${pkgver}/README" "${pkgdir}/usr/share/doc/${pkgname}/README"
 }
 
-# vim:set ts=2 sw=2 et:
