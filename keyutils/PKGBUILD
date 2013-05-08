@@ -1,11 +1,7 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas@chakra-project.org
 
 pkgname=keyutils
 pkgver=1.5.5
-pkgrel=1
+pkgrel=2
 pkgdesc="Linux Key Management Utilities"
 arch=('x86_64')
 url="http://www.kernel.org"
