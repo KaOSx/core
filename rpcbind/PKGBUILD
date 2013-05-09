@@ -1,12 +1,7 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer Samir Benmendil <ram-z[at]chakra-project[dot]org>
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=rpcbind
 pkgver=0.2.0
-pkgrel=5
+pkgrel=1
 pkgdesc="portmap replacement which supports RPC over various protocols"
 arch=('x86_64')
 depends=('bash' 'glibc' 'libtirpc')
