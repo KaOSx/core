@@ -1,12 +1,8 @@
-#
-# Core packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 # KEEP LIBTOOL FILES!
 pkgname=neon
 pkgver=0.29.6
-pkgrel=4
+pkgrel=5
 pkgdesc="HTTP and WebDAV client library with a C interface"
 arch=('x86_64')
 license=('GPL' 'LGPL')
@@ -18,9 +14,13 @@ options=('libtool')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
+  
   ./configure --prefix=/usr \
-    --with-expat --enable-shared --disable-static \
-    --with-ssl=openssl --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt
+    --with-expat \
+    --enable-shared \
+    --disable-static \
+    --with-ssl=openssl \
+    --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt
   make 
   # fix invalid .so links in man pages 
   sed -i '/^\.so/s|\.so \([^.]\+\)\.\([[:digit:]]\)|.so man\2/\1.\2|' doc/man/*
@@ -28,5 +28,6 @@ build() {
 
 package() {
   cd ${srcdir}/${pkgname}-${pkgver}
+  
   make DESTDIR=${pkgdir} install
 }

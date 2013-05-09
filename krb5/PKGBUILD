@@ -1,30 +1,23 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=krb5
-pkgver=1.10.3
+pkgver=1.11.2
 pkgrel=1
 pkgdesc="The Kerberos network authentication system"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://web.mit.edu/kerberos/"
 license=('custom')
 depends=('e2fsprogs' 'libldap' 'keyutils')
 makedepends=('perl')
-provides=('heimdal')
-replaces=('heimdal')
-conflicts=('heimdal')
 backup=('etc/krb5.conf' 'var/lib/krb5kdc/kdc.conf')
-source=("http://web.mit.edu/kerberos/dist/${pkgname}/1.10/${pkgname}-${pkgver}-signed.tar"
-        'krb5-1.10.1-gcc47.patch'
+source=("http://web.mit.edu/kerberos/dist/${pkgname}/1.11/${pkgname}-${pkgver}-signed.tar"
+        'krb5-config_LDFLAGS.patch'
         'krb5-kadmind.service'
         'krb5-kdc.service'
 	'krb5-kpropd.service'
 	'krb5-kpropd@.service'
 	'krb5-kpropd.socket')
-md5sums=('a31eaa949d663cccca6b790af4573368'
-         '88c7ffb6b2e28d1123eef2c94f42e7b1'
+md5sums=('d7a63c9c68b65efa71a615c67b6edf70'
+         '656e242de9b5ada1edf398983db51eef'
          'd2c898d376ebe5c62b873da7cab0f7e7'
          'f0245d33083337f95654f4caf1d32f57'
          '3dddf2f79ef74c4e736711e41228ee91'
@@ -36,8 +29,8 @@ build() {
    tar zxvf ${pkgname}-${pkgver}.tar.gz
    cd "${srcdir}/${pkgname}-${pkgver}/src"
    
-   # gcc47 build error messages
-   patch -p2 -i ../../krb5-1.10.1-gcc47.patch
+   patch -p2 -i "${srcdir}"/krb5-config_LDFLAGS.patch
+   
    rm lib/krb5/krb/deltat.c
 
    sed -i "/KRB5ROOT=/s/\/local//" util/ac_check_krb5.m4
@@ -45,6 +38,7 @@ build() {
    export CFLAGS+=" -fPIC -fno-strict-aliasing -fstack-protector-all"
    export CPPFLAGS+=" -I/usr/include/et"
    ./configure --prefix=/usr \
+               --sysconfdir=/etc \
                --mandir=/usr/share/man \
                --localstatedir=/var/lib \
                --enable-shared \
