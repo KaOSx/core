@@ -1,8 +1,7 @@
-# maintainer: <abveritas[at]chakra-project[dot]org>
 
 pkgname=gperf
 pkgver=3.0.4
-pkgrel=4
+pkgrel=5
 pkgdesc="Perfect hash function generator."
 arch=('x86_64')
 url="http://www.gnu.org/software/gperf/"

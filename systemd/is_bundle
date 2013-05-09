@@ -1,7 +1,0 @@
-#!/bin/sh
-
-if egrep -q "($1.*cinstall.*)" /proc/mounts; then
-	echo 1
-else
-	echo 0
-fi

@@ -1,1 +1,0 @@
-KERNEL=="loop*", SUBSYSTEM=="block", PROGRAM="is_bundle %k", ENV{UDISKS_PRESENTATION_HIDE}="%c"

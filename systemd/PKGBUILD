@@ -1,6 +1,6 @@
 
 pkgname=systemd
-pkgver=203
+pkgver=204
 pkgrel=1
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
@@ -31,7 +31,7 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-install-udev'
         'initcpio-install-timestamp'
         'use-split-usr-path.patch')
-md5sums=('b5a124ae8aee2b9fa357f912e87e9048'
+md5sums=('a07619bb19f48164fbf0761d12fd39a8'
          'e99e9189aa2f6084ac28b8ddf605aeb8'
          'fb37e34ea006c79be1c54cbb0f803414'
          'df69615503ad293c9ddf9d8b7755282d'
@@ -63,8 +63,8 @@ package() {
 
   printf "d /run/console 0755 root root\n" > "$pkgdir/usr/lib/tmpfiles.d/console.conf"
 
-  install -dm755 "$pkgdir/bin"
-  ln -s ../usr/lib/systemd/systemd "$pkgdir/bin/systemd"
+  #install -dm755 "$pkgdir/bin"
+  #ln -s ../usr/lib/systemd/systemd "$pkgdir/bin/systemd"
 
   # Remove rpm dir
   rm -r "$pkgdir/etc/rpm"
