@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=3.9
 _srcname=linux-3.9
-pkgver=3.9.1
+pkgver=3.9.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -26,8 +26,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'config.aufs'
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
-        'change-default-console-loglevel.patch'
-        'kernel_usb_AlanStern.patch')
+        'change-default-console-loglevel.patch')
 md5sums=('4348c9b6b2eb3144d601e87c19d5d909'
          '66f171a17aa39b6dc6eb8bb51a4117c7'
          '8856dc07ca69edc7ebd3aa5be93085e8'
@@ -54,18 +53,15 @@ build() {
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
-  #patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
+  patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
 
   #aufs patches for Live:
-  #patch -p1 -i "${srcdir}/aufs3.patch"
-  #patch -p1 -i "${srcdir}/aufs3-base.patch"
-  #patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
-  #patch -p1 -i "${srcdir}/aufs3-loopback.patch"
-  #patch -p1 -i "${srcdir}/aufs3-proc_map.patch"
-  #patch -p1 -i "${srcdir}/aufs3-standalone.patch"
-  
-  # usb errors, upstream patch from Alan Stern
-  #patch -p1 -i "${srcdir}/kernel_usb_AlanStern.patch"
+  patch -p1 -i "${srcdir}/aufs3.patch"
+  patch -p1 -i "${srcdir}/aufs3-base.patch"
+  patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs3-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs3-proc_map.patch"
+  patch -p1 -i "${srcdir}/aufs3-standalone.patch"
   
   cat "${srcdir}/config.x86_64" > ./.config
 
@@ -80,24 +76,9 @@ build() {
 
   # get kernel version
   make prepare
-
-  # load configuration
-  # Configure the kernel. Replace the line below with one of your choice.
-  #make menuconfig # CLI menu for configuration
-  #make nconfig # new CLI menu for configuration
-  #make xconfig # X-based configuration
-  #make oldconfig # using old config from previous kernel version
-  # ... or manually edit .config
   
   # rewrite configuration
   yes "" | make config >/dev/null
-
-  ####################
-  # stop here
-  # this is useful to configure the kernel
-  #msg "Stopping build"
-  #return 1
-  ####################
 
   # build!
   make ${MAKEFLAGS} bzImage modules
@@ -258,7 +239,7 @@ package_linux-next-headers() {
   cp fs/xfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h"
 
   #aufs3-util need
-  #sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do

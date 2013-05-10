@@ -1,7 +1,6 @@
-# Maintainer: abveritas[at]chakra-project[dot]org>
 
 pkgname=gnutls
-pkgver=3.1.10
+pkgver=3.1.11
 pkgrel=1
 pkgdesc="A library which provides a secure layer over a reliable transport layer"
 arch=('x86_64')
@@ -11,12 +10,15 @@ install=gnutls.install
 options=('libtool')
 depends=('gcc-libs' 'libtasn1>=3.2' 'readline' 'zlib' 'libgcrypt' 'texinfo' 'nettle')
 source=("ftp://ftp.gnutls.org/gcrypt/gnutls/v3.1/${pkgname}-${pkgver}.tar.xz")
-md5sums=('9e73aa5c3ef3b7358159a31302e25aa7')
+md5sums=('b1c8f431f7c258a1e76cdba05cc1dd88')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   
-  ./configure --prefix=/usr --with-zlib --disable-guile --disable-static
+  ./configure --prefix=/usr \
+       --with-zlib \
+       --disable-guile \
+       --disable-static 
   make 
 }
 
