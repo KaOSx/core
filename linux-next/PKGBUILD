@@ -12,7 +12,6 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'bc')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-        #"http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config.x86_64'
@@ -28,18 +27,17 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch')
 md5sums=('4348c9b6b2eb3144d601e87c19d5d909'
-         '66f171a17aa39b6dc6eb8bb51a4117c7'
-         '8856dc07ca69edc7ebd3aa5be93085e8'
-         '52690fe8baa6d6abd858f04c4531d437'
-         '94a873436f6c62580ac54c1b9f0e021a'
-         'a2678afaf5205f24c58affd4b1570503'
-         '7693e0258036ab1c6e6a42d7ee573666'
-         'f9d33aeebb5c637eeefc222643632035'
-         '5e73a0f39d73095bdff6a9168ecc05cd'
+         'adeb2556568f79e827e7a0ce4c483605'
+         '435414a9f8bf03eadc45269232f3376e'
+         '89fbb605ef398297b8dc43409c849c92'
+         'd5f57f666f02ca25ba298210e2332ce8'
+         'cf2ad9065886e56698524eab323ac656'
+         '460247f1b4da5dccdaacfa6d161131f0'
+         '498abc1e34df8a7d19e43980c74f2bc2'
+         'fd1096263cbe36599360258123cb180f'
          '52f4a2c7f6277774117c834d949d6b81'
          '7b2ca9cdb5555219f793b5a807b05870'
-         '65cbe8e4c8efaf96dd162102e46ce81d'
-         '635d42d089029f82e0b9e220af1e2908')
+         '65cbe8e4c8efaf96dd162102e46ce81d')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
