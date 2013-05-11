@@ -9,16 +9,13 @@ url="http://freetype.sourceforge.net"
 depends=('zlib' 'sh' 'bzip2')
 options=('!libtool')
 source=("http://downloads.sourceforge.net/sourceforge/freetype/freetype-${pkgver}.tar.bz2"
-        'freetype-2.3.0-enable-spr.patch'
         'freetype-2.2.1-enable-valid.patch')
 md5sums=('3463102764315eb86c0d3c2e1f3ffb7d'
-         '816dc8619a6904a7385769433c0a8653'
          '214119610444c9b02766ccee5e220680')
 
 build() {
   cd "${srcdir}/freetype-${pkgver}"
 
-  patch -p1 -i "${srcdir}/freetype-2.3.0-enable-spr.patch"
   patch -p1 -i "${srcdir}/freetype-2.2.1-enable-valid.patch"
 
   ./configure --prefix=/usr
