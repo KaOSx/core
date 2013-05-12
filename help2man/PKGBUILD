@@ -1,7 +1,6 @@
-# Maintainer: abveritas[at]chakra-project[dot]org>
 
 pkgname=help2man
-pkgver=1.41.1
+pkgver=1.41.2
 pkgrel=1
 pkgdesc="Conversion tool to create man files"
 arch=('x86_64')
@@ -9,7 +8,7 @@ url="http://www.gnu.org/software/help2man/"
 license=('GPL')
 depends=('perl-locale-gettext')
 source=("http://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('4485615cd699a78eb42444324546942a')
+md5sums=('48cb7fa1d9cca2ebea1844694668c8a8')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
