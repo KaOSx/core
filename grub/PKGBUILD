@@ -14,9 +14,9 @@ makedepends=('xz' 'bdf-unifont' 'ttf-dejavu' 'python' 'autogen'
              'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse')
 
 source=("http://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
-        "ftp://ftp.archlinux.org/other/grub2/grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
-        "ftp://ftp.archlinux.org/other/grub2/grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz"
-        "ftp://ftp.archlinux.org/other/grub2/grub2_extras_915resolution_r${_grub_915_ver}.tar.xz"
+        "http://sourceforge.net/projects/kdeos/files/Sources/grub/grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
+        "http://sourceforge.net/projects/kdeos/files/Sources/grub/grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz"
+        "http://sourceforge.net/projects/kdeos/files/Sources/grub/grub2_extras_915resolution_r${_grub_915_ver}.tar.xz"
         'grub_mkconfig_fixes.patch'
         'grub.default'
         'grub.cfg'
