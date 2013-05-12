@@ -1,0 +1,20 @@
+
+pkgname=grub-themes-monochrome
+_pkgname=monochrome-light
+pkgver=1.0
+pkgrel=1
+pkgdesc="Monochrome-light Grub2-theme."
+url="http://www.reddit.com/r/linux/comments/w7mux/i_make_grub_themes_heres_my_newest_one/"
+arch=('x86_64')
+license=('CC-BY-ND')
+depends=('grub-common')
+install=${pkgname}.install
+source=("http://sourceforge.net/projects/kdeos/files/Sources/grub2-themes/$pkgver/$_pkgname.tar.xz")
+md5sums=('d708232349e14966304c3ee4c86e6687')
+ 
+build() {
+  cd "${srcdir}"
+  
+  install -dm755 "$pkgdir/usr/share/grub/themes"
+  cp -dpr --no-preserve=ownership "${_pkgname}" "$pkgdir/usr/share/grub/themes"
+}
