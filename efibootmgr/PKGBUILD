@@ -1,11 +1,7 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=efibootmgr
 pkgver=0.6.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Tool to modify UEFI Firmware Boot Manager Variables."
 arch=('x86_64')
 url="http://linux.dell.com/efibootmgr/"
@@ -17,13 +13,11 @@ md5sums=('9e9a31d79e579644de83a14139b66d10')
 
 build () {	
 	rm -rf ${srcdir}/efibootmgr-${pkgver}_build/ || true
-	
 	cp -r ${srcdir}/efibootmgr-${pkgver} ${srcdir}/efibootmgr-${pkgver}_build
 	
 	cd ${srcdir}/efibootmgr-${pkgver}_build/
 	
-	echo
-	
+	echo	
 	CFLAGS= make
 	echo
 	
@@ -31,7 +25,6 @@ build () {
 
 
 package() {
-	
 	mkdir -p ${pkgdir}/usr/sbin/
 	mkdir -p ${pkgdir}/usr/share/man/man8/
 	
