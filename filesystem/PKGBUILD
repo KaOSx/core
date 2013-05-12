@@ -1,6 +1,6 @@
 
 pkgname=filesystem
-pkgver=2013.04
+pkgver=2013.05
 pkgrel=1
 _codename=2013
 pkgdesc='Base filesystem'
@@ -38,7 +38,7 @@ md5sums=('3b1d2710d902b222bb345433f35b766a'
          'f3b6ae7db8adffaaa4bffc6099dcbd50'
          'a8a962370cd0128465d514e6a1f74130'
          '4e83f889774994f4c6c1530e92c2588d'
-         '7227cc4d37c547e681b10b1bc62840cf'
+         '4a9e9d50ecbea2cec507c7bed6bd30b7'
          '201bbb8b4734d2f46afe1e24d7cc6173'
          '45100e8a4a6d8d4b3a7dcd34b0fa4281')
 
@@ -67,7 +67,7 @@ package() {
 	for f in gshadow shadow crypttab; do
 		install -m600 ${srcdir}/${f} etc/
 	done
-	touch etc/KdeOs-release
+	touch etc/KdeOS-release
 	install -D -m644 ${srcdir}/modprobe.d.usb-load-ehci-first usr/lib/modprobe.d/usb-load-ehci-first.conf
 	install -m755 ${srcdir}/locale.sh etc/profile.d/locale.sh
 

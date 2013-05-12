@@ -11,8 +11,8 @@ license=('GPL3')
 depends=("grub-common=${pkgver}" 'dosfstools' 'efibootmgr')
 makedepends=('xz' 'python' 'autogen' 'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse')
 options=('!strip' '!emptydirs')
-replaces=('grub2-efi-x86_64')
-provides=('grub2-efi-x86_64')
+replaces=('grub2-efi64')
+provides=('grub2-efi64')
 
 source=("http://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
         "ftp://ftp.archlinux.org/other/grub2/grub2_extras_lua_r${_grub_lua_ver}.tar.xz")

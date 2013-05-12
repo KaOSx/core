@@ -66,7 +66,7 @@ index 14402e8..64c9bb5 100644
    alt_version=`echo $version | sed -e "s,\.old$,,g"`
    linux_root_device_thisversion="${LINUX_ROOT_DEVICE}"
  
-+  if test -e "/etc/arch-release" ; then
++  if test -e "/etc/KdeOS-release" ; then
 +    if echo "${basename}" | grep -q 'vmlinuz-linux' ; then
 +      version="`echo "${basename}" | sed -e 's,vmlinuz-linux,,g'`"
 +      
@@ -99,7 +99,7 @@ index 14402e8..64c9bb5 100644
      linux_root_device_thisversion=${GRUB_DEVICE}
    fi
  
-+  if test -e "/etc/arch-release" ; then
++  if test -e "/etc/KdeOS-release" ; then
 +    is_first_entry="false"
 +    
 +    linux_entry "${OS}" "${version}" true \
@@ -122,7 +122,7 @@ index 14402e8..64c9bb5 100644
      echo "submenu '$(gettext_printf "Advanced options for %s" "${OS}" | grub_quote)' \$menuentry_id_option 'gnulinux-advanced-$boot_device_id' {"
    fi
  
-+  if ! test -e "/etc/arch-release" ; then
++  if ! test -e "/etc/KdeOS-release" ; then
    linux_entry "${OS}" "${version}" advanced \
                "${GRUB_CMDLINE_LINUX} ${GRUB_CMDLINE_LINUX_DEFAULT}"
 +  fi
@@ -134,7 +134,7 @@ index 14402e8..64c9bb5 100644
  
  # If at least one kernel was found, then we need to
  # add a closing '}' for the submenu command.
-+if ! test -e "/etc/arch-release" ; then
++if ! test -e "/etc/KdeOS-release" ; then
  if [ x"$is_first_entry" != xtrue ]; then
    echo '}'
  fi
