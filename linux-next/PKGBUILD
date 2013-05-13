@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 _basekernel=3.9
 _srcname=linux-3.9
 pkgver=3.9.2
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -28,7 +28,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch')
 md5sums=('4348c9b6b2eb3144d601e87c19d5d909'
          'adeb2556568f79e827e7a0ce4c483605'
-         '435414a9f8bf03eadc45269232f3376e'
+         '5f53be36ed19619784c0bc226c8233f5'
          '89fbb605ef398297b8dc43409c849c92'
          'd5f57f666f02ca25ba298210e2332ce8'
          'cf2ad9065886e56698524eab323ac656'
