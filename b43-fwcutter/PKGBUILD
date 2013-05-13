@@ -1,11 +1,7 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=b43-fwcutter
 pkgver=017
-pkgrel=1
+pkgrel=2
 pkgdesc="firmware extractor for the bcm43xx kernel module"
 url="http://wireless.kernel.org/en/users/Drivers/b43"
 depends=('glibc')
@@ -16,11 +12,13 @@ md5sums=('fe6a3cc765d8a8328dc09f7a6159bfb7')
 
 build() {
 	cd ${srcdir}/${pkgname}-${pkgver}
+	
 	make
 }
 
 package() {
 	cd $srcdir/${pkgname}-${pkgver}
+	
 	install -D -m755 b43-fwcutter ${pkgdir}/usr/bin/b43-fwcutter
 	install -D -m644 b43-fwcutter.1 ${pkgdir}/usr/share/man/man1/b43-fwcutter.1
 }
