@@ -1,10 +1,6 @@
-#
-# Core packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=ca-certificates
-pkgver=20121114
+pkgver=20130119
 pkgrel=1
 pkgdesc='Common CA certificates'
 arch=('any')
@@ -15,7 +11,7 @@ depends=('bash' 'run-parts' 'openssl' 'findutils' 'coreutils' 'sed')
 makedepends=('ruby' 'python2')
 install=ca-certificates.install
 backup=('etc/ca-certificates.conf')
-md5sums=('3000802ea54fbe3a9b6aaa58428241c3')
+md5sums=('1fbbec2028a33cf865b79c204aa2e626')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
@@ -41,4 +37,3 @@ package() {
   ) > ${pkgdir}/etc/ca-certificates.conf
 }
 
-# vim:set ts=2 sw=2 et:
