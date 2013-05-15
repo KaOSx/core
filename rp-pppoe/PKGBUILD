@@ -1,12 +1,9 @@
-# $Id: PKGBUILD 77813 2010-04-18 07:47:31Z allan $
-# Contributor: orelien <aurelien.foret@wanadoo.fr>
-# Maintainer:
 
 pkgname=rp-pppoe
 pkgver=3.11
-pkgrel=1
+pkgrel=2
 pkgdesc="Roaring Penguin's Point-to-Point Protocol over Ethernet client"
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="http://www.roaringpenguin.com/pppoe/"
 license=('GPL')
 groups=('base')
@@ -14,13 +11,17 @@ depends=('ppp>=2.4.5' 'sh')
 options=('!makeflags')
 backup=(etc/ppp/{pppoe.conf,firewall-standalone,firewall-masq,pppoe-server-options})
 source=("http://www.roaringpenguin.com/files/download/rp-pppoe-${pkgver}.tar.gz"
-        'adsl.service')
+        'adsl.service'
+        'kmode.patch')
 install=${pkgname}.install
-sha256sums=('86a1a4d92fcea74fa6dd45516c5975933fa978b36fafe71f76ea70b4b4747720'
-            '0247cd38b933da5033cf5229e695b29514dfc13f4c65ebd8ba03da65f4b2cff0')
+md5sums=('13b5900c56bd602df6cc526e5e520722'
+         'ae14bb45cdd6aad31395a301f96ddd82'
+         '125372c49bbd978d138433846283f82a')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}/src"
+  patch -p2 -i ${srcdir}/kmode.patch
+  
   ./configure --prefix=/usr \
               --enable-plugin
   make
@@ -30,5 +31,5 @@ package() {
   cd "${srcdir}/${pkgname}-${pkgver}/src"
   make PLUGIN_DIR="/usr/lib/rp-pppoe" DESTDIR="${pkgdir}" install
   
-  install -Dm755 "${srcdir}/adsl.service" "${pkgdir}/usr/lib/systemd/system/adsl.service"
+  install -Dm644 "${srcdir}/adsl.service" "${pkgdir}/usr/lib/systemd/system/adsl.service"
 }
