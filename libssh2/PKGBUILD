@@ -1,11 +1,7 @@
-#
-# Platform packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=libssh2
 pkgver=1.4.3
-pkgrel=1
+pkgrel=2
 pkgdesc="A library implementing the SSH2 protocol as defined by Internet Drafts"
 url="http://www.libssh2.org/"
 arch=('x86_64')
@@ -19,6 +15,7 @@ md5sums=('071004c60c5d6f90354ad1b701013a0b'
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
+  
   ./configure --prefix=/usr 
   make 
 }

@@ -1,10 +1,6 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=libssh
-pkgver=0.5.3
+pkgver=0.5.4
 pkgrel=1
 pkgdesc="Library for accessing ssh client services through C libraries"
 url="http://www.libssh.org/"
@@ -12,12 +8,13 @@ license=('LGPL')
 arch=('x86_64')
 depends=('openssl')
 makedepends=('cmake' 'doxygen')
-source=("https://red.libssh.org/attachments/download/38/${pkgname}-${pkgver}.tar.gz")
-md5sums=('9ad01838d3b89d98e900e0f6260a88cc')
+source=("https://red.libssh.org/attachments/download/41/${pkgname}-${pkgver}.tar.gz")
+md5sums=('b8b4e733c13dfabae33b2688ef82dacc')
 
 build() {
   cd "${srcdir}"
   mkdir build
+  
   cd build
   cmake ../${pkgname}-${pkgver} \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -27,5 +24,6 @@ build() {
 
 package(){
   cd "${srcdir}"/build
+  
   make DESTDIR="${pkgdir}" install
 }

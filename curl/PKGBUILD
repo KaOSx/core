@@ -1,10 +1,6 @@
-#
-# Core packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=curl
-pkgver=7.28.1
+pkgver=7.30.0
 pkgrel=1
 pkgdesc="An URL retrival utility and library"
 arch=('x86_64')
@@ -17,7 +13,7 @@ source=("http://curl.haxx.se/download/${pkgname}-${pkgver}.tar.bz2"
 
 _curlbuild=curlbuild-64.h
 
-md5sums=('26eb081c999b0e203770869427e9a93d'
+md5sums=('0db5ec03a5001b42a2edc03bf63b5ceb'
          '751bd433ede935c8fae727377625a8ae')
 
 build() {
