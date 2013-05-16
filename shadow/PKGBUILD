@@ -1,12 +1,7 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dog]org>
-# maintainer Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=shadow
 pkgver=4.1.5.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
 url='http://pkg-shadow.alioth.debian.org/'
@@ -20,33 +15,30 @@ backup=(etc/login.defs
         etc/default/useradd)
 options=('!libtool')
 install='shadow.install'
-source=("http://pkg-shadow.alioth.debian.org/releases/$pkgname-$pkgver.tar.bz2"{,.sig}
-        LICENSE
-        adduser
-        chgpasswd
-        chpasswd
-        defaults.pam
-        login.defs
-        newusers
-        passwd
-        shadow.cron.daily
-        useradd.defaults
-        xstrdup.patch
-        shadow-strncpy-usage.patch)
-sha1sums=('81f38720b953ef9c2c100c43d02dfe19cafd6c30'
-          '126570e2939bf3b57f28df5197ab9309747a6b5c'
-          '7ab316761036787c0cfcb53b7a6e82da7c373123'
-          'cdb0ec4dc094a091c1053d74b4b6cb89327362dc'
-          '4ad0e059406a305c8640ed30d93c2a1f62c2f4ad'
-          '87186f6e5e00d195cafba5e38400418481dce3af'
-          '0e56fed7fc93572c6bf0d8f3b099166558bb46f1'
-          'e5cab2118ecb1e61874cde842d7d04d1003f35cb'
-          '12427b1ca92a9b85ca8202239f0d9f50198b818f'
-          '49cb1b18af9d2ae7cc4a2441f1a6951d313f7c60'
-          '5d83ba7e11c765c951867cbe00b0ae7ff57148fa'
-          '80e3d2ee8c990c2f7fbd0dcf406a9e41cbe66fe2'
-          '6010fffeed1fc6673ad9875492e1193b1a847b53'
-          '3bc0e0968ddec0e58b1e2de88d9d0065c93d60c9')
+source=("http://pkg-shadow.alioth.debian.org/releases/$pkgname-$pkgver.tar.bz2"
+        'LICENSE'
+        'chgpasswd'
+        'chpasswd'
+        'defaults.pam'
+        'login.defs'
+        'newusers'
+        'passwd'
+        'shadow.cron.daily'
+        'useradd.defaults'
+        'xstrdup.patch'
+        'shadow-strncpy-usage.patch')
+md5sums=('a00449aa439c69287b6d472191dc2247'
+         'bdf93c7bc4b751277159c5de8fc34df2'
+         '65e9ebce249a5b9ed021e2790452b9e1'
+         '22eac9992cbabccdc22c8c07dc8251c7'
+         'a31374fef2cba0ca34dfc7078e2969e4'
+         'c4db3dbd4d5759d3e4f29366946d14e5'
+         'f6760e9701d7ed2cd91371d427faed2a'
+         'cb4556b8d92d5d09a690ce06c57b0f76'
+         '1d64b4113e1d402746d9dd65f28a2c6f'
+         '8056f0a8e49353efbda61357b714688a'
+         '0eebe9d13065bec4b5d7ccf3bf46c509'
+         '8a9152e7448a0f9d1d07ed0016776e16')
 
 build() {
   cd "$pkgname-$pkgver"
@@ -82,9 +74,6 @@ package() {
 
   # license
   install -Dm644 "$srcdir/LICENSE" "$pkgdir/usr/share/licenses/shadow/LICENSE"
-
-  # interactive useradd
-  install -Dm755 "$srcdir/adduser" "$pkgdir/usr/sbin/adduser"
 
   # useradd defaults
   install -Dm644 "$srcdir/useradd.defaults" "$pkgdir/etc/default/useradd"

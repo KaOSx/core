@@ -1,17 +1,13 @@
-#
-# Core packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=vpnc
 pkgver=0.5.3.1
-pkgrel=1
+pkgrel=2
 pkgdesc="VPN client for cisco3000 VPN Concentrators"
 url="http://www.unix-ag.uni-kl.de/~massar/vpnc/"
 license=('GPL')
 depends=('libgcrypt' 'openssl' 'iproute2')
 arch=('x86_64')
-source=("http://www.chakra-linux.org/sources/vpnc/$pkgname-$pkgver.tar.xz"
+source=("http://sourceforge.net/projects/kdeos/files/Sources/vpnc/$pkgname-$pkgver.tar.xz"
         'vpnc.conf')
 backup=(etc/vpnc/default.conf)
 md5sums=('b0802bea7ee8218ffcc256b62fdbe606'
@@ -32,7 +28,6 @@ package() {
   make DESTDIR=$pkgdir PREFIX=/usr install
 
   install -D -m644 $srcdir/vpnc.conf $pkgdir/etc/vpnc/default.conf
-
 }
 
 

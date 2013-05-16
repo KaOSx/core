@@ -1,16 +1,12 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=tcl
 pkgver=8.6.0
-pkgrel=1
+pkgrel=2
 pkgdesc="The Tcl scripting language"
 arch=('x86_64')
 url="http://tcl.sourceforge.net/"
 license=('custom')
-depends=('glibc')
+depends=('glibc' 'zlib')
 source=("http://downloads.sourceforge.net/sourceforge/tcl/tcl${pkgver}-src.tar.gz")
 md5sums=('573aa5fe678e9185ef2b3c56b24658d3')
 
@@ -18,6 +14,9 @@ build() {
   cd ${srcdir}/tcl${pkgver}/unix
   # Already in sqlite3:
   rm -rf ${srcdir}/tcl${pkgver}/pkgs/sqlite3*
+  # Out of memory warnings in check functions
+  sed -i 's/#define DUPTRAVERSE_MAX_DEPTH 500/#define DUPTRAVERSE_MAX_DEPTH 5000/' \
+    ../generic/regc_nfa.c
 
   ./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --enable-64bit
   
@@ -26,6 +25,7 @@ build() {
 
 check() {
   cd ${srcdir}/tcl${pkgver}/unix
+  
   make test
 }
 
