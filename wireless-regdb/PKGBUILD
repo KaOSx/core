@@ -1,17 +1,14 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=wireless-regdb
 pkgver=2013.02.13
-pkgrel=1
+pkgrel=2
 pkgdesc="Central Regulatory Domain Database"
-arch=('any')
+arch=('x86_64')
 url="http://wireless.kernel.org/en/developers/Regulatory/CRDA"
 backup=(etc/conf.d/wireless-regdom)
 license=('custom')
 depends=('sh')
+makedepends=('crda')
 install=wireless-regdb.install
 source=("https://www.kernel.org/pub/software/network/${pkgname}/${pkgname}-${pkgver}.tar.xz"
         'crda.conf.d')
@@ -23,10 +20,11 @@ package() {
   msg "Installing and verifying the regulatory.bin file ..."
   cd ${srcdir}/${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
+  
   # If crda is installed, the wireless regdb can be verified using regdbdump
   # Keep this step optional so no depend/makedepend loop is created
-  if [ -x /sbin/regdbdump ]; then
-    if /sbin/regdbdump ${pkgdir}/usr/lib/crda/regulatory.bin > /dev/null; then
+  if [ -x /usr/bin/regdbdump ]; then
+    if /usr/bin/regdbdump ${pkgdir}/usr/lib/crda/regulatory.bin > /dev/null; then
       msg "Regulatory database verification was succesful."
     else
       error "Regulatory database verification failed."

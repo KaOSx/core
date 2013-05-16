@@ -1,7 +1,3 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=python2-m2crypto
 pkgver=0.21.1
@@ -12,8 +8,6 @@ url="http://wiki.osafoundation.org/bin/view/Projects/MeTooCrypto"
 license=('BSD')
 depends=('python2' 'openssl')
 provides=('python-m2crypto')
-replaces=('python-m2crypto')
-conflicts=('python-m2crypto')
 makedepends=('swig')
 source=("http://pypi.python.org/packages/source/M/M2Crypto/M2Crypto-${pkgver}.tar.gz")
 md5sums=('f93d8462ff7646397a9f77a2fe602d17')
