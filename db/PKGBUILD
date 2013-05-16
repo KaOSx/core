@@ -1,11 +1,7 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=db
 pkgver=5.3.21
-pkgrel=1
+pkgrel=2
 pkgdesc="The Berkeley DB embedded database system"
 arch=('x86_64')
 url="http://www.oracle.com/technology/software/products/berkeley-db/index.html"
@@ -18,14 +14,20 @@ md5sums=('3fda0b004acdaa6fa350bfc41a3b95ca')
 
 build() {
   cd ${srcdir}/$pkgname-${pkgver}/build_unix
-  ../dist/configure --prefix=/usr --enable-compat185 \
-    --enable-shared --enable-static --enable-cxx --enable-dbm
+  
+  ../dist/configure --prefix=/usr \
+     --enable-compat185 \
+     --enable-shared \
+     --enable-static \
+     --enable-cxx \
+     --enable-dbm
   make LIBSO_LIBS=-lpthread
 }
 
 package() {
   cd ${srcdir}/$pkgname-${pkgver}/build_unix
   make DESTDIR=${pkgdir} install
+  
   rm -rf ${pkgdir}/usr/docs
   install -Dm644 ${srcdir}/${pkgname}-${pkgver}/LICENSE \
     ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
