@@ -1,11 +1,7 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=expat
 pkgver=2.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="An XML Parser library written in C"
 arch=('x86_64')
 url="http://expat.sourceforge.net/"
