@@ -1,9 +1,7 @@
 
-# maintainer abveritas@chakra-project.org
-
 pkgname=usbutils
 pkgver=006
-pkgrel=1
+pkgrel=2
 pkgdesc="USB Device Utilities"
 arch=('x86_64')
 license=('GPL')
@@ -20,8 +18,8 @@ md5sums=('c9aa14ee3d6c991fda183f42cf72a8a8'
 
 build() {
   cd $srcdir/$pkgname-$pkgver
-  # patch lsusb.py to use correct usb.ids file and python2 interpreter
   patch -p1 -i $srcdir/fix-python2.patch
+  
   ./configure --prefix=/usr --datadir=/usr/share/hwdata --disable-zlib
   make
 }
@@ -29,6 +27,7 @@ build() {
 package() {
   cd $srcdir/$pkgname-$pkgver
   make DESTDIR=$pkgdir install
+  
   # this is now in the hwids package
   rm -rf $pkgdir/usr/{share/hwdata,sbin}
 }

@@ -1,8 +1,7 @@
-# maintainer: Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=cmake
 pkgver=2.8.10.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A cross-platform open-source make system"
 arch=('x86_64')
 license=('custom')
