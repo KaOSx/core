@@ -1,10 +1,6 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=xfsprogs
-pkgver=3.1.8
+pkgver=3.1.11
 pkgrel=1
 pkgdesc="XFS filesystem utilities"
 arch=('x86_64')
@@ -13,8 +9,8 @@ url="http://oss.sgi.com/projects/xfs/"
 groups=('base')
 depends=('util-linux')
 options=('!makeflags' '!libtool')
-source=("http://chakra-linux.org/sources/xfsprogs/${pkgname}-${pkgver}.tar.gz")
-md5sums=('f70b2e7200d4c29f0af1cf70e7be1db6')
+source=("ftp://oss.sgi.com/projects/xfs/cmd_tars/${pkgname}-${pkgver}.tar.gz")
+md5sums=('de9f1f45026c2f4e0776058d429ff4b6')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
@@ -26,9 +22,9 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  
+  cd "${srcdir}/${pkgname}-${pkgver}" 
   make DIST_ROOT="${pkgdir}" install install-dev
+  
   chown -R root $pkgdir
   chgrp -R root $pkgdir
   mv "${pkgdir}"/lib/libhandle.so* "${pkgdir}/usr/lib/"
