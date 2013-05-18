@@ -1,6 +1,7 @@
 
 pkgname=mailx
-pkgver=12.4
+_pkgname=nail
+pkgver=12.5
 pkgrel=1
 pkgdesc="A commandline utility for sending email"
 arch=('x86_64')
@@ -10,14 +11,17 @@ groups=('base')
 depends=('openssl' 'krb5')
 optdepends=('smtp-forwarder: for sending mail')
 backup=('etc/mail.rc')
-source=("http://sourceforge.net/projects/heirloom/files/heirloom-mailx/$pkgver/mailx-$pkgver.tar.bz2"
+# tar from http://nail.cvs.sourceforge.net/viewvc/nail/nail/?view=tar
+source=("http://sourceforge.net/projects/kdeos/files/Sources/mailx/mailx.tar.xz"
         "http://www.linuxfromscratch.org/patches/blfs/svn/mailx-12.4-openssl_1.0.0_build_fix-1.patch")
-md5sums=('0c93759e34200eb56a0e7c464680a54a'
+md5sums=('27ca4e11923c21cb55b9496f26ab4cd2'
          '7b7e904cfa99674aa4221fb231f5e94e')
 
 build() {
-  cd $srcdir/$pkgname-$pkgver
-  patch -Np1 -i $srcdir/mailx-12.4-openssl_1.0.0_build_fix-1.patch
+  cd $srcdir/$_pkgname
+  #patch -Np1 -i $srcdir/mailx-12.4-openssl_1.0.0_build_fix-1.patch
+  
+  sed -i 's|/etc/nail.rc|/etc/mail.rc|g' mailx.1
 
   # For Linux and BSD, this should be set.
   echo "set bsdcompat" >> nail.rc
@@ -34,7 +38,7 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${srcdir}/${_pkgname}
   make DESTDIR="${pkgdir}" `cat makeflags` install
 
   # For compatibility with the old mailx program
