@@ -1,10 +1,9 @@
-# Chakra Packages for Chakra, part of chakra-project.org
 
 pkgname=perl-xml-sax
 pkgver=0.99
 pkgrel=1
 pkgdesc="Simple API for XML"
-arch=('any')
+arch=('x86_64')
 url="http://search.cpan.org/dist/XML-SAX"
 license=('GPL' 'PerlArtistic')
 depends=('perl' 'perl-xml-sax-base' 'perl-xml-namespacesupport')

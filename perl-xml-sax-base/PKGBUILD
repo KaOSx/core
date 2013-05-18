@@ -1,10 +1,9 @@
-# Core packages for Chakra
 
 pkgname=perl-xml-sax-base
 pkgver=1.08
 pkgrel=1
 pkgdesc="Base class SAX Drivers and Filters"
-arch=('any')
+arch=('x86_64')
 url="http://search.cpan.org/dist/XML-SAX-Base"
 license=('GPL' 'PerlArtistic')
 depends=('perl')
@@ -15,11 +14,13 @@ md5sums=('38c8c3247dfd080712596118d70dbe32')
 build() {
   cd  $srcdir/XML-SAX-Base-$pkgver
   PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+  
   make
 }
 
 check() {
   cd  $srcdir/XML-SAX-Base-$pkgver
+  
   make test
 }
 
