@@ -1,10 +1,7 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas@chakra-project.org
+
 
 # Find the kernel name inside the chroot
-_extramodules=extramodules-3.7-CHAKRA
+_extramodules=extramodules-3.8
 _kver="$(cat /lib/modules/${_extramodules}/version)"
 
 pkgname=broadcom-wl

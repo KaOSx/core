@@ -1,11 +1,7 @@
-#
-# Core Packages for Chakra, part of chakra-project.org
-#
-# maintainer abveritas[at]chakra-project[dot]org>
 
 pkgname=apr
 pkgver=1.4.6
-pkgrel=1
+pkgrel=2
 pkgdesc="The Apache Portable Runtime"
 arch=('x86_64')
 url="http://apr.apache.org/"
@@ -18,7 +14,6 @@ md5sums=('ffee70a111fd07372982b0550bbb14b7')
 build() {
   cd "${srcdir}/apr-${pkgver}"
 
-
   ./configure --prefix=/usr --includedir=/usr/include/apr-1 \
     --with-installbuilddir=/usr/share/apr-1/build \
     --enable-nonportable-atomics \
@@ -28,10 +23,12 @@ build() {
 
 check() {
   cd "${srcdir}/apr-${pkgver}"
+  
   make -j1 check
 }
 
 package() {
   cd "${srcdir}/apr-${pkgver}"
+  
   make DESTDIR="${pkgdir}" install
 }
