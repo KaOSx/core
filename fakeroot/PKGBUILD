@@ -1,7 +1,7 @@
 
 pkgname=fakeroot
-pkgver=1.18.4
-pkgrel=2
+pkgver=1.19
+pkgrel=1
 pkgdesc="Gives a fake root environment, useful for building packages as a non-privileged user."
 arch=('x86_64')
 license=('GPL')
@@ -11,15 +11,15 @@ install="fakeroot.install"
 depends=('glibc' 'filesystem' 'util-linux' 'sed' 'sh')
 options=('!libtool')
 source=("http://ftp.debian.org/debian/pool/main/f/${pkgname}/${pkgname}_${pkgver}.orig.tar.bz2")
-md5sums=('706171d8d520b1ca1576ac73f2ceb4f3')
+md5sums=('3a00a1264cb31a815552050ef0c2468b')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
 
   ./configure --prefix=/usr \
-              --libdir=/usr/lib/libfakeroot \
-	            --disable-static \
-              --with-ipc=sysv
+        --libdir=/usr/lib/libfakeroot \
+	--disable-static \
+        --with-ipc=sysv
 
   make
 }
@@ -31,7 +31,6 @@ package() {
   install -d -m755 "${pkgdir}/etc/ld.so.conf.d"
   echo '/usr/lib/libfakeroot' > "${pkgdir}/etc/ld.so.conf.d/fakeroot.conf"
   
-  # install README for sysv/tcp usage
   install -D -m644 "${srcdir}/${pkgname}-${pkgver}/README" "${pkgdir}/usr/share/doc/${pkgname}/README"
 }
 
