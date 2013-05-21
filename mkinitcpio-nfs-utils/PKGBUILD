@@ -1,0 +1,31 @@
+
+pkgname=mkinitcpio-nfs-utils
+pkgver=0.3
+pkgrel=2
+pkgdesc="ipconfig and nfsmount tools for NFS root support in mkinitcpio"
+arch=('x86_64')
+url="http://www.archlinux.org/"
+license=('GPL2')
+depends=('glibc')
+source=("ftp://ftp.archlinux.org/other/mkinitcpio/$pkgname-$pkgver.tar.xz"
+        'nfsmount.patch')
+        #'initcpio-install-net'
+        #'initcpio-hook-net')
+md5sums=('a7e586b0adb1a746dc7ae71d104bac0d'
+         '23740117f1e6468b4baa57d7c6d11418')
+
+build() {
+  cd "$pkgname-$pkgver"
+  patch -p1 -i "$srcdir/nfsmount.patch"
+  
+  make
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  make DESTDIR="$pkgdir" install
+
+  # override hooks, they need updates
+  #install -m644 "$srcdir/initcpio-install-net" "$pkgdir/usr/lib/initcpio/install/net"
+  #install -m644 "$srcdir/initcpio-hook-net" "$pkgdir/usr/lib/initcpio/hooks/net"
+}
