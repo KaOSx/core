@@ -1,13 +1,13 @@
 
 pkgname=netctl
-pkgver=1.0
+pkgver=1.1
 pkgrel=1
 pkgdesc="Profile based systemd network management"
 url="http://projects.archlinux.org/netctl.git/"
 license=("GPL")
 arch=('x86_64')
 depends=('coreutils' 'iproute2' 'openresolv')
-makedepends=('asciidoc') 
+makedepends=('pkg-config') 
 optdepends=('dialog: for the menu based wifi assistant'
             'dhclient: for DHCP support (or dhcpcd)'
             'dhcpcd: for DHCP support (or dhclient)'
@@ -21,7 +21,7 @@ conflicts=('netcfg')
 replaces=('netcfg')
 provides=('netcfg')
 source=("ftp://ftp.archlinux.org/other/packages/netctl/netctl-${pkgver}.tar.xz")
-md5sums=('8620b61440a1028d5fe701ce076730a8')
+md5sums=('599ec9525126369f0b4e287e85debbad')
 
 package() {
   cd "$srcdir/netctl-${pkgver}"
