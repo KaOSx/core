@@ -1,6 +1,6 @@
 
 pkgname=procps-ng
-pkgver=3.3.7
+pkgver=3.3.8
 pkgrel=1
 pkgdesc='Utilities for monitoring your system and its processes'
 arch=('x86_64')
@@ -13,7 +13,7 @@ backup=('etc/sysctl.conf')
 options=('!libtool')
 source=("procps-ng-${pkgver}.tar.gz::http://gitorious.org/procps/procps/archive-tarball/v${pkgver}"
         'sysctl.conf')
-md5sums=('feb96054fedb2ce7009bf753954429a1'
+md5sums=('7e85139d50c29d1a0f6f646c627d86b5'
          '40d6fa670817ad36c7282687c2237bbb')
 
 build() {
