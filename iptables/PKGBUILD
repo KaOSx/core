@@ -1,6 +1,6 @@
 
 pkgname=iptables
-pkgver=1.4.18
+pkgver=1.4.19
 pkgrel=1
 pkgdesc="A Linux kernel packet control tool"
 arch=('x86_64')
@@ -10,11 +10,8 @@ depends=('glibc' 'bash')
 makedepends=('linux-api-headers' 'chrpath')
 options=('!libtool')
 source=("http://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.tar.bz2"
-        'iptables'
-        'ip6tables'
         'empty.rules'
-       'simple_firewall.rules'
-        'iptables.conf.d'
+        'simple_firewall.rules'
         'empty-filter.rules'
         'empty-mangle.rules'
         'empty-nat.rules'
@@ -24,13 +21,9 @@ source=("http://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.t
         'iptables.service'
         'ip6tables.service'
         'iptables-flush')
-backup=(etc/conf.d/iptables)
-md5sums=('a819199d5ec013b82da13a8ffbba857e'
-         'b33866830b9f5bc7bd97bb47c3f30048'
-         '7bfa35a013b84a504d6baa41c66647a5'
+md5sums=('0e33aebcc92cea0fd178f8326fa14107'
          '14186bbafe21bb0638c0cb8e0903c829'
          '88fe330e810bb89b3aa08747bae3e3f9'
-         '34cc92ba5ff879ce7d26f59653623cd4'
          '3ae6e25f397195611bab943945ff31ee'
          '60a90471364984ef43fa750d02b19e6e'
          '07f769473723984ecd1d13ef841c0222'
@@ -67,11 +60,8 @@ package() {
   chrpath --delete "${pkgdir}"/usr/lib/iptables/*.so
 
   cd "${srcdir}"
-  install -D -m755 iptables "${pkgdir}"/etc/rc.d/iptables
-  install -D -m755 ip6tables "${pkgdir}"/etc/rc.d/ip6tables
   install -D -m644 empty.rules "${pkgdir}"/etc/iptables/empty.rules
   install -D -m644 simple_firewall.rules "${pkgdir}"/etc/iptables/simple_firewall.rules
-  install -D -m644 iptables.conf.d "${pkgdir}"/etc/conf.d/iptables
 
   mkdir -p "${pkgdir}"/var/lib/{iptables,ip6tables}
   install -m644 empty-{filter,mangle,nat,raw,security}.rules "${pkgdir}"/var/lib/iptables
