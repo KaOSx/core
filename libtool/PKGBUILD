@@ -2,7 +2,7 @@
 
 pkgname=('libtool' 'libltdl')
 pkgver=2.4.2
-pkgrel=8
+pkgrel=9
 pkgdesc="A generic library support script"
 arch=('x86_64')
 url="http://www.gnu.org/software/libtool"
@@ -14,17 +14,19 @@ md5sums=('2ec8997e0c07249eb4cbd072417d70fe')
 
 build() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
+  
   ./configure --prefix=/usr
   make
 }
 
-check() {
-  cd "${srcdir}/${pkgbase}-${pkgver}"
-  make check
-}
+#check() {
+#  cd "${srcdir}/${pkgbase}-${pkgver}"
+#  
+#  make check
+#}
 
 package_libtool() {
-  depends=('sh' "libltdl=${pkgver}" 'tar' 'gcc=4.8.0')
+  depends=('sh' "libltdl=${pkgver}" 'tar' 'gcc=4.8.1')
   groups=('base-devel')
   install=libtool.install
 
@@ -44,4 +46,3 @@ package_libltdl() {
   rm -rf "${pkgdir}/usr/share"/{aclocal,libtool/config}
 }
 
-# vim:set ts=2 sw=2 et:
