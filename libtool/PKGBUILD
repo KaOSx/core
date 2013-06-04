@@ -19,11 +19,11 @@ build() {
   make
 }
 
-#check() {
-#  cd "${srcdir}/${pkgbase}-${pkgver}"
-#  
-#  make check
-#}
+check() {
+  cd "${srcdir}/${pkgbase}-${pkgver}"
+  
+  make check
+}
 
 package_libtool() {
   depends=('sh' "libltdl=${pkgver}" 'tar' 'gcc=4.8.1')
