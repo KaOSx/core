@@ -1,6 +1,6 @@
 
 pkgname=less
-pkgver=451
+pkgver=458
 pkgrel=1
 pkgdesc="A terminal based program for viewing text files"
 license=('GPL3')
@@ -9,7 +9,7 @@ url="http://www.greenwoodsoftware.com/less"
 groups=('base')
 depends=('ncurses' 'pcre')
 source=("http://www.greenwoodsoftware.com/$pkgname/$pkgname-$pkgver.tar.gz")
-md5sums=('765f082658002b2b46b86af4a0da1842')
+md5sums=('935b38aa2e73c888c210dedf8fd94f49')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
@@ -21,5 +21,5 @@ build() {
 package() {
   cd $srcdir/$pkgname-$pkgver
   
-  make prefix=$pkgdir/usr install
+  make DESTDIR=${pkgdir} install
 }
