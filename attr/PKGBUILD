@@ -1,7 +1,7 @@
 
 pkgname=attr
-pkgver=2.4.46
-pkgrel=4
+pkgver=2.4.47
+pkgrel=1
 pkgdesc="Extended attribute support library for ACL support"
 arch=('x86_64')
 url="http://oss.sgi.com/projects/xfs/"
@@ -11,7 +11,7 @@ depends=('glibc')
 makedepends=('gettext')
 options=('!libtool')
 source=("http://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.src.tar.gz")
-md5sums=('db557c17fdfa4f785333ecda08654010')
+md5sums=('84f58dec00b60f2dc8fd1c9709291cc7')
 
 build() {
   cd "${srcdir}"/${pkgname}-${pkgver}
