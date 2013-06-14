@@ -1,6 +1,6 @@
 
 pkgname=ca-certificates
-pkgver=20130119
+pkgver=20130610
 pkgrel=1
 pkgdesc='Common CA certificates'
 arch=('any')
@@ -11,7 +11,7 @@ depends=('bash' 'run-parts' 'openssl' 'findutils' 'coreutils' 'sed')
 makedepends=('ruby' 'python2')
 install=ca-certificates.install
 backup=('etc/ca-certificates.conf')
-md5sums=('1fbbec2028a33cf865b79c204aa2e626')
+md5sums=('ca34fb3a5bfb3264062d592c69f1dec6')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"

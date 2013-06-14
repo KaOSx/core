@@ -1,6 +1,6 @@
 
 pkgname=linux-firmware
-pkgver=20130508
+pkgver=20130614
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
@@ -43,7 +43,7 @@ options=(!strip emptydirs)
 source=("http://sourceforge.net/projects/kdeos/files/Sources/linux-firmware/$pkgname-$pkgver.tar.xz"
         "http://mirror2.openwrt.org/sources/broadcom-wl-${_b43}.tar.bz2"
         "http://downloads.openwrt.org/sources/wl_apsta-${_legacy}.o")
-md5sums=('8596a033183e14953058e432e7ee8c34'
+md5sums=('200c1b38089b96d2994ae2fbb58b01af'
          'f4e357b09eaf5d8b1f1920cf3493a555'
          'e08665c5c5b66beb9c3b2dd54aa80cb3')
 
