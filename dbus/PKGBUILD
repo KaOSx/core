@@ -1,6 +1,6 @@
 
 pkgname=dbus
-pkgver=1.6.10
+pkgver=1.6.12
 pkgrel=1
 pkgdesc="Freedesktop.org message bus system"
 url="http://www.freedesktop.org/Software/dbus"
@@ -16,7 +16,7 @@ install=dbus.install
 source=("http://dbus.freedesktop.org/releases/dbus/dbus-$pkgver.tar.gz"
         '30-dbus'
         'systemd-user-session.patch')
-md5sums=('de4970c20629aeb958a12132415b3630'
+md5sums=('a70edc50524f258eaf5c9a9994ed8748'
          '3314d727fa57fc443fce25b5cbeebbcc'
          'd8a1bd529b3ddca671ee1a695a143db9')
 
