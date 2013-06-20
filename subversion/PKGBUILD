@@ -1,11 +1,11 @@
 
 pkgname=subversion
-pkgver=1.7.10
+pkgver=1.8.0
 pkgrel=1
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
 license=('APACHE')
-depends=('db' 'neon' 'apr-util' 'sqlite3' 'file' 'systemd')
+depends=('db' 'serf' 'apr-util' 'sqlite3' 'file' 'systemd')
 optdepends=('kdeutils-kwallet' 'bash-completion: for svn bash completion')
 makedepends=('krb5' 'apache' 'python2' 'perl' 'swig' 'ruby' 'java-runtime' 
              'autoconf' 'e2fsprogs' 'kdelibs')
@@ -20,7 +20,7 @@ source=("http://apache.mirror.rafal.ca/subversion/$pkgname-$pkgver.tar.bz2"
 	'svnserve.tmpfiles'
 	'svnserve.service'
         'subversion.rpath.fix.patch')
-md5sums=('4088a77e14232876c9b4ff1541e6e200'
+md5sums=('f053a9948dfe5c70eff5c00509723214'
          'a0db6dd43af33952739b6ec089852630'
          'c459e299192552f61578f3438abf0664'
          'bb2857eceafcfac35dde39dcffad2314'
@@ -37,13 +37,19 @@ build() {
 
    # configure
    autoreconf
-   ./configure --prefix=/usr --with-apr=/usr --with-apr-util=/usr \
-               --with-zlib=/usr --with-neon=/usr --with-apxs \
+   ./configure --prefix=/usr \
+               --with-apr=/usr \
+               --with-apr-util=/usr \
+               --with-zlib=/usr \
+               --with-serf=/usr \
+               --with-apxs \
                --with-sqlite=/usr \
-               --enable-javahl --without-gnome-keyring --with-kwallet \
+               --enable-javahl \
+               --without-gnome-keyring \
+               --with-kwallet \
                --disable-static
 
-   make external-all
+   make 
    make LT_LDFLAGS="-L$Fdestdir/usr/lib" local-all
    make swig_pydir=/usr/lib/python2.7/site-packages/libsvn \
      swig_pydir_extra=/usr/lib/python2.7/site-packages/svn swig-py swig-pl javahl # swig-rb
