@@ -1,6 +1,6 @@
 
 pkgname=freetype2
-pkgver=2.4.12
+pkgver=2.5.0.1
 pkgrel=1
 pkgdesc="TrueType font rendering library"
 arch=('x86_64')
@@ -9,16 +9,15 @@ url="http://freetype.sourceforge.net"
 depends=('zlib' 'sh' 'bzip2')
 options=('!libtool')
 source=("http://downloads.sourceforge.net/sourceforge/freetype/freetype-${pkgver}.tar.bz2"
-        'freetype-2.2.1-enable-valid.patch')
-md5sums=('3463102764315eb86c0d3c2e1f3ffb7d'
-         '214119610444c9b02766ccee5e220680')
+        'freetype-2.3.0-enable-spr.patch')
+md5sums=('c72e9010b1d986d556fc0b2b5fcbf31a'
+         '816dc8619a6904a7385769433c0a8653')
 
 build() {
   cd "${srcdir}/freetype-${pkgver}"
+  patch -p1 -i "${srcdir}/freetype-2.3.0-enable-spr.patch"
 
-  patch -p1 -i "${srcdir}/freetype-2.2.1-enable-valid.patch"
-
-  ./configure --prefix=/usr
+  ./configure --prefix=/usr --disable-static
   make
 }
 
