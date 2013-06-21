@@ -1,0 +1,35 @@
+
+pkgname=serf
+pkgver=1.2.1
+pkgrel=1
+pkgdesc="High-performance asynchronous HTTP client library"
+url="http://code.google.com/p/serf/"
+arch=('x86_64')
+license=('Apache')
+depends=('apr' 'apr-util' 'openssl' 'zlib')
+options=('!libtool')
+source=("http://serf.googlecode.com/files/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('4f8e76c9c6567aee1d66aba49f76a58b')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+  ./configure --prefix=/usr \
+        --with-apr=/usr \
+        --with-apr-util=/usr \
+        --with-openssl=/usr
+  make
+}
+
+check() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+
+  make check
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make DESTDIR="${pkgdir}" install
+
+  rm "${pkgdir}"/usr/lib/libserf-1.a
+}

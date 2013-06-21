@@ -1,7 +1,7 @@
 
 pkgname=freetype2
 pkgver=2.5.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="TrueType font rendering library"
 arch=('x86_64')
 license=('GPL')
@@ -17,7 +17,7 @@ build() {
   cd "${srcdir}/freetype-${pkgver}"
   patch -p1 -i "${srcdir}/freetype-2.3.0-enable-spr.patch"
 
-  ./configure --prefix=/usr --disable-static
+  ./configure --prefix=/usr --disable-static --without-png
   make
 }
 
