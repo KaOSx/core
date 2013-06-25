@@ -10,7 +10,7 @@ url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.8.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.9.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config.x86_64'
@@ -77,24 +77,9 @@ build() {
   
   # get kernel version
   make prepare
-
-  # load configuration
-  # Configure the kernel. Replace the line below with one of your choice.
-  #make menuconfig # CLI menu for configuration
-  #make nconfig # new CLI menu for configuration
-  #make xconfig # X-based configuration
-  #make oldconfig # using old config from previous kernel version
-  # ... or manually edit .config
   
   # rewrite configuration
   yes "" | make config >/dev/null
-
-  ####################
-  # stop here
-  # this is useful to configure the kernel
-  #msg "Stopping build"
-  #return 1
-  ####################
 
   # build!
   make ${MAKEFLAGS} bzImage modules
