@@ -1,6 +1,6 @@
 
 pkgname=dhcpcd
-pkgver=5.6.8
+pkgver=6.0.2
 pkgrel=1
 pkgdesc="RFC2131 compliant DHCP client daemon"
 url="http://roy.marples.name/projects/dhcpcd/"
@@ -8,24 +8,19 @@ arch=('x86_64')
 license=('BSD')
 groups=('base')
 depends=('glibc' 'sh')
-backup=('etc/conf.d/dhcpcd' 'etc/dhcpcd.conf')
-options=('emptydirs')  # We Need the Empty /var/lib/dhcpcd Directory
-source=("http://roy.marples.name/downloads/$pkgname/$pkgname-$pkgver.tar.bz2" \
-        'dhcpcd.conf.d'
+backup=('etc/dhcpcd.conf')
+options=('emptydirs')  
+source=("http://roy.marples.name/downloads/$pkgname/$pkgname-$pkgver.tar.bz2" 
 	'dhcpcd@.service'
 	'dhcpcd.service')
-md5sums=('0f1fb6e7bcbf7e374d4af0d58e75246e'
-         '372d33485556982b64a97f301e17c5dd'
+md5sums=('9fffa6a4cd45f17f3d3f657a0b53915e'
          '3b47ff473ee7f7b03062818b94fd3ed5'
          'c10ec3816b13fd5d59f696f7154f445a')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
 
-  # configure variables
   ./configure --libexecdir=/usr/lib/dhcpcd --dbdir=/var/lib/dhcpcd --rundir=/run
-
-  # Build
   make
 }
 
@@ -37,12 +32,9 @@ package() {
   install -d ${pkgdir}/usr/sbin
   ln -sf /sbin/dhcpcd ${pkgdir}/usr/sbin/dhcpcd
 
-  # Install Configuration File used in /etc/rc.d/network
-  install -D -m644 ../dhcpcd.conf.d $pkgdir/etc/conf.d/$pkgname
-
   # Install License
   install -d $pkgdir/usr/share/licenses/$pkgname
-  awk '{if(FNR<27)print $0}' ${srcdir}/${pkgname}-${pkgver}/configure.h \
+  sed 26q "$srcdir/$pkgname-$pkgver/control.h" \
         >> ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 
   # Set Options in /etc/dhcpcd.conf
