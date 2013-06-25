@@ -2,17 +2,18 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.9
-_srcname=linux-3.9
-pkgver=3.9.7
+_basekernel=3.10-rc7
+_srcname=linux-3.10-rc7
+pkgver=3.10.1
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl' 'bc')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+#source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.10-rc7.tar.xz"
+        #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config.x86_64'
         #aufs patches
@@ -26,9 +27,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         'change-default-console-loglevel.patch')
-md5sums=('4348c9b6b2eb3144d601e87c19d5d909'
-         '74005c469fbd309ab631d981e2d3a6e7'
-         '574eb8307a395b7eeb9ae197ce7e245f'
+md5sums=('965bdc1f3c9a884545e0c5e9a292516c'
+         'c7eaf373348371e154df3fb6924ce316'
          '89fbb605ef398297b8dc43409c849c92'
          'd5f57f666f02ca25ba298210e2332ce8'
          'cf2ad9065886e56698524eab323ac656'
@@ -43,7 +43,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  #patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -54,16 +54,16 @@ build() {
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs3.patch"
-  patch -p1 -i "${srcdir}/aufs3-base.patch"
-  patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs3-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs3-proc_map.patch"
-  patch -p1 -i "${srcdir}/aufs3-standalone.patch"
+  #patch -p1 -i "${srcdir}/aufs3.patch"
+  #patch -p1 -i "${srcdir}/aufs3-base.patch"
+  #patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
+  #patch -p1 -i "${srcdir}/aufs3-loopback.patch"
+  #patch -p1 -i "${srcdir}/aufs3-proc_map.patch"
+  #patch -p1 -i "${srcdir}/aufs3-standalone.patch"
   
   cat "${srcdir}/config.x86_64" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -236,7 +236,7 @@ package_linux-next-headers() {
   cp fs/xfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h"
 
   #aufs3-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/linux/aufs_type.h"
+  #sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
