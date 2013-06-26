@@ -28,7 +28,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.10-rc7.tar
         'linux-next.preset'
         'change-default-console-loglevel.patch')
 md5sums=('965bdc1f3c9a884545e0c5e9a292516c'
-         'c7eaf373348371e154df3fb6924ce316'
+         '15f702c24e0cdf17f1b84fb07442c7b8'
          '89fbb605ef398297b8dc43409c849c92'
          'd5f57f666f02ca25ba298210e2332ce8'
          'cf2ad9065886e56698524eab323ac656'
