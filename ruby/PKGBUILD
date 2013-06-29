@@ -1,7 +1,7 @@
 
 pkgname=('ruby' 'ruby-docs')
-pkgver=2.0.0_p0
-_pkgver=2.0.0-p0
+pkgver=2.0.0_p247
+_pkgver=2.0.0-p247
 pkgrel=1
 pkgdesc="An object-oriented language for quick and easy programming"
 arch=('x86_64')
@@ -11,10 +11,11 @@ makedepends=('gdbm' 'db' 'openssl' 'zlib' 'readline' 'tk' 'libffi'
              'doxygen' 'libyaml')
 options=('!emptydirs')
 source=("ftp://ftp.ruby-lang.org/pub/ruby/2.0/${pkgname}-${_pkgver}.tar.bz2")
-md5sums=('895c1c581f8d28e8b3bb02472b2ccf6a')
+md5sums=('60913f3eec0c4071f44df42600be2604')
 
 build() {
   cd "${srcdir}/${pkgname}-${_pkgver}"
+  
   ./configure --prefix=/usr \
       --sysconfdir=/etc \
       --enable-shared \
@@ -36,7 +37,6 @@ package_ruby() {
 
 package_ruby-docs() {
   pkgdesc="Documentation files for ruby"
-
   depends=('ruby')
 
   cd "${srcdir}/ruby-${_pkgver}"
