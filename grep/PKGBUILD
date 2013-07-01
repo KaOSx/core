@@ -1,7 +1,7 @@
 
 pkgname=grep
 pkgver=2.14
-pkgrel=3
+pkgrel=4
 pkgdesc="A string search utility"
 arch=('x86_64')
 license=('GPL3')
@@ -16,9 +16,7 @@ md5sums=('d4a3f03849d1e17ce56ab76aa5a24cab')
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
 
-  ./configure --prefix=/usr \
-              --without-included-regex
-
+  ./configure --prefix=/usr --without-included-regex
   make
 }
 

@@ -1,54 +1,44 @@
 
 pkgname=ncurses
 pkgver=5.9
-pkgrel=5
+pkgrel=6
 pkgdesc="System V Release 4.0 curses emulation library"
 arch=('x86_64')
 url="http://www.gnu.org/software/ncurses/"
 license=('MIT')
 depends=('glibc')
-source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz"
-        'gentoo-ncurses-5.9-rxvt-unicode-9.15.patch')
-md5sums=('8cb9c412e5f2d96bc6f459aa8c6282a1'
-         'da9ffd52d5826c661aa02be2bf1fa8c1')
+source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('8cb9c412e5f2d96bc6f459aa8c6282a1')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  patch -p0 -i "${srcdir}/gentoo-ncurses-5.9-rxvt-unicode-9.15.patch"
-
   cd "${srcdir}"
-  rm -rf ncurses{,w}-build && mkdir -p ncurses{,w}-build
+  mkdir -p ncurses{,w}-build
   
   cd "${srcdir}/ncursesw-build"
-  "${srcdir}/${pkgname}-${pkgver}/configure" \
-      --prefix=/usr \
+  ${srcdir}/${pkgname}-${pkgver}/configure --prefix=/usr \
       --mandir=/usr/share/man \
       --with-shared \
       --with-normal \
       --without-debug \
       --without-ada \
-      --with-install-prefix="${pkgdir}" \
       --enable-widec \
       --enable-pc-files
   make 
 
   # external binary support 
   cd ${srcdir}/ncurses-build
-  CONFIGFLAG="--with-chtype=long"
-  "${srcdir}/${pkgname}-${pkgver}/configure" \
-      --prefix=/usr \
+  ${srcdir}/${pkgname}-${pkgver}/configure --prefix=/usr \
       --with-shared \
       --with-normal \
       --without-debug \
       --without-ada \
-      --with-install-prefix="${pkgdir}" \
-      "${CONFIGFLAG}"
+      --with-chtype=long
   make 
 }
 
 package() {
   cd "${srcdir}/ncursesw-build"
-  make install
+  make DESTDIR=${pkgdir} install
 
   # link to non-wide-character ncurses libraries
   for lib in curses ncurses form panel menu ; do \

@@ -1,7 +1,7 @@
 
 pkgname=pcre
 pkgver=8.33
-pkgrel=1
+pkgrel=2
 pkgdesc="A library that implements Perl 5-style regular expressions"
 arch=('x86_64')
 url="http://www.pcre.org/"
@@ -25,6 +25,7 @@ build() {
 
 check() {
   cd "${srcdir}"/${pkgname}-${pkgver} 
+  
   make -j1 check
 }
 

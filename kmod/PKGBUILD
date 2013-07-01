@@ -1,7 +1,7 @@
 
 pkgname=kmod
 pkgver=13
-pkgrel=1
+pkgrel=2
 pkgdesc="Linux kernel module handling"
 arch=('x86_64')
 url='http://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary'
@@ -40,7 +40,7 @@ package() {
   ln -s ../usr/bin/kmod "$pkgdir/sbin/modprobe"
   ln -s ../usr/bin/kmod "$pkgdir/sbin/depmod"
 
-  for tool in {ins,ls,rm}mod modinfo; do
+  for tool in {ins,ls,rm}mod mod{probe,info}; do
     ln -s kmod "$pkgdir/usr/bin/$tool"
   done
 
