@@ -2,17 +2,17 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.10-rc7
-_srcname=linux-3.10-rc7
-pkgver=3.10.1
+_basekernel=3.10
+_srcname=linux-3.10
+pkgver=3.10.0
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-#source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.10-rc7.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
+#source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.10-rc7.tar.xz"
         #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config.x86_64'
@@ -27,7 +27,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.10-rc7.tar
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         'change-default-console-loglevel.patch')
-md5sums=('965bdc1f3c9a884545e0c5e9a292516c'
+md5sums=('4f25cd5bec5f8d5a7d935b3f2ccb8481'
          '15f702c24e0cdf17f1b84fb07442c7b8'
          '89fbb605ef398297b8dc43409c849c92'
          'd5f57f666f02ca25ba298210e2332ce8'
