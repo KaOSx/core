@@ -1,6 +1,6 @@
 
 pkgname=xz
-pkgver=5.0.4
+pkgver=5.0.5
 pkgrel=1
 pkgdesc='Library and command line tools for XZ and LZMA compressed files'
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL' 'LGPL' 'custom')
 depends=('sh')
 options=('!libtool')
 source=("http://tukaani.org/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('df3df690aef18384e1e031be7ec3a964')
+md5sums=('19d924e066b6fff0bc9d1981b4e53196')
 
 build() {
         cd ${srcdir}/${pkgname}-${pkgver}
