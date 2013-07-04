@@ -1,7 +1,7 @@
 
 pkgname=kmod
-pkgver=13
-pkgrel=2
+pkgver=14
+pkgrel=1
 pkgdesc="Linux kernel module handling"
 arch=('x86_64')
 url='http://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary'
@@ -13,7 +13,7 @@ conflicts=('module-init-tools')
 replaces=('module-init-tools')
 source=("ftp://ftp.kernel.org/pub/linux/utils/kernel/$pkgname/$pkgname-$pkgver.tar.xz"
         "depmod-search.conf")
-md5sums=('d5aba43b9370cd52f3cb35e82a1aa595'
+md5sums=('38009d0d6f10678a3ec22ccd29210d13'
          '9ae9acc68ca27134f55a0959073b8e53')
 
 build() {
