@@ -1,5 +1,5 @@
 pkgname=cmake
-pkgver=2.8.11.1
+pkgver=2.8.11.2
 pkgrel=1
 pkgdesc="A cross-platform open-source make system"
 arch=('x86_64')
@@ -9,7 +9,7 @@ depends=('curl' 'libarchive' 'shared-mime-info')
 makedepends=('qt')
 install=${pkgname}.install
 source=("http://www.cmake.org/files/v2.8/${pkgname}-${pkgver}.tar.gz")
-md5sums=('df5324a3b203373a9e0a04b924281a43')
+md5sums=('6f5d7b8e7534a5d9e1a7664ba63cf882')
 
 build() {
   cd "${srcdir}"/${pkgname}-${pkgver}
