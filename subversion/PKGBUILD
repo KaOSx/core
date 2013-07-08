@@ -1,7 +1,7 @@
 
 pkgname=subversion
 pkgver=1.8.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
 license=('APACHE')
@@ -47,7 +47,8 @@ build() {
                --enable-javahl \
                --without-gnome-keyring \
                --with-kwallet \
-               --disable-static
+               --disable-static \
+               --libexecdir=/usr/lib
 
    make 
    make LT_LDFLAGS="-L$Fdestdir/usr/lib" local-all
