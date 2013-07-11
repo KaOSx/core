@@ -1,69 +1,78 @@
  
 pkgbase=boost
 pkgname=('boost-libs' 'boost')
-pkgver=1.52.0
+pkgver=1.54.0
 _boostver=${pkgver//./_}
-pkgrel=2
+pkgrel=1
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="http://www.boost.org/"
 license=('custom')
 makedepends=('icu' 'python2' 'python3' 'bzip2' 'zlib' 'openmpi') 
-source=("http://downloads.sourceforge.net/${pkgbase}/${pkgbase}_${_boostver}.tar.gz")
+source=("http://downloads.sourceforge.net/${pkgbase}/${pkgbase}_${_boostver}.tar.gz"
+        'python3.patch'
+        'coroutine.patch')
 license=('custom')
-md5sums=('f62451fa646ca392b0fbc08beb23ad12')
+md5sums=('efbfbff5a85a9330951f243d0a46e4b9'
+         '79df69792b958aa0716bdd42414f30da'
+         '2db61ac2c62ea8e9d6c15786f133b9eb')
 
 _stagedir="${srcdir}/stagedir"
 
 build() {
-  # set python path for bjam
-  cd "${srcdir}/${pkgbase}_${_boostver}/tools"
-  echo "using python : 2.7 : /usr/bin/python2 ;" >> build/v2/user-config.jam
-  echo "using python : 3.3 : /usr/bin/python3 : /usr/include/python3.3m : /usr/lib ;" >> build/v2/user-config.jam
-  echo "using mpi ;" >> build/v2/user-config.jam
+  local JOBS="$(sed -e 's/.*\(-j *[0-9]\+\).*/\1/' <<< ${MAKEFLAGS})"
+  
+  cd "${srcdir}/${pkgbase}_${_boostver}"
+  patch -p1 -i ${srcdir}/coroutine.patch
+  # Build errors with python 3
+  sed -i "/PYTHON_ROOT/s/print sys.prefix/print(sys.prefix)/g" bootstrap.sh
+  patch -p1 -i ${srcdir}/python3.patch
+  
+  # Shut up strict aliasing warnings
+   echo "using gcc : : : <compileflags>-fno-strict-aliasing ;" >> ./tools/build/v2/user-config.jam
+   # Add an extra python version. This does not replace anything and python 2.x need to be the default.
+   echo "using python : 3.3 : /usr/bin/python3 : /usr/include/python3.3m : /usr/lib ;" >> ./tools/build/v2/user-config.jam
+   # Support for OpenMPI
+   echo "using mpi ;" >> ./tools/build/v2/user-config.jam
 
   cd "${srcdir}"/${pkgbase}_${_boostver}
+  ./bootstrap.sh --with-toolset=gcc --with-icu --with-python=/usr/bin/python2
 
-  # build bjam
-  cd "${srcdir}/${pkgbase}_${_boostver}/tools/build/v2/engine"
-  ./build.sh cc
+  # setup tools
+  install -d -m 755 "${_stagedir}"/bin
+  install "${srcdir}"/${pkgbase}_${_boostver}/tools/build/v2/engine/bin.linuxx86_64/bjam "${_stagedir}"/bin/bjam
 
-  install -d "${_stagedir}"/usr/bin
-  install bin.linuxx86_64/bjam "${_stagedir}"/usr/bin/bjam
-
-  # build tools
-  cd "${srcdir}/${pkgbase}_${_boostver}/tools/"
-  "${_stagedir}"/usr/bin/bjam --toolset=gcc
-
-  # copy the tools
-  cd "${srcdir}/${pkgbase}_${_boostver}/dist/bin"
-  for i in *;do
-      install -m755 "${i}" "${_stagedir}/usr/bin/${i}"
-  done
+  # build & copy the tools
+  pushd tools
+   for _tool in bcp inspect quickbook compiler_status process_jam_log wave; do
+      "${_stagedir}"/bin/bjam --toolset=gcc $_tool
+   done
+   "${_stagedir}"/bin/bjam --toolset=gcc cflags="-std=gnu++11" library_status
+   popd
+   cp -a dist/bin/* "${_stagedir}"/bin
 
   #boostbook needed by quickbook
-  cd "${srcdir}/${pkgbase}_${_boostver}/dist/"
-  cp -r share "${_stagedir}"
+  install -d -m 755 "${_stagedir}"/share/boostbook
+  cp -a tools/boostbook/{xsl,dtd} "${_stagedir}"/share/boostbook/
 
-  # build libs
-  cd "${srcdir}/${pkgbase}_${_boostver}"
-
-  # default "minimal" install: "release link=shared,static
+  # default "minimal" install: "release link=shared
   # runtime-link=shared threading=single,multi"
   # --layout=tagged will add the "-mt" suffix for multithreaded libraries
   # and installs includes in /usr/include/boost.
   # --layout=system no longer adds the -mt suffix for multi-threaded libs.
   # install to ${_stagedir} in preparation for split packaging
 
-  "${_stagedir}"/usr/bin/bjam \
-      release debug-symbols=off threading=multi \
-      runtime-link=shared link=shared,static \
-      cflags=-fno-strict-aliasing \
+  "${_stagedir}"/bin/bjam \
+      variant=release \
+      debug-symbols=off \
+      threading=multi \
+      runtime-link=shared \
+      link=shared \
       toolset=gcc \
+      python=2.7 \
       --prefix="${_stagedir}" \
-      -sTOOLS=gcc \
       --layout=system \
-      ${MAKEFLAGS} \
+      ${JOBS} \
       install
 }
 
@@ -73,18 +82,8 @@ package_boost() {
     optdepends=('python3: for python3 bindings'
                 'python2: for python2 bindings')
 
-    install -d "${pkgdir}"/usr/{include,lib,share}
-    # headers/source files
-    cp -r "${_stagedir}"/include/ "${pkgdir}"/usr/
-
-    # static libs
-    cp -r "${_stagedir}"/lib/*.a "${pkgdir}"/usr/lib/
-
-    # utilities (bjam, bcp, pyste)
-    cp -r "${_stagedir}"/usr/* "${pkgdir}"/usr/
-
-    #boostbook
-    cp -r "${_stagedir}"/share/* "${pkgdir}"/usr/share
+    install -d -m 755 "${pkgdir}"/usr
+    cp -a "${_stagedir}"/{bin,include,share} "${pkgdir}"/usr
 
     # license
     install -D -m644 "${srcdir}/${pkgbase}_${_boostver}/LICENSE_1_0.txt" \
@@ -96,9 +95,8 @@ package_boost-libs() {
     depends=('gcc-libs' 'bzip2' 'zlib' 'icu')
     optdepends=('openmpi: for mpi support')
 
-    install -d "${pkgdir}/usr/lib"
-    #shared libs
-    cp -r "${_stagedir}"/lib/*.so{,.*} "${pkgdir}/usr/lib/"
+    install -d -m 755 "${pkgdir}"/usr
+    cp -a "${_stagedir}"/lib "${pkgdir}"/usr
 
     # license
     install -D -m644 "${srcdir}/${pkgbase}_${_boostver}/LICENSE_1_0.txt" \
