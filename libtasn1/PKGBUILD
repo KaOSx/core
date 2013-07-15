@@ -1,24 +1,25 @@
-# Maintainer: abveritas[at]chakra-project[dot]org>
 
 pkgname=libtasn1
-pkgver=3.2
+pkgver=3.3
 pkgrel=1
 pkgdesc="The ASN.1 library used in GNUTLS"
 arch=('x86_64')
 license=('GPL3' 'LGPL')
 url="http://www.gnu.org/software/libtasn1/"
 depends=('glibc' 'texinfo')
+checkdepends=('valgrind')
 options=('!libtool')
 install=libtasn1.install
 source=("ftp://ftp.gnu.org/gnu/libtasn1/${pkgname}-${pkgver}.tar.gz")
-md5sums=('1b07629163025b9693aae9b8957842b2')
+md5sums=('2bdd687f487c50a0382b99553866a6e0')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   
   ./configure --prefix=/usr \
-      --with-packager=Chakra \
-      --with-packager-bug-reports="http://chakra-project.org/bugs/" 
+      --with-packager=KdeOS \
+      --with-packager-bug-reports="https://github.com/KdeOs/core/issues" \
+      --with-packager-version=${pkgver}-${pkgrel}
   make
 }
 

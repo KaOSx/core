@@ -1,0 +1,29 @@
+
+pkgname=datefudge
+pkgver=1.17
+pkgrel=1
+pkgdesc="A program (and preload library) to fake system date"
+arch=('x86_64')
+url="http://packages.qa.debian.org/d/datefudge.html"
+license=('GPL2')
+depends=('sh')
+source=("http://ftp.de.debian.org/debian/pool/main/d/$pkgname/${pkgname}_${pkgver}.tar.gz")
+md5sums=('d306e183ea3fdbde088ebd523f6387c5')
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  make
+}
+
+check() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  make test
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  make DESTDIR="$pkgdir/" install
+}
