@@ -1,7 +1,7 @@
 
 pkgname=apr
-pkgver=1.4.6
-pkgrel=2
+pkgver=1.4.8
+pkgrel=1
 pkgdesc="The Apache Portable Runtime"
 arch=('x86_64')
 url="http://apr.apache.org/"
@@ -9,12 +9,13 @@ depends=('util-linux')
 options=('!libtool')
 license=('APACHE')
 source=("http://www.apache.org/dist/apr/apr-${pkgver}.tar.bz2")
-md5sums=('ffee70a111fd07372982b0550bbb14b7')
+md5sums=('ce2ab01a0c3cdb71cf0a6326b8654f41')
 
 build() {
   cd "${srcdir}/apr-${pkgver}"
 
-  ./configure --prefix=/usr --includedir=/usr/include/apr-1 \
+  ./configure --prefix=/usr \
+    --includedir=/usr/include/apr-1 \
     --with-installbuilddir=/usr/share/apr-1/build \
     --enable-nonportable-atomics \
     --with-devrandom=/dev/urandom

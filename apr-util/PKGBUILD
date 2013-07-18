@@ -1,7 +1,7 @@
 
 pkgname=apr-util
 pkgver=1.5.2
-pkgrel=1
+pkgrel=2
 pkgdesc="The Apache Portable Runtime"
 arch=('x86_64')
 url="http://apr.apache.org/"
@@ -17,7 +17,8 @@ build() {
     --with-apr=/usr \
     --without-pgsql \
     --without-mysql \
-    --without-sqlite2 --without-sqlite3 \
+    --without-sqlite2 \
+    --without-sqlite3 \
     --with-berkeley-db=/usr \
     --with-gdbm=/usr \
     --with-ldap
