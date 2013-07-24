@@ -1,6 +1,6 @@
 
 pkgname=systemd
-pkgver=205
+pkgver=206
 pkgrel=1
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
@@ -14,27 +14,27 @@ backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/dbus-1/system.d/org.freedesktop.hostname1.conf
         etc/dbus-1/system.d/org.freedesktop.login1.conf
         etc/dbus-1/system.d/org.freedesktop.locale1.conf
+        etc/dbus-1/system.d/org.freedesktop.machine1.conf
         etc/dbus-1/system.d/org.freedesktop.timedate1.conf
+        etc/systemd/bootchart.conf
         etc/systemd/system.conf
         etc/systemd/user.conf
         etc/systemd/logind.conf
         etc/systemd/journald.conf
         etc/udev/udev.conf)
 provides=("udev=$pkgver")
-conflicts=('udev' 'sysvinit' 'initscripts' 'initscripts-systemd')
-replaces=('udev')
 groups=('base')
 install="systemd.install"
 options=('!libtool')
 source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-hook-udev'
+        'initcpio-install-systemd'
         'initcpio-install-udev'
-        'initcpio-install-timestamp'
         'use-split-usr-path.patch')
-md5sums=('3afc38170371929cf6ab056bf6a52fc6'
-         'e99e9189aa2f6084ac28b8ddf605aeb8'
-         'fb37e34ea006c79be1c54cbb0f803414'
-         'df69615503ad293c9ddf9d8b7755282d'
+md5sums=('89e36f2d3ba963020b72738549954cbc'
+         '0688f6e5f1455ce779653df56b80face'
+         '8e427dfeb00ab6aedd9bd6742a200ae6'
+         '9d95a118f9c2bc06bdc6bd7eba08c572'
          '21572b99173a7cdeaff965e0a5e9182b')
 
 build() {
@@ -92,9 +92,11 @@ package() {
           s#GROUP="cdrom"#GROUP="optical"#g' "$pkgdir"/usr/lib/udev/rules.d/*.rules
 
   # add mkinitcpio hooks
+  install -Dm644 "$srcdir/initcpio-install-systemd" "$pkgdir/usr/lib/initcpio/install/systemd"
   install -Dm644 "$srcdir/initcpio-install-udev" "$pkgdir/usr/lib/initcpio/install/udev"
   install -Dm644 "$srcdir/initcpio-hook-udev" "$pkgdir/usr/lib/initcpio/hooks/udev"
-  install -Dm644 "$srcdir/initcpio-install-timestamp" "$pkgdir/usr/lib/initcpio/install/timestamp"
+  
+  rm -r "$pkgdir/usr/lib/rpm/macros.d"
   
   # Make journalctl persistent
   install -dm755 "$pkgdir/var/log/journal"

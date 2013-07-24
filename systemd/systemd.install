@@ -3,20 +3,33 @@
 sd_booted() {
   [ -e sys/fs/cgroup/systemd ]
 }
-   
-post_install() {
-  udevadm hwdb --update 
+ 
+add_privs() {
+  if ! setcap "$2" "$1" 2>/dev/null; then
+    echo "==> Warning: setcap failed, falling back to setuid root on /$1"
+    chmod u+s "$1"
+  fi
+}
+
+post_common() {
+  systemd-machine-id-setup
+
+  add_privs usr/bin/systemd-detect-virt 'cap_dac_override,cap_sys_ptrace+ep'
+
+  udevadm hwdb --update
+  journalctl --update-catalog
 
   if sd_booted; then
     systemctl --system daemon-reexec
   fi
+}
 
+post_install() {
+  post_common 
 }
 
 post_upgrade() {
-  udevadm hwdb --update
-
-  journalctl --update-catalog
+  post_common
   
   if [ "$(pacman -Q systemd | cut -d " " -f2 | cut -d "-" -f1)" = "196" ] ; then
     echo -e '\e[31;46m WARNING'
@@ -30,7 +43,6 @@ post_upgrade() {
   fi
   
   if sd_booted; then
-    systemctl --system daemon-reexec
     systemctl restart systemd-logind.service
   fi
 
