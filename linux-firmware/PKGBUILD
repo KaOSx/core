@@ -1,6 +1,6 @@
 
 pkgname=linux-firmware
-pkgver=20130614
+pkgver=20130726
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
@@ -8,10 +8,8 @@ pkgdesc="Firmware files for Linux"
 arch=('x86_64')
 url="http://git.kernel.org/?p=linux/kernel/git/dwmw2/linux-firmware.git;a=summary"
 license=('GPL2' 'GPL3' 'custom')
-makedepends=('b43-fwcutter')
-provides=('kernel26-firmware=3.1.99' 'linux-firmware=3.1.99')
+makedepends=('b43-fwcutter' 'git')
 conflicts=('linux-firmware-git'
-           'kernel26-firmware'
            'ar9170-fw'
            'carl9170-fw'
            'iwlwifi-1000-ucode'
@@ -24,9 +22,9 @@ conflicts=('linux-firmware-git'
            'rt2x00-rt61-fw'
            'rt2x00-rt71w-fw'
            'b43-firmware'
-           'b43-firmware-legacy')
-replaces=('kernel26-firmware'
-           'ar9170-fw'
+           'b43-firmware-legacy'
+           'amd-ucode')
+replaces=('ar9170-fw'
            'carl9170'
            'iwlwifi-1000-ucode'
            'iwlwifi-3945-ucode'
@@ -40,10 +38,10 @@ replaces=('kernel26-firmware'
            'b43-firmware'
            'b43-firmware-legacy')
 options=(!strip emptydirs)
-source=("http://sourceforge.net/projects/kdeos/files/Sources/linux-firmware/$pkgname-$pkgver.tar.xz"
+source=("git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git#branch=master"
         "http://mirror2.openwrt.org/sources/broadcom-wl-${_b43}.tar.bz2"
         "http://downloads.openwrt.org/sources/wl_apsta-${_legacy}.o")
-md5sums=('200c1b38089b96d2994ae2fbb58b01af'
+md5sums=('SKIP'
          'f4e357b09eaf5d8b1f1920cf3493a555'
          'e08665c5c5b66beb9c3b2dd54aa80cb3')
 
@@ -59,7 +57,7 @@ mksource() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd "${srcdir}/${pkgname}"
 
   install -d -m755 "${pkgdir}/usr/lib/firmware"
   cp -a * "${pkgdir}/usr/lib/firmware/"
