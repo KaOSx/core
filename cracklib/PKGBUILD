@@ -1,6 +1,6 @@
 
 pkgname=cracklib
-pkgver=2.8.22
+pkgver=2.9.0
 pkgrel=1
 pkgdesc="Password Checking Library"
 arch=('x86_64')
@@ -9,7 +9,7 @@ url="http://sourceforge.net/projects/cracklib"
 depends=('glibc' 'zlib')
 options=('!libtool')
 source=("http://downloads.sourceforge.net/sourceforge/$pkgname/$pkgname-$pkgver.tar.gz")
-md5sums=('463177b5c29c7a598c991e12a4898e06')
+md5sums=('e0f94ac2138fd33c7e77b19c1e9a9390')
 
 build() {
   cd $startdir/src/$pkgname-$pkgver
