@@ -1,4 +1,4 @@
-# useradd defaults file for Chakra-Project GNU/Linux
+# useradd defaults file for KdeOS
 # original changes by TomK
 GROUP=100
 HOME=/home
