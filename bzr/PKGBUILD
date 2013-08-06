@@ -1,15 +1,14 @@
 
 pkgname=bzr
-pkgver=2.5.1
+pkgver=2.6.0
 pkgrel=1
 pkgdesc="Bazaar is a version control system that helps you track project history over time and to collaborate easily with others."
 arch=('x86_64')
 url="http://bazaar.canonical.com/en/"
 license=('GPL')
 depends=('python2')
-source=("http://launchpad.net/${pkgname}/${pkgver%.*}/${pkgver}/+download/${pkgname}-${pkgver}.tar.gz"{,.sig})
-md5sums=('ac5079858364a046071000d5cdccb67b'
-         'c83dd08dd2c3e27edbab873500d7d6eb')
+source=("http://launchpad.net/${pkgname}/${pkgver%.*}/${pkgver}/+download/${pkgname}-${pkgver}.tar.gz")
+md5sums=('28c86653d0df10d202c6b842deb0ea35')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
