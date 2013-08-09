@@ -9,11 +9,14 @@ license=('Apache')
 depends=('apr' 'apr-util' 'openssl' 'zlib')
 makedepends=('scons')
 options=('!libtool')
-source=("http://serf.googlecode.com/files/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('bb0dbf9494495db7e8b34eac99b2dc3a')
+source=("http://serf.googlecode.com/files/${pkgname}-${pkgver}.tar.bz2"
+        'scons_shared_lib_version.patch')
+md5sums=('bb0dbf9494495db7e8b34eac99b2dc3a'
+         '240cb83adbc0f7d51d5836c7c2e20ce5')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  patch -p0 -i ${srcdir}/scons_shared_lib_version.patch
 
   scons PREFIX=/usr 
 }

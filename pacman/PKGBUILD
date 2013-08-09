@@ -1,7 +1,7 @@
 
 pkgname=pacman
 pkgver=4.1.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -40,6 +40,7 @@ check() {
 package() {
   cd $srcdir/$pkgname-$pkgver
   make DESTDIR=$pkgdir install
+  make DESTDIR=$pkgdir -C contrib install
 
   mkdir -p $pkgdir/etc
   install -m644 $srcdir/pacman.conf $pkgdir/etc/pacman.conf
