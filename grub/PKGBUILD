@@ -6,7 +6,7 @@ _grub_915_ver=9
 pkgname=('grub-common' 'grub-bios')
 pkgbase=grub
 pkgver=2.00
-pkgrel=1
+pkgrel=2
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
 license=('GPL3')
@@ -20,7 +20,8 @@ source=("http://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
         'grub_mkconfig_fixes.patch'
         'grub.default'
         'grub.cfg'
-        'grub_bzr_export.sh')
+        'grub_bzr_export.sh'
+        'grub-2.00-mkinitcpio-0.15.patch')
 
 noextract=("grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
            "grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz"
@@ -33,7 +34,14 @@ md5sums=('a1043102fbc7bcedbf53e7ee3d17ab91'
          '9afdb77b529c3d500e1dba03436bbf0b'
          '924f8e29755a99310c778c977adc6be5'
          '4ad249b859afeeac1693ea663b283bdc'
-         'f343ed2340ebc86c427873641bb72419')
+         'f343ed2340ebc86c427873641bb72419'
+         'f0c3c72f965c4dd7f05b4f752992e699')
+         
+prepare() {
+	cd "${srcdir}/grub-${pkgver}"
+	## Apply fix for mkinitcpio 0.15 rw changes
+	patch -p0 -i "${srcdir}/grub-2.00-mkinitcpio-0.15.patch"
+}
 
 _build_grub-common_and_bios() {
 
