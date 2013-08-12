@@ -16,7 +16,7 @@ md5sums=('bb0dbf9494495db7e8b34eac99b2dc3a'
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  patch -p0 -i ${srcdir}/scons_shared_lib_version.patch
+  #patch -p0 -i ${srcdir}/scons_shared_lib_version.patch
 
   scons PREFIX=/usr 
 }
@@ -29,6 +29,7 @@ check() {
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  install -d "${pkgdir}/usr"
   
-  scons PREFIX="${pkgdir}" install
+  scons PREFIX="${pkgdir}/usr" install
 }
