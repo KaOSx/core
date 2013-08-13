@@ -1,6 +1,6 @@
 
 pkgname=iptables
-pkgver=1.4.19
+pkgver=1.4.20
 pkgrel=1
 pkgdesc="A Linux kernel packet control tool"
 arch=('x86_64')
@@ -21,7 +21,7 @@ source=("http://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.t
         'iptables.service'
         'ip6tables.service'
         'iptables-flush')
-md5sums=('0e33aebcc92cea0fd178f8326fa14107'
+md5sums=('387b92d3efcf4f07fe31c3bf0f1d18f5'
          '14186bbafe21bb0638c0cb8e0903c829'
          '88fe330e810bb89b3aa08747bae3e3f9'
          '3ae6e25f397195611bab943945ff31ee'
