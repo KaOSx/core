@@ -1,25 +1,27 @@
 
-pkgname=glib2
-pkgver=2.34.3
-pkgrel=4
+
+pkgbase=glib2
+pkgname=('glib2' 'glib2-docs')
+pkgver=2.36.4
+pkgrel=1
 pkgdesc="Common C routines used by GTK+ and other libs"
 url="http://www.gtk.org/"
 arch=('x86_64')
-license=('LGPL')
-depends=('pcre' 'libffi')
-makedepends=('pkgconfig' 'python2' 'libxslt' 'docbook-xml')
-options=('!libtool' '!docs')
-source=("http://ftp.gnome.org/pub/GNOME/sources/glib/2.34/glib-${pkgver}.tar.xz"
-        'revert-warn-glib-compile-schemas.patch'
-        'gcc48.patch')
-md5sums=('a4ca31e258273c3761e3de2edd607661'
-         '3265d1afbcf1f5f308e26c3f9f6ca899'
-         '90674fbce9f11680be839f6e6332b1f7')
+makedepends=('pkg-config' 'python2' 'libxslt' 'docbook-xml' 'pcre' 'libffi')
+source=("http://ftp.gnome.org/pub/GNOME/sources/glib/2.36/glib-$pkgver.tar.xz"
+        'revert-warn-glib-compile-schemas.patch')
+md5sums=('2f4b15f7ef43d8702d067ab987bf7aba'
+         '3265d1afbcf1f5f308e26c3f9f6ca899')
 
+prepare() {
+  cd glib-$pkgver
+  
+  patch -Rp1 -i ../revert-warn-glib-compile-schemas.patch
+  touch -r NEWS gtk-doc.make
+}
+  
 build() {
-  cd "${srcdir}/glib-${pkgver}"
-  patch -Rp1 -i "$srcdir/revert-warn-glib-compile-schemas.patch"
-  patch -p1 -i "${srcdir}/gcc48.patch"
+  cd glib-$pkgver
   
   PYTHON=/usr/bin/python2 ./configure --prefix=/usr --libdir=/usr/lib \
       --sysconfdir=/etc \
@@ -28,13 +30,30 @@ build() {
   make
 }
 
-package() {
-  cd "${srcdir}/glib-${pkgver}"
-  make completiondir=/usr/share/bash-completion/completions DESTDIR="${pkgdir}" install
+package_glib2() {
+  depends=('pcre' 'libffi')
+  options=('!docs' '!libtool' '!emptydirs')
+  license=('LGPL')
 
-  for _i in "${pkgdir}/usr/share/bash-completion/completions/"*; do
-      chmod -x "${_i}"
+  cd glib-$pkgver
+  make completiondir=/usr/share/bash-completion/completions DESTDIR="$pkgdir" install
+
+  for _i in "$pkgdir/usr/share/bash-completion/completions/"*; do
+      chmod -x "$_i"
   done
-  sed -i "s|#!/usr/bin/env python|#!/usr/bin/env python2|" "$pkgdir"/usr/bin/gdbus-codegen
+
+  rm -rf "$pkgdir/usr/share/gdb/"
 }
 
+package_glib2-docs() {
+  pkgdesc="Documentation for glib2"
+  license=('custom')
+  options=('docs' '!emptydirs')
+  
+  cd glib-$pkgver/docs
+  make DESTDIR="${pkgdir}" install
+  install -m755 -d "${pkgdir}/usr/share/licenses/glib2-docs"
+  install -m644 reference/COPYING "${pkgdir}/usr/share/licenses/glib2-docs/"
+
+  rm -rf "${pkgdir}/usr/share/man"
+}
