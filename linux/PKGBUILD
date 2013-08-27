@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.9
-pkgver=3.9.8
+_basekernel=3.10
+pkgver=3.10.10
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.9.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.10.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config.x86_64'
@@ -265,7 +265,7 @@ package_linux-headers() {
   done
 
   # remove unneeded architectures
-  rm -rf "${pkgdir}"/usr/src/linux-${_kernver}/arch/{alpha,arm,arm26,avr32,blackfin,c6x,cris,frv,h8300,hexagon,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,openrisc,parisc,powerpc,ppc,s390,score,sh,sh64,sparc,sparc64,tile,unicore32,um,v850,xtensa}
+  rm -rf "${pkgdir}"/usr/src/linux-${_kernver}/arch/{alpha,arm,arm26,arm64,avr32,blackfin,c6x,cris,frv,h8300,hexagon,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,openrisc,parisc,powerpc,ppc,s390,score,sh,sh64,sparc,sparc64,tile,unicore32,um,v850,xtensa}
 }
 
 package_linux-docs() {
