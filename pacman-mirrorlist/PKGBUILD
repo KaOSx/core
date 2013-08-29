@@ -1,6 +1,6 @@
 
 pkgname=pacman-mirrorlist
-pkgver=20130828
+pkgver=20130829
 pkgrel=1
 pkgdesc="KaOS mirror list for use by pacman"
 arch=('x86_64')
@@ -8,14 +8,13 @@ url="http://www.archlinux.org/pacman/"
 license=('GPL')
 depends=('mirror-check')
 groups=('base')
-backup=(etc/pacman.d/mirrorlist)
+#backup=(etc/pacman.d/mirrorlist)
 source=('mirrorlist')
-md5sums=('f20d825cf7339e6c8563afbf09f4300b')
+md5sums=('27f07bcc62c0aeb2d8bad73e025fb1aa')
 
 package() {
   mkdir -p $pkgdir/etc/pacman.d
+  
   install -m644 $srcdir/mirrorlist $pkgdir/etc/pacman.d/
-  # customize mirrorlist to architecture
-  #sed -i -e "s/@carch@/${CARCH}/g" $pkgdir/etc/pacman.d/mirrorlist
 }
 

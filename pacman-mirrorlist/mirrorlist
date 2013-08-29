@@ -3,6 +3,6 @@
 #
 
 # United States
-#Server = http://kaosx.us/repo/$repo
+Server = http://kaosx.us/repo/$repo
 
 
