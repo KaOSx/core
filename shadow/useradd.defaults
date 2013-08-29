@@ -1,4 +1,4 @@
-# useradd defaults file for KdeOS
+# useradd defaults file for KaOS
 # original changes by TomK
 GROUP=100
 HOME=/home

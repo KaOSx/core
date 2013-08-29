@@ -1,12 +1,12 @@
 
 pkgname=filesystem
-pkgver=2013.05
+pkgver=2013.08
 pkgrel=1
 _codename=2013
 pkgdesc='Base filesystem'
 arch=('x86_64')
 license=('GPL')
-url='http://www.veritasfarm.net'
+url='http://kaosx.us'
 groups=('base')
 install='filesystem.install'
 depends=('iana-etc' 'bash' 'coreutils')
@@ -20,7 +20,7 @@ source=('group' 'issue' 'nsswitch.conf' 'securetty' 'host.conf' 'ld.so.conf'
         'gshadow' 'profile' 'modprobe.d.usb-load-ehci-first' 'machine-info' 'os-release'
         'vconsole.conf' 'locale.sh')
 md5sums=('3b1d2710d902b222bb345433f35b766a'
-         '72cc4758203f8496415bec298ba13a73'
+         'db5338e17b20e85deaf85a16d30f5d65'
          '13753e4e0964f3652b0cc60a28528bdf'
          '4c4540eeb748bf1f71d631b8c1dcf0b3'
          'f28150d4c0b22a017be51b9f7f9977ed'
@@ -28,7 +28,7 @@ md5sums=('3b1d2710d902b222bb345433f35b766a'
          '455b78cada80f40b6f6968f5cbd97a2e'
          '01249bb0ba4468f95e2cc3a627f5e6e3'
          'ca716f853860199c1286e7939b2f2666'
-         'a367150bd0fe6b02114365121de64a53'
+         'f477860ae71b9efce9aadf7dfdfec9f3'
          '7bc65f234dfb6abf24e7c3b03e86f4ff'
          'b7244a8455581eeb441edeec03495054'
          'd41d8cd98f00b204e9800998ecf8427e'
@@ -37,8 +37,8 @@ md5sums=('3b1d2710d902b222bb345433f35b766a'
          '677523dbe94b79299aa91b35ed8203b6'
          'f3b6ae7db8adffaaa4bffc6099dcbd50'
          'a8a962370cd0128465d514e6a1f74130'
-         '4e83f889774994f4c6c1530e92c2588d'
-         '4a9e9d50ecbea2cec507c7bed6bd30b7'
+         '13d8d253ae8613ba2474683f585e73db'
+         '6e52bb84c297f9ce8c4022eb3dda0375'
          '201bbb8b4734d2f46afe1e24d7cc6173'
          '45100e8a4a6d8d4b3a7dcd34b0fa4281')
 

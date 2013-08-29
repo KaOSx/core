@@ -6,7 +6,7 @@ _grub_915_ver=9
 pkgname=('grub-common' 'grub-bios')
 pkgbase=grub
 pkgver=2.00
-pkgrel=2
+pkgrel=3
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
 license=('GPL3')
@@ -14,9 +14,9 @@ makedepends=('xz' 'bdf-unifont' 'ttf-dejavu' 'python' 'autogen'
              'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse')
 
 source=("http://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
-        "http://sourceforge.net/projects/kdeos/files/Sources/grub/grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
-        "http://sourceforge.net/projects/kdeos/files/Sources/grub/grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz"
-        "http://sourceforge.net/projects/kdeos/files/Sources/grub/grub2_extras_915resolution_r${_grub_915_ver}.tar.xz"
+        "http://sourceforge.net/projects/kaos/files/sources/grub/grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
+        "http://sourceforge.net/projects/kaos/files/sources/grub/grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz"
+        "http://sourceforge.net/projects/kaos/files/sources/grub/grub2_extras_915resolution_r${_grub_915_ver}.tar.xz"
         'grub_mkconfig_fixes.patch'
         'grub.default'
         'grub.cfg'
@@ -32,8 +32,8 @@ md5sums=('a1043102fbc7bcedbf53e7ee3d17ab91'
          '77f7d5f8ce395663cd7fff4d37099957'
          'a80e2b1d3bab778c3b6117d5a698992f'
          '9afdb77b529c3d500e1dba03436bbf0b'
-         '924f8e29755a99310c778c977adc6be5'
-         '4ad249b859afeeac1693ea663b283bdc'
+         '2f372ff858b5ad59b8b7d34dee56cd67'
+         '516ae3964cf4400b3d7ebe4e278c3b86'
          'f343ed2340ebc86c427873641bb72419'
          'f0c3c72f965c4dd7f05b4f752992e699')
          

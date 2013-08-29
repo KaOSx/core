@@ -1,8 +1,8 @@
-NAME="KdeOS"
+NAME="KaOS"
 VERSION="2013"
-ID=kdeos
-PRETTY_NAME="KdeOS (2013)"
+ID=kaos
+PRETTY_NAME="KaOS (2013)"
 ANSI_COLOR="0;36"
-HOME_URL="http://www.kde-os.tk/"
+HOME_URL="http://kaos.us/"
 
 

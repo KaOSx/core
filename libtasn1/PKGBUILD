@@ -1,7 +1,7 @@
 
 pkgname=libtasn1
 pkgver=3.3
-pkgrel=1
+pkgrel=2
 pkgdesc="The ASN.1 library used in GNUTLS"
 arch=('x86_64')
 license=('GPL3' 'LGPL')
@@ -17,8 +17,8 @@ build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   
   ./configure --prefix=/usr \
-      --with-packager=KdeOS \
-      --with-packager-bug-reports="https://github.com/KdeOs/core/issues" \
+      --with-packager=KaOS \
+      --with-packager-bug-reports="https://github.com/KaOSx/core/issues" \
       --with-packager-version=${pkgver}-${pkgrel}
   make
 }
