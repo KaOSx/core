@@ -2,18 +2,18 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.10
-_srcname=linux-3.10
-pkgver=3.10.9
+_basekernel=3.11-rc7
+_srcname=linux-3.11
+pkgver=3.11.0
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-#source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.10-rc7.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+#source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.11-rc7.tar.xz"
+        #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config.x86_64'
         #aufs patches
@@ -27,9 +27,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         'change-default-console-loglevel.patch')
-md5sums=('4f25cd5bec5f8d5a7d935b3f2ccb8481'
-         '868d7f5315f95da5e48ed56691a36263'
-         '24464465d6f85c641abfa0f7c641c307'
+md5sums=('c98bfc6a4b2b5f274df0d9dc0dd2fc3a'
+         'b2d136816ca6416800b8d50f4164dafe'
          '92960782cb21c2e39f2f3271a5d06462'
          '498156cee91b664f3d3fd71637831cb0'
          'a6176a553dec72197bde60add7fb8a06'
@@ -44,7 +43,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -52,19 +51,19 @@ build() {
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
-  patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
+  ##patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs3.patch"
-  patch -p1 -i "${srcdir}/aufs3-base.patch"
-  patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs3-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs3-proc_map.patch"
-  patch -p1 -i "${srcdir}/aufs3-standalone.patch"
+  ##patch -p1 -i "${srcdir}/aufs3.patch"
+  ##patch -p1 -i "${srcdir}/aufs3-base.patch"
+  ##patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
+  ##patch -p1 -i "${srcdir}/aufs3-loopback.patch"
+  ##patch -p1 -i "${srcdir}/aufs3-proc_map.patch"
+  ##patch -p1 -i "${srcdir}/aufs3-standalone.patch"
   
   cat "${srcdir}/config.x86_64" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  ##cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -237,7 +236,7 @@ package_linux-next-headers() {
   cp fs/xfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h"
 
   #aufs3-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/linux/aufs_type.h"
+  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
