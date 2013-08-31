@@ -1,7 +1,7 @@
 
 pkgname=filesystem
 pkgver=2013.08
-pkgrel=1
+pkgrel=2
 _codename=2013
 pkgdesc='Base filesystem'
 arch=('x86_64')
@@ -67,7 +67,7 @@ package() {
 	for f in gshadow shadow crypttab; do
 		install -m600 ${srcdir}/${f} etc/
 	done
-	touch etc/KdeOS-release
+	touch etc/KaOS-release
 	install -D -m644 ${srcdir}/modprobe.d.usb-load-ehci-first usr/lib/modprobe.d/usb-load-ehci-first.conf
 	install -m755 ${srcdir}/locale.sh etc/profile.d/locale.sh
 
