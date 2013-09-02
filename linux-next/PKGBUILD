@@ -2,17 +2,17 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.11-rc7
+_basekernel=3.11
 _srcname=linux-3.11
 pkgver=3.11.0
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-#source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.11-rc7.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
+#source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.11-rc7.tar.xz"
         #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config.x86_64'
@@ -27,7 +27,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.11-rc7.tar
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         'change-default-console-loglevel.patch')
-md5sums=('c98bfc6a4b2b5f274df0d9dc0dd2fc3a'
+md5sums=('fea363551ff45fbe4cb88497b863b261'
          'b2d136816ca6416800b8d50f4164dafe'
          '92960782cb21c2e39f2f3271a5d06462'
          '498156cee91b664f3d3fd71637831cb0'
