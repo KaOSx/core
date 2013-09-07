@@ -2,7 +2,7 @@
 pkgname=grub-themes-monochrome
 _pkgname=monochrome
 pkgver=1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Monochrome-light Grub-theme."
 url="http://www.reddit.com/r/linux/comments/w7mux/i_make_grub_themes_heres_my_newest_one/"
 arch=('x86_64')
