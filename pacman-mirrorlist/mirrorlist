@@ -1,6 +1,8 @@
 #
 # KaOS repository mirrorlist
 #
+# Germany
+Server = http://mirror3.layerjet.com/kaos/$repo
 
 # United States
 Server = http://kaosx.us/repo/$repo

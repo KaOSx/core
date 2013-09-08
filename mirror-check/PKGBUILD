@@ -1,14 +1,14 @@
 
 pkgname=mirror-check
 pkgver=2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Checks whether the locally used mirror is synced with the main"
 arch=('x86_64')
 url="http://www.chakra-project.org"
 license=('GPL2')
 makedepends=('asciidoc')
 source=('mirror-check' 'mirror-check.desktop')
-md5sums=('f8cd4bca339896955ce57db0e88601b6'
+md5sums=('2fcee42d94e732cd0340e5298249cbb6'
          '5a0a0a1774ecd4808827e4c3cd6eca7c')
 
 package() {
