@@ -1,7 +1,7 @@
 
 pkgname=shadow
 pkgver=4.1.5.1
-pkgrel=4
+pkgrel=5
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
 url='http://pkg-shadow.alioth.debian.org/'
@@ -30,7 +30,7 @@ source=("http://pkg-shadow.alioth.debian.org/releases/$pkgname-$pkgver.tar.bz2"
 md5sums=('a00449aa439c69287b6d472191dc2247'
          'bdf93c7bc4b751277159c5de8fc34df2'
          '65e9ebce249a5b9ed021e2790452b9e1'
-         '22eac9992cbabccdc22c8c07dc8251c7'
+         'f6760e9701d7ed2cd91371d427faed2a'
          'a31374fef2cba0ca34dfc7078e2969e4'
          'c4db3dbd4d5759d3e4f29366946d14e5'
          'f6760e9701d7ed2cd91371d427faed2a'

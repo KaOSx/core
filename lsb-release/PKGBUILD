@@ -22,7 +22,7 @@ package() {
 
   install -d -m755 "${pkgdir}/etc"
   echo "LSB_VERSION=$pkgver" >> "$pkgdir/etc/lsb-release"
-  echo "DISTRIB_ID=August2013" >> "$pkgdir/etc/lsb-release"
+  echo "DISTRIB_ID=KDE4.11" >> "$pkgdir/etc/lsb-release"
   echo "DISTRIB_RELEASE=rolling" >> "$pkgdir/etc/lsb-release"
   echo "DISTRIB_DESCRIPTION=\"KaOS\"" >> "$pkgdir/etc/lsb-release" 
 }
