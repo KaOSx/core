@@ -1,0 +1,40 @@
+
+pkgname=efivar
+_pkgname=vathpela-efivar
+_commit=6ec0289
+pkgver=0.6
+pkgrel=1
+pkgdesc="Library to manipulate EFI variables"
+arch=('x86_64')
+url="https://github.com/vathpela/efivar"
+license=('LGPL2.1')
+depends=('popt')
+options=('zipman' 'docs' '!makeflags')
+source=("https://github.com/vathpela/efivar/tarball/master/efivar-${pkgver}.tar.gz")
+md5sums=('b650459d6e5a0ad3bae4695c6705e7d1')
+
+build() {
+	cd "${srcdir}/${_pkgname}-${_commit}/"
+	
+	unset CFLAGS
+	unset CPPFLAGS
+	unset CXXFLAGS
+	unset LDFLAGS
+	unset MAKEFLAGS
+	
+	sed 's|-rpath=$(TOPDIR)/src/|-rpath=$(libdir)|g' -i "${srcdir}/${_pkgname}-${_commit}/src/test/Makefile" || true
+	
+	make libdir="/usr/lib/" bindir="/usr/bin/" mandir="/usr/share/man/" includedir="/usr/include/" V=1 -j1
+	echo
+}
+
+package() {
+	
+	cd "${srcdir}/${_pkgname}-${_commit}/"
+	
+	make -j1 V=1 DESTDIR="${pkgdir}/" libdir="/usr/lib/" bindir="/usr/bin/" mandir="/usr/share/man/" includedir="/usr/include/" install
+	echo
+	
+	install -d "${pkgdir}/usr/bin"
+	install -D -m0755 "${srcdir}/${_pkgname}-${_commit}/src/test/tester" "${pkgdir}/usr/bin/efivar-tester"
+}
