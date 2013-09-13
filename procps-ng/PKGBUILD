@@ -1,34 +1,29 @@
 
 pkgname=procps-ng
 pkgver=3.3.8
-pkgrel=1
+pkgrel=2
 pkgdesc='Utilities for monitoring your system and its processes'
 arch=('x86_64')
-url="http://gitorious.org/procps"
+url="http://sourceforge.net/projects/procps-ng/"
 license=('GPL' 'LGPL')
 groups=('base')
 depends=('ncurses')
 provides=('procps')
-backup=('etc/sysctl.conf')
 options=('!libtool')
-source=("procps-ng-${pkgver}.tar.gz::http://gitorious.org/procps/procps/archive-tarball/v${pkgver}"
-        'sysctl.conf')
-md5sums=('7e85139d50c29d1a0f6f646c627d86b5'
-         '40d6fa670817ad36c7282687c2237bbb')
+source=("http://downloads.sourceforge.net/project/${pkgname}/Production/${pkgname}-${pkgver}.tar.xz")
+md5sums=('aecbeeda2ab308f8d09dddcb4cb9a572')
 
 build() {
-  cd "${srcdir}/procps-procps"
+  cd "${srcdir}/${pkgname}-${pkgver}"
   
-  echo ${pkgver} > .tarball-version
-  ./autogen.sh
   ./configure --exec-prefix=/ --prefix=/usr --sysconfdir=/etc --libdir=/usr/lib
   make
 }
 
 package() {
-  cd "${srcdir}/procps-procps"
+  cd "${pkgname}-${pkgver}"
+  
   make DESTDIR="${pkgdir}" install
-  install -D -m644 ../sysctl.conf "${pkgdir}/etc/sysctl.conf"
 
   # provided by util-linux
   rm "${pkgdir}/bin/kill"
