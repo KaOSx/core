@@ -1,37 +1,34 @@
-#
-# Chakra Packages for Chakra, part of chakra-project.org
-#
-# maintainer (i686): Phil Miller <philm[at]chakra-project[dog]org>
-# maintainer (x86_64): Manuel Tortosa <manutortosa[at]chakra-project[dot]org>
 
 pkgname=elfutils
-pkgver=0.154
+pkgver=0.156
 pkgrel=1
 pkgdesc="Collection of libraries and utilities for working with ELF object files and DWARF debugging information."
-arch=('i686' 'x86_64')
+arch=('x86_64')
 url="https://fedorahosted.org/elfutils/"
-license=('GPL2')
-depends=('glibc')
-provides=('libelf')
-replaces=('libelf')
-conflicts=('libelf')
+license=('LGPL3' 'GPL' 'GPL3')
+depends=('gcc-libs' 'zlib' 'bzip2' 'xz')
 source=("https://fedorahosted.org/releases/e/l/elfutils/${pkgver}/elfutils-${pkgver}.tar.bz2")
-md5sums=('e5b26ceaee67db40e742f13052087354')
+md5sums=('f3b5cbb63b0757f571c6cc109df4c55b')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  CFLAGS+=" -g"
+  
   ./configure --prefix=/usr --program-prefix="eu-"
   make
 }
 
 check() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make check
 }
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make install DESTDIR="${pkgdir}"
+
 }
 
-# vim:set ts=2 sw=2 et:
+
