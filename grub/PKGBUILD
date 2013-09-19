@@ -6,7 +6,7 @@ _grub_915_ver=9
 pkgname=('grub-common' 'grub-bios')
 pkgbase=grub
 pkgver=2.00
-pkgrel=3
+pkgrel=4
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
 license=('GPL3')
@@ -31,9 +31,9 @@ md5sums=('a1043102fbc7bcedbf53e7ee3d17ab91'
          '704ea9f250b6137f05fa0197fd07053a'
          '77f7d5f8ce395663cd7fff4d37099957'
          'a80e2b1d3bab778c3b6117d5a698992f'
-         '9afdb77b529c3d500e1dba03436bbf0b'
+         '0e596579198d0820550377c3d4077bd2'
          '2f372ff858b5ad59b8b7d34dee56cd67'
-         '516ae3964cf4400b3d7ebe4e278c3b86'
+         '2039d39feb025d0803bd5d9e6d560dd6'
          'f343ed2340ebc86c427873641bb72419'
          'f0c3c72f965c4dd7f05b4f752992e699')
          

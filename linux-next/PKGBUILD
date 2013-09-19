@@ -55,16 +55,16 @@ build() {
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
 
   #aufs patches for Live:
-  ##patch -p1 -i "${srcdir}/aufs3.patch"
-  ##patch -p1 -i "${srcdir}/aufs3-base.patch"
-  ##patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
-  ##patch -p1 -i "${srcdir}/aufs3-loopback.patch"
-  ##patch -p1 -i "${srcdir}/aufs3-proc_map.patch"
-  ##patch -p1 -i "${srcdir}/aufs3-standalone.patch"
+  patch -p1 -i "${srcdir}/aufs3.patch"
+  patch -p1 -i "${srcdir}/aufs3-base.patch"
+  patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs3-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs3-proc_map.patch"
+  patch -p1 -i "${srcdir}/aufs3-standalone.patch"
   
   cat "${srcdir}/config.x86_64" > ./.config
 
-  ##cat "${srcdir}/config.aufs" >> ./.config
+  cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -237,7 +237,7 @@ package_linux-next-headers() {
   cp fs/xfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h"
 
   #aufs3-util need
-  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
