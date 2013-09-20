@@ -1,14 +1,14 @@
 
 pkgname=tk
-pkgver=8.6.0
-pkgrel=2
+pkgver=8.6.1
+pkgrel=1
 pkgdesc="A windowing toolkit for use with tcl"
 arch=('x86_64')
 url="http://tcl.sourceforge.net/"
 license=('custom')
 depends=("tcl=${pkgver}" 'libxss' 'libxft')
 source=("http://downloads.sourceforge.net/sourceforge/tcl/${pkgname}${pkgver}-src.tar.gz")
-md5sums=('b883a1a3c489c17413fb602a94bf54e8')
+md5sums=('63f21c3a0e0cefbd854b4eb29b129ac6')
 
 build() {
   cd "${srcdir}/${pkgname}${pkgver}/unix"
