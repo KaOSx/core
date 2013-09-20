@@ -3,15 +3,15 @@ _grub_lua_ver=24
 _grub_ntldr_ver=21
 _grub_915_ver=9
 
-pkgname=('grub-common' 'grub-bios')
+pkgname=('grub-common' 'grub-bios' 'grub-efi-x86_64')
 pkgbase=grub
 pkgver=2.00
 pkgrel=4
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
 license=('GPL3')
-makedepends=('xz' 'bdf-unifont' 'ttf-dejavu' 'python' 'autogen'
-             'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse')
+makedepends=('xz' 'bdf-unifont' 'ttf-dejavu' 'python2' 'autogen' 'bdf-unifont'
+             'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse' 'dosfstools' 'efibootmgr')
 
 source=("http://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
         "http://sourceforge.net/projects/kaos/files/sources/grub/grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
@@ -86,7 +86,7 @@ _build_grub-common_and_bios() {
 		--with-platform="pc" \
 		--target="x86_64" \
 		--host="${CARCH}-unknown-linux-gnu" \
-		"${_EFIEMU}" \
+		--enable-efiemu \
 		--enable-mm-debug \
 		--enable-nls \
 		--enable-device-mapper \
@@ -112,7 +112,7 @@ _build_grub-common_and_bios() {
 
 }
 
-_build_grub-efi-i386() {
+_build_grub-efi-x86_64() {
 
 	## copy the source for building the efi package
 	cp -r "${srcdir}/grub-${pkgver}" "${srcdir}/grub_efi-${pkgver}"
@@ -130,7 +130,7 @@ _build_grub-efi-i386() {
 
 	CFLAGS="" ./configure \
 		--with-platform="efi" \
-		--target="i386" \
+		--target="x86_64" \
 		--host="${CARCH}-unknown-linux-gnu" \
 		--disable-efiemu \
 		--enable-mm-debug \
@@ -158,13 +158,7 @@ _build_grub-efi-i386() {
 }
 
 build() {
-
-	## set architecture dependent variables
-	if [[ "${CARCH}" == 'x86_64' ]]; then
-		_EFIEMU="--enable-efiemu"
-	else
-		_EFIEMU="--disable-efiemu"
-	fi
+	_EFIEMU="--enable-efiemu"
 
 	_HOST="${CARCH}"
 
@@ -177,7 +171,7 @@ build() {
 	_build_grub-common_and_bios
 	echo
 
-	_build_grub-efi-i386
+	_build_grub-efi-x86_64
 	echo
 
 }
@@ -233,13 +227,11 @@ package_grub-bios() {
 
 }
 
-package_grub-efi-i386() {
+package_grub-efi-x86_64() {
 
-	pkgdesc="GNU GRand Unified Bootloader - i386 UEFI Modules"
+	pkgdesc="GNU GRand Unified Bootloader - x86_64 UEFI Modules"
 	depends=("grub-common=${pkgver}" 'dosfstools' 'efibootmgr')
 	options=('!strip' '!emptydirs')
-	replaces=('grub2-efi-i386')
-	provides=('grub2-efi-i386')
 
 	cd "${srcdir}/grub_efi-${pkgver}"
 	make DESTDIR="${pkgdir}/" install
@@ -249,8 +241,8 @@ package_grub-efi-i386() {
 	rm -rf "${pkgdir}"/{boot,etc,usr/{share,bin,sbin}}
 
 	## remove gdb debugging related files
-	rm -f "${pkgdir}/usr/lib/grub/i386-efi"/*.module || true
-	rm -f "${pkgdir}/usr/lib/grub/i386-efi"/*.image || true
-	rm -f "${pkgdir}/usr/lib/grub/i386-efi"/{kernel.exec,gdb_grub,gmodule.pl} || true
+	rm -f "${pkgdir}/usr/lib/grub/x86_64-efi"/*.module || true
+	rm -f "${pkgdir}/usr/lib/grub/x86_64-efi"/*.image || true
+	rm -f "${pkgdir}/usr/lib/grub/x86_64-efi"/{kernel.exec,gdb_grub,gmodule.pl} || true
 
 }

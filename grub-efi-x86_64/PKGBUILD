@@ -3,19 +3,19 @@ _grub_lua_ver=24
 
 pkgname=grub-efi-x86_64
 pkgver=2.00
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU GRand Unified Bootloader (2) - x86_64 UEFI Modules"
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
 license=('GPL3')
 depends=("grub-common=${pkgver}" 'dosfstools' 'efibootmgr')
-makedepends=('xz' 'python' 'autogen' 'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse')
+makedepends=('xz' 'python2' 'autogen' 'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse')
 options=('!strip' '!emptydirs')
 replaces=('grub2-efi64')
 provides=('grub2-efi64')
 
 source=("http://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
-        "ftp://ftp.archlinux.org/other/grub2/grub2_extras_lua_r${_grub_lua_ver}.tar.xz")
+        "http://sourceforge.net/projects/kaos/files/sources/grub/grub2_extras_lua_r${_grub_lua_ver}.tar.xz")
 
 noextract=("grub2_extras_lua_r${_grub_lua_ver}.tar.xz")
 
