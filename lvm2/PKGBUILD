@@ -1,12 +1,13 @@
 
 pkgbase=lvm2
 pkgname=('lvm2' 'device-mapper')
-pkgver=2.02.100
+pkgver=2.02.101
 pkgrel=1
 arch=('x86_64')
 url="http://sourceware.org/lvm2/"
 license=('GPL2' 'LGPL2.1')
 groups=('base')
+makedepends=('systemd')
 source=("http://mirrors.kernel.org/sources.redhat.com/lvm2/LVM2.${pkgver}.tgz"
         'lvm2_install'
         'lvm2_hook'
@@ -17,7 +18,7 @@ source=("http://mirrors.kernel.org/sources.redhat.com/lvm2/LVM2.${pkgver}.tgz"
         'lvm-monitoring.service'
         'lvmetad.service'
         'lvmetad.socket')
-md5sums=('9629cf5728544d7e637cafde1f73d777'
+md5sums=('9fccf30e0d9529fe54abbbb8e31b1178'
          '8cfc93d5fe9be1cd0a37dd4fbe3cc2ec'
          'b25cfb248e66e0f76e7aafa6715d620a'
          '69e40679cd8b3658bfc619e48baae125'
@@ -44,7 +45,7 @@ build() {
 package_device-mapper() {
   pkgdesc="Device mapper userspace library and tools"
   url="http://sourceware.org/dm/"
-  depends=('glibc' 'udev')
+  depends=('glibc' 'systemd')
 
   cd "${srcdir}/LVM2.${pkgver}"
   make DESTDIR="${pkgdir}" install_device-mapper
@@ -59,7 +60,7 @@ package_device-mapper() {
 
 package_lvm2() {
   pkgdesc="Logical Volume Manager 2 utilities"
-  depends=('bash' "device-mapper>=${pkgver}" 'udev' 'readline')
+  depends=('bash' "device-mapper>=${pkgver}" 'systemd' 'readline')
   conflicts=('lvm' 'mkinitcpio<0.7')
   backup=('etc/lvm/lvm.conf')
   options=('!makeflags')
