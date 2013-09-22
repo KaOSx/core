@@ -1,7 +1,7 @@
 
 pkgname=m4
-pkgver=1.4.16
-pkgrel=3
+pkgver=1.4.17
+pkgrel=1
 pkgdesc="m4 macro processor"
 arch=('x86_64')
 license=('GPL3')
@@ -9,19 +9,11 @@ url="http://www.gnu.org/software/m4"
 install=m4.install
 groups=('base-devel')
 depends=('glibc' 'bash')
-source=("ftp://ftp.gnu.org/gnu/m4/$pkgname-$pkgver.tar.xz"
-        'm4-1.4.16-readlink-einval.patch')
-md5sums=('7548ec061a1ba993790159764f522d0e'
-         'cea138fa9b568d06e46269611cec8dd0')
+source=("ftp://ftp.gnu.org/gnu/m4/$pkgname-$pkgver.tar.xz")
+md5sums=('12a3c829301a4fd6586a57d3fcf196dc')
 
 build() {
   cd ${srcdir}/$pkgname-$pkgver
-  
-  # for latest glibc
-  sed -i -e '/gets is a/d' lib/stdio.in.h
-  
-  # patch testsuite failure with newer kernels
-  patch -p1 -i $srcdir/m4-1.4.16-readlink-einval.patch
   
   ./configure --prefix=/usr
   make
