@@ -3,10 +3,10 @@ _grub_lua_ver=24
 _grub_ntldr_ver=21
 _grub_915_ver=9
 
-pkgname=('grub-common' 'grub-bios' 'grub-efi-x86_64')
+pkgname=('grub-common' 'grub-bios' 'grub-efi')
 pkgbase=grub
 pkgver=2.00
-pkgrel=4
+pkgrel=5
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
 license=('GPL3')
@@ -112,7 +112,7 @@ _build_grub-common_and_bios() {
 
 }
 
-_build_grub-efi-x86_64() {
+_build_grub-efi() {
 
 	## copy the source for building the efi package
 	cp -r "${srcdir}/grub-${pkgver}" "${srcdir}/grub_efi-${pkgver}"
@@ -171,7 +171,7 @@ build() {
 	_build_grub-common_and_bios
 	echo
 
-	_build_grub-efi-x86_64
+	_build_grub-efi
 	echo
 
 }
@@ -184,8 +184,7 @@ package_grub-common() {
 	replaces=('grub2-common')
 	provides=('grub2-common')
 	backup=('boot/grub/grub.cfg' 'etc/default/grub' 'etc/grub.d/40_custom')
-	optdepends=('libisoburn: provides xorriso for generating grub rescue iso using grub-mkrescue'
-	            'os-prober: to detect other OSes when generating grub.cfg in BIOS systems'
+	optdepends=('os-prober: to detect any other OS when generating grub.cfg in BIOS systems'
 	            'mtools: for grub-mkrescue FAT FS support')
 	install="grub.install"
 	options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
@@ -227,10 +226,13 @@ package_grub-bios() {
 
 }
 
-package_grub-efi-x86_64() {
+package_grub-efi() {
 
-	pkgdesc="GNU GRand Unified Bootloader - x86_64 UEFI Modules"
+	pkgdesc="GNU GRand Unified Bootloader - UEFI Modules"
 	depends=("grub-common=${pkgver}" 'dosfstools' 'efibootmgr')
+	provides=('grub-efi-x86_64')
+	replaces=('grub-efi-x86_64')
+	conflicts=('grub-efi-x86_64')
 	options=('!strip' '!emptydirs')
 
 	cd "${srcdir}/grub_efi-${pkgver}"
