@@ -1,6 +1,6 @@
 
 pkgname=tzdata
-pkgver=2013d
+pkgver=2013e
 pkgrel=1
 pkgdesc="Sources for time zone and daylight saving time data"
 arch=('any')
@@ -8,7 +8,7 @@ url="http://www.iana.org/time-zones"
 license=('GPL')
 options=('!emptydirs')
 source=("http://www.iana.org/time-zones/repository/releases/${pkgname}${pkgver}.tar.gz")
-md5sums=('65b6818162230fc02f86f293376c73df')
+md5sums=('095acd2138974cc8466d4c6e72225a61')
 
 timezones=('africa' 'antarctica' 'asia' 'australasia'
            'europe' 'northamerica' 'southamerica'
@@ -20,7 +20,7 @@ package() {
   cd ${srcdir}
   zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo ${timezones[@]}
   zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo/posix ${timezones[@]}
-  zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo/right -L leapseconds ${timezones[@]}
+  #zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo/right -L leap-seconds.list ${timezones[@]}
   zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo -p America/New_York
   install -m444 -t ${pkgdir}/usr/share/zoneinfo iso3166.tab zone.tab
 }
