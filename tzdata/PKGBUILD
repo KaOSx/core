@@ -1,14 +1,16 @@
 
 pkgname=tzdata
-pkgver=2013e
+pkgver=2013f
 pkgrel=1
 pkgdesc="Sources for time zone and daylight saving time data"
-arch=('any')
+arch=('x86_64')
 url="http://www.iana.org/time-zones"
 license=('GPL')
 options=('!emptydirs')
-source=("http://www.iana.org/time-zones/repository/releases/${pkgname}${pkgver}.tar.gz")
-md5sums=('095acd2138974cc8466d4c6e72225a61')
+source=("http://www.iana.org/time-zones/repository/releases/${pkgname}${pkgver}.tar.gz"
+        "http://www.iana.org/time-zones/repository/releases/tzcode${pkgver}.tar.gz")
+md5sums=('6d35470a6090e741c39aa9bc9cd103e3'
+         '0cca1a29a3734935e7dd44e86fa3bbd5')
 
 timezones=('africa' 'antarctica' 'asia' 'australasia'
            'europe' 'northamerica' 'southamerica'
@@ -20,7 +22,8 @@ package() {
   cd ${srcdir}
   zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo ${timezones[@]}
   zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo/posix ${timezones[@]}
-  #zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo/right -L leap-seconds.list ${timezones[@]}
+  awk -f leapseconds.awk leap-seconds.list > leapseconds && echo "leapseconds file generated"
+  zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo/right -L leapseconds ${timezones[@]}
   zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo -p America/New_York
   install -m444 -t ${pkgdir}/usr/share/zoneinfo iso3166.tab zone.tab
 }
