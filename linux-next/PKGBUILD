@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=3.11
 _srcname=linux-3.11
-pkgver=3.11.1
+pkgver=3.11.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -28,14 +28,14 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch')
 md5sums=('fea363551ff45fbe4cb88497b863b261'
-         '43331cad943b9540afea49ad8ce5cf46'
-         'b2d136816ca6416800b8d50f4164dafe'
-         '92960782cb21c2e39f2f3271a5d06462'
-         '498156cee91b664f3d3fd71637831cb0'
-         'a6176a553dec72197bde60add7fb8a06'
-         'f7f3625cd5816c01b0850b8d52a6ef6d'
-         'adfe151a0a6402455775abcab5ed0257'
-         '6ba8708022b6a7868984a9aa2dd29391'
+         '5aa3286dcc7d70ceb50c3cbc64bc1cd8'
+         '502ab26cb1aa2062954a79f15b2311a0'
+         '9cdf15b96cccd2ef74314bb96198fe8a'
+         '5bdaab0bd3bf0e5ccc58734fee18be2b'
+         '0279d4554c8e7029f72e3cee6c483cd1'
+         'a5a2bced963531da84c8cb2e9edcf2f1'
+         '5154d42a41d6b3ba754617c1ecd702cf'
+         '999b7dbe797045b84b94676b6a02a79e'
          '52f4a2c7f6277774117c834d949d6b81'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a037ffe4a3a934b5d1d730c57ef27ca0')
