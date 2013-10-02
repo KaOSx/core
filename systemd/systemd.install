@@ -24,6 +24,19 @@ post_common() {
   fi
 }
 
+_208_changes() {
+  chown root:systemd-journal var/log/journal
+  chmod 2755 var/log/journal
+
+  if [ -e var/lib/backlight ] && [ ! -e var/lib/systemd/backlight ]; then
+    mv -T var/lib/backlight var/lib/systemd/backlight
+  fi
+
+  if [ -e var/lib/random-seed ] && [ ! -e var/lib/systemd/random-seed ]; then
+    mv -T var/lib/random-seed var/lib/systemd/random-seed
+  fi
+}
+
 post_install() {
   post_common 
 }
@@ -31,19 +44,12 @@ post_install() {
 post_upgrade() {
   post_common
   
-  if [ "$(pacman -Q systemd | cut -d " " -f2 | cut -d "-" -f1)" = "196" ] ; then
-    echo -e '\e[31;46m WARNING'
-    echo -e '\e[31;46m Systemd 197 has moved to persistent network naming, for most users this will have' 
-    echo -e '\e[31;46m no effect.  To check what the new name for your network device will be, run:'
-    echo -e '\e[31;46m hwinfo --network, and look for: Device File: xxxxx, were xxxx is your device.'
-    echo -e '\e[31;46m This will be used in /usr/lib/udev/rules.d/80-net-name-slot.rules '
-    echo -e '\e[31;46m If you use dhcpcd instead of networkmanager to connect, re-enable the service before rebooting'
-    echo -e '\e[31;46m Configuration files like conky.conf will need the new naming scheme too'
-    echo -e '\e[31;46m http://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames \e[0m'
-  fi
-  
   if sd_booted; then
     systemctl restart systemd-logind.service
+  fi
+  
+  if [ "$(vercmp 208-1 "$2")" -eq 1 ]; then
+    _208_changes
   fi
 
 }
