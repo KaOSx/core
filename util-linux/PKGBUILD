@@ -1,7 +1,7 @@
 
 pkgname=util-linux
 pkgver=2.23.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -33,11 +33,11 @@ md5sums=('b39fde897334a4858bb2098edcce5b3f'
          '4368b3f98abd8a32662e094c54e7f9b1'
          'a31374fef2cba0ca34dfc7078e2969e4'
          'fa85e5cce5d723275b14365ba71a8aad'
-         '5f169a4ffe7ed69f58e106cdd2d760df'
+         '6116b8e199a3dfd26a085a67a718435d'
          '477237985820117a0e6e1b13a86eb599'
-         '560c6575b1272508c8818219ce023c10'
+         '7464f86d346b22dd07b433c341a33aab'
          '477237985820117a0e6e1b13a86eb599'
-         '30fe7d41e054ee43fab7855bf88a07e5')
+         '6969307eef026979703a6eba33c2e3eb')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
