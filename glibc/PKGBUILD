@@ -3,21 +3,20 @@
 
 pkgname=glibc
 pkgver=2.17
-pkgrel=1
-_glibcdate=20120419
+pkgrel=2
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="http://www.gnu.org/software/libc"
 license=('GPL' 'LGPL')
 groups=('base')
-depends=('linux-api-headers>=3.7' 'tzdata')
-makedepends=('gcc>=4.7')
+depends=('linux-api-headers>=3.10' 'tzdata')
+makedepends=('gcc>=4.8')
 backup=(etc/gai.conf
         etc/locale.gen
         etc/nscd.conf)
 options=('!strip')
 install=glibc.install
-source=(http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz{,.sig}
+source=(http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz
         glibc-2.17-sync-with-linux37.patch
         glibc-2.17-getaddrinfo-stack-overflow.patch
         glibc-2.17-regexp-matcher-overrun.patch
@@ -27,7 +26,6 @@ source=(http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz{,.sig}
         locale-gen
         glibc.conf)
 md5sums=('87bf675c8ee523ebda4803e8e1cec638'
-         'SKIP'
          'fb99380d94598cc76d793deebf630022'
          '56d5f2c09503a348281a20ae404b7de3'
          '200acc05961b084ee00dde919e64f82d'
@@ -36,15 +34,6 @@ md5sums=('87bf675c8ee523ebda4803e8e1cec638'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
          '8b3298de2392a10905a64ceccf56d2c1')
-
-mksource() {
-    git clone git://sourceware.org/git/glibc.git
-    pushd glibc
-        git checkout -b glibc-${pkgver}-chakra origin/release/${pkgver}/master
-    popd
-    tar -cvJf glibc-${pkgver}_${_glibcdate}.tar.xz glibc/*
-    md5sum glibc-${pkgver}_${_glibcdate}.tar.xz
-}
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
@@ -92,13 +81,12 @@ build() {
   sed -i '2,4d' configparms
 }
 
-#check() {
-  # bug to file - the linker commands need to be reordered
-#  LDFLAGS=${LDFLAGS/--as-needed,/}
+check() {
+  LDFLAGS=${LDFLAGS/--as-needed,/}
 
-#  cd ${srcdir}/glibc-build
-#  make check
-#}
+  cd ${srcdir}/glibc-build
+  make check
+}
 
 package() {
   cd ${srcdir}/glibc-build
