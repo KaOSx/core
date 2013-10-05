@@ -1,7 +1,7 @@
 
 pkgbase=lvm2
 pkgname=('lvm2' 'device-mapper')
-pkgver=2.02.102
+pkgver=2.02.103
 pkgrel=1
 arch=('x86_64')
 url="http://sourceware.org/lvm2/"
@@ -17,8 +17,9 @@ source=("http://mirrors.kernel.org/sources.redhat.com/lvm2/LVM2.${pkgver}.tgz"
         'dmeventd.socket'
         'lvm-monitoring.service'
         'lvmetad.service'
-        'lvmetad.socket')
-md5sums=('cfce545d87abf42ae4c9e0aae704619e'
+        'lvmetad.socket'
+        'sd-lvm2')
+md5sums=('e427e3494aaf86da2d363f344deb3837'
          '8cfc93d5fe9be1cd0a37dd4fbe3cc2ec'
          'b25cfb248e66e0f76e7aafa6715d620a'
          '69e40679cd8b3658bfc619e48baae125'
@@ -27,7 +28,8 @@ md5sums=('cfce545d87abf42ae4c9e0aae704619e'
          '4a48a13247b24146aeca818373d2b401'
          '7ffd0d3d805b17f7cd546f4fe8a340d4'
          'cf69c0a7c658384740f7dcb51398de20'
-         '750f644d104d3a794b564e29cc4e588a')
+         '750f644d104d3a794b564e29cc4e588a'
+         '489d3fca0a379e1d9de7c8265603df1d')
 
 build() {
   cd "${srcdir}/LVM2.${pkgver}"
@@ -75,6 +77,7 @@ package_lvm2() {
   # mkinitcpio hook
   install -D -m644 "${srcdir}/lvm2_hook" "${pkgdir}/usr/lib/initcpio/hooks/lvm2"
   install -D -m644 "${srcdir}/lvm2_install" "${pkgdir}/usr/lib/initcpio/install/lvm2"
+  install -D -m644 "${srcdir}/sd-lvm2" "${pkgdir}/usr/lib/initcpio/install/sd-lvm2"
   # systemd support
   install -D -m644 "${srcdir}/lvm2.conf" "${pkgdir}/usr/lib/tmpfiles.d/lvm2.conf"
   install -D -m644 "${srcdir}/lvm-monitoring.service" "${pkgdir}/usr/lib/systemd/system/lvm-monitoring.service"
