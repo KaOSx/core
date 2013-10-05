@@ -3,7 +3,7 @@
 pkgname=linux-api-headers
 pkgver=3.10.11
 _basever=3.10
-pkgrel=1
+pkgrel=2
 pkgdesc="Kernel headers sanitized for use in userspace"
 arch=('x86_64')
 url="http://www.gnu.org/software/libc"

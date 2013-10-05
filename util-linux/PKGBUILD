@@ -1,7 +1,7 @@
 
 pkgname=util-linux
 pkgver=2.23.2
-pkgrel=2
+pkgrel=3
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
