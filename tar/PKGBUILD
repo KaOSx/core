@@ -1,7 +1,7 @@
 
 pkgname=tar
-pkgver=1.26
-pkgrel=3
+pkgver=1.27
+pkgrel=1
 pkgdesc="Utility used to store, backup, and transport files"
 arch=('x86_64')
 url="http://www.gnu.org/software/tar/tar.html"
@@ -10,16 +10,11 @@ groups=('base')
 depends=('glibc' 'sh')
 options=('!emptydirs')
 install=tar.install
-source=("ftp://ftp.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.bz2"
-        'tar.1')
-md5sums=('2cee42a2ff4f1cd4f9298eeeb2264519'
-         'e97e7343f4e23724b4c48bca2f033e38')
+source=("ftp://ftp.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.bz2")
+md5sums=('74f51434bfb7756bd571a0f718b171ae')
 
 build() {
   cd ${srcdir}/$pkgname-$pkgver
-  
-  # fix build failure with newer glibc
-   sed -i -e '/gets is a/d' gnu/stdio.in.h
   
   ./configure --prefix=/usr --libexecdir=/usr/lib/tar --bindir=/bin
   make 
@@ -35,6 +30,4 @@ package() {
   cd ${srcdir}/$pkgname-$pkgver
   
   make DESTDIR=${pkgdir} install
-  
-  install -D -m644 ../tar.1 ${pkgdir}/usr/share/man/man1/tar.1
 }
