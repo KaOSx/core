@@ -1,7 +1,7 @@
 
 pkgname=systemd
 pkgver=208
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -101,6 +101,10 @@ package() {
   # Make journalctl persistent
   install -dm755 "$pkgdir/var/log/journal"
   sed -i -e 's/#SystemMaxUse=/SystemMaxUse=25M/' ${pkgdir}/etc/systemd/journald.conf
+  
+  # 208 changed permissions for /var/log/journal
+  chown root:systemd-journal "$pkgdir/var/log/journal"
+  chmod 2755 "$pkgdir/var/log/journal"
 }
 
 
