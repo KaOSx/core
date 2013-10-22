@@ -1,7 +1,7 @@
 
 pkgname=filesystem
-pkgver=2013.08
-pkgrel=2
+pkgver=2013.10
+pkgrel=1
 _codename=2013
 pkgdesc='Base filesystem'
 arch=('x86_64')
@@ -19,14 +19,14 @@ source=('group' 'issue' 'nsswitch.conf' 'securetty' 'host.conf' 'ld.so.conf'
         'passwd' 'shadow' 'fstab' 'crypttab' 'hosts' 'hostname' 'motd' 'resolv.conf' 'shells'
         'gshadow' 'profile' 'modprobe.d.usb-load-ehci-first' 'machine-info' 'os-release'
         'vconsole.conf' 'locale.sh')
-md5sums=('3b1d2710d902b222bb345433f35b766a'
+md5sums=('ce1731103d00ef3ed129fc9b8f50ff5f'
          'db5338e17b20e85deaf85a16d30f5d65'
          '13753e4e0964f3652b0cc60a28528bdf'
          '4c4540eeb748bf1f71d631b8c1dcf0b3'
          'f28150d4c0b22a017be51b9f7f9977ed'
          '6e488ffecc8ba142c0cf7e2d7aeb832e'
-         '455b78cada80f40b6f6968f5cbd97a2e'
-         '01249bb0ba4468f95e2cc3a627f5e6e3'
+         '1cfd310dff0804a7d21958487c32a3b1'
+         '2ef2429c2c98d0883906aa6f5363be80'
          'ca716f853860199c1286e7939b2f2666'
          'f477860ae71b9efce9aadf7dfdfec9f3'
          '7bc65f234dfb6abf24e7c3b03e86f4ff'
@@ -34,11 +34,11 @@ md5sums=('3b1d2710d902b222bb345433f35b766a'
          'd41d8cd98f00b204e9800998ecf8427e'
          '6f48288b6fcaf0065fcb7b0e525413e0'
          '22518e922891f9359f971f4f5b4e793c'
-         '677523dbe94b79299aa91b35ed8203b6'
+         'f45389e116ab0b9e9968287617d27c7d'
          'f3b6ae7db8adffaaa4bffc6099dcbd50'
          'a8a962370cd0128465d514e6a1f74130'
          '13d8d253ae8613ba2474683f585e73db'
-         '6e52bb84c297f9ce8c4022eb3dda0375'
+         '7815642c9509f6873c40cfad8556f3cd'
          '201bbb8b4734d2f46afe1e24d7cc6173'
          '45100e8a4a6d8d4b3a7dcd34b0fa4281')
 
