@@ -3,7 +3,7 @@
 
 pkgname=sed
 pkgver=4.2.2
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU stream editor"
 arch=('x86_64')
 url="http://www.gnu.org/software/sed"
@@ -18,10 +18,7 @@ md5sums=('4111de4faa3b9848a0686b2f260c5056')
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
 
-  ./configure --prefix=/usr \
-              --bindir=/bin \
-              --without-included-regex
-
+  ./configure --prefix=/usr 
   make
 }
 
