@@ -1,7 +1,7 @@
 
 pkgname=kmod
 pkgver=15
-pkgrel=1
+pkgrel=2
 pkgdesc="Linux kernel module handling"
 arch=('x86_64')
 url='http://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary'
