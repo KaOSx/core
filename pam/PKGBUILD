@@ -1,6 +1,7 @@
+
 pkgname=pam
 pkgver=1.1.8
-pkgrel=1
+pkgrel=2
 pkgdesc="PAM (Pluggable Authentication Modules) library"
 arch=('x86_64')
 license=('GPL2')
@@ -10,22 +11,25 @@ makedepends=('flex' 'w3m' 'docbook-xml>=4.4' 'docbook-xsl')
 backup=(etc/security/{access.conf,group.conf,limits.conf,namespace.conf,namespace.init,pam_env.conf,time.conf} etc/pam.d/other etc/default/passwd etc/environment)
 source=("https://fedorahosted.org/releases/l/i/linux-pam/Linux-PAM-$pkgver.tar.bz2"
         #http://www.kernel.org/pub/linux/libs/pam/library/Linux-PAM-$pkgver.tar.bz2
-        "ftp://ftp.suse.com/pub/people/kukuk/pam/pam_unix2/pam_unix2-2.6.tar.bz2"
+        "ftp://ftp.suse.com/pub/people/kukuk/pam/pam_unix2/pam_unix2-2.9.1.tar.bz2"
         'other'
         'glibc216.patch')
 options=('!libtool' '!emptydirs')
 md5sums=('35b6091af95981b1b2cd60d813b5e4ee'
-         'e2788389a6c59224110a45fcff30e02b'
+         'da6a46e5f8cd3eaa7cbc4fc3a7e2b555'
          '6e6c8719e5989d976a14610f340bd33a'
          '0b5f56559484af741005db19ecfdd709')
 
 build() {
   cd $srcdir/Linux-PAM-$pkgver
   
-  ./configure --libdir=/usr/lib
+  ./configure \
+        CFLAGS="$CFLAGS -I$srcdir/Linux-PAM-$pkgver/libpam/include/" \
+        LDFLAGS="$LDFLAGS -L$srcdir/Linux-PAM-$pkgver/libpam/.libs/" \
+        --libdir=/usr/lib
   make
 
-  cd $srcdir/pam_unix2-2.6
+  cd $srcdir/pam_unix2-2.9.1
   patch -p1 -i ../glibc216.patch
   
   ./configure --libdir=/usr/lib
@@ -39,7 +43,7 @@ package() {
 
   # build pam_unix2 module
   # source ftp://ftp.suse.com/pub/people/kukuk/pam/pam_unix2
-  cd $srcdir/pam_unix2-2.6
+  cd $srcdir/pam_unix2-2.9.1
   make DESTDIR=$pkgdir install
 
   # add the realtime permissions for audio users
