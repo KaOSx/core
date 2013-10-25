@@ -1,7 +1,7 @@
 
 pkgname=kmod
 pkgver=15
-pkgrel=2
+pkgrel=3
 pkgdesc="Linux kernel module handling"
 arch=('x86_64')
 url='http://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary'
@@ -22,7 +22,6 @@ build() {
   ./configure \
     --sysconfdir=/etc \
     --with-zlib 
-
   make
 }
 
@@ -35,12 +34,12 @@ package() {
 
   # extra directories
   install -dm755 "$pkgdir"/{etc,usr/lib}/{depmod,modprobe}.d "$pkgdir/sbin"
-
+  
   # add symlinks to kmod
   ln -s ../usr/bin/kmod "$pkgdir/sbin/modprobe"
   ln -s ../usr/bin/kmod "$pkgdir/sbin/depmod"
 
-  for tool in {ins,ls,rm}mod mod{probe,info}; do
+  for tool in {ins,ls,rm,dep}mod mod{probe,info}; do
     ln -s kmod "$pkgdir/usr/bin/$tool"
   done
 

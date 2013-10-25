@@ -1,7 +1,7 @@
 
 pkgname=util-linux
 pkgver=2.24
-pkgrel=1
+pkgrel=2
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -85,6 +85,8 @@ package() {
   install -m644 "$srcdir/system-services" "${pkgdir}/etc/pam.d/system-services"
 
   install -Dm644 "$srcdir/uuidd.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/uuidd.conf"
+  # fdisk fix for live-mode, until all moves to /usr
+  ln -s /sbin/fdisk "$pkgdir/usr/bin/fdisk"
 }
 
 
