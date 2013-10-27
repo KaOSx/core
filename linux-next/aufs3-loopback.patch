@@ -209,10 +209,10 @@ index 494982d..b832480 100644
  		if (file->f_mapping != h_file->f_mapping) {
  			file->f_mapping = h_file->f_mapping;
 diff --git a/fs/aufs/loop.c b/fs/aufs/loop.c
-index a5c4e7a..47a220b 100644
+index f4db034..d491e45 100644
 --- a/fs/aufs/loop.c
 +++ b/fs/aufs/loop.c
-@@ -145,3 +145,19 @@ void au_loopback_fin(void)
+@@ -144,3 +144,19 @@ void au_loopback_fin(void)
  	symbol_put(loop_backing_file);
  	kfree(au_warn_loopback_array);
  }
