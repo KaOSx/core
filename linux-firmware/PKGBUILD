@@ -1,6 +1,6 @@
 
 pkgname=linux-firmware
-pkgver=20131004
+pkgver=20131013
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
@@ -44,17 +44,6 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.g
 md5sums=('SKIP'
          'f4e357b09eaf5d8b1f1920cf3493a555'
          'e08665c5c5b66beb9c3b2dd54aa80cb3')
-
-# create tarball: source PKGBUILD && mksource
-
-mksource() {
-	  rm -vRf linux-firmware*
-	  git clone git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
-	  pushd ${pkgname}
-          git archive --format=tar --prefix linux-firmware-$(date +%Y%m%d)/ master | xz -9 > ../linux-firmware-$(date +%Y%m%d).tar.xz
-	  popd
-	  md5sum linux-firmware-$(date +%Y%m%d).tar.xz
-}
 
 package() {
   cd "${srcdir}/${pkgname}"
