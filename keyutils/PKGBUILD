@@ -1,7 +1,7 @@
 
 pkgname=keyutils
-pkgver=1.5.5
-pkgrel=2
+pkgver=1.5.8
+pkgrel=1
 pkgdesc="Linux Key Management Utilities"
 arch=('x86_64')
 url="http://www.kernel.org"
@@ -9,7 +9,7 @@ license=('GPL2' 'LGPL2.1')
 depends=('glibc' 'sh')
 backup=('etc/request-key.conf')
 source=("http://people.redhat.com/~dhowells/$pkgname/$pkgname-$pkgver.tar.bz2")
-md5sums=('d759680b2f23c99af95938f5026f25fb')
+md5sums=('3c7f463039b83833c12a9414c2fcb389')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
