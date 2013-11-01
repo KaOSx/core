@@ -1,17 +1,18 @@
 
 pkgname=efivar
 _pkgname=vathpela-efivar
-_commit=6ec0289
-pkgver=0.6
+_commit=f00ee56
+pkgver=0.7
 pkgrel=1
 pkgdesc="Library to manipulate EFI variables"
 arch=('x86_64')
 url="https://github.com/vathpela/efivar"
 license=('LGPL2.1')
 depends=('popt')
+makedepends=('git')
 options=('zipman' 'docs' '!makeflags')
 source=("https://github.com/vathpela/efivar/tarball/master/efivar-${pkgver}.tar.gz")
-md5sums=('b650459d6e5a0ad3bae4695c6705e7d1')
+md5sums=('399a013cfe4c70afa9880bb6f60484b2')
 
 build() {
 	cd "${srcdir}/${_pkgname}-${_commit}/"
