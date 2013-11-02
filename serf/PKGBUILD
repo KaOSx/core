@@ -1,6 +1,6 @@
 
 pkgname=serf
-pkgver=1.3.1
+pkgver=1.3.2
 pkgrel=1
 pkgdesc="High-performance asynchronous HTTP client library"
 url="http://code.google.com/p/serf/"
@@ -10,7 +10,7 @@ depends=('apr' 'apr-util' 'openssl' 'zlib')
 makedepends=('scons')
 options=('!libtool')
 source=("http://serf.googlecode.com/files/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('da5aca0cad19fd9c19129c3f8f7393dd')
+md5sums=('43ce30fccf39ab0186a7590e2733e3ec')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
