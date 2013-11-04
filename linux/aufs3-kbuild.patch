@@ -1,4 +1,4 @@
-aufs3.10 kbuild patch
+aufs3.11 kbuild patch
 
 diff --git a/fs/Kconfig b/fs/Kconfig
 index c229f82..397b473 100644
@@ -22,7 +22,7 @@ index 4fe6df3..4a57676 100644
  obj-$(CONFIG_EFIVAR_FS)		+= efivarfs/
 +obj-$(CONFIG_AUFS_FS)           += aufs/
 diff --git a/include/uapi/linux/Kbuild b/include/uapi/linux/Kbuild
-index bdc6e87..349600c 100644
+index 997f9f2..ede7bad 100644
 --- a/include/uapi/linux/Kbuild
 +++ b/include/uapi/linux/Kbuild
 @@ -56,6 +56,7 @@ header-y += atmppp.h

@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.10
-pkgver=3.10.11
+_basekernel=3.11
+pkgver=3.11.7
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.10.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.11.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config.x86_64'
@@ -25,18 +25,18 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.10.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         'change-default-console-loglevel.patch')
-md5sums=('4f25cd5bec5f8d5a7d935b3f2ccb8481'
-         '9aadf2325fed53e971fe59bc6c7c3b89'
-         '297bb556b1de83b0748ead7a570cca1f'
-         '92960782cb21c2e39f2f3271a5d06462'
-         '498156cee91b664f3d3fd71637831cb0'
-         'a6176a553dec72197bde60add7fb8a06'
-         'f7f3625cd5816c01b0850b8d52a6ef6d'
-         'adfe151a0a6402455775abcab5ed0257'
-         '6ba8708022b6a7868984a9aa2dd29391'
+md5sums=('fea363551ff45fbe4cb88497b863b261'
+         '42361474ed56948d8f52e72958b2cdf0'
+         '022060f00bf97cac2ca6758231abbac3'
+         '77e6f850e8651a52d930ca62bd4b0753'
+         '5bdaab0bd3bf0e5ccc58734fee18be2b'
+         '0279d4554c8e7029f72e3cee6c483cd1'
+         'a5a2bced963531da84c8cb2e9edcf2f1'
+         '5154d42a41d6b3ba754617c1ecd702cf'
+         '5f4a7b1334f5e40e2711996c2d0414a6'
          '52f4a2c7f6277774117c834d949d6b81'
          'eb14dcfd80c00852ef81ded6e826826a'
-         '65cbe8e4c8efaf96dd162102e46ce81d')
+         '98beb36f9b8cf16e58de2483ea9985e3')
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
