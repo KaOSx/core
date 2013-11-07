@@ -6,7 +6,7 @@ _grub_915_ver=9
 pkgname=('grub-common' 'grub-bios' 'grub-efi')
 pkgbase=grub
 pkgver=2.00
-pkgrel=5
+pkgrel=6
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
 license=('GPL3')
@@ -201,6 +201,10 @@ package_grub-common() {
 
 	# remove platform specific files
 	rm -rf "${pkgdir}/usr/lib/grub/i386-pc/"
+	
+	# fix boot error message "error: file `/grub/locale/en.mo.gz` not found"
+	mkdir -p "${pkgdir}/boot/grub/locale"
+	cp "${pkgdir}/usr/share/locale/en@quot/LC_MESSAGES/grub.mo" "${pkgdir}/boot/grub/locale/en.mo"
 
 }
 
