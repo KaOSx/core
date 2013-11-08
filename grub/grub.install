@@ -1,5 +1,5 @@
 infodir="usr/share/info"
-filelist=('grub.info' 'grub-dev.info')
+filelist=('grub.info')
 
 post_install() {
   if [ -f /boot/grub/grub.cfg.pacsave ]; then
