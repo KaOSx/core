@@ -1,6 +1,6 @@
 
 pkgname=python2
-pkgver=2.7.5
+pkgver=2.7.6
 pkgrel=1
 _pybasever=2.7
 pkgdesc="A high-level scripting language"
@@ -12,8 +12,8 @@ makedepends=('tk')
 provides=('python' 'python-elementtree' 'python-ctypes')
 replaces=('python-elementtree' 'python-ctypes' 'python')
 conflicts=('python')
-source=("http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.bz2")
-md5sums=('6334b666b7ff2038c761d7b27ba699c1')
+source=("http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz")
+md5sums=('bcf93efa8eaf383c98ed3ce40b763497')
 
 build() {
   cd "${srcdir}/Python-${pkgver}"
