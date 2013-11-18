@@ -1,6 +1,6 @@
 
 pkgname=krb5
-pkgver=1.11.3
+pkgver=1.11.4
 pkgrel=1
 pkgdesc="The Kerberos network authentication system"
 arch=('x86_64')
@@ -8,6 +8,7 @@ url="http://web.mit.edu/kerberos/"
 license=('custom')
 depends=('e2fsprogs' 'libldap' 'keyutils')
 makedepends=('perl')
+options=('!emptydirs')
 backup=('etc/krb5.conf' 'var/lib/krb5kdc/kdc.conf')
 source=("http://web.mit.edu/kerberos/dist/${pkgname}/1.11/${pkgname}-${pkgver}-signed.tar"
         'krb5-config_LDFLAGS.patch'
@@ -16,22 +17,20 @@ source=("http://web.mit.edu/kerberos/dist/${pkgname}/1.11/${pkgname}-${pkgver}-s
 	'krb5-kpropd.service'
 	'krb5-kpropd@.service'
 	'krb5-kpropd.socket')
-md5sums=('56f0ae274b285320b8a597cb89442449'
+md5sums=('138628ae154ff449bc41602c8de78e8b'
          '656e242de9b5ada1edf398983db51eef'
          'd2c898d376ebe5c62b873da7cab0f7e7'
          'f0245d33083337f95654f4caf1d32f57'
          '3dddf2f79ef74c4e736711e41228ee91'
          'babefac221331f7131a29faac33cc5bc'
          '5b9cee689e4f8085d39ef4e05f1ddd9a')
-options=('!emptydirs')
+
 
 build() {
-   tar zxvf ${pkgname}-${pkgver}.tar.gz
+   tar xf ${pkgname}-${pkgver}.tar.gz
    cd "${srcdir}/${pkgname}-${pkgver}/src"
    
    patch -p2 -i "${srcdir}"/krb5-config_LDFLAGS.patch
-   
-   rm lib/krb5/krb/deltat.c
 
    sed -i "/KRB5ROOT=/s/\/local//" util/ac_check_krb5.m4
 
@@ -39,7 +38,6 @@ build() {
    export CPPFLAGS+=" -I/usr/include/et"
    ./configure --prefix=/usr \
                --sysconfdir=/etc \
-               --mandir=/usr/share/man \
                --localstatedir=/var/lib \
                --enable-shared \
                --with-system-et \
