@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=3.12
 _srcname=linux-3.12
-pkgver=3.12.0
+pkgver=3.12.1
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -28,7 +28,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch')
 md5sums=('cc6ee608854e0da4b64f6c1ff8b6398c'
-         'c63b8f181a680819984726622ae6b2ca'
+         'e4c84bef155713e313a1f21bbf9bec56'
          '77e6f850e8651a52d930ca62bd4b0753'
          '5bdaab0bd3bf0e5ccc58734fee18be2b'
          '0279d4554c8e7029f72e3cee6c483cd1'
