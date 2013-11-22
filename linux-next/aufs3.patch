@@ -1,5 +1,5 @@
 --- /dev/null
-+++ linux-3.11/Documentation/ABI/testing/debugfs-aufs	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/Documentation/ABI/testing/debugfs-aufs	2013-11-22 16:59:50.806892934 -0500
 @@ -0,0 +1,50 @@
 +What:		/debug/aufs/si_<id>/
 +Date:		March 2009
@@ -52,7 +52,7 @@
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
 --- /dev/null
-+++ linux-3.11/Documentation/ABI/testing/sysfs-aufs	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/Documentation/ABI/testing/sysfs-aufs	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,31 @@
 +What:		/sys/fs/aufs/si_<id>/
 +Date:		March 2009
@@ -86,7 +86,7 @@
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
 --- /dev/null
-+++ linux-3.11/Documentation/filesystems/aufs/design/01intro.txt	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/Documentation/filesystems/aufs/design/01intro.txt	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,162 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -251,7 +251,7 @@
 +helper, instead of doing in kernel space. Actually I am still thinking
 +about it. But currently I have implemented it in kernel space.
 --- /dev/null
-+++ linux-3.11/Documentation/filesystems/aufs/design/02struct.txt	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/Documentation/filesystems/aufs/design/02struct.txt	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,243 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -497,7 +497,7 @@
 +
 +For this purpose, use "aumvdown" command in aufs-util.git.
 --- /dev/null
-+++ linux-3.11/Documentation/filesystems/aufs/design/03lookup.txt	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/Documentation/filesystems/aufs/design/03lookup.txt	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,106 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -606,7 +606,7 @@
 +   aufs performance when system surely hide the aufs branches from user,
 +   by over-mounting something (or another method).
 --- /dev/null
-+++ linux-3.11/Documentation/filesystems/aufs/design/04branch.txt	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/Documentation/filesystems/aufs/design/04branch.txt	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,76 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -685,7 +685,7 @@
 +  - a regular file on the branch is opened for write and there is no
 +    same named entry on the upper branch.
 --- /dev/null
-+++ linux-3.11/Documentation/filesystems/aufs/design/05wbr_policy.txt	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/Documentation/filesystems/aufs/design/05wbr_policy.txt	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,65 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -753,7 +753,7 @@
 +  one. If the selected branch is readonly, then aufs follows the
 +  copyup policy.
 --- /dev/null
-+++ linux-3.11/Documentation/filesystems/aufs/design/06mmap.txt	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/Documentation/filesystems/aufs/design/06mmap.txt	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,47 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -803,7 +803,7 @@
 +approach, aufs met a hard problem and I could not solve it without
 +switching the approach.
 --- /dev/null
-+++ linux-3.11/Documentation/filesystems/aufs/design/07export.txt	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/Documentation/filesystems/aufs/design/07export.txt	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,59 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -865,7 +865,7 @@
 +- readdir(): call lockdep_on/off() because filldir in NFSD calls
 +  lookup_one_len(), vfs_getattr(), encode_fh() and others.
 --- /dev/null
-+++ linux-3.11/Documentation/filesystems/aufs/design/08shwh.txt	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/Documentation/filesystems/aufs/design/08shwh.txt	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,53 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -921,7 +921,7 @@
 +This new squashfs archive can be stored on the boot device and the
 +initramfs will use it to replace the old one at the next boot.
 --- /dev/null
-+++ linux-3.11/Documentation/filesystems/aufs/design/10dynop.txt	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/Documentation/filesystems/aufs/design/10dynop.txt	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,47 @@
 +
 +# Copyright (C) 2010-2013 Junjiro R. Okajima
@@ -971,7 +971,7 @@
 +Currently this approach is applied to file_operations and
 +vm_operations_struct for regular files only.
 --- /dev/null
-+++ linux-3.11/Documentation/filesystems/aufs/design/99plan.txt	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/Documentation/filesystems/aufs/design/99plan.txt	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,96 @@
 +
 +# Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -1070,8 +1070,8 @@
 +/new.
 +Otherwise from /new.
 --- /dev/null
-+++ linux-3.11/Documentation/filesystems/aufs/README	2013-10-26 20:08:29.095789478 -0400
-@@ -0,0 +1,347 @@
++++ linux-3.12/Documentation/filesystems/aufs/README	2013-11-22 16:59:50.810226355 -0500
+@@ -0,0 +1,344 @@
 +
 +Aufs3 -- advanced multi layered unification filesystem version 3.x
 +http://aufs.sf.net
@@ -1242,9 +1242,7 @@
 +1.
 +- apply ./aufs3-kbuild.patch to your kernel source files.
 +- apply ./aufs3-base.patch too.
-+- apply ./aufs3-proc_map.patch too, if you want to make /proc/PID/maps (and
-+  others including lsof(1)) show the file path on aufs instead of the
-+  path on the branch fs.
++- apply ./aufs3-mmap.patch too.
 +- apply ./aufs3-standalone.patch too, if you have a plan to set
 +  CONFIG_AUFS_FS=m. otherwise you don't need ./aufs3-standalone.patch.
 +- copy ./{Documentation,fs,include/uapi/linux/aufs_type.h} files to your
@@ -1264,9 +1262,7 @@
 +2.
 +- module only (CONFIG_AUFS_FS=m).
 +- apply ./aufs3-base.patch to your kernel source files.
-+- apply ./aufs3-proc_map.patch too to your kernel source files,
-+  if you want to make /proc/PID/maps (and others including lsof(1)) show
-+  the file path on aufs instead of the path on the branch fs.
++- apply ./aufs3-mmap.patch too.
 +- apply ./aufs3-standalone.patch too.
 +- build your kernel, don't forget "make headers_install", and reboot.
 +- edit ./config.mk and set other aufs configurations if necessary.
@@ -1402,6 +1398,7 @@
 +lauri kasvandik made a donation (2013/5).
 +"pemasu from Finland" made a donation (2013/7).
 +The Parted Magic Project made a donation (2013/9).
++Pavel Barta made a donation (2013/10).
 +
 +Thank you very much.
 +Donations are always, including future donations, very important and
@@ -1420,7 +1417,7 @@
 +# mode: text;
 +# End: ;
 --- /dev/null
-+++ linux-3.11/fs/aufs/aufs.h	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/fs/aufs/aufs.h	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,60 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -1483,7 +1480,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/branch.c	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/fs/aufs/branch.c	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,1212 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -1852,7 +1849,7 @@
 +
 +	/*
 +	 * a limit for rmdir/rename a dir
-+	 * cf. AUFS_MAX_NAMELEN in include/linux/aufs_type.h
++	 * cf. AUFS_MAX_NAMELEN in include/uapi/linux/aufs_type.h
 +	 */
 +	err = vfs_statfs(&br->br_path, &kst);
 +	if (unlikely(err))
@@ -2698,7 +2695,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/branch.h	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/fs/aufs/branch.h	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,265 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -2966,8 +2963,8 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_BRANCH_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/conf.mk	2013-10-26 20:08:29.095789478 -0400
-@@ -0,0 +1,38 @@
++++ linux-3.12/fs/aufs/conf.mk	2013-11-22 16:59:50.810226355 -0500
+@@ -0,0 +1,37 @@
 +
 +AuConfStr = CONFIG_AUFS_FS=${CONFIG_AUFS_FS}
 +
@@ -2982,7 +2979,6 @@
 +	HNOTIFY HFSNOTIFY \
 +	EXPORT INO_T_64 \
 +	RDU \
-+	PROC_MAP \
 +	SP_IATTR \
 +	SHWH \
 +	BR_RAMFS \
@@ -3007,7 +3003,7 @@
 +
 +-include ${srctree}/${src}/conf_priv.mk
 --- /dev/null
-+++ linux-3.11/fs/aufs/cpup.c	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/fs/aufs/cpup.c	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,1268 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -4278,7 +4274,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/cpup.h	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/fs/aufs/cpup.h	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,95 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -4376,7 +4372,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_CPUP_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/dbgaufs.c	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/fs/aufs/dbgaufs.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,433 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -4812,7 +4808,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/dbgaufs.h	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/fs/aufs/dbgaufs.h	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,49 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -4864,7 +4860,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __DBGAUFS_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/dcsub.c	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/fs/aufs/dcsub.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,243 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -5110,7 +5106,7 @@
 +	return path_is_under(path + 0, path + 1);
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/dcsub.h	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/fs/aufs/dcsub.h	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,94 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -5207,7 +5203,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DCSUB_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/debug.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/debug.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,518 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -5728,7 +5724,7 @@
 +	return 0;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/debug.h	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/debug.h	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,249 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -5980,7 +5976,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DEBUG_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/dentry.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/dentry.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,1065 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -7048,7 +7044,7 @@
 +	.d_release		= aufs_d_release
 +};
 --- /dev/null
-+++ linux-3.11/fs/aufs/dentry.h	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/dentry.h	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,234 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -7285,7 +7281,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DENTRY_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/dinfo.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/dinfo.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,543 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -7831,7 +7827,7 @@
 +	return -1;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/dir.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/dir.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,645 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -8479,7 +8475,7 @@
 +	.fsync		= aufs_fsync_dir
 +};
 --- /dev/null
-+++ linux-3.11/fs/aufs/dir.h	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/dir.h	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,137 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -8619,7 +8615,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIR_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/dynop.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/dynop.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,380 @@
 +/*
 + * Copyright (C) 2010-2013 Junjiro R. Okajima
@@ -9002,7 +8998,7 @@
 +		WARN_ON(!list_empty(&dynop[i].head));
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/dynop.h	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/dynop.h	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,76 @@
 +/*
 + * Copyright (C) 2010-2013 Junjiro R. Okajima
@@ -9081,7 +9077,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DYNOP_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/export.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/export.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,832 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -9916,7 +9912,7 @@
 +	atomic_set(&sbinfo->si_xigen_next, u);
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/file.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/file.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,725 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -10644,8 +10640,8 @@
 +#endif /* CONFIG_AUFS_DEBUG */
 +};
 --- /dev/null
-+++ linux-3.11/fs/aufs/file.h	2013-10-26 20:08:29.099122900 -0400
-@@ -0,0 +1,312 @@
++++ linux-3.12/fs/aufs/file.h	2013-11-22 16:59:50.813559775 -0500
+@@ -0,0 +1,310 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
 + *
@@ -10946,20 +10942,18 @@
 +static inline void au_vm_prfile_set(struct vm_area_struct *vma,
 +				    struct file *file)
 +{
-+#ifdef CONFIG_AUFS_PROC_MAP
 +	get_file(file);
 +	vma->vm_prfile = file;
 +#ifndef CONFIG_MMU
 +	get_file(file);
 +	vma->vm_region->vm_prfile = file;
 +#endif
-+#endif
 +}
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FILE_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/finfo.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/finfo.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,157 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -11119,8 +11113,8 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/f_op.c	2013-10-26 20:08:29.099122900 -0400
-@@ -0,0 +1,721 @@
++++ linux-3.12/fs/aufs/f_op.c	2013-11-22 16:59:50.813559775 -0500
+@@ -0,0 +1,726 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
 + *
@@ -11175,6 +11169,11 @@
 +		au_set_fbstart(file, bindex);
 +		au_set_h_fptr(file, bindex, h_file);
 +		au_update_figen(file);
++		if (!(file->f_mode & FMODE_WRITE)) {
++			lg_local_lock(&files_lglock);
++			__file_sb_list_add(file, dentry->d_sb);
++			lg_local_unlock(&files_lglock);
++		}
 +		/* todo: necessary? */
 +		/* file->f_ra = h_file->f_ra; */
 +	}
@@ -11843,7 +11842,7 @@
 +#endif
 +};
 --- /dev/null
-+++ linux-3.11/fs/aufs/f_op_sp.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/f_op_sp.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,383 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -12229,7 +12228,7 @@
 +	return ret;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/fstype.h	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/fstype.h	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,470 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -12702,7 +12701,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FSTYPE_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/hfsnotify.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/hfsnotify.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,296 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -13001,7 +13000,7 @@
 +	.init_br	= au_hfsn_init_br
 +};
 --- /dev/null
-+++ linux-3.11/fs/aufs/hfsplus.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/hfsplus.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,57 @@
 +/*
 + * Copyright (C) 2010-2013 Junjiro R. Okajima
@@ -13061,7 +13060,7 @@
 +	}
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/hnotify.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/hnotify.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,712 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -13776,7 +13775,7 @@
 +		au_hn_destroy_cache();
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/iinfo.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/iinfo.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,276 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -14055,7 +14054,7 @@
 +	AuRwDestroy(&iinfo->ii_rwsem);
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/inode.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/inode.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,492 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -14550,7 +14549,7 @@
 +	return au_test_h_perm(h_inode, mask);
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/inode.h	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/inode.h	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,600 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -15153,7 +15152,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_INODE_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/ioctl.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/ioctl.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,202 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -15358,7 +15357,7 @@
 +}
 +#endif
 --- /dev/null
-+++ linux-3.11/fs/aufs/i_op_add.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/i_op_add.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,739 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -16100,7 +16099,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/i_op.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/i_op.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,1118 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -17221,7 +17220,7 @@
 +	.update_time	= aufs_update_time
 +};
 --- /dev/null
-+++ linux-3.11/fs/aufs/i_op_del.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/i_op_del.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,502 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -17726,7 +17725,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/i_op_ren.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/i_op_ren.c	2013-11-22 16:59:50.813559775 -0500
 @@ -0,0 +1,1009 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -18738,8 +18737,8 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/Kconfig	2013-10-26 20:08:29.095789478 -0400
-@@ -0,0 +1,202 @@
++++ linux-3.12/fs/aufs/Kconfig	2013-11-22 16:59:50.810226355 -0500
+@@ -0,0 +1,179 @@
 +config AUFS_FS
 +	tristate "Aufs (Advanced multi layered unification filesystem) support"
 +	help
@@ -18841,29 +18840,6 @@
 +	shows better performance in most cases.
 +	See detail in aufs.5.
 +
-+config AUFS_PROC_MAP
-+	bool "support for /proc/maps and lsof(1)"
-+	depends on PROC_FS
-+	help
-+	When you issue mmap(2) in aufs, it is actually a direct mmap(2)
-+	call to the file on the branch fs since the file in aufs is
-+	purely virtual. And the file path printed in /proc/maps (and
-+	others) will be the path on the branch fs. In most cases, it
-+	does no harm. But some utilities like lsof(1) may confuse since
-+	the utility or user may expect the file path in aufs to be
-+	printed.
-+	To address this issue, aufs provides a patch which introduces a
-+	new member called vm_prfile into struct vm_are_struct. The patch
-+	is meaningless without enabling this configuration since nobody
-+	sets the new vm_prfile member.
-+	If you don't apply the patch, then enabling this configuration
-+	will cause a compile error.
-+	This approach is fragile since if someone else make some changes
-+	around vm_file, then vm_prfile may not work anymore. As a
-+	workaround such case, aufs provides this configuration. If you
-+	disable it, then lsof(1) may produce incorrect result but the
-+	problem will be gone even if the aufs patch is applied (I hope).
-+
 +config AUFS_SP_IATTR
 +	bool "Respect the attributes (mtime/ctime mainly) of special files"
 +	help
@@ -18943,7 +18919,7 @@
 +	When aufs supports Magic SysRq, enabled automatically.
 +endif
 --- /dev/null
-+++ linux-3.11/fs/aufs/loop.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/loop.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,146 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -19092,7 +19068,7 @@
 +	kfree(au_warn_loopback_array);
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/loop.h	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/loop.h	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,53 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -19148,7 +19124,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LOOP_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/magic.mk	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/magic.mk	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,54 @@
 +
 +# defined in ${srctree}/fs/fuse/inode.c
@@ -19205,7 +19181,7 @@
 +ccflags-y += -DHFSPLUS_SUPER_MAGIC=0x482b
 +endif
 --- /dev/null
-+++ linux-3.11/fs/aufs/Makefile	2013-10-26 20:08:29.095789478 -0400
++++ linux-3.12/fs/aufs/Makefile	2013-11-22 16:59:50.810226355 -0500
 @@ -0,0 +1,42 @@
 +
 +include ${src}/magic.mk
@@ -19219,9 +19195,9 @@
 +ccflags-y += -DDEBUG
 +# sparse requires the full pathname
 +ifdef M
-+ccflags-y += -include ${M}/../../include/linux/aufs_type.h
++ccflags-y += -include ${M}/../../include/uapi/linux/aufs_type.h
 +else
-+ccflags-y += -include ${srctree}/include/linux/aufs_type.h
++ccflags-y += -include ${srctree}/include/uapi/linux/aufs_type.h
 +endif
 +
 +obj-$(CONFIG_AUFS_FS) += aufs.o
@@ -19250,7 +19226,7 @@
 +aufs-$(CONFIG_AUFS_DEBUG) += debug.o
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
 --- /dev/null
-+++ linux-3.11/fs/aufs/module.c	2013-10-26 20:08:29.099122900 -0400
++++ linux-3.12/fs/aufs/module.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,203 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -19456,7 +19432,7 @@
 +module_init(aufs_init);
 +module_exit(aufs_exit);
 --- /dev/null
-+++ linux-3.11/fs/aufs/module.h	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/module.h	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,105 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -19564,7 +19540,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_MODULE_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/mvdown.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/mvdown.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,610 @@
 +/*
 + * Copyright (C) 2011-2013 Junjiro R. Okajima
@@ -20177,7 +20153,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/opts.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/opts.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,1704 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -21884,7 +21860,7 @@
 +	return au_mntflags(sb) & AuOptMask_UDBA;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/opts.h	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/opts.h	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,211 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -22098,7 +22074,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_OPTS_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/plink.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/plink.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,520 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -22621,7 +22597,7 @@
 +	}
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/poll.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/poll.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,56 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -22680,7 +22656,7 @@
 +	return mask;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/procfs.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/procfs.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,170 @@
 +/*
 + * Copyright (C) 2010-2013 Junjiro R. Okajima
@@ -22853,7 +22829,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/rdu.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/rdu.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,389 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -23245,7 +23221,7 @@
 +}
 +#endif
 --- /dev/null
-+++ linux-3.11/fs/aufs/rwsem.h	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/rwsem.h	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,188 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -23436,7 +23412,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_RWSEM_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/sbinfo.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/sbinfo.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,350 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -23789,7 +23765,7 @@
 +	spin_unlock(&sbinfo->au_si_pid.tree_lock);
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/spl.h	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/spl.h	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,112 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -23904,7 +23880,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SPL_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/super.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/super.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,1002 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -24909,7 +24885,7 @@
 +	.owner		= THIS_MODULE,
 +};
 --- /dev/null
-+++ linux-3.11/fs/aufs/super.h	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/super.h	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,568 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -25480,7 +25456,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SUPER_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/sysaufs.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/sysaufs.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,105 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -25588,7 +25564,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/sysaufs.h	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/sysaufs.h	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,104 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -25695,7 +25671,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __SYSAUFS_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/sysfs.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/sysfs.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,297 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -25995,7 +25971,7 @@
 +	}
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/sysrq.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/sysrq.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,151 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -26149,7 +26125,7 @@
 +		pr_err("err %d (ignored)\n", err);
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/vdir.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/vdir.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,888 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -27040,7 +27016,7 @@
 +	return 0;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/vfsub.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/vfsub.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,772 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -27815,8 +27791,8 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/vfsub.h	2013-10-26 20:08:29.102456321 -0400
-@@ -0,0 +1,311 @@
++++ linux-3.12/fs/aufs/vfsub.h	2013-11-22 16:59:50.816893195 -0500
+@@ -0,0 +1,312 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
 + *
@@ -27854,6 +27830,7 @@
 +extern struct lglock vfsmount_lock;
 +extern void __mnt_drop_write(struct vfsmount *);
 +extern spinlock_t inode_sb_list_lock;
++void __file_sb_list_add(struct file *file, struct super_block *sb);
 +
 +/* copied from linux/fs/file_table.c */
 +extern struct lglock files_lglock;
@@ -28129,7 +28106,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_VFSUB_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/wbr_policy.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/wbr_policy.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,756 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -28888,7 +28865,7 @@
 +	}
 +};
 --- /dev/null
-+++ linux-3.11/fs/aufs/whout.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/whout.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,1022 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -29913,7 +29890,7 @@
 +	}
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/whout.h	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/whout.h	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,87 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -30003,7 +29980,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WHOUT_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/wkq.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/wkq.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,213 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -30219,7 +30196,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/fs/aufs/wkq.h	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/wkq.h	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,92 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -30314,7 +30291,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WKQ_H__ */
 --- /dev/null
-+++ linux-3.11/fs/aufs/xino.c	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/fs/aufs/xino.c	2013-11-22 16:59:50.816893195 -0500
 @@ -0,0 +1,1312 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -31629,29 +31606,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.11/include/linux/aufs_type.h	2013-10-26 20:08:29.102456321 -0400
-@@ -0,0 +1,19 @@
-+/*
-+ * Copyright (C) 2012-2013 Junjiro R. Okajima
-+ *
-+ * This program, aufs is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License as published by
-+ * the Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, write to the Free Software
-+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-+ */
-+
-+#include <uapi/linux/aufs_type.h>
---- /dev/null
-+++ linux-3.11/include/uapi/linux/aufs_type.h	2013-10-26 20:08:29.102456321 -0400
++++ linux-3.12/include/uapi/linux/aufs_type.h	2013-11-22 16:59:50.820226616 -0500
 @@ -0,0 +1,282 @@
 +/*
 + * Copyright (C) 2005-2013 Junjiro R. Okajima
@@ -31695,7 +31650,7 @@
 +
 +#include <linux/limits.h>
 +
-+#define AUFS_VERSION	"3.11-20131014"
++#define AUFS_VERSION	"3.12-20131111"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
