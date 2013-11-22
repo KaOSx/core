@@ -1,6 +1,6 @@
 
 pkgname=iptables
-pkgver=1.4.20
+pkgver=1.4.21
 pkgrel=1
 pkgdesc="A Linux kernel packet control tool"
 arch=('x86_64')
@@ -21,7 +21,7 @@ source=("http://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.t
         'iptables.service'
         'ip6tables.service'
         'iptables-flush')
-md5sums=('387b92d3efcf4f07fe31c3bf0f1d18f5'
+md5sums=('536d048c8e8eeebcd9757d0863ebb0c0'
          '14186bbafe21bb0638c0cb8e0903c829'
          '88fe330e810bb89b3aa08747bae3e3f9'
          '3ae6e25f397195611bab943945ff31ee'
@@ -40,7 +40,7 @@ build() {
   # use system one
   rm include/linux/types.h
 
-  patch -p1 -i ${srcdir}/0503-extension_cppflags.patch
+  #patch -p1 -i ${srcdir}/0503-extension_cppflags.patch
 
  ./configure --prefix=/usr \
      --libexecdir=/usr/lib/iptables \
