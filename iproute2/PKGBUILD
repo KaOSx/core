@@ -1,6 +1,6 @@
 
 pkgname=iproute2
-pkgver=3.11.0
+pkgver=3.12.0
 pkgrel=1
 pkgdesc="IP Routing Utilities"
 arch=('x86_64')
@@ -13,7 +13,7 @@ backup=('etc/iproute2/ematch_map' 'etc/iproute2/rt_dsfield' 'etc/iproute2/rt_pro
 	'etc/iproute2/rt_realms' 'etc/iproute2/rt_scopes' 'etc/iproute2/rt_tables')
 source=("http://www.kernel.org/pub/linux/utils/net/$pkgname/$pkgname-$pkgver.tar.xz"
 	'iproute2-fhs.patch')
-md5sums=('d7ffb27bc9f0d80577b1f3fb9d1a7689'
+md5sums=('f87386aaaecafab95607fd10e8152c68'
          '034959fc89919633ee8542b9ab3d0e3c')
 
 prepare() {
