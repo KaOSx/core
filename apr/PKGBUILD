@@ -1,6 +1,6 @@
 
 pkgname=apr
-pkgver=1.4.8
+pkgver=1.5.0
 pkgrel=1
 pkgdesc="The Apache Portable Runtime"
 arch=('x86_64')
@@ -9,7 +9,7 @@ depends=('util-linux')
 options=('!libtool')
 license=('APACHE')
 source=("http://www.apache.org/dist/apr/apr-${pkgver}.tar.bz2")
-md5sums=('ce2ab01a0c3cdb71cf0a6326b8654f41')
+md5sums=('cc93bd2c12d0d037f68e21cc6385dc31')
 
 build() {
   cd "${srcdir}/apr-${pkgver}"

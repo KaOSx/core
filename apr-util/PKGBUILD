@@ -1,7 +1,7 @@
 
 pkgname=apr-util
-pkgver=1.5.2
-pkgrel=2
+pkgver=1.5.3
+pkgrel=1
 pkgdesc="The Apache Portable Runtime"
 arch=('x86_64')
 url="http://apr.apache.org/"
@@ -9,7 +9,7 @@ depends=('apr' 'gdbm' 'expat' 'db' 'libldap' 'unixodbc')
 options=('!libtool')
 license=('APACHE')
 source=("http://www.apache.org/dist/apr/apr-util-${pkgver}.tar.bz2")
-md5sums=('89c1348aa79e898d7c34a6206311c9c2')
+md5sums=('6f3417691c7a27090f36e7cf4d94b36e')
 
 build() {
   cd "${srcdir}/apr-util-${pkgver}"

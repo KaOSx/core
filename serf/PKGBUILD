@@ -1,7 +1,7 @@
 
 pkgname=serf
 pkgver=1.3.2
-pkgrel=1
+pkgrel=2
 pkgdesc="High-performance asynchronous HTTP client library"
 url="http://code.google.com/p/serf/"
 arch=('x86_64')
