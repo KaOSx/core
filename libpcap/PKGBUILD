@@ -1,6 +1,6 @@
 
 pkgname=libpcap
-pkgver=1.4.0
+pkgver=1.5.1
 pkgrel=1
 pkgdesc="A system-independent interface for user-level packet capture"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('BSD')
 depends=('glibc' 'libnl' 'sh' 'libusbx')
 makedepends=('flex')
 source=("http://www.tcpdump.org/release/libpcap-${pkgver}.tar.gz")
-md5sums=('56e88a5aabdd1e04414985ac24f7e76c')
+md5sums=('b51f0c611b1e21b73f9ba120023bf972')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
