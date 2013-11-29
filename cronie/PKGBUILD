@@ -1,6 +1,6 @@
 
 pkgname='cronie'
-pkgver=1.4.9
+pkgver=1.4.11
 pkgrel=1
 pkgdesc='Daemon that runs specified programs at scheduled times and related tools'
 url='https://fedorahosted.org/cronie/'
@@ -20,7 +20,7 @@ source=("https://fedorahosted.org/releases/c/r/${pkgname}/${pkgname}-${pkgver}.t
         'cron.deny'
 	'service'
         'pam.d')
-md5sums=('9133195e5e6f824ef460f5ccc533f1b7'
+md5sums=('2ba645cf54de17f138ef70312843862f'
          '2962d9812fbbbdee1bd7f1c1ccb5e372'
          'b4e1316eaa8f3806f20bad21a5101caa'
          'ace2584e5467371e35acf5f5af8f3c29')
