@@ -4,8 +4,8 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=3.12
 _srcname=linux-3.12
-pkgver=3.12.1
-pkgrel=2
+pkgver=3.12.2
+pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -28,14 +28,14 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch')
 md5sums=('cc6ee608854e0da4b64f6c1ff8b6398c'
-         '5a8cb5a659baeeb6df3fe22de8d32df6'
-         'e4c84bef155713e313a1f21bbf9bec56'
-         '77e6f850e8651a52d930ca62bd4b0753'
-         '5bdaab0bd3bf0e5ccc58734fee18be2b'
-         '0279d4554c8e7029f72e3cee6c483cd1'
-         'a5a2bced963531da84c8cb2e9edcf2f1'
-         '5154d42a41d6b3ba754617c1ecd702cf'
-         '5f4a7b1334f5e40e2711996c2d0414a6'
+         '97453b56d6a999b5a4b0899b4e28fabe'
+         'ecaf674a0dd3aa15cf85e0949fec99e3'
+         '0d0e78327ab3a51cd991570e0623ee8d'
+         '3c1e2bfded7e0ff5772902a1ccc25995'
+         'e3532ac7a671d23a63e1db0c446e14f4'
+         'f9efcdfe604a4fb61ad54a398857926d'
+         'ac36fee8d9a7c089c465f7cbd39dcf6b'
+         'ec3a27c3030473690262942960021f80'
          '52f4a2c7f6277774117c834d949d6b81'
          '7b2ca9cdb5555219f793b5a807b05870'
          '98beb36f9b8cf16e58de2483ea9985e3')
