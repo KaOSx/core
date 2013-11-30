@@ -1,7 +1,7 @@
 
 pkgname=wireless-regdb
-pkgver=2013.02.13
-pkgrel=2
+pkgver=2013.11.27
+pkgrel=1
 pkgdesc="Central Regulatory Domain Database"
 arch=('x86_64')
 url="http://wireless.kernel.org/en/developers/Regulatory/CRDA"
@@ -12,7 +12,7 @@ makedepends=('crda')
 install=wireless-regdb.install
 source=("https://www.kernel.org/pub/software/network/${pkgname}/${pkgname}-${pkgver}.tar.xz"
         'crda.conf.d')
-md5sums=('46a4aa49282ea6713c3cf28cc2fc600f'
+md5sums=('5d00474713f4d3d287b0ca19860a83e8'
          '2374dcf1c6530332f375e5362b80169b')
 
 package() {
@@ -42,5 +42,5 @@ package() {
   sort -u ${pkgdir}/etc/conf.d/wireless-regdom.tmp >> ${pkgdir}/etc/conf.d/wireless-regdom
   rm -f ${pkgdir}/etc/conf.d/wireless-regdom.tmp
 
-  install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -D -m644 ${srcdir}/${pkgname}-${pkgver}/LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }
