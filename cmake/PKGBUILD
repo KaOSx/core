@@ -1,6 +1,6 @@
 pkgname=cmake
 pkgver=2.8.12.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A cross-platform open-source make system"
 arch=('x86_64')
 license=('custom')
@@ -8,11 +8,14 @@ url="http://www.cmake.org"
 depends=('curl' 'libarchive' 'shared-mime-info')
 makedepends=('qt')
 install=${pkgname}.install
-source=("http://www.cmake.org/files/v2.8/${pkgname}-${pkgver}.tar.gz")
-md5sums=('9d38cd4e2c94c3cea97d0e2924814acc')
+source=("http://www.cmake.org/files/v2.8/${pkgname}-${pkgver}.tar.gz"
+        'freetype2.patch')
+md5sums=('9d38cd4e2c94c3cea97d0e2924814acc'
+         '90321de1d9d46cd8d6609d0509dbd7b0')
 
 build() {
   cd "${srcdir}"/${pkgname}-${pkgver}
+  patch -p1 -i "${srcdir}"/freetype2.patch
 
   ./bootstrap --prefix=/usr \
     --mandir=/share/man \

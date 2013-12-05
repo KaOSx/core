@@ -1,6 +1,6 @@
 
 pkgname=bison
-pkgver=3.0.1
+pkgver=3.0.2
 pkgrel=1
 pkgdesc="The GNU general-purpose parser generator"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('glibc' 'm4' 'sh')
 groups=('base-devel')
 install=bison.install
 source=("ftp://ftp.gnu.org/gnu/bison/${pkgname}-${pkgver}.tar.xz")
-md5sums=('032a7b7b9f1a6e278ccde73f82cec5c2')
+md5sums=('146be9ff9fbd27497f0bf2286a5a2082')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
