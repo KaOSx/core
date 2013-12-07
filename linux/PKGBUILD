@@ -2,22 +2,22 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.11
-pkgver=3.11.7
+_basekernel=3.12
+pkgver=3.12.4
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.11.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.12.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config.x86_64'
         #aufs patches
         'aufs3-loopback.patch'
         'aufs3-base.patch'
-        'aufs3-proc_map.patch'
+        'aufs3-mmap.patch'
         'aufs3-standalone.patch'
         'aufs3-kbuild.patch'
         'aufs3.patch'
@@ -57,7 +57,7 @@ prepare() {
   patch -p1 -i "${srcdir}/aufs3-base.patch"
   patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
   patch -p1 -i "${srcdir}/aufs3-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs3-proc_map.patch"
+  patch -p1 -i "${srcdir}/aufs3-mmap.patch"
   patch -p1 -i "${srcdir}/aufs3-standalone.patch"
   
   cat "${srcdir}/config.x86_64" > ./.config
@@ -241,7 +241,7 @@ package_linux-headers() {
   cp fs/xfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h"
 
   #aufs3-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
