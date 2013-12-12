@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=3.12
-pkgver=3.12.4
+pkgver=3.12.5
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -26,7 +26,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.12.tar.xz"
         'linux.preset'
         'change-default-console-loglevel.patch')
 md5sums=('cc6ee608854e0da4b64f6c1ff8b6398c'
-         '511b5a2f0de55b5e91fd293766ce182b'
+         '70e456d21f7e7c0dc2f9bd170f1ae4ee'
          'cac39016afa34659b598c1988761d580'
          '0d0e78327ab3a51cd991570e0623ee8d'
          '3c1e2bfded7e0ff5772902a1ccc25995'
