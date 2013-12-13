@@ -1,0 +1,9 @@
+## arg 1:  the new package version
+post_install() {
+cat << 'EOM'
+  ==> PLEASE NOTE:
+  ==> Extended configuration options for NFS (clients & server) are available in
+  ==> /etc/conf.d/nfs-common.conf and in /etc/conf.d/nfs-server.conf   
+EOM
+}
+

@@ -1,0 +1,26 @@
+
+pkgname=nfsidmap
+pkgver=0.25
+pkgrel=1
+pkgdesc="Library to help mapping IDs, mainly for NFSv4"
+arch=('x86_64')
+url="http://www.citi.umich.edu/projects/nfsv4/linux/"
+depends=('glibc' 'libldap')
+license=('custom:nfsidmap')
+source=("http://www.citi.umich.edu/projects/nfsv4/linux/libnfsidmap/libnfsidmap-$pkgver.tar.gz")
+md5sums=('2ac4893c92716add1a1447ae01df77ab')
+
+build() {
+  cd $srcdir/lib$pkgname-$pkgver
+  
+  ./configure --prefix=/usr --sysconfdir=/etc
+  make
+}
+
+package() {
+  cd $srcdir/lib$pkgname-$pkgver
+  make DESTDIR=$pkgdir install
+
+  install -Dm644 COPYING $pkgdir/usr/share/licenses/nfsidmap/LICENSE
+}
+
