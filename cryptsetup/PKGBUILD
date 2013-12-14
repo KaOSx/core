@@ -1,6 +1,6 @@
 
 pkgname=cryptsetup
-pkgver=1.6.2
+pkgver=1.6.3
 pkgrel=1
 pkgdesc="Userspace setup tool for transparent encryption of block devices using the Linux 2.6 cryptoapi"
 arch=('x86_64')
@@ -12,7 +12,7 @@ options=('!libtool' '!emptydirs')
 source=("http://cryptsetup.googlecode.com/files/${pkgname}-${pkgver}.tar.bz2"
         'encrypt_hook'
 	'encrypt_install')
-md5sums=('cd834da49fbe92dd66df02cc5c61280f'
+md5sums=('a7aeb549a543eeac433eadfb6bc67837'
          'c279d86d6dc18322c054d2272ebb9e90'
          'abe9bb42341e8f2ecd2b07e4244ac066')
 build() {
