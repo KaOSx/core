@@ -1,7 +1,7 @@
 
 pkgname=crda
 pkgver=1.1.3
-pkgrel=2
+pkgrel=3
 pkgdesc="Central Regulatory Domain Agent"
 arch=('x86_64')
 url="http://wireless.kernel.org/en/developers/Regulatory/CRDA"

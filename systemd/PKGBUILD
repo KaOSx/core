@@ -1,7 +1,7 @@
 
 pkgname=systemd
 pkgver=208
-pkgrel=5
+pkgrel=6
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
@@ -31,7 +31,7 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-install-systemd'
         'initcpio-install-udev'
         'use-split-usr-path.patch')
-md5sums=('6b30239cbea4cb2c832625f1012dbe03'
+md5sums=('df64550d92afbffb4f67a434193ee165'
          '7a79eb3e4ce19906cfebfea75fb9f8bb'
          '1f495ca327afa3eb1fd09777961630ab'
          'bde43090d4ac0ef048e3eaee8202a407'
