@@ -27,9 +27,9 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.13-rc5.tar
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         'change-default-console-loglevel.patch')
-md5sums=('ac88b2b018636cb552b61ca9e474c3e2'
+md5sums=('3fcce17ba5cc31f60b03c37515f1c031'
          #'511b5a2f0de55b5e91fd293766ce182b'
-         'ecaf674a0dd3aa15cf85e0949fec99e3'
+         '3b97d393b3c735b40e84e29d63c66070'
          '0d0e78327ab3a51cd991570e0623ee8d'
          '3c1e2bfded7e0ff5772902a1ccc25995'
          'e3532ac7a671d23a63e1db0c446e14f4'
@@ -40,8 +40,8 @@ md5sums=('ac88b2b018636cb552b61ca9e474c3e2'
          '7b2ca9cdb5555219f793b5a807b05870'
          '98beb36f9b8cf16e58de2483ea9985e3')
          
-# module md5sums
-# c59bdd247009e0cd8418cb3b4d1b9ba5  /lib/modules/3.13.0-1-next/modules.symbols
+# module rc5 md5sums
+# abe352741ed05b9eff9ea39285d800ec  /lib/modules/3.13.0-1-next/modules.symbols
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"

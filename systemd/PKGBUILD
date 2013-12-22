@@ -2,6 +2,7 @@
 pkgname=systemd
 pkgver=208
 pkgrel=6
+pkgdesc="System and Session Manager"
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
