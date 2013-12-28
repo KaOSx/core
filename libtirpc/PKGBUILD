@@ -1,6 +1,6 @@
 
 pkgname=libtirpc
-pkgver=0.2.3
+pkgver=0.2.4
 pkgrel=1
 pkgdesc="Transport Independent RPC library (SunRPC replacement)"
 arch=('x86_64')
@@ -9,25 +9,19 @@ license=('BSD')
 depends=('libgssglue')
 backup=('etc/netconfig')
 options=('!libtool')
-source=("http://downloads.sourceforge.net/sourceforge/libtirpc/${pkgname}-${pkgver}.tar.bz2"
-        'libtirpc-build.patch')
-md5sums=('b70e6c12a369a91e69fcc3b9feb23d61'
-         'd4c0eef2f0891abf06cd4146eb51ed36')
+source=("http://downloads.sourceforge.net/sourceforge/libtirpc/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('847995e8d002cbf1387bda05947be086')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   
-  patch -p1 -i ${srcdir}/libtirpc-build.patch
-  
-  ./configure --prefix=/usr \
-         --enable-gss \
-         --sysconf=/etc
+  ./configure --prefix=/usr --sysconf=/etc
   make
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  
+  cd "${srcdir}/${pkgname}-${pkgver}" 
   make DESTDIR="${pkgdir}" install
+  
   install -D -m644 COPYING "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
 }
