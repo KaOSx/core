@@ -1,15 +1,15 @@
 
 pkgname=libcap
-pkgver=2.22
-pkgrel=2
+pkgver=2.23
+pkgrel=1
 pkgdesc="POSIX 1003.1e capabilities"
 arch=('x86_64')
 url="http://www.kernel.org/pub/linux/libs/security/linux-privs/"
 license=('GPL')
 depends=('glibc' 'attr')
 options=('!staticlibs')
-source=("http://abveritas.sourceforge.net/sources/libcap/${pkgname}-${pkgver}.tar.gz")
-md5sums=('b4896816b626bea445f0b3849bdd4077')
+source=("https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/${pkgname}-${pkgver}.tar.xz")
+md5sums=('09a185e4b0aa8a81a51c1e4d0eba7db0')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
