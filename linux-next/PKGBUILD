@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.13-rc5
+_basekernel=3.13-rc6
 _srcname=linux-3.13
-pkgver=3.13rc5
+pkgver=3.13rc6
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -12,10 +12,10 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 #source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.13-rc5.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.13-rc6.tar.xz"
         #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
-        'config.x86_64'
+        'config'
         #aufs patches
         'aufs3-loopback.patch'
         'aufs3-base.patch'
@@ -27,9 +27,9 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.13-rc5.tar
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         'change-default-console-loglevel.patch')
-md5sums=('3fcce17ba5cc31f60b03c37515f1c031'
+md5sums=('fb3ffbf05177cdf9c4ef71406177e83b'
          #'511b5a2f0de55b5e91fd293766ce182b'
-         '3b97d393b3c735b40e84e29d63c66070'
+         '32c69f23b4c39830162b01d9b7a51836'
          '0d0e78327ab3a51cd991570e0623ee8d'
          '3c1e2bfded7e0ff5772902a1ccc25995'
          'e3532ac7a671d23a63e1db0c446e14f4'
@@ -40,7 +40,7 @@ md5sums=('3fcce17ba5cc31f60b03c37515f1c031'
          '7b2ca9cdb5555219f793b5a807b05870'
          '98beb36f9b8cf16e58de2483ea9985e3')
          
-# module rc5 md5sums
+# module rc5/rc6 md5sums
 # abe352741ed05b9eff9ea39285d800ec  /lib/modules/3.13.0-1-next/modules.symbols
 
 build() {
@@ -65,7 +65,7 @@ build() {
   ##patch -p1 -i "${srcdir}/aufs3-mmap.patch"
   ##patch -p1 -i "${srcdir}/aufs3-standalone.patch"
   
-  cat "${srcdir}/config.x86_64" > ./.config
+  cat "${srcdir}/config" > ./.config
 
   cat "${srcdir}/config.aufs" >> ./.config
 
