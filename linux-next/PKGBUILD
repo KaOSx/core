@@ -40,8 +40,8 @@ md5sums=('fb3ffbf05177cdf9c4ef71406177e83b'
          '7b2ca9cdb5555219f793b5a807b05870'
          '98beb36f9b8cf16e58de2483ea9985e3')
          
-# module rc5/rc6 md5sums
-# abe352741ed05b9eff9ea39285d800ec  /lib/modules/3.13.0-1-next/modules.symbols
+# module rc6 md5sums
+# 664af6e5b48228db9ec5ab07e50138d5  /lib/modules/3.13.0-1-next/modules.symbols
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
