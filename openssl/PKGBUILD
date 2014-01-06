@@ -1,9 +1,8 @@
 
 pkgname=openssl
-_ver=1.0.1e
-# use a pacman compatible version scheme
-pkgver=${_ver/[a-z]/.${_ver//[0-9.]/}}
-pkgrel=2
+_ver=1.0.1f
+pkgver=1.0.1.f
+pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
 url='https://www.openssl.org'
@@ -14,10 +13,12 @@ options=('!makeflags')
 backup=('etc/ssl/openssl.cnf')
 source=("https://www.openssl.org/source/${pkgname}-${_ver}.tar.gz"
         'no-rpath.patch'
-        'ca-dir.patch')
-md5sums=('66bf6f10f060d561929de96f9dfe5b8c'
+        'ca-dir.patch'
+        'perl.patch')
+md5sums=('f26b09c028a0541cab33da697d522b25'
          'dc78d3d06baffc16217519242ce92478'
-         '3bf51be3a1bbd262be46dc619f92aa90')
+         '3bf51be3a1bbd262be46dc619f92aa90'
+         'ea2a61c8bd43788d81d98f1ac36c98ac')
 
 build() {
 	cd $srcdir/$pkgname-$_ver
@@ -28,6 +29,8 @@ build() {
 	patch -p0 -i $srcdir/no-rpath.patch
 	# set ca dir to /etc/ssl by default
 	patch -p0 -i $srcdir/ca-dir.patch
+	
+	patch -p1 -i $srcdir/perl.patch
 	
 	./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib \
 		shared zlib ${optflags} \
