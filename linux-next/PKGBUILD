@@ -11,9 +11,9 @@ url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-#source=("http://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
+#source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
 source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.13-rc7.tar.xz"
-        #"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+        #"https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
