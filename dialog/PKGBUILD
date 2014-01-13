@@ -1,6 +1,6 @@
 
 pkgname=dialog
-pkgver=1.2_20131001
+pkgver=1.2_20140112
 pkgrel=1
 pkgdesc="A tool to display dialog boxes from shell scripts"
 arch=('x86_64')
@@ -8,7 +8,7 @@ url="http://invisible-island.net/dialog/"
 license=('LGPL2.1')
 depends=('ncurses')
 source=("ftp://invisible-island.net/${pkgname}/${pkgname}-${pkgver/_/-}.tgz")
-md5sums=('e0932673cd94e4c6e2470d78f0c22376')
+md5sums=('373dbe256bd3bcb37f5172aa77af9fa5')
 
 build() {
   cd "${srcdir}/$pkgname-${pkgver/_/-}"
