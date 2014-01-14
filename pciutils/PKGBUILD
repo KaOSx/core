@@ -1,6 +1,6 @@
 
 pkgname=pciutils
-pkgver=3.2.0
+pkgver=3.2.1
 pkgrel=1
 pkgdesc="PCI bus configuration space access library and tools"
 arch=('x86_64')
@@ -11,7 +11,7 @@ optdepends=('sh: required by update-pciids')
 depends=('glibc' 'hwids' 'kmod')
 makedepends=('wget')
 source=("ftp://ftp.kernel.org/pub/software/utils/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('adb27c2d6ca54405115c532ae4c348e6')
+md5sums=('fe7806d075994db0e28894e42668a02a')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
