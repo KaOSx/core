@@ -1,30 +1,29 @@
 
 pkgname=inetutils
-pkgver=1.9.1
-pkgrel=2
+pkgver=1.9.2
+pkgrel=1
 pkgdesc="A collection of common network programs."
 arch=('x86_64')
 url="http://www.gnu.org/software/inetutils/"
 license=('GPL')
 depends=('readline' 'ncurses' 'pam')
+makedepends=('help2man')
 backup=('etc/conf.d/ftpd' 'etc/xinetd.d/telnet' 'etc/xinetd.d/talk')
 options=('!emptydirs')
 install="inetutils.install"
 source=("http://ftp.gnu.org/gnu/inetutils/${pkgname}-${pkgver}.tar.gz"
-        ftpd.conf telnet.xinetd talk.xinetd rlogin.xinetd rsh.xinetd
-        ftpd.service dnsdomainname)
-md5sums=('944f7196a2b3dba2d400e9088576000c'
+        'ftpd.conf' 'telnet.xinetd' 'talk.xinetd' 'rlogin.xinetd'
+        'rsh.xinetd' 'ftpd.service')
+md5sums=('aa1a9a132259db83e66c1f3265065ba2'
          'e6e6e5990a2e8159a276fef8fbf54c04'
          '8596208d119045543c5fb644e1d713d5'
          '2c3655985cf122591d71d031af84ff90'
          'c25d8382a994de84d9c6962d804f689b'
          'c3aa508a9d1293a787341108cd49c1b7'
-         'c6ad2f35dda2c2c35b3d1897f29973b2'
-         '9a2ffdbc9111b0f01bff6752eefc50d4')
+         'c04b4f0d41d9b59081f314335f8d9d60')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  sed -i 's|_GL_WARN_ON_USE (gets|//_GL_WARN_ON_USE (gets|' lib/stdio.in.h
 
   ./configure --prefix=/usr --libexec=/usr/sbin --localstatedir=/var \
     --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info \
@@ -41,7 +40,8 @@ build() {
     --disable-logger --disable-syslogd \
     --disable-inetd --disable-whois \
     --disable-uucpd \
-    --disable-ifconfig --disable-traceroute
+    --disable-ifconfig --disable-traceroute \
+    --enable-dnsdomainname 
 
   make
 }
