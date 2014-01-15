@@ -1,7 +1,7 @@
 
 pkgname=mirror-check
 pkgver=2.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Checks whether the locally used mirror is synced with the main, forked from the Chakra-Project"
 arch=('x86_64')
 url="http://kaosx.us"
@@ -9,7 +9,7 @@ license=('GPL2')
 makedepends=('asciidoc')
 source=('mirror-check' 'mirror-check.desktop')
 md5sums=('035bfdc76c2112b77d81a8a9da81c157'
-         '5a0a0a1774ecd4808827e4c3cd6eca7c')
+         'a4fb465512d3df76374c4a78bc7c788a')
 
 package() {
   cd ${srcdir}
