@@ -1,6 +1,6 @@
 
 pkgname=git
-pkgver=1.8.5.2
+pkgver=1.8.5.3
 pkgrel=1
 pkgdesc="Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency."
 arch=('x86_64')
@@ -20,8 +20,8 @@ source=("http://git-core.googlecode.com/files/git-${pkgver}.tar.gz"
         "http://git-core.googlecode.com/files/git-manpages-${pkgver}.tar.gz"
         'git-daemon@.service'
         'git-daemon.socket')
-md5sums=('df8519044f9880f3687d863d99245282'
-         '27851cc39808f1be6d3789fae87c8308'
+md5sums=('57b966065882f83ef5879620a1e329ca'
+         '8602e319e85e031aae9e674306928181'
          '042524f942785772d7bd52a1f02fe5ae'
          'f67869315c2cc112e076f0c73f248002')
 
