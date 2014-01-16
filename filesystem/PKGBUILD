@@ -1,8 +1,8 @@
 
 pkgname=filesystem
-pkgver=2013.10
-pkgrel=2
-_codename=2013
+pkgver=2014.01
+pkgrel=1
+_codename=2014
 pkgdesc='Base filesystem'
 arch=('x86_64')
 license=('GPL')
@@ -38,7 +38,7 @@ md5sums=('ce1731103d00ef3ed129fc9b8f50ff5f'
          'f3b6ae7db8adffaaa4bffc6099dcbd50'
          'a8a962370cd0128465d514e6a1f74130'
          '13d8d253ae8613ba2474683f585e73db'
-         '7815642c9509f6873c40cfad8556f3cd'
+         'cd33b75f805108ef9c29c145c4e2ea2c'
          '201bbb8b4734d2f46afe1e24d7cc6173'
          '45100e8a4a6d8d4b3a7dcd34b0fa4281')
 
