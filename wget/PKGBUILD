@@ -1,7 +1,7 @@
 
 pkgname=wget
-pkgver=1.14
-pkgrel=3
+pkgver=1.15
+pkgrel=1
 pkgdesc="A network utility to retrieve files from the Web"
 arch=('x86_64')
 url="http://www.gnu.org/software/wget/wget.html"
@@ -12,22 +12,22 @@ optdepends=('ca-certificates: HTTPS downloads')
 backup=('etc/wgetrc')
 install=wget.install
 source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('316f6f59292c9098ad81fd54f658c579')
+md5sums=('7a279d5ac5594919124d5526e7143e28')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  cat >> doc/sample.wgetrc <<EOF
 
-  ./configure -with-ssl=openssl --prefix=/usr --sysconfdir=/etc --enable-nls
+# default root certs location
+ca_certificate=/etc/ssl/certs/ca-certificates.crt
+EOF
+
+  ./configure --prefix=/usr --sysconfdir=/etc -with-ssl=openssl --enable-nls
   make
 }
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  
   make DESTDIR="${pkgdir}" install
-
-  cat >> "$pkgdir/etc/wgetrc" <<EOF
-
-# default root certs location
-ca_certificate=/etc/ssl/certs/ca-certificates.crt
-EOF
 }
