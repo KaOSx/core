@@ -1,0 +1,38 @@
+
+pkgname=btrfs-progs
+pkgver=3.12
+pkgrel=1
+pkgdesc="Btrfs filesystem utilities."
+arch=('x86_64')
+url="http://btrfs.wiki.kernel.org/"
+license=('GPL2')
+depends=('glibc' 'e2fsprogs' 'lzo2')
+makedepoends=('git')
+options=('!staticlibs')
+source=("git://git.kernel.org/pub/scm/linux/kernel/git/mason/${pkgname}.git#tag=v${pkgver}"
+	'initcpio-install-btrfs'
+	'initcpio-hook-btrfs')
+md5sums=('SKIP'
+         '5642e1524eefddf9195693cd114ecc65'
+         '85ff8daca50a5ba3dff3c3e641d38b1e')
+
+build() {
+   cd $srcdir/${pkgname}
+   
+   make CFLAGS="$CFLAGS" 
+   make CFLAGS="$CFLAGS" btrfs-select-super
+}
+
+package() {
+   cd $srcdir/${pkgname}
+   make prefix=$pkgdir/usr install
+   install -Dm755 btrfs-select-super $pkgdir/usr/bin
+
+   mkdir -p $pkgdir/usr/share/
+   mv $pkgdir/usr/man $pkgdir/usr/share/man
+   mkdir -p ${pkgdir}/sbin
+   ln -sf /usr/bin/btrfs ${pkgdir}/sbin/btrfs
+
+   install -Dm644 "$srcdir/initcpio-install-btrfs" "$pkgdir/usr/lib/initcpio/install/btrfs"
+   install -Dm644 "$srcdir/initcpio-hook-btrfs" "$pkgdir/usr/lib/initcpio/hooks/btrfs"
+}
