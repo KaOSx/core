@@ -1,7 +1,7 @@
 
 pkgname=man-pages
-pkgver=3.56
-_posixver=2003-a
+pkgver=3.57
+_posixver=2013-a
 pkgrel=1
 pkgdesc="Linux man pages"
 arch=('x86_64')
@@ -10,9 +10,9 @@ url="http://www.kernel.org/doc/man-pages/"
 groups=('base')
 depends=()
 source=("http://www.kernel.org/pub/linux/docs/man-pages/$pkgname-$pkgver.tar.xz"
-	"http://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/$pkgname-posix-${_posixver}.tar.bz2")
-md5sums=('888e0c96df95e7649cedfcb26d61f22b'
-         '7c78aff03c0a6767ba483d34f19e4b09')
+	"http://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/$pkgname-posix-${_posixver}.tar.xz")
+md5sums=('18bba89745fecdfddad3caaef7cde5f4'
+         '825fde78e6fddd02426ecdd50e2cbe0d')
 
 build() {
   cd ${srcdir}/$pkgname-$pkgver
@@ -29,6 +29,9 @@ package() {
   cd ${srcdir}/$pkgname-$pkgver
 
   make prefix=${pkgdir}/usr install
+  
+  install -m755 -d "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -m644 ${srcdir}/$pkgname-posix-${_posixver}/POSIX-COPYRIGHT "${pkgdir}/usr/share/licenses/${pkgname}/POSIX-COPYRIGHT"
 
   cd ${pkgdir}/usr/share/man
   # these are included in coreutils 
