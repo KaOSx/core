@@ -3,6 +3,6 @@
 Type=Application
 Version=2.0
 Name=Mirror-Check
-Icon=network-server-database
+Icon=mirror-check
 Exec=/usr/bin/mirror-check --gui
 Categories=Network;

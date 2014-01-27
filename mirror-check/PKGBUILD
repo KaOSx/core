@@ -1,19 +1,23 @@
 
 pkgname=mirror-check
 pkgver=2.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Checks whether the locally used mirror is synced with the main, forked from the Chakra-Project"
 arch=('x86_64')
 url="http://kaosx.us"
 license=('GPL2')
 makedepends=('asciidoc')
-source=('mirror-check' 'mirror-check.desktop')
+source=('mirror-check'
+        'mirror-check.desktop'
+        'mirror-check.png')
 md5sums=('035bfdc76c2112b77d81a8a9da81c157'
-         'a4fb465512d3df76374c4a78bc7c788a')
+         'aff18a3883a298752fac09d3ce096429'
+         '8ddce8951baf48c265ff5d5769559b12')
 
 package() {
   cd ${srcdir}
 
   install -m 755 -D mirror-check "$pkgdir/usr/bin/mirror-check"
-  install -Dm644 "${srcdir}/mirror-check.desktop" "${pkgdir}/usr/share/applications/mirror-check.desktop"	
+  install -Dm644 "${srcdir}/mirror-check.desktop" "${pkgdir}/usr/share/applications/mirror-check.desktop"
+  install -Dm644 "${srcdir}/mirror-check.png" "${pkgdir}/usr/share/pixmaps/mirror-check.png"
 }

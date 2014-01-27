@@ -1,7 +1,7 @@
 
 pkgname=isl3890-firmware
 pkgver=2.13.25.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Firmware for wireless card 3Com 3CRWE154G72"
 arch=('x86_64')
 url="http://wireless.kernel.org/en/users/Drivers/p54/devices"
@@ -10,7 +10,7 @@ source=("http://daemonizer.de/prism54/prism54-fw/fw-softmac/$pkgver.arm")
 md5sums=('35a3974a67986be313b2d1640cde458e')
 
 package() {
-  mkdir -p $pkgdir/pkg/usr/lib/firmware/isl3890/
+  mkdir -p $pkgdir/usr/lib/firmware/isl3890/
   
-  install -m644 * $pkgdir/pkg/usr/lib/firmware/isl3890/isl3890
+  install -m644 * $pkgdir/usr/lib/firmware/isl3890/isl3890
 }
