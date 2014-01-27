@@ -1,20 +1,20 @@
 
 pkgname=libpcap
-pkgver=1.5.1
+pkgver=1.5.3
 pkgrel=1
 pkgdesc="A system-independent interface for user-level packet capture"
 arch=('x86_64')
 url="http://www.tcpdump.org/"
 license=('BSD')
 depends=('glibc' 'libnl' 'sh' 'libusbx')
-makedepends=('flex')
+makedepends=('flex' 'bluez')
 source=("http://www.tcpdump.org/release/libpcap-${pkgver}.tar.gz")
-md5sums=('b51f0c611b1e21b73f9ba120023bf972')
+md5sums=('7e7321fb3aff2f2bb05c8229f3795d4a')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
   
-  ./configure --prefix=/usr --enable-ipv6 --with-libnl
+  ./configure --prefix=/usr --enable-ipv6 --with-libnl --enable-bluetooth
   make
 }
 
