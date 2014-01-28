@@ -1,16 +1,16 @@
 
 pkgname=python2-m2crypto
-pkgver=0.21.1
-pkgrel=2
+pkgver=0.22.3
+pkgrel=1
 pkgdesc="A crypto and SSL toolkit for Python"
 arch=('x86_64')
 url="http://wiki.osafoundation.org/bin/view/Projects/MeTooCrypto"
 license=('BSD')
 depends=('python2' 'openssl')
-provides=('python-m2crypto')
-makedepends=('swig')
-source=("http://pypi.python.org/packages/source/M/M2Crypto/M2Crypto-${pkgver}.tar.gz")
-md5sums=('f93d8462ff7646397a9f77a2fe602d17')
+makedepends=('swig' 'python2-distribute')
+#source=("http://pypi.python.org/packages/source/M/M2Crypto/M2Crypto-${pkgver}.tar.gz")
+source=("https://github.com/martinpaljak/M2Crypto/archive/v${pkgver}.tar.gz")
+md5sums=('b99418d3797b28d95b784a0a56735923')
 
 build() {
   cd "${srcdir}/M2Crypto-${pkgver}"
