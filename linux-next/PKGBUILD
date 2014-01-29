@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=3.13
 _srcname=linux-3.13
-pkgver=3.13.0
+pkgver=3.13.1
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.13-rc8.tar.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -26,19 +26,21 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'config.aufs'
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
-        'change-default-console-loglevel.patch')
+        'change-default-console-loglevel.patch'
+        'i8042-fix-aliases.patch')
 md5sums=('0ecbaf65c00374eb4a826c2f9f37606f'
-         #'511b5a2f0de55b5e91fd293766ce182b'
-         '00e82e4a4d6d654c4436a9b41705f177'
-         '0d0e78327ab3a51cd991570e0623ee8d'
-         '3c1e2bfded7e0ff5772902a1ccc25995'
-         'e3532ac7a671d23a63e1db0c446e14f4'
-         'f9efcdfe604a4fb61ad54a398857926d'
-         'ac36fee8d9a7c089c465f7cbd39dcf6b'
-         'ec3a27c3030473690262942960021f80'
+         '675692f24410f375055d422e7886f3d8'
+         '60cc2f2bdaa1ec9a2468324235c9b146'
+         'e4066031f031de0135cd47780d4045d1'
+         '97f15945523cd6536efd33745a176b0c'
+         '3743bc484d012fc0c5931e95e568802a'
+         '77a8a77623d7fec863229ecdd347c2e1'
+         'afa405180be0597a41761f47def31473'
+         'ada69e5870ad73b617bb1a8b5ce56564'
          '52f4a2c7f6277774117c834d949d6b81'
          '7b2ca9cdb5555219f793b5a807b05870'
-         '98beb36f9b8cf16e58de2483ea9985e3')
+         '98beb36f9b8cf16e58de2483ea9985e3'
+         '93dbf73af819b77f03453a9c6de2bb47')
          
 # module rc6 md5sums
 # 664af6e5b48228db9ec5ab07e50138d5  /lib/modules/3.13.0-1-next/modules.symbols
@@ -47,7 +49,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -56,14 +58,16 @@ build() {
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
+  
+  patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
 
   #aufs patches for Live:
-  ##patch -p1 -i "${srcdir}/aufs3.patch"
-  ##patch -p1 -i "${srcdir}/aufs3-base.patch"
-  ##patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
-  ##patch -p1 -i "${srcdir}/aufs3-loopback.patch"
-  ##patch -p1 -i "${srcdir}/aufs3-mmap.patch"
-  ##patch -p1 -i "${srcdir}/aufs3-standalone.patch"
+  patch -p1 -i "${srcdir}/aufs3.patch"
+  patch -p1 -i "${srcdir}/aufs3-base.patch"
+  patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs3-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs3-mmap.patch"
+  patch -p1 -i "${srcdir}/aufs3-standalone.patch"
   
   cat "${srcdir}/config" > ./.config
 
@@ -240,7 +244,7 @@ package_linux-next-headers() {
   cp fs/xfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h"
 
   #aufs3-util need
-  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
