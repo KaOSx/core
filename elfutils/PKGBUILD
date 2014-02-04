@@ -7,12 +7,15 @@ arch=('x86_64')
 url="https://fedorahosted.org/elfutils/"
 license=('LGPL3' 'GPL' 'GPL3')
 depends=('gcc-libs' 'zlib' 'bzip2' 'xz')
-source=("https://fedorahosted.org/releases/e/l/elfutils/${pkgver}/elfutils-${pkgver}.tar.bz2")
-md5sums=('050a4909e452d01ab4747fd69d4036e0')
+source=("https://fedorahosted.org/releases/e/l/elfutils/${pkgver}/elfutils-${pkgver}.tar.bz2"
+        'backtrace-test.patch')
+md5sums=('050a4909e452d01ab4747fd69d4036e0'
+         'd7b676641814dfd7e4920e9add688350')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  #CFLAGS+=" -g"
+  patch -p1 -i "${srcdir}/backtrace-test.patch"
+  CFLAGS+=" -g"
   
   ./configure --prefix=/usr --program-prefix="eu-"
   make
