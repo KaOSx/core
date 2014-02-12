@@ -1,9 +1,9 @@
 
 pkgbase="sqlite"
 pkgname=('sqlite' 'sqlite-tcl' 'sqlite-doc') 
-_amalgamationver=3080300
-_docver=3080300
-pkgver=3.8.3
+_amalgamationver=3080301
+_docver=3080301
+pkgver=3.8.3.1
 pkgrel=1
 pkgdesc="A C library that implements an SQL database engine"
 arch=('x86_64')
@@ -15,8 +15,8 @@ source=( # tarball containing the amalgamation for SQLite 3.7.5 together with a 
 	"http://www.sqlite.org/2014/sqlite-doc-${_docver}.zip"
 	'license.txt')
 options=('!libtool' '!emptydirs')
-md5sums=('11572878dc0ac74ae370367a464ab5cf'
-         '627f0a147e06be8b8205bc36151d7ae0'
+md5sums=('509ff98d8dc9729b618b7e96612079c6'
+         '2156b06ba0a4d290bc146de4fd5e7f5c'
          'c1cdbc5544034d9012e421e75a5e4890')
 
 build() {
