@@ -1,6 +1,6 @@
 
 pkgname=flex
-pkgver=2.5.37
+pkgver=2.5.38
 pkgrel=1
 pkgdesc="A tool for generating text-scanning programs"
 arch=('x86_64')
@@ -9,10 +9,8 @@ license=('custom')
 groups=('base-devel')
 depends=('glibc' 'm4' 'sh')
 install=flex.install
-source=("http://downloads.sourceforge.net/sourceforge/flex/flex-$pkgver.tar.bz2"
-	'lex.sh')
-md5sums=('c75940e1fc25108f2a7b3ef42abdae06'
-         'f725259ec23a9e87ee29e2ef82eda9a5')
+source=("http://downloads.sourceforge.net/sourceforge/flex/flex-$pkgver.tar.bz2")
+md5sums=('b230c88e65996ff74994d08a2a2e0f27')
 
 build() {
   cd $srcdir/$pkgname-$pkgver 
@@ -22,19 +20,16 @@ build() {
 }
 
 check() {
-  cd $srcdir/$pkgname-$pkgver
-  
+  cd $srcdir/$pkgname-$pkgver 
   sed -i -e '/test-bison-yylloc/d' -e '/test-bison-yylval/d' tests/Makefile.in
 
   make check
 }
 
 package() {
-  cd $srcdir/$pkgname-$pkgver
-  
+  cd $srcdir/$pkgname-$pkgver 
   make DESTDIR=$pkgdir install
-  install -Dm755 $srcdir/lex.sh $pkgdir/usr/bin/lex 
-
-  install -Dm644 COPYING \
-  	$pkgdir/usr/share/licenses/$pkgname/license.txt 
+  
+  ln -s flex ${pkgdir}/usr/bin/lex 
+  install -Dm644 COPYING $pkgdir/usr/share/licenses/$pkgname/license.txt 
 }
