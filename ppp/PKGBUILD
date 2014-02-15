@@ -1,7 +1,7 @@
 
 pkgname=ppp
-pkgver=2.4.5
-pkgrel=6
+pkgver=2.4.6
+pkgrel=1
 pkgdesc="A daemon which implements the Point-to-Point Protocol for dial-up networking"
 arch=('x86_64') 
 url="http://www.samba.org/ppp/"
@@ -23,7 +23,7 @@ source=("ftp://ftp.samba.org/pub/ppp/ppp-${pkgver}.tar.gz"
         'ipv6-down'
         'ipv6-up.d.iface-config.sh'
         'ppp.service')
-md5sums=('4621bc56167b6953ec4071043fe0ec57'
+md5sums=('3434d2cc9327167a0723aaaa8670083b'
          '7a9259a8f038073eeea7e4552ff1849f'
          '48c024f73a80c8b69c4def22f86902cc'
          '2d811f8470ccdea3b8c4505a438483e9'
@@ -57,7 +57,7 @@ build() {
   sed -i "s:^#CBCP=y:CBCP=y:" pppd/Makefile.linux 
   
   # Fix build error with recent kernels
-  rm include/linux/if_pppol2tp.h 
+  #rm include/linux/if_pppol2tp.h 
 
   ./configure --prefix=/usr
   make 
