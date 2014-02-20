@@ -1,16 +1,17 @@
 
 pkgname=systemd
-pkgver=208
-pkgrel=6
+pkgver=209
+pkgrel=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
 depends=('acl' 'bash' 'glibc' 'glib2' 'kmod' 'hwids' 'util-linux' 'kbd' 'libcap' 'libxslt'
-         'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus-core') 
-makedepends=('docbook-xsl' 'gobject-introspection' 'gperf' 'intltool')
-optdepends=('python2-gobject3: systemd-analyze'
-            'dbus-python: systemd-analyze')
+         'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus') 
+makedepends=('docbook-xsl' 'gobject-introspection' 'gperf' 'intltool' 'python3' 'cryptsetup' 'libmicrohttpd')
+optdepends=('cryptsetup: required for encrypted block devices'
+            'libmicrohttpd: systemd-journal-gatewayd'
+            'python3: systemd library bindings')
 backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/dbus-1/system.d/org.freedesktop.hostname1.conf
         etc/dbus-1/system.d/org.freedesktop.login1.conf
@@ -30,29 +31,27 @@ options=('!libtool')
 source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-hook-udev'
         'initcpio-install-systemd'
-        'initcpio-install-udev'
-        'use-split-usr-path.patch')
-md5sums=('df64550d92afbffb4f67a434193ee165'
+        'initcpio-install-udev')
+md5sums=('2c7a7c8ffede079a3e1b241565bd4ed7'
          '7a79eb3e4ce19906cfebfea75fb9f8bb'
          '1f495ca327afa3eb1fd09777961630ab'
-         'bde43090d4ac0ef048e3eaee8202a407'
-         '21572b99173a7cdeaff965e0a5e9182b')
+         'bde43090d4ac0ef048e3eaee8202a407')
 
 build() {
   cd "$pkgname-$pkgver"
-  
-  #patch -p1 -i "$srcdir/use-split-usr-path.patch"
 
   ./configure \
-      PYTHON=python2 \
-      PYTHON_CONFIG=python2-config \
+      PYTHON=python3 \
+      PYTHON_CONFIG=python3-config \
       --libexecdir=/usr/lib \
       --localstatedir=/var \
       --sysconfdir=/etc \
       --enable-introspection \
+      --enable-compat-libs \
       --disable-gtk-doc \
       --disable-audit \
       --disable-ima \
+      --disable-kdbus \
       --with-firmware-path=/usr/lib/firmware/updates:/lib/firmware/updates:/usr/lib/firmware:/lib/firmware
 
   make
@@ -65,7 +64,7 @@ check() {
 package() {
   make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
 
-  printf "d /run/console 0755 root root\n" > "$pkgdir/usr/lib/tmpfiles.d/console.conf"
+  #printf "d /run/console 0755 root root\n" > "$pkgdir/usr/lib/tmpfiles.d/console.conf"
 
   install -dm755 "$pkgdir/bin"
   ln -s ../usr/lib/systemd/systemd "$pkgdir/bin/systemd"
@@ -103,9 +102,10 @@ package() {
   install -dm755 "$pkgdir/var/log/journal"
   sed -i -e 's/#SystemMaxUse=/SystemMaxUse=25M/' ${pkgdir}/etc/systemd/journald.conf
   
-  # 208 changed permissions for /var/log/journal
-  chown root:systemd-journal "$pkgdir/var/log/journal"
-  chmod 2755 "$pkgdir/var/log/journal"
+  # 208 changed permissions for /var/log/journal, 209 misses /var/log/journal
+  install -o root -g systemd-journal -dm2755 "$pkgdir/var/log/journal"
+  #chown root:systemd-journal "$pkgdir/var/log/journal"
+  #chmod 2755 "$pkgdir/var/log/journal"
 }
 
 

@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=3.13
 _srcname=linux-3.13
-pkgver=3.13.3
+pkgver=3.13.4
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -29,7 +29,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('0ecbaf65c00374eb4a826c2f9f37606f'
-         '2d3d298f2b430122f4baf2af88277231'
+         '77ca721ea0e8373f58f596fe0d9b1b47'
          '948e223a4be0c5b8d35c25b1f532dfd8'
          'e4066031f031de0135cd47780d4045d1'
          '97f15945523cd6536efd33745a176b0c'
