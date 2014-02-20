@@ -2,29 +2,25 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.17
-pkgrel=3
+pkgver=2.19
+pkgrel=1
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="http://www.gnu.org/software/libc"
 license=('GPL' 'LGPL')
 groups=('base')
-depends=('linux-api-headers>=3.10' 'tzdata')
+depends=('linux-api-headers>=3.13' 'tzdata' 'filesystem')
 makedepends=('gcc>=4.8')
 backup=(etc/gai.conf
         etc/locale.gen
         etc/nscd.conf)
 options=('!strip')
 install=glibc.install
-source=(http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz
-        glibc-2.17-sync-with-linux37.patch
-        glibc-2.17-getaddrinfo-stack-overflow.patch
-        glibc-2.17-regexp-matcher-overrun.patch
-        nscd.service
-        nscd.tmpfiles
-        locale.gen.txt
-        locale-gen
-        glibc.conf)
+source=("http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
+        'glibc-2.18-xattr-compat-hack.patch'
+        'locale.gen.txt'
+        'locale-gen'
+        'glibc.conf')
 md5sums=('87bf675c8ee523ebda4803e8e1cec638'
          'fb99380d94598cc76d793deebf630022'
          '56d5f2c09503a348281a20ae404b7de3'
@@ -37,15 +33,7 @@ md5sums=('87bf675c8ee523ebda4803e8e1cec638'
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
-
-  # combination of upstream commits 318cd0b, b540704 and fc1abbe
-  patch -p1 -i ${srcdir}/glibc-2.17-sync-with-linux37.patch
-
-  # CVE-2013-1914 - upstream commit 1cef1b19
-  patch -p1 -i ${srcdir}/glibc-2.17-getaddrinfo-stack-overflow.patch
-
-  # CVE-2013-0242 - upstream commit a445af0b
-  patch -p1 -i ${srcdir}/glibc-2.17-regexp-matcher-overrun.patch
+  patch -p1 -i $srcdir/glibc-2.18-xattr-compat-hack.patch
   
   cd ${srcdir}
   mkdir glibc-build
@@ -60,11 +48,13 @@ build() {
   ${srcdir}/glibc-${pkgver}/configure --prefix=/usr \
       --libdir=/usr/lib --libexecdir=/usr/lib \
       --with-headers=/usr/include \
+      --with-bugurl=https://github.com/KaOSx/core/issues \
       --enable-add-ons=nptl,libidn \
       --enable-obsolete-rpc \
       --enable-kernel=2.6.32 \
       --enable-bind-now --disable-profile \
       --enable-stackguard-randomization \
+      --enable-lock-elision \
       --enable-multi-arch
 
   # build libraries with hardening disabled
@@ -101,9 +91,8 @@ package() {
   install -dm755 ${pkgdir}/{,usr/{sbin,lib/{,locale,systemd/system,tmpfiles.d}}}
 
   install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.conf ${pkgdir}/etc/nscd.conf
-  sed -i -e 's/^\tserver-user/#\tserver-user/' ${pkgdir}/etc/nscd.conf
-  install -m644 ${srcdir}/nscd.service ${pkgdir}/usr/lib/systemd/system
-  install -m644 ${srcdir}/nscd.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/nscd.conf
+  install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.service ${pkgdir}/usr/lib/systemd/system
+  install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/nscd.conf
 
   install -m755 ${srcdir}/locale-gen ${pkgdir}/usr/sbin
   install -m644 ${srcdir}/glibc-${pkgver}/posix/gai.conf ${pkgdir}/etc/gai.conf
@@ -129,11 +118,11 @@ package() {
 
   strip $STRIP_STATIC usr/lib/*.a 
 
-  strip $STRIP_SHARED lib/{libanl,libBrokenLocale,libcidn,libcrypt}-${pkgver}.so \
-                      lib/libnss_{compat,dns,files,hesiod,nis,nisplus}-${pkgver}.so \
-                      lib/{libdl,libm,libnsl,libresolv,librt,libutil}-${pkgver}.so \
+  strip $STRIP_SHARED lib/{libanl,libBrokenLocale,libcidn,libcrypt}-*.so \
+                      lib/libnss_{compat,dns,files,hesiod,nis,nisplus}-*.so \
+                      lib/{libdl,libm,libnsl,libresolv,librt,libutil}-*.so \
                       lib/{libmemusage,libpcprofile,libSegFault}.so \
-                      usr/lib/{pt_chown,{audit,gconv}/*.so}
+                      usr/lib/{audit,gconv}/*.so
 
   # Add /usr/lib32 to the default library search path
   install -Dm644 "$srcdir/glibc.conf" "$pkgdir/etc/ld.so.conf.d/glibc.conf"
