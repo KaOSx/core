@@ -1,25 +1,22 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=binutils
-pkgver=2.23.2
-pkgrel=3
+pkgver=2.24
+pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
 url="http://www.gnu.org/software/binutils/"
 license=('GPL')
 groups=('base-devel')
-depends=('glibc>=2.17' 'zlib')
+depends=('glibc>=2.19' 'zlib')
 checkdepends=('dejagnu' 'bc')
 options=('!libtool' '!distcc' '!ccache')
 install=binutils.install
-source=(ftp://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.gz
-        'binutils-2.23.2-texinfo-5.0.patch')
-md5sums=('cda9dcc08c86ff2fd3f27e4adb250f6f'
-         '34e439ce23213a91e2af872dfbb5094c')
+source=("ftp://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.gz")
+md5sums=('a5dd5dd2d212a282cc1d4a84633e0d88')
 
 prepare() {
   cd ${srcdir}/binutils-${pkgver}
-  patch -p1 -i ${srcdir}/binutils-2.23.2-texinfo-5.0.patch
   
   # libiberty configure tests for header files using "$CPP $CPPFLAGS"
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
@@ -32,9 +29,9 @@ build() {
 
   ${srcdir}/binutils-${pkgver}/configure --prefix=/usr \
     --with-lib-path=/usr/lib:/usr/local/lib \
+    --with-bugurl=https://github.com/KaOSx/core/issues \
     --enable-ld=default --enable-gold \
-    --enable-plugins --enable-threads \
-    --enable-shared  --with-pic \
+    --enable-plugins --enable-threads --enable-shared \
     --disable-werror --disable-multilib
 
   # check the host environment and makes sure all the necessary tools are available
