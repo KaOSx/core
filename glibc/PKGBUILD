@@ -3,13 +3,13 @@
 
 pkgname=glibc
 pkgver=2.19
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="http://www.gnu.org/software/libc"
 license=('GPL' 'LGPL')
 groups=('base')
-depends=('linux-api-headers>=3.13' 'tzdata' 'filesystem')
+depends=('linux-api-headers>=3.13' 'tzdata')
 makedepends=('gcc>=4.8')
 backup=(etc/gai.conf
         etc/locale.gen
