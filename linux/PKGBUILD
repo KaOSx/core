@@ -2,18 +2,18 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.12
-pkgver=3.12.5
+_basekernel=3.13
+pkgver=3.13.5
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.12.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.13.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
-        'config.x86_64'
+        'config'
         #aufs patches
         'aufs3-loopback.patch'
         'aufs3-base.patch'
@@ -24,7 +24,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.12.tar.xz"
         'config.aufs'
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
-        'change-default-console-loglevel.patch')
+        'change-default-console-loglevel.patch'
+        'i8042-fix-aliases.patch')
 md5sums=('cc6ee608854e0da4b64f6c1ff8b6398c'
          '70e456d21f7e7c0dc2f9bd170f1ae4ee'
          'cac39016afa34659b598c1988761d580'
@@ -51,6 +52,8 @@ prepare() {
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
+  
+  patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
 
   #aufs patches for Live:
   patch -p1 -i "${srcdir}/aufs3.patch"
@@ -60,7 +63,7 @@ prepare() {
   patch -p1 -i "${srcdir}/aufs3-mmap.patch"
   patch -p1 -i "${srcdir}/aufs3-standalone.patch"
   
-  cat "${srcdir}/config.x86_64" > ./.config
+  cat "${srcdir}/config" > ./.config
 
   cat "${srcdir}/config.aufs" >> ./.config
 
