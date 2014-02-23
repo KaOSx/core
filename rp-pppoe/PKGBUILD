@@ -1,19 +1,18 @@
 
 pkgname=rp-pppoe
 pkgver=3.11
-pkgrel=3
+pkgrel=4
 pkgdesc="Roaring Penguin's Point-to-Point Protocol over Ethernet client"
 arch=('x86_64')
 url="http://www.roaringpenguin.com/pppoe/"
 license=('GPL')
 groups=('base')
-depends=('ppp>=2.4.5' 'sh')
+depends=('ppp>=2.4.6' 'sh')
 options=('!makeflags')
 backup=(etc/ppp/{pppoe.conf,firewall-standalone,firewall-masq,pppoe-server-options})
 source=("http://www.roaringpenguin.com/files/download/rp-pppoe-${pkgver}.tar.gz"
         'adsl.service'
         'kmode.patch')
-install=${pkgname}.install
 md5sums=('13b5900c56bd602df6cc526e5e520722'
          'ae14bb45cdd6aad31395a301f96ddd82'
          '125372c49bbd978d138433846283f82a')
