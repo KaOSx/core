@@ -28,7 +28,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.13.tar.xz"
         'i8042-fix-aliases.patch')
 md5sums=('0ecbaf65c00374eb4a826c2f9f37606f'
          '114c391a592131f1c12544e063173a45'
-         '948e223a4be0c5b8d35c25b1f532dfd8'
+         'c2833542b48f2d1be4e3c7e265b6d357'
          'e4066031f031de0135cd47780d4045d1'
          '97f15945523cd6536efd33745a176b0c'
          '3743bc484d012fc0c5931e95e568802a'
