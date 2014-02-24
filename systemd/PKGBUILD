@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=209
-pkgrel=2
+pkgver=210
+pkgrel=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
@@ -32,7 +32,7 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-hook-udev'
         'initcpio-install-systemd'
         'initcpio-install-udev')
-md5sums=('2c7a7c8ffede079a3e1b241565bd4ed7'
+md5sums=('03efddf8c9eca36d4d590f9967e7e818'
          '7a79eb3e4ce19906cfebfea75fb9f8bb'
          '1f495ca327afa3eb1fd09777961630ab'
          'bde43090d4ac0ef048e3eaee8202a407')
