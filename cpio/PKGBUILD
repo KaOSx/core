@@ -1,7 +1,7 @@
 
 pkgname=cpio
 pkgver=2.11
-pkgrel=5
+pkgrel=6
 pkgdesc="A tool to copy files into or out of a cpio or tar archive"
 arch=('x86_64')
 license=('GPL')
@@ -26,7 +26,6 @@ package() {
   make DESTDIR=${pkgdir} install
   
   rm -f ${pkgdir}/usr/bin/mt ${pkgdir}/pkg/usr/share/man/man1/mt.1
-  mv ${pkgdir}/usr/bin ${pkgdir}/bin
   rm -rf ${pkgdir}/usr/libexec
   # remove mt manpage 
   rm $pkgdir/usr/share/man/man1/mt.1 
