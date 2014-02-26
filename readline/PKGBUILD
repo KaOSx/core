@@ -1,9 +1,9 @@
 
 pkgname=readline
-_basever=6.2
-_patchlevel=004 #prepare for some patches
-pkgver=$_basever.$_patchlevel
-pkgrel=2
+_basever=6.3
+_patchlevel=000 #prepare for some patches
+pkgver=$_basever #.$_patchlevel
+pkgrel=1
 pkgdesc="GNU readline library"
 arch=('x86_64')
 url="http://tiswww.case.edu/php/chet/readline/rltop.html"
@@ -19,12 +19,8 @@ if [ $_patchlevel -gt 00 ]; then
         source=(${source[@]} http://ftp.gnu.org/gnu/readline/readline-$_basever-patches/readline${_basever//./}-$(printf "%03d" $p))
     done
 fi
-md5sums=('67948acb2ca081f23359d0256e9a271c'
-         '58d54966c1191db45973cb3191ac621a'
-         '83287d52a482f790dfb30ec0a8746669'
-         '0665020ea118e8434bd145fb71f452cc'
-         'c9d5d79718856e711667dede87cb7622'
-         'c08e787f50579ce301075c523fa660a4')
+md5sums=('33c8fb279e981274f485fd91da77e94a'
+         '58d54966c1191db45973cb3191ac621a')
 
 build() {
   cd ${srcdir}/${pkgname}-$_basever
