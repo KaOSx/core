@@ -1,6 +1,6 @@
 
 pkgname=libnl
-pkgver=3.2.23
+pkgver=3.2.24
 pkgrel=1
 pkgdesc="Library for applications dealing with netlink sockets"
 arch=('x86_64')
@@ -10,7 +10,7 @@ conflicts=('libnl3')
 backup=('etc/libnl/classid' 'etc/libnl/pktloc')
 options=('!libtool')
 source=("http://www.infradead.org/~tgr/libnl/files/$pkgname-$pkgver.tar.gz")
-md5sums=('438f8f0a3d46eb90771c9aa2af41590e')
+md5sums=('6e0e7bad0674749d930dd9f285343d55')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
