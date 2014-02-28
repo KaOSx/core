@@ -1,20 +1,18 @@
 
 pkgname=efibootmgr
-_pkgname=vathpela-efibootmgr
-pkgver=0.6.0
-pkgrel=3
-_commit=adc0500
+pkgver=0.6.1
+pkgrel=1
 pkgdesc="Tool to modify UEFI Firmware Boot Manager Variables."
 arch=('x86_64')
 url="https://github.com/vathpela/efibootmgr"
 license=('GPL2')
 depends=('zlib' 'pciutils' 'efivar')
 options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
-source=("https://github.com/vathpela/efibootmgr/tarball/libefivars/efibootmgr-${pkgver}.tar.gz")
-md5sums=('ff807168b370fa8e4c3d026f1f1c2b2f')
+source=("https://github.com/vathpela/efibootmgr/archive/${pkgver}.tar.gz")
+md5sums=('c2055c9c0711e20e1c8b2caca4ea5e00')
 
 build () {	
-	cd ${srcdir}/${_pkgname}-${_commit}/
+	cd ${srcdir}/${pkgname}-${pkgver}/
 	
 	echo	
 	CFLAGS= make
@@ -23,11 +21,11 @@ build () {
 
 
 package() {
-        cd ${srcdir}/${_pkgname}-${_commit}/
+        cd ${srcdir}/${pkgname}-${pkgver}/
         
         install -d "${pkgdir}/usr/bin/"
         install -d "${pkgdir}/usr/share/man/man8/"
 	
-	install -D -m0755 ${srcdir}/${_pkgname}-${_commit}/src/efibootmgr/efibootmgr ${pkgdir}/usr/sbin/efibootmgr
-	install -D -m644 ${srcdir}/${_pkgname}-${_commit}/src/man/man8/efibootmgr.8 ${pkgdir}/usr/share/man/man8/efibootmgr.8
+	install -D -m0755 ${srcdir}/${pkgname}-${pkgver}/src/efibootmgr/efibootmgr ${pkgdir}/usr/sbin/efibootmgr
+	install -D -m644 ${srcdir}/${pkgname}-${pkgver}/src/man/man8/efibootmgr.8 ${pkgdir}/usr/share/man/man8/efibootmgr.8
 }
