@@ -1,6 +1,6 @@
 
 pkgname=netctl
-pkgver=1.4
+pkgver=1.5
 pkgrel=1
 pkgdesc="Profile based systemd network management"
 url="http://projects.archlinux.org/netctl.git/"
@@ -18,7 +18,7 @@ conflicts=('netcfg')
 replaces=('netcfg')
 provides=('netcfg')
 source=("ftp://ftp.archlinux.org/other/packages/netctl/netctl-${pkgver}.tar.xz")
-md5sums=('825f07c432bff1de0254ab800f22cb61')
+md5sums=('69d3711d3444a8668a2fd18be9445748')
 
 package() {
   cd "$srcdir/netctl-${pkgver}"
