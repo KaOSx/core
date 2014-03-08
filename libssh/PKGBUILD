@@ -1,6 +1,6 @@
 
 pkgname=libssh
-pkgver=0.5.5
+pkgver=0.6.3
 pkgrel=1
 pkgdesc="Library for accessing ssh client services through C libraries"
 url="http://www.libssh.org/"
@@ -8,8 +8,8 @@ license=('LGPL')
 arch=('x86_64')
 depends=('openssl')
 makedepends=('cmake' 'doxygen')
-source=("https://red.libssh.org/attachments/download/51/${pkgname}-${pkgver}.tar.gz")
-md5sums=('bb308196756c7255c0969583d917136b')
+source=("https://red.libssh.org/attachments/download/87/${pkgname}-${pkgver}.tar.xz")
+md5sums=('66cf16e77f60913b4d54f18c92cdbf71')
 
 build() {
   cd "${srcdir}"
