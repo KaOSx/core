@@ -1,7 +1,7 @@
 
 pkgname=serf
-pkgver=1.3.2
-pkgrel=2
+pkgver=1.3.4
+pkgrel=1
 pkgdesc="High-performance asynchronous HTTP client library"
 url="http://code.google.com/p/serf/"
 arch=('x86_64')
@@ -9,8 +9,8 @@ license=('Apache')
 depends=('apr' 'apr-util' 'openssl' 'zlib')
 makedepends=('scons')
 options=('!libtool')
-source=("http://serf.googlecode.com/files/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('43ce30fccf39ab0186a7590e2733e3ec')
+source=("http://serf.googlecode.com/svn/src_releases/serf-${pkgver}.tar.bz2")
+md5sums=('9820da2c46ee10773309f0de657cddfd')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
