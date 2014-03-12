@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=210
-pkgrel=2
+pkgver=211
+pkgrel=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
@@ -31,61 +31,14 @@ options=('!libtool')
 source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-hook-udev'
         'initcpio-install-systemd'
-        'initcpio-install-udev'
-        '0001-login-fix-pos-array-allocation.patch'
-        '0002-login-set-pos-slot-to-fallback-on-pos-eviction.patch'
-        '0003-login-Allow-calling-org.freedesktop.login1.Seat.Swit.patch'
-        '0004-fix-typo-in-iDRAC-network-interface-name-irdac-idrac.patch'
-        '0007-mount-don-t-send-out-PropertiesChanged-message-if-ac.patch'
-        '0008-mount-don-t-fire-PropertiesChanged-signals-for-mount.patch'
-        '0009-logs-show-fix-corrupt-output-with-empty-messages.patch'
-        '0010-journalctl-refuse-extra-arguments-with-verify-and-si.patch'
-        '0011-cdrom_id-use-the-old-MMC-fallback.patch'
-        '0012-nspawn-fix-detection-of-missing-proc-self-loginuid.patch'
-        '0013-Fix-systemd-stdio-bridge-symlink.patch'
-        '0014-execute-free-directory-path-if-we-fail-to-remove-it-.patch'
-        '0015-journal-assume-that-next-entry-is-after-previous-ent.patch'
-        '0016-journal-forget-file-after-encountering-an-error.patch'
-        '0017-core-correctly-unregister-PIDs-from-PID-hashtables.patch')
-md5sums=('03efddf8c9eca36d4d590f9967e7e818'
+        'initcpio-install-udev')
+md5sums=('0a70c382b6089526f98073b4ee85ef75'
          '7a79eb3e4ce19906cfebfea75fb9f8bb'
          '1f495ca327afa3eb1fd09777961630ab'
-         'bde43090d4ac0ef048e3eaee8202a407'
-         'e64ade3fffc1e8fc5af0703135b389c4'
-         'b619c45b2e973b9bd1cc85a66647a859'
-         '5265ac8a57f8b6438effd332c5a38e7e'
-         '0d047c3e44076fcefded5c2db31743d7'
-         'c5bee064008abf23e5154768681944d2'
-         '11f93b3c02c268a16db95f69c3d8c459'
-         '43bc34b1e991dca2d9fb8b887e3b2d3d'
-         '2e4a5fc2b2cc2e64c3ade2f504763b81'
-         'b55c5fb9dccb25085e199afc460ca011'
-         'cc16a4ae58eb87a9739f183ed20e2290'
-         'be17e74f25c70a2928fe16ce4fdb5a7e'
-         '4875226e16a893b82663691c6ae7c922'
-         '0180fbe462be9ca6a0da208ccb94844e'
-         'c1182aee4a8baaf66d7a6b7a1347d60e'
-         '057ef5aa2089f0884151f22e7dbe4ed5')
+         'bde43090d4ac0ef048e3eaee8202a407')
 
 build() {
   cd "$pkgname-$pkgver"
-  patch -p1 <../0001-login-fix-pos-array-allocation.patch
-  patch -p1 <../0002-login-set-pos-slot-to-fallback-on-pos-eviction.patch
-  patch -p1 <../0003-login-Allow-calling-org.freedesktop.login1.Seat.Swit.patch
-  patch -p1 <../0004-fix-typo-in-iDRAC-network-interface-name-irdac-idrac.patch
-  patch -p1 <../0007-mount-don-t-send-out-PropertiesChanged-message-if-ac.patch
-  patch -p1 <../0008-mount-don-t-fire-PropertiesChanged-signals-for-mount.patch
-  patch -p1 <../0009-logs-show-fix-corrupt-output-with-empty-messages.patch
-  patch -p1 <../0010-journalctl-refuse-extra-arguments-with-verify-and-si.patch
-  patch -p1 <../0011-cdrom_id-use-the-old-MMC-fallback.patch
-  patch -p1 <../0012-nspawn-fix-detection-of-missing-proc-self-loginuid.patch
-  patch -p1 <../0013-Fix-systemd-stdio-bridge-symlink.patch
-  patch -p1 <../0014-execute-free-directory-path-if-we-fail-to-remove-it-.patch
-  patch -p1 <../0015-journal-assume-that-next-entry-is-after-previous-ent.patch
-  patch -p1 <../0016-journal-forget-file-after-encountering-an-error.patch
-  patch -p1 <../0017-core-correctly-unregister-PIDs-from-PID-hashtables.patch
-
-  autoreconf -fis
 
   ./configure \
       PYTHON=python3 \
