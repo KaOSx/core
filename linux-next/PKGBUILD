@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 _basekernel=3.14-rc6
 _srcname=linux-3.14
 pkgver=3.14rc6
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -27,9 +27,10 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.14-rc6.tar
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         'change-default-console-loglevel.patch'
-        'i8042-fix-aliases.patch')
+        'i8042-fix-aliases.patch'
+        'keppler.patch')
 md5sums=('95166f810b5fc3075bbc24377720f285'
-         'ced57b3a698ce7eca3f99667529fef09'
+         '9cc08607723599eed004a45d7b85adb1'
          'e4066031f031de0135cd47780d4045d1'
          '97f15945523cd6536efd33745a176b0c'
          '3743bc484d012fc0c5931e95e568802a'
@@ -39,7 +40,8 @@ md5sums=('95166f810b5fc3075bbc24377720f285'
          '52f4a2c7f6277774117c834d949d6b81'
          '7b2ca9cdb5555219f793b5a807b05870'
          '98beb36f9b8cf16e58de2483ea9985e3'
-         '93dbf73af819b77f03453a9c6de2bb47')
+         '93dbf73af819b77f03453a9c6de2bb47'
+         'b87df7644e46164d3177aeb9d99191ea')
          
 # module rc6 md5sums
 # 664af6e5b48228db9ec5ab07e50138d5  /lib/modules/3.13.0-1-next/modules.symbols
@@ -59,6 +61,8 @@ build() {
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
   
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
+  
+  patch -p1 -i "${srcdir}/keppler.patch"
 
   #aufs patches for Live:
   ##patch -p1 -i "${srcdir}/aufs3.patch"
