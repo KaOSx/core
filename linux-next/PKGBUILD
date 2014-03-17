@@ -2,17 +2,17 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.14-rc6
+_basekernel=3.14-rc7
 _srcname=linux-3.14
 pkgver=3.14rc6
-pkgrel=2
+pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 #source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.14-rc6.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.14-rc7.tar.xz"
         ##"https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -29,7 +29,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.14-rc6.tar
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch'
         'keppler.patch')
-md5sums=('95166f810b5fc3075bbc24377720f285'
+md5sums=('ed6c1837f279a1bfe74798a1f3ee9f85'
          '9cc08607723599eed004a45d7b85adb1'
          'e4066031f031de0135cd47780d4045d1'
          '97f15945523cd6536efd33745a176b0c'
@@ -41,7 +41,7 @@ md5sums=('95166f810b5fc3075bbc24377720f285'
          '7b2ca9cdb5555219f793b5a807b05870'
          '98beb36f9b8cf16e58de2483ea9985e3'
          '93dbf73af819b77f03453a9c6de2bb47'
-         'b87df7644e46164d3177aeb9d99191ea')
+         '62a725a49449c891ada8ca4d188377ff')
          
 # module rc6 md5sums
 # 664af6e5b48228db9ec5ab07e50138d5  /lib/modules/3.13.0-1-next/modules.symbols
