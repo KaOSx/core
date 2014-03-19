@@ -1,6 +1,6 @@
 
 pkgname=git
-pkgver=1.9.0
+pkgver=1.9.1
 pkgrel=1
 pkgdesc="Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency."
 arch=('x86_64')
@@ -16,12 +16,12 @@ optdepends=('tk: gitk and git gui'
             'subversion: git svn'
             'cvsps: git cvsimport')
 install="git.install"
-source=("http://git-core.googlecode.com/files/git-${pkgver}.tar.gz"
-        "http://git-core.googlecode.com/files/git-manpages-${pkgver}.tar.gz"
+source=("https://www.kernel.org/pub/software/scm/git/git-${pkgver}.tar.xz"
+        "https://www.kernel.org/pub/software/scm/git/git-manpages-${pkgver}.tar.xz"
         'git-daemon@.service'
         'git-daemon.socket')
-md5sums=('e16c14b27c644b8e0dd72bdb5ff77450'
-         'a7c78336e2d3f9a0f5fc120c16fabcba'
+md5sums=('d65ca55041898c226e532425fc673035'
+         '3fc7750e2785ac2af2cb749665c7ff1d'
          '042524f942785772d7bd52a1f02fe5ae'
          'f67869315c2cc112e076f0c73f248002')
 
