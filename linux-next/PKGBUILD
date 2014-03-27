@@ -29,7 +29,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.14-rc8.tar
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch'
         'keppler.patch')
-md5sums=('ed6c1837f279a1bfe74798a1f3ee9f85'
+md5sums=('f7295bcc13c47b6bee924dde5057f1e8'
          '9cc08607723599eed004a45d7b85adb1'
          'e4066031f031de0135cd47780d4045d1'
          '97f15945523cd6536efd33745a176b0c'
