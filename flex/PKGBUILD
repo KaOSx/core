@@ -1,6 +1,6 @@
 
 pkgname=flex
-pkgver=2.5.38
+pkgver=2.5.39
 pkgrel=1
 pkgdesc="A tool for generating text-scanning programs"
 arch=('x86_64')
@@ -10,7 +10,7 @@ groups=('base-devel')
 depends=('glibc' 'm4' 'sh')
 install=flex.install
 source=("http://downloads.sourceforge.net/sourceforge/flex/flex-$pkgver.tar.bz2")
-md5sums=('b230c88e65996ff74994d08a2a2e0f27')
+md5sums=('77d44c6bb8c0705e0017ab9a84a1502b')
 
 build() {
   cd $srcdir/$pkgname-$pkgver 
