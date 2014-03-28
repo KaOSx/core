@@ -1,13 +1,13 @@
 
 pkgname=hwids
-pkgver=20131226
+pkgver=20140321
 pkgrel=1
 pkgdesc="Hardware identification databases"
 url="https://github.com/gentoo/hwids"
 license=('GPL2')
 arch=('x86_64')
 source=("https://github.com/gentoo/${pkgname}/tarball/${pkgname}-${pkgver}")
-md5sums=('8320d1de195c92c2bc08b10e6143f860')
+md5sums=('4bb7a7c7c4601e43ad3d9036398e20ec')
 
 package() {
   cd ${srcdir}/*

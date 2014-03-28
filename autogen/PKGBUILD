@@ -1,12 +1,12 @@
 
 pkgname=autogen
 pkgver=5.18.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A tool designed to simplify the creation and maintenance of programs that contain large amounts of repetitious text"
 arch=('x86_64')
 url="http://autogen.sourceforge.net/"
 license=('GPL3')
-depends=('guile>=1.8.8' 'libxml2' 'libtool')
+depends=('guile' 'libxml2')
 options=('!libtool')
 install=autogen.install
 source=("http://ftp.gnu.org/gnu/${pkgname}/rel${pkgver}/${pkgname}-${pkgver}.tar.xz")

@@ -1,16 +1,16 @@
 
 pkgname=guile
-pkgver=1.8.8
-pkgrel=3
+pkgver=2.0.11
+pkgrel=1
 pkgdesc="GNU Ubiquitous Intelligent Language for Extensions, the official extension language for the GNU operating system"
 url="http://www.gnu.org/software/guile/"
 arch=('x86_64')
 license=('GPL')
-depends=('gmp' 'libltdl' 'ncurses>=5.7' 'texinfo')
+depends=('gmp' 'libltdl' 'ncurses' 'texinfo' 'gc' 'libffi' 'libunistring')
 install=guile.install
 source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz")
 options=('!libtool')
-md5sums=('18661a8fdfef13e2fcb7651720aa53f3')
+md5sums=('e532c68c6f17822561e3001136635ddd')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
@@ -18,7 +18,7 @@ build() {
   ./configure --prefix=/usr \
 	--disable-static  \
 	--disable-error-on-warning
-  make LDFLAGS+="-lpthread"
+  make 
 }
 
 package() {
