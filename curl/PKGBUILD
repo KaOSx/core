@@ -15,6 +15,8 @@ md5sums=('e6d1f9d1b59da5062109ffe14e0569a4'
 
 build() {
     cd ${srcdir}/${pkgname}-${pkgver}
+    # build fail http://sourceforge.net/p/curl/bugs/1350/
+    rm src/tool_hugehelp.c
 
     ./configure \
         --with-random=/dev/urandom \
