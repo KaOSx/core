@@ -1,28 +1,29 @@
 
 pkgname=logrotate
 pkgver=3.8.7
-pkgrel=1
+pkgrel=2
 pkgdesc="Rotates system logs automatically"
 url='https://fedorahosted.org/logrotate/'
 arch=('x86_64')
 license=('GPL')
 groups=('base')
-depends=('popt' 'cron' 'gzip' 'acl')
+depends=('popt' 'gzip' 'acl')
 backup=('etc/logrotate.conf')
 source=("https://fedorahosted.org/releases/l/o/logrotate/logrotate-${pkgver}.tar.gz"
         'logrotate.conf' 
-        'logrotate.cron.daily')
+        'logrotate.service'
+        'logrotate.timer'
+        'path.patch')
 md5sums=('99e08503ef24c3e2e3ff74cc5f3be213'
-         '1bcb4769f347c7de346f6264e57f48d8'
-         '202f50b878c8c28677fcd8ef27f6330c')
+         '416de14f92ef4361adad8b6e7065245a'
+         '57039a96a716391fad46c7eb1bf47b52'
+         '287c2ad9b074cb5478db7692f385827c'
+         'e76526bcd6fc33c9d921e1cb1eff1ffb')
 
 build() {
   cd $srcdir/${pkgname}-${pkgver}
-
-  sed -i 's|#define DEFAULT_MAIL_COMMAND .*|#define DEFAULT_MAIL_COMMAND "/usr/bin/mail"|'\
-    config.h
-  sed -i "s|CFLAGS = -Wall|CFLAGS = -Wall $CFLAGS|" Makefile
-  sed -i 's|$(BASEDIR)/man|$(BASEDIR)/share/man|' Makefile
+  patch -p0 -i "$srcdir/path.patch"
+  
   make WITH_ACL=yes 
 }
 
@@ -38,5 +39,9 @@ package() {
   
   install -dm755 $pkgdir/etc/logrotate.d
   install -Dm644 $srcdir/logrotate.conf $pkgdir/etc/logrotate.conf
-  install -Dm744 $srcdir/logrotate.cron.daily $pkgdir/etc/cron.daily/logrotate
+  
+  install -D -m644 ${srcdir}/logrotate.timer ${pkgdir}/usr/lib/systemd/system/logrotate.timer
+  install -D -m644 ${srcdir}/logrotate.service ${pkgdir}/usr/lib/systemd/system/logrotate.service
+  install -d -m755 ${pkgdir}/usr/lib/systemd/system/multi-user.target.wants
+  ln -s ../logrotate.timer ${pkgdir}//usr/lib/systemd/system/multi-user.target.wants/logrotate.timer
 }
