@@ -1,7 +1,7 @@
 
 pkgname=shadow
 pkgver=4.1.5.1
-pkgrel=6
+pkgrel=7
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
 url='http://pkg-shadow.alioth.debian.org/'
@@ -15,7 +15,7 @@ backup=(etc/login.defs
         etc/default/useradd)
 options=('!libtool')
 install='shadow.install'
-source=("http://pkg-shadow.alioth.debian.org/releases/$pkgname-$pkgver.tar.bz2"
+source=("ftp://ftp.lfs-matrix.net/pub/blfs/svn/s/${pkgname}_${pkgver}.orig.tar.gz"
         'LICENSE'
         'chgpasswd'
         'chpasswd'
@@ -23,11 +23,12 @@ source=("http://pkg-shadow.alioth.debian.org/releases/$pkgname-$pkgver.tar.bz2"
         'login.defs'
         'newusers'
         'passwd'
-        'shadow.cron.daily'
+        'shadow.service'
+        'shadow.timer'
         'useradd.defaults'
         'xstrdup.patch'
         'shadow-strncpy-usage.patch')
-md5sums=('a00449aa439c69287b6d472191dc2247'
+md5sums=('ae66de9953f840fb3a97f6148bc39a30'
          'bdf93c7bc4b751277159c5de8fc34df2'
          '65e9ebce249a5b9ed021e2790452b9e1'
          'f6760e9701d7ed2cd91371d427faed2a'
@@ -35,13 +36,14 @@ md5sums=('a00449aa439c69287b6d472191dc2247'
          'c4db3dbd4d5759d3e4f29366946d14e5'
          'f6760e9701d7ed2cd91371d427faed2a'
          'cb4556b8d92d5d09a690ce06c57b0f76'
-         '1d64b4113e1d402746d9dd65f28a2c6f'
+         '23df9e8f5746c2679bc1f276388eac18'
+         '5bd14862ace022d6682b179c18fe30de'
          '190e69801f123512549a97052508c271'
          '0eebe9d13065bec4b5d7ccf3bf46c509'
          '8a9152e7448a0f9d1d07ed0016776e16')
 
 build() {
-  cd "$pkgname-$pkgver"
+  cd "${pkgname}-${pkgver}"
 
   # avoid transitive linking issues with binutils 2.22
   sed -i '/^user\(mod\|add\)_LDADD/s|$| -lattr|' src/Makefile.am
@@ -50,8 +52,8 @@ build() {
   LDFLAGS+=" -lcrypt"
 
   # need to offer these upstream
-  patch -p1 <"$srcdir/xstrdup.patch"
-  patch -p1 <"$srcdir/shadow-strncpy-usage.patch"
+  patch -p1 <"${srcdir}/xstrdup.patch"
+  patch -p1 <"${srcdir}/shadow-strncpy-usage.patch"
 
   # supress etc/pam.d/*, we provide our own
   sed -i '/^SUBDIRS/s/pam.d//' etc/Makefile.in
@@ -68,33 +70,36 @@ build() {
 }
 
 package() {
-  cd "$pkgname-$pkgver"
+  cd "${pkgname}-${pkgver}"
 
-  make DESTDIR="$pkgdir" install
+  make DESTDIR="${pkgdir}" install
 
   # license
-  install -Dm644 "$srcdir/LICENSE" "$pkgdir/usr/share/licenses/shadow/LICENSE"
+  install -Dm644 "${srcdir}/LICENSE" "${pkgdir}/usr/share/licenses/shadow/LICENSE"
 
   # useradd defaults
-  install -Dm644 "$srcdir/useradd.defaults" "$pkgdir/etc/default/useradd"
+  install -Dm644 "$srcdir/useradd.defaults" "${pkgdir}/etc/default/useradd"
 
-  # cron job
-  install -Dm744 "$srcdir/shadow.cron.daily" "$pkgdir/etc/cron.daily/shadow"
+  # systemd timer
+  install -D -m644 ${srcdir}/shadow.timer ${pkgdir}/usr/lib/systemd/system/shadow.timer
+  install -D -m644 ${srcdir}/shadow.service ${pkgdir}/usr/lib/systemd/system/shadow.service
+  install -d -m755 ${pkgdir}/usr/lib/systemd/system/multi-user.target.wants
+  ln -s ../shadow.timer ${pkgdir}//usr/lib/systemd/system/multi-user.target.wants/shadow.timer
 
   # login.defs
-  install -Dm644 "$srcdir/login.defs" "$pkgdir/etc/login.defs"
+  install -Dm644 "${srcdir}/login.defs" "${pkgdir}/etc/login.defs"
 
   # PAM config - custom
-  install -dm755 "$pkgdir/etc/pam.d"
-  install -t "$pkgdir/etc/pam.d" -m644 "$srcdir"/{passwd,chgpasswd,chpasswd,newusers}
+  install -dm755 "${pkgdir}/etc/pam.d"
+  install -t "${pkgdir}/etc/pam.d" -m644 "${srcdir}"/{passwd,chgpasswd,chpasswd,newusers}
 
   # PAM config - from tarball
-  install -Dm644 etc/pam.d/groupmems "$pkgdir/etc/pam.d/groupmems"
+  install -Dm644 etc/pam.d/groupmems "${pkgdir}/etc/pam.d/groupmems"
 
   # we use the 'useradd' PAM file for other similar utilities
   for file in chage groupadd groupdel groupmod shadow \
       useradd usermod userdel; do
-    install -Dm644 "$srcdir/defaults.pam" "$pkgdir/etc/pam.d/$file"
+    install -Dm644 "${srcdir}/defaults.pam" "${pkgdir}/etc/pam.d/$file"
   done
 
   # Remove utilities provided by util-linux
