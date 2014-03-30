@@ -1,13 +1,12 @@
 
 pkgname=gpm
 pkgver=1.20.7
-pkgrel=1
+pkgrel=2
 pkgdesc="A mouse server for the console and xterm"
 arch=('x86_64')
 url="http://unix.schottelius.org/gpm/"
 license=('GPL')
 depends=('ncurses' 'bash')
-backup=('etc/conf.d/gpm')
 options=('!makeflags')
 install=gpm.install
 source=("http://www.nico.schottelius.org/software/gpm/archives/${pkgname}-${pkgver}.tar.lzma"

@@ -1,7 +1,7 @@
 
 pkgname=iana-etc
 pkgver=2.30
-pkgrel=3
+pkgrel=4
 pkgdesc="/etc/protocols and /etc/services provided by IANA"
 arch=('x86_64')
 url="http://sethwklein.net/iana-etc"
@@ -27,8 +27,8 @@ check() {
 
 package() {
   cd "$srcdir/$pkgname-$pkgver"
-
   make DESTDIR="$pkgdir/" install
+  
   install -D -m644 COPYING "$pkgdir/usr/share/licenses/iana-etc/LICENSE"
   install -Dm644 port-numbers.iana "${pkgdir}/usr/share/iana-etc/port-numbers.iana"
   install -Dm644 protocol-numbers.iana "${pkgdir}/usr/share/iana-etc/protocol-numbers.iana"

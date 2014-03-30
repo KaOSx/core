@@ -1,7 +1,7 @@
 
 pkgname=autoconf
 pkgver=2.69
-pkgrel=1
+pkgrel=2
 pkgdesc="A GNU tool for automatically configuring source code"
 arch=('x86_64')
 license=('GPL2' 'GPL3' 'custom')
@@ -14,12 +14,14 @@ md5sums=('50f97f4159805e374639a73e2636f22e')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
+  
   ./configure --prefix=/usr
   make 
 }
 
 check() {
   cd ${srcdir}/${pkgname}-${pkgver}
+  
   make check
 }
 
@@ -27,9 +29,7 @@ package() {
   cd ${srcdir}/${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install 
 
-  # license exception
-  install -Dm644 COPYING.EXCEPTION \
-    $pkgdir/usr/share/licenses/autoconf/COPYING.EXCEPTION
+  install -Dm644 COPYING.EXCEPTION $pkgdir/usr/share/licenses/autoconf/COPYING.EXCEPTION
 
   # conflict with bintuils
   rm -f ${pkgdir}/usr/share/info/standards.info
