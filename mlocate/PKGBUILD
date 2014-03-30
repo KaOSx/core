@@ -7,8 +7,7 @@ arch=('x86_64')
 url="http://carolina.mff.cuni.cz/~trmac/blog/mlocate"
 license=('GPL')
 depends=('glibc' 'coreutils' 'sh')
-backup=('etc/updatedb.conf'
-        'etc/cron.daily/updatedb')
+backup=('etc/updatedb.conf')
 source=("https://fedorahosted.org/releases/m/l/mlocate/mlocate-$pkgver.tar.xz"
 	'updatedb.conf'
 	'updatedb.timer'
