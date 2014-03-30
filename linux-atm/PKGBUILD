@@ -1,19 +1,18 @@
 
 pkgname=linux-atm
 pkgver=2.5.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Drivers and tools to support ATM networking under Linux."
 arch=('x86_64')
 depends=('glibc')
 source=("http://downloads.sourceforge.net/sourceforge/$pkgname/$pkgname-$pkgver.tar.gz")
 url="http://linux-atm.sourceforge.net/"
-license=(GPL)
-options=(!libtool !makeflags)
+license=('GPL')
+options=('!libtool' '!makeflags')
 md5sums=('d49499368c3cf15f73a05d9bce8824a8')
 
 build() {
-  cd $srcdir/$pkgname-$pkgver
-  
+  cd $srcdir/$pkgname-$pkgver 
   # install firmware in /usr/lib
   sed -i "s#/lib/firmware#/usr/lib/firmware#" src/extra/Makefile.in
   
