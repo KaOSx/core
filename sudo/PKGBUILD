@@ -1,19 +1,22 @@
 
 pkgname=sudo
-pkgver=1.8.9.4
-_pkgver=1.8.9p4
+pkgver=1.8.10.2
+_pkgver=1.8.10p2
 pkgrel=1
 pkgdesc="Give certain users the ability to run some commands as root."
 arch=('x86_64')
 url="http://www.sudo.ws/sudo/"
 license=('custom')
-depends=('glibc' 'pam')
+depends=('glibc' 'pam' 'libldap')
 backup=('etc/sudoers' 'etc/pam.d/sudo')
+install=sudo.install
 options=('!libtool')
 source=("ftp://ftp.sudo.ws/pub/sudo/${pkgname}-${_pkgver}.tar.gz"
-        'sudo.pam')
-md5sums=('a46f6de8645e6c5b6668d30657439d1c'
-         '4e7ad4ec8f2fe6a40e12bcb2c0b256e3')
+        'sudo.pam'
+        'sudo.tmpfiles.conf')
+md5sums=('5e5eab1036a7cc2c088ab0d9b6b6a42e'
+         'a929068d0916daae0cf69bc8435c054e'
+         '5d124e73d02d9f0869b8ed5d182917b6')
 
 build() {
   cd "${srcdir}/${pkgname}-${_pkgver}"
@@ -21,6 +24,9 @@ build() {
   ./configure --prefix=/usr \
               --with-pam \
               --libexecdir=/usr/lib \
+              --with-ldap \
+              --with-ldap-conf-file=/etc/openldap/ldap.conf \
+              --with-rundir=/run/sudo \
               --with-env-editor \
               --with-all-insults \
               --with-logfac=auth
@@ -29,7 +35,6 @@ build() {
 }
 
 check() {
-
   cd "$srcdir/$pkgname-${_pkgver}"
   
   make check
@@ -44,8 +49,13 @@ package() {
 
   make DESTDIR="${pkgdir}" install
   install -D -m644 "${srcdir}/sudo.pam" "${pkgdir}/etc/pam.d/sudo"
+  
+  # changes with 1.8.10, added .install for this
+  rmdir "$pkgdir/run/sudo"
+  rmdir "$pkgdir/run"
+
+  install -Dm644 "$srcdir/sudo.tmpfiles.conf" "$pkgdir/usr/lib/tmpfiles.d/sudo.conf"
 
   install -D -m644 doc/LICENSE "${pkgdir}/usr/share/licenses/sudo/LICENSE"
 }
 
-# vim:set ts=2 sw=2 et:
