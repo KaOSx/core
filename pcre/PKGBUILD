@@ -1,15 +1,15 @@
 
 pkgname=pcre
-pkgver=8.34
+pkgver=8.35
 pkgrel=1
 pkgdesc="A library that implements Perl 5-style regular expressions"
 arch=('x86_64')
 url="http://www.pcre.org/"
 license=('BSD')
-depends=('gcc-libs')
+depends=('gcc-libs' 'readline' 'zlib' 'bzip2' 'libedit')
 options=('!libtool')
 source=("ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('5439e321351bddd5533551bbce128d07')
+md5sums=('6aacb23986adccd9b3bc626c00979958')
 
 build() {
   cd "${srcdir}"/${pkgname}-${pkgver}
@@ -19,7 +19,10 @@ build() {
         --enable-unicode-properties \
         --enable-jit \
         --enable-pcre16 \
-        --enable-pcre32
+        --enable-pcre32 \
+        --enable-pcregrep-libz \
+        --enable-pcregrep-libbz2 \
+        --enable-pcretest-libreadline
   make
 }
 
