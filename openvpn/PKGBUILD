@@ -1,6 +1,6 @@
 
 pkgname=openvpn
-pkgver=2.3.2
+pkgver=2.3.3
 pkgrel=1
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
@@ -10,11 +10,11 @@ license=('custom')
 backup=(usr/share/openvpn/easy-rsa/vars
         usr/share/openvpn/easy-rsa/openssl.cnf)
 source=("http://swupdate.openvpn.net/community/releases/openvpn-${pkgver}.tar.gz"
-        "http://build.openvpn.net/downloads/releases/easy-rsa-2.2.0_master.tar.gz"
+        "https://github.com/OpenVPN/easy-rsa/archive/2.2.2.tar.gz"
 	'openvpn@.service'
 	'systemd.patch')
-md5sums=('06e5f93dbf13f2c19647ca15ffc23ac1'
-         'fbf818b6e1f212e77b9ce0e6d92584a1'
+md5sums=('5c66ea3143ac884a3075521bd74ede06'
+         '040238338980617bc9c2df4274349593'
          '0846aa59d0b123d61030890f9a4135ae'
          'e1bd1523e38745e948c710db1a330bb1')
 
@@ -32,7 +32,8 @@ build() {
   make
 
   # Build easy-rsa
-  cd $srcdir/easy-rsa-2.2.0_master
+  cd $srcdir/easy-rsa-2.2.2
+  autoreconf -i
   ./configure --prefix=/usr --with-easyrsadir=/usr/share/openvpn/easy-rsa
   make
 }
@@ -51,7 +52,7 @@ package() {
   install -d -m755 $pkgdir/usr/share/openvpn/contrib
   cp -r contrib $pkgdir/usr/share/openvpn
   # Install easy-rsa
-  cd $srcdir/easy-rsa-2.2.0_master
+  cd $srcdir/easy-rsa-2.2.2
   make install DESTDIR=$pkgdir
   rm -f ${pkgdir}/usr/share/openvpn/easy-rsa/openssl-0.9.?.cnf
   # install systemd units
