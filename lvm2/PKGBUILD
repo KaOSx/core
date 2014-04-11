@@ -1,7 +1,7 @@
 
 pkgbase=lvm2
 pkgname=('lvm2' 'device-mapper')
-pkgver=2.02.105
+pkgver=2.02.106
 pkgrel=1
 arch=('x86_64')
 url="http://sourceware.org/lvm2/"
@@ -19,7 +19,7 @@ source=("http://mirrors.kernel.org/sources.redhat.com/lvm2/LVM2.${pkgver}.tgz"
         'lvmetad.service'
         'lvmetad.socket'
         'sd-lvm2')
-md5sums=('b5b3540661fc70bf329b526c1cfbcf3a'
+md5sums=('77f84279fb649b3dc4edad1c6d1a1b0e'
          '8cfc93d5fe9be1cd0a37dd4fbe3cc2ec'
          'b25cfb248e66e0f76e7aafa6715d620a'
          '69e40679cd8b3658bfc619e48baae125'
