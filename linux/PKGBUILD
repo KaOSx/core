@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=3.13
-pkgver=3.13.5
+pkgver=3.13.10
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -11,7 +11,7 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.13.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}-rc1.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -25,7 +25,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.13.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         'change-default-console-loglevel.patch'
-        'i8042-fix-aliases.patch')
+        'i8042-fix-aliases.patch'
+        '0001-Bluetooth-allocate-static-minor-for-vhci.patch')
 md5sums=('0ecbaf65c00374eb4a826c2f9f37606f'
          '114c391a592131f1c12544e063173a45'
          'c2833542b48f2d1be4e3c7e265b6d357'
@@ -55,6 +56,9 @@ prepare() {
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
   
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
+  
+  # vhci warning in kmod
+  patch -p1 -i "${srcdir}/0001-Bluetooth-allocate-static-minor-for-vhci.patch"
 
   #aufs patches for Live:
   patch -p1 -i "${srcdir}/aufs3.patch"
