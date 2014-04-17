@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 _basekernel=3.14
 _srcname=linux-3.14
 pkgver=3.14.1
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -33,7 +33,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'refcount_leak.patch')
 md5sums=('b621207b3f6ecbb67db18b13258f8ea8'
          '2526eb95793ecc1c22d7e1428ef23cdc'
-         'b395e09c883b4c8785fc1d7f591a9bd6'
+         'f347197d6860209b29a5e2e872345ead'
          '1c47a3ec038815c204b2f747f5a9950b'
          '1c21a3e9ac6439d45e42ccfb31e72d1f'
          'e6b5306178dee7f85d5dfd0fcb1ac374'
