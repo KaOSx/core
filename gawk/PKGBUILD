@@ -1,7 +1,7 @@
 
 pkgname=gawk
-pkgver=4.1.0
-pkgrel=2
+pkgver=4.1.1
+pkgrel=1
 pkgdesc="The GNU awk utility interprets a special-purpose programming language that makes it possible to handle simple data-reformatting jobs with just a few lines of code."
 arch=('x86_64')
 url="http://www.gnu.org/software/gawk/gawk.html"
@@ -10,14 +10,14 @@ groups=('base')
 provides=('awk')
 install="gawk.install"
 source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-depends=('sh' 'glibc')
+depends=('sh' 'glibc' 'mpfr')
 makedepends=('gzip')
-md5sums=('b18992ff8faf3217dab55d2d0aa7d707')
+md5sums=('a2a26543ce410eb74bc4a508349ed09a')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
 
-  ./configure --prefix=/usr --libexecdir=/usr/lib
+  ./configure --prefix=/usr --libexecdir=/usr/lib 
   make
 }
 
