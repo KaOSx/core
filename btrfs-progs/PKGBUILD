@@ -1,6 +1,6 @@
 
 pkgname=btrfs-progs
-pkgver=3.14
+pkgver=3.14.1
 pkgrel=1
 pkgdesc="Btrfs filesystem utilities."
 arch=('x86_64')
