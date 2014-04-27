@@ -1,7 +1,7 @@
 
 pkgname=popt
 pkgver=1.16
-pkgrel=5
+pkgrel=6
 pkgdesc="A commandline option parser"
 arch=('x86_64') 
 url="http://rpm5.org"

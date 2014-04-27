@@ -1,7 +1,7 @@
 
 pkgname=nano
 pkgver=2.2.6
-pkgrel=3
+pkgrel=4
 pkgdesc="Pico editor clone with enhancements"
 arch=('x86_64')
 license=('GPL')

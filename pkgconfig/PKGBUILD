@@ -1,7 +1,7 @@
 
 pkgname=pkg-config
 pkgver=0.28
-pkgrel=1
+pkgrel=2
 pkgdesc="A system for managing library compile/link flags"
 arch=('x86_64')
 url="http://pkgconfig.freedesktop.org/wiki/"

@@ -1,7 +1,7 @@
 
 pkgname=zlib
 pkgver=1.2.8
-pkgrel=1
+pkgrel=2
 pkgdesc='Compression library implementing the deflate compression method found in gzip and PKZIP'
 arch=('x86_64')
 license=('custom')
