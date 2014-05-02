@@ -1,6 +1,6 @@
 
 pkgname=openvpn
-pkgver=2.3.3
+pkgver=2.3.4
 pkgrel=1
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
@@ -13,7 +13,7 @@ source=("http://swupdate.openvpn.net/community/releases/openvpn-${pkgver}.tar.gz
         "https://github.com/OpenVPN/easy-rsa/archive/2.2.2.tar.gz"
 	'openvpn@.service'
 	'systemd.patch')
-md5sums=('5c66ea3143ac884a3075521bd74ede06'
+md5sums=('04d47237907faabe9d046970ffe44b2e'
          '040238338980617bc9c2df4274349593'
          '0846aa59d0b123d61030890f9a4135ae'
          'e1bd1523e38745e948c710db1a330bb1')
