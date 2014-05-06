@@ -1,7 +1,7 @@
 
 pkgname=wpa_supplicant
-pkgver=2.0
-pkgrel=2
+pkgver=2.1
+pkgrel=1
 pkgdesc="A utility providing key negotiation for WPA wireless networks"
 arch=('x86_64')
 depends=('openssl' 'dbus' 'readline' 'libnl')
@@ -10,12 +10,17 @@ groups=('base')
 backup=('etc/wpa_supplicant.conf')
 url="http://hostap.epitest.fi/wpa_supplicant"
 source=("http://hostap.epitest.fi/releases/wpa_supplicant-$pkgver.tar.gz"
-        'config')
-md5sums=('3be2ebfdcced52e00eda0afe2889839d'
-         '4aa1e5accd604091341b989b47fe1076')
+        'config'
+        'openssl.patch')
+md5sums=('e96b8db5a8171cd17a5b2012d6ad7cc7'
+         '78bc0d6b6db02d4d58982d870e0a0c26'
+         '1009d1e35631e83b4cd375fe23b9dcd0')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}/${pkgname}"
+  cd "${srcdir}/${pkgname}-${pkgver}/"
+  patch -p1 -i "${srcdir}"/openssl.patch
+  
+  cd "${pkgname}/"
   cp "${srcdir}/config" ./.config
   sed -i 's@/usr/local@$(PREFIX)@g' Makefile
   
