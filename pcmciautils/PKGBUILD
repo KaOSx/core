@@ -1,7 +1,7 @@
 
 pkgname=pcmciautils
 pkgver=018
-pkgrel=5
+pkgrel=6
 pkgdesc="Utilities for inserting and removing PCMCIA cards"
 arch=('x86_64')
 url="http://kernel.org/pub/linux/utils/kernel/pcmcia/pcmcia.html"
@@ -9,7 +9,7 @@ license=('GPL')
 groups=('base')
 depends=('sysfsutils' 'systemd')
 conflicts=('pcmcia-cs')
-options=(!makeflags)
+options=('!makeflags')
 source=("http://ftp.de.debian.org/debian/pool/main/p/${pkgname}/${pkgname}_${pkgver}.orig.tar.gz"
         'initcpio-install-pcmcia')
 md5sums=('3c388cb559975b37a75cb5965e9800a9'
