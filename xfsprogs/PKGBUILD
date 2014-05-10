@@ -1,6 +1,7 @@
 
 pkgname=xfsprogs
-pkgver=3.1.11
+pkgver=3.2.0rc3
+_pkgver=3.2.0-rc3
 pkgrel=1
 pkgdesc="XFS filesystem utilities"
 arch=('x86_64')
@@ -9,11 +10,11 @@ url="http://oss.sgi.com/projects/xfs/"
 groups=('base')
 depends=('util-linux')
 options=('!makeflags' '!libtool')
-source=("ftp://oss.sgi.com/projects/xfs/cmd_tars/${pkgname}-${pkgver}.tar.gz")
-md5sums=('de9f1f45026c2f4e0776058d429ff4b6')
+source=("ftp://oss.sgi.com/projects/xfs/cmd_tars/${pkgname}-${_pkgver}.tar.gz")
+md5sums=('86f3122355453cd44c726e066aface66')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd "${srcdir}/${pkgname}-${_pkgver}"
   
   export OPTIMIZER="-march=${CARCH/_/-} -O1"
   export DEBUG=-DNDEBUG
@@ -22,7 +23,7 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}" 
+  cd "${srcdir}/${pkgname}-${_pkgver}" 
   make DIST_ROOT="${pkgdir}" install install-dev
   
   chown -R root $pkgdir
