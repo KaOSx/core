@@ -1,7 +1,7 @@
 
 pkgname=libevent
 pkgver=2.0.21
-pkgrel=1
+pkgrel=2
 pkgdesc="An event notification library"
 license=('GPL2')
 arch=('x86_64')

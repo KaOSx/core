@@ -1,7 +1,7 @@
 
 pkgname=libssh2
 pkgver=1.4.3
-pkgrel=2
+pkgrel=3
 pkgdesc="A library implementing the SSH2 protocol as defined by Internet Drafts"
 url="http://www.libssh2.org/"
 arch=('x86_64')
@@ -24,6 +24,5 @@ package() {
   cd ${srcdir}/${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install 
   
-  install -Dm644 COPYING \
-    ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE 
+  install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE 
 }
