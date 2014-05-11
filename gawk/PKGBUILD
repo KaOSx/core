@@ -9,20 +9,23 @@ license=('GPL')
 groups=('base')
 provides=('awk')
 install="gawk.install"
-source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
 depends=('sh' 'glibc' 'mpfr')
 makedepends=('gzip')
-md5sums=('a2a26543ce410eb74bc4a508349ed09a')
+source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+        'install_hook.patch')
+md5sums=('a2a26543ce410eb74bc4a508349ed09a'
+         '8b6125993248e2c8db6da43c711c6878')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  patch -p1 -i "$srcdir"/install_hook.patch
 
   ./configure --prefix=/usr --libexecdir=/usr/lib 
   make
 }
 
 check() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd "${srcdir}/${pkgname}-${pkgver}"
   
   make check
 }

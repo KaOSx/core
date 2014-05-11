@@ -1,0 +1,48 @@
+From 976f73ab03569bb836aa5c949be1c1cc973b2d2e Mon Sep 17 00:00:00 2001
+From: Arnold D. Robbins <arnold@skeeve.com>
+Date: Fri, 11 Apr 2014 04:42:16 +0000
+Subject: Use $(DESTDIR) in extension/Makefile.am when removing .la files.
+
+---
+diff --git a/extension/ChangeLog b/extension/ChangeLog
+index afd64ff..f3a1c7a 100644
+--- a/extension/ChangeLog
++++ b/extension/ChangeLog
+@@ -1,3 +1,9 @@
++2014-04-11         Arnold D. Robbins     <arnold@skeeve.com>
++
++	* Makefile.am (install-data-hook): Use $(DESTDIR) when removing
++	the .la files. Thanks to Lars Wendler <polynomial-c@gentoo.org>
++	for the report and fix.
++
+ 2014-04-08         Arnold D. Robbins     <arnold@skeeve.com>
+ 
+ 	* 4.1.1: Release tar ball made.
+diff --git a/extension/Makefile.am b/extension/Makefile.am
+index 9c49bb8..11826e2 100644
+--- a/extension/Makefile.am
++++ b/extension/Makefile.am
+@@ -100,7 +100,7 @@ testext_la_LIBADD     = $(MY_LIBS)
+ 
+ install-data-hook:
+ 	for i in $(pkgextension_LTLIBRARIES) ; do \
+-		$(RM) $(pkgextensiondir)/$$i ; \
++		$(RM) $(DESTDIR)$(pkgextensiondir)/$$i ; \
+ 	done
+ 
+ # Keep the uninstall check working:
+diff --git a/extension/Makefile.in b/extension/Makefile.in
+index 040cdb8..d81b169 100644
+--- a/extension/Makefile.in
++++ b/extension/Makefile.in
+@@ -1231,7 +1231,7 @@ uninstall-man: uninstall-man3
+ 
+ install-data-hook:
+ 	for i in $(pkgextension_LTLIBRARIES) ; do \
+-		$(RM) $(pkgextensiondir)/$$i ; \
++		$(RM) $(DESTDIR)$(pkgextensiondir)/$$i ; \
+ 	done
+ 
+ # Keep the uninstall check working:
+--
+cgit v0.9.0.2
