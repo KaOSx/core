@@ -1,8 +1,8 @@
 
 pkgname=efivar
 _pkgname=vathpela-efivar
-_commit=596ddd6
-pkgver=0.8
+_commit=cf48e28
+pkgver=0.10
 pkgrel=1
 pkgdesc="Library to manipulate EFI variables"
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=('popt')
 makedepends=('git')
 options=('zipman' 'docs' '!makeflags')
 source=("https://github.com/vathpela/efivar/tarball/master/efivar-${pkgver}.tar.gz")
-md5sums=('47b50ea24f005c30b166810ff06da912')
+md5sums=('b2d8661adb09fc400907101d374c90c8')
 
 build() {
 	cd "${srcdir}/${_pkgname}-${_commit}/"
@@ -24,6 +24,7 @@ build() {
 	unset MAKEFLAGS
 	
 	sed 's|-rpath=$(TOPDIR)/src/|-rpath=$(libdir)|g' -i "${srcdir}/${_pkgname}-${_commit}/src/test/Makefile" || true
+	sed 's|-O0|-Os|g' -i "${srcdir}/efivar/Make.defaults" || true
 	
 	make libdir="/usr/lib/" bindir="/usr/bin/" mandir="/usr/share/man/" includedir="/usr/include/" V=1 -j1
 	echo
