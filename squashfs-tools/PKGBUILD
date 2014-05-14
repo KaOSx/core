@@ -1,14 +1,14 @@
 
 pkgname=squashfs-tools
-pkgver=4.2
-pkgrel=3
+pkgver=4.3
+pkgrel=1
 pkgdesc="Tools for squashfs, a highly compressed read-only filesystem for Linux."
 url="http://squashfs.sourceforge.net"
 license=("GPL")
 arch=('x86_64')
 depends=('zlib' 'glibc' 'lzo2' 'xz')
 source=("http://downloads.sourceforge.net/sourceforge/squashfs/squashfs${pkgver}.tar.gz")
-md5sums=('1b7a781fb4cf8938842279bd3e8ee852')
+md5sums=('d92ab59aabf5173f2a59089531e30dbf')
 
 build() {
     cd ${srcdir}/squashfs${pkgver}/${pkgname}
