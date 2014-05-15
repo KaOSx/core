@@ -1,7 +1,7 @@
 
 pkgname=pam
 pkgver=1.1.8
-pkgrel=2
+pkgrel=3
 pkgdesc="PAM (Pluggable Authentication Modules) library"
 arch=('x86_64')
 license=('GPL2')
@@ -11,17 +11,23 @@ makedepends=('flex' 'w3m' 'docbook-xml>=4.4' 'docbook-xsl')
 backup=(etc/security/{access.conf,group.conf,limits.conf,namespace.conf,namespace.init,pam_env.conf,time.conf} etc/pam.d/other etc/default/passwd etc/environment)
 source=("https://fedorahosted.org/releases/l/i/linux-pam/Linux-PAM-$pkgver.tar.bz2"
         #http://www.kernel.org/pub/linux/libs/pam/library/Linux-PAM-$pkgver.tar.bz2
-        "ftp://ftp.suse.com/pub/people/kukuk/pam/pam_unix2/pam_unix2-2.9.1.tar.bz2"
+        "http://sourceforge.net/projects/kaosx/files/sources/pam/pam_unix2-2.9.1.tar.bz2"
         'other'
-        'glibc216.patch')
+        'glibc216.patch'
+        'CVE-2013-7041.patch'
+        'CVE-2014-2583.patch')
 options=('!libtool' '!emptydirs')
 md5sums=('35b6091af95981b1b2cd60d813b5e4ee'
          'da6a46e5f8cd3eaa7cbc4fc3a7e2b555'
          '6e6c8719e5989d976a14610f340bd33a'
-         '0b5f56559484af741005db19ecfdd709')
+         '0b5f56559484af741005db19ecfdd709'
+         'cb3572d1e39c1a7ac66af526729146ea'
+         '144ea8e2f9d49a0f4021027ca2c1558f')
 
 build() {
   cd $srcdir/Linux-PAM-$pkgver
+  patch -p1 -i  ${srcdir}/CVE-2013-7041.patch
+  patch -p1 -i  ${srcdir}/CVE-2014-2583.patch
   
   ./configure \
         CFLAGS="$CFLAGS -I$srcdir/Linux-PAM-$pkgver/libpam/include/" \
