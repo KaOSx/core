@@ -3,7 +3,7 @@ pkgbase="linux-lts"
 pkgname=('linux-lts' 'linux-lts-headers' 'linux-lts-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=3.2
-pkgver=3.2.57
+pkgver=3.2.59
 pkgrel=1
 makedepends=('xmlto' 'docbook-xsl')
 arch=('x86_64')
@@ -22,7 +22,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/linux-$_basekernel.tar.xz"
         'module-symbol-waiting-3.0.patch'
         'module-init-wait-3.0.patch')
 md5sums=('364066fa18767ec0ae5f4e4abcf9dc51'
-         '6934e452412f80ceb7d725fd93c18007'
+         '68696787e651422f02816d2c825f9a9c'
          '1d7221dacead994957051dafa4b87fca'
          '232b52576a62c7a333e9fe7a1e1ca359'
          '9d3c56a4b999c8bfbd4018089a62f662'
