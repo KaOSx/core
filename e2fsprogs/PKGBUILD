@@ -1,6 +1,6 @@
 
 pkgname=e2fsprogs
-pkgver=1.42.9
+pkgver=1.42.10
 pkgrel=1
 pkgdesc="Ext2/3/4 filesystem utilities"
 arch=('x86_64')
@@ -13,7 +13,7 @@ source=("http://downloads.sourceforge.net/sourceforge/${pkgname}/${pkgname}-${pk
         'MIT-LICENSE')
 backup=('etc/mke2fs.conf')
 install=${pkgname}.install
-md5sums=('3f8e41e63b432ba114b33f58674563f7'
+md5sums=('62bfe2fe0a194c5c37165789ac2825a8'
          '035b7c69b7a2cecf996a4708c262245e')
 
 build() {
@@ -33,7 +33,8 @@ build() {
       --enable-htree \
       --enable-blkid-debug \
       --enable-verbose-makecmds \
-      --enable-e2initrd-helper 
+      --enable-e2initrd-helper \
+      --enable-quota
 
   make
 }
