@@ -1,7 +1,7 @@
 
 pkgname=curl
-pkgver=7.36.0
-pkgrel=2
+pkgver=7.37.0
+pkgrel=1
 pkgdesc="An URL retrival utility and library"
 arch=('x86_64')
 url="http://curl.haxx.se"
@@ -10,13 +10,11 @@ depends=('zlib' 'openssl' 'bash' 'ca-certificates' 'libssh2')
 options=('!libtool')
 source=("http://curl.haxx.se/download/${pkgname}-${pkgver}.tar.bz2"
         'curlbuild.h')
-md5sums=('e6d1f9d1b59da5062109ffe14e0569a4'
+md5sums=('7dda0cc2e4136f78d5801ac347be696b'
          '751bd433ede935c8fae727377625a8ae')
 
 build() {
     cd ${srcdir}/${pkgname}-${pkgver}
-    # build fail http://sourceforge.net/p/curl/bugs/1350/
-    rm src/tool_hugehelp.c
 
     ./configure \
         --with-random=/dev/urandom \
