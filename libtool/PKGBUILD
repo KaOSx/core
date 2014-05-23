@@ -2,14 +2,14 @@
 
 pkgname=('libtool' 'libltdl')
 pkgver=2.4.2
-pkgrel=14
+pkgrel=15
 pkgdesc="A generic library support script"
 arch=('x86_64')
 url="http://www.gnu.org/software/libtool"
 license=('GPL')
 options=('!libtool')
 depends=('sed' 'grep') # Needed by libtoolize
-makedepends=('gcc=4.8.2')
+makedepends=('gcc=4.8.3')
 source=("ftp://ftp.gnu.org/pub/gnu/libtool/${pkgname}-${pkgver}.tar.xz")
 md5sums=('2ec8997e0c07249eb4cbd072417d70fe')
 
@@ -27,7 +27,7 @@ check() {
 }
 
 package_libtool() {
-  depends=('sh' "libltdl=${pkgver}" 'tar' 'gcc=4.8.2')
+  depends=('sh' "libltdl=${pkgver}" 'tar' 'gcc=4.8.3')
   groups=('base-devel')
   install=libtool.install
 
