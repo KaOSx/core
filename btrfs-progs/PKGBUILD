@@ -1,12 +1,12 @@
 
 pkgname=btrfs-progs
-pkgver=3.14.1
+pkgver=3.14.2
 pkgrel=1
 pkgdesc="Btrfs filesystem utilities."
 arch=('x86_64')
 url="http://btrfs.wiki.kernel.org/"
 license=('GPL2')
-depends=('glibc' 'e2fsprogs' 'lzo2')
+depends=('glibc' 'e2fsprogs' 'lzo2' 'asciidoc')
 makedepoends=('git')
 options=('!staticlibs')
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/mason/${pkgname}.git#tag=v${pkgver}"
@@ -28,8 +28,6 @@ package() {
    make prefix=$pkgdir/usr install
    install -Dm755 btrfs-select-super $pkgdir/usr/bin
 
-   mkdir -p $pkgdir/usr/share/
-   mv $pkgdir/usr/man $pkgdir/usr/share/man
    mkdir -p ${pkgdir}/sbin
    ln -sf /usr/bin/btrfs ${pkgdir}/sbin/btrfs
 
