@@ -27,24 +27,22 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.14.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch'
         '0001-Bluetooth-allocate-static-minor-for-vhci.patch'
-        'refcount_leak.patch'
         'keppler.patch')
-md5sums=('0ecbaf65c00374eb4a826c2f9f37606f'
-         'dcf42b5013a7831d02168fd3eda5cce2'
-         'c2833542b48f2d1be4e3c7e265b6d357'
-         'e4066031f031de0135cd47780d4045d1'
-         '97f15945523cd6536efd33745a176b0c'
-         '3743bc484d012fc0c5931e95e568802a'
-         '77a8a77623d7fec863229ecdd347c2e1'
-         'afa405180be0597a41761f47def31473'
-         'ada69e5870ad73b617bb1a8b5ce56564'
+md5sums=('b621207b3f6ecbb67db18b13258f8ea8'
+         'a56bf05cb9033097198f9269bbcff130'
+         'f277bbe32ddc2212176c08a962a4a404'
+         '1c47a3ec038815c204b2f747f5a9950b'
+         '1c21a3e9ac6439d45e42ccfb31e72d1f'
+         'e6b5306178dee7f85d5dfd0fcb1ac374'
+         '367ace617ab8789e62fe9a154b5d2bc8'
+         '44bf3d60bddf60e828108d97372a3a16'
+         '95de250b5f948798b00b6f7d8ebab2ad'
          '52f4a2c7f6277774117c834d949d6b81'
          'eb14dcfd80c00852ef81ded6e826826a'
          '98beb36f9b8cf16e58de2483ea9985e3'
          '93dbf73af819b77f03453a9c6de2bb47'
          '08d82ddb0b7254cdeae0165efa1ec2f8'
-         '3b9c53b4adb2ce935ba3f04d2634eb94'
-         '8c8acc81f4a2c622a0ca9d1f7506185a')
+         '62a725a49449c891ada8ca4d188377ff')
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -64,8 +62,6 @@ prepare() {
   
   # vhci warning in kmod
   patch -p1 -i "${srcdir}/0001-Bluetooth-allocate-static-minor-for-vhci.patch"
-  # http://seclists.org/oss-sec/2014/q2/97
-  patch -p1 -i "${srcdir}/refcount_leak.patch"
   # http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-0196
   patch -p1 -i "${srcdir}/keppler.patch"
 
@@ -204,7 +200,7 @@ package_linux-headers() {
     cp -a drivers/media/pci/${i}/*.h "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/pci/${i}"
   done
   # usb
-  for i in cpia2 em28xx pwc sn9c102; do
+  for i in cpia2 em28xx pwc; do
     mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/usb/${i}"
     cp -a drivers/media/usb/${i}/*.h "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/usb/${i}"
   done
