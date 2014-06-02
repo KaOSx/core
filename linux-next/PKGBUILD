@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.15-rc7
+_basekernel=3.15-rc8
 _srcname=linux-3.15
-pkgver=3.15rc7
+pkgver=3.15rc8
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -12,7 +12,7 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 #source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.15-rc7.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.15-rc8.tar.xz"
         ##"https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -28,7 +28,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.15-rc7.tar
         'linux-next.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('a56d456b69b2e984aea0329bed0bda4d'
+md5sums=('87a7df910058f0dd7709346ce078a497'
          'e5b01769e0c1824bafddcecf3f0ffd3d'
          '1c47a3ec038815c204b2f747f5a9950b'
          '1c21a3e9ac6439d45e42ccfb31e72d1f'
