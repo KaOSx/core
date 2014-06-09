@@ -1,6 +1,6 @@
 
 pkgname=linux-firmware
-pkgver=20140527
+pkgver=20140603
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
