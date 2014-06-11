@@ -1,20 +1,18 @@
 
 pkgname=elfutils
-pkgver=0.158
+pkgver=0.159
 pkgrel=1
 pkgdesc="Collection of libraries and utilities for working with ELF object files and DWARF debugging information."
 arch=('x86_64')
 url="https://fedorahosted.org/elfutils/"
 license=('LGPL3' 'GPL' 'GPL3')
 depends=('gcc-libs' 'zlib' 'bzip2' 'xz')
-source=("https://fedorahosted.org/releases/e/l/elfutils/${pkgver}/elfutils-${pkgver}.tar.bz2"
-        'backtrace-test.patch')
-md5sums=('050a4909e452d01ab4747fd69d4036e0'
-         'd7b676641814dfd7e4920e9add688350')
+source=("https://fedorahosted.org/releases/e/l/elfutils/${pkgver}/elfutils-${pkgver}.tar.bz2")
+md5sums=('1f45a18231c782ccd0966059e2e42ea9')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  patch -p1 -i "${srcdir}/backtrace-test.patch"
+
   CFLAGS+=" -g"
   
   ./configure --prefix=/usr --program-prefix="eu-"
