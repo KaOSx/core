@@ -1,5 +1,6 @@
+
 pkgname=cmake
-pkgver=2.8.12.2
+pkgver=3.0.0
 pkgrel=1
 pkgdesc="A cross-platform open-source make system"
 arch=('x86_64')
@@ -8,14 +9,11 @@ url="http://www.cmake.org"
 depends=('curl' 'libarchive' 'shared-mime-info')
 makedepends=('qt')
 install=${pkgname}.install
-source=("http://www.cmake.org/files/v2.8/${pkgname}-${pkgver}.tar.gz"
-        'freetype2.patch')
-md5sums=('17c6513483d23590cbce6957ec6d1e66'
-         '90321de1d9d46cd8d6609d0509dbd7b0')
+source=("http://www.cmake.org/files/v3.0/${pkgname}-${pkgver}.tar.gz")
+md5sums=('21a1c85e1a3b803c4b48e7ff915a863e')
 
 build() {
   cd "${srcdir}"/${pkgname}-${pkgver}
-  patch -p1 -i "${srcdir}"/freetype2.patch
 
   ./bootstrap --prefix=/usr \
     --mandir=/share/man \
@@ -29,11 +27,6 @@ build() {
 package() {
   cd "${srcdir}"/${pkgname}-${pkgver}
   make DESTDIR="${pkgdir}" install
-
-  vimpath="$pkgdir/usr/share/vim/vimfiles"
-  install -Dm644 Docs/cmake-indent.vim ${vimpath}/indent/cmake-indent.vim
-  install -Dm644 Docs/cmake-syntax.vim ${vimpath}/syntax/cmake-syntax.vim
-  install -Dm644 Docs/cmake-mode.el ${pkgdir}/usr/share/emacs/site-lisp/cmake-mode.el
 
   install -Dm644 Copyright.txt ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }
