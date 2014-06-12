@@ -1,12 +1,12 @@
 
 pkgname=usbutils
 pkgver=007
-pkgrel=1
+pkgrel=2
 pkgdesc="USB Device Utilities"
 arch=('x86_64')
 license=('GPL')
 groups=('base')
-depends=('libusbx' 'hwids')
+depends=('libusb' 'hwids')
 optdepends=('python2: for lsusb.py usage'
             'coreutils: for lsusb.py usage'
             'wget: for update-usbids.sh usage')
