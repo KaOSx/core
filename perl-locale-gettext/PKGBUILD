@@ -2,13 +2,13 @@
 pkgname=perl-locale-gettext
 _realname=gettext
 pkgver=1.05
-pkgrel=2
+pkgrel=3
 pkgdesc="Permits access from Perl to the gettext() family of functions"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
 url="http://search.cpan.org/dist/${_realname}/"
 depends=('gettext' 'perl')
-options=(!emptydirs)
+options=('!emptydirs')
 source=("http://search.cpan.org/CPAN/authors/id/P/PV/PVANDRY/${_realname}-${pkgver}.tar.gz"
         'compatibility-with-POSIX-module.patch')
 md5sums=('f3d3f474a1458f37174c410dfef61a46'
