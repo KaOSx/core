@@ -1,6 +1,6 @@
 
 pkgname=libusb
-pkgver=1.0.18
+pkgver=1.0.19
 pkgrel=1
 pkgdesc="Library that provides generic access to USB device"
 arch=('x86_64')
@@ -12,7 +12,7 @@ provides=('libusbx')
 replaces=('libusbx')
 conflicts=('libusbx')
 source=("http://sourceforge.net/projects/libusb/files/libusb-1.0/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('4a6d049923efc6496f1d383054dac1a6')
+md5sums=('f9e2bb5879968467e5ca756cb4e1fa7e')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
