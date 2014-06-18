@@ -1,6 +1,6 @@
 
 pkgname=gettext
-pkgver=0.19
+pkgver=0.19.1
 pkgrel=1
 pkgdesc="GNU internationalization library"
 arch=('x86_64')
@@ -8,11 +8,10 @@ url="http://www.gnu.org/software/gettext"
 license=('GPL')
 groups=('base')
 depends=('acl' 'gcc-libs' 'glib2' 'libcroco' 'sh')
-optdepends=('cvs: for autopoint tool')
 options=('!libtool')
 install=gettext.install
 source=("ftp://ftp.gnu.org/pub/gnu/gettext/${pkgname}-${pkgver}.tar.gz")
-md5sums=('eae24a623e02b33e3e1024adff9a5a08')
+md5sums=('8949a57e82abe88274a93174ade515e4')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
