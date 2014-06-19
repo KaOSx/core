@@ -1,7 +1,7 @@
 
 pkgname=rpcbind
 pkgver=0.2.1
-pkgrel=3
+pkgrel=4
 pkgdesc="portmap replacement which supports RPC over various protocols"
 arch=('x86_64')
 depends=('bash' 'glibc' 'libtirpc')
@@ -22,8 +22,7 @@ build() {
   
   ./configure --prefix=/usr \
         --with-rpcuser=rpc \
-        --enable-warmstarts \
-        --with-statedir=/run
+        --enable-warmstarts 
   make 
 }
 package() {
