@@ -1,17 +1,17 @@
 
 pkgname=systemd
 pkgver=214
-pkgrel=1
+pkgrel=2
 pkgdesc="System and Session Manager"
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1' 'MIT')
 depends=('acl' 'bash' 'glibc' 'glib2' 'kmod' 'hwids' 'util-linux' 'kbd' 'libcap' 'libxslt'
          'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus') 
-makedepends=('docbook-xsl' 'gobject-introspection' 'gperf' 'intltool' 'python3' 'cryptsetup' 'libmicrohttpd')
+makedepends=('docbook-xsl' 'gobject-introspection' 'gperf' 'intltool' 'cryptsetup' 'python2' 'python2-lxml'
+             'libmicrohttpd')
 optdepends=('cryptsetup: required for encrypted block devices'
-            'libmicrohttpd: systemd-journal-gatewayd'
-            'python3: systemd library bindings')
+            'libmicrohttpd: systemd-journal-gatewayd')
 backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/dbus-1/system.d/org.freedesktop.hostname1.conf
         etc/dbus-1/system.d/org.freedesktop.login1.conf
@@ -41,8 +41,6 @@ build() {
   cd "$pkgname-$pkgver"
 
   ./configure \
-      PYTHON=python3 \
-      PYTHON_CONFIG=python3-config \
       --libexecdir=/usr/lib \
       --localstatedir=/var \
       --sysconfdir=/etc \
@@ -97,7 +95,8 @@ package() {
   install -Dm644 "$srcdir/initcpio-install-udev" "$pkgdir/usr/lib/initcpio/install/udev"
   install -Dm644 "$srcdir/initcpio-hook-udev" "$pkgdir/usr/lib/initcpio/hooks/udev"
   
-  rm -r "$pkgdir/usr/lib/rpm/macros.d"
+  rm -r "$pkgdir/usr/lib/rpm"
+  rm "$pkgdir/usr/lib/sysctl.d/50-coredump.conf"
   
   # Make journalctl persistent
   install -dm755 "$pkgdir/var/log/journal"

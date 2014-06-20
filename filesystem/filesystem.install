@@ -36,9 +36,10 @@ post_upgrade() {
 	_addgroup systemd-journal -g 110
 	_addgroup systemd-journal-gateway -g 191
 	_adduser systemd-journal-gateway -u 191 -g 191 -d / -s /sbin/nologin
+	_addgroup systemd-timesync -g 192
 	_adduser systemd-timesync -u 192 -g 192 -d / -s /sbin/nologin
-	_addgroup systemd-bus-proxy -g 194
-	_adduser systemd-bus-proxy -u 194 -g 194 -d / -s /sbin/nologin
+	_addgroup systemd-network -g 193
+	_adduser systemd-network -u 193 -g 193 -d / -s /sbin/nologin
 	_addgroup systemd-resolve -g 195
 	_adduser systemd-resolve -u 195 -g 195 -d / -s /sbin/nologin
 
