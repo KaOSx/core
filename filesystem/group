@@ -35,3 +35,6 @@ users:x:100:
 systemd-journal:x:110:
 systemd-journal-gateway:x:191:
 systemd-timesync:x:192:
+systemd-bus-proxy:x:194:
+systemd-resolve:x:195:
+

@@ -1,14 +1,14 @@
 # args: <group> [options]
 _addgroup() {
-	if ! getent group "$1" >/dev/null; then
-		groupadd "$@" >/dev/null
+	if ! getent group "$1" >/dev/null && groupadd "$@" >/dev/null; then
+		need_group_update=1
 	fi
 }
 
 # args: <group> [options]
 _adduser() {
-	if ! getent passwd "$1" >/dev/null; then
-		useradd "$@" >/dev/null
+	if ! getent passwd "$1" >/dev/null && useradd "$@" >/dev/null; then
+		need_passwd_update=1
 	fi
 }
 
@@ -25,7 +25,7 @@ post_upgrade() {
 	_addgroup games   -g 50
 	_addgroup uucp    -g 14
 	_addgroup http    -g 33
-	_adduser  http    -u 33 -d /srv/http -g http -s /bin/false
+	_adduser  http    -u 33 -d /srv/http -g http -s /sbin/nologin
 	_addgroup scanner -g 96
 	_addgroup rfkill  -g 24
 	_addgroup lock    -g 54
@@ -34,10 +34,21 @@ post_upgrade() {
 	_addgroup dbus    -g 81
 	_adduser dbus     -u 81 -d / -g dbus -s /sbin/nologin
 	_addgroup systemd-journal -g 110
+	_addgroup systemd-journal-gateway -g 191
+	_adduser systemd-journal-gateway -u 191 -g 191 -d / -s /sbin/nologin
+	_adduser systemd-timesync -u 192 -g 192 -d / -s /sbin/nologin
+	_addgroup systemd-bus-proxy -g 194
+	_adduser systemd-bus-proxy -u 194 -g 194 -d / -s /sbin/nologin
+	_addgroup systemd-resolve -g 195
+	_adduser systemd-resolve -u 195 -g 195 -d / -s /sbin/nologin
 
-	# sync gshadow to group 
-	if ! grep -q '^lock:' etc/gshadow; then
-		grpconv >/dev/null
+	# sync gshadow to group when needed
+	if (( need_group_update )); then
+ 		grpconv >/dev/null
+ 	fi
+ 	
+ 	if (( need_passwd_update )); then
+		pwconv >/dev/null
 	fi
 
 	if ! grep -q '^include /etc/ld.so.conf.d/\*.conf$' etc/ld.so.conf; then

@@ -14,8 +14,6 @@ add_privs() {
 post_common() {
   systemd-machine-id-setup
 
-  add_privs usr/bin/systemd-detect-virt 'cap_dac_override,cap_sys_ptrace+ep'
-
   udevadm hwdb --update
   journalctl --update-catalog
 
