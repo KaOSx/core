@@ -1,7 +1,7 @@
 
 pkgname=acl
 pkgver=2.2.52
-pkgrel=1
+pkgrel=2
 pkgdesc="Library for filesystem ACL support"
 arch=('x86_64')
 url="http://savannah.nongnu.org/projects/acl"
