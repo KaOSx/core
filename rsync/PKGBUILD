@@ -1,7 +1,7 @@
 
 pkgname=rsync
-pkgver=3.1.0
-pkgrel=2
+pkgver=3.1.1
+pkgrel=1
 pkgdesc="A file transfer program to keep remote files in sync"
 arch=('x86_64')
 url="http://samba.anu.edu.au/rsync/"
@@ -13,19 +13,16 @@ source=("http://rsync.samba.org/ftp/rsync/${pkgname}-${pkgver}.tar.gz"
         'rsync.xinetd'
         'rsyncd.service'
         'rsyncd.socket'
-        'rsyncd@.service'
-        'CVE-2014-2855.patch')
-md5sums=('3be148772a33224771a8d4d2a028b132'
+        'rsyncd@.service')
+md5sums=('43bd6676f0b404326eee2d63be3cdcfe'
          'bce64d122a8e0f86872a4a21a03bc7f3'
          'ea3e9277dc908bc51f9eddc0f6b935c1'
          'ec96f9089d71109557cdcaa3f0633ed6'
          'ae4c381e0c02d6132c7f6ded3f473041'
-         '53f94e613e0bc502d38dd61bd2cd7636'
-         'dacfe77bd72fbf6b6ba65c741c57f74c')
+         '53f94e613e0bc502d38dd61bd2cd7636')
 
 build() {
 	cd ${srcdir}/${pkgname}-${pkgver}
-	patch -p1 -i ${srcdir}/CVE-2014-2855.patch
  
 	./configure --prefix=/usr --with-included-popt 
 	make 
