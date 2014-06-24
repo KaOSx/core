@@ -1,6 +1,6 @@
 
 pkgname=netctl
-pkgver=1.7
+pkgver=1.8
 pkgrel=1
 pkgdesc="Profile based systemd network management"
 url="http://projects.archlinux.org/netctl.git/"
@@ -14,11 +14,8 @@ optdepends=('dialog: for the menu based wifi assistant'
             'wpa_supplicant: for wireless networking support'
             'wpa_actiond: for automatic wireless connections through netctl-auto'
             'ppp: for pppoe connections')
-conflicts=('netcfg')
-replaces=('netcfg')
-provides=('netcfg')
 source=("ftp://ftp.archlinux.org/other/packages/netctl/netctl-${pkgver}.tar.xz")
-md5sums=('e4e57290543a5313b0b2cde7a4d2bc21')
+md5sums=('4994bdfa29c835b70a9e11abd6e538b9')
 
 package() {
   cd "$srcdir/netctl-${pkgver}"
