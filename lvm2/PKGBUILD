@@ -2,7 +2,7 @@
 pkgbase=lvm2
 pkgname=('lvm2' 'device-mapper')
 pkgver=2.02.107
-pkgrel=1
+pkgrel=3
 arch=('x86_64')
 url="http://sourceware.org/lvm2/"
 license=('GPL2' 'LGPL2.1')
@@ -17,7 +17,7 @@ md5sums=('efa5b0ff0245cbccf53aec1f3d8840ba'
          '8cfc93d5fe9be1cd0a37dd4fbe3cc2ec'
          'b25cfb248e66e0f76e7aafa6715d620a'
          '69e40679cd8b3658bfc619e48baae125'
-         '489d3fca0a379e1d9de7c8265603df1d')
+         '00e15be4621b47c8940c64c419bf7ff3')
 
 build() {
   cd "${srcdir}/LVM2.${pkgver}"
@@ -28,7 +28,7 @@ build() {
     --with-default-dm-run-dir=/run --with-default-run-dir=/run/lvm \
     --enable-pkgconfig --enable-readline --enable-dmeventd --enable-cmdlib --enable-applib \
     --enable-udev_sync --enable-udev_rules --with-default-locking-dir=/run/lock/lvm \
-    --enable-lvmetad --enable-udev-systemd-background-jobs
+    --enable-lvmetad --enable-udev-systemd-background-jobs --sbindir=/usr/sbin
   make
 }
 
