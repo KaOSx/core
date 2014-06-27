@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=3.15
 _srcname=linux-3.15
-pkgver=3.15.1
+pkgver=3.15.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -31,15 +31,17 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('97ca1625bb40368dc41b9a7971549071'
-         '78a944411af297b9e5e9aa430056de4c'
+         '53eb7e210c9330021e60ffe2c5081e19'
          'e5b01769e0c1824bafddcecf3f0ffd3d'
-         '1c47a3ec038815c204b2f747f5a9950b'
-         '1c21a3e9ac6439d45e42ccfb31e72d1f'
-         'e6b5306178dee7f85d5dfd0fcb1ac374'
-         '367ace617ab8789e62fe9a154b5d2bc8'
-         '44bf3d60bddf60e828108d97372a3a16'
-         '95de250b5f948798b00b6f7d8ebab2ad'
+         '01237bdc65edfa79f269ad58a5efd20f'
+         '73254fdb2f6871e35c67bda8af529061'
+         '5ef7f0f98c1e2db9b63ab8c998789bcc'
+         '7504dc36a07900ccd824525092a1e16a'
+         'c44076802f8620cd2aabb27003dfca9e'
+         'ea1b9fd745e2d7e91f02098288103b69'
          '52f4a2c7f6277774117c834d949d6b81'
+         '69c2d540c1f8d472920d964990d37d39'
+         '641c193ac053aad26af1c46d03fc1e3b'
          '7b2ca9cdb5555219f793b5a807b05870'
          '98beb36f9b8cf16e58de2483ea9985e3'
          '93dbf73af819b77f03453a9c6de2bb47')
@@ -71,7 +73,7 @@ build() {
   patch -p1 -i "${srcdir}/aufs3-mmap.patch"
   patch -p1 -i "${srcdir}/aufs3-standalone.patch"
   patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  patch -p1 -i "${srcdir}/vfs-ion.patch"
+  patch -p1 -i "${srcdir}/vfs-ino.patch"
   
   cat "${srcdir}/config" > ./.config
 
