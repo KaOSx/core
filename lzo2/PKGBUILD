@@ -1,6 +1,6 @@
 
 pkgname=lzo2
-pkgver=2.07
+pkgver=2.08
 pkgrel=1
 pkgdesc="Portable lossless data compression library"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL')
 depends=('glibc')
 source=("http://www.oberhumer.com/opensource/lzo/download/lzo-${pkgver}.tar.gz")
 options=('!libtool')
-md5sums=('4011935e95171e78ad4894f7335c982a')
+md5sums=('fcec64c26a0f4f4901468f360029678f')
 
 build() {
   cd "${srcdir}/lzo-${pkgver}"
