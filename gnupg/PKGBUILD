@@ -1,6 +1,6 @@
 
 pkgname=gnupg
-pkgver=2.0.24
+pkgver=2.0.25
 pkgrel=1
 pkgdesc="GNU Privacy Guard 2 - a PGP replacement tool"
 arch=('x86_64')
@@ -12,14 +12,11 @@ install=${pkgname}.install
 conflicts=('gnupg2')
 provides=("gnupg2=${pkgver}")
 replaces=('gnupg2')
-source=("ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-$pkgver.tar.bz2"
-        'protect-tool-env.patch')
-md5sums=('94cd984321b44ab622aa50f93ee66671'
-         '7e5167aa042dbe18ab79d8b0df3f3cab')
+source=("ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-$pkgver.tar.bz2")
+md5sums=('048d8de797125f1d8e6cf3bdff9e2d12')
 
 build() {
 	cd ${srcdir}/gnupg-$pkgver
-	patch -p1 -i ${srcdir}/protect-tool-env.patch 
 	
 	./configure --prefix=/usr \
               --sysconfdir=/etc \
