@@ -4,7 +4,7 @@ pkgname=('linux-lts' 'linux-lts-headers' 'linux-lts-docs')
 _kernelname=${pkgname#linux}
 _basekernel=3.2
 pkgver=3.2.60
-pkgrel=1
+pkgrel=3
 makedepends=('xmlto' 'docbook-xsl')
 arch=('x86_64')
 license=('GPL2')
@@ -91,7 +91,7 @@ build() {
 package_linux-lts() {
   pkgdesc="The Linux LTS-Kernel and modules"
   groups=('lts')
-  depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio')
+  depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio' 'systemd-lts')
   optdepends=('crda: to set the correct wireless channels of your country')
   provides=("linux=$pkgver")
   backup=("etc/mkinitcpio.d/${pkgname}.preset")
