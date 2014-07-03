@@ -1,7 +1,7 @@
 
 pkgname=mpfr
 _pkgver=3.1.2
-_patchlevel=p8
+_patchlevel=p10
 pkgver=${_pkgver}.${_patchlevel}
 #pkgver=${_pkgver}
 pkgrel=1
@@ -13,9 +13,10 @@ depends=('gmp>=5.0')
 options=('!libtool')
 install=mpfr.install
 source=("http://www.mpfr.org/mpfr-current/mpfr-${_pkgver}.tar.xz"
+        # http://www.mpfr.org/mpfr-3.1.2/allpatches  http://www.mpfr.org/mpfr-3.1.2/#bugs
         "mpfr-${_pkgver}-${_patchlevel}.patch")
 md5sums=('e3d203d188b8fe60bb6578dd3152e05c'
-         '7a1d9d0f17c721c57bae829ce07487ed')
+         '43121795ef12f1b29ada4508d9186ea9')
 
 build() {
   cd "${srcdir}/${pkgname}-${_pkgver}"
