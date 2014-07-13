@@ -1,7 +1,7 @@
 
 pkgname=util-linux
 pkgver=2.24.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -87,6 +87,9 @@ package() {
   install -Dm644 "$srcdir/uuidd.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/uuidd.conf"
   # fdisk fix for live-mode, until all moves to /usr
   ln -s /sbin/fdisk "$pkgdir/usr/bin/fdisk"
+  # udisks2 fixes until all moves to /usr
+  ln -s /bin/mount "$pkgdir/usr/bin/mount"
+  ln -s /bin/umount "$pkgdir/usr/bin/umount"
 }
 
 
