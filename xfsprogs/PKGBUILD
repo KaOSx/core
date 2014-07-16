@@ -1,7 +1,7 @@
 
 pkgname=xfsprogs
-pkgver=3.2.0
-_pkgver=3.2.0
+pkgver=3.2.1
+_pkgver=3.2.1
 pkgrel=1
 pkgdesc="XFS filesystem utilities"
 arch=('x86_64')
@@ -11,7 +11,7 @@ groups=('base')
 depends=('util-linux')
 options=('!makeflags' '!libtool')
 source=("ftp://oss.sgi.com/projects/xfs/cmd_tars/${pkgname}-${_pkgver}.tar.gz")
-md5sums=('400047b2f6af87c0345b8f0cc00c13db')
+md5sums=('5c6905932029c8f9207fe5a0a8aac24b')
 
 build() {
   cd "${srcdir}/${pkgname}-${_pkgver}"
