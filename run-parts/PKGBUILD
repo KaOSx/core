@@ -1,8 +1,8 @@
 
 pkgname=run-parts
 pkgver=4.4
-pkgrel=1
-pkgdesc='run scripts or programs in a directory'
+pkgrel=2
+pkgdesc='Run scripts or programs in a directory'
 arch=('x86_64')
 url='http://packages.qa.debian.org/d/debianutils.html'
 license=('GPL')

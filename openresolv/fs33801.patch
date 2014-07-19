@@ -38,19 +38,6 @@ index 81fe154..9b4f1bd 100644
  .It Sy libc_service
  Location of the libc service.
  .It Sy libc_restart
-@@ -229,10 +229,8 @@ Command to restart the named service.
- Command to restart the pdnsd service.
- .It Sy unbound_service
- Location of the unbound service.
--.It Sy unbound_restart
--Command to restart the unbound service.
--.It Sy unbound_pid
--Location of the unbound pidfile.
-+.It Sy unbound_reload
-+Command to reload the unbound service.
- .Sh SEE ALSO
- .Xr resolv.conf 5
- and
 diff --git i/unbound.in w/unbound.in
 index 4ee0da7..5e4a326 100644
 --- i/unbound.in
