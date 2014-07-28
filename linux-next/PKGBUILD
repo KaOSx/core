@@ -2,18 +2,18 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.15
-_srcname=linux-3.15
-pkgver=3.15.6
+_basekernel=3.16-rc7
+_srcname=linux-3.16
+pkgver=3.16rc6
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-#source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.15-rc8.tar.xz"
-        "https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+#source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.16-rc7.tar.xz"
+        #"https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -30,8 +30,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('97ca1625bb40368dc41b9a7971549071'
-         '25e4c27b4aff5e14dc4b3dc0029fd05d'
+md5sums=('8608902c05c4acb065ccf342f2574f5f'
          'e5b01769e0c1824bafddcecf3f0ffd3d'
          '01237bdc65edfa79f269ad58a5efd20f'
          '73254fdb2f6871e35c67bda8af529061'
@@ -53,7 +52,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -61,23 +60,23 @@ build() {
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
-  patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
+  ##patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
   
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs3.patch"
-  patch -p1 -i "${srcdir}/aufs3-base.patch"
-  patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs3-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs3-mmap.patch"
-  patch -p1 -i "${srcdir}/aufs3-standalone.patch"
-  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  patch -p1 -i "${srcdir}/vfs-ino.patch"
+  #patch -p1 -i "${srcdir}/aufs3.patch"
+  #patch -p1 -i "${srcdir}/aufs3-base.patch"
+  #patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
+  #patch -p1 -i "${srcdir}/aufs3-loopback.patch"
+  #patch -p1 -i "${srcdir}/aufs3-mmap.patch"
+  #patch -p1 -i "${srcdir}/aufs3-standalone.patch"
+  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  #patch -p1 -i "${srcdir}/vfs-ino.patch"
   
   cat "${srcdir}/config" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -250,7 +249,7 @@ package_linux-next-headers() {
   cp fs/xfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h"
 
   #aufs3-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  #sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
