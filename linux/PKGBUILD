@@ -28,22 +28,21 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.15.tar.xz"
         'linux.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('b621207b3f6ecbb67db18b13258f8ea8'
-         '068b814830b45c232340db534bc06e04'
-         'f277bbe32ddc2212176c08a962a4a404'
-         '1c47a3ec038815c204b2f747f5a9950b'
-         '1c21a3e9ac6439d45e42ccfb31e72d1f'
-         'e6b5306178dee7f85d5dfd0fcb1ac374'
-         '367ace617ab8789e62fe9a154b5d2bc8'
-         '44bf3d60bddf60e828108d97372a3a16'
-         '95de250b5f948798b00b6f7d8ebab2ad'
+md5sums=('97ca1625bb40368dc41b9a7971549071'
+         '2f09ab9d30dfe6d59469990a46d20cc4'
+         'bf926c6a70c5e4e8038e23eabe4c2fb5'
+         '01237bdc65edfa79f269ad58a5efd20f'
+         '73254fdb2f6871e35c67bda8af529061'
+         '5ef7f0f98c1e2db9b63ab8c998789bcc'
+         '7504dc36a07900ccd824525092a1e16a'
+         'c44076802f8620cd2aabb27003dfca9e'
+         'ea1b9fd745e2d7e91f02098288103b69'
          '52f4a2c7f6277774117c834d949d6b81'
+         '69c2d540c1f8d472920d964990d37d39'
+         '641c193ac053aad26af1c46d03fc1e3b'
          'eb14dcfd80c00852ef81ded6e826826a'
          '98beb36f9b8cf16e58de2483ea9985e3'
-         '93dbf73af819b77f03453a9c6de2bb47'
-         '08d82ddb0b7254cdeae0165efa1ec2f8'
-         '62a725a49449c891ada8ca4d188377ff'
-         '94dd3e6b85743e2ce08d0e12f769ada5')
+         '93dbf73af819b77f03453a9c6de2bb47')
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -70,8 +69,6 @@ prepare() {
   patch -p1 -i "${srcdir}/aufs3-standalone.patch"
   patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   patch -p1 -i "${srcdir}/vfs-ino.patch"
-  
-  patch -p1 -i "${srcdir}/net-v2-net-sctp-inherit-auth_capable-on-INIT-collisions.patch"
   
   cat "${srcdir}/config" > ./.config
 
