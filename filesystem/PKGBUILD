@@ -1,7 +1,7 @@
 
 pkgname=filesystem
-pkgver=2014.06
-pkgrel=2
+pkgver=2014.07
+pkgrel=1
 _codename=2014
 pkgdesc='Base filesystem'
 arch=('x86_64')
@@ -19,7 +19,7 @@ source=('group' 'issue' 'nsswitch.conf' 'securetty' 'host.conf' 'ld.so.conf'
         'passwd' 'shadow' 'fstab' 'crypttab' 'hosts' 'hostname' 'motd' 'resolv.conf' 'shells'
         'gshadow' 'profile' 'modprobe.d.usb-load-ehci-first' 'machine-info' 'os-release'
         'vconsole.conf' 'locale.sh')
-md5sums=('0d8e29479b0b484c2ff2f1c9192f961c'
+md5sums=('b3bdc030bcc334fc62901c3788bea535'
          'db5338e17b20e85deaf85a16d30f5d65'
          '13753e4e0964f3652b0cc60a28528bdf'
          '4c4540eeb748bf1f71d631b8c1dcf0b3'
@@ -34,7 +34,7 @@ md5sums=('0d8e29479b0b484c2ff2f1c9192f961c'
          'd41d8cd98f00b204e9800998ecf8427e'
          '6f48288b6fcaf0065fcb7b0e525413e0'
          '22518e922891f9359f971f4f5b4e793c'
-         'f45389e116ab0b9e9968287617d27c7d'
+         '91c52b60c98eddc834b8e843b8a5f4f1'
          'f3b6ae7db8adffaaa4bffc6099dcbd50'
          'a8a962370cd0128465d514e6a1f74130'
          '13d8d253ae8613ba2474683f585e73db'

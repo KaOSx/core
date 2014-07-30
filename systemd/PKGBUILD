@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=214
-pkgrel=2
+pkgver=215
+pkgrel=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
@@ -32,7 +32,7 @@ source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
         'initcpio-hook-udev'
         'initcpio-install-systemd'
         'initcpio-install-udev')
-md5sums=('eac4f9fc5bd18a0efc3fc20858baacf3'
+md5sums=('d2603e9fffd8b18d242543e36f2e7d31'
          '7a79eb3e4ce19906cfebfea75fb9f8bb'
          'dae619987dc95b721547a85ef36dfa91'
          'bde43090d4ac0ef048e3eaee8202a407')
@@ -89,7 +89,10 @@ package() {
   sed -i 's#GROUP="dialout"#GROUP="uucp"#g;
           s#GROUP="tape"#GROUP="storage"#g;
           s#GROUP="cdrom"#GROUP="optical"#g' "$pkgdir"/usr/lib/udev/rules.d/*.rules
-
+  sed -i 's/dialout/uucp/g;
+          s/tape/storage/g;
+          s/cdrom/optical/g' "$pkgdir"/usr/lib/sysusers.d/basic.conf
+          
   # add mkinitcpio hooks
   install -Dm644 "$srcdir/initcpio-install-systemd" "$pkgdir/usr/lib/initcpio/install/systemd"
   install -Dm644 "$srcdir/initcpio-install-udev" "$pkgdir/usr/lib/initcpio/install/udev"
