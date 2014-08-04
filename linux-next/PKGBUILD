@@ -2,17 +2,17 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.16-rc7
+_basekernel=3.16
 _srcname=linux-3.16
-pkgver=3.16rc7
+pkgver=3.16.0
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-#source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.16-rc7.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
+#source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.16-rc7.tar.xz"
         #"https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -30,7 +30,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.16-rc7.tar
         'linux-next.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('8608902c05c4acb065ccf342f2574f5f'
+md5sums=('5c569ed649a0c9711879f333e90c5386'
          'e5b01769e0c1824bafddcecf3f0ffd3d'
          '01237bdc65edfa79f269ad58a5efd20f'
          '73254fdb2f6871e35c67bda8af529061'
