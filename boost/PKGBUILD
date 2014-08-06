@@ -3,7 +3,7 @@ pkgbase=boost
 pkgname=('boost-libs' 'boost')
 pkgver=1.55.0
 _boostver=${pkgver//./_}
-pkgrel=1
+pkgrel=2
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="http://www.boost.org/"
@@ -24,7 +24,7 @@ build() {
   patch -p0 -i ${srcdir}/001-log_fix_dump_avx2.patch
   
    # Add an extra python version. This does not replace anything and python 2.x need to be the default.
-   echo "using python : 3.3 : /usr/bin/python3 : /usr/include/python3.3m : /usr/lib ;" >> ./tools/build/v2/user-config.jam
+   echo "using python : 3.4 : /usr/bin/python3 : /usr/include/python3.4m : /usr/lib ;" >> ./tools/build/v2/user-config.jam
    # Support for OpenMPI
    echo "using mpi ;" >> ./tools/build/v2/user-config.jam
 
