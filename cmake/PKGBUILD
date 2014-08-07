@@ -1,6 +1,6 @@
 
 pkgname=cmake
-pkgver=3.0.0
+pkgver=3.0.1
 pkgrel=1
 pkgdesc="A cross-platform open-source make system"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('curl' 'libarchive' 'shared-mime-info')
 makedepends=('qt')
 install=${pkgname}.install
 source=("http://www.cmake.org/files/v3.0/${pkgname}-${pkgver}.tar.gz")
-md5sums=('21a1c85e1a3b803c4b48e7ff915a863e')
+md5sums=('e2e05d84cb44a42f1371d9995631dcf5')
 
 build() {
   cd "${srcdir}"/${pkgname}-${pkgver}
