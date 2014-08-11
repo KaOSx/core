@@ -1,7 +1,7 @@
 
 pkgname=krb5
 pkgver=1.12.1
-pkgrel=1
+pkgrel=2
 pkgdesc="The Kerberos network authentication system"
 arch=('x86_64')
 url="http://web.mit.edu/kerberos/"
@@ -16,23 +16,29 @@ source=("http://web.mit.edu/kerberos/dist/${pkgname}/1.12/${pkgname}-${pkgver}-s
         'krb5-kdc.service'
 	'krb5-kpropd.service'
 	'krb5-kpropd@.service'
-	'krb5-kpropd.socket')
+	'krb5-kpropd.socket'
+	'CVE-2014-4345.patch')
 md5sums=('524b1067b619cb5bf780759b6884c3f5'
-         '656e242de9b5ada1edf398983db51eef'
+         'a1eb1629bef5427b18f521eff4de61b3'
          'd2c898d376ebe5c62b873da7cab0f7e7'
          'f0245d33083337f95654f4caf1d32f57'
          '3dddf2f79ef74c4e736711e41228ee91'
          'babefac221331f7131a29faac33cc5bc'
-         '5b9cee689e4f8085d39ef4e05f1ddd9a')
+         '5b9cee689e4f8085d39ef4e05f1ddd9a'
+         'c14bd9a1cae154ce08b10b470d83ee3a')
 
 
 build() {
    tar xf ${pkgname}-${pkgver}.tar.gz
-   cd "${srcdir}/${pkgname}-${pkgver}/src"
+   cd "${srcdir}/${pkgname}-${pkgver}"
    
-   (cd build-tools;  patch -Np2 -i "${srcdir}"/krb5-config_LDFLAGS.patch; cd ..)
+   patch -p1 -i "${srcdir}"/krb5-config_LDFLAGS.patch
+   # https://github.com/krb5/krb5/commit/81c332e29f10887c6b9deb065f81ba259f4c7e03
+   patch -p1 -i "${srcdir}"/CVE-2014-4345.patch
 
-   sed -i "/KRB5ROOT=/s/\/local//" util/ac_check_krb5.m4
+   sed -i "/KRB5ROOT=/s/\/local//" src/util/ac_check_krb5.m4
+   
+   cd "${srcdir}/${pkgname}-${pkgver}/src"
 
    export CFLAGS+=" -fPIC -fno-strict-aliasing -fstack-protector-all"
    export CPPFLAGS+=" -I/usr/include/et"
