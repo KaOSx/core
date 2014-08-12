@@ -41,6 +41,8 @@ post_upgrade() {
 	_adduser systemd-timesync -u 192 -g 192 -d / -s /sbin/nologin
 	_addgroup systemd-network -g 193
 	_adduser systemd-network -u 193 -g 193 -d / -s /sbin/nologin
+	_addgroup systemd-bus-proxy -g 194
+	_adduser systemd-bus-proxy -u 194 -g 194 -d / -s /sbin/nologin
 	_addgroup systemd-resolve -g 195
 	_adduser systemd-resolve -u 195 -g 195 -d / -s /sbin/nologin
 

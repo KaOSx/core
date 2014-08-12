@@ -1,7 +1,7 @@
 
 pkgname=filesystem
 pkgver=2014.08
-pkgrel=1
+pkgrel=2
 _codename=2014
 pkgdesc='Base filesystem'
 arch=('x86_64')
