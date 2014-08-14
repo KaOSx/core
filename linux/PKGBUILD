@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=3.15
-pkgver=3.15.9
+pkgver=3.15.10
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -29,7 +29,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.15.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('97ca1625bb40368dc41b9a7971549071'
-         '3354f744a008e2ad3150461b7456ae61'
+         '364aa7eaf7c01326ff9b5dbec1cb8643'
          'bf926c6a70c5e4e8038e23eabe4c2fb5'
          '01237bdc65edfa79f269ad58a5efd20f'
          '73254fdb2f6871e35c67bda8af529061'

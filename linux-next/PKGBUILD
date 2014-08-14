@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=3.16
 _srcname=linux-3.16
-pkgver=3.16.0
+pkgver=3.16.1
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.16-rc7.tar.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -31,18 +31,19 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('5c569ed649a0c9711879f333e90c5386'
-         'e5b01769e0c1824bafddcecf3f0ffd3d'
-         '01237bdc65edfa79f269ad58a5efd20f'
-         '73254fdb2f6871e35c67bda8af529061'
-         '5ef7f0f98c1e2db9b63ab8c998789bcc'
-         '7504dc36a07900ccd824525092a1e16a'
-         'c44076802f8620cd2aabb27003dfca9e'
-         'ea1b9fd745e2d7e91f02098288103b69'
-         '52f4a2c7f6277774117c834d949d6b81'
-         '69c2d540c1f8d472920d964990d37d39'
-         '641c193ac053aad26af1c46d03fc1e3b'
+         '9da4b0f5e343455b8141bcfa47e88cf5'
+         'ac50b07acd60f833ac33742926b5aca0'
+         '8b5d2184be4218bd85a295005bace50b'
+         'efe2df28a870a3013a7cb1fb888f82a2'
+         '8bddc7a7db5a921f0fc7133f4fbbbe47'
+         '83305affa2b4107b597bb6356d2a1bba'
+         '8b4cd65323d93a3e811cc523556a284b'
+         '7dafd9278a3e5ff1f735c33a6d938f31'
+         '1556acc15186a90f02b614f8d28c6175'
+         'fc6c9779857c00cd65810e807659f54c'
+         '57383577266dcb91f871cf3c33263c12'
          '7b2ca9cdb5555219f793b5a807b05870'
-         '98beb36f9b8cf16e58de2483ea9985e3'
+         'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47')
          
 # module rc6 md5sums
@@ -52,7 +53,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -65,18 +66,18 @@ build() {
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
 
   #aufs patches for Live:
-  #patch -p1 -i "${srcdir}/aufs3.patch"
-  #patch -p1 -i "${srcdir}/aufs3-base.patch"
-  #patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
-  #patch -p1 -i "${srcdir}/aufs3-loopback.patch"
-  #patch -p1 -i "${srcdir}/aufs3-mmap.patch"
-  #patch -p1 -i "${srcdir}/aufs3-standalone.patch"
-  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  #patch -p1 -i "${srcdir}/vfs-ino.patch"
+  patch -p1 -i "${srcdir}/aufs3.patch"
+  patch -p1 -i "${srcdir}/aufs3-base.patch"
+  patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs3-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs3-mmap.patch"
+  patch -p1 -i "${srcdir}/aufs3-standalone.patch"
+  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  patch -p1 -i "${srcdir}/vfs-ino.patch"
   
   cat "${srcdir}/config" > ./.config
 
-  #cat "${srcdir}/config.aufs" >> ./.config
+  cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -249,7 +250,7 @@ package_linux-next-headers() {
   cp fs/xfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h"
 
   #aufs3-util need
-  #sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
