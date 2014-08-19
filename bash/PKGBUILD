@@ -1,7 +1,7 @@
 
 pkgname=bash
 _basever=4.3
-_patchlevel=022 #prepare for some patches
+_patchlevel=024 #prepare for some patches
 pkgver=$_basever.$_patchlevel
 pkgrel=1
 pkgdesc="The GNU Bourne Again shell"
@@ -73,6 +73,10 @@ md5sums=('81348932d5da294953e15d4814c74dd1'
          '1d350671c48dec30b34d8b81f09cd79d'
          'SKIP'
          '11c349af66a55481a3215ef2520bec36'
+         'SKIP'
+         'b3cb0d80fd0c47728264405cbb3b23c7'
+         'SKIP'
+         'b5ea5600942acceb4b6f07313d2de74e'
          'SKIP')
 
 build() {
@@ -97,24 +101,24 @@ build() {
 check() {
   cd ${srcdir}/${pkgname}-$_basever
   
-  make check
+  #make check
 }
 
 package() {
   cd ${srcdir}/${pkgname}-$_basever
   make DESTDIR=${pkgdir} install
 
-  # for now, bash is our default /bin/sh
+  # bash is default /bin/sh
   cd ${pkgdir}/bin
   ln -s bash sh
 
   install -dm755 ${pkgdir}/etc/skel/
   
-  # system-wide configuration files
+  # system configuration files
   install -m644 ${srcdir}/system.bashrc ${pkgdir}/etc/bash.bashrc
   install -m644 ${srcdir}/system.bash_logout ${pkgdir}/etc/bash.bash_logout
   
-  # user configuration file skeletons
+  # user configuration files
   install -m644 ${srcdir}/dot.bashrc ${pkgdir}/etc/skel/.bashrc
   install -m644 ${srcdir}/dot.bash_profile ${pkgdir}/etc/skel/.bash_profile
   install -m644 ${srcdir}/dot.bash_logout ${pkgdir}/etc/skel/.bash_logout
