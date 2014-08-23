@@ -7,7 +7,7 @@ arch=('x86_64')
 url="http://www.roaringpenguin.com/pppoe/"
 license=('GPL')
 groups=('base')
-depends=('ppp>=2.4.6' 'sh')
+depends=('ppp>=2.4.7' 'sh')
 options=('!makeflags')
 backup=(etc/ppp/{pppoe.conf,firewall-standalone,firewall-masq,pppoe-server-options})
 source=("http://www.roaringpenguin.com/files/download/rp-pppoe-${pkgver}.tar.gz"
