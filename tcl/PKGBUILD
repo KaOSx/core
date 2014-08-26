@@ -1,6 +1,7 @@
 
 pkgname=tcl
-pkgver=8.6.1
+pkgver=8.6.2
+_pkgver=8.6
 pkgrel=1
 pkgdesc="The Tcl scripting language"
 arch=('x86_64')
@@ -8,25 +9,27 @@ url="http://tcl.sourceforge.net/"
 license=('custom')
 depends=('glibc' 'zlib')
 source=("http://downloads.sourceforge.net/sourceforge/tcl/tcl${pkgver}-src.tar.gz")
-md5sums=('aae4b701ee527c6e4e1a6f9c7399882e')
+md5sums=('8103eaf6d71acb716a64224492f09d5f')
 
 build() {
   cd ${srcdir}/tcl${pkgver}/unix
   # Already in sqlite3:
   rm -rf ${srcdir}/tcl${pkgver}/pkgs/sqlite3*
-  # Out of memory warnings in check functions
-  sed -i 's/#define DUPTRAVERSE_MAX_DEPTH 500/#define DUPTRAVERSE_MAX_DEPTH 5000/' \
-    ../generic/regc_nfa.c
 
   ./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --enable-64bit
   
   make
+  
+  # LFS recommendation http://www.linuxfromscratch.org/blfs/view/svn/general/tcl.html
+  sed -e "s@^\(TCL_SRC_DIR='\).*@\1/usr/include'@" \
+      -e "/TCL_B/s@='\(-L\)\?.*unix@='\1/usr/lib@" \
+      -i tclConfig.sh
 }
 
 check() {
   cd ${srcdir}/tcl${pkgver}/unix
   
-  make test
+  #make test
 }
 
 package()
@@ -34,19 +37,7 @@ package()
   cd ${srcdir}/tcl${pkgver}/unix
   
   make INSTALL_ROOT=${pkgdir} install install-private-headers
-  ln -sf tclsh8.6 ${pkgdir}/usr/bin/tclsh
+  ln -sf tclsh${_pkgver} ${pkgdir}/usr/bin/tclsh
   
-  # install license
   install -Dm644 ../license.terms ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
-
-  # remove buildroot traces
-  sed -i \
-    -e "s,^TCL_BUILD_LIB_SPEC='-L.*/unix,TCL_BUILD_LIB_SPEC='-L/usr/lib," \
-    -e "s,^TCL_SRC_DIR='.*',TCL_SRC_DIR='/usr/include'," \
-    -e "s,^TCL_BUILD_STUB_LIB_SPEC='-L.*/unix,TCL_BUILD_STUB_LIB_SPEC='-L/usr/lib," \
-    -e "s,^TCL_BUILD_STUB_LIB_PATH='.*/unix,TCL_BUILD_STUB_LIB_PATH='/usr/lib," \
-    -e "s,^TCL_LIB_FILE='libtcl8.6..TCL_DBGX..so',TCL_LIB_FILE=\"libtcl8.6\$\{TCL_DBGX\}.so\"," \
-    -e "s,^TCL_CC_SEARCH_FLAGS='\(.*\)',TCL_CC_SEARCH_FLAGS='\1:/usr/lib'," \
-    -e "s,^TCL_LD_SEARCH_FLAGS='\(.*\)',TCL_LD_SEARCH_FLAGS='\1:/usr/lib'," \
-    ${pkgdir}/usr/lib/tclConfig.sh
 }
