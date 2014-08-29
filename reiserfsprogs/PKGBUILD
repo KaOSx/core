@@ -1,7 +1,7 @@
 
 pkgname=reiserfsprogs
 pkgver=3.6.24
-pkgrel=1
+pkgrel=2
 pkgdesc="Reiserfs utilities"
 arch=('x86_64')
 url="http://www.kernel.org/pub/linux/utils/fs/reiserfs/README"
