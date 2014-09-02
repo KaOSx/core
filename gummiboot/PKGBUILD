@@ -1,0 +1,41 @@
+
+pkgname=gummiboot
+pkgver=45
+pkgrel=1
+pkgdesc="Simple UEFI Boot Manager"
+url="http://freedesktop.org/wiki/Software/gummiboot"
+arch=('x86_64')
+license=('LGPL2.1')
+depends=('util-linux')
+makedepends=('gnu-efi-libs' 'docbook-xsl' 'git')
+options=('!strip' '!makeflags')
+install=gummiboot.install
+source=("git://anongit.freedesktop.org/$pkgname#tag=$pkgver"
+        'loader.conf'
+        'KaOS.conf'
+        'splash.bmp')
+md5sums=('SKIP'
+         '30b74b38eaf1178bbc540bda9a24bfe2'
+         '62582e549e63388024c4d8b9b2b9101c'
+         'd7eec59a2aaa54770d22ccfa52d0ac2b')
+
+build() {
+	cd ${srcdir}/${pkgname}
+
+	./autogen.sh
+	./configure --sysconfdir=/etc  --with-efi-ldsdir=/usr/lib --libexecdir=/usr/lib --libdir=/usr/lib
+	
+	make
+}
+
+package() {
+	cd ${srcdir}/${pkgname}
+	make DESTDIR="${pkgdir}" install
+	
+        # Install gummiboot example configuration files (can go away with systemd's kernel-install)
+	install -D -m0644 "${srcdir}/loader.conf" "${pkgdir}/usr/lib/gummiboot/loader/loader.conf"
+	install -D -m0644 "${srcdir}/KaOS.conf" "${pkgdir}/usr/lib/gummiboot/loader/entries/KaOS.conf"
+
+	## ship a boot splash (has to be dropped in manually to take effect)
+	install -D -m0644 "${srcdir}/splash.bmp" "${pkgdir}/usr/lib/gummiboot/splash.bmp"
+}
