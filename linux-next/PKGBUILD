@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=3.16
 _srcname=linux-3.16
-pkgver=3.16.1
+pkgver=3.16.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -31,7 +31,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('5c569ed649a0c9711879f333e90c5386'
-         '9da4b0f5e343455b8141bcfa47e88cf5'
+         '926e6e2ee0634ce53730701da749b040'
          'ac50b07acd60f833ac33742926b5aca0'
          '8b5d2184be4218bd85a295005bace50b'
          'efe2df28a870a3013a7cb1fb888f82a2'
@@ -39,7 +39,7 @@ md5sums=('5c569ed649a0c9711879f333e90c5386'
          '83305affa2b4107b597bb6356d2a1bba'
          '8b4cd65323d93a3e811cc523556a284b'
          '7dafd9278a3e5ff1f735c33a6d938f31'
-         '1556acc15186a90f02b614f8d28c6175'
+         '1e9cdee4a3dd978fd37606d073d8548a'
          'fc6c9779857c00cd65810e807659f54c'
          '57383577266dcb91f871cf3c33263c12'
          '7b2ca9cdb5555219f793b5a807b05870'
