@@ -1,6 +1,6 @@
 
 pkgname=curl
-pkgver=7.37.1
+pkgver=7.38.0
 pkgrel=1
 pkgdesc="An URL retrival utility and library"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('zlib' 'openssl' 'bash' 'ca-certificates' 'libssh2')
 options=('!libtool')
 source=("http://curl.haxx.se/download/${pkgname}-${pkgver}.tar.bz2"
         'curlbuild.h')
-md5sums=('95c627abcf6494f5abe55effe7cd6a57'
+md5sums=('af6b3c299bd891f43cb5f76c4091b7b4'
          '751bd433ede935c8fae727377625a8ae')
 
 build() {
