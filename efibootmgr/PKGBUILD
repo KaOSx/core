@@ -1,6 +1,6 @@
 
 pkgname=efibootmgr
-pkgver=0.7.0
+pkgver=0.8.0
 pkgrel=1
 pkgdesc="Tool to modify UEFI Firmware Boot Manager Variables."
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL2')
 depends=('zlib' 'pciutils' 'efivar')
 options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
 source=("https://github.com/vathpela/efibootmgr/archive/${pkgname}-${pkgver}.tar.gz")
-md5sums=('534f4b6b25cd9356fdcab1f516bbdbbc')
+md5sums=('4b481b9dd78c9b71a4ccd1acd572ea89')
 
 build () {	
 	cd ${srcdir}/${pkgname}-${pkgname}-${pkgver}/

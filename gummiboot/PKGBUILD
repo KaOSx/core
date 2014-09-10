@@ -1,7 +1,7 @@
 
 pkgname=gummiboot
 pkgver=45
-pkgrel=1
+pkgrel=2
 pkgdesc="Simple UEFI Boot Manager"
 url="http://freedesktop.org/wiki/Software/gummiboot"
 arch=('x86_64')
@@ -13,10 +13,12 @@ install=gummiboot.install
 source=("git://anongit.freedesktop.org/$pkgname#tag=$pkgver"
         'loader.conf'
         'KaOS.conf'
+        'KaOS_fallback.conf'
         'splash.bmp')
 md5sums=('SKIP'
          '30b74b38eaf1178bbc540bda9a24bfe2'
-         '62582e549e63388024c4d8b9b2b9101c'
+         'eb444ae327472b98a65631ede777720a'
+         'b8d8ebeab17edbe91209e705cfc9e774'
          'd7eec59a2aaa54770d22ccfa52d0ac2b')
 
 build() {
@@ -35,6 +37,7 @@ package() {
         # Install gummiboot example configuration files (can go away with systemd's kernel-install)
 	install -D -m0644 "${srcdir}/loader.conf" "${pkgdir}/usr/lib/gummiboot/loader/loader.conf"
 	install -D -m0644 "${srcdir}/KaOS.conf" "${pkgdir}/usr/lib/gummiboot/loader/entries/KaOS.conf"
+	install -D -m0644 "${srcdir}/KaOS_fallback.conf" "${pkgdir}/usr/lib/gummiboot/loader/entries/KaOS_fallback.conf"
 
 	## ship a boot splash (has to be dropped in manually to take effect)
 	install -D -m0644 "${srcdir}/splash.bmp" "${pkgdir}/usr/lib/gummiboot/splash.bmp"

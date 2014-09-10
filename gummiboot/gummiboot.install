@@ -1,5 +1,5 @@
 post_install() {
-	mkdir -p /boot/EFI/gummiboot
+	mkdir -p /boot/efi/gummiboot
 	/usr/bin/gummiboot update
 	echo ":: Run '/usr/bin/gummiboot install' to make gummiboot your default bootloader"
 }
