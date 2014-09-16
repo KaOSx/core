@@ -1,6 +1,6 @@
 
 pkgname=dbus
-pkgver=1.8.6
+pkgver=1.8.8
 pkgrel=1
 pkgdesc="Freedesktop.org message bus system"
 url="http://www.freedesktop.org/Software/dbus"
@@ -15,7 +15,7 @@ options=('!libtool')
 install=dbus.install 
 source=("http://dbus.freedesktop.org/releases/dbus/dbus-$pkgver.tar.gz"
         '30-dbus')
-md5sums=('6a08ba555d340e9dfe2d623b83c0eea8'
+md5sums=('b9f4a18ee3faa1e07c04aa1d83239c43'
          '3314d727fa57fc443fce25b5cbeebbcc')
 
 build() {
@@ -26,7 +26,7 @@ build() {
       --with-system-pid-file=/run/dbus/pid \
       --with-system-socket=/run/dbus/system_bus_socket \
       --with-console-auth-dir=/run/console/ \
-      --enable-inotify --disable-dnotify \
+      --enable-inotify \
       --disable-verbose-mode --disable-static \
       --disable-tests --disable-asserts \
       --with-systemdsystemunitdir=/usr/lib/systemd/system \
