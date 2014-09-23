@@ -1,15 +1,15 @@
 
 pkgname=less
-pkgver=458
-pkgrel=3
-pkgdesc="A terminal based program for viewing text files"
+pkgver=468
+pkgrel=1
+pkgdesc="Terminal based program for viewing text files"
 license=('GPL3')
 arch=('x86_64')
 url="http://www.greenwoodsoftware.com/less"
+depends=('glibc' 'ncurses' 'pcre')
 groups=('base')
-depends=('ncurses' 'pcre')
-source=("http://www.greenwoodsoftware.com/$pkgname/$pkgname-$pkgver.tar.gz")
-md5sums=('935b38aa2e73c888c210dedf8fd94f49')
+source=("http://www.greenwoodsoftware.com/less/$pkgname-$pkgver.tar.gz")
+md5sums=('ebaeed479369ff5b8d331381363a9c13')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
