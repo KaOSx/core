@@ -1,6 +1,6 @@
 
 pkgname=nfs-utils
-pkgver=1.3.0
+pkgver=1.3.1
 pkgrel=1
 pkgdesc="Support programs for Network File Systems"
 arch=('x86_64')
@@ -20,13 +20,12 @@ source=("http://downloads.sourceforge.net/project/nfs/nfs-utils/${pkgver}/${pkgn
 	'nfs-utils.conf'
         'id_resolver.conf'
         'nfs-utils_env.sh')
-md5sums=('3ac3726eda563946d1f44ac3e5b61d56'
+md5sums=('97f157f954edb6d4d4385a0c5986f36f'
          '21510b0b30e71c8d6679c7c23f3b78eb'
          'c1fe8dd9581c1df788d8965f4f1479f3'
          'e6ad3c7a59c7e4c24965a0e7da35026c'
          'eb4f4027fab6fc1201f1ca04f5954c76'
          '7674106eaaa4c149bccd4f05fe3604e9'
-         '92423a1e833ba90fdc446aa2296ac7f0'
          '8ac484023d786766d287ccbe878ae4ba'
          '391aaafdf01a665629c708d1386b5896'
          'f204f675a144d14ba21535370eafe645')
