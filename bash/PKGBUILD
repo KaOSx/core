@@ -1,7 +1,7 @@
 
 pkgname=bash
 _basever=4.3
-_patchlevel=025 #prepare for some patches
+_patchlevel=026 #prepare for some patches
 pkgver=$_basever.$_patchlevel
 pkgrel=1
 pkgdesc="The GNU Bourne Again shell"
@@ -79,6 +79,8 @@ md5sums=('81348932d5da294953e15d4814c74dd1'
          'b5ea5600942acceb4b6f07313d2de74e'
          'SKIP'
          '193c06f578d38ffdbaebae9c51a7551f'
+         'SKIP'
+         '922578e2be7ed03729454e92ee8d3f3a'
          'SKIP')
 
 build() {
