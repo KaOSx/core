@@ -2,7 +2,7 @@
 # KEEP LIBTOOL FILES!
 pkgname=neon
 pkgver=0.30.0
-pkgrel=1
+pkgrel=2
 pkgdesc="HTTP and WebDAV client library with a C interface"
 arch=('x86_64')
 url="http://www.webdav.org/neon/"
