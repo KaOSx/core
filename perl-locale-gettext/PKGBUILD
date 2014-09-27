@@ -2,7 +2,7 @@
 pkgname=perl-locale-gettext
 _realname=gettext
 pkgver=1.05
-pkgrel=3
+pkgrel=4
 pkgdesc="Permits access from Perl to the gettext() family of functions"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
