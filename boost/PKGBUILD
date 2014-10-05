@@ -3,7 +3,7 @@ pkgbase=boost
 pkgname=('boost-libs' 'boost')
 pkgver=1.56.0
 _pkgver=1_56_0
-pkgrel=1
+pkgrel=2
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="http://www.boost.org/"
@@ -13,15 +13,9 @@ source=("http://downloads.sourceforge.net/boost/${pkgbase}_${_pkgver}.tar.gz")
 license=('custom')
 md5sums=('8c54705c424513fa2be0042696a3a162')
 
-_stagedir="${srcdir}/stagedir"
-
 build() {
+  export _stagedir="${srcdir}/stagedir"
   local JOBS="$(sed -e 's/.*\(-j *[0-9]\+\).*/\1/' <<< ${MAKEFLAGS})"
-  
-   # Add an extra python version. This does not replace anything and python 2.x need to be the default.
-   echo "using python : 3.4 : /usr/bin/python3 : /usr/include/python3.4m : /usr/lib ;" >> project-config.jam
-   # Support for OpenMPI
-   echo "using mpi ;" >> project-config.jam
 
   cd "${srcdir}"/${pkgbase}_${_pkgver}
   ./bootstrap.sh --with-toolset=gcc --with-icu --with-python=/usr/bin/python2
@@ -30,6 +24,11 @@ build() {
   install -d -m 755 "${_stagedir}"/bin
   install tools/build/src/engine/bin.linuxx86_64/b2 "${_stagedir}"/bin/b2
 
+  # Add an extra python version. This does not replace anything and python 2.x is the default.
+   echo "using python : 3.4 : /usr/bin/python3 : /usr/include/python3.4m : /usr/lib ;" >> project-config.jam
+   # Support for OpenMPI
+   echo "using mpi ;" >> project-config.jam
+  
   #boostbook needed by quickbook
   install -d -m 755 "${_stagedir}"/share/boostbook
   cp -a tools/boostbook/{xsl,dtd} "${_stagedir}"/share/boostbook/
