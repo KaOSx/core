@@ -2,8 +2,8 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.15
-pkgver=3.15.10
+_basekernel=3.16
+pkgver=3.16.4
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
