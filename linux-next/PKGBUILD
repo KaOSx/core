@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.16
-_srcname=linux-3.16
-pkgver=3.16.4
+_basekernel=3.17
+_srcname=linux-3.17
+pkgver=3.17.0
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.16-rc7.tar.xz"
-        "https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+        #"https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -30,8 +30,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('5c569ed649a0c9711879f333e90c5386'
-         '38298e5acfdf188e264cc2984e50410c'
+md5sums=('fb30d0f29214d75cddd2faa94f73d5cf'
+         #'38298e5acfdf188e264cc2984e50410c'
          'ac50b07acd60f833ac33742926b5aca0'
          '8b5d2184be4218bd85a295005bace50b'
          'efe2df28a870a3013a7cb1fb888f82a2'
@@ -53,7 +53,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -66,18 +66,18 @@ build() {
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs3.patch"
-  patch -p1 -i "${srcdir}/aufs3-base.patch"
-  patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs3-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs3-mmap.patch"
-  patch -p1 -i "${srcdir}/aufs3-standalone.patch"
-  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  patch -p1 -i "${srcdir}/vfs-ino.patch"
+  #patch -p1 -i "${srcdir}/aufs3.patch"
+  #patch -p1 -i "${srcdir}/aufs3-base.patch"
+  #patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
+  #patch -p1 -i "${srcdir}/aufs3-loopback.patch"
+  #patch -p1 -i "${srcdir}/aufs3-mmap.patch"
+  #patch -p1 -i "${srcdir}/aufs3-standalone.patch"
+  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  #patch -p1 -i "${srcdir}/vfs-ino.patch"
   
   cat "${srcdir}/config" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -247,10 +247,11 @@ package_linux-next-headers() {
   # add xfs and shmem for aufs building
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs"
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/mm"
-  cp fs/xfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h"
+  # not in 3.17 ?
+  #cp fs/xfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h"
 
   #aufs3-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  #sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
