@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 _basekernel=3.17
 _srcname=linux-3.17
 pkgver=3.17.0
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -247,8 +247,7 @@ package_linux-next-headers() {
   # add xfs and shmem for aufs building
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs"
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/mm"
-  # not in 3.17 ?
-  #cp fs/xfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h"
+  cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs3-util need
   #sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
