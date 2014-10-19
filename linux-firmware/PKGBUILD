@@ -1,12 +1,12 @@
 
 pkgname=linux-firmware
-pkgver=20140829
+pkgver=20141009
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
 pkgdesc="Firmware files for Linux"
 arch=('x86_64')
-url="http://git.kernel.org/?p=linux/kernel/git/dwmw2/linux-firmware.git;a=summary"
+url="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git"
 license=('GPL2' 'GPL3' 'custom')
 makedepends=('b43-fwcutter' 'git')
 conflicts=('linux-firmware-git'
