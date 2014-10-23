@@ -1,7 +1,7 @@
 
 pkgname=logrotate
-pkgver=3.8.7
-pkgrel=2
+pkgver=3.8.8
+pkgrel=1
 pkgdesc="Rotates system logs automatically"
 url='https://fedorahosted.org/logrotate/'
 arch=('x86_64')
@@ -14,7 +14,7 @@ source=("https://fedorahosted.org/releases/l/o/logrotate/logrotate-${pkgver}.tar
         'logrotate.service'
         'logrotate.timer'
         'path.patch')
-md5sums=('99e08503ef24c3e2e3ff74cc5f3be213'
+md5sums=('49846e873dddea15964cd0355b9943ca'
          '416de14f92ef4361adad8b6e7065245a'
          '57039a96a716391fad46c7eb1bf47b52'
          '287c2ad9b074cb5478db7692f385827c'
@@ -24,7 +24,12 @@ build() {
   cd $srcdir/${pkgname}-${pkgver}
   patch -p0 -i "$srcdir/path.patch"
   
-  make WITH_ACL=yes 
+  ./autogen.sh
+  ./configure --prefix=/usr \
+       --mandir=/usr/share/man \
+       --with-acl
+  
+  make 
 }
 
 check() {
@@ -35,7 +40,7 @@ check() {
 
 package() {
   cd $srcdir/${pkgname}-${pkgver}
-  make PREFIX=$pkgdir install
+  make DESTDIR=$pkgdir install
   
   install -dm755 $pkgdir/etc/logrotate.d
   install -Dm644 $srcdir/logrotate.conf $pkgdir/etc/logrotate.conf
