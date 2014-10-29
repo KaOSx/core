@@ -1,17 +1,21 @@
 # NOTE: requires rebuilt with each new gcc version
 
-pkgname=('libtool' 'libltdl')
-pkgver=2.4.2
-pkgrel=15
+pkgname=libtool
+pkgver=2.4.3
+pkgrel=1
 pkgdesc="A generic library support script"
 arch=('x86_64')
 url="http://www.gnu.org/software/libtool"
 license=('GPL')
 options=('!libtool')
-depends=('sed' 'grep') # Needed by libtoolize
-makedepends=('gcc=4.8.3')
+depends=('sed' 'grep' 'sh' 'tar' 'gcc=4.8.3') # Needed by libtoolize
+groups=('base-devel')
+provides=('libltdl')
+conflicts=('libltdl')
+replaces=('libltdl')
+install=libtool.install
 source=("ftp://ftp.gnu.org/pub/gnu/libtool/${pkgname}-${pkgver}.tar.xz")
-md5sums=('2ec8997e0c07249eb4cbd072417d70fe')
+md5sums=('b5699a6d58f5594cdb0992c5e1f5e57e')
 
 build() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
@@ -26,24 +30,11 @@ check() {
   make check
 }
 
-package_libtool() {
-  depends=('sh' "libltdl=${pkgver}" 'tar' 'gcc=4.8.3')
-  groups=('base-devel')
-  install=libtool.install
-
-  cd "${srcdir}/${pkgbase}-${pkgver}"
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
   
-  make DESTDIR="${pkgdir}" install-binSCRIPTS install-man install-info \
-                           install-data-local
-  rm -r "${pkgdir}/usr/share/libtool/libltdl"
+  make DESTDIR=${pkgdir} install
 }
 
-package_libltdl() {
-  pkgdesc="A system independent dlopen wrapper for GNU libtool"
 
-  cd "${srcdir}/${pkgbase}-${pkgver}"
-  make DESTDIR="${pkgdir}" install-libLTLIBRARIES install-includeHEADERS \
-                           install-ltdlincludeHEADERS install-data-local
-  rm -r "${pkgdir}/usr/share"/{aclocal,libtool/config}
-}
 
