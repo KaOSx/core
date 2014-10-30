@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=3.16
-pkgver=3.16.6
+pkgver=3.16.7
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -29,7 +29,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.16.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('5c569ed649a0c9711879f333e90c5386'
-         'c83d2b26c8282e91b227f6810beb332e'
+         '062f41ed40a33485605d98bad4bcc5a1'
          '57c55742740aee6afba47c7d6642ede2'
          '8b5d2184be4218bd85a295005bace50b'
          'efe2df28a870a3013a7cb1fb888f82a2'
