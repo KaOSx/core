@@ -1,23 +1,24 @@
 #
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 # NOTE: libtool requires rebuilt with each new gcc version
+# http://www.linuxfromscratch.org/lfs/view/7.6/chapter06/gcc.html
 
 pkgname=('gcc' 'gcc-libs' 'gcc-fortran' 'gcc-objc' 'gcc-ada' 'gcc-go')
-pkgver=4.8.3
+pkgver=4.9.2
 #_snapshot=4.8-20130718
 pkgrel=1
 pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
 url="http://gcc.gnu.org"
-makedepends=('binutils>=2.23' 'libmpc' 'cloog' 'gcc-ada' 'doxygen')
+makedepends=('binutils>=2.24' 'libmpc' 'cloog' 'gcc-ada' 'doxygen')
 checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
 source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2"
 #source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.bz2")
         'gcc-4.8-filename-output.patch'
         'gcc-4.8-lambda-ICE.patch')
-md5sums=('7c60f24fab389f77af203d2516ee110f'
+md5sums=('4df8ee253b7f3863ad0b86359cd39c43'
          '40cb437805e2f7a006aa0d0c3098ab0f'
          '6eb6e080dbf7bc6825f53a0aaa6c4ef9')
 
@@ -38,7 +39,6 @@ build() {
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
   
   patch -p0 -i ${srcdir}/gcc-4.8-filename-output.patch
-  patch -p1 -i ${srcdir}/gcc-4.8-lambda-ICE.patch
   
   # using -pipe causes spurious test-suite failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=48565
@@ -87,7 +87,7 @@ package_gcc-libs()
 {
   pkgdesc="Runtime libraries shipped by GCC"
   groups=('base')
-  depends=('glibc>=2.17')
+  depends=('glibc>=2.20')
   install=gcc-libs.install
 
   cd ${srcdir}/gcc-build
@@ -119,7 +119,7 @@ package_gcc-libs()
 package_gcc()
 {
   pkgdesc="The GNU Compiler Collection - C and C++ frontends"
-  depends=("gcc-libs=$pkgver-$pkgrel" 'binutils>=2.23' 'libmpc' 'cloog')
+  depends=("gcc-libs=$pkgver-$pkgrel" 'binutils>=2.24' 'libmpc' 'cloog')
   groups=('base-devel')
   install=gcc.install
 
@@ -128,7 +128,7 @@ package_gcc()
   make -j1 DESTDIR=${pkgdir} install
 
   install -d $pkgdir/usr/share/gdb/auto-load/usr/lib
-  mv $pkgdir{,/usr/share/gdb/auto-load}/usr/lib/libstdc++.so.6.0.19-gdb.py
+  mv $pkgdir{,/usr/share/gdb/auto-load}/usr/lib/libstdc++.so.6.0.20-gdb.py
 
   # unfortunately it is much, much easier to install the lot and clean-up the mess...
   rm $pkgdir/usr/bin/{{$CHOST-,}gfortran,{$CHOST-,}gccgo,gnat*}

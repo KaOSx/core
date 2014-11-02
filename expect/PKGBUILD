@@ -1,7 +1,7 @@
 
 pkgname=expect
 pkgver=5.45
-pkgrel=4
+pkgrel=5
 pkgdesc="A tool for automating interactive applications"
 arch=('x86_64')
 url="http://www.nist.gov/el/msid/expect.cfm"
