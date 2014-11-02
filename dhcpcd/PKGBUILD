@@ -1,7 +1,7 @@
 
 pkgname=dhcpcd
 pkgver=6.6.0
-pkgrel=1
+pkgrel=2
 pkgdesc="RFC2131 compliant DHCP client daemon"
 url="http://roy.marples.name/projects/dhcpcd/"
 arch=('x86_64')
@@ -21,7 +21,10 @@ md5sums=('c2c4972ea3f0118c01fc03a026fce641'
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
 
-  ./configure --libexecdir=/usr/lib/dhcpcd --dbdir=/var/lib/dhcpcd --rundir=/run
+  ./configure --libexecdir=/usr/lib/dhcpcd \
+       --dbdir=/var/lib/dhcpcd \
+       --rundir=/run \
+       --without-dev
   make
 }
 

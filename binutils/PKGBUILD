@@ -40,9 +40,9 @@ build() {
   ${srcdir}/binutils-${pkgver}/configure --prefix=/usr \
     --with-lib-path=/usr/lib:/usr/local/lib \
     --with-bugurl=https://github.com/KaOSx/core/issues \
-    --enable-ld=default --enable-gold \
+    --enable-ld=default --enable-gold --with-pic \
     --enable-plugins --enable-threads --enable-shared \
-    --disable-werror --disable-multilib
+    --disable-werror --disable-multilib 
 
   # check the host environment and makes sure all the necessary tools are available
   make configure-host
@@ -61,13 +61,6 @@ check() {
 package() {
   cd ${srcdir}/binutils-build
   make prefix=${pkgdir}/usr tooldir=${pkgdir}/usr install
-  
-  # Add some useful headers
-  install -m644 ${srcdir}/binutils-${pkgver}/include/libiberty.h ${pkgdir}/usr/include
-  install -m644 ${srcdir}/binutils-${pkgver}/include/demangle.h ${pkgdir}/usr/include
-
-  # install libraries PIC
-  install -m644 libiberty/pic/libiberty.a ${pkgdir}/usr/lib
 
   # Remove Windows/Novell specific man pages
   rm ${pkgdir}/usr/share/man/man1/{dlltool,nlmconv,windres,windmc}*
