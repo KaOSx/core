@@ -1,7 +1,7 @@
 
 pkgname=curl
-pkgver=7.38.0
-pkgrel=2
+pkgver=7.39.0
+pkgrel=1
 pkgdesc="An URL retrival utility and library"
 arch=('x86_64')
 url="http://curl.haxx.se"
@@ -9,16 +9,12 @@ license=('MIT')
 depends=('zlib' 'openssl' 'bash' 'ca-certificates' 'libssh2')
 options=('!libtool')
 source=("http://curl.haxx.se/download/${pkgname}-${pkgver}.tar.bz2"
-        'curlbuild.h'
-        '0001-threaded-resolver-revert-Curl_expire_latest-switch.patch')
-md5sums=('af6b3c299bd891f43cb5f76c4091b7b4'
-         '751bd433ede935c8fae727377625a8ae'
-         'deb28ba80ade06c07b67d392d133afb5')
+        'curlbuild.h')
+md5sums=('1efecb5b0e43c17d968f0d228bbbbbbd'
+         '751bd433ede935c8fae727377625a8ae')
 
 build() {
     cd ${srcdir}/${pkgname}-${pkgver}
-    # https://sourceforge.net/p/curl/bugs/1426/?page=1 xbmc stream fail
-    patch -p1 -i ${srcdir}/0001-threaded-resolver-revert-Curl_expire_latest-switch.patch
 
     ./configure \
         --with-random=/dev/urandom \
