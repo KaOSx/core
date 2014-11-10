@@ -1,6 +1,6 @@
 
 pkgname=ca-certificates
-pkgver=20140325
+pkgver=20141019
 pkgrel=1
 pkgdesc='Common CA certificates'
 arch=('x86_64')
@@ -11,10 +11,10 @@ depends=('bash' 'run-parts' 'openssl' 'findutils' 'coreutils' 'sed')
 makedepends=('ruby' 'python2')
 install=ca-certificates.install
 backup=('etc/ca-certificates.conf')
-md5sums=('0436aba482091da310bd762e1deca8b4')
+md5sums=('f619282081c8bfc65ea64c37fa5285ed')
 
 build() {
-  cd "${srcdir}/${pkgname}"
+  cd "${srcdir}/${pkgname}-${pkgver}"
 
   sed 's|/usr/bin/python|/usr/bin/python2|g' -i mozilla/certdata2pem.py
   sed 's|python|python2|g' -i mozilla/Makefile
@@ -22,7 +22,7 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}"
+  cd "${srcdir}/${pkgname}-${pkgver}"
 
   install -d -m755 "${pkgdir}"/{etc/ca-certificates/update.d,usr/{sbin,share/ca-certificates},etc/ssl/certs}
   make install DESTDIR="${pkgdir}"
