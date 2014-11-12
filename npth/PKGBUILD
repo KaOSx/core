@@ -1,0 +1,30 @@
+
+pkgname=npth
+pkgver=1.1
+pkgrel=1
+pkgdesc='Library to provide the GNU Pth API and thus a non-preemptive threads implementation.'
+url="http://git.gnupg.org/cgi-bin/gitweb.cgi?p=npth.git;a=blob_plain;f=README;hb=refs/heads/master"
+license=('LGPL')
+options=('!libtool')
+arch=('x86_64')
+source=("ftp://ftp.gnupg.org/gcrypt/npth/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('aaffc8ef3e955ab50a1905809f268a23')
+
+build() {
+	cd "${srcdir}/${pkgname}-${pkgver}"
+	
+	./configure --prefix=/usr --enable-maintainer-mode
+	make
+}
+
+check() {
+	cd "${srcdir}/${pkgname}-${pkgver}"
+	
+	make check
+}
+
+package() {
+	cd "${srcdir}/${pkgname}-${pkgver}"
+	
+	make DESTDIR="${pkgdir}" install
+}
