@@ -1,6 +1,6 @@
 
 pkgname=traceroute
-pkgver=2.0.20
+pkgver=2.0.21
 pkgrel=1
 pkgdesc="Tracks the route taken by packets over an IP network"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL2')
 groups=('base')
 depends=('glibc')
 source=("http://downloads.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('559f104e155e0e14ee0c717776a745fa')
+md5sums=('79289adabd6f3ebf9160fc0815ab3150')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
