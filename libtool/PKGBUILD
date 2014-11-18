@@ -2,23 +2,28 @@
 
 pkgname=libtool
 pkgver=2.4.3
-pkgrel=2
+pkgrel=3
 pkgdesc="A generic library support script"
 arch=('x86_64')
 url="http://www.gnu.org/software/libtool"
 license=('GPL')
 options=('!libtool')
 depends=('sed' 'grep' 'sh' 'tar' 'gcc=4.9.2') # Needed by libtoolize
+makedepends=('help2man')
 groups=('base-devel')
 provides=('libltdl')
 conflicts=('libltdl')
 replaces=('libltdl')
 install=libtool.install
-source=("ftp://ftp.gnu.org/pub/gnu/libtool/${pkgname}-${pkgver}.tar.xz")
-md5sums=('b5699a6d58f5594cdb0992c5e1f5e57e')
+source=("ftp://ftp.gnu.org/pub/gnu/libtool/${pkgname}-${pkgver}.tar.xz"
+        'no-clean-gnulib.patch')
+md5sums=('b5699a6d58f5594cdb0992c5e1f5e57e'
+         '23c8ef65f19705239f1aa362f429e3ad')
 
 build() {
   cd "${srcdir}/${pkgbase}-${pkgver}"
+  # https://bugs.gentoo.org/527200  build failures with 2.4.3 in ocatve & groff
+  patch -p1 -i "${srcdir}/no-clean-gnulib.patch"
   
   ./configure --prefix=/usr
   make
