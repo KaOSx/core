@@ -1,18 +1,18 @@
 
 pkgname=btrfs-progs
-pkgver=3.17
+pkgver=3.17.2
 pkgrel=1
 pkgdesc="Btrfs filesystem utilities."
 arch=('x86_64')
 url="http://btrfs.wiki.kernel.org/"
 license=('GPL2')
 depends=('glibc' 'e2fsprogs' 'lzo2' 'asciidoc')
-makedepoends=('git')
+makedepends=('git' 'xmlto')
 options=('!staticlibs')
 source=("https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/${pkgname}-v${pkgver}.tar.xz"
 	'initcpio-install-btrfs'
 	'initcpio-hook-btrfs')
-md5sums=('1abac9ab6c00b551142306431a7f6017'
+md5sums=('2ed5892942e13f5902b8307f62ecc378'
          '5642e1524eefddf9195693cd114ecc65'
          '85ff8daca50a5ba3dff3c3e641d38b1e')
 
