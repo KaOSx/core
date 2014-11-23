@@ -1,13 +1,13 @@
 
 pkgname=unixodbc
 pkgver=2.3.2
-pkgrel=1
+pkgrel=2
 pkgdesc="ODBC is an open specification for providing application developers with a predictable API with which to access Data Sources"
 arch=('x86_64')
 license=('GPL2' 'LGPL2.1')
 url="http://www.unixodbc.org/"
 backup=('etc/odbc.ini' 'etc/odbcinst.ini')
-depends=('readline>=6.0' 'libltdl')
+depends=('readline>=6.0' 'libtool')
 options=('!libtool')
 source=("http://www.unixodbc.org/unixODBC-$pkgver.tar.gz")
 md5sums=('5e4528851eda5d3d4aed249b669bd05b')
