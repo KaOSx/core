@@ -1,6 +1,6 @@
 
 pkgname=libffi
-pkgver=3.1
+pkgver=3.2.1
 pkgrel=1
 pkgdesc="A portable, high level programming interface to various calling conventions."
 arch=('x86_64')
@@ -11,12 +11,12 @@ options=('!libtool')
 install=libffi.install
 source=("ftp://sourceware.org/pub/libffi/libffi-${pkgver}.tar.gz"
         'libffi.pc.patch')
-md5sums=('f5898b29bbfd70502831a212d9249d10'
+md5sums=('83b89587607e3eb65c70d361f13bab43'
          'd5679972e3f98288fa410a965d8efbcc')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  patch -p1 -i ${srcdir}/libffi.pc.patch
+  #patch -p1 -i ${srcdir}/libffi.pc.patch
   
   autoreconf -fi
   ./configure --prefix=/usr --disable-static
