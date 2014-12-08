@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.16
-pkgver=3.16.7
+_basekernel=3.17
+pkgver=3.17.6
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.16.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.17.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -28,18 +28,18 @@ source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.16.tar.xz"
         'linux.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('5c569ed649a0c9711879f333e90c5386'
-         '062f41ed40a33485605d98bad4bcc5a1'
-         '57c55742740aee6afba47c7d6642ede2'
-         '8b5d2184be4218bd85a295005bace50b'
-         'efe2df28a870a3013a7cb1fb888f82a2'
-         '8bddc7a7db5a921f0fc7133f4fbbbe47'
-         '83305affa2b4107b597bb6356d2a1bba'
-         '8b4cd65323d93a3e811cc523556a284b'
-         '7dafd9278a3e5ff1f735c33a6d938f31'
+md5sums=('fb30d0f29214d75cddd2faa94f73d5cf'
+         'a249818fc3c167a067b1508d86855efa'
+         'db08fc0b915eb9876f44ffcb5e423ed3'
+         '7be6808cd61bd2a22488e85a94cc50ac'
+         '5df13fbec8b76f49cd19890c72318832'
+         'a6fdc776346feebc1b2f2533a2566d00'
+         'b666318b13ecfe1d918682e932750d5c'
+         'ee24396308d5d79489e54a60098e2b2d'
+         '0cda203a55ea7a6108762745d13a8a87'
          '1e9cdee4a3dd978fd37606d073d8548a'
-         'fc6c9779857c00cd65810e807659f54c'
-         '57383577266dcb91f871cf3c33263c12'
+         'f81a3b5c8f438d8b378676f1ec6f778d'
+         '8a075a5764e0a0bb3101e8331de39444'
          'eb14dcfd80c00852ef81ded6e826826a'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47')
@@ -246,9 +246,9 @@ package_linux-headers() {
   cp drivers/media/tuners/*.h "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/tuners/"
 
   # add xfs and shmem for aufs building
-  mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs"
+  mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs"
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/mm"
-  cp fs/xfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h"
+  cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs3-util need
   sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"

@@ -1,6 +1,6 @@
 
 pkgname=wget
-pkgver=1.16
+pkgver=1.16.1
 pkgrel=1
 pkgdesc="A network utility to retrieve files from the Web"
 arch=('x86_64')
@@ -12,7 +12,7 @@ optdepends=('ca-certificates: HTTPS downloads')
 backup=('etc/wgetrc')
 install=wget.install
 source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('fe102975ab3a6c049777883f1bb9ad07')
+md5sums=('78942cc0cce0a23e18114d982789e360')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
