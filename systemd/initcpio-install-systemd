@@ -101,11 +101,16 @@ build() {
 
     # systemd
     add_binary /usr/lib/systemd/systemd /init
-    add_binary /usr/bin/systemd-tmpfiles
+    
+    map add_binary \
+        /usr/lib/systemd/systemd-hibernate-resume \
+        /usr/lib/systemd/system-generators/systemd-hibernate-resume-generator \
+        /usr/bin/systemd-tmpfiles
 
     # generate sysroot.mount and sysroot-usr.mount gpt 
-    add_file "/usr/lib/systemd/system-generators/systemd-fstab-generator"
-    add_file "/usr/lib/systemd/system-generators/systemd-gpt-auto-generator"
+    map add_file \
+        /usr/lib/systemd/system-generators/systemd-fstab-generator \
+        /usr/lib/systemd/system-generators/systemd-gpt-auto-generator
 
     # udev rules and systemd units
     map add_udev_rule "$rules" \
@@ -113,10 +118,9 @@ build() {
             60-persistent-storage.rules \
             64-btrfs.rules \
             80-drivers.rules \
-            99-systemd.rules \
+            99-systemd.rules
 
     map add_systemd_unit \
-            ctrl-alt-del.target \
             initrd-cleanup.service \
             initrd-fs.target \
             initrd-parse-etc.service \
@@ -126,22 +130,32 @@ build() {
             initrd-udevadm-cleanup-db.service \
             initrd.target \
             kmod-static-nodes.service \
+            local-fs.target \
+            local-fs-pre.target \
+            paths.target \
+            slices.target \
             sockets.target \
+            swap.target \
             systemd-fsck@.service \
+            systemd-hibernate-resume@.service \
             systemd-journald.service \
+            systemd-journald-audit.socket \
+            systemd-journald-dev-log.socket \
             systemd-tmpfiles-setup-dev.service \
             systemd-udev-trigger.service \
             systemd-udevd-control.socket \
             systemd-udevd-kernel.socket \
-            systemd-udevd.service
+            systemd-udevd.service \
+            timers.target
 
     add_symlink "/usr/lib/systemd/system/default.target" "initrd.target"
+    add_symlink "/usr/lib/systemd/system/ctrl-alt-del.target" "reboot.target"
 
     # libdbus needs the passwd info of the root user
     # TODO: make sure this is no longer necessary when systemctl moves to sd-bus
     add_file "/etc/nsswitch.conf"
     add_file "/etc/passwd"
-    add_binary "/lib/libnss_files-2.17.so"
+    add_binary "/lib/libnss_files-2.20.so"
 
     # udev wants /etc/group since it doesn't launch with --resolve-names=never
     add_file "/etc/group"
@@ -157,4 +171,4 @@ rescue shell exists on your initramfs.
 HELPEOF
 }
 
-# vim: set ft=sh ts=4 sw=4 et:
+

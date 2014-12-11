@@ -1,7 +1,7 @@
 
 pkgname=python2
-pkgver=2.7.8
-pkgrel=3
+pkgver=2.7.9
+pkgrel=1
 _pybasever=2.7
 pkgdesc="A high-level scripting language"
 arch=('x86_64')
@@ -13,7 +13,7 @@ provides=('python' 'python-elementtree' 'python-ctypes')
 replaces=('python-elementtree' 'python-ctypes' 'python')
 conflicts=('python')
 source=("http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz")
-md5sums=('d235bdfa75b8396942e360a70487ee00')
+md5sums=('38d530f7efc373d64a8fb1637e3baaa7')
 
 build() {
   cd "${srcdir}/Python-${pkgver}"
