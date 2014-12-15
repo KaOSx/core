@@ -3,7 +3,7 @@ pkgname=linux-firmware
 pkgver=20141201
 _b43=5.100.138
 _legacy=3.130.20.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Firmware files for Linux"
 arch=('x86_64')
 url="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git"
@@ -59,4 +59,8 @@ package() {
 
   # install b43-legacy-firmware
   b43-fwcutter -w "${pkgdir}/usr/lib/firmware/" ${srcdir}/wl_apsta-${_legacy}.o
+  
+  # systemd 218 no longer provides firmware loader helper, let the kernel find firmware
+  install -d -m755 "${pkgdir}/lib"
+  ln -s "/usr/lib/firmware" "${pkgdir}/lib/firmware"
 }

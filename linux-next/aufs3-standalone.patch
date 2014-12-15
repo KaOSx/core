@@ -1,4 +1,4 @@
-aufs3.17 standalone patch
+aufs3.18 standalone patch
 
 diff --git a/fs/inode.c b/fs/inode.c
 index df21e66..c8df03d 100644
@@ -21,10 +21,10 @@ index df21e66..c8df03d 100644
  /**
   *	touch_atime	-	update the access time
 diff --git a/fs/namespace.c b/fs/namespace.c
-index ef42d9b..88af377 100644
+index 5b66b2b..68ff4e4 100644
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
-@@ -452,6 +452,7 @@ void __mnt_drop_write(struct vfsmount *mnt)
+@@ -454,6 +454,7 @@ void __mnt_drop_write(struct vfsmount *mnt)
  	mnt_dec_writers(real_mount(mnt));
  	preempt_enable();
  }
@@ -32,7 +32,7 @@ index ef42d9b..88af377 100644
  
  /**
   * mnt_drop_write - give up write access to a mount
-@@ -1584,6 +1585,7 @@ int iterate_mounts(int (*f)(struct vfsmount *, void *), void *arg,
+@@ -1727,6 +1728,7 @@ int iterate_mounts(int (*f)(struct vfsmount *, void *), void *arg,
  	}
  	return 0;
  }
@@ -41,7 +41,7 @@ index ef42d9b..88af377 100644
  static void cleanup_group_ids(struct mount *mnt, struct mount *end)
  {
 diff --git a/fs/notify/group.c b/fs/notify/group.c
-index ad19959..adf290d 100644
+index d16b62c..06ca6bc 100644
 --- a/fs/notify/group.c
 +++ b/fs/notify/group.c
 @@ -22,6 +22,7 @@
@@ -77,7 +77,7 @@ index ad19959..adf290d 100644
  int fsnotify_fasync(int fd, struct file *file, int on)
  {
 diff --git a/fs/notify/mark.c b/fs/notify/mark.c
-index d90deaa..60b4239 100644
+index 34c38fa..d40cf58 100644
 --- a/fs/notify/mark.c
 +++ b/fs/notify/mark.c
 @@ -109,6 +109,7 @@ void fsnotify_put_mark(struct fsnotify_mark *mark)
@@ -96,7 +96,7 @@ index d90deaa..60b4239 100644
  
  void fsnotify_set_mark_mask_locked(struct fsnotify_mark *mark, __u32 mask)
  {
-@@ -275,6 +277,7 @@ err:
+@@ -311,6 +313,7 @@ err:
  
  	return ret;
  }
@@ -104,7 +104,7 @@ index d90deaa..60b4239 100644
  
  int fsnotify_add_mark(struct fsnotify_mark *mark, struct fsnotify_group *group,
  		      struct inode *inode, struct vfsmount *mnt, int allow_dups)
-@@ -336,6 +339,7 @@ void fsnotify_init_mark(struct fsnotify_mark *mark,
+@@ -372,6 +375,7 @@ void fsnotify_init_mark(struct fsnotify_mark *mark,
  	atomic_set(&mark->refcnt, 1);
  	mark->free_mark = free_mark;
  }
@@ -113,7 +113,7 @@ index d90deaa..60b4239 100644
  static int fsnotify_mark_destroy(void *ignored)
  {
 diff --git a/fs/open.c b/fs/open.c
-index d6fd3ac..5e99d8b 100644
+index de92c13..65d8ab0 100644
 --- a/fs/open.c
 +++ b/fs/open.c
 @@ -62,6 +62,7 @@ int do_truncate(struct dentry *dentry, loff_t length, unsigned int time_attrs,
@@ -133,7 +133,7 @@ index d6fd3ac..5e99d8b 100644
  SYSCALL_DEFINE4(fallocate, int, fd, int, mode, loff_t, offset, loff_t, len)
  {
 diff --git a/fs/splice.c b/fs/splice.c
-index 9ba380c..3419932 100644
+index 619359a..c14f60e 100644
 --- a/fs/splice.c
 +++ b/fs/splice.c
 @@ -1127,6 +1127,7 @@ long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
@@ -152,6 +152,18 @@ index 9ba380c..3419932 100644
  
  /**
   * splice_direct_to_actor - splices data directly between two non-pipes
+diff --git a/fs/xattr.c b/fs/xattr.c
+index 64e83ef..bd71e53 100644
+--- a/fs/xattr.c
++++ b/fs/xattr.c
+@@ -207,6 +207,7 @@ vfs_getxattr_alloc(struct dentry *dentry, const char *name, char **xattr_value,
+ 	*xattr_value = value;
+ 	return error;
+ }
++EXPORT_SYMBOL_GPL(vfs_getxattr_alloc);
+ 
+ /* Compare an extended attribute value with the given value */
+ int vfs_xattr_cmp(struct dentry *dentry, const char *xattr_name,
 diff --git a/security/commoncap.c b/security/commoncap.c
 index bab0611..3fa2f82 100644
 --- a/security/commoncap.c
@@ -189,7 +201,7 @@ index 188c1d2..426d9af 100644
  int devcgroup_inode_mknod(int mode, dev_t dev)
  {
 diff --git a/security/security.c b/security/security.c
-index e41b1a8..37cc870 100644
+index 18b35c6..12c67af 100644
 --- a/security/security.c
 +++ b/security/security.c
 @@ -407,6 +407,7 @@ int security_path_rmdir(struct path *dir, struct dentry *dentry)
