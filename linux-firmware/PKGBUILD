@@ -3,7 +3,7 @@ pkgname=linux-firmware
 pkgver=20141201
 _b43=5.100.138
 _legacy=3.130.20.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Firmware files for Linux"
 arch=('x86_64')
 url="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git"
@@ -48,19 +48,15 @@ md5sums=('SKIP'
 package() {
   cd "${srcdir}/${pkgname}"
 
-  install -d -m755 "${pkgdir}/usr/lib/firmware"
-  cp -a * "${pkgdir}/usr/lib/firmware/"
+  install -d -m755 "${pkgdir}/lib/firmware"
+  cp -a * "${pkgdir}/lib/firmware/"
   install -d -m755 "${pkgdir}/usr/share/licenses/linux-firmware/"
-  rm -f "${pkgdir}/usr/lib/firmware/GPL*"
-  mv "${pkgdir}/usr/lib/firmware"/{LICEN*,WHENCE} "${pkgdir}/usr/share/licenses/linux-firmware/"
+  rm -f "${pkgdir}/lib/firmware/GPL*"
+  mv "${pkgdir}/lib/firmware"/{LICEN*,WHENCE} "${pkgdir}/usr/share/licenses/linux-firmware/"
 
   # install b43-firmware
-  b43-fwcutter -w "${pkgdir}/usr/lib/firmware/" ${srcdir}/broadcom-wl-${_b43}/linux/wl_apsta.o
+  b43-fwcutter -w "${pkgdir}/lib/firmware/" ${srcdir}/broadcom-wl-${_b43}/linux/wl_apsta.o
 
   # install b43-legacy-firmware
-  b43-fwcutter -w "${pkgdir}/usr/lib/firmware/" ${srcdir}/wl_apsta-${_legacy}.o
-  
-  # systemd 218 no longer provides firmware loader helper, let the kernel find firmware
-  install -d -m755 "${pkgdir}/lib"
-  ln -s "/usr/lib/firmware" "${pkgdir}/lib/firmware"
+  b43-fwcutter -w "${pkgdir}/lib/firmware/" ${srcdir}/wl_apsta-${_legacy}.o
 }
