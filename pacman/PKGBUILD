@@ -1,24 +1,23 @@
 
 pkgname=pacman
-pkgver=4.1.2
-pkgrel=3
+pkgver=4.2.0
+pkgrel=1
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="http://www.archlinux.org/pacman/"
 license=('GPL')
 groups=('base')
-depends=('bash' 'glibc' 'libarchive' 'curl>=7.19.4'
+depends=('bash' 'glibc' 'libarchive' 'curl>=7.39.0'
          'gpgme' 'pacman-mirrorlist')
 makedepends=('asciidoc')
 checkdepends=('python2' 'fakechroot')
 optdepends=('fakeroot: for makepkg usage as normal user')
 backup=(etc/pacman.conf etc/makepkg.conf)
-install=pacman.install
-options=(!libtool)
+options=('!libtool')
 source=("ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz"
         'pacman.conf'
         'makepkg.conf')
-md5sums=('063c8b0ff6bdf903dc235445525627cd'
+md5sums=('184ce14f1f326fede72012cca51bba51'
          'fe6aba114adcdbf060f71b349d22ebb9'
          '5f360e003e95f1a5cbd6e60d937dfd25')
 
