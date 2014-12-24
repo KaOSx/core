@@ -8,7 +8,7 @@ post_upgrade() {
 	  echo -e '\e[1;34m ==> pacman 4.2.0'
           echo -e '\e[1;34m Then the pacman database format has changed' 
           echo -e '\e[1;34m Make sure to update the database with:'
-          echo -e '\e[1;34m ==> sudo pacman-db-upgrade'
+          echo -e '\e[1;34m ==> sudo pacman-db-upgrade \e[0m'
       fi
 }
 
