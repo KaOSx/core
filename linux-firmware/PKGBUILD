@@ -1,9 +1,9 @@
 
 pkgname=linux-firmware
-pkgver=20141201
+pkgver=20141225
 _b43=5.100.138
 _legacy=3.130.20.0
-pkgrel=3
+pkgrel=1
 pkgdesc="Firmware files for Linux"
 arch=('x86_64')
 url="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git"
