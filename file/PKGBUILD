@@ -1,6 +1,6 @@
 
 pkgname=file
-pkgver=5.21
+pkgver=5.22
 pkgrel=1
 pkgdesc="File type identification utility"
 arch=('x86_64')
@@ -10,7 +10,7 @@ url="http://www.darwinsys.com/file/"
 depends=('glibc' 'zlib')
 options=('!libtool')
 source=("ftp://ftp.astron.com/pub/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('549fe96e09041eabece9de2bb28ef923')
+md5sums=('8fb13e5259fe447e02c4a37bc7225add')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
