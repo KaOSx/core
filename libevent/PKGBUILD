@@ -1,14 +1,15 @@
 
 pkgname=libevent
-pkgver=2.0.21
-pkgrel=2
+pkgver=2.0.22
+_pkgver=2.0
+pkgrel=1
 pkgdesc="An event notification library"
 license=('GPL2')
 arch=('x86_64')
-url="http://www.monkey.org/~provos/libevent/"
+url="http://libevent.org/"
 depends=('openssl')
-source=("https://github.com/downloads/${pkgname}/${pkgname}/${pkgname}-$pkgver-stable.tar.gz")
-md5sums=('b2405cc9ebf264aa47ff615d9de527a2')
+source=("http://sourceforge.net/projects/levent/files/libevent/libevent-${_pkgver}/${pkgname}-${pkgver}-stable.tar.gz")
+md5sums=('c4c56f986aa985677ca1db89630a2e11')
          
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}-stable"
