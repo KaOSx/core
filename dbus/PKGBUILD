@@ -12,7 +12,7 @@ conficts=('dbus-core')
 replaces=('dbus-core')
 provides=('dbus-core')
 options=('!libtool')
-install=dbus.install 
+#install=dbus.install 
 source=("http://dbus.freedesktop.org/releases/dbus/dbus-$pkgver.tar.gz"
         '30-dbus')
 md5sums=('dfb810eda8780cf9debf7169b3ca5fe1'
