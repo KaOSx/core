@@ -1,7 +1,7 @@
 
 pkgname=openssl
-_ver=1.0.1k
-pkgver=1.0.1.k
+_ver=1.0.1l
+pkgver=1.0.1.l
 pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
@@ -15,7 +15,7 @@ source=("https://www.openssl.org/source/${pkgname}-${_ver}.tar.gz"
         'no-rpath.patch'
         'ca-dir.patch'
         'CVE-2014-0198.patch')
-md5sums=('d4f002bd22a56881340105028842ae1f'
+md5sums=('cdb22925fc9bc97ccbf1e007661f2aa6'
          'dc78d3d06baffc16217519242ce92478'
          '3bf51be3a1bbd262be46dc619f92aa90'
          '4fbedb05aa44408f1ee3ad81ba034f04')
