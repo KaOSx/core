@@ -1,9 +1,9 @@
 
 pkgbase="sqlite"
 pkgname=('sqlite' 'sqlite-tcl' 'sqlite-doc') 
-_amalgamationver=3080704
-_docver=3080704
-pkgver=3.8.7.4
+_amalgamationver=3080800
+_docver=3080800
+pkgver=3.8.8
 pkgrel=1
 pkgdesc="A C library that implements an SQL database engine"
 arch=('x86_64')
@@ -11,12 +11,12 @@ license=('custom')
 url="http://www.sqlite.org/"
 makedepends=('tcl' 'readline>=6.0.00')
 source=( # tarball containing the amalgamation for SQLite 3.7.5 together with a configure script and makefile for building it; includes now also the Tcl Extension Architecture (TEA)
-	"http://www.sqlite.org/2014/sqlite-autoconf-$_amalgamationver.tar.gz"
-	"http://www.sqlite.org/2014/sqlite-doc-${_docver}.zip"
+	"http://www.sqlite.org/2015/sqlite-autoconf-$_amalgamationver.tar.gz"
+	"http://www.sqlite.org/2015/sqlite-doc-${_docver}.zip"
 	'license.txt')
 options=('!libtool' '!emptydirs')
-md5sums=('33bb8db0038317ce1b0480ca1185c7ba'
-         '42560edd0f320e09cfff045ca4f6a281'
+md5sums=('3a3caebf93308ddf5d120c393d9ecb82'
+         '2eccef516e76f4e2c1584e725038c564'
          'c1cdbc5544034d9012e421e75a5e4890')
 
 build() {
