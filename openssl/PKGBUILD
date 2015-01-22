@@ -1,7 +1,7 @@
 
 pkgname=openssl
-_ver=1.0.1l
-pkgver=1.0.1.l
+_ver=1.0.2
+pkgver=1.0.2
 pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
@@ -13,12 +13,10 @@ options=('!makeflags')
 backup=('etc/ssl/openssl.cnf')
 source=("https://www.openssl.org/source/${pkgname}-${_ver}.tar.gz"
         'no-rpath.patch'
-        'ca-dir.patch'
-        'CVE-2014-0198.patch')
-md5sums=('cdb22925fc9bc97ccbf1e007661f2aa6'
+        'ca-dir.patch')
+md5sums=('38373013fc85c790aabf8837969c5eba'
          'dc78d3d06baffc16217519242ce92478'
-         '3bf51be3a1bbd262be46dc619f92aa90'
-         '4fbedb05aa44408f1ee3ad81ba034f04')
+         '3bf51be3a1bbd262be46dc619f92aa90')
 
 build() {
 	cd $srcdir/$pkgname-$_ver
@@ -31,7 +29,7 @@ build() {
 	patch -p0 -i $srcdir/ca-dir.patch
 	
 	# http://www.scip.ch/en/?vuldb.13136
-	patch -p1 -i $srcdir/CVE-2014-0198.patch
+	#patch -p1 -i $srcdir/CVE-2014-0198.patch
 	
 	./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib \
 		shared zlib ${optflags} \
