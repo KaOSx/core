@@ -1,7 +1,7 @@
 
 pkgname=cmake
-pkgver=3.1.0
-pkgrel=2
+pkgver=3.1.1
+pkgrel=1
 pkgdesc="A cross-platform open-source make system"
 arch=('x86_64')
 license=('custom')
@@ -9,14 +9,11 @@ url="http://www.cmake.org"
 depends=('curl' 'libarchive' 'shared-mime-info')
 makedepends=('qt5-base')
 install=${pkgname}.install
-source=("http://www.cmake.org/files/v3.1/${pkgname}-${pkgver}.tar.gz"
-        'ruby220.patch')
-md5sums=('188eb7dc9b1b82b363bc51c0d3f1d461'
-         'c6bc35ea57cbd18f9ffc4a4babd867e0')
+source=("http://www.cmake.org/files/v3.1/${pkgname}-${pkgver}.tar.gz")
+md5sums=('0ae4f25dbec66697c0c3cec1b9e885ae')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
-  patch -p1 -i ${srcdir}/ruby220.patch
 
   ./bootstrap --prefix=/usr \
     --mandir=/share/man \
