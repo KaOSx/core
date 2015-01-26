@@ -1,7 +1,7 @@
 
 pkgname=patch
-pkgver=2.7.1
-pkgrel=3
+pkgver=2.7.3
+pkgrel=1
 pkgdesc="A utility to apply patch files to original sources"
 arch=('x86_64')
 url="http://www.gnu.org/software/patch/patch.html"
@@ -9,8 +9,8 @@ license=('GPL')
 groups=('base-devel')
 depends=('glibc')
 optdepends=('ed: Interpret the patch as an ed script')
-source=("ftp://ftp.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.xz")
-md5sums=('e9ae5393426d3ad783a300a338c09b72')
+source=("ftp://ftp.gnu.org/gnu/patch/$pkgname-$pkgver.tar.xz")
+md5sums=('29b87be845e4662ab0ca0d48a805ecc6')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
