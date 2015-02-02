@@ -1,5 +1,5 @@
 # useradd defaults file for KaOS
-# original changes by TomK
+# original changes by TomK from ArchLinux
 GROUP=100
 HOME=/home
 INACTIVE=-1

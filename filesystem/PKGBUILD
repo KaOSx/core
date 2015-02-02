@@ -1,8 +1,8 @@
 
 pkgname=filesystem
-pkgver=2014.08
-pkgrel=2
-_codename=2014
+pkgver=2015.02
+pkgrel=1
+_codename=2015
 pkgdesc='Base filesystem'
 arch=('x86_64')
 license=('GPL')
@@ -25,7 +25,7 @@ md5sums=('1109716df48ad1bfbf08520ea12fe347'
          '4c4540eeb748bf1f71d631b8c1dcf0b3'
          'f28150d4c0b22a017be51b9f7f9977ed'
          '6e488ffecc8ba142c0cf7e2d7aeb832e'
-         'e6d3624b3b8fb6ca6cb902442b248d10'
+         'b259783e9fee2368fe632a8258fdc80f'
          '1ec1b16e2a71fad63ab8f147069a5d97'
          'ca716f853860199c1286e7939b2f2666'
          'f477860ae71b9efce9aadf7dfdfec9f3'
@@ -38,7 +38,7 @@ md5sums=('1109716df48ad1bfbf08520ea12fe347'
          'f3b6ae7db8adffaaa4bffc6099dcbd50'
          'a8a962370cd0128465d514e6a1f74130'
          '13d8d253ae8613ba2474683f585e73db'
-         'cd33b75f805108ef9c29c145c4e2ea2c'
+         'bb2ca7eebb260f0cc51ba2b033032895'
          '201bbb8b4734d2f46afe1e24d7cc6173'
          '08565c934ec0d6b90da1165ee9cf82dc')
 
