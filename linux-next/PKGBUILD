@@ -2,18 +2,18 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.18
-_srcname=linux-3.18
-pkgver=3.18.5
+_basekernel=3.19-rc7
+_srcname=linux-3.19
+pkgver=3.19rc7
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
-#source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.16-rc7.tar.xz"
-        "https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+#source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v3.x/testing/linux-3.19-rc7.tar.xz"
+        ##"https://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -30,8 +30,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('9e854df51ca3fef8bfe566dbd7b89241'
-         'e8563b2feaa6c33d20d23ac7add9d385'
+md5sums=('21550df84d5df01e47c7b77af4465cc5'
+         #'e8563b2feaa6c33d20d23ac7add9d385'
          'e14c4a58c06e17b91fc1e4592a26f19a'
          '6c677654a778a9bd26206112f9fe3104'
          '16937a67f64db68f12c6c83698bf63cc'
@@ -53,7 +53,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -66,18 +66,18 @@ build() {
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs3.patch"
-  patch -p1 -i "${srcdir}/aufs3-base.patch"
-  patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs3-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs3-mmap.patch"
-  patch -p1 -i "${srcdir}/aufs3-standalone.patch"
-  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  patch -p1 -i "${srcdir}/vfs-ino.patch"
+  ##patch -p1 -i "${srcdir}/aufs3.patch"
+  ##patch -p1 -i "${srcdir}/aufs3-base.patch"
+  ##patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
+  ##patch -p1 -i "${srcdir}/aufs3-loopback.patch"
+  ##patch -p1 -i "${srcdir}/aufs3-mmap.patch"
+  ##patch -p1 -i "${srcdir}/aufs3-standalone.patch"
+  ##patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  ##patch -p1 -i "${srcdir}/vfs-ino.patch"
   
   cat "${srcdir}/config" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -250,7 +250,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs3-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do

@@ -1,4 +1,4 @@
-aufs3.17 loopback patch
+aufs3.18.1+ loopback patch
 
 diff --git a/drivers/block/loop.c b/drivers/block/loop.c
 index 30efd68..77b31b4 100644
@@ -196,7 +196,7 @@ index 90df5d6..cb91822 100644
  	unsigned	lo_blocksize;
  	void		*key_data; 
 diff --git a/fs/aufs/f_op.c b/fs/aufs/f_op.c
-index 24ced51..69fa5cc 100644
+index 3dd9138..63a424c 100644
 --- a/fs/aufs/f_op.c
 +++ b/fs/aufs/f_op.c
 @@ -367,7 +367,7 @@ static ssize_t aufs_splice_read(struct file *file, loff_t *ppos,
@@ -258,10 +258,10 @@ index da8b756..28cb7ea 100644
  
  #endif /* __KERNEL__ */
 diff --git a/fs/aufs/super.c b/fs/aufs/super.c
-index 45146eb..fccd7d6 100644
+index 2ec0b4f..65a6781 100644
 --- a/fs/aufs/super.c
 +++ b/fs/aufs/super.c
-@@ -809,7 +809,10 @@ static const struct super_operations aufs_sop = {
+@@ -812,7 +812,10 @@ static const struct super_operations aufs_sop = {
  	.statfs		= aufs_statfs,
  	.put_super	= aufs_put_super,
  	.sync_fs	= aufs_sync_fs,
@@ -274,10 +274,10 @@ index 45146eb..fccd7d6 100644
  
  /* ---------------------------------------------------------------------- */
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index c28347c..ce4d76d 100644
+index aabcbba..1a634f5 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
-@@ -1587,6 +1587,10 @@ struct super_operations {
+@@ -1594,6 +1594,10 @@ struct super_operations {
  	int (*bdev_try_to_free_page)(struct super_block*, struct page*, gfp_t);
  	long (*nr_cached_objects)(struct super_block *, int);
  	long (*free_cached_objects)(struct super_block *, long, int);

@@ -1,6 +1,6 @@
 
 pkgname=git
-pkgver=2.2.2
+pkgver=2.3.0
 pkgrel=1
 pkgdesc="Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency."
 arch=('x86_64')
@@ -19,21 +19,15 @@ optdepends=('tk: gitk and git gui'
 source=("https://www.kernel.org/pub/software/scm/git/git-${pkgver}.tar.xz"
         "https://www.kernel.org/pub/software/scm/git/git-manpages-${pkgver}.tar.xz"
         'git-daemon@.service'
-        'git-daemon.socket'
-        'gnupg2.1_test.patch'
-        'gnupg2.1_dir.patch')
-md5sums=('f694e8c911a6f7cfd7aec7b99454ed1f'
-         '1a3eb109a5e7bdbd84fc68940fc56692'
+        'git-daemon.socket')
+md5sums=('e5880760d1f43f4f49b3bf94b9046eee'
+         'f3c28de4608368cb7d7319cbf5ea36b0'
          '042524f942785772d7bd52a1f02fe5ae'
-         'f67869315c2cc112e076f0c73f248002'
-         '3128822bb3d20d2a7537bcf02343a84a'
-         '624e5e537351a0297b831ae55f8ec6d9')
+         'f67869315c2cc112e076f0c73f248002')
 
 build() {
   export PYTHON_PATH='/usr/bin/python2'
   cd "${srcdir}/${pkgname}-${pkgver}"
-  patch -p1 -i "${srcdir}/gnupg2.1_test.patch"
-  patch -p1 -i "${srcdir}/gnupg2.1_dir.patch"
   
   make prefix=/usr gitexecdir=/usr/lib/git-core \
        USE_LIBPCRE=1 \
