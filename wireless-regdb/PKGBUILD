@@ -1,6 +1,6 @@
 
 pkgname=wireless-regdb
-pkgver=2014.11.18
+pkgver=2015.01.30
 pkgrel=1
 pkgdesc="Central Regulatory Domain Database"
 arch=('x86_64')
@@ -12,29 +12,16 @@ makedepends=('crda')
 install=wireless-regdb.install
 source=("https://www.kernel.org/pub/software/network/${pkgname}/${pkgname}-${pkgver}.tar.xz"
         'crda.conf.d')
-md5sums=('d750c402c5510add7380edcb1d9b75b2'
+md5sums=('904e3a32e46359bd31256eb97258dba5'
          '2374dcf1c6530332f375e5362b80169b')
 
 package() {
-  # Install and verify regulatory.bin file
-  msg "Installing and verifying the regulatory.bin file ..."
   cd ${srcdir}/${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
   
-  # If crda is installed, the wireless regdb can be verified using regdbdump
-  # Keep this step optional so no depend/makedepend loop is created
-  if [ -x /usr/bin/regdbdump ]; then
-    if /usr/bin/regdbdump ${pkgdir}/usr/lib/crda/regulatory.bin > /dev/null; then
-      msg "Regulatory database verification was succesful."
-    else
-      error "Regulatory database verification failed."
-      return 1
-    fi
-  else
-    warning "Crda is not installed, regulatory database could not be verified."
-  fi
+  install -D -m644 ${srcdir}/${pkgname}-${pkgver}/sforshee.key.pub.pem ${pkgdir}/usr/lib/crda/pubkeys/sforshee.key.pub.pem
+  install -D -m644 ${srcdir}/${pkgname}-${pkgver}/regulatory.bin.5 ${pkgdir}/usr/share/man/man5/regulatory.bin.5
   
-  msg "Installing /etc/conf.d/wireless-regdom ..."
   install -D -m644 ${srcdir}/crda.conf.d ${pkgdir}/etc/conf.d/wireless-regdom
   for dom in $(grep ^country ${srcdir}/${pkgname}-${pkgver}/db.txt | cut -d' ' -f2 | sed 's|:||g'); do
     echo "#WIRELESS_REGDOM=\"${dom}\"" >> ${pkgdir}/etc/conf.d/wireless-regdom.tmp
