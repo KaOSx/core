@@ -30,9 +30,9 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('21550df84d5df01e47c7b77af4465cc5'
+md5sums=('d3fc8316d4d4d04b65cbc2d70799e763'
          #'e8563b2feaa6c33d20d23ac7add9d385'
-         'e14c4a58c06e17b91fc1e4592a26f19a'
+         '56c23af884ba255ae48e13d962479b37'
          '6c677654a778a9bd26206112f9fe3104'
          '16937a67f64db68f12c6c83698bf63cc'
          '913a03597c14e6a006d3b28e8cfd47ff'
