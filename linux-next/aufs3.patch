@@ -1,5 +1,5 @@
 --- /dev/null
-+++ linux-3.18.1+/Documentation/ABI/testing/debugfs-aufs	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/ABI/testing/debugfs-aufs	2015-02-17 20:21:42.217675416 -0500
 @@ -0,0 +1,50 @@
 +What:		/debug/aufs/si_<id>/
 +Date:		March 2009
@@ -52,7 +52,7 @@
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
 --- /dev/null
-+++ linux-3.18.1+/Documentation/ABI/testing/sysfs-aufs	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/ABI/testing/sysfs-aufs	2015-02-17 20:21:42.217675416 -0500
 @@ -0,0 +1,31 @@
 +What:		/sys/fs/aufs/si_<id>/
 +Date:		March 2009
@@ -86,8 +86,8 @@
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/README	2015-01-06 16:35:55.897675473 -0500
-@@ -0,0 +1,370 @@
++++ linux-3.19/Documentation/filesystems/aufs/README	2015-02-17 20:21:42.217675416 -0500
+@@ -0,0 +1,371 @@
 +
 +Aufs3 -- advanced multi layered unification filesystem version 3.x
 +http://aufs.sf.net
@@ -441,6 +441,7 @@
 +Nikolay Pertsev made a donation (2014/5).
 +James B made a donation (2014/7).
 +Stefano Di Biase made a donation (2014/8).
++Daniel Epellei made a donation (2015/1).
 +
 +Thank you very much.
 +Donations are always, including future donations, very important and
@@ -459,10 +460,10 @@
 +# mode: text;
 +# End: ;
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/design/01intro.txt	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/filesystems/aufs/design/01intro.txt	2015-02-17 20:21:42.217675416 -0500
 @@ -0,0 +1,161 @@
 +
-+# Copyright (C) 2005-2014 Junjiro R. Okajima
++# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
 +# This program is free software; you can redistribute it and/or modify
 +# it under the terms of the GNU General Public License as published by
@@ -623,10 +624,10 @@
 +helper, instead of doing in kernel space. Actually I am still thinking
 +about it. But currently I have implemented it in kernel space.
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/design/02struct.txt	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/filesystems/aufs/design/02struct.txt	2015-02-17 20:21:42.217675416 -0500
 @@ -0,0 +1,251 @@
 +
-+# Copyright (C) 2005-2014 Junjiro R. Okajima
++# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
 +# This program is free software; you can redistribute it and/or modify
 +# it under the terms of the GNU General Public License as published by
@@ -877,10 +878,10 @@
 +
 +For this purpose, use "aumvdown" command in aufs-util.git.
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/design/03lookup.txt	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/filesystems/aufs/design/03lookup.txt	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,133 @@
 +
-+# Copyright (C) 2005-2014 Junjiro R. Okajima
++# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
 +# This program is free software; you can redistribute it and/or modify
 +# it under the terms of the GNU General Public License as published by
@@ -1013,10 +1014,10 @@
 +   aufs performance when system surely hide the aufs branches from user,
 +   by over-mounting something (or another method).
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/design/04branch.txt	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/filesystems/aufs/design/04branch.txt	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,75 @@
 +
-+# Copyright (C) 2005-2014 Junjiro R. Okajima
++# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
 +# This program is free software; you can redistribute it and/or modify
 +# it under the terms of the GNU General Public License as published by
@@ -1091,10 +1092,10 @@
 +  - a regular file on the branch is opened for write and there is no
 +    same named entry on the upper branch.
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/design/05wbr_policy.txt	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/filesystems/aufs/design/05wbr_policy.txt	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,64 @@
 +
-+# Copyright (C) 2005-2014 Junjiro R. Okajima
++# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
 +# This program is free software; you can redistribute it and/or modify
 +# it under the terms of the GNU General Public License as published by
@@ -1158,10 +1159,10 @@
 +  one. If the selected branch is readonly, then aufs follows the
 +  copyup policy.
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/design/06fhsm.txt	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/filesystems/aufs/design/06fhsm.txt	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,120 @@
 +
-+# Copyright (C) 2011-2014 Junjiro R. Okajima
++# Copyright (C) 2011-2015 Junjiro R. Okajima
 +# 
 +# This program is free software; you can redistribute it and/or modify
 +# it under the terms of the GNU General Public License as published by
@@ -1281,10 +1282,10 @@
 +And of course, in every step, an error may happen. So the operation
 +should restore the original file state after an error happens.
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/design/06mmap.txt	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/filesystems/aufs/design/06mmap.txt	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,46 @@
 +
-+# Copyright (C) 2005-2014 Junjiro R. Okajima
++# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
 +# This program is free software; you can redistribute it and/or modify
 +# it under the terms of the GNU General Public License as published by
@@ -1330,10 +1331,10 @@
 +approach, aufs met a hard problem and I could not solve it without
 +switching the approach.
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/design/06xattr.txt	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/filesystems/aufs/design/06xattr.txt	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,96 @@
 +
-+# Copyright (C) 2014 Junjiro R. Okajima
++# Copyright (C) 2014-2015 Junjiro R. Okajima
 +#
 +# This program is free software; you can redistribute it and/or modify
 +# it under the terms of the GNU General Public License as published by
@@ -1429,10 +1430,10 @@
 +Do we need another attribute to stop copying XATTR? I am unsure. For
 +now, aufs implements the branch attributes to ignore the error.
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/design/07export.txt	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/filesystems/aufs/design/07export.txt	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,58 @@
 +
-+# Copyright (C) 2005-2014 Junjiro R. Okajima
++# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
 +# This program is free software; you can redistribute it and/or modify
 +# it under the terms of the GNU General Public License as published by
@@ -1490,10 +1491,10 @@
 +- readdir(): call lockdep_on/off() because filldir in NFSD calls
 +  lookup_one_len(), vfs_getattr(), encode_fh() and others.
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/design/08shwh.txt	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/filesystems/aufs/design/08shwh.txt	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,52 @@
 +
-+# Copyright (C) 2005-2014 Junjiro R. Okajima
++# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
 +# This program is free software; you can redistribute it and/or modify
 +# it under the terms of the GNU General Public License as published by
@@ -1545,10 +1546,10 @@
 +This new squashfs archive can be stored on the boot device and the
 +initramfs will use it to replace the old one at the next boot.
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/design/10dynop.txt	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/filesystems/aufs/design/10dynop.txt	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,46 @@
 +
-+# Copyright (C) 2010-2014 Junjiro R. Okajima
++# Copyright (C) 2010-2015 Junjiro R. Okajima
 +#
 +# This program is free software; you can redistribute it and/or modify
 +# it under the terms of the GNU General Public License as published by
@@ -1594,10 +1595,10 @@
 +Currently this approach is applied to file_operations and
 +vm_operations_struct for regular files only.
 --- /dev/null
-+++ linux-3.18.1+/Documentation/filesystems/aufs/design/99plan.txt	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/Documentation/filesystems/aufs/design/99plan.txt	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,58 @@
 +
-+# Copyright (C) 2005-2014 Junjiro R. Okajima
++# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
 +# This program is free software; you can redistribute it and/or modify
 +# it under the terms of the GNU General Public License as published by
@@ -1655,7 +1656,7 @@
 +/new.
 +Otherwise from /new.
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/Kconfig	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/fs/aufs/Kconfig	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,185 @@
 +config AUFS_FS
 +	tristate "Aufs (Advanced multi layered unification filesystem) support"
@@ -1843,7 +1844,7 @@
 +	When aufs supports Magic SysRq, enabled automatically.
 +endif
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/Makefile	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/fs/aufs/Makefile	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,44 @@
 +
 +include ${src}/magic.mk
@@ -1890,10 +1891,10 @@
 +aufs-$(CONFIG_AUFS_DEBUG) += debug.o
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/aufs.h	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/fs/aufs/aufs.h	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,59 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -1952,10 +1953,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/branch.c	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/fs/aufs/branch.c	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,1410 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -2493,7 +2494,7 @@
 +	    && au_br_writable(add_branch->br_perm)
 +	    && !au_test_fs_bad_xino(h_dentry->d_sb)
 +	    && add_branch->br_xino.xi_file
-+	    && add_branch->br_xino.xi_file->f_dentry->d_parent == h_dentry)
++	    && add_branch->br_xino.xi_file->f_path.dentry->d_parent == h_dentry)
 +		au_xino_brid_set(sb, add_branch->br_id);
 +
 +out:
@@ -2722,7 +2723,7 @@
 +	struct au_hfile *hfile;
 +
 +	err = 0;
-+	root = IS_ROOT(file->f_dentry);
++	root = IS_ROOT(file->f_path.dentry);
 +	if (root) {
 +		get_file(file);
 +		to_free[*idx] = file;
@@ -3115,13 +3116,13 @@
 +
 +long au_ibusy_ioctl(struct file *file, unsigned long arg)
 +{
-+	return au_ibusy(file->f_dentry->d_sb, (void __user *)arg);
++	return au_ibusy(file->f_path.dentry->d_sb, (void __user *)arg);
 +}
 +
 +#ifdef CONFIG_COMPAT
 +long au_ibusy_compat_ioctl(struct file *file, unsigned long arg)
 +{
-+	return au_ibusy(file->f_dentry->d_sb, compat_ptr(arg));
++	return au_ibusy(file->f_path.dentry->d_sb, compat_ptr(arg));
 +}
 +#endif
 +
@@ -3365,10 +3366,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/branch.h	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/fs/aufs/branch.h	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,267 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -3635,7 +3636,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_BRANCH_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/conf.mk	2015-01-06 16:35:55.897675473 -0500
++++ linux-3.19/fs/aufs/conf.mk	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,38 @@
 +
 +AuConfStr = CONFIG_AUFS_FS=${CONFIG_AUFS_FS}
@@ -3676,10 +3677,10 @@
 +
 +-include ${srctree}/${src}/conf_priv.mk
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/cpup.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/cpup.c	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,1303 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -3976,7 +3977,7 @@
 +		AuLabel(last hole);
 +
 +		err = 1;
-+		if (au_test_nfs(dst->f_dentry->d_sb)) {
++		if (au_test_nfs(dst->f_path.dentry->d_sb)) {
 +			/* nfs requires this step to make last hole */
 +			/* is this only nfs? */
 +			do {
@@ -4012,7 +4013,7 @@
 +	char *buf;
 +
 +	err = -ENOMEM;
-+	blksize = dst->f_dentry->d_sb->s_blocksize;
++	blksize = dst->f_path.dentry->d_sb->s_blocksize;
 +	if (!blksize || PAGE_SIZE < blksize)
 +		blksize = PAGE_SIZE;
 +	AuDbg("blksize %lu\n", blksize);
@@ -4721,7 +4722,7 @@
 +	h_d_start = NULL;
 +	if (file) {
 +		h_d_start = hdp[0 + cpg->bsrc].hd_dentry;
-+		hdp[0 + cpg->bsrc].hd_dentry = au_hf_top(file)->f_dentry;
++		hdp[0 + cpg->bsrc].hd_dentry = au_hf_top(file)->f_path.dentry;
 +	}
 +	flags_orig = cpg->flags;
 +	cpg->flags = !AuCpup_DTIME;
@@ -4939,7 +4940,7 @@
 +
 +static int au_cpup_dir(struct dentry *dentry, aufs_bindex_t bdst,
 +		       struct au_pin *pin,
-+		       struct dentry *h_parent __maybe_unused ,
++		       struct dentry *h_parent __maybe_unused,
 +		       void *arg __maybe_unused)
 +{
 +	struct au_cp_generic cpg = {
@@ -4982,10 +4983,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/cpup.h	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/cpup.h	2015-02-17 20:21:42.221008670 -0500
 @@ -0,0 +1,94 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -5079,10 +5080,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_CPUP_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/dbgaufs.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/dbgaufs.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,432 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -5309,7 +5310,7 @@
 +
 +	err = -ENOENT;
 +	xf = NULL;
-+	name = &file->f_dentry->d_name;
++	name = &file->f_path.dentry->d_name;
 +	if (unlikely(name->len < sizeof(DbgaufsXi_PREFIX)
 +		     || memcmp(name->name, DbgaufsXi_PREFIX,
 +			       sizeof(DbgaufsXi_PREFIX) - 1)))
@@ -5514,10 +5515,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/dbgaufs.h	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/dbgaufs.h	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,48 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -5565,10 +5566,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __DBGAUFS_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/dcsub.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/dcsub.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,224 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -5792,10 +5793,10 @@
 +	return path_is_under(path + 0, path + 1);
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/dcsub.h	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/dcsub.h	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,125 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -5920,10 +5921,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DCSUB_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/debug.c	2015-01-06 16:35:55.901008731 -0500
-@@ -0,0 +1,520 @@
++++ linux-3.19/fs/aufs/debug.c	2015-02-17 20:21:42.224341924 -0500
+@@ -0,0 +1,522 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -6162,16 +6163,16 @@
 +	}
 +	a[0] = 0;
 +	if (bindex < 0
-+	    && file->f_dentry
-+	    && au_test_aufs(file->f_dentry->d_sb)
++	    && file->f_path.dentry
++	    && au_test_aufs(file->f_path.dentry->d_sb)
 +	    && au_fi(file))
 +		snprintf(a, sizeof(a), ", gen %d, mmapped %d",
 +			 au_figen(file), atomic_read(&au_fi(file)->fi_mmapped));
 +	dpri("f%d: mode 0x%x, flags 0%o, cnt %ld, v %llu, pos %llu%s\n",
 +	     bindex, file->f_mode, file->f_flags, (long)file_count(file),
 +	     file->f_version, file->f_pos, a);
-+	if (file->f_dentry)
-+		do_pri_dentry(bindex, file->f_dentry);
++	if (file->f_path.dentry)
++		do_pri_dentry(bindex, file->f_path.dentry);
 +	return 0;
 +}
 +
@@ -6184,7 +6185,9 @@
 +	int err;
 +
 +	err = do_pri_file(-1, file);
-+	if (err || !file->f_dentry || !au_test_aufs(file->f_dentry->d_sb))
++	if (err
++	    || !file->f_path.dentry
++	    || !au_test_aufs(file->f_path.dentry->d_sb))
 +		return;
 +
 +	finfo = au_fi(file);
@@ -6443,10 +6446,10 @@
 +	return 0;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/debug.h	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/debug.h	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,262 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -6708,10 +6711,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DEBUG_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/dentry.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/dentry.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,1096 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -7807,10 +7810,10 @@
 +	.d_release		= aufs_d_release
 +};
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/dentry.h	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/dentry.h	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,233 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -8043,10 +8046,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DENTRY_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/dinfo.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/dinfo.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,544 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -8590,10 +8593,10 @@
 +	return -1;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/dir.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/dir.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,645 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -8702,7 +8705,7 @@
 +	struct file *h_file;
 +
 +	/* open all lower dirs */
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	bstart = au_dbstart(dentry);
 +	for (bindex = au_fbstart(file); bindex < bstart; bindex++)
 +		au_set_h_fptr(file, bindex, NULL);
@@ -8747,7 +8750,7 @@
 +	FiMustWriteLock(file);
 +
 +	err = 0;
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	file->f_version = dentry->d_inode->i_version;
 +	bindex = au_dbstart(dentry);
 +	au_set_fbstart(file, bindex);
@@ -8788,7 +8791,7 @@
 +	struct au_fidir *fidir;
 +
 +	err = -ENOMEM;
-+	sb = file->f_dentry->d_sb;
++	sb = file->f_path.dentry->d_sb;
 +	si_read_lock(sb, AuLock_FLUSH);
 +	fidir = au_fidir_alloc(sb);
 +	if (fidir) {
@@ -8812,7 +8815,7 @@
 +	fidir = finfo->fi_hdir;
 +	if (fidir) {
 +		au_sphl_del(&finfo->fi_hlist,
-+			    &au_sbi(file->f_dentry->d_sb)->si_files);
++			    &au_sbi(file->f_path.dentry->d_sb)->si_files);
 +		vdir_cache = fidir->fd_vdir_cache; /* lock-free */
 +		if (vdir_cache)
 +			au_vdir_free(vdir_cache);
@@ -8899,7 +8902,7 @@
 +	if (unlikely(err))
 +		goto out;
 +
-+	sb = file->f_dentry->d_sb;
++	sb = file->f_path.dentry->d_sb;
 +	inode = file_inode(file);
 +	bend = au_fbend_dir(file);
 +	for (bindex = au_fbstart(file); !err && bindex <= bend; bindex++) {
@@ -8926,7 +8929,7 @@
 +	struct mutex *mtx;
 +
 +	err = 0;
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	mtx = &dentry->d_inode->i_mutex;
 +	mutex_lock(mtx);
 +	sb = dentry->d_sb;
@@ -8958,7 +8961,7 @@
 +
 +	AuDbg("%pD, ctx{%pf, %llu}\n", file, ctx->actor, ctx->pos);
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	inode = dentry->d_inode;
 +	IMustLock(inode);
 +
@@ -9147,7 +9150,7 @@
 +	struct au_nhash whlist;
 +	struct test_empty_arg arg = {
 +		.ctx = {
-+			.actor = au_diractor(test_empty_cb)
++			.actor = test_empty_cb
 +		}
 +	};
 +	int (*test_empty)(struct dentry *dentry, struct test_empty_arg *arg);
@@ -9197,7 +9200,7 @@
 +	int err;
 +	struct test_empty_arg arg = {
 +		.ctx = {
-+			.actor = au_diractor(test_empty_cb)
++			.actor = test_empty_cb
 +		}
 +	};
 +	aufs_bindex_t bindex, btail;
@@ -9238,10 +9241,10 @@
 +	.fsync		= aufs_fsync_dir
 +};
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/dir.h	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/dir.h	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,130 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -9371,10 +9374,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIR_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/dynop.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/dynop.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,379 @@
 +/*
-+ * Copyright (C) 2010-2014 Junjiro R. Okajima
++ * Copyright (C) 2010-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -9753,10 +9756,10 @@
 +		WARN_ON(!list_empty(&dynop[i].head));
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/dynop.h	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/dynop.h	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,75 @@
 +/*
-+ * Copyright (C) 2010-2014 Junjiro R. Okajima
++ * Copyright (C) 2010-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -9831,10 +9834,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DYNOP_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/export.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/export.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,831 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -10207,7 +10210,7 @@
 +	struct inode *dir;
 +	struct find_name_by_ino arg = {
 +		.ctx = {
-+			.actor = au_diractor(find_name_by_ino)
++			.actor = find_name_by_ino
 +		}
 +	};
 +	int err;
@@ -10665,10 +10668,10 @@
 +	atomic_set(&sbinfo->si_xigen_next, u);
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/f_op.c	2015-01-06 16:35:55.901008731 -0500
-@@ -0,0 +1,813 @@
++++ linux-3.19/fs/aufs/f_op.c	2015-02-17 20:21:42.224341924 -0500
+@@ -0,0 +1,814 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -10706,7 +10709,7 @@
 +	FiMustWriteLock(file);
 +
 +	err = 0;
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	finfo = au_fi(file);
 +	memset(&finfo->fi_htop, 0, sizeof(finfo->fi_htop));
 +	atomic_set(&finfo->fi_mmapped, 0);
@@ -10741,7 +10744,7 @@
 +	AuDbg("%pD, f_flags 0x%x, f_mode 0x%x\n",
 +	      file, vfsub_file_flags(file), file->f_mode);
 +
-+	sb = file->f_dentry->d_sb;
++	sb = file->f_path.dentry->d_sb;
 +	si_read_lock(sb, AuLock_FLUSH);
 +	err = au_do_open(file, au_do_open_nondir, /*fidir*/NULL);
 +	si_read_unlock(sb);
@@ -10754,7 +10757,8 @@
 +	aufs_bindex_t bindex;
 +
 +	finfo = au_fi(file);
-+	au_sphl_del(&finfo->fi_hlist, &au_sbi(file->f_dentry->d_sb)->si_files);
++	au_sphl_del(&finfo->fi_hlist,
++		    &au_sbi(file->f_path.dentry->d_sb)->si_files);
 +	bindex = finfo->fi_btop;
 +	if (bindex >= 0)
 +		au_set_h_fptr(file, bindex, NULL);
@@ -10799,7 +10803,7 @@
 +	struct file *h_file;
 +	struct super_block *sb;
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	sb = dentry->d_sb;
 +	si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLMW);
 +	err = au_reval_and_lock_fdi(file, au_reopen_nondir, /*wlock*/0);
@@ -10859,7 +10863,7 @@
 +	struct file *h_file;
 +	char __user *buf = (char __user *)ubuf;
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	sb = dentry->d_sb;
 +	inode = dentry->d_inode;
 +	au_mtx_and_read_lock(inode);
@@ -10952,7 +10956,7 @@
 +	struct super_block *sb;
 +
 +	file = kio->ki_filp;
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	sb = dentry->d_sb;
 +	si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLMW);
 +	err = au_reval_and_lock_fdi(file, au_reopen_nondir, /*wlock*/0);
@@ -10988,7 +10992,7 @@
 +	struct super_block *sb;
 +
 +	file = kio->ki_filp;
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	sb = dentry->d_sb;
 +	inode = dentry->d_inode;
 +	au_mtx_and_read_lock(inode);
@@ -11039,7 +11043,7 @@
 +	struct dentry *dentry;
 +	struct super_block *sb;
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	sb = dentry->d_sb;
 +	si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLMW);
 +	err = au_reval_and_lock_fdi(file, au_reopen_nondir, /*wlock*/0);
@@ -11050,7 +11054,7 @@
 +	h_file = au_hf_top(file);
 +	get_file(h_file);
 +	if (au_test_loopback_kthread()) {
-+		au_warn_loopback(h_file->f_dentry->d_sb);
++		au_warn_loopback(h_file->f_path.dentry->d_sb);
 +		if (file->f_mapping != h_file->f_mapping) {
 +			file->f_mapping = h_file->f_mapping;
 +			smp_mb(); /* unnecessary? */
@@ -11084,7 +11088,7 @@
 +	struct super_block *sb;
 +	struct file *h_file;
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	sb = dentry->d_sb;
 +	inode = dentry->d_inode;
 +	au_mtx_and_read_lock(inode);
@@ -11136,7 +11140,7 @@
 +	struct inode *inode;
 +	struct file *h_file;
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	sb = dentry->d_sb;
 +	inode = dentry->d_inode;
 +	au_mtx_and_read_lock(inode);
@@ -11160,7 +11164,7 @@
 +	fi_write_unlock(file);
 +
 +	lockdep_off();
-+	err = do_fallocate(h_file, mode, offset, len);
++	err = vfs_fallocate(h_file, mode, offset, len);
 +	lockdep_on();
 +	ii_write_lock_child(inode);
 +	au_cpup_attr_timesizes(inode);
@@ -11245,7 +11249,7 @@
 +
 +	AuDbgVmRegion(file, vma);
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	sb = dentry->d_sb;
 +	lockdep_off();
 +	si_read_lock(sb, AuLock_NOPLMW);
@@ -11315,7 +11319,7 @@
 +	struct file *h_file;
 +	struct super_block *sb;
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	inode = dentry->d_inode;
 +	sb = dentry->d_sb;
 +	mutex_lock(&inode->i_mutex);
@@ -11362,7 +11366,7 @@
 +	struct file *file, *h_file;
 +
 +	file = kio->ki_filp;
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	inode = dentry->d_inode;
 +	au_mtx_and_read_lock(inode);
 +
@@ -11416,7 +11420,7 @@
 +	struct dentry *dentry;
 +	struct super_block *sb;
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	sb = dentry->d_sb;
 +	si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLMW);
 +	err = au_reval_and_lock_fdi(file, au_reopen_nondir, /*wlock*/0);
@@ -11440,7 +11444,7 @@
 +/* no one supports this operation, currently */
 +#if 0
 +static ssize_t aufs_sendpage(struct file *file, struct page *page, int offset,
-+			     size_t len, loff_t *pos , int more)
++			     size_t len, loff_t *pos, int more)
 +{
 +}
 +#endif
@@ -11481,10 +11485,10 @@
 +	.fallocate	= aufs_fallocate
 +};
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/fhsm.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/fhsm.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,426 @@
 +/*
-+ * Copyright (C) 2011-2014 Junjiro R. Okajima
++ * Copyright (C) 2011-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -11910,10 +11914,10 @@
 +		seq_printf(seq, ",fhsm_sec=%u", u);
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/file.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/file.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,829 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -12149,7 +12153,7 @@
 +	if (unlikely(err))
 +		goto out;
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	di_write_lock_child(dentry);
 +	err = au_cmoo(dentry);
 +	di_downgrade_lock(dentry, AuLock_IR);
@@ -12161,7 +12165,7 @@
 +	if (!err) {
 +		finfo->fi_file = file;
 +		au_sphl_add(&finfo->fi_hlist,
-+			    &au_sbi(file->f_dentry->d_sb)->si_files);
++			    &au_sbi(file->f_path.dentry->d_sb)->si_files);
 +	}
 +	fi_write_unlock(file);
 +	if (unlikely(err)) {
@@ -12180,7 +12184,7 @@
 +	struct dentry *dentry;
 +	struct file *h_file, *h_file_tmp;
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	bstart = au_dbstart(dentry);
 +	h_file_tmp = NULL;
 +	if (au_fbstart(file) == bstart) {
@@ -12240,7 +12244,7 @@
 +	struct dentry *h_dentry;
 +	struct au_hdentry *hdp;
 +
-+	dinfo = au_di(file->f_dentry);
++	dinfo = au_di(file->f_path.dentry);
 +	AuRwMustWriteLock(&dinfo->di_rwsem);
 +
 +	bstart = dinfo->di_bstart;
@@ -12262,7 +12266,7 @@
 +	struct inode *inode, *h_inode;
 +	struct dentry *h_dentry, *hi_wh;
 +	struct au_cp_generic cpg = {
-+		.dentry	= file->f_dentry,
++		.dentry	= file->f_path.dentry,
 +		.bdst	= bcpup,
 +		.bsrc	= -1,
 +		.len	= len,
@@ -12306,7 +12310,7 @@
 +	struct super_block *sb;
 +	struct file *h_file;
 +	struct au_cp_generic cpg = {
-+		.dentry	= file->f_dentry,
++		.dentry	= file->f_path.dentry,
 +		.bdst	= -1,
 +		.bsrc	= -1,
 +		.len	= len,
@@ -12423,7 +12427,7 @@
 +	struct inode *inode;
 +	struct super_block *sb;
 +	struct au_cp_generic cpg = {
-+		.dentry	= file->f_dentry,
++		.dentry	= file->f_path.dentry,
 +		.bdst	= -1,
 +		.bsrc	= -1,
 +		.len	= -1,
@@ -12494,7 +12498,7 @@
 +
 +	FiMustWriteLock(file);
 +
-+	sb = file->f_dentry->d_sb;
++	sb = file->f_path.dentry->d_sb;
 +	finfo = au_fi(file);
 +	fidir = finfo->fi_hdir;
 +	AuDebugOn(!fidir);
@@ -12525,7 +12529,7 @@
 +	}
 +
 +	p = fidir->fd_hfile;
-+	if (!au_test_mmapped(file) && !d_unlinked(file->f_dentry)) {
++	if (!au_test_mmapped(file) && !d_unlinked(file->f_path.dentry)) {
 +		bend = au_sbend(sb);
 +		for (finfo->fi_btop = 0; finfo->fi_btop <= bend;
 +		     finfo->fi_btop++, p++)
@@ -12565,7 +12569,7 @@
 +	struct au_finfo *finfo;
 +	struct au_hfile *hfile;
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	finfo = au_fi(file);
 +	if (!finfo->fi_hdir) {
 +		hfile = &finfo->fi_htop;
@@ -12615,7 +12619,7 @@
 +	struct inode *inode;
 +
 +	err = 0;
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	inode = dentry->d_inode;
 +	sigen = au_sigen(dentry->d_sb);
 +	fi_write_lock(file);
@@ -12742,10 +12746,10 @@
 +#endif /* CONFIG_AUFS_DEBUG */
 +};
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/file.h	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/file.h	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,284 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -13029,10 +13033,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FILE_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/finfo.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/finfo.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,156 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -13083,13 +13087,13 @@
 +	if (val) {
 +		FiMustWriteLock(file);
 +		hf->hf_file = val;
-+		hf->hf_br = au_sbr(file->f_dentry->d_sb, bindex);
++		hf->hf_br = au_sbr(file->f_path.dentry->d_sb, bindex);
 +	}
 +}
 +
 +void au_update_figen(struct file *file)
 +{
-+	atomic_set(&au_fi(file)->fi_generation, au_digen(file->f_dentry));
++	atomic_set(&au_fi(file)->fi_generation, au_digen(file->f_path.dentry));
 +	/* smp_mb(); */ /* atomic_set */
 +}
 +
@@ -13140,7 +13144,7 @@
 +{
 +	struct au_finfo *finfo;
 +
-+	au_nfiles_dec(file->f_dentry->d_sb);
++	au_nfiles_dec(file->f_path.dentry->d_sb);
 +
 +	finfo = au_fi(file);
 +	AuDebugOn(finfo->fi_hdir);
@@ -13164,7 +13168,7 @@
 +	struct dentry *dentry;
 +
 +	err = -ENOMEM;
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	finfo = au_cache_alloc_finfo();
 +	if (unlikely(!finfo))
 +		goto out;
@@ -13188,10 +13192,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/fstype.h	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/fstype.h	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,469 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -13232,8 +13236,8 @@
 +
 +static inline int au_test_iso9660(struct super_block *sb __maybe_unused)
 +{
-+#if defined(CONFIG_ROMFS_FS) || defined(CONFIG_ROMFS_FS_MODULE)
-+	return sb->s_magic == ROMFS_MAGIC;
++#if defined(CONFIG_ISO9660_FS) || defined(CONFIG_ISO9660_FS_MODULE)
++	return sb->s_magic == ISOFS_SUPER_MAGIC;
 +#else
 +	return 0;
 +#endif
@@ -13241,8 +13245,8 @@
 +
 +static inline int au_test_romfs(struct super_block *sb __maybe_unused)
 +{
-+#if defined(CONFIG_ISO9660_FS) || defined(CONFIG_ISO9660_FS_MODULE)
-+	return sb->s_magic == ISOFS_SUPER_MAGIC;
++#if defined(CONFIG_ROMFS_FS) || defined(CONFIG_ROMFS_FS_MODULE)
++	return sb->s_magic == ROMFS_MAGIC;
 +#else
 +	return 0;
 +#endif
@@ -13660,10 +13664,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FSTYPE_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/hfsnotify.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/hfsnotify.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,288 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -13951,10 +13955,10 @@
 +	.init_br	= au_hfsn_init_br
 +};
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/hfsplus.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/hfsplus.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,56 @@
 +/*
-+ * Copyright (C) 2010-2014 Junjiro R. Okajima
++ * Copyright (C) 2010-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -14010,10 +14014,10 @@
 +	}
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/hnotify.c	2015-01-06 16:35:55.901008731 -0500
++++ linux-3.19/fs/aufs/hnotify.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,714 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -14727,10 +14731,10 @@
 +		au_hn_destroy_cache();
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/i_op.c	2015-01-06 16:35:55.904341989 -0500
-@@ -0,0 +1,1306 @@
++++ linux-3.19/fs/aufs/i_op.c	2015-02-17 20:21:42.224341924 -0500
+@@ -0,0 +1,1299 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -14944,15 +14948,6 @@
 +	if (inode)
 +		atomic_inc(&inode->i_count);
 +	ret = d_splice_alias(inode, dentry);
-+	if (IS_ERR(ret)
-+	    && PTR_ERR(ret) == -EIO
-+	    && inode
-+	    && S_ISDIR(inode->i_mode)) {
-+		atomic_inc(&inode->i_count);
-+		ret = d_materialise_unique(dentry, inode);
-+		if (!IS_ERR(ret))
-+			ii_write_unlock(inode);
-+	}
 +#if 0
 +	if (unlikely(d_need_lookup(dentry))) {
 +		spin_lock(&dentry->d_lock);
@@ -14961,9 +14956,11 @@
 +	} else
 +#endif
 +	if (inode) {
-+		if (!IS_ERR(ret))
++		if (!IS_ERR(ret)) {
 +			iput(inode);
-+		else {
++			if (ret && ret != dentry)
++				ii_write_unlock(inode);
++		} else {
 +			ii_write_unlock(inode);
 +			iput(inode);
 +			inode = NULL;
@@ -16036,10 +16033,10 @@
 +	.update_time	= aufs_update_time
 +};
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/i_op_add.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/i_op_add.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,891 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -16930,10 +16927,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/i_op_del.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/i_op_del.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,507 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -17440,10 +17437,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/i_op_ren.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/i_op_ren.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,1034 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -18477,10 +18474,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/iinfo.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/iinfo.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,277 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -18757,10 +18754,10 @@
 +	AuRwDestroy(&iinfo->ii_rwsem);
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/inode.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/inode.c	2015-02-17 20:21:42.224341924 -0500
 @@ -0,0 +1,496 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -19256,10 +19253,10 @@
 +	return au_test_h_perm(h_inode, mask);
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/inode.h	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/inode.h	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,667 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -19926,10 +19923,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_INODE_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/ioctl.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/ioctl.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,219 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -19989,7 +19986,7 @@
 +			goto out;
 +	}
 +
-+	fd = get_unused_fd();
++	fd = get_unused_fd_flags(0);
 +	err = fd;
 +	if (unlikely(fd < 0))
 +		goto out;
@@ -20073,7 +20070,7 @@
 +		break;
 +
 +	case AUFS_CTL_FHSM_FD:
-+		dentry = file->f_dentry;
++		dentry = file->f_path.dentry;
 +		if (IS_ROOT(dentry))
 +			err = au_fhsm_fd(dentry->d_sb, arg);
 +		else
@@ -20096,7 +20093,7 @@
 +
 +	switch (cmd) {
 +	case AUFS_CTL_MVDOWN:
-+		err = au_mvdown(file->f_dentry, (void __user *)arg);
++		err = au_mvdown(file->f_path.dentry, (void __user *)arg);
 +		break;
 +
 +	case AUFS_CTL_WBR_FD:
@@ -20148,10 +20145,10 @@
 +}
 +#endif
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/loop.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/loop.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,145 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -20197,7 +20194,7 @@
 +	if (!backing_file)
 +		return 0;
 +
-+	h_adding = backing_file->f_dentry;
++	h_adding = backing_file->f_path.dentry;
 +	/*
 +	 * h_adding can be local NFS.
 +	 * in this case aufs cannot detect the loop.
@@ -20296,10 +20293,10 @@
 +	kfree(au_warn_loopback_array);
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/loop.h	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/loop.h	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,52 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -20351,7 +20348,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LOOP_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/magic.mk	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/magic.mk	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,54 @@
 +
 +# defined in ${srctree}/fs/fuse/inode.c
@@ -20408,10 +20405,10 @@
 +ccflags-y += -DHFSPLUS_SUPER_MAGIC=0x482b
 +endif
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/module.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/module.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,210 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -20621,10 +20618,10 @@
 +module_init(aufs_init);
 +module_exit(aufs_exit);
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/module.h	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/module.h	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,104 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -20728,10 +20725,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_MODULE_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/mvdown.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/mvdown.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,694 @@
 +/*
-+ * Copyright (C) 2011-2014 Junjiro R. Okajima
++ * Copyright (C) 2011-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -21425,10 +21422,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/opts.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/opts.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,1850 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -22357,7 +22354,7 @@
 +		goto out;
 +
 +	err = -EINVAL;
-+	if (unlikely(file->f_dentry->d_sb == sb)) {
++	if (unlikely(file->f_path.dentry->d_sb == sb)) {
 +		fput(file);
 +		pr_err("%s must be outside\n", args[0].from);
 +		goto out;
@@ -22985,7 +22982,7 @@
 +		au_xino_brid_set(sb, -1);
 +
 +		/* safe d_parent access */
-+		parent = opt->xino.file->f_dentry->d_parent;
++		parent = opt->xino.file->f_path.dentry->d_parent;
 +		root = sb->s_root;
 +		bend = au_sbend(sb);
 +		for (bindex = 0; bindex <= bend; bindex++) {
@@ -23278,10 +23275,10 @@
 +	return au_mntflags(sb) & AuOptMask_UDBA;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/opts.h	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/opts.h	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,213 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -23494,10 +23491,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_OPTS_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/plink.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/plink.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,532 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -24029,10 +24026,10 @@
 +	}
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/poll.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/poll.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,55 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -24065,7 +24062,7 @@
 +
 +	/* We should pretend an error happened. */
 +	mask = POLLERR /* | POLLIN | POLLOUT */;
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	sb = dentry->d_sb;
 +	si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLMW);
 +	err = au_reval_and_lock_fdi(file, au_reopen_nondir, /*wlock*/0);
@@ -24087,10 +24084,10 @@
 +	return mask;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/posix_acl.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/posix_acl.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,99 @@
 +/*
-+ * Copyright (C) 2014 Junjiro R. Okajima
++ * Copyright (C) 2014-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -24189,10 +24186,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/procfs.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/procfs.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,169 @@
 +/*
-+ * Copyright (C) 2010-2014 Junjiro R. Okajima
++ * Copyright (C) 2010-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -24361,10 +24358,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/rdu.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/rdu.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,388 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -24490,7 +24487,7 @@
 +	aufs_bindex_t bend;
 +	struct au_rdu_arg arg = {
 +		.ctx = {
-+			.actor = au_diractor(au_rdu_fill)
++			.actor = au_rdu_fill
 +		}
 +	};
 +	struct dentry *dentry;
@@ -24521,7 +24518,7 @@
 +	if (unlikely(err))
 +		goto out;
 +
-+	dentry = file->f_dentry;
++	dentry = file->f_path.dentry;
 +	inode = dentry->d_inode;
 +#if 1
 +	mutex_lock(&inode->i_mutex);
@@ -24605,7 +24602,7 @@
 +	err = 0;
 +	nent = rdu->nent;
 +	u = &rdu->ent;
-+	sb = file->f_dentry->d_sb;
++	sb = file->f_path.dentry->d_sb;
 +	si_read_lock(sb, AuLock_FLUSH);
 +	while (nent-- > 0) {
 +		/* unnecessary to support mmap_sem since this is a dir */
@@ -24752,10 +24749,10 @@
 +}
 +#endif
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/rwsem.h	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/rwsem.h	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,191 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -24946,10 +24943,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_RWSEM_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/sbinfo.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/sbinfo.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,353 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -25302,10 +25299,10 @@
 +	spin_unlock(&sbinfo->au_si_pid.tree_lock);
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/spl.h	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/spl.h	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,111 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -25416,10 +25413,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SPL_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/super.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/super.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,1009 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -25616,7 +25613,7 @@
 +		hdp = au_di(sb->s_root)->di_hdentry;
 +		h_root = hdp[0 + bindex].hd_dentry;
 +	}
-+	d = f->f_dentry;
++	d = f->f_path.dentry;
 +	name = &d->d_name;
 +	/* safe ->d_parent because the file is unlinked */
 +	if (d->d_parent == h_root
@@ -26428,10 +26425,10 @@
 +	.owner		= THIS_MODULE,
 +};
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/super.h	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/super.h	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,641 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -27072,10 +27069,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SUPER_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/sysaufs.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/sysaufs.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,104 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -27179,10 +27176,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/sysaufs.h	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/sysaufs.h	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,101 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -27283,10 +27280,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __SYSAUFS_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/sysfs.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/sysfs.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,372 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -27573,13 +27570,13 @@
 +
 +long au_brinfo_ioctl(struct file *file, unsigned long arg)
 +{
-+	return au_brinfo(file->f_dentry->d_sb, (void __user *)arg);
++	return au_brinfo(file->f_path.dentry->d_sb, (void __user *)arg);
 +}
 +
 +#ifdef CONFIG_COMPAT
 +long au_brinfo_compat_ioctl(struct file *file, unsigned long arg)
 +{
-+	return au_brinfo(file->f_dentry->d_sb, compat_ptr(arg));
++	return au_brinfo(file->f_path.dentry->d_sb, compat_ptr(arg));
 +}
 +#endif
 +
@@ -27658,10 +27655,10 @@
 +	}
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/sysrq.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/sysrq.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,157 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -27818,10 +27815,10 @@
 +		pr_err("err %d (ignored)\n", err);
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/vdir.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/vdir.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,889 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -28187,7 +28184,7 @@
 +	struct super_block *sb;
 +	int err;
 +
-+	sb = file->f_dentry->d_sb;
++	sb = file->f_path.dentry->d_sb;
 +	SiMustAnyLock(sb);
 +
 +	err = -ENOMEM;
@@ -28281,7 +28278,7 @@
 +	const unsigned char shwh = !!au_ftest_fillvdir(arg->flags, SHWH);
 +
 +	arg->err = 0;
-+	sb = arg->file->f_dentry->d_sb;
++	sb = arg->file->f_path.dentry->d_sb;
 +	au_fset_fillvdir(arg->flags, CALLED);
 +	/* smp_mb(); */
 +	if (nlen <= AUFS_WH_PFX_LEN
@@ -28290,7 +28287,7 @@
 +		    || au_nhash_test_known_wh(&arg->whlist, name, nlen))
 +			goto out; /* already exists or whiteouted */
 +
-+		sb = arg->file->f_dentry->d_sb;
++		sb = arg->file->f_path.dentry->d_sb;
 +		arg->err = au_ino(sb, arg->bindex, h_ino, d_type, &ino);
 +		if (!arg->err) {
 +			if (unlikely(nlen > AUFS_MAX_NAMELEN))
@@ -28380,7 +28377,7 @@
 +	struct super_block *sb;
 +
 +	file = arg->file;
-+	sb = file->f_dentry->d_sb;
++	sb = file->f_path.dentry->d_sb;
 +	SiMustAnyLock(sb);
 +
 +	rdhash = au_sbi(sb)->si_rdhash;
@@ -28451,7 +28448,7 @@
 +	unsigned char do_read;
 +	struct fillvdir_arg arg = {
 +		.ctx = {
-+			.actor = au_diractor(fillvdir)
++			.actor = fillvdir
 +		}
 +	};
 +	struct inode *inode;
@@ -28710,10 +28707,10 @@
 +	return 0;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/vfsub.c	2015-01-06 16:35:55.904341989 -0500
++++ linux-3.19/fs/aufs/vfsub.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,796 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -29186,7 +29183,7 @@
 +
 +	err = 0;
 +	if (file->f_op->flush) {
-+		if (!au_test_nfs(file->f_dentry->d_sb))
++		if (!au_test_nfs(file->f_path.dentry->d_sb))
 +			err = file->f_op->flush(file, id);
 +		else {
 +			lockdep_off();
@@ -29509,10 +29506,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/vfsub.h	2015-01-06 16:35:55.904341989 -0500
-@@ -0,0 +1,310 @@
++++ linux-3.19/fs/aufs/vfsub.h	2015-02-17 20:21:42.227675178 -0500
+@@ -0,0 +1,301 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -29674,15 +29671,6 @@
 +int vfsub_flush(struct file *file, fl_owner_t id);
 +int vfsub_iterate_dir(struct file *file, struct dir_context *ctx);
 +
-+/* just for type-check */
-+static inline filldir_t au_diractor(int (*func)(struct dir_context *,
-+						const char *, int, loff_t, u64,
-+						unsigned))
-+{
-+	return (filldir_t)func;
-+}
-+
-+
 +static inline loff_t vfsub_f_size_read(struct file *file)
 +{
 +	return i_size_read(file_inode(file));
@@ -29822,10 +29810,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_VFSUB_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/wbr_policy.c	2015-01-06 16:35:55.907675245 -0500
++++ linux-3.19/fs/aufs/wbr_policy.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,765 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -30590,10 +30578,10 @@
 +	}
 +};
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/whout.c	2015-01-06 16:35:55.907675245 -0500
++++ linux-3.19/fs/aufs/whout.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,1056 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -31649,10 +31637,10 @@
 +	}
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/whout.h	2015-01-06 16:35:55.907675245 -0500
++++ linux-3.19/fs/aufs/whout.h	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,85 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -31737,10 +31725,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WHOUT_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/wkq.c	2015-01-06 16:35:55.907675245 -0500
++++ linux-3.19/fs/aufs/wkq.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,213 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -31953,10 +31941,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/wkq.h	2015-01-06 16:35:55.907675245 -0500
++++ linux-3.19/fs/aufs/wkq.h	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,91 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -32047,10 +32035,10 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WKQ_H__ */
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/xattr.c	2015-01-06 16:35:55.907675245 -0500
++++ linux-3.19/fs/aufs/xattr.c	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,334 @@
 +/*
-+ * Copyright (C) 2014 Junjiro R. Okajima
++ * Copyright (C) 2014-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -32384,10 +32372,10 @@
 +}
 +#endif
 --- /dev/null
-+++ linux-3.18.1+/fs/aufs/xino.c	2015-01-06 16:35:55.907675245 -0500
-@@ -0,0 +1,1316 @@
++++ linux-3.19/fs/aufs/xino.c	2015-02-17 20:21:42.227675178 -0500
+@@ -0,0 +1,1318 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -32433,7 +32421,7 @@
 +
 +#if 0 /* reserved for future use */
 +	if (err > 0)
-+		fsnotify_access(file->f_dentry);
++		fsnotify_access(file->f_path.dentry);
 +#endif
 +
 +	return err;
@@ -32462,7 +32450,7 @@
 +
 +#if 0 /* reserved for future use */
 +	if (err > 0)
-+		fsnotify_modify(file->f_dentry);
++		fsnotify_modify(file->f_path.dentry);
 +#endif
 +
 +	return err;
@@ -32530,7 +32518,7 @@
 +	struct path path;
 +	int err;
 +
-+	base = base_file->f_dentry;
++	base = base_file->f_path.dentry;
 +	parent = base->d_parent; /* dir inode is locked */
 +	dir = parent->d_inode;
 +	IMustLock(dir);
@@ -32613,7 +32601,7 @@
 +		ldir->hdir = au_hi(sb->s_root->d_inode, bindex);
 +		au_hn_imtx_lock_nested(ldir->hdir, AuLsc_I_PARENT);
 +	} else {
-+		ldir->parent = dget_parent(xino->f_dentry);
++		ldir->parent = dget_parent(xino->f_path.dentry);
 +		ldir->mtx = &ldir->parent->d_inode->i_mutex;
 +		mutex_lock_nested(ldir->mtx, AuLsc_I_PARENT);
 +	}
@@ -33135,7 +33123,7 @@
 +	}
 +
 +	/* keep file count */
-+	h_parent = dget_parent(file->f_dentry);
++	h_parent = dget_parent(file->f_path.dentry);
 +	h_dir = h_parent->d_inode;
 +	mutex_lock_nested(&h_dir->i_mutex, AuLsc_I_PARENT);
 +	/* mnt_want_write() is unnecessary here */
@@ -33150,7 +33138,7 @@
 +	}
 +
 +	err = -EINVAL;
-+	d = file->f_dentry;
++	d = file->f_path.dentry;
 +	if (unlikely(sb == d->d_sb)) {
 +		if (!silent)
 +			pr_err("%s must be outside\n", fname);
@@ -33583,14 +33571,14 @@
 +
 +	err = 0;
 +	sbinfo = au_sbi(sb);
-+	parent = dget_parent(xino->file->f_dentry);
++	parent = dget_parent(xino->file->f_path.dentry);
 +	if (remount) {
 +		skip = 0;
-+		dname = &xino->file->f_dentry->d_name;
++		dname = &xino->file->f_path.dentry->d_name;
 +		cur_xino = sbinfo->si_xib;
 +		if (cur_xino) {
-+			cur_parent = dget_parent(cur_xino->f_dentry);
-+			cur_name = &cur_xino->f_dentry->d_name;
++			cur_parent = dget_parent(cur_xino->f_path.dentry);
++			cur_name = &cur_xino->f_path.dentry->d_name;
 +			skip = (cur_parent == parent
 +				&& au_qstreq(dname, cur_name));
 +			dput(cur_parent);
@@ -33614,6 +33602,8 @@
 +
 +	/* reset all */
 +	AuIOErr("failed creating xino(%d).\n", err);
++	au_xigen_clr(sb);
++	xino_clear_xib(sb);
 +
 +out:
 +	dput(parent);
@@ -33667,7 +33657,7 @@
 +		file = au_xino_create(sb, AUFS_XINO_DEFPATH, /*silent*/0);
 +		if (IS_ERR(file))
 +			goto out;
-+		h_sb = file->f_dentry->d_sb;
++		h_sb = file->f_path.dentry->d_sb;
 +		if (unlikely(au_test_fs_bad_xino(h_sb))) {
 +			pr_err("xino doesn't support %s(%s)\n",
 +			       AUFS_XINO_DEFPATH, au_sbtype(h_sb));
@@ -33703,10 +33693,10 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.18.1+/include/uapi/linux/aufs_type.h	2015-01-06 16:35:55.907675245 -0500
++++ linux-3.19/include/uapi/linux/aufs_type.h	2015-02-17 20:21:42.227675178 -0500
 @@ -0,0 +1,419 @@
 +/*
-+ * Copyright (C) 2005-2014 Junjiro R. Okajima
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -33746,7 +33736,7 @@
 +
 +#include <linux/limits.h>
 +
-+#define AUFS_VERSION	"3.18.1+-20150106"
++#define AUFS_VERSION	"3.19-20150216"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
