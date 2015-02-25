@@ -1,6 +1,6 @@
 
 pkgname=git
-pkgver=2.3.0
+pkgver=2.3.1
 pkgrel=1
 pkgdesc="Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency."
 arch=('x86_64')
@@ -20,13 +20,12 @@ source=("https://www.kernel.org/pub/software/scm/git/git-${pkgver}.tar.xz"
         "https://www.kernel.org/pub/software/scm/git/git-manpages-${pkgver}.tar.xz"
         'git-daemon@.service'
         'git-daemon.socket')
-md5sums=('e5880760d1f43f4f49b3bf94b9046eee'
-         'f3c28de4608368cb7d7319cbf5ea36b0'
+md5sums=('0d33343eb442350e8e84e730c3216a38'
+         '45e51a4057067cd6805b6010bf3c6a6a'
          '042524f942785772d7bd52a1f02fe5ae'
          'f67869315c2cc112e076f0c73f248002')
 
 build() {
-  export PYTHON_PATH='/usr/bin/python2'
   cd "${srcdir}/${pkgname}-${pkgver}"
   
   make prefix=/usr gitexecdir=/usr/lib/git-core \
@@ -39,7 +38,6 @@ build() {
 }
 
 check() {
-  export PYTHON_PATH='/usr/bin/python2'
   cd "${srcdir}/${pkgname}-${pkgver}"
 
   local jobs="$(expr "$MAKEFLAGS" : '.*\(-j[0-9]*\).*')"
@@ -57,7 +55,6 @@ check() {
 }
 
 package() {
-  export PYTHON_PATH='/usr/bin/python2'
   cd "${srcdir}/${pkgname}-${pkgver}"
   make prefix=/usr gitexecdir=/usr/lib/git-core \
        USE_LIBPCRE=1 \
@@ -72,14 +69,6 @@ package() {
   install -m644 ./contrib/completion/git-prompt.sh "${pkgdir}/usr/share/git/git-prompt.sh"
   # more contrib stuff
   cp -a ./contrib/* "${pkgdir}/usr/share/git/"
-
-  # scripts are for python 2.x
-  find "${pkgdir}" -name '*.py' \
-       -exec sed -e 's|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|' -i \{\} \+
-
-  sed -e 's|#![ ]*/usr/bin/env python$|#!/usr/bin/env python2|' \
-      -i "${pkgdir}/usr/lib/git-core/git-p4" \
-      -i "${pkgdir}/usr/share/git/gitview/gitview"
 
   # emacs interface
   cd contrib/emacs
