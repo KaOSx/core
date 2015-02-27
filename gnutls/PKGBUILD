@@ -1,7 +1,7 @@
 
 pkgname=gnutls
-pkgver=3.3.12
-_pkgver=3.3.12
+pkgver=3.3.13
+_pkgver=3.3.13
 pkgrel=1
 pkgdesc="A library which provides a secure layer over a reliable transport layer"
 arch=('x86_64')
@@ -12,7 +12,7 @@ options=('libtool')
 depends=('gcc-libs' 'libtasn1>=3.6' 'readline' 'zlib' 'texinfo' 'nettle' 'p11-kit')
 makepends=('datefudge' 'valgrind' 'strace')
 source=("ftp://ftp.gnutls.org/gcrypt/gnutls/v3.3/${pkgname}-${pkgver}.tar.xz")
-md5sums=('a37b20b4352a5f542367ded904729c90')
+md5sums=('a7387fe8bf3e604bf518a6da9ab2a4e6')
 
 build() {
   cd "${srcdir}/${pkgname}-${_pkgver}"
