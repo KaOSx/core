@@ -1,25 +1,24 @@
 
 pkgname=pacman
-pkgver=4.2.0
+pkgver=4.2.1
 pkgrel=1
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="http://www.archlinux.org/pacman/"
 license=('GPL')
 groups=('base')
-depends=('bash' 'glibc' 'libarchive' 'curl>=7.39.0'
-         'gpgme' 'pacman-mirrorlist')
+depends=('bash' 'glibc' 'libarchive' 'curl' 'gpgme' 'pacman-mirrorlist')
 makedepends=('asciidoc')
 checkdepends=('python2' 'fakechroot')
-optdepends=('fakeroot: for makepkg usage as normal user')
 backup=(etc/pacman.conf etc/makepkg.conf)
 options=('!libtool')
-source=("ftp://ftp.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz"
+install=pacman.install
+source=("https://sources.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz"
         'pacman.conf'
         'makepkg.conf')
-md5sums=('184ce14f1f326fede72012cca51bba51'
+md5sums=('2a596fc8f723e99660c0869a74afcf47'
          'fe6aba114adcdbf060f71b349d22ebb9'
-         '5f360e003e95f1a5cbd6e60d937dfd25')
+         '4d5217ebbbf9ec5cb4dd3ca26b8514e6')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
@@ -43,18 +42,9 @@ package() {
 
   mkdir -p $pkgdir/etc
   install -m644 $srcdir/pacman.conf $pkgdir/etc/pacman.conf
-  mycarch="x86_64"
-  mychost="x86_64-unknown-linux-gnu"
-  myflags="-march=x86-64 "
-
   install -m644 $srcdir/makepkg.conf $pkgdir/etc/
-  # set things correctly in the default conf file
-  sed -i $pkgdir/etc/makepkg.conf \
-    -e "s|@CARCH[@]|$mycarch|g" \
-    -e "s|@CHOST[@]|$mychost|g" \
-    -e "s|@CARCHFLAGS[@]|$myflags|g"
 
-  # install completion files
+  # completion files
   install -Dm644 contrib/bash_completion "$pkgdir/usr/share/bash-completion/completions/pacman"
   for f in makepkg pacman-key; do
     ln -s pacman "$pkgdir/usr/share/bash-completion/completions/$f"
