@@ -1,7 +1,7 @@
 
 pkgname=wget
 pkgver=1.16.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A network utility to retrieve files from the Web"
 arch=('x86_64')
 url="http://www.gnu.org/software/wget/wget.html"
@@ -11,11 +11,15 @@ depends=('glibc' 'openssl' 'libidn' 'util-linux' 'pcre')
 optdepends=('ca-certificates: HTTPS downloads')
 backup=('etc/wgetrc')
 install=wget.install
-source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('50b67a11971ecc6d142e634e8436fc0f')
+source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+        '0001-main.c-Need-to-explicitly-disallow-show_progress-in-.patch')
+md5sums=('50b67a11971ecc6d142e634e8436fc0f'
+         '87ebe95f2c403e041fab209610e695ae')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  patch -p1 -i $srcdir/0001-main.c-Need-to-explicitly-disallow-show_progress-in-.patch
+  
   cat >> doc/sample.wgetrc <<EOF
 
 # default root certs location

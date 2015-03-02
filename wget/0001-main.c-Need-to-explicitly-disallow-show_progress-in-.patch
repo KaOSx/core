@@ -1,0 +1,26 @@
+From 9dde436dd689bd51eef71d64152dde9c8c0b5f65 Mon Sep 17 00:00:00 2001
+From: Darshit Shah <darnir@gmail.com>
+Date: Mon, 2 Mar 2015 21:40:57 +0530
+Subject: [PATCH] main.c: Need to explicitly disallow show_progress in -q
+
+---
+ src/main.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/main.c b/src/main.c
+index 7675455..9d7790b 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -1272,6 +1272,9 @@ main (int argc, char **argv)
+   if (opt.verbose == -1)
+     opt.verbose = !opt.quiet;
+ 
++  if (opt.quiet && opt.show_progress == -1)
++    opt.show_progress = false;
++
+   /* Sanity checks.  */
+   if (opt.verbose && opt.quiet)
+     {
+-- 
+2.3.1
+
