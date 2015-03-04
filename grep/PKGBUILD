@@ -10,7 +10,7 @@ groups=('base')
 depends=('glibc' 'pcre' 'sh')
 makedepends=('texinfo>=4.8a')
 install="${pkgname}.install"
-source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
+source=("ftp://ftp.gnu.org/gnu/grep/${pkgname}-${pkgver}.tar.xz")
 md5sums=('43c48064d6409862b8a850db83c8038a')
 
 build() {
