@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=3.19
 _srcname=linux-3.19
-pkgver=3.19.0
+pkgver=3.19.1
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -31,17 +31,17 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('d3fc8316d4d4d04b65cbc2d70799e763'
-         #'e8563b2feaa6c33d20d23ac7add9d385'
+         '2f2822cf2d84a8ec3a8b044e732cf45b'
          '56c23af884ba255ae48e13d962479b37'
-         '6c677654a778a9bd26206112f9fe3104'
-         '16937a67f64db68f12c6c83698bf63cc'
-         '913a03597c14e6a006d3b28e8cfd47ff'
-         '1ec6be363ab2746812450313595209ab'
-         'd19f9bbab09084f6629ce390272faa1a'
-         'd4769ebd4a8a325331d7f52ac1160c87'
+         'fecc074c7d7b842fefdf77d78897358f'
+         '35da0cef8ee134c5f8203a108d221547'
+         'b42a1c2604af883112ac233451f4d374'
+         '4c8c31114dbc4e265c68d0a8819d93d3'
+         '618f1b073d39afc91b5c95297d6edcb5'
+         'bc99a0c33218fca30363dc38f7dda4c2'
          '260b2e47579140f61546f37d90e0b527'
-         '162576826deb48df7907fc62f04c66a2'
-         '8a075a5764e0a0bb3101e8331de39444'
+         '282c7058a9e90242ba8fa13f4acb9ae0'
+         '4fa6ff485b7ade29a85b3c7ce4576f01'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47')
