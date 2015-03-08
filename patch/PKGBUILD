@@ -1,6 +1,6 @@
 
 pkgname=patch
-pkgver=2.7.4
+pkgver=2.7.5
 pkgrel=1
 pkgdesc="A utility to apply patch files to original sources"
 arch=('x86_64')
@@ -10,7 +10,7 @@ groups=('base-devel')
 depends=('glibc')
 optdepends=('ed: Interpret the patch as an ed script')
 source=("ftp://ftp.gnu.org/gnu/patch/$pkgname-$pkgver.tar.xz")
-md5sums=('abc59498fcdddd44e0d07764aa105fd2')
+md5sums=('e3da7940431633fb65a01b91d3b7a27a')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
