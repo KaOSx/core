@@ -14,7 +14,7 @@ md5sums=('4747281d4e3ebdb78bc88cdccd3ca5f7')
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
   
-  ./configure --prefix=/usr --enable-ipv6 --with-libnl # --enable-bluetooth
+  ./configure --prefix=/usr # --enable-ipv6 --with-libnl --enable-bluetooth
   make
 }
 
