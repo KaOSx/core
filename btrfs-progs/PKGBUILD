@@ -1,6 +1,6 @@
 
 pkgname=btrfs-progs
-pkgver=3.18.2
+pkgver=3.19
 pkgrel=1
 pkgdesc="Btrfs filesystem utilities."
 arch=('x86_64')
@@ -12,15 +12,16 @@ options=('!staticlibs')
 source=("https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/${pkgname}-v${pkgver}.tar.xz"
 	'initcpio-install-btrfs'
 	'initcpio-hook-btrfs')
-md5sums=('1059a9f7e444be704cfaccc0df128265'
+md5sums=('edb76ab11d78df7a5d5981807583acc2'
          '5642e1524eefddf9195693cd114ecc65'
          '85ff8daca50a5ba3dff3c3e641d38b1e')
 
 build() {
    cd $srcdir/${pkgname}-v${pkgver}
    
-   make CFLAGS="$CFLAGS" 
-   make CFLAGS="$CFLAGS" btrfs-select-super
+   ./configure --prefix=/usr
+   make  
+   make btrfs-select-super
 }
 
 package() {
