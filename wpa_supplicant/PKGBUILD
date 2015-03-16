@@ -1,6 +1,6 @@
 
 pkgname=wpa_supplicant
-pkgver=2.3
+pkgver=2.4
 pkgrel=1
 pkgdesc="A utility providing key negotiation for WPA wireless networks"
 arch=('x86_64')
@@ -11,7 +11,7 @@ backup=('etc/wpa_supplicant.conf')
 url="http://hostap.epitest.fi/wpa_supplicant"
 source=("http://hostap.epitest.fi/releases/wpa_supplicant-$pkgver.tar.gz"
         'config')
-md5sums=('f2ed8fef72cf63d8d446a2d0a6da630a'
+md5sums=('f0037dbe03897dcaf2ad2722e659095d'
          '78bc0d6b6db02d4d58982d870e0a0c26')
 
 build() {
