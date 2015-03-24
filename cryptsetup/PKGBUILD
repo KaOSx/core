@@ -1,18 +1,18 @@
 
 pkgname=cryptsetup
-pkgver=1.6.6
+pkgver=1.6.7
 pkgrel=1
-pkgdesc="Userspace setup tool for transparent encryption of block devices using the Linux 2.6 cryptoapi"
+pkgdesc="Utility used to conveniently setup disk encryption based on DMCrypt kernel module."
 arch=('x86_64')
 license=('GPL')
-url="http://code.google.com/p/cryptsetup/"
+url="https://gitlab.com/cryptsetup/cryptsetup/blob/master/README.md"
 groups=('base')
 depends=('device-mapper' 'libgcrypt' 'popt' 'util-linux')
 options=('!libtool' '!emptydirs')
 source=("https://www.kernel.org/pub/linux/utils/${pkgname}/v1.6/${pkgname}-${pkgver}.tar.xz"
         'encrypt_hook'
 	'encrypt_install')
-md5sums=('179c0781de59838a4e39f61b2df5ea48'
+md5sums=('918406eb5d2e2f5a7348c432ea9b1473'
          'c279d86d6dc18322c054d2272ebb9e90'
          'abe9bb42341e8f2ecd2b07e4244ac066')
 build() {
