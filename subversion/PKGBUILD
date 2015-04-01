@@ -1,12 +1,12 @@
 
 pkgname=subversion
-pkgver=1.8.11
-pkgrel=2
+pkgver=1.8.13
+pkgrel=1
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
 license=('APACHE')
 depends=('db' 'serf' 'apr-util' 'sqlite3' 'file' 'systemd')
-optdepends=('kdeutils-kwallet' 'bash-completion: for svn bash completion')
+optdepends=('kwallet' 'bash-completion: for svn bash completion')
 makedepends=('krb5' 'apache' 'python2' 'perl' 'swig' 'ruby' 'java-runtime' 
              'autoconf' 'e2fsprogs' 'kdelibs')
 #backup=('etc/xinetd.d/svn' 'etc/conf.d/svnserve')
@@ -20,7 +20,7 @@ source=("http://apache.mirror.rafal.ca/subversion/$pkgname-$pkgver.tar.bz2"
 	'svnserve.tmpfiles'
 	'svnserve.service'
         'subversion.rpath.fix.patch')
-md5sums=('766a89bbbb388f8eb76166672d3b9e49'
+md5sums=('4413417b529d7bdf82f74e50df02e88b'
          'a0db6dd43af33952739b6ec089852630'
          'c459e299192552f61578f3438abf0664'
          'bb2857eceafcfac35dde39dcffad2314'
