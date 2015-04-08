@@ -1,6 +1,6 @@
 
 pkgname=pacman-mirrorlist
-pkgver=20150407
+pkgver=20150408
 pkgrel=1
 pkgdesc="KaOS mirror list for use by pacman"
 arch=('x86_64')
@@ -8,7 +8,7 @@ url="http://www.archlinux.org/pacman/"
 license=('GPL')
 depends=('mirror-check')
 groups=('base')
-#backup=(etc/pacman.d/mirrorlist)
+backup=(etc/pacman.d/mirrorlist)
 source=('mirrorlist')
 md5sums=('36e2663bf43904dd82bdbc2f9907a30e')
 
