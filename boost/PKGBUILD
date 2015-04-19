@@ -1,17 +1,17 @@
  
 pkgbase=boost
 pkgname=('boost-libs' 'boost')
-pkgver=1.56.0
-_pkgver=1_56_0
-pkgrel=2
+pkgver=1.58.0
+_pkgver=1_58_0
+pkgrel=1
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="http://www.boost.org/"
 license=('custom')
-makedepends=('icu>=54.1' 'python2' 'python3' 'bzip2' 'zlib' 'openmpi') 
+makedepends=('icu>=55.1' 'python2' 'python3' 'bzip2' 'zlib' 'openmpi') 
 source=("http://downloads.sourceforge.net/boost/${pkgbase}_${_pkgver}.tar.gz")
 license=('custom')
-md5sums=('8c54705c424513fa2be0042696a3a162')
+md5sums=('5a5d5614d9a07672e1ab2a250b5defc5')
 
 build() {
   export _stagedir="${srcdir}/stagedir"
@@ -20,26 +20,20 @@ build() {
   cd "${srcdir}"/${pkgbase}_${_pkgver}
   ./bootstrap.sh --with-toolset=gcc --with-icu --with-python=/usr/bin/python2
 
-  # setup tools
+  # tools
   install -d -m 755 "${_stagedir}"/bin
   install tools/build/src/engine/bin.linuxx86_64/b2 "${_stagedir}"/bin/b2
 
-  # Add an extra python version. This does not replace anything and python 2.x is the default.
+  # Also build with python3 support, leaving 2 as default
    echo "using python : 3.4 : /usr/bin/python3 : /usr/include/python3.4m : /usr/lib ;" >> project-config.jam
    # Support for OpenMPI
    echo "using mpi ;" >> project-config.jam
   
-  #boostbook needed by quickbook
+  #quickbook support
   install -d -m 755 "${_stagedir}"/share/boostbook
   cp -a tools/boostbook/{xsl,dtd} "${_stagedir}"/share/boostbook/
 
-  # default "minimal" install: "release link=shared
-  # runtime-link=shared threading=single,multi"
-  # --layout=tagged will add the "-mt" suffix for multithreaded libraries
-  # and installs includes in /usr/include/boost.
-  # --layout=system no longer adds the -mt suffix for multi-threaded libs.
-  # install to ${_stagedir} in preparation for split packaging
-
+  # ${_stagedir} for split package
   "${_stagedir}"/bin/b2 \
       variant=release \
       debug-symbols=off \
@@ -65,7 +59,7 @@ package_boost() {
     cp -a "${_stagedir}"/{bin,include,share} "${pkgdir}"/usr
     
     install -d "${pkgdir}"/usr/lib
-    find "${_stagedir}"/lib -name \*.a -exec mv {} "${pkgdir}"/usr/lib \;
+    cp -a "${_stagedir}"/lib/*.a "${pkgdir}"/usr/lib/
 
     # license
     install -D -m644 "${srcdir}/${pkgbase}_${_pkgver}/LICENSE_1_0.txt" \
