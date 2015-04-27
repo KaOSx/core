@@ -1,6 +1,6 @@
 
 pkgname=rpcbind
-pkgver=0.2.2
+pkgver=0.2.3
 pkgrel=1
 pkgdesc="portmap replacement which supports RPC over various protocols"
 arch=('x86_64')
@@ -11,14 +11,13 @@ install=rpcbind.install
 source=("http://downloads.sourceforge.net/sourceforge/rpcbind/rpcbind-$pkgver.tar.bz2" 
 	'rpcbind-sunrpc.patch'
 	'rpcbind.service')
-md5sums=('8acf839bfef2364a05fbd6be5f8edf9a'
+md5sums=('c8875246b2688a1adfbd6ad43480278d'
          'c02ac36a98baac70b8a26190524b7b73'
          'a7b23a32be2eb52d7dec52da36d4eba1')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
-  
-  patch -p1 -i ../rpcbind-sunrpc.patch
+  #patch -p1 -i ../rpcbind-sunrpc.patch
   
   ./configure --prefix=/usr \
         --with-rpcuser=rpc \
