@@ -2,7 +2,7 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.0.1
+_basekernel=4.0
 _srcname=linux-4.0
 pkgver=4.0.1
 pkgrel=1
@@ -31,16 +31,17 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('a86916bd12798220da9eb4a1eec3616d'
-         'b8f60d39adb115bb9b667b82180a6057'
-         'fecc074c7d7b842fefdf77d78897358f'
-         '35da0cef8ee134c5f8203a108d221547'
-         'b42a1c2604af883112ac233451f4d374'
-         '4c8c31114dbc4e265c68d0a8819d93d3'
-         '618f1b073d39afc91b5c95297d6edcb5'
-         'bc99a0c33218fca30363dc38f7dda4c2'
+         '80f12ad5146991a83bb35ab141c24f81'
+         'f075b07dc5d213c54999eb0c6606a4dc'
+         '16c0e0545aaeb2907d1c2b902a0aac44'
+         'cf70388424ba3280dea7d31228cee547'
+         '8a1d8b17f6baa4049bda05d5ff3a6264'
+         '0ee3b68cabc215608569849f968fb801'
+         '45d777cffc2b178c8f06eef5143f869c'
+         'a5bf01e025a566b8d6d2cc006738fe48'
          '260b2e47579140f61546f37d90e0b527'
-         '282c7058a9e90242ba8fa13f4acb9ae0'
-         '4fa6ff485b7ade29a85b3c7ce4576f01'
+         'b8d46df172964def0b7ba2065cda0cba'
+         'f7dcd5370aaeb7f7a1c617c83b124809'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47')
@@ -65,18 +66,18 @@ build() {
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs4.patch"
-  patch -p1 -i "${srcdir}/aufs4-base.patch"
-  patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs4-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs4-mmap.patch"
-  patch -p1 -i "${srcdir}/aufs4-standalone.patch"
-  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  patch -p1 -i "${srcdir}/vfs-ino.patch"
+  #patch -p1 -i "${srcdir}/aufs4.patch"
+  #patch -p1 -i "${srcdir}/aufs4-base.patch"
+  #patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
+  #patch -p1 -i "${srcdir}/aufs4-loopback.patch"
+  #patch -p1 -i "${srcdir}/aufs4-mmap.patch"
+  #patch -p1 -i "${srcdir}/aufs4-standalone.patch"
+  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  #patch -p1 -i "${srcdir}/vfs-ino.patch"
   
   cat "${srcdir}/config" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -249,7 +250,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs4-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
