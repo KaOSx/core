@@ -1,0 +1,2026 @@
+--- /dev/null
++++ linux-4.0/Documentation/ABI/testing/debugfs-aufs	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,50 @@
++What:		/debug/aufs/si_<id>/
++Date:		March 2009
++Contact:	J. R. Okajima <hooanon05g@gmail.com>
++Description:
++		Under /debug/aufs, a directory named si_<id> is created
++		per aufs mount, where <id> is a unique id generated
++		internally.
++
++What:		/debug/aufs/si_<id>/plink
++Date:		Apr 2013
++Contact:	J. R. Okajima <hooanon05g@gmail.com>
++Description:
++		It has three lines and shows the information about the
++		pseudo-link. The first line is a single number
++		representing a number of buckets. The second line is a
++		number of pseudo-links per buckets (separated by a
++		blank). The last line is a single number representing a
++		total number of psedo-links.
++		When the aufs mount option 'noplink' is specified, it
++		will show "1\n0\n0\n".
++
++What:		/debug/aufs/si_<id>/xib
++Date:		March 2009
++Contact:	J. R. Okajima <hooanon05g@gmail.com>
++Description:
++		It shows the consumed blocks by xib (External Inode Number
++		Bitmap), its block size and file size.
++		When the aufs mount option 'noxino' is specified, it
++		will be empty. About XINO files, see the aufs manual.
++
++What:		/debug/aufs/si_<id>/xino0, xino1 ... xinoN
++Date:		March 2009
++Contact:	J. R. Okajima <hooanon05g@gmail.com>
++Description:
++		It shows the consumed blocks by xino (External Inode Number
++		Translation Table), its link count, block size and file
++		size.
++		When the aufs mount option 'noxino' is specified, it
++		will be empty. About XINO files, see the aufs manual.
++
++What:		/debug/aufs/si_<id>/xigen
++Date:		March 2009
++Contact:	J. R. Okajima <hooanon05g@gmail.com>
++Description:
++		It shows the consumed blocks by xigen (External Inode
++		Generation Table), its block size and file size.
++		If CONFIG_AUFS_EXPORT is disabled, this entry will not
++		be created.
++		When the aufs mount option 'noxino' is specified, it
++		will be empty. About XINO files, see the aufs manual.
+--- /dev/null
++++ linux-4.0/Documentation/ABI/testing/sysfs-aufs	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,31 @@
++What:		/sys/fs/aufs/si_<id>/
++Date:		March 2009
++Contact:	J. R. Okajima <hooanon05g@gmail.com>
++Description:
++		Under /sys/fs/aufs, a directory named si_<id> is created
++		per aufs mount, where <id> is a unique id generated
++		internally.
++
++What:		/sys/fs/aufs/si_<id>/br0, br1 ... brN
++Date:		March 2009
++Contact:	J. R. Okajima <hooanon05g@gmail.com>
++Description:
++		It shows the abolute path of a member directory (which
++		is called branch) in aufs, and its permission.
++
++What:		/sys/fs/aufs/si_<id>/brid0, brid1 ... bridN
++Date:		July 2013
++Contact:	J. R. Okajima <hooanon05g@gmail.com>
++Description:
++		It shows the id of a member directory (which is called
++		branch) in aufs.
++
++What:		/sys/fs/aufs/si_<id>/xi_path
++Date:		March 2009
++Contact:	J. R. Okajima <hooanon05g@gmail.com>
++Description:
++		It shows the abolute path of XINO (External Inode Number
++		Bitmap, Translation Table and Generation Table) file
++		even if it is the default path.
++		When the aufs mount option 'noxino' is specified, it
++		will be empty. About XINO files, see the aufs manual.
+--- /dev/null
++++ linux-4.0/Documentation/filesystems/aufs/README	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,383 @@
++
++Aufs4 -- advanced multi layered unification filesystem version 4.x
++http://aufs.sf.net
++Junjiro R. Okajima
++
++
++0. Introduction
++----------------------------------------
++In the early days, aufs was entirely re-designed and re-implemented
++Unionfs Version 1.x series. Adding many original ideas, approaches,
++improvements and implementations, it becomes totally different from
++Unionfs while keeping the basic features.
++Recently, Unionfs Version 2.x series begin taking some of the same
++approaches to aufs1's.
++Unionfs is being developed by Professor Erez Zadok at Stony Brook
++University and his team.
++
++Aufs4 supports linux-4.0 and later, and for linux-3.x series try aufs3.
++If you want older kernel version support, try aufs2-2.6.git or
++aufs2-standalone.git repository, aufs1 from CVS on SourceForge.
++
++Note: it becomes clear that "Aufs was rejected. Let's give it up."
++      According to Christoph Hellwig, linux rejects all union-type
++      filesystems but UnionMount.
++<http://marc.info/?l=linux-kernel&m=123938533724484&w=2>
++
++PS. Al Viro seems have a plan to merge aufs as well as overlayfs and
++    UnionMount, and he pointed out an issue around a directory mutex
++    lock and aufs addressed it. But it is still unsure whether aufs will
++    be merged (or any other union solution).
++<http://marc.info/?l=linux-kernel&m=136312705029295&w=1>
++
++
++1. Features
++----------------------------------------
++- unite several directories into a single virtual filesystem. The member
++  directory is called as a branch.
++- you can specify the permission flags to the branch, which are 'readonly',
++  'readwrite' and 'whiteout-able.'
++- by upper writable branch, internal copyup and whiteout, files/dirs on
++  readonly branch are modifiable logically.
++- dynamic branch manipulation, add, del.
++- etc...
++
++Also there are many enhancements in aufs, such as:
++- test only the highest one for the directory permission (dirperm1)
++- copyup on open (coo=)
++- 'move' policy for copy-up between two writable branches, after
++  checking free space.
++- xattr, acl
++- readdir(3) in userspace.
++- keep inode number by external inode number table
++- keep the timestamps of file/dir in internal copyup operation
++- seekable directory, supporting NFS readdir.
++- whiteout is hardlinked in order to reduce the consumption of inodes
++  on branch
++- do not copyup, nor create a whiteout when it is unnecessary
++- revert a single systemcall when an error occurs in aufs
++- remount interface instead of ioctl
++- maintain /etc/mtab by an external command, /sbin/mount.aufs.
++- loopback mounted filesystem as a branch
++- kernel thread for removing the dir who has a plenty of whiteouts
++- support copyup sparse file (a file which has a 'hole' in it)
++- default permission flags for branches
++- selectable permission flags for ro branch, whether whiteout can
++  exist or not
++- export via NFS.
++- support <sysfs>/fs/aufs and <debugfs>/aufs.
++- support multiple writable branches, some policies to select one
++  among multiple writable branches.
++- a new semantics for link(2) and rename(2) to support multiple
++  writable branches.
++- no glibc changes are required.
++- pseudo hardlink (hardlink over branches)
++- allow a direct access manually to a file on branch, e.g. bypassing aufs.
++  including NFS or remote filesystem branch.
++- userspace wrapper for pathconf(3)/fpathconf(3) with _PC_LINK_MAX.
++- and more...
++
++Currently these features are dropped temporary from aufs4.
++See design/08plan.txt in detail.
++- nested mount, i.e. aufs as readonly no-whiteout branch of another aufs
++  (robr)
++- statistics of aufs thread (/sys/fs/aufs/stat)
++
++Features or just an idea in the future (see also design/*.txt),
++- reorder the branch index without del/re-add.
++- permanent xino files for NFSD
++- an option for refreshing the opened files after add/del branches
++- light version, without branch manipulation. (unnecessary?)
++- copyup in userspace
++- inotify in userspace
++- readv/writev
++
++
++2. Download
++----------------------------------------
++There are three GIT trees for aufs4, aufs4-linux.git,
++aufs4-standalone.git, and aufs-util.git. Note that there is no "4" in
++"aufs-util.git."
++While the aufs-util is always necessary, you need either of aufs4-linux
++or aufs4-standalone.
++
++The aufs4-linux tree includes the whole linux mainline GIT tree,
++git://git.kernel.org/.../torvalds/linux.git.
++And you cannot select CONFIG_AUFS_FS=m for this version, eg. you cannot
++build aufs4 as an external kernel module.
++Several extra patches are not included in this tree. Only
++aufs4-standalone tree contains them. They are describe in the later
++section "Configuration and Compilation."
++
++On the other hand, the aufs4-standalone tree has only aufs source files
++and necessary patches, and you can select CONFIG_AUFS_FS=m.
++But you need to apply all aufs patches manually.
++
++You will find GIT branches whose name is in form of "aufs4.x" where "x"
++represents the linux kernel version, "linux-4.x". For instance,
++"aufs4.0" is for linux-4.0. For latest "linux-4.x-rcN", use
++"aufs4.x-rcN" branch.
++
++o aufs4-linux tree
++$ git clone --reference /your/linux/git/tree \
++	git://github.com/sfjro/aufs4-linux.git aufs4-linux.git
++- if you don't have linux GIT tree, then remove "--reference ..."
++$ cd aufs4-linux.git
++$ git checkout origin/aufs4.0
++
++Or You may want to directly git-pull aufs into your linux GIT tree, and
++leave the patch-work to GIT.
++$ cd /your/linux/git/tree
++$ git remote add aufs4 git://github.com/sfjro/aufs4-linux.git
++$ git fetch aufs4
++$ git checkout -b my4.0 v4.0
++$ (add your local change...)
++$ git pull aufs4 aufs4.0
++- now you have v4.0 + your_changes + aufs4.0 in you my4.0 branch.
++- you may need to solve some conflicts between your_changes and
++  aufs4.0. in this case, git-rerere is recommended so that you can
++  solve the similar conflicts automatically when you upgrade to 4.1 or
++  later in the future.
++
++o aufs4-standalone tree
++$ git clone git://github.com/sfjro/aufs4-standalone.git aufs4-standalone.git
++$ cd aufs4-standalone.git
++$ git checkout origin/aufs4.0
++
++o aufs-util tree
++$ git clone git://git.code.sf.net/p/aufs/aufs-util aufs-util.git
++- note that the public aufs-util.git is on SourceForge instead of
++  GitHUB.
++$ cd aufs-util.git
++$ git checkout origin/aufs4.0
++
++Note: The 4.x-rcN branch is to be used with `rc' kernel versions ONLY.
++The minor version number, 'x' in '4.x', of aufs may not always
++follow the minor version number of the kernel.
++Because changes in the kernel that cause the use of a new
++minor version number do not always require changes to aufs-util.
++
++Since aufs-util has its own minor version number, you may not be
++able to find a GIT branch in aufs-util for your kernel's
++exact minor version number.
++In this case, you should git-checkout the branch for the
++nearest lower number.
++
++For (an unreleased) example:
++If you are using "linux-4.10" and the "aufs4.10" branch
++does not exist in aufs-util repository, then "aufs4.9", "aufs4.8"
++or something numerically smaller is the branch for your kernel.
++
++Also you can view all branches by
++	$ git branch -a
++
++
++3. Configuration and Compilation
++----------------------------------------
++Make sure you have git-checkout'ed the correct branch.
++
++For aufs4-linux tree,
++- enable CONFIG_AUFS_FS.
++- set other aufs configurations if necessary.
++
++For aufs4-standalone tree,
++There are several ways to build.
++
++1.
++- apply ./aufs4-kbuild.patch to your kernel source files.
++- apply ./aufs4-base.patch too.
++- apply ./aufs4-mmap.patch too.
++- apply ./aufs4-standalone.patch too, if you have a plan to set
++  CONFIG_AUFS_FS=m. otherwise you don't need ./aufs4-standalone.patch.
++- copy ./{Documentation,fs,include/uapi/linux/aufs_type.h} files to your
++  kernel source tree. Never copy $PWD/include/uapi/linux/Kbuild.
++- enable CONFIG_AUFS_FS, you can select either
++  =m or =y.
++- and build your kernel as usual.
++- install the built kernel.
++  Note: Since linux-3.9, every filesystem module requires an alias
++  "fs-<fsname>". You should make sure that "fs-aufs" is listed in your
++  modules.aliases file if you set CONFIG_AUFS_FS=m.
++- install the header files too by "make headers_install" to the
++  directory where you specify. By default, it is $PWD/usr.
++  "make help" shows a brief note for headers_install.
++- and reboot your system.
++
++2.
++- module only (CONFIG_AUFS_FS=m).
++- apply ./aufs4-base.patch to your kernel source files.
++- apply ./aufs4-mmap.patch too.
++- apply ./aufs4-standalone.patch too.
++- build your kernel, don't forget "make headers_install", and reboot.
++- edit ./config.mk and set other aufs configurations if necessary.
++  Note: You should read $PWD/fs/aufs/Kconfig carefully which describes
++  every aufs configurations.
++- build the module by simple "make".
++  Note: Since linux-3.9, every filesystem module requires an alias
++  "fs-<fsname>". You should make sure that "fs-aufs" is listed in your
++  modules.aliases file.
++- you can specify ${KDIR} make variable which points to your kernel
++  source tree.
++- install the files
++  + run "make install" to install the aufs module, or copy the built
++    $PWD/aufs.ko to /lib/modules/... and run depmod -a (or reboot simply).
++  + run "make install_headers" (instead of headers_install) to install
++    the modified aufs header file (you can specify DESTDIR which is
++    available in aufs standalone version's Makefile only), or copy
++    $PWD/usr/include/linux/aufs_type.h to /usr/include/linux or wherever
++    you like manually. By default, the target directory is $PWD/usr.
++- no need to apply aufs4-kbuild.patch, nor copying source files to your
++  kernel source tree.
++
++Note: The header file aufs_type.h is necessary to build aufs-util
++      as well as "make headers_install" in the kernel source tree.
++      headers_install is subject to be forgotten, but it is essentially
++      necessary, not only for building aufs-util.
++      You may not meet problems without headers_install in some older
++      version though.
++
++And then,
++- read README in aufs-util, build and install it
++- note that your distribution may contain an obsoleted version of
++  aufs_type.h in /usr/include/linux or something. When you build aufs
++  utilities, make sure that your compiler refers the correct aufs header
++  file which is built by "make headers_install."
++- if you want to use readdir(3) in userspace or pathconf(3) wrapper,
++  then run "make install_ulib" too. And refer to the aufs manual in
++  detail.
++
++There several other patches in aufs4-standalone.git. They are all
++optional. When you meet some problems, they will help you.
++- aufs4-loopback.patch
++  Supports a nested loopback mount in a branch-fs. This patch is
++  unnecessary until aufs produces a message like "you may want to try
++  another patch for loopback file".
++- vfs-ino.patch
++  Modifies a system global kernel internal function get_next_ino() in
++  order to stop assigning 0 for an inode-number. Not directly related to
++  aufs, but recommended generally.
++- tmpfs-idr.patch
++  Keeps the tmpfs inode number as the lowest value. Effective to reduce
++  the size of aufs XINO files for tmpfs branch. Also it prevents the
++  duplication of inode number, which is important for backup tools and
++  other utilities. When you find aufs XINO files for tmpfs branch
++  growing too much, try this patch.
++
++
++4. Usage
++----------------------------------------
++At first, make sure aufs-util are installed, and please read the aufs
++manual, aufs.5 in aufs-util.git tree.
++$ man -l aufs.5
++
++And then,
++$ mkdir /tmp/rw /tmp/aufs
++# mount -t aufs -o br=/tmp/rw:${HOME} none /tmp/aufs
++
++Here is another example. The result is equivalent.
++# mount -t aufs -o br=/tmp/rw=rw:${HOME}=ro none /tmp/aufs
++  Or
++# mount -t aufs -o br:/tmp/rw none /tmp/aufs
++# mount -o remount,append:${HOME} /tmp/aufs
++
++Then, you can see whole tree of your home dir through /tmp/aufs. If
++you modify a file under /tmp/aufs, the one on your home directory is
++not affected, instead the same named file will be newly created under
++/tmp/rw. And all of your modification to a file will be applied to
++the one under /tmp/rw. This is called the file based Copy on Write
++(COW) method.
++Aufs mount options are described in aufs.5.
++If you run chroot or something and make your aufs as a root directory,
++then you need to customize the shutdown script. See the aufs manual in
++detail.
++
++Additionally, there are some sample usages of aufs which are a
++diskless system with network booting, and LiveCD over NFS.
++See sample dir in CVS tree on SourceForge.
++
++
++5. Contact
++----------------------------------------
++When you have any problems or strange behaviour in aufs, please let me
++know with:
++- /proc/mounts (instead of the output of mount(8))
++- /sys/module/aufs/*
++- /sys/fs/aufs/* (if you have them)
++- /debug/aufs/* (if you have them)
++- linux kernel version
++  if your kernel is not plain, for example modified by distributor,
++  the url where i can download its source is necessary too.
++- aufs version which was printed at loading the module or booting the
++  system, instead of the date you downloaded.
++- configuration (define/undefine CONFIG_AUFS_xxx)
++- kernel configuration or /proc/config.gz (if you have it)
++- behaviour which you think to be incorrect
++- actual operation, reproducible one is better
++- mailto: aufs-users at lists.sourceforge.net
++
++Usually, I don't watch the Public Areas(Bugs, Support Requests, Patches,
++and Feature Requests) on SourceForge. Please join and write to
++aufs-users ML.
++
++
++6. Acknowledgements
++----------------------------------------
++Thanks to everyone who have tried and are using aufs, whoever
++have reported a bug or any feedback.
++
++Especially donators:
++Tomas Matejicek(slax.org) made a donation (much more than once).
++	Since Apr 2010, Tomas M (the author of Slax and Linux Live
++	scripts) is making "doubling" donations.
++	Unfortunately I cannot list all of the donators, but I really
++	appreciate.
++	It ends Aug 2010, but the ordinary donation URL is still available.
++	<http://sourceforge.net/donate/index.php?group_id=167503>
++Dai Itasaka made a donation (2007/8).
++Chuck Smith made a donation (2008/4, 10 and 12).
++Henk Schoneveld made a donation (2008/9).
++Chih-Wei Huang, ASUS, CTC donated Eee PC 4G (2008/10).
++Francois Dupoux made a donation (2008/11).
++Bruno Cesar Ribas and Luis Carlos Erpen de Bona, C3SL serves public
++	aufs2 GIT tree (2009/2).
++William Grant made a donation (2009/3).
++Patrick Lane made a donation (2009/4).
++The Mail Archive (mail-archive.com) made donations (2009/5).
++Nippy Networks (Ed Wildgoose) made a donation (2009/7).
++New Dream Network, LLC (www.dreamhost.com) made a donation (2009/11).
++Pavel Pronskiy made a donation (2011/2).
++Iridium and Inmarsat satellite phone retailer (www.mailasail.com), Nippy
++	Networks (Ed Wildgoose) made a donation for hardware (2011/3).
++Max Lekomcev (DOM-TV project) made a donation (2011/7, 12, 2012/3, 6 and
++11).
++Sam Liddicott made a donation (2011/9).
++Era Scarecrow made a donation (2013/4).
++Bor Ratajc made a donation (2013/4).
++Alessandro Gorreta made a donation (2013/4).
++POIRETTE Marc made a donation (2013/4).
++Alessandro Gorreta made a donation (2013/4).
++lauri kasvandik made a donation (2013/5).
++"pemasu from Finland" made a donation (2013/7).
++The Parted Magic Project made a donation (2013/9 and 11).
++Pavel Barta made a donation (2013/10).
++Nikolay Pertsev made a donation (2014/5).
++James B made a donation (2014/7).
++Stefano Di Biase made a donation (2014/8).
++Daniel Epellei made a donation (2015/1).
++
++Thank you very much.
++Donations are always, including future donations, very important and
++helpful for me to keep on developing aufs.
++
++
++7.
++----------------------------------------
++If you are an experienced user, no explanation is needed. Aufs is
++just a linux filesystem.
++
++
++Enjoy!
++
++# Local variables: ;
++# mode: text;
++# End: ;
+--- /dev/null
++++ linux-4.0/Documentation/filesystems/aufs/design/01intro.txt	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,170 @@
++
++# Copyright (C) 2005-2015 Junjiro R. Okajima
++# 
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++# 
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++# 
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++
++Introduction
++----------------------------------------
++
++aufs [ei ju: ef es] | [a u f s]
++1. abbrev. for "advanced multi-layered unification filesystem".
++2. abbrev. for "another unionfs".
++3. abbrev. for "auf das" in German which means "on the" in English.
++   Ex. "Butter aufs Brot"(G) means "butter onto bread"(E).
++   But "Filesystem aufs Filesystem" is hard to understand.
++
++AUFS is a filesystem with features:
++- multi layered stackable unification filesystem, the member directory
++  is called as a branch.
++- branch permission and attribute, 'readonly', 'real-readonly',
++  'readwrite', 'whiteout-able', 'link-able whiteout', etc. and their
++  combination.
++- internal "file copy-on-write".
++- logical deletion, whiteout.
++- dynamic branch manipulation, adding, deleting and changing permission.
++- allow bypassing aufs, user's direct branch access.
++- external inode number translation table and bitmap which maintains the
++  persistent aufs inode number.
++- seekable directory, including NFS readdir.
++- file mapping, mmap and sharing pages.
++- pseudo-link, hardlink over branches.
++- loopback mounted filesystem as a branch.
++- several policies to select one among multiple writable branches.
++- revert a single systemcall when an error occurs in aufs.
++- and more...
++
++
++Multi Layered Stackable Unification Filesystem
++----------------------------------------------------------------------
++Most people already knows what it is.
++It is a filesystem which unifies several directories and provides a
++merged single directory. When users access a file, the access will be
++passed/re-directed/converted (sorry, I am not sure which English word is
++correct) to the real file on the member filesystem. The member
++filesystem is called 'lower filesystem' or 'branch' and has a mode
++'readonly' and 'readwrite.' And the deletion for a file on the lower
++readonly branch is handled by creating 'whiteout' on the upper writable
++branch.
++
++On LKML, there have been discussions about UnionMount (Jan Blunck,
++Bharata B Rao and Valerie Aurora) and Unionfs (Erez Zadok). They took
++different approaches to implement the merged-view.
++The former tries putting it into VFS, and the latter implements as a
++separate filesystem.
++(If I misunderstand about these implementations, please let me know and
++I shall correct it. Because it is a long time ago when I read their
++source files last time).
++
++UnionMount's approach will be able to small, but may be hard to share
++branches between several UnionMount since the whiteout in it is
++implemented in the inode on branch filesystem and always
++shared. According to Bharata's post, readdir does not seems to be
++finished yet.
++There are several missing features known in this implementations such as
++- for users, the inode number may change silently. eg. copy-up.
++- link(2) may break by copy-up.
++- read(2) may get an obsoleted filedata (fstat(2) too).
++- fcntl(F_SETLK) may be broken by copy-up.
++- unnecessary copy-up may happen, for example mmap(MAP_PRIVATE) after
++  open(O_RDWR).
++
++In linux-3.18, "overlay" filesystem (formerly known as "overlayfs") was
++merged into mainline. This is another implementation of UnionMount as a
++separated filesystem. All the limitations and known problems which
++UnionMount are equally inherited to "overlay" filesystem.
++
++Unionfs has a longer history. When I started implementing a stackable
++filesystem (Aug 2005), it already existed. It has virtual super_block,
++inode, dentry and file objects and they have an array pointing lower
++same kind objects. After contributing many patches for Unionfs, I
++re-started my project AUFS (Jun 2006).
++
++In AUFS, the structure of filesystem resembles to Unionfs, but I
++implemented my own ideas, approaches and enhancements and it became
++totally different one.
++
++Comparing DM snapshot and fs based implementation
++- the number of bytes to be copied between devices is much smaller.
++- the type of filesystem must be one and only.
++- the fs must be writable, no readonly fs, even for the lower original
++  device. so the compression fs will not be usable. but if we use
++  loopback mount, we may address this issue.
++  for instance,
++	mount /cdrom/squashfs.img /sq
++	losetup /sq/ext2.img
++	losetup /somewhere/cow
++	dmsetup "snapshot /dev/loop0 /dev/loop1 ..."
++- it will be difficult (or needs more operations) to extract the
++  difference between the original device and COW.
++- DM snapshot-merge may help a lot when users try merging. in the
++  fs-layer union, users will use rsync(1).
++
++You may want to read my old paper "Filesystems in LiveCD"
++(http://aufs.sourceforge.net/aufs2/report/sq/sq.pdf).
++
++
++Several characters/aspects/persona of aufs
++----------------------------------------------------------------------
++
++Aufs has several characters, aspects or persona.
++1. a filesystem, callee of VFS helper
++2. sub-VFS, caller of VFS helper for branches
++3. a virtual filesystem which maintains persistent inode number
++4. reader/writer of files on branches such like an application
++
++1. Callee of VFS Helper
++As an ordinary linux filesystem, aufs is a callee of VFS. For instance,
++unlink(2) from an application reaches sys_unlink() kernel function and
++then vfs_unlink() is called. vfs_unlink() is one of VFS helper and it
++calls filesystem specific unlink operation. Actually aufs implements the
++unlink operation but it behaves like a redirector.
++
++2. Caller of VFS Helper for Branches
++aufs_unlink() passes the unlink request to the branch filesystem as if
++it were called from VFS. So the called unlink operation of the branch
++filesystem acts as usual. As a caller of VFS helper, aufs should handle
++every necessary pre/post operation for the branch filesystem.
++- acquire the lock for the parent dir on a branch
++- lookup in a branch
++- revalidate dentry on a branch
++- mnt_want_write() for a branch
++- vfs_unlink() for a branch
++- mnt_drop_write() for a branch
++- release the lock on a branch
++
++3. Persistent Inode Number
++One of the most important issue for a filesystem is to maintain inode
++numbers. This is particularly important to support exporting a
++filesystem via NFS. Aufs is a virtual filesystem which doesn't have a
++backend block device for its own. But some storage is necessary to
++keep and maintain the inode numbers. It may be a large space and may not
++suit to keep in memory. Aufs rents some space from its first writable
++branch filesystem (by default) and creates file(s) on it. These files
++are created by aufs internally and removed soon (currently) keeping
++opened.
++Note: Because these files are removed, they are totally gone after
++      unmounting aufs. It means the inode numbers are not persistent
++      across unmount or reboot. I have a plan to make them really
++      persistent which will be important for aufs on NFS server.
++
++4. Read/Write Files Internally (copy-on-write)
++Because a branch can be readonly, when you write a file on it, aufs will
++"copy-up" it to the upper writable branch internally. And then write the
++originally requested thing to the file. Generally kernel doesn't
++open/read/write file actively. In aufs, even a single write may cause a
++internal "file copy". This behaviour is very similar to cp(1) command.
++
++Some people may think it is better to pass such work to user space
++helper, instead of doing in kernel space. Actually I am still thinking
++about it. But currently I have implemented it in kernel space.
+--- /dev/null
++++ linux-4.0/Documentation/filesystems/aufs/design/02struct.txt	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,258 @@
++
++# Copyright (C) 2005-2015 Junjiro R. Okajima
++# 
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++# 
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++# 
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++
++Basic Aufs Internal Structure
++
++Superblock/Inode/Dentry/File Objects
++----------------------------------------------------------------------
++As like an ordinary filesystem, aufs has its own
++superblock/inode/dentry/file objects. All these objects have a
++dynamically allocated array and store the same kind of pointers to the
++lower filesystem, branch.
++For example, when you build a union with one readwrite branch and one
++readonly, mounted /au, /rw and /ro respectively.
++- /au = /rw + /ro
++- /ro/fileA exists but /rw/fileA
++
++Aufs lookup operation finds /ro/fileA and gets dentry for that. These
++pointers are stored in a aufs dentry. The array in aufs dentry will be,
++- [0] = NULL (because /rw/fileA doesn't exist)
++- [1] = /ro/fileA
++
++This style of an array is essentially same to the aufs
++superblock/inode/dentry/file objects.
++
++Because aufs supports manipulating branches, ie. add/delete/change
++branches dynamically, these objects has its own generation. When
++branches are changed, the generation in aufs superblock is
++incremented. And a generation in other object are compared when it is
++accessed. When a generation in other objects are obsoleted, aufs
++refreshes the internal array.
++
++
++Superblock
++----------------------------------------------------------------------
++Additionally aufs superblock has some data for policies to select one
++among multiple writable branches, XIB files, pseudo-links and kobject.
++See below in detail.
++About the policies which supports copy-down a directory, see
++wbr_policy.txt too.
++
++
++Branch and XINO(External Inode Number Translation Table)
++----------------------------------------------------------------------
++Every branch has its own xino (external inode number translation table)
++file. The xino file is created and unlinked by aufs internally. When two
++members of a union exist on the same filesystem, they share the single
++xino file.
++The struct of a xino file is simple, just a sequence of aufs inode
++numbers which is indexed by the lower inode number.
++In the above sample, assume the inode number of /ro/fileA is i111 and
++aufs assigns the inode number i999 for fileA. Then aufs writes 999 as
++4(8) bytes at 111 * 4(8) bytes offset in the xino file.
++
++When the inode numbers are not contiguous, the xino file will be sparse
++which has a hole in it and doesn't consume as much disk space as it
++might appear. If your branch filesystem consumes disk space for such
++holes, then you should specify 'xino=' option at mounting aufs.
++
++Aufs has a mount option to free the disk blocks for such holes in XINO
++files on tmpfs or ramdisk. But it is not so effective actually. If you
++meet a problem of disk shortage due to XINO files, then you should try
++"tmpfs-ino.patch" (and "vfs-ino.patch" too) in aufs4-standalone.git.
++The patch localizes the assignment inumbers per tmpfs-mount and avoid
++the holes in XINO files.
++
++Also a writable branch has three kinds of "whiteout bases". All these
++are existed when the branch is joined to aufs, and their names are
++whiteout-ed doubly, so that users will never see their names in aufs
++hierarchy.
++1. a regular file which will be hardlinked to all whiteouts.
++2. a directory to store a pseudo-link.
++3. a directory to store an "orphan"-ed file temporary.
++
++1. Whiteout Base
++   When you remove a file on a readonly branch, aufs handles it as a
++   logical deletion and creates a whiteout on the upper writable branch
++   as a hardlink of this file in order not to consume inode on the
++   writable branch.
++2. Pseudo-link Dir
++   See below, Pseudo-link.
++3. Step-Parent Dir
++   When "fileC" exists on the lower readonly branch only and it is
++   opened and removed with its parent dir, and then user writes
++   something into it, then aufs copies-up fileC to this
++   directory. Because there is no other dir to store fileC. After
++   creating a file under this dir, the file is unlinked.
++
++Because aufs supports manipulating branches, ie. add/delete/change
++dynamically, a branch has its own id. When the branch order changes,
++aufs finds the new index by searching the branch id.
++
++
++Pseudo-link
++----------------------------------------------------------------------
++Assume "fileA" exists on the lower readonly branch only and it is
++hardlinked to "fileB" on the branch. When you write something to fileA,
++aufs copies-up it to the upper writable branch. Additionally aufs
++creates a hardlink under the Pseudo-link Directory of the writable
++branch. The inode of a pseudo-link is kept in aufs super_block as a
++simple list. If fileB is read after unlinking fileA, aufs returns
++filedata from the pseudo-link instead of the lower readonly
++branch. Because the pseudo-link is based upon the inode, to keep the
++inode number by xino (see above) is essentially necessary.
++
++All the hardlinks under the Pseudo-link Directory of the writable branch
++should be restored in a proper location later. Aufs provides a utility
++to do this. The userspace helpers executed at remounting and unmounting
++aufs by default.
++During this utility is running, it puts aufs into the pseudo-link
++maintenance mode. In this mode, only the process which began the
++maintenance mode (and its child processes) is allowed to operate in
++aufs. Some other processes which are not related to the pseudo-link will
++be allowed to run too, but the rest have to return an error or wait
++until the maintenance mode ends. If a process already acquires an inode
++mutex (in VFS), it has to return an error.
++
++
++XIB(external inode number bitmap)
++----------------------------------------------------------------------
++Addition to the xino file per a branch, aufs has an external inode number
++bitmap in a superblock object. It is also an internal file such like a
++xino file.
++It is a simple bitmap to mark whether the aufs inode number is in-use or
++not.
++To reduce the file I/O, aufs prepares a single memory page to cache xib.
++
++As well as XINO files, aufs has a feature to truncate/refresh XIB to
++reduce the number of consumed disk blocks for these files.
++
++
++Virtual or Vertical Dir, and Readdir in Userspace
++----------------------------------------------------------------------
++In order to support multiple layers (branches), aufs readdir operation
++constructs a virtual dir block on memory. For readdir, aufs calls
++vfs_readdir() internally for each dir on branches, merges their entries
++with eliminating the whiteout-ed ones, and sets it to file (dir)
++object. So the file object has its entry list until it is closed. The
++entry list will be updated when the file position is zero and becomes
++obsoleted. This decision is made in aufs automatically.
++
++The dynamically allocated memory block for the name of entries has a
++unit of 512 bytes (by default) and stores the names contiguously (no
++padding). Another block for each entry is handled by kmem_cache too.
++During building dir blocks, aufs creates hash list and judging whether
++the entry is whiteouted by its upper branch or already listed.
++The merged result is cached in the corresponding inode object and
++maintained by a customizable life-time option.
++
++Some people may call it can be a security hole or invite DoS attack
++since the opened and once readdir-ed dir (file object) holds its entry
++list and becomes a pressure for system memory. But I'd say it is similar
++to files under /proc or /sys. The virtual files in them also holds a
++memory page (generally) while they are opened. When an idea to reduce
++memory for them is introduced, it will be applied to aufs too.
++For those who really hate this situation, I've developed readdir(3)
++library which operates this merging in userspace. You just need to set
++LD_PRELOAD environment variable, and aufs will not consume no memory in
++kernel space for readdir(3).
++
++
++Workqueue
++----------------------------------------------------------------------
++Aufs sometimes requires privilege access to a branch. For instance,
++in copy-up/down operation. When a user process is going to make changes
++to a file which exists in the lower readonly branch only, and the mode
++of one of ancestor directories may not be writable by a user
++process. Here aufs copy-up the file with its ancestors and they may
++require privilege to set its owner/group/mode/etc.
++This is a typical case of a application character of aufs (see
++Introduction).
++
++Aufs uses workqueue synchronously for this case. It creates its own
++workqueue. The workqueue is a kernel thread and has privilege. Aufs
++passes the request to call mkdir or write (for example), and wait for
++its completion. This approach solves a problem of a signal handler
++simply.
++If aufs didn't adopt the workqueue and changed the privilege of the
++process, then the process may receive the unexpected SIGXFSZ or other
++signals.
++
++Also aufs uses the system global workqueue ("events" kernel thread) too
++for asynchronous tasks, such like handling inotify/fsnotify, re-creating a
++whiteout base and etc. This is unrelated to a privilege.
++Most of aufs operation tries acquiring a rw_semaphore for aufs
++superblock at the beginning, at the same time waits for the completion
++of all queued asynchronous tasks.
++
++
++Whiteout
++----------------------------------------------------------------------
++The whiteout in aufs is very similar to Unionfs's. That is represented
++by its filename. UnionMount takes an approach of a file mode, but I am
++afraid several utilities (find(1) or something) will have to support it.
++
++Basically the whiteout represents "logical deletion" which stops aufs to
++lookup further, but also it represents "dir is opaque" which also stop
++further lookup.
++
++In aufs, rmdir(2) and rename(2) for dir uses whiteout alternatively.
++In order to make several functions in a single systemcall to be
++revertible, aufs adopts an approach to rename a directory to a temporary
++unique whiteouted name.
++For example, in rename(2) dir where the target dir already existed, aufs
++renames the target dir to a temporary unique whiteouted name before the
++actual rename on a branch, and then handles other actions (make it opaque,
++update the attributes, etc). If an error happens in these actions, aufs
++simply renames the whiteouted name back and returns an error. If all are
++succeeded, aufs registers a function to remove the whiteouted unique
++temporary name completely and asynchronously to the system global
++workqueue.
++
++
++Copy-up
++----------------------------------------------------------------------
++It is a well-known feature or concept.
++When user modifies a file on a readonly branch, aufs operate "copy-up"
++internally and makes change to the new file on the upper writable branch.
++When the trigger systemcall does not update the timestamps of the parent
++dir, aufs reverts it after copy-up.
++
++
++Move-down (aufs3.9 and later)
++----------------------------------------------------------------------
++"Copy-up" is one of the essential feature in aufs. It copies a file from
++the lower readonly branch to the upper writable branch when a user
++changes something about the file.
++"Move-down" is an opposite action of copy-up. Basically this action is
++ran manually instead of automatically and internally.
++For desgin and implementation, aufs has to consider these issues.
++- whiteout for the file may exist on the lower branch.
++- ancestor directories may not exist on the lower branch.
++- diropq for the ancestor directories may exist on the upper branch.
++- free space on the lower branch will reduce.
++- another access to the file may happen during moving-down, including
++  UDBA (see "Revalidate Dentry and UDBA").
++- the file should not be hard-linked nor pseudo-linked. they should be
++  handled by auplink utility later.
++
++Sometimes users want to move-down a file from the upper writable branch
++to the lower readonly or writable branch. For instance,
++- the free space of the upper writable branch is going to run out.
++- create a new intermediate branch between the upper and lower branch.
++- etc.
++
++For this purpose, use "aumvdown" command in aufs-util.git.
+--- /dev/null
++++ linux-4.0/Documentation/filesystems/aufs/design/03lookup.txt	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,113 @@
++
++# Copyright (C) 2005-2015 Junjiro R. Okajima
++# 
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++# 
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++# 
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++
++Lookup in a Branch
++----------------------------------------------------------------------
++Since aufs has a character of sub-VFS (see Introduction), it operates
++lookup for branches as VFS does. It may be a heavy work. But almost all
++lookup operation in aufs is the simplest case, ie. lookup only an entry
++directly connected to its parent. Digging down the directory hierarchy
++is unnecessary. VFS has a function lookup_one_len() for that use, and
++aufs calls it.
++
++When a branch is a remote filesystem, aufs basically relies upon its
++->d_revalidate(), also aufs forces the hardest revalidate tests for
++them.
++For d_revalidate, aufs implements three levels of revalidate tests. See
++"Revalidate Dentry and UDBA" in detail.
++
++
++Test Only the Highest One for the Directory Permission (dirperm1 option)
++----------------------------------------------------------------------
++Let's try case study.
++- aufs has two branches, upper readwrite and lower readonly.
++  /au = /rw + /ro
++- "dirA" exists under /ro, but /rw. and its mode is 0700.
++- user invoked "chmod a+rx /au/dirA"
++- the internal copy-up is activated and "/rw/dirA" is created and its
++  permission bits are set to world readable.
++- then "/au/dirA" becomes world readable?
++
++In this case, /ro/dirA is still 0700 since it exists in readonly branch,
++or it may be a natively readonly filesystem. If aufs respects the lower
++branch, it should not respond readdir request from other users. But user
++allowed it by chmod. Should really aufs rejects showing the entries
++under /ro/dirA?
++
++To be honest, I don't have a good solution for this case. So aufs
++implements 'dirperm1' and 'nodirperm1' mount options, and leave it to
++users.
++When dirperm1 is specified, aufs checks only the highest one for the
++directory permission, and shows the entries. Otherwise, as usual, checks
++every dir existing on all branches and rejects the request.
++
++As a side effect, dirperm1 option improves the performance of aufs
++because the number of permission check is reduced when the number of
++branch is many.
++
++
++Revalidate Dentry and UDBA (User's Direct Branch Access)
++----------------------------------------------------------------------
++Generally VFS helpers re-validate a dentry as a part of lookup.
++0. digging down the directory hierarchy.
++1. lock the parent dir by its i_mutex.
++2. lookup the final (child) entry.
++3. revalidate it.
++4. call the actual operation (create, unlink, etc.)
++5. unlock the parent dir
++
++If the filesystem implements its ->d_revalidate() (step 3), then it is
++called. Actually aufs implements it and checks the dentry on a branch is
++still valid.
++But it is not enough. Because aufs has to release the lock for the
++parent dir on a branch at the end of ->lookup() (step 2) and
++->d_revalidate() (step 3) while the i_mutex of the aufs dir is still
++held by VFS.
++If the file on a branch is changed directly, eg. bypassing aufs, after
++aufs released the lock, then the subsequent operation may cause
++something unpleasant result.
++
++This situation is a result of VFS architecture, ->lookup() and
++->d_revalidate() is separated. But I never say it is wrong. It is a good
++design from VFS's point of view. It is just not suitable for sub-VFS
++character in aufs.
++
++Aufs supports such case by three level of revalidation which is
++selectable by user.
++1. Simple Revalidate
++   Addition to the native flow in VFS's, confirm the child-parent
++   relationship on the branch just after locking the parent dir on the
++   branch in the "actual operation" (step 4). When this validation
++   fails, aufs returns EBUSY. ->d_revalidate() (step 3) in aufs still
++   checks the validation of the dentry on branches.
++2. Monitor Changes Internally by Inotify/Fsnotify
++   Addition to above, in the "actual operation" (step 4) aufs re-lookup
++   the dentry on the branch, and returns EBUSY if it finds different
++   dentry.
++   Additionally, aufs sets the inotify/fsnotify watch for every dir on branches
++   during it is in cache. When the event is notified, aufs registers a
++   function to kernel 'events' thread by schedule_work(). And the
++   function sets some special status to the cached aufs dentry and inode
++   private data. If they are not cached, then aufs has nothing to
++   do. When the same file is accessed through aufs (step 0-3) later,
++   aufs will detect the status and refresh all necessary data.
++   In this mode, aufs has to ignore the event which is fired by aufs
++   itself.
++3. No Extra Validation
++   This is the simplest test and doesn't add any additional revalidation
++   test, and skip the revalidation in step 4. It is useful and improves
++   aufs performance when system surely hide the aufs branches from user,
++   by over-mounting something (or another method).
+--- /dev/null
++++ linux-4.0/Documentation/filesystems/aufs/design/04branch.txt	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,74 @@
++
++# Copyright (C) 2005-2015 Junjiro R. Okajima
++# 
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++# 
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++# 
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++
++Branch Manipulation
++
++Since aufs supports dynamic branch manipulation, ie. add/remove a branch
++and changing its permission/attribute, there are a lot of works to do.
++
++
++Add a Branch
++----------------------------------------------------------------------
++o Confirm the adding dir exists outside of aufs, including loopback
++  mount, and its various attributes.
++o Initialize the xino file and whiteout bases if necessary.
++  See struct.txt.
++
++o Check the owner/group/mode of the directory
++  When the owner/group/mode of the adding directory differs from the
++  existing branch, aufs issues a warning because it may impose a
++  security risk.
++  For example, when a upper writable branch has a world writable empty
++  top directory, a malicious user can create any files on the writable
++  branch directly, like copy-up and modify manually. If something like
++  /etc/{passwd,shadow} exists on the lower readonly branch but the upper
++  writable branch, and the writable branch is world-writable, then a
++  malicious guy may create /etc/passwd on the writable branch directly
++  and the infected file will be valid in aufs.
++  I am afraid it can be a security issue, but aufs can do nothing except
++  producing a warning.
++
++
++Delete a Branch
++----------------------------------------------------------------------
++o Confirm the deleting branch is not busy
++  To be general, there is one merit to adopt "remount" interface to
++  manipulate branches. It is to discard caches. At deleting a branch,
++  aufs checks the still cached (and connected) dentries and inodes. If
++  there are any, then they are all in-use. An inode without its
++  corresponding dentry can be alive alone (for example, inotify/fsnotify case).
++
++  For the cached one, aufs checks whether the same named entry exists on
++  other branches.
++  If the cached one is a directory, because aufs provides a merged view
++  to users, as long as one dir is left on any branch aufs can show the
++  dir to users. In this case, the branch can be removed from aufs.
++  Otherwise aufs rejects deleting the branch.
++
++  If any file on the deleting branch is opened by aufs, then aufs
++  rejects deleting.
++
++
++Modify the Permission of a Branch
++----------------------------------------------------------------------
++o Re-initialize or remove the xino file and whiteout bases if necessary.
++  See struct.txt.
++
++o rw --> ro: Confirm the modifying branch is not busy
++  Aufs rejects the request if any of these conditions are true.
++  - a file on the branch is mmap-ed.
++  - a regular file on the branch is opened for write and there is no
++    same named entry on the upper branch.
+--- /dev/null
++++ linux-4.0/Documentation/filesystems/aufs/design/05wbr_policy.txt	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,64 @@
++
++# Copyright (C) 2005-2015 Junjiro R. Okajima
++# 
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++# 
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++# 
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++
++Policies to Select One among Multiple Writable Branches
++----------------------------------------------------------------------
++When the number of writable branch is more than one, aufs has to decide
++the target branch for file creation or copy-up. By default, the highest
++writable branch which has the parent (or ancestor) dir of the target
++file is chosen (top-down-parent policy).
++By user's request, aufs implements some other policies to select the
++writable branch, for file creation several policies, round-robin,
++most-free-space, and other policies. For copy-up, top-down-parent,
++bottom-up-parent, bottom-up and others.
++
++As expected, the round-robin policy selects the branch in circular. When
++you have two writable branches and creates 10 new files, 5 files will be
++created for each branch. mkdir(2) systemcall is an exception. When you
++create 10 new directories, all will be created on the same branch.
++And the most-free-space policy selects the one which has most free
++space among the writable branches. The amount of free space will be
++checked by aufs internally, and users can specify its time interval.
++
++The policies for copy-up is more simple,
++top-down-parent is equivalent to the same named on in create policy,
++bottom-up-parent selects the writable branch where the parent dir
++exists and the nearest upper one from the copyup-source,
++bottom-up selects the nearest upper writable branch from the
++copyup-source, regardless the existence of the parent dir.
++
++There are some rules or exceptions to apply these policies.
++- If there is a readonly branch above the policy-selected branch and
++  the parent dir is marked as opaque (a variation of whiteout), or the
++  target (creating) file is whiteout-ed on the upper readonly branch,
++  then the result of the policy is ignored and the target file will be
++  created on the nearest upper writable branch than the readonly branch.
++- If there is a writable branch above the policy-selected branch and
++  the parent dir is marked as opaque or the target file is whiteouted
++  on the branch, then the result of the policy is ignored and the target
++  file will be created on the highest one among the upper writable
++  branches who has diropq or whiteout. In case of whiteout, aufs removes
++  it as usual.
++- link(2) and rename(2) systemcalls are exceptions in every policy.
++  They try selecting the branch where the source exists as possible
++  since copyup a large file will take long time. If it can't be,
++  ie. the branch where the source exists is readonly, then they will
++  follow the copyup policy.
++- There is an exception for rename(2) when the target exists.
++  If the rename target exists, aufs compares the index of the branches
++  where the source and the target exists and selects the higher
++  one. If the selected branch is readonly, then aufs follows the
++  copyup policy.
+--- /dev/null
++++ linux-4.0/Documentation/filesystems/aufs/design/06fhsm.txt	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,120 @@
++
++# Copyright (C) 2011-2015 Junjiro R. Okajima
++# 
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++# 
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++# 
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
++
++
++File-based Hierarchical Storage Management (FHSM)
++----------------------------------------------------------------------
++Hierarchical Storage Management (or HSM) is a well-known feature in the
++storage world. Aufs provides this feature as file-based with multiple
++writable branches, based upon the principle of "Colder, the Lower".
++Here the word "colder" means that the less used files, and "lower" means
++that the position in the order of the stacked branches vertically.
++These multiple writable branches are prioritized, ie. the topmost one
++should be the fastest drive and be used heavily.
++
++o Characters in aufs FHSM story
++- aufs itself and a new branch attribute.
++- a new ioctl interface to move-down and to establish a connection with
++  the daemon ("move-down" is a converse of "copy-up").
++- userspace tool and daemon.
++
++The userspace daemon establishes a connection with aufs and waits for
++the notification. The notified information is very similar to struct
++statfs containing the number of consumed blocks and inodes.
++When the consumed blocks/inodes of a branch exceeds the user-specified
++upper watermark, the daemon activates its move-down process until the
++consumed blocks/inodes reaches the user-specified lower watermark.
++
++The actual move-down is done by aufs based upon the request from
++user-space since we need to maintain the inode number and the internal
++pointer arrays in aufs.
++
++Currently aufs FHSM handles the regular files only. Additionally they
++must not be hard-linked nor pseudo-linked.
++
++
++o Cowork of aufs and the user-space daemon
++  During the userspace daemon established the connection, aufs sends a
++  small notification to it whenever aufs writes something into the
++  writable branch. But it may cost high since aufs issues statfs(2)
++  internally. So user can specify a new option to cache the
++  info. Actually the notification is controlled by these factors.
++  + the specified cache time.
++  + classified as "force" by aufs internally.
++  Until the specified time expires, aufs doesn't send the info
++  except the forced cases. When aufs decide forcing, the info is always
++  notified to userspace.
++  For example, the number of free inodes is generally large enough and
++  the shortage of it happens rarely. So aufs doesn't force the
++  notification when creating a new file, directory and others. This is
++  the typical case which aufs doesn't force.
++  When aufs writes the actual filedata and the files consumes any of new
++  blocks, the aufs forces notifying.
++
++
++o Interfaces in aufs
++- New branch attribute.
++  + fhsm
++    Specifies that the branch is managed by FHSM feature. In other word,
++    participant in the FHSM.
++    When nofhsm is set to the branch, it will not be the source/target
++    branch of the move-down operation. This attribute is set
++    independently from coo and moo attributes, and if you want full
++    FHSM, you should specify them as well.
++- New mount option.
++  + fhsm_sec
++    Specifies a second to suppress many less important info to be
++    notified.
++- New ioctl.
++  + AUFS_CTL_FHSM_FD
++    create a new file descriptor which userspace can read the notification
++    (a subset of struct statfs) from aufs.
++- Module parameter 'brs'
++  It has to be set to 1. Otherwise the new mount option 'fhsm' will not
++  be set.
++- mount helpers /sbin/mount.aufs and /sbin/umount.aufs
++  When there are two or more branches with fhsm attributes,
++  /sbin/mount.aufs invokes the user-space daemon and /sbin/umount.aufs
++  terminates it. As a result of remounting and branch-manipulation, the
++  number of branches with fhsm attribute can be one. In this case,
++  /sbin/mount.aufs will terminate the user-space daemon.
++
++
++Finally the operation is done as these steps in kernel-space.
++- make sure that,
++  + no one else is using the file.
++  + the file is not hard-linked.
++  + the file is not pseudo-linked.
++  + the file is a regular file.
++  + the parent dir is not opaqued.
++- find the target writable branch.
++- make sure the file is not whiteout-ed by the upper (than the target)
++  branch.
++- make the parent dir on the target branch.
++- mutex lock the inode on the branch.
++- unlink the whiteout on the target branch (if exists).
++- lookup and create the whiteout-ed temporary name on the target branch.
++- copy the file as the whiteout-ed temporary name on the target branch.
++- rename the whiteout-ed temporary name to the original name.
++- unlink the file on the source branch.
++- maintain the internal pointer array and the external inode number
++  table (XINO).
++- maintain the timestamps and other attributes of the parent dir and the
++  file.
++
++And of course, in every step, an error may happen. So the operation
++should restore the original file state after an error happens.
+--- /dev/null
++++ linux-4.0/Documentation/filesystems/aufs/design/06mmap.txt	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,46 @@
++
++# Copyright (C) 2005-2015 Junjiro R. Okajima
++# 
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++# 
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++# 
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++
++mmap(2) -- File Memory Mapping
++----------------------------------------------------------------------
++In aufs, the file-mapped pages are handled by a branch fs directly, no
++interaction with aufs. It means aufs_mmap() calls the branch fs's
++->mmap().
++This approach is simple and good, but there is one problem.
++Under /proc, several entries show the mmapped files by its path (with
++device and inode number), and the printed path will be the path on the
++branch fs's instead of virtual aufs's.
++This is not a problem in most cases, but some utilities lsof(1) (and its
++user) may expect the path on aufs.
++
++To address this issue, aufs adds a new member called vm_prfile in struct
++vm_area_struct (and struct vm_region). The original vm_file points to
++the file on the branch fs in order to handle everything correctly as
++usual. The new vm_prfile points to a virtual file in aufs, and the
++show-functions in procfs refers to vm_prfile if it is set.
++Also we need to maintain several other places where touching vm_file
++such like
++- fork()/clone() copies vma and the reference count of vm_file is
++  incremented.
++- merging vma maintains the ref count too.
++
++This is not a good approach. It just fakes the printed path. But it
++leaves all behaviour around f_mapping unchanged. This is surely an
++advantage.
++Actually aufs had adopted another complicated approach which calls
++generic_file_mmap() and handles struct vm_operations_struct. In this
++approach, aufs met a hard problem and I could not solve it without
++switching the approach.
+--- /dev/null
++++ linux-4.0/Documentation/filesystems/aufs/design/06xattr.txt	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,96 @@
++
++# Copyright (C) 2014-2015 Junjiro R. Okajima
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
++
++
++Listing XATTR/EA and getting the value
++----------------------------------------------------------------------
++For the inode standard attributes (owner, group, timestamps, etc.), aufs
++shows the values from the topmost existing file. This behaviour is good
++for the non-dir entries since the bahaviour exactly matches the shown
++information. But for the directories, aufs considers all the same named
++entries on the lower branches. Which means, if one of the lower entry
++rejects readdir call, then aufs returns an error even if the topmost
++entry allows it. This behaviour is necessary to respect the branch fs's
++security, but can make users confused since the user-visible standard
++attributes don't match the behaviour.
++To address this issue, aufs has a mount option called dirperm1 which
++checks the permission for the topmost entry only, and ignores the lower
++entry's permission.
++
++A similar issue can happen around XATTR.
++getxattr(2) and listxattr(2) families behave as if dirperm1 option is
++always set. Otherwise these very unpleasant situation would happen.
++- listxattr(2) may return the duplicated entries.
++- users may not be able to remove or reset the XATTR forever,
++
++
++XATTR/EA support in the internal (copy,move)-(up,down)
++----------------------------------------------------------------------
++Generally the extended attributes of inode are categorized as these.
++- "security" for LSM and capability.
++- "system" for posix ACL, 'acl' mount option is required for the branch
++  fs generally.
++- "trusted" for userspace, CAP_SYS_ADMIN is required.
++- "user" for userspace, 'user_xattr' mount option is required for the
++  branch fs generally.
++
++Moreover there are some other categories. Aufs handles these rather
++unpopular categories as the ordinary ones, ie. there is no special
++condition nor exception.
++
++In copy-up, the support for XATTR on the dst branch may differ from the
++src branch. In this case, the copy-up operation will get an error and
++the original user operation which triggered the copy-up will fail. It
++can happen that even all copy-up will fail.
++When both of src and dst branches support XATTR and if an error occurs
++during copying XATTR, then the copy-up should fail obviously. That is a
++good reason and aufs should return an error to userspace. But when only
++the src branch support that XATTR, aufs should not return an error.
++For example, the src branch supports ACL but the dst branch doesn't
++because the dst branch may natively un-support it or temporary
++un-support it due to "noacl" mount option. Of course, the dst branch fs
++may NOT return an error even if the XATTR is not supported. It is
++totally up to the branch fs.
++
++Anyway when the aufs internal copy-up gets an error from the dst branch
++fs, then aufs tries removing the just copied entry and returns the error
++to the userspace. The worst case of this situation will be all copy-up
++will fail.
++
++For the copy-up operation, there two basic approaches.
++- copy the specified XATTR only (by category above), and return the
++  error unconditionally if it happens.
++- copy all XATTR, and ignore the error on the specified category only.
++
++In order to support XATTR and to implement the correct behaviour, aufs
++chooses the latter approach and introduces some new branch attributes,
++"icexsec", "icexsys", "icextr", "icexusr", and "icexoth".
++They correspond to the XATTR namespaces (see above). Additionally, to be
++convenient, "icex" is also provided which means all "icex*" attributes
++are set (here the word "icex" stands for "ignore copy-error on XATTR").
++
++The meaning of these attributes is to ignore the error from setting
++XATTR on that branch.
++Note that aufs tries copying all XATTR unconditionally, and ignores the
++error from the dst branch according to the specified attributes.
++
++Some XATTR may have its default value. The default value may come from
++the parent dir or the environment. If the default value is set at the
++file creating-time, it will be overwritten by copy-up.
++Some contradiction may happen I am afraid.
++Do we need another attribute to stop copying XATTR? I am unsure. For
++now, aufs implements the branch attributes to ignore the error.
+--- /dev/null
++++ linux-4.0/Documentation/filesystems/aufs/design/07export.txt	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,58 @@
++
++# Copyright (C) 2005-2015 Junjiro R. Okajima
++# 
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++# 
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++# 
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++
++Export Aufs via NFS
++----------------------------------------------------------------------
++Here is an approach.
++- like xino/xib, add a new file 'xigen' which stores aufs inode
++  generation.
++- iget_locked(): initialize aufs inode generation for a new inode, and
++  store it in xigen file.
++- destroy_inode(): increment aufs inode generation and store it in xigen
++  file. it is necessary even if it is not unlinked, because any data of
++  inode may be changed by UDBA.
++- encode_fh(): for a root dir, simply return FILEID_ROOT. otherwise
++  build file handle by
++  + branch id (4 bytes)
++  + superblock generation (4 bytes)
++  + inode number (4 or 8 bytes)
++  + parent dir inode number (4 or 8 bytes)
++  + inode generation (4 bytes))
++  + return value of exportfs_encode_fh() for the parent on a branch (4
++    bytes)
++  + file handle for a branch (by exportfs_encode_fh())
++- fh_to_dentry():
++  + find the index of a branch from its id in handle, and check it is
++    still exist in aufs.
++  + 1st level: get the inode number from handle and search it in cache.
++  + 2nd level: if not found in cache, get the parent inode number from
++    the handle and search it in cache. and then open the found parent
++    dir, find the matching inode number by vfs_readdir() and get its
++    name, and call lookup_one_len() for the target dentry.
++  + 3rd level: if the parent dir is not cached, call
++    exportfs_decode_fh() for a branch and get the parent on a branch,
++    build a pathname of it, convert it a pathname in aufs, call
++    path_lookup(). now aufs gets a parent dir dentry, then handle it as
++    the 2nd level.
++  + to open the dir, aufs needs struct vfsmount. aufs keeps vfsmount
++    for every branch, but not itself. to get this, (currently) aufs
++    searches in current->nsproxy->mnt_ns list. it may not be a good
++    idea, but I didn't get other approach.
++  + test the generation of the gotten inode.
++- every inode operation: they may get EBUSY due to UDBA. in this case,
++  convert it into ESTALE for NFSD.
++- readdir(): call lockdep_on/off() because filldir in NFSD calls
++  lookup_one_len(), vfs_getattr(), encode_fh() and others.
+--- /dev/null
++++ linux-4.0/Documentation/filesystems/aufs/design/08shwh.txt	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,52 @@
++
++# Copyright (C) 2005-2015 Junjiro R. Okajima
++# 
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++# 
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++# 
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++
++Show Whiteout Mode (shwh)
++----------------------------------------------------------------------
++Generally aufs hides the name of whiteouts. But in some cases, to show
++them is very useful for users. For instance, creating a new middle layer
++(branch) by merging existing layers.
++
++(borrowing aufs1 HOW-TO from a user, Michael Towers)
++When you have three branches,
++- Bottom: 'system', squashfs (underlying base system), read-only
++- Middle: 'mods', squashfs, read-only
++- Top: 'overlay', ram (tmpfs), read-write
++
++The top layer is loaded at boot time and saved at shutdown, to preserve
++the changes made to the system during the session.
++When larger changes have been made, or smaller changes have accumulated,
++the size of the saved top layer data grows. At this point, it would be
++nice to be able to merge the two overlay branches ('mods' and 'overlay')
++and rewrite the 'mods' squashfs, clearing the top layer and thus
++restoring save and load speed.
++
++This merging is simplified by the use of another aufs mount, of just the
++two overlay branches using the 'shwh' option.
++# mount -t aufs -o ro,shwh,br:/livesys/overlay=ro+wh:/livesys/mods=rr+wh \
++	aufs /livesys/merge_union
++
++A merged view of these two branches is then available at
++/livesys/merge_union, and the new feature is that the whiteouts are
++visible!
++Note that in 'shwh' mode the aufs mount must be 'ro', which will disable
++writing to all branches. Also the default mode for all branches is 'ro'.
++It is now possible to save the combined contents of the two overlay
++branches to a new squashfs, e.g.:
++# mksquashfs /livesys/merge_union /path/to/newmods.squash
++
++This new squashfs archive can be stored on the boot device and the
++initramfs will use it to replace the old one at the next boot.
+--- /dev/null
++++ linux-4.0/Documentation/filesystems/aufs/design/10dynop.txt	2015-04-28 22:00:23.319317022 -0400
+@@ -0,0 +1,47 @@
++
++# Copyright (C) 2010-2015 Junjiro R. Okajima
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++
++Dynamically customizable FS operations
++----------------------------------------------------------------------
++Generally FS operations (struct inode_operations, struct
++address_space_operations, struct file_operations, etc.) are defined as
++"static const", but it never means that FS have only one set of
++operation. Some FS have multiple sets of them. For instance, ext2 has
++three sets, one for XIP, for NOBH, and for normal.
++Since aufs overrides and redirects these operations, sometimes aufs has
++to change its behaviour according to the branch FS type. More importantly
++VFS acts differently if a function (member in the struct) is set or
++not. It means aufs should have several sets of operations and select one
++among them according to the branch FS definition.
++
++In order to solve this problem and not to affect the behaviour of VFS,
++aufs defines these operations dynamically. For instance, aufs defines
++dummy direct_IO function for struct address_space_operations, but it may
++not be set to the address_space_operations actually. When the branch FS
++doesn't have it, aufs doesn't set it to its address_space_operations
++while the function definition itself is still alive. So the behaviour
++itself will not change, and it will return an error when direct_IO is
++not set.
++
++The lifetime of these dynamically generated operation object is
++maintained by aufs branch object. When the branch is removed from aufs,
++the reference counter of the object is decremented. When it reaches
++zero, the dynamically generated operation object will be freed.
++
++This approach is designed to support AIO (io_submit), Direct I/O and
++XIP (DAX) mainly.
++Currently this approach is applied to address_space_operations for
++regular files only.
+--- /dev/null
++++ linux-4.0/include/uapi/linux/aufs_type.h	2015-04-28 22:00:23.325983536 -0400
+@@ -0,0 +1,419 @@
++/*
++ * Copyright (C) 2005-2015 Junjiro R. Okajima
++ *
++ * This program, aufs is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef __AUFS_TYPE_H__
++#define __AUFS_TYPE_H__
++
++#define AUFS_NAME	"aufs"
++
++#ifdef __KERNEL__
++/*
++ * define it before including all other headers.
++ * sched.h may use pr_* macros before defining "current", so define the
++ * no-current version first, and re-define later.
++ */
++#define pr_fmt(fmt)	AUFS_NAME " %s:%d: " fmt, __func__, __LINE__
++#include <linux/sched.h>
++#undef pr_fmt
++#define pr_fmt(fmt) \
++		AUFS_NAME " %s:%d:%.*s[%d]: " fmt, __func__, __LINE__, \
++		(int)sizeof(current->comm), current->comm, current->pid
++#else
++#include <stdint.h>
++#include <sys/types.h>
++#endif /* __KERNEL__ */
++
++#include <linux/limits.h>
++
++#define AUFS_VERSION	"4.0-20150427"
++
++/* todo? move this to linux-2.6.19/include/magic.h */
++#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
++
++/* ---------------------------------------------------------------------- */
++
++#ifdef CONFIG_AUFS_BRANCH_MAX_127
++typedef int8_t aufs_bindex_t;
++#define AUFS_BRANCH_MAX 127
++#else
++typedef int16_t aufs_bindex_t;
++#ifdef CONFIG_AUFS_BRANCH_MAX_511
++#define AUFS_BRANCH_MAX 511
++#elif defined(CONFIG_AUFS_BRANCH_MAX_1023)
++#define AUFS_BRANCH_MAX 1023
++#elif defined(CONFIG_AUFS_BRANCH_MAX_32767)
++#define AUFS_BRANCH_MAX 32767
++#endif
++#endif
++
++#ifdef __KERNEL__
++#ifndef AUFS_BRANCH_MAX
++#error unknown CONFIG_AUFS_BRANCH_MAX value
++#endif
++#endif /* __KERNEL__ */
++
++/* ---------------------------------------------------------------------- */
++
++#define AUFS_FSTYPE		AUFS_NAME
++
++#define AUFS_ROOT_INO		2
++#define AUFS_FIRST_INO		11
++
++#define AUFS_WH_PFX		".wh."
++#define AUFS_WH_PFX_LEN		((int)sizeof(AUFS_WH_PFX) - 1)
++#define AUFS_WH_TMP_LEN		4
++/* a limit for rmdir/rename a dir and copyup */
++#define AUFS_MAX_NAMELEN	(NAME_MAX \
++				- AUFS_WH_PFX_LEN * 2	/* doubly whiteouted */\
++				- 1			/* dot */\
++				- AUFS_WH_TMP_LEN)	/* hex */
++#define AUFS_XINO_FNAME		"." AUFS_NAME ".xino"
++#define AUFS_XINO_DEFPATH	"/tmp/" AUFS_XINO_FNAME
++#define AUFS_XINO_DEF_SEC	30 /* seconds */
++#define AUFS_XINO_DEF_TRUNC	45 /* percentage */
++#define AUFS_DIRWH_DEF		3
++#define AUFS_RDCACHE_DEF	10 /* seconds */
++#define AUFS_RDCACHE_MAX	3600 /* seconds */
++#define AUFS_RDBLK_DEF		512 /* bytes */
++#define AUFS_RDHASH_DEF		32
++#define AUFS_WKQ_NAME		AUFS_NAME "d"
++#define AUFS_MFS_DEF_SEC	30 /* seconds */
++#define AUFS_MFS_MAX_SEC	3600 /* seconds */
++#define AUFS_FHSM_CACHE_DEF_SEC	30 /* seconds */
++#define AUFS_PLINK_WARN		50 /* number of plinks in a single bucket */
++
++/* pseudo-link maintenace under /proc */
++#define AUFS_PLINK_MAINT_NAME	"plink_maint"
++#define AUFS_PLINK_MAINT_DIR	"fs/" AUFS_NAME
++#define AUFS_PLINK_MAINT_PATH	AUFS_PLINK_MAINT_DIR "/" AUFS_PLINK_MAINT_NAME
++
++#define AUFS_DIROPQ_NAME	AUFS_WH_PFX ".opq" /* whiteouted doubly */
++#define AUFS_WH_DIROPQ		AUFS_WH_PFX AUFS_DIROPQ_NAME
++
++#define AUFS_BASE_NAME		AUFS_WH_PFX AUFS_NAME
++#define AUFS_PLINKDIR_NAME	AUFS_WH_PFX "plnk"
++#define AUFS_ORPHDIR_NAME	AUFS_WH_PFX "orph"
++
++/* doubly whiteouted */
++#define AUFS_WH_BASE		AUFS_WH_PFX AUFS_BASE_NAME
++#define AUFS_WH_PLINKDIR	AUFS_WH_PFX AUFS_PLINKDIR_NAME
++#define AUFS_WH_ORPHDIR		AUFS_WH_PFX AUFS_ORPHDIR_NAME
++
++/* branch permissions and attributes */
++#define AUFS_BRPERM_RW		"rw"
++#define AUFS_BRPERM_RO		"ro"
++#define AUFS_BRPERM_RR		"rr"
++#define AUFS_BRATTR_COO_REG	"coo_reg"
++#define AUFS_BRATTR_COO_ALL	"coo_all"
++#define AUFS_BRATTR_FHSM	"fhsm"
++#define AUFS_BRATTR_UNPIN	"unpin"
++#define AUFS_BRATTR_ICEX	"icex"
++#define AUFS_BRATTR_ICEX_SEC	"icexsec"
++#define AUFS_BRATTR_ICEX_SYS	"icexsys"
++#define AUFS_BRATTR_ICEX_TR	"icextr"
++#define AUFS_BRATTR_ICEX_USR	"icexusr"
++#define AUFS_BRATTR_ICEX_OTH	"icexoth"
++#define AUFS_BRRATTR_WH		"wh"
++#define AUFS_BRWATTR_NLWH	"nolwh"
++#define AUFS_BRWATTR_MOO	"moo"
++
++#define AuBrPerm_RW		1		/* writable, hardlinkable wh */
++#define AuBrPerm_RO		(1 << 1)	/* readonly */
++#define AuBrPerm_RR		(1 << 2)	/* natively readonly */
++#define AuBrPerm_Mask		(AuBrPerm_RW | AuBrPerm_RO | AuBrPerm_RR)
++
++#define AuBrAttr_COO_REG	(1 << 3)	/* copy-up on open */
++#define AuBrAttr_COO_ALL	(1 << 4)
++#define AuBrAttr_COO_Mask	(AuBrAttr_COO_REG | AuBrAttr_COO_ALL)
++
++#define AuBrAttr_FHSM		(1 << 5)	/* file-based hsm */
++#define AuBrAttr_UNPIN		(1 << 6)	/* rename-able top dir of
++						   branch. meaningless since
++						   linux-3.18-rc1 */
++
++/* ignore error in copying XATTR */
++#define AuBrAttr_ICEX_SEC	(1 << 7)
++#define AuBrAttr_ICEX_SYS	(1 << 8)
++#define AuBrAttr_ICEX_TR	(1 << 9)
++#define AuBrAttr_ICEX_USR	(1 << 10)
++#define AuBrAttr_ICEX_OTH	(1 << 11)
++#define AuBrAttr_ICEX		(AuBrAttr_ICEX_SEC	\
++				 | AuBrAttr_ICEX_SYS	\
++				 | AuBrAttr_ICEX_TR	\
++				 | AuBrAttr_ICEX_USR	\
++				 | AuBrAttr_ICEX_OTH)
++
++#define AuBrRAttr_WH		(1 << 12)	/* whiteout-able */
++#define AuBrRAttr_Mask		AuBrRAttr_WH
++
++#define AuBrWAttr_NoLinkWH	(1 << 13)	/* un-hardlinkable whiteouts */
++#define AuBrWAttr_MOO		(1 << 14)	/* move-up on open */
++#define AuBrWAttr_Mask		(AuBrWAttr_NoLinkWH | AuBrWAttr_MOO)
++
++#define AuBrAttr_CMOO_Mask	(AuBrAttr_COO_Mask | AuBrWAttr_MOO)
++
++/* #warning test userspace */
++#ifdef __KERNEL__
++#ifndef CONFIG_AUFS_FHSM
++#undef AuBrAttr_FHSM
++#define AuBrAttr_FHSM		0
++#endif
++#ifndef CONFIG_AUFS_XATTR
++#undef	AuBrAttr_ICEX
++#define AuBrAttr_ICEX		0
++#undef	AuBrAttr_ICEX_SEC
++#define AuBrAttr_ICEX_SEC	0
++#undef	AuBrAttr_ICEX_SYS
++#define AuBrAttr_ICEX_SYS	0
++#undef	AuBrAttr_ICEX_TR
++#define AuBrAttr_ICEX_TR	0
++#undef	AuBrAttr_ICEX_USR
++#define AuBrAttr_ICEX_USR	0
++#undef	AuBrAttr_ICEX_OTH
++#define AuBrAttr_ICEX_OTH	0
++#endif
++#endif
++
++/* the longest combination */
++/* AUFS_BRATTR_ICEX and AUFS_BRATTR_ICEX_TR don't affect here */
++#define AuBrPermStrSz	sizeof(AUFS_BRPERM_RW			\
++			       "+" AUFS_BRATTR_COO_REG		\
++			       "+" AUFS_BRATTR_FHSM		\
++			       "+" AUFS_BRATTR_UNPIN		\
++			       "+" AUFS_BRATTR_ICEX_SEC		\
++			       "+" AUFS_BRATTR_ICEX_SYS		\
++			       "+" AUFS_BRATTR_ICEX_USR		\
++			       "+" AUFS_BRATTR_ICEX_OTH		\
++			       "+" AUFS_BRWATTR_NLWH)
++
++typedef struct {
++	char a[AuBrPermStrSz];
++} au_br_perm_str_t;
++
++static inline int au_br_writable(int brperm)
++{
++	return brperm & AuBrPerm_RW;
++}
++
++static inline int au_br_whable(int brperm)
++{
++	return brperm & (AuBrPerm_RW | AuBrRAttr_WH);
++}
++
++static inline int au_br_wh_linkable(int brperm)
++{
++	return !(brperm & AuBrWAttr_NoLinkWH);
++}
++
++static inline int au_br_cmoo(int brperm)
++{
++	return brperm & AuBrAttr_CMOO_Mask;
++}
++
++static inline int au_br_fhsm(int brperm)
++{
++	return brperm & AuBrAttr_FHSM;
++}
++
++/* ---------------------------------------------------------------------- */
++
++/* ioctl */
++enum {
++	/* readdir in userspace */
++	AuCtl_RDU,
++	AuCtl_RDU_INO,
++
++	AuCtl_WBR_FD,	/* pathconf wrapper */
++	AuCtl_IBUSY,	/* busy inode */
++	AuCtl_MVDOWN,	/* move-down */
++	AuCtl_BR,	/* info about branches */
++	AuCtl_FHSM_FD	/* connection for fhsm */
++};
++
++/* borrowed from linux/include/linux/kernel.h */
++#ifndef ALIGN
++#define ALIGN(x, a)		__ALIGN_MASK(x, (typeof(x))(a)-1)
++#define __ALIGN_MASK(x, mask)	(((x)+(mask))&~(mask))
++#endif
++
++/* borrowed from linux/include/linux/compiler-gcc3.h */
++#ifndef __aligned
++#define __aligned(x)			__attribute__((aligned(x)))
++#endif
++
++#ifdef __KERNEL__
++#ifndef __packed
++#define __packed			__attribute__((packed))
++#endif
++#endif
++
++struct au_rdu_cookie {
++	uint64_t	h_pos;
++	int16_t		bindex;
++	uint8_t		flags;
++	uint8_t		pad;
++	uint32_t	generation;
++} __aligned(8);
++
++struct au_rdu_ent {
++	uint64_t	ino;
++	int16_t		bindex;
++	uint8_t		type;
++	uint8_t		nlen;
++	uint8_t		wh;
++	char		name[0];
++} __aligned(8);
++
++static inline int au_rdu_len(int nlen)
++{
++	/* include the terminating NULL */
++	return ALIGN(sizeof(struct au_rdu_ent) + nlen + 1,
++		     sizeof(uint64_t));
++}
++
++union au_rdu_ent_ul {
++	struct au_rdu_ent __user	*e;
++	uint64_t			ul;
++};
++
++enum {
++	AufsCtlRduV_SZ,
++	AufsCtlRduV_End
++};
++
++struct aufs_rdu {
++	/* input */
++	union {
++		uint64_t	sz;	/* AuCtl_RDU */
++		uint64_t	nent;	/* AuCtl_RDU_INO */
++	};
++	union au_rdu_ent_ul	ent;
++	uint16_t		verify[AufsCtlRduV_End];
++
++	/* input/output */
++	uint32_t		blk;
++
++	/* output */
++	union au_rdu_ent_ul	tail;
++	/* number of entries which were added in a single call */
++	uint64_t		rent;
++	uint8_t			full;
++	uint8_t			shwh;
++
++	struct au_rdu_cookie	cookie;
++} __aligned(8);
++
++/* ---------------------------------------------------------------------- */
++
++struct aufs_wbr_fd {
++	uint32_t	oflags;
++	int16_t		brid;
++} __aligned(8);
++
++/* ---------------------------------------------------------------------- */
++
++struct aufs_ibusy {
++	uint64_t	ino, h_ino;
++	int16_t		bindex;
++} __aligned(8);
++
++/* ---------------------------------------------------------------------- */
++
++/* error code for move-down */
++/* the actual message strings are implemented in aufs-util.git */
++enum {
++	EAU_MVDOWN_OPAQUE = 1,
++	EAU_MVDOWN_WHITEOUT,
++	EAU_MVDOWN_UPPER,
++	EAU_MVDOWN_BOTTOM,
++	EAU_MVDOWN_NOUPPER,
++	EAU_MVDOWN_NOLOWERBR,
++	EAU_Last
++};
++
++/* flags for move-down */
++#define AUFS_MVDOWN_DMSG	1
++#define AUFS_MVDOWN_OWLOWER	(1 << 1)	/* overwrite lower */
++#define AUFS_MVDOWN_KUPPER	(1 << 2)	/* keep upper */
++#define AUFS_MVDOWN_ROLOWER	(1 << 3)	/* do even if lower is RO */
++#define AUFS_MVDOWN_ROLOWER_R	(1 << 4)	/* did on lower RO */
++#define AUFS_MVDOWN_ROUPPER	(1 << 5)	/* do even if upper is RO */
++#define AUFS_MVDOWN_ROUPPER_R	(1 << 6)	/* did on upper RO */
++#define AUFS_MVDOWN_BRID_UPPER	(1 << 7)	/* upper brid */
++#define AUFS_MVDOWN_BRID_LOWER	(1 << 8)	/* lower brid */
++#define AUFS_MVDOWN_FHSM_LOWER	(1 << 9)	/* find fhsm attr for lower */
++#define AUFS_MVDOWN_STFS	(1 << 10)	/* req. stfs */
++#define AUFS_MVDOWN_STFS_FAILED	(1 << 11)	/* output: stfs is unusable */
++#define AUFS_MVDOWN_BOTTOM	(1 << 12)	/* output: no more lowers */
++
++/* index for move-down */
++enum {
++	AUFS_MVDOWN_UPPER,
++	AUFS_MVDOWN_LOWER,
++	AUFS_MVDOWN_NARRAY
++};
++
++/*
++ * additional info of move-down
++ * number of free blocks and inodes.
++ * subset of struct kstatfs, but smaller and always 64bit.
++ */
++struct aufs_stfs {
++	uint64_t	f_blocks;
++	uint64_t	f_bavail;
++	uint64_t	f_files;
++	uint64_t	f_ffree;
++};
++
++struct aufs_stbr {
++	int16_t			brid;	/* optional input */
++	int16_t			bindex;	/* output */
++	struct aufs_stfs	stfs;	/* output when AUFS_MVDOWN_STFS set */
++} __aligned(8);
++
++struct aufs_mvdown {
++	uint32_t		flags;			/* input/output */
++	struct aufs_stbr	stbr[AUFS_MVDOWN_NARRAY]; /* input/output */
++	int8_t			au_errno;		/* output */
++} __aligned(8);
++
++/* ---------------------------------------------------------------------- */
++
++union aufs_brinfo {
++	/* PATH_MAX may differ between kernel-space and user-space */
++	char	_spacer[4096];
++	struct {
++		int16_t	id;
++		int	perm;
++		char	path[0];
++	};
++} __aligned(8);
++
++/* ---------------------------------------------------------------------- */
++
++#define AuCtlType		'A'
++#define AUFS_CTL_RDU		_IOWR(AuCtlType, AuCtl_RDU, struct aufs_rdu)
++#define AUFS_CTL_RDU_INO	_IOWR(AuCtlType, AuCtl_RDU_INO, struct aufs_rdu)
++#define AUFS_CTL_WBR_FD		_IOW(AuCtlType, AuCtl_WBR_FD, \
++				     struct aufs_wbr_fd)
++#define AUFS_CTL_IBUSY		_IOWR(AuCtlType, AuCtl_IBUSY, struct aufs_ibusy)
++#define AUFS_CTL_MVDOWN		_IOWR(AuCtlType, AuCtl_MVDOWN, \
++				      struct aufs_mvdown)
++#define AUFS_CTL_BRINFO		_IOW(AuCtlType, AuCtl_BR, union aufs_brinfo)
++#define AUFS_CTL_FHSM_FD	_IOW(AuCtlType, AuCtl_FHSM_FD, int)
++
++#endif /* __AUFS_TYPE_H__ */
