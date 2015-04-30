@@ -1,7 +1,7 @@
 
 pkgname=gawk
 pkgver=4.1.2
-pkgrel=1
+pkgrel=2
 pkgdesc="The GNU awk utility interprets a special-purpose programming language that makes it possible to handle simple data-reformatting jobs with just a few lines of code."
 arch=('x86_64')
 url="http://www.gnu.org/software/gawk/gawk.html"
@@ -11,11 +11,14 @@ provides=('awk')
 install="gawk.install"
 depends=('sh' 'glibc' 'mpfr')
 makedepends=('gzip')
-source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('29555d982b8b678b0091010eb7508e4a')
+source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+        'regexps.patch')
+md5sums=('29555d982b8b678b0091010eb7508e4a'
+         '5ae05aa078470ac87cb700d456c905a8')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  patch -p1 -i ${srcdir}/regexps.patch
 
   ./configure --prefix=/usr \
        --libexecdir=/usr/lib \

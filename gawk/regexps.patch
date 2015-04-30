@@ -1,0 +1,107 @@
+From 665ec924795675c32d7178613367ec9f7a7d08e1 Mon Sep 17 00:00:00 2001
+From: Arnold D. Robbins <arnold@skeeve.com>
+Date: Thu, 30 Apr 2015 07:04:09 +0000
+Subject: Fix brackets in regexps again. Let's hope this is really it.
+
+diff --git a/awkgram.c b/awkgram.c
+index 14e29d9..3f64cb2 100644
+--- a/awkgram.c
++++ b/awkgram.c
+@@ -5364,7 +5364,7 @@ yylex(void)
+ 		/*
+ 		 * Here is what's ok with brackets:
+ 		 *
+-		 * [[] [^[] []] [^]] [.../...]
++		 * [..[..] []] [^]] [.../...]
+ 		 * [...\[...] [...\]...] [...\/...]
+ 		 * 
+ 		 * (Remember that all of the above are inside /.../)
+@@ -5372,7 +5372,7 @@ yylex(void)
+ 		 * The code for \ handles \[, \] and \/.
+ 		 *
+ 		 * Otherwise, track the first open [ position, and if
+-		 * an embedded [ or ] occurs, allow it to pass through
++		 * an embedded ] occurs, allow it to pass through
+ 		 * if it's right after the first [ or after [^.
+ 		 *
+ 		 * Whew!
+@@ -5383,19 +5383,21 @@ yylex(void)
+ 		for (;;) {
+ 			c = nextc(false);
+ 
++			cur_index = tok - tokstart;
+ 			if (gawk_mb_cur_max == 1 || nextc_is_1stbyte) switch (c) {
+ 			case '[':
++				if (nextc(false) == ':' || in_brack == 0)
++					in_brack++;
++				pushback();
++				if (in_brack == 1)
++					b_index = tok - tokstart;
++				break;
+ 			case ']':
+-				cur_index = tok - tokstart;
+ 				if (in_brack > 0
+ 				    && (cur_index == b_index + 1 
+ 					|| (cur_index == b_index + 2 && tok[-1] == '^')))
+ 					; /* do nothing */
+-				else if (c == '[') {
+-					in_brack++;
+-					if (in_brack == 1)
+-						b_index = tok - tokstart;
+-				} else {
++				else {
+ 					in_brack--;
+ 					if (in_brack == 0)
+ 						b_index = -1;
+diff --git a/awkgram.y b/awkgram.y
+index beb85d5..8228307 100644
+--- a/awkgram.y
++++ b/awkgram.y
+@@ -3025,7 +3025,7 @@ yylex(void)
+ 		/*
+ 		 * Here is what's ok with brackets:
+ 		 *
+-		 * [[] [^[] []] [^]] [.../...]
++		 * [..[..] []] [^]] [.../...]
+ 		 * [...\[...] [...\]...] [...\/...]
+ 		 * 
+ 		 * (Remember that all of the above are inside /.../)
+@@ -3033,7 +3033,7 @@ yylex(void)
+ 		 * The code for \ handles \[, \] and \/.
+ 		 *
+ 		 * Otherwise, track the first open [ position, and if
+-		 * an embedded [ or ] occurs, allow it to pass through
++		 * an embedded ] occurs, allow it to pass through
+ 		 * if it's right after the first [ or after [^.
+ 		 *
+ 		 * Whew!
+@@ -3044,19 +3044,21 @@ yylex(void)
+ 		for (;;) {
+ 			c = nextc(false);
+ 
++			cur_index = tok - tokstart;
+ 			if (gawk_mb_cur_max == 1 || nextc_is_1stbyte) switch (c) {
+ 			case '[':
++				if (nextc(false) == ':' || in_brack == 0)
++					in_brack++;
++				pushback();
++				if (in_brack == 1)
++					b_index = tok - tokstart;
++				break;
+ 			case ']':
+-				cur_index = tok - tokstart;
+ 				if (in_brack > 0
+ 				    && (cur_index == b_index + 1 
+ 					|| (cur_index == b_index + 2 && tok[-1] == '^')))
+ 					; /* do nothing */
+-				else if (c == '[') {
+-					in_brack++;
+-					if (in_brack == 1)
+-						b_index = tok - tokstart;
+-				} else {
++				else {
+ 					in_brack--;
+ 					if (in_brack == 0)
+ 						b_index = -1;
+--
+cgit v0.9.0.2
