@@ -1,0 +1,44 @@
+
+pkgname=s-nail
+pkgver=14.8.0
+_pkgver=14_8_0
+pkgrel=1
+pkgdesc="Mail processing system and commandline utility for sending email"
+arch=('x86_64')
+url="http://sdaoden.users.sourceforge.net/code.html#s-naill"
+license=('BSD')
+groups=('base')
+depends=('openssl' 'krb5')
+optdepends=('postfix: for sending mail')
+backup=('etc/mail.rc')
+conflicts=('mailx')
+replaces=('mailx')
+provides=('mailx')
+source=("http://sourceforge.net/projects/s-nail/files/${pkgname}-${_pkgver}.tar.xz")
+md5sums=('cd0c700cf5a5d95ab26845aeb2192e8c')
+
+build() {
+  cd $srcdir/${pkgname}-${pkgver}
+
+  make PREFIX=/usr \
+       SYSCONFDIR=/etc \
+       MAILSPOOL=/var/spool/mail \
+       MANDIR=/usr/share/man \
+       SID= NAIL=mail \
+       WANT_AUTOCC=0 \
+       config
+
+  make build
+}
+
+package() {
+  cd ${srcdir}/${pkgname}-${pkgver}
+  make DESTDIR="${pkgdir}" packager-install
+
+  # For compatibility with the old mailx program
+  ln -sf mail "${pkgdir}"/usr/bin/mailx
+  ln -sf mail "${pkgdir}"/usr/bin/nail
+  ln -sf mail.1.gz "${pkgdir}"/usr/share/man/man1/mailx.1.gz
+
+  install -D -m0644 COPYING "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
+}
