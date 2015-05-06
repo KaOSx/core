@@ -1,6 +1,6 @@
 
 pkgname=iw
-pkgver=3.17
+pkgver=4.0
 pkgrel=1
 pkgdesc="nl80211 based CLI configuration utility for wireless devices"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('libnl')
 makedepends=('linux-api-headers' 'pkg-config')
 source=("https://www.kernel.org/pub/software/network/$pkgname/$pkgname-$pkgver.tar.xz"
         'version-sh.patch')
-md5sums=('69c4a2f29cf560247febc6cad7161a72'
+md5sums=('5109c4cb665711e6f83507ea1059e6df'
          '9e8d3294410721165571020a671121da')
 
 build() {

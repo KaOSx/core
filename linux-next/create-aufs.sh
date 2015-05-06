@@ -2,8 +2,8 @@
 
 rm -Rf aufs4-standalone
 # clone the aufs repository to the local disk
-git clone git://github.com/sfjro/aufs4-standalone.git aufs4-standalone.git
-cd aufs4-standalone.git
+git clone git://github.com/sfjro/aufs4-standalone.git aufs4-standalone
+cd aufs4-standalone
 git branch -r
 git checkout origin/aufs4.0
 
@@ -17,7 +17,7 @@ grep -qse 'EXPORT_SYMBOL(' aufs4-standalone.patch && \
 sed -i-old -e 's|EXPORT_SYMBOL(|EXPORT_SYMBOL_GPL(|' aufs4-standalone.patch
 rm -rf ../tmp/linux-4.0
 mkdir -p ../tmp/linux-4.0
-cp -a fs ../tmp/linux-4.09
+cp -a fs ../tmp/linux-4.0
 cp -a include ../tmp/linux-4.0
 cp -a Documentation ../tmp/linux-4.0
 rm ../tmp/linux-4.0/include/uapi/linux/Kbuild
