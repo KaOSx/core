@@ -1,7 +1,7 @@
 
 pkgname=attr
 pkgver=2.4.47
-pkgrel=2
+pkgrel=3
 pkgdesc="Extended attribute support library for ACL support"
 arch=('x86_64')
 url="http://oss.sgi.com/projects/xfs/"
@@ -31,4 +31,5 @@ package() {
   chmod 0755 "${pkgdir}"/usr/lib/libattr.so.*.*.*
   # remove conflicting manpages
   rm -rf "${pkgdir}"/usr/share/man/man2
+  rm -rf "${pkgdir}"/usr/share/man/man5
 }
