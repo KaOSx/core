@@ -1,7 +1,7 @@
 
 pkgname=iputils
 pkgver=20121221
-pkgrel=3
+pkgrel=4
 pkgdesc="IP Configuration Utilities (and Ping)."
 arch=('x86_64')
 license=('GPL')
@@ -12,12 +12,16 @@ makedepends=('libxslt' 'opensp')
 backup=(etc/xinetd.d/tftp)
 install=${pkgname}.install
 source=("http://www.skbuff.net/${pkgname}/${pkgname}-s${pkgver}.tar.bz2"
-        'tftp.xinetd')
+        'tftp.xinetd'
+        'recverr.patch')
 md5sums=('6072aef64205720dd1893b375e184171'
-         'b5f1b81ea53983c402a46e85501858b3')
+         'b5f1b81ea53983c402a46e85501858b3'
+         'b75f5f267b3c47b35a94ac0a79767388')
 
 build() {
   cd "${srcdir}/${pkgname}-s${pkgver}"
+  # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=709052
+  patch -p1 -i  "${srcdir}"/recverr.patch
 
   make USE_GNUTLS=no CCOPTOPT="$CFLAGS"
 }
