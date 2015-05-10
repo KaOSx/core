@@ -3,11 +3,11 @@
 # NOTE: libtool requires rebuilt with each new gcc version
 # http://www.linuxfromscratch.org/lfs/view/7.6/chapter06/gcc.html
 
-pkgname=('gcc' 'gcc-libs' 'gcc-fortran' 'gcc-objc' 'gcc-ada' 'gcc-go')
+pkgname=('gcc' 'gcc-libs')
 pkgver=4.9.2
 _pkgver=4.9
 #_snapshot=4.8-20130718
-pkgrel=1
+pkgrel=2
 pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
@@ -77,11 +77,11 @@ check() {
 
   # increase stack size to prevent test failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=31827
-  ulimit -s 32768
+  #ulimit -s 32768
 
   # do not abort on error as some are "expected"
-  make -k check || true
-  ${srcdir}/${_basedir}/contrib/test_summary
+  #make -k check || true
+  #${srcdir}/${_basedir}/contrib/test_summary
 }
 
 package_gcc-libs()
@@ -131,58 +131,66 @@ package_gcc-libs()
 
 package_gcc()
 {
-  pkgdesc="The GNU Compiler Collection - C and C++ frontends"
+  pkgdesc="The GNU Compiler Collection"
   depends=("gcc-libs=$pkgver-$pkgrel" 'binutils>=2.24' 'libmpc' 'cloog')
   groups=('base-devel')
   install=gcc.install
+  conflicts=('gcc-fortran'
+             'gcc-objc'
+             'gcc-ada'
+             'gcc-go')
+  replaces=('gcc-fortran'
+            'gcc-objc'
+            'gcc-ada'
+            'gcc-go')
+  provides=('gcc-fortran'
+            'gcc-objc'
+            'gcc-ada'
+            'gcc-go')
 
   cd ${srcdir}/gcc-build
   
-  make -C gcc DESTDIR=${pkgdir} install-driver install-cpp install-gcc-ar \
-    c++.install-common install-headers install-plugin install-lto-wrapper
+  make DESTDIR=${pkgdir} install 
 
-  install -m755 gcc/gcov $pkgdir/usr/bin/
-  install -m755 -t $pkgdir/usr/lib/gcc/$CHOST/$pkgver/ gcc/{cc1,cc1plus,collect2,lto1}
-
-  make -C $CHOST/libgcc DESTDIR=${pkgdir} install
-  rm ${pkgdir}/usr/lib/libgcc_s.so*
-  
-  make -C $CHOST/libstdc++-v3/src DESTDIR=${pkgdir} install
-  make -C $CHOST/libstdc++-v3/include DESTDIR=${pkgdir} install
-  make -C $CHOST/libstdc++-v3/libsupc++ DESTDIR=${pkgdir} install
-  make -C $CHOST/libstdc++-v3/python DESTDIR=${pkgdir} install
-
-  install -d $pkgdir/usr/share/gdb/auto-load/usr/lib
-  mv $pkgdir/usr/lib/libstdc++.so.6.*-gdb.py \
-    $pkgdir/usr/share/gdb/auto-load/usr/lib/
-  rm ${pkgdir}/usr/lib/libstdc++.so*
-
-  make DESTDIR=${pkgdir} install-fixincludes
-  make -C gcc DESTDIR=${pkgdir} install-mkheaders
-  make -C lto-plugin DESTDIR=${pkgdir} install
-
-  make -C $CHOST/libcilkrts DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS \
-    install-nodist_cilkincludeHEADERS
-  make -C $CHOST/libgomp DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS \
-    install-nodist_libsubincludeHEADERS
-  make -C $CHOST/libitm DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS
-  make -C $CHOST/libquadmath DESTDIR=${pkgdir} install-nodist_libsubincludeHEADERS
-  make -C $CHOST/libsanitizer DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS
-  make -C $CHOST/libsanitizer/asan DESTDIR=${pkgdir} install-nodist_toolexeclibHEADERS
-
-  make -C libiberty DESTDIR=${pkgdir} install
-  # install PIC version of libiberty
-  install -m644 ${srcdir}/gcc-build/libiberty/pic/libiberty.a ${pkgdir}/usr/lib
-
-  make -C gcc DESTDIR=${pkgdir} install-man install-info
-  rm ${pkgdir}/usr/share/man/man1/{gccgo,gfortran}.1
-  rm ${pkgdir}/usr/share/info/{gccgo,gfortran,gnat-style,gnat_rm,gnat_ugn}.info
-
-  make -C libcpp DESTDIR=${pkgdir} install
-  make -C gcc DESTDIR=${pkgdir} install-po
-
-  # many packages expect this symlink
   ln -s gcc ${pkgdir}/usr/bin/cc
+  ln -s gfortran ${pkgdir}/usr/bin/f95
+  ln -s gcc ${pkgdir}/usr/bin/gnatgcc
+  
+  mv ${pkgdir}/usr/lib/gcc/$CHOST/$pkgver/adalib/libgna{rl,t}-${_pkgver}.so ${pkgdir}/usr/lib
+  ln -s libgnarl-${_pkgver}.so ${pkgdir}/usr/lib/libgnarl.so
+  ln -s libgnat-${_pkgver}.so ${pkgdir}/usr/lib/libgnat.so
+  rm ${pkgdir}/usr/lib/gcc/$CHOST/$pkgver/adalib/libgna{rl,t}.so
+  
+  # remove unneeded static libs
+  rm $pkgdir/usr/lib/libasan.a
+  rm $pkgdir/usr/lib/libatomic.a
+  rm $pkgdir/usr/lib/libcilkrts.a
+  rm $pkgdir/usr/lib/libfortran.a
+  rm $pkgdir/usr/lib/libgo.a
+  rm $pkgdir/usr/lib/libgomp.a
+  rm $pkgdir/usr/lib/libitm.a
+  rm $pkgdir/usr/lib/libsan.a
+  
+  # remove gcc-libs provided
+  rm $pkgdir/usr/lib/libasan.so*
+  rm $pkgdir/usr/lib/libatomic.so*
+  rm $pkgdir/usr/lib/libcilkrts.so*
+  rm $pkgdir/usr/lib/libgcc*
+  rm $pkgdir/usr/lib/libgfortran.so*
+  rm $pkgdir/usr/lib/libgomp.so*
+  rm $pkgdir/usr/lib/libitm.so*
+  rm $pkgdir/usr/lib/liblsan*
+  rm $pkgdir/usr/lib/libobjc*
+  rm $pkgdir/usr/lib/libquadmath*
+  rm $pkgdir/usr/lib/libstdc++.so*
+  rm $pkgdir/usr/lib/libtsan.so*
+  rm $pkgdir/usr/lib/libubsan*
+  rm $pkgdir/usr/lib/libvtv*
+  rm $pkgdir/usr/share/info/libgomp*
+  rm $pkgdir/usr/share/info/libitm*
+  rm $pkgdir/usr/share/info/libquadmath*
+  rm $pkgdir/usr/share/locale/de/LC_MESSAGES/libstdc++.mo
+  rm $pkgdir/usr/share/locale/fr/LC_MESSAGES/libstdc++.mo
 
   # POSIX conformance launcher scripts for c89 and c99
   cat > $pkgdir/usr/bin/c89 <<"EOF"
@@ -214,84 +222,9 @@ EOF
   chmod 755 $pkgdir/usr/bin/c{8,9}9
 
   # install the libstdc++ man pages
-  make -C $CHOST/libstdc++-v3/doc DESTDIR=$pkgdir doc-install-man
+  #make -C $CHOST/libstdc++-v3/doc DESTDIR=$pkgdir doc-install-man
 
-  # Install Runtime Library Exception
   install -d ${pkgdir}/usr/share/licenses/gcc/
   ln -s ../gcc-libs/RUNTIME.LIBRARY.EXCEPTION ${pkgdir}/usr/share/licenses/gcc/
 }
 
-package_gcc-fortran()
-{
-  pkgdesc="Fortran front-end for GCC"
-  depends=("gcc=$pkgver-$pkgrel")
-  install=gcc-fortran.install
-
-  cd ${srcdir}/gcc-build
-  make -C $CHOST/libgfortran DESTDIR=$pkgdir install-{{caf,my}execlibLTLIBRARIES,toolexeclibDATA}
-  make -C $CHOST/libgomp DESTDIR=$pkgdir install-nodist_fincludeHEADERS
-  make -C gcc DESTDIR=$pkgdir fortran.install-{common,man,info}
-  install -Dm755 gcc/f951 $pkgdir/usr/lib/gcc/$CHOST/$pkgver/f951
-  
-  ln -s gfortran ${pkgdir}/usr/bin/f95
- 
-  # Install Runtime Library Exception
-  install -Dm644 ${srcdir}/${_basedir}/COPYING.RUNTIME \
-    ${pkgdir}/usr/share/licenses/gcc-fortran/RUNTIME.LIBRARY.EXCEPTION
-}
-
-package_gcc-objc()
-{
-  pkgdesc="Objective-C front-end for GCC"
-  depends=("gcc=$pkgver-$pkgrel")
-
-  cd ${srcdir}/gcc-build
-  make DESTDIR=$pkgdir -C $CHOST/libobjc install-headers
-  install -dm755 $pkgdir/usr/lib/gcc/$CHOST/$pkgver/
-  install -m755 gcc/cc1obj{,plus} $pkgdir/usr/lib/gcc/$CHOST/$pkgver/
-
-  # Install Runtime Library Exception
-  install -Dm644 ${srcdir}/${_basedir}/COPYING.RUNTIME \
-    ${pkgdir}/usr/share/licenses/gcc-objc/RUNTIME.LIBRARY.EXCEPTION
-}
-
-package_gcc-ada()
-{
-  pkgdesc="Ada front-end for GCC (GNAT)"
-  depends=("gcc=$pkgver-$pkgrel")
-  install=gcc-ada.install
-
-  cd ${srcdir}/gcc-build/gcc
-  make DESTDIR=$pkgdir ada.install-{common,info}
-  install -m755 gnat1 $pkgdir/usr/lib/gcc/$CHOST/$pkgver
-
-  ln -s gcc ${pkgdir}/usr/bin/gnatgcc
-  
-  # dynamic linking
-  mv ${pkgdir}/usr/lib/gcc/$CHOST/$pkgver/adalib/libgna{rl,t}-${_pkgver}.so ${pkgdir}/usr/lib
-  ln -s libgnarl-${_pkgver}.so ${pkgdir}/usr/lib/libgnarl.so
-  ln -s libgnat-${_pkgver}.so ${pkgdir}/usr/lib/libgnat.so
-  rm ${pkgdir}/usr/lib/gcc/$CHOST/$pkgver/adalib/libgna{rl,t}.so
-  
-  # Install Runtime Library Exception
-  install -Dm644 ${srcdir}/${_basedir}/COPYING.RUNTIME \
-    ${pkgdir}/usr/share/licenses/gcc-ada/RUNTIME.LIBRARY.EXCEPTION
-}
-
-package_gcc-go()
-{
-  pkgdesc="Go front-end for GCC"
-  depends=("gcc=$pkgver-$pkgrel")
-  install=gcc-go.install
-
-  cd ${srcdir}/gcc-build
-  make -C $CHOST/libgo DESTDIR=$pkgdir install-exec-am
-  make -C gcc DESTDIR=$pkgdir go.install-{common,man,info}
-  install -Dm755 gcc/go1 $pkgdir/usr/lib/gcc/$CHOST/$pkgver/go1
-  
-  rm $pkgdir/usr/lib/libgo.a
-
-  # Install Runtime Library Exception
-  install -Dm644 ${srcdir}/${_basedir}/COPYING.RUNTIME \
-    ${pkgdir}/usr/share/licenses/gcc-go/RUNTIME.LIBRARY.EXCEPTION
-}
