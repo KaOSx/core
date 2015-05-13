@@ -1,6 +1,6 @@
 
 pkgname=inetutils
-pkgver=1.9.2
+pkgver=1.9.3
 pkgrel=1
 pkgdesc="A collection of common network programs."
 arch=('x86_64')
@@ -14,7 +14,7 @@ install="inetutils.install"
 source=("http://ftp.gnu.org/gnu/inetutils/${pkgname}-${pkgver}.tar.gz"
         'ftpd.conf' 'telnet.xinetd' 'talk.xinetd' 'rlogin.xinetd'
         'rsh.xinetd' 'ftpd.service')
-md5sums=('aa1a9a132259db83e66c1f3265065ba2'
+md5sums=('491a75cb382ce3f68122e4556addfcae'
          'e6e6e5990a2e8159a276fef8fbf54c04'
          '8596208d119045543c5fb644e1d713d5'
          '2c3655985cf122591d71d031af84ff90'
@@ -57,8 +57,8 @@ package() {
   
   install -d "${pkgdir}/bin"
   ln -s /usr/bin/hostname "${pkgdir}/bin/hostname"
-  install -D -m755 "${srcdir}/dnsdomainname" "${pkgdir}/bin/dnsdomainname"
-  echo ".so man1/hostname.1" > "${pkgdir}/usr/share/man/man1/dnsdomainname.1"
+  ln -s /usr/bin/dnsdomainname "${pkgdir}/bin/dnsdomainname"
+
 
   install -D -m644 "${srcdir}/ftpd.service" "${pkgdir}/usr/lib/systemd/system/ftpd.service"
   install -D -m644 "${srcdir}/ftpd.conf" "${pkgdir}/etc/conf.d/ftpd"
