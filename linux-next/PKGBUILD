@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.0.2
-_srcname=linux-4.0.2
-pkgver=4.0.2
+_basekernel=4.0
+_srcname=linux-4.0
+pkgver=4.0.3
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-3.19-rc7.tar.xz"
-        ###"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -30,7 +30,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('4f734f445c7f3ab9410a0a028227831a'
+md5sums=('a86916bd12798220da9eb4a1eec3616d'
+         '0ccd3969e595402f4f6bed790d5481a6'
          'f075b07dc5d213c54999eb0c6606a4dc'
          '16c0e0545aaeb2907d1c2b902a0aac44'
          'cf70388424ba3280dea7d31228cee547'
@@ -52,7 +53,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
