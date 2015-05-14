@@ -1,8 +1,8 @@
 
 pkgname=perl-test-pod
 _realname=Test-Pod
-pkgver=1.48
-pkgrel=3
+pkgver=1.49
+pkgrel=1
 pkgdesc="Check for POD errors in files"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
@@ -10,7 +10,7 @@ url="http://search.cpan.org/dist/${_realname}/"
 depends=('perl')
 options=('!emptydirs')
 source=("http://search.cpan.org/CPAN/authors/id/D/DW/DWHEELER/${_realname}-${pkgver}.tar.gz")
-md5sums=('c6bfd00ccdcb417d68fb3c0a0ec884c8')
+md5sums=('8f678832f2e255887475de15bbb9787e')
 
 build() {
   cd ${srcdir}/${_realname}-${pkgver}
