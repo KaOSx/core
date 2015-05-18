@@ -1,6 +1,6 @@
 
 pkgname=e2fsprogs
-pkgver=1.42.12
+pkgver=1.42.13
 pkgrel=1
 pkgdesc="Ext2/3/4 filesystem utilities"
 arch=('x86_64')
@@ -13,7 +13,7 @@ source=("http://downloads.sourceforge.net/sourceforge/e2fsprogs/${pkgname}-${pkg
         'MIT-LICENSE')
 backup=('etc/mke2fs.conf')
 install=${pkgname}.install
-md5sums=('68255f51be017a93f2f6402fab06c2bf'
+md5sums=('bc759fc62666786f5436e2075beb3265'
          '035b7c69b7a2cecf996a4708c262245e')
 
 build() {
