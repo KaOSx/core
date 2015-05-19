@@ -53,7 +53,8 @@ build() {
       --disable-audit \
       --disable-ima \
       --disable-kdbus \
-      --disable-networkd 
+      --disable-networkd \
+      --disable-gudev
       #--with-firmware-path=/usr/lib/firmware/updates:/lib/firmware/updates:/usr/lib/firmware:/lib/firmware
 
   make
