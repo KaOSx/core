@@ -10,7 +10,7 @@ license=('GPL2' 'LGPL2.1' 'MIT')
 depends=('acl' 'bash' 'glibc' 'glib2' 'kmod' 'hwids' 'util-linux' 'kbd' 'libcap' 'libxslt'
          'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn' 'lz4') 
 makedepends=('docbook-xsl' 'gobject-introspection' 'gperf' 'intltool' 'cryptsetup' 'python2' 'python2-lxml'
-             'libmicrohttpd')
+             'libmicrohttpd' 'gnu-efi-libs')
 optdepends=('cryptsetup: required for encrypted block devices'
             'libmicrohttpd: systemd-journal-gatewayd')
 backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
@@ -49,12 +49,14 @@ build() {
       --enable-compat-libs \
       --enable-split-usr \
       --enable-lz4 \
+      --enable-efi \
+      --enable-gnuefi \
       --disable-gtk-doc \
       --disable-audit \
       --disable-ima \
       --disable-kdbus \
       --disable-networkd \
-      --disable-gudev
+      --disable-gudev \
       #--with-firmware-path=/usr/lib/firmware/updates:/lib/firmware/updates:/usr/lib/firmware:/lib/firmware
 
   make
