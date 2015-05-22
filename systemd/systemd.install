@@ -37,6 +37,10 @@ _208_changes() {
 
 post_install() {
   post_common 
+  
+  mkdir -p /boot/efi/systemd-boot
+  /usr/bin/bootctl update
+  echo ":: Run '/usr/bin/bootctl install' to make systemd-boot your default bootloader"
 }
 
 post_upgrade() {
@@ -49,5 +53,7 @@ post_upgrade() {
   if [ "$(vercmp 208-1 "$2")" -eq 1 ]; then
     _208_changes
   fi
+  
+  /usr/bin/bootctl update
 }
 
