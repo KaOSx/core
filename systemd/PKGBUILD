@@ -29,8 +29,8 @@ provides=("udev=$pkgver")
 groups=('base')
 install="systemd.install"
 options=('!libtool')
-#source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
-source=("git://anongit.freedesktop.org/systemd/systemd.git"
+source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
+#source=("git://anongit.freedesktop.org/systemd/systemd.git"
         'initcpio-hook-udev'
         'initcpio-install-systemd'
         'initcpio-install-udev'
@@ -48,11 +48,11 @@ md5sums=('SKIP'
          'd7eec59a2aaa54770d22ccfa52d0ac2b')
 
 build() {
-  cd "$pkgname"
+  cd "$pkgname-$pkgver"
   #rm src/journal/audit_type-to-name.h
   #rm src/udev/keyboard-keys-from-name.gperf
   
-  ./autogen.sh
+  #./autogen.sh
   ./configure \
       --libexecdir=/usr/lib \
       --localstatedir=/var \
@@ -74,12 +74,12 @@ build() {
   make
 }
 
-#check() {
-  #make -C "$pkgname-$pkgver" check || true
-#}
+check() {
+  make -C "$pkgname-$pkgver" check || true
+}
 
 package() {
-  make -C "$pkgname" DESTDIR="$pkgdir" install
+  make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
 
   install -dm755 "$pkgdir/bin"
   ln -s ../usr/lib/systemd/systemd "$pkgdir/bin/systemd"
@@ -96,7 +96,7 @@ package() {
 
   ln -s ../lib/systemd/systemd-udevd "$pkgdir/usr/bin/udevd"
 
-  install -m644 "systemd/tmpfiles.d/legacy.conf" "$pkgdir/usr/lib/tmpfiles.d"
+  install -m644 "systemd-$pkgver/tmpfiles.d/legacy.conf" "$pkgdir/usr/lib/tmpfiles.d"
 
   # Replace in optical 
   sed -i 's#GROUP="dialout"#GROUP="uucp"#g;

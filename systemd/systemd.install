@@ -37,10 +37,13 @@ _208_changes() {
 
 post_install() {
   post_common 
-  
+
+  # systemd-boot install
+  if [ -d sys/firmware/efi/efivars ]; then
+    /usr/bin/bootctl update
+    echo ":: Run '/usr/bin/bootctl install' to make systemd-boot your default bootloader"
+  fi
   mkdir -p /boot/efi/systemd-boot
-  /usr/bin/bootctl update
-  echo ":: Run '/usr/bin/bootctl install' to make systemd-boot your default bootloader"
 }
 
 post_upgrade() {
@@ -54,6 +57,8 @@ post_upgrade() {
     _208_changes
   fi
   
-  /usr/bin/bootctl update
+  if [ -d sys/firmware/efi/efivars ]; then
+    /usr/bin/bootctl update
+  fi
 }
 
