@@ -25,7 +25,9 @@ backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/systemd/logind.conf
         etc/systemd/journald.conf
         etc/udev/udev.conf)
-provides=("udev=$pkgver")
+conflicts=('gummiboot')
+replaces=('gummiboot')
+provides=("udev=$pkgver" 'gummiboot')
 groups=('base')
 install="systemd.install"
 options=('!libtool')
