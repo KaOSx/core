@@ -58,7 +58,14 @@ post_upgrade() {
   fi
   
   if [ -d sys/firmware/efi/efivars ]; then
+    echo ":: Updating bootctl"
     /usr/bin/bootctl update
+  
+    if [ "$(vercmp 1:220-1 "$2")" -eq 1 ]; then
+      echo ":: Installing systemd-boot"
+      mkdir -p /boot/efi/systemd-boot
+      /usr/bin/bootctl install
+    fi
   fi
 }
 
