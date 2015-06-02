@@ -4,6 +4,9 @@
 # Germany
 Server = http://mirror3.layerjet.com/kaos/$repo
 
+France
+Server = http://kaos.youm.org/$repo
+
 # United States
 Server = http://mirror.dacentec.com/kaosx/$repo
 Server = http://kaosx.tk/repo/$repo
