@@ -1,25 +1,19 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=binutils
-pkgver=2.24
-pkgrel=2
+pkgver=2.25
+pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
 url="http://www.gnu.org/software/binutils/"
 license=('GPL')
 groups=('base-devel')
-depends=('glibc>=2.20' 'zlib')
+depends=('glibc>=2.21' 'zlib')
 checkdepends=('dejagnu' 'bc')
 options=('!libtool' '!distcc' '!ccache')
 install=binutils.install
-source=("ftp://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.gz"
-        'binutils-2.24-lto-testsuite.patch'
-        'binutils-2.24-gold-testsuite-plugin.patch'
-        'binutils-2.24-shared-pie.patch')
-md5sums=('a5dd5dd2d212a282cc1d4a84633e0d88'
-         'e68a1f221545f082baa5bd417cd077af'
-         'e46bbb03abaa5db58c12247644dc4857'
-         'ec59461c4febab9cfe1c1ef33326bc50')
+source=("ftp://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.gz")
+md5sums=('ab6719fd7434caf07433ec834db8ad4f')
 
 prepare() {
   cd ${srcdir}/binutils-${pkgver}
@@ -27,10 +21,6 @@ prepare() {
   # libiberty configure tests for header files using "$CPP $CPPFLAGS"
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
   
-  patch -p1 -i $srcdir/binutils-2.24-lto-testsuite.patch
-  patch -p1 -i $srcdir/binutils-2.24-gold-testsuite-plugin.patch
-  patch -p1 -i $srcdir/binutils-2.24-shared-pie.patch
-
   mkdir ${srcdir}/binutils-build
 }
 
@@ -64,7 +54,6 @@ package() {
 
   # Remove Windows/Novell specific man pages
   rm ${pkgdir}/usr/share/man/man1/{dlltool,nlmconv,windres,windmc}*
-  rm ${pkgdir}/usr/share/info/{configure,standards}.info
 
   # Remove these symlinks, they are not ABI stable.
   # Programs should compile static to the .a file.

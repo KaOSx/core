@@ -3,7 +3,7 @@
 # NOTE: libtool requires rebuilt with each new gcc version
 # http://www.linuxfromscratch.org/lfs/view/7.6/chapter06/gcc.html
 
-pkgname=('gcc' 'gcc-libs')
+pkgname=('gcc' 'gcc-libs') 
 pkgver=4.9.2
 _pkgver=4.9
 #_snapshot=4.8-20130718
@@ -12,11 +12,11 @@ pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
 url="http://gcc.gnu.org"
-makedepends=('binutils>=2.24' 'libmpc' 'cloog' 'gcc-ada' 'doxygen')
+makedepends=('binutils>=2.25' 'libmpc' 'cloog' 'doxygen')
 checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
 source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2"
-#source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.bz2")
+#source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.bz2"
         'gcc-4.8-filename-output.patch'
         'isl-0.13.patch')
 md5sums=('4df8ee253b7f3863ad0b86359cd39c43'
@@ -77,18 +77,18 @@ check() {
 
   # increase stack size to prevent test failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=31827
-  #ulimit -s 32768
+  ulimit -s 32768
 
   # do not abort on error as some are "expected"
-  #make -k check || true
-  #${srcdir}/${_basedir}/contrib/test_summary
+  make -k check || true
+  ${srcdir}/${_basedir}/contrib/test_summary
 }
 
 package_gcc-libs()
 {
   pkgdesc="Runtime libraries shipped by GCC"
   groups=('base')
-  depends=('glibc>=2.20')
+  depends=('glibc>=2.21')
   options=('!emptydirs' '!strip')
   install=gcc-libs.install
   
@@ -132,7 +132,7 @@ package_gcc-libs()
 package_gcc()
 {
   pkgdesc="The GNU Compiler Collection"
-  depends=("gcc-libs=$pkgver-$pkgrel" 'binutils>=2.24' 'libmpc' 'cloog')
+  depends=("gcc-libs=$pkgver-$pkgrel" 'binutils>=2.25' 'libmpc' 'cloog')
   groups=('base-devel')
   install=gcc.install
   conflicts=('gcc-fortran'
@@ -149,8 +149,10 @@ package_gcc()
             'gcc-go')
 
   cd ${srcdir}/gcc-build
-  
   make DESTDIR=${pkgdir} install 
+  
+  cd ${srcdir}/gcc-build/gcc
+  make DESTDIR=$pkgdir ada.install-{common,info}
 
   ln -s gcc ${pkgdir}/usr/bin/cc
   ln -s gfortran ${pkgdir}/usr/bin/f95
@@ -165,11 +167,11 @@ package_gcc()
   rm $pkgdir/usr/lib/libasan.a
   rm $pkgdir/usr/lib/libatomic.a
   rm $pkgdir/usr/lib/libcilkrts.a
-  rm $pkgdir/usr/lib/libfortran.a
+  rm $pkgdir/usr/lib/libgfortran.a
   rm $pkgdir/usr/lib/libgo.a
   rm $pkgdir/usr/lib/libgomp.a
   rm $pkgdir/usr/lib/libitm.a
-  rm $pkgdir/usr/lib/libsan.a
+  rm $pkgdir/usr/lib/libtsan.a
   
   # remove gcc-libs provided
   rm $pkgdir/usr/lib/libasan.so*

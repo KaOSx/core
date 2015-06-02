@@ -1,8 +1,8 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=linux-api-headers
-pkgver=3.16.7
-_basever=3.16
+pkgver=4.0.4
+_basever=4.0
 pkgrel=1
 pkgdesc="Kernel headers sanitized for use in userspace"
 arch=('x86_64')
@@ -11,14 +11,14 @@ license=('GPL2')
 provides=("kernel-headers=${pkgver}")
 conflicts=('kernel-headers')
 replaces=('kernel-headers')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-${_basever}.tar.xz"
-	"http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz")
-md5sums=('5c569ed649a0c9711879f333e90c5386'
-         '062f41ed40a33485605d98bad4bcc5a1')
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-${_basever}.tar.xz"
+	"http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz")
+md5sums=('a86916bd12798220da9eb4a1eec3616d'
+         '30de8c55237264deee4d4fc60eee78fd')
 
 build() {
   cd ${srcdir}/linux-${_basever}
-  [[ $pkgver != $_basever ]] && patch -p1 -i ${srcdir}/patch-${pkgver}
+  [[ $pkgver != $_basever ]] && patch -p1 -i ${srcdir}/patch-${pkgver} || true
 
   make mrproper
   make headers_check

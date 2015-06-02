@@ -1,10 +1,10 @@
 
 pkgname=mpfr
 _pkgver=3.1.2
-_patchlevel=p10
+_patchlevel=p11
 pkgver=${_pkgver}.${_patchlevel}
 #pkgver=${_pkgver}
-pkgrel=2
+pkgrel=1
 pkgdesc="Multiple-precision floating-point library"
 arch=('x86_64')
 url="http://www.mpfr.org/"
@@ -16,7 +16,7 @@ source=("http://www.mpfr.org/mpfr-current/mpfr-${_pkgver}.tar.xz"
         # http://www.mpfr.org/mpfr-3.1.2/allpatches  http://www.mpfr.org/mpfr-3.1.2/#bugs
         "mpfr-${_pkgver}-${_patchlevel}.patch")
 md5sums=('e3d203d188b8fe60bb6578dd3152e05c'
-         '43121795ef12f1b29ada4508d9186ea9')
+         '9f96a5c7cac1d6cd983ed9cf7d997074')
 
 build() {
   cd "${srcdir}/${pkgname}-${_pkgver}"
