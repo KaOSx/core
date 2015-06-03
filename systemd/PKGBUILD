@@ -33,6 +33,7 @@ install="systemd.install"
 options=('!libtool')
 #source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
 # commit/?id=c4e87748d5d3f574d335a87e3a6272276814b2fd
+# github move https://github.com/systemd/systemd/tree/c4e87748d5d3f574d335a87e3a6272276814b2fd
 source=("git://anongit.freedesktop.org/systemd/systemd.git"
         'initcpio-hook-udev'
         'initcpio-install-systemd'

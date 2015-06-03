@@ -7,6 +7,9 @@ Server = http://mirror3.layerjet.com/kaos/$repo
 # France
 Server = http://kaos.youm.org/$repo
 
+# Netherlands
+Server = http://nyxi.eu/mirrors/kaos/$repo
+
 # United States
 Server = http://mirror.dacentec.com/kaosx/$repo
 Server = http://kaosx.tk/repo/$repo
