@@ -1,10 +1,10 @@
-aufs3.19 loopback patch
+aufs4.0 loopback patch
 
 diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index 30efd68..2a9b789 100644
+index a0da519..ffef6c0 100644
 --- a/drivers/block/loop.c
 +++ b/drivers/block/loop.c
-@@ -514,7 +514,7 @@ out:
+@@ -471,7 +471,7 @@ static int do_req_filebacked(struct loop_device *lo, struct request *rq)
  }
  
  struct switch_request {
@@ -13,7 +13,15 @@ index 30efd68..2a9b789 100644
  	struct completion wait;
  };
  
-@@ -576,7 +576,8 @@ static int loop_thread(void *data)
+@@ -491,6 +491,7 @@ static void do_loop_switch(struct loop_device *lo, struct switch_request *p)
+ 	mapping = file->f_mapping;
+ 	mapping_set_gfp_mask(old_file->f_mapping, lo->old_gfp_mask);
+ 	lo->lo_backing_file = file;
++	lo->lo_backing_virt_file = p->virt_file;
+ 	lo->lo_blocksize = S_ISBLK(mapping->host->i_mode) ?
+ 		mapping->host->i_bdev->bd_block_size : PAGE_SIZE;
+ 	lo->old_gfp_mask = mapping_gfp_mask(mapping);
+@@ -502,11 +503,13 @@ static void do_loop_switch(struct loop_device *lo, struct switch_request *p)
   * First it needs to flush existing IO, it does this by sending a magic
   * BIO down the pipe. The completion of this BIO does the actual switch.
   */
@@ -22,47 +30,31 @@ index 30efd68..2a9b789 100644
 +		       struct file *virt_file)
  {
  	struct switch_request w;
- 	struct bio *bio = bio_alloc(GFP_KERNEL, 0);
-@@ -584,6 +585,7 @@ static int loop_switch(struct loop_device *lo, struct file *file)
- 		return -ENOMEM;
- 	init_completion(&w.wait);
+ 
  	w.file = file;
 +	w.virt_file = virt_file;
- 	bio->bi_private = &w;
- 	bio->bi_bdev = NULL;
- 	loop_make_request(lo->lo_queue, bio);
-@@ -600,7 +602,7 @@ static int loop_flush(struct loop_device *lo)
- 	if (!lo->lo_thread)
- 		return 0;
  
+ 	/* freeze queue and wait for completion of scheduled requests */
+ 	blk_mq_freeze_queue(lo->lo_queue);
+@@ -525,7 +528,16 @@ static int loop_switch(struct loop_device *lo, struct file *file)
+  */
+ static int loop_flush(struct loop_device *lo)
+ {
 -	return loop_switch(lo, NULL);
 +	return loop_switch(lo, NULL, NULL);
- }
- 
- /*
-@@ -619,6 +621,7 @@ static void do_loop_switch(struct loop_device *lo, struct switch_request *p)
- 	mapping = file->f_mapping;
- 	mapping_set_gfp_mask(old_file->f_mapping, lo->old_gfp_mask);
- 	lo->lo_backing_file = file;
-+	lo->lo_backing_virt_file = p->virt_file;
- 	lo->lo_blocksize = S_ISBLK(mapping->host->i_mode) ?
- 		mapping->host->i_bdev->bd_block_size : PAGE_SIZE;
- 	lo->old_gfp_mask = mapping_gfp_mask(mapping);
-@@ -627,6 +630,13 @@ out:
- 	complete(&p->wait);
- }
- 
++}
++
 +static struct file *loop_real_file(struct file *file)
 +{
 +	struct file *f = NULL;
++
 +	if (file->f_path.dentry->d_sb->s_op->real_loop)
 +		f = file->f_path.dentry->d_sb->s_op->real_loop(file);
 +	return f;
-+}
+ }
  
  /*
-  * loop_change_fd switched the backing store of a loopback device to
-@@ -640,6 +650,7 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
+@@ -540,6 +552,7 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
  			  unsigned int arg)
  {
  	struct file	*file, *old_file;
@@ -70,7 +62,7 @@ index 30efd68..2a9b789 100644
  	struct inode	*inode;
  	int		error;
  
-@@ -656,9 +667,16 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
+@@ -556,9 +569,16 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
  	file = fget(arg);
  	if (!file)
  		goto out;
@@ -87,7 +79,7 @@ index 30efd68..2a9b789 100644
  
  	error = -EINVAL;
  
-@@ -670,17 +688,21 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
+@@ -570,17 +590,21 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
  		goto out_putf;
  
  	/* and ... switch */
@@ -110,7 +102,7 @@ index 30efd68..2a9b789 100644
   out:
  	return error;
  }
-@@ -841,7 +863,7 @@ static void loop_config_discard(struct loop_device *lo)
+@@ -741,7 +765,7 @@ static void loop_config_discard(struct loop_device *lo)
  static int loop_set_fd(struct loop_device *lo, fmode_t mode,
  		       struct block_device *bdev, unsigned int arg)
  {
@@ -119,7 +111,7 @@ index 30efd68..2a9b789 100644
  	struct inode	*inode;
  	struct address_space *mapping;
  	unsigned lo_blocksize;
-@@ -856,6 +878,12 @@ static int loop_set_fd(struct loop_device *lo, fmode_t mode,
+@@ -756,6 +780,12 @@ static int loop_set_fd(struct loop_device *lo, fmode_t mode,
  	file = fget(arg);
  	if (!file)
  		goto out;
@@ -132,7 +124,7 @@ index 30efd68..2a9b789 100644
  
  	error = -EBUSY;
  	if (lo->lo_state != Lo_unbound)
-@@ -904,6 +932,7 @@ static int loop_set_fd(struct loop_device *lo, fmode_t mode,
+@@ -804,6 +834,7 @@ static int loop_set_fd(struct loop_device *lo, fmode_t mode,
  	lo->lo_device = bdev;
  	lo->lo_flags = lo_flags;
  	lo->lo_backing_file = file;
@@ -140,16 +132,8 @@ index 30efd68..2a9b789 100644
  	lo->transfer = transfer_none;
  	lo->ioctl = NULL;
  	lo->lo_sizelimit = 0;
-@@ -948,6 +977,7 @@ out_clr:
- 	lo->lo_thread = NULL;
- 	lo->lo_device = NULL;
- 	lo->lo_backing_file = NULL;
-+	lo->lo_backing_virt_file = NULL;
- 	lo->lo_flags = 0;
- 	set_capacity(lo->lo_disk, 0);
- 	invalidate_bdev(bdev);
-@@ -957,6 +987,8 @@ out_clr:
- 	lo->lo_state = Lo_unbound;
+@@ -835,6 +866,8 @@ static int loop_set_fd(struct loop_device *lo, fmode_t mode,
+ 
   out_putf:
  	fput(file);
 +	if (virt_file)
@@ -157,7 +141,7 @@ index 30efd68..2a9b789 100644
   out:
  	/* This is safe: open() is still holding a reference. */
  	module_put(THIS_MODULE);
-@@ -1003,6 +1035,7 @@ loop_init_xfer(struct loop_device *lo, struct loop_func_table *xfer,
+@@ -881,6 +914,7 @@ loop_init_xfer(struct loop_device *lo, struct loop_func_table *xfer,
  static int loop_clr_fd(struct loop_device *lo)
  {
  	struct file *filp = lo->lo_backing_file;
@@ -165,15 +149,15 @@ index 30efd68..2a9b789 100644
  	gfp_t gfp = lo->old_gfp_mask;
  	struct block_device *bdev = lo->lo_device;
  
-@@ -1036,6 +1069,7 @@ static int loop_clr_fd(struct loop_device *lo)
- 
+@@ -909,6 +943,7 @@ static int loop_clr_fd(struct loop_device *lo)
  	spin_lock_irq(&lo->lo_lock);
+ 	lo->lo_state = Lo_rundown;
  	lo->lo_backing_file = NULL;
 +	lo->lo_backing_virt_file = NULL;
  	spin_unlock_irq(&lo->lo_lock);
  
  	loop_release_xfer(lo);
-@@ -1078,6 +1112,8 @@ static int loop_clr_fd(struct loop_device *lo)
+@@ -950,6 +985,8 @@ static int loop_clr_fd(struct loop_device *lo)
  	 * bd_mutex which is usually taken before lo_ctl_mutex.
  	 */
  	fput(filp);
@@ -183,10 +167,10 @@ index 30efd68..2a9b789 100644
  }
  
 diff --git a/drivers/block/loop.h b/drivers/block/loop.h
-index 90df5d6..cb91822 100644
+index 301c27f..df84aa0 100644
 --- a/drivers/block/loop.h
 +++ b/drivers/block/loop.h
-@@ -44,7 +44,7 @@ struct loop_device {
+@@ -46,7 +46,7 @@ struct loop_device {
  	int		(*ioctl)(struct loop_device *, int cmd, 
  				 unsigned long arg); 
  
@@ -258,10 +242,10 @@ index 6d9864d..3322557 100644
  
  #endif /* __KERNEL__ */
 diff --git a/fs/aufs/super.c b/fs/aufs/super.c
-index 9acda0e..bb80e3b 100644
+index 2c30722..5bb7305 100644
 --- a/fs/aufs/super.c
 +++ b/fs/aufs/super.c
-@@ -812,7 +812,10 @@ static const struct super_operations aufs_sop = {
+@@ -809,7 +809,10 @@ static const struct super_operations aufs_sop = {
  	.statfs		= aufs_statfs,
  	.put_super	= aufs_put_super,
  	.sync_fs	= aufs_sync_fs,
@@ -274,13 +258,13 @@ index 9acda0e..bb80e3b 100644
  
  /* ---------------------------------------------------------------------- */
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index f634198..bfecf84 100644
+index 52cc449..e9e5641 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
-@@ -1620,6 +1620,10 @@ struct super_operations {
- 	int (*bdev_try_to_free_page)(struct super_block*, struct page*, gfp_t);
- 	long (*nr_cached_objects)(struct super_block *, int);
- 	long (*free_cached_objects)(struct super_block *, long, int);
+@@ -1656,6 +1656,10 @@ struct super_operations {
+ 				  struct shrink_control *);
+ 	long (*free_cached_objects)(struct super_block *,
+ 				    struct shrink_control *);
 +#if defined(CONFIG_BLK_DEV_LOOP) ||  defined(CONFIG_BLK_DEV_LOOP_MODULE)
 +	/* and aufs */
 +	struct file *(*real_loop)(struct file *);

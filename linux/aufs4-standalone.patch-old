@@ -1,10 +1,10 @@
-aufs3.19 standalone patch
+aufs4.0 standalone patch
 
 diff --git a/fs/dcache.c b/fs/dcache.c
-index eaed72c..3b4386e 100644
+index b93a9f2..5a010ee 100644
 --- a/fs/dcache.c
 +++ b/fs/dcache.c
-@@ -1124,6 +1124,7 @@ rename_retry:
+@@ -1235,6 +1235,7 @@ rename_retry:
  	seq = 1;
  	goto again;
  }
@@ -13,10 +13,10 @@ index eaed72c..3b4386e 100644
  /*
   * Search for at least 1 mount point in the dentry's subdirs.
 diff --git a/fs/inode.c b/fs/inode.c
-index 98d87de..084d84f 100644
+index f00b16f..eb7b8b5 100644
 --- a/fs/inode.c
 +++ b/fs/inode.c
-@@ -57,6 +57,7 @@ static struct hlist_head *inode_hashtable __read_mostly;
+@@ -58,6 +58,7 @@ static struct hlist_head *inode_hashtable __read_mostly;
  static __cacheline_aligned_in_smp DEFINE_SPINLOCK(inode_hash_lock);
  
  __cacheline_aligned_in_smp DEFINE_SPINLOCK(inode_sb_list_lock);
@@ -24,19 +24,11 @@ index 98d87de..084d84f 100644
  
  /*
   * Empty aops. Can be used for the cases where the user does not
-@@ -1515,6 +1516,7 @@ int update_time(struct inode *inode, struct timespec *time, int flags)
- 	mark_inode_dirty_sync(inode);
- 	return 0;
- }
-+EXPORT_SYMBOL(update_time);
- 
- /**
-  *	touch_atime	-	update the access time
 diff --git a/fs/namespace.c b/fs/namespace.c
-index cd1e968..a99a3a7 100644
+index 82ef140..a3aa4b9 100644
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
-@@ -454,6 +454,7 @@ void __mnt_drop_write(struct vfsmount *mnt)
+@@ -463,6 +463,7 @@ void __mnt_drop_write(struct vfsmount *mnt)
  	mnt_dec_writers(real_mount(mnt));
  	preempt_enable();
  }
@@ -44,7 +36,7 @@ index cd1e968..a99a3a7 100644
  
  /**
   * mnt_drop_write - give up write access to a mount
-@@ -1728,6 +1729,7 @@ int iterate_mounts(int (*f)(struct vfsmount *, void *), void *arg,
+@@ -1718,6 +1719,7 @@ int iterate_mounts(int (*f)(struct vfsmount *, void *), void *arg,
  	}
  	return 0;
  }
@@ -125,7 +117,7 @@ index 92e48c7..d2c4b68 100644
  static int fsnotify_mark_destroy(void *ignored)
  {
 diff --git a/fs/open.c b/fs/open.c
-index 813be03..328f0d6 100644
+index 33f9cbf..2c8bd72 100644
 --- a/fs/open.c
 +++ b/fs/open.c
 @@ -62,6 +62,7 @@ int do_truncate(struct dentry *dentry, loff_t length, unsigned int time_attrs,
@@ -137,10 +129,10 @@ index 813be03..328f0d6 100644
  long vfs_truncate(struct path *path, loff_t length)
  {
 diff --git a/fs/splice.c b/fs/splice.c
-index 619359a..c14f60e 100644
+index beb9993..813275a 100644
 --- a/fs/splice.c
 +++ b/fs/splice.c
-@@ -1127,6 +1127,7 @@ long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
+@@ -1112,6 +1112,7 @@ long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
  
  	return splice_write(pipe, out, ppos, len, flags);
  }
@@ -148,7 +140,7 @@ index 619359a..c14f60e 100644
  
  /*
   * Attempt to initiate a splice from a file to a pipe.
-@@ -1153,6 +1154,7 @@ long do_splice_to(struct file *in, loff_t *ppos,
+@@ -1138,6 +1139,7 @@ long do_splice_to(struct file *in, loff_t *ppos,
  
  	return splice_read(in, ppos, pipe, len, flags);
  }
@@ -169,10 +161,10 @@ index 4ef6985..6bb6303 100644
  /* Compare an extended attribute value with the given value */
  int vfs_xattr_cmp(struct dentry *dentry, const char *xattr_name,
 diff --git a/security/commoncap.c b/security/commoncap.c
-index 2915d85..58382dd 100644
+index f66713b..fd4c4b8 100644
 --- a/security/commoncap.c
 +++ b/security/commoncap.c
-@@ -979,9 +979,11 @@ int cap_mmap_addr(unsigned long addr)
+@@ -975,9 +975,11 @@ int cap_mmap_addr(unsigned long addr)
  	}
  	return ret;
  }
@@ -205,10 +197,10 @@ index 188c1d2..426d9af 100644
  int devcgroup_inode_mknod(int mode, dev_t dev)
  {
 diff --git a/security/security.c b/security/security.c
-index 18b35c6..12c67af 100644
+index e81d5bb..0b7b840 100644
 --- a/security/security.c
 +++ b/security/security.c
-@@ -407,6 +407,7 @@ int security_path_rmdir(struct path *dir, struct dentry *dentry)
+@@ -430,6 +430,7 @@ int security_path_rmdir(struct path *dir, struct dentry *dentry)
  		return 0;
  	return security_ops->path_rmdir(dir, dentry);
  }
@@ -216,7 +208,7 @@ index 18b35c6..12c67af 100644
  
  int security_path_unlink(struct path *dir, struct dentry *dentry)
  {
-@@ -423,6 +424,7 @@ int security_path_symlink(struct path *dir, struct dentry *dentry,
+@@ -446,6 +447,7 @@ int security_path_symlink(struct path *dir, struct dentry *dentry,
  		return 0;
  	return security_ops->path_symlink(dir, dentry, old_name);
  }
@@ -224,7 +216,7 @@ index 18b35c6..12c67af 100644
  
  int security_path_link(struct dentry *old_dentry, struct path *new_dir,
  		       struct dentry *new_dentry)
-@@ -431,6 +433,7 @@ int security_path_link(struct dentry *old_dentry, struct path *new_dir,
+@@ -454,6 +456,7 @@ int security_path_link(struct dentry *old_dentry, struct path *new_dir,
  		return 0;
  	return security_ops->path_link(old_dentry, new_dir, new_dentry);
  }
@@ -232,7 +224,7 @@ index 18b35c6..12c67af 100644
  
  int security_path_rename(struct path *old_dir, struct dentry *old_dentry,
  			 struct path *new_dir, struct dentry *new_dentry,
-@@ -458,6 +461,7 @@ int security_path_truncate(struct path *path)
+@@ -481,6 +484,7 @@ int security_path_truncate(struct path *path)
  		return 0;
  	return security_ops->path_truncate(path);
  }
@@ -240,7 +232,7 @@ index 18b35c6..12c67af 100644
  
  int security_path_chmod(struct path *path, umode_t mode)
  {
-@@ -465,6 +469,7 @@ int security_path_chmod(struct path *path, umode_t mode)
+@@ -488,6 +492,7 @@ int security_path_chmod(struct path *path, umode_t mode)
  		return 0;
  	return security_ops->path_chmod(path, mode);
  }
@@ -248,7 +240,7 @@ index 18b35c6..12c67af 100644
  
  int security_path_chown(struct path *path, kuid_t uid, kgid_t gid)
  {
-@@ -472,6 +477,7 @@ int security_path_chown(struct path *path, kuid_t uid, kgid_t gid)
+@@ -495,6 +500,7 @@ int security_path_chown(struct path *path, kuid_t uid, kgid_t gid)
  		return 0;
  	return security_ops->path_chown(path, uid, gid);
  }
@@ -256,7 +248,7 @@ index 18b35c6..12c67af 100644
  
  int security_path_chroot(struct path *path)
  {
-@@ -557,6 +563,7 @@ int security_inode_readlink(struct dentry *dentry)
+@@ -580,6 +586,7 @@ int security_inode_readlink(struct dentry *dentry)
  		return 0;
  	return security_ops->inode_readlink(dentry);
  }
@@ -264,7 +256,7 @@ index 18b35c6..12c67af 100644
  
  int security_inode_follow_link(struct dentry *dentry, struct nameidata *nd)
  {
-@@ -571,6 +578,7 @@ int security_inode_permission(struct inode *inode, int mask)
+@@ -594,6 +601,7 @@ int security_inode_permission(struct inode *inode, int mask)
  		return 0;
  	return security_ops->inode_permission(inode, mask);
  }
@@ -272,7 +264,7 @@ index 18b35c6..12c67af 100644
  
  int security_inode_setattr(struct dentry *dentry, struct iattr *attr)
  {
-@@ -693,6 +701,7 @@ int security_file_permission(struct file *file, int mask)
+@@ -716,6 +724,7 @@ int security_file_permission(struct file *file, int mask)
  
  	return fsnotify_perm(file, mask);
  }
@@ -280,7 +272,7 @@ index 18b35c6..12c67af 100644
  
  int security_file_alloc(struct file *file)
  {
-@@ -753,6 +762,7 @@ int security_mmap_file(struct file *file, unsigned long prot,
+@@ -775,6 +784,7 @@ int security_mmap_file(struct file *file, unsigned long prot,
  		return ret;
  	return ima_file_mmap(file, prot);
  }

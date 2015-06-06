@@ -2,25 +2,25 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=3.19
-pkgver=3.19.4
+_basekernel=4.0
+pkgver=4.0.5
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.19.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v3.x/patch-${pkgver}.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.0.tar.xz"
+        "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
-        'aufs3-loopback.patch'
-        'aufs3-base.patch'
-        'aufs3-mmap.patch'
-        'aufs3-standalone.patch'
-        'aufs3-kbuild.patch'
-        'aufs3.patch'
+        'aufs4-loopback.patch'
+        'aufs4-base.patch'
+        'aufs4-mmap.patch'
+        'aufs4-standalone.patch'
+        'aufs4-kbuild.patch'
+        'aufs4.patch'
         'config.aufs'
         'tmpfs-idr.patch'
         'vfs-ino.patch'
@@ -61,12 +61,12 @@ prepare() {
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
   
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs3.patch"
-  patch -p1 -i "${srcdir}/aufs3-base.patch"
-  patch -p1 -i "${srcdir}/aufs3-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs3-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs3-mmap.patch"
-  patch -p1 -i "${srcdir}/aufs3-standalone.patch"
+  patch -p1 -i "${srcdir}/aufs4.patch"
+  patch -p1 -i "${srcdir}/aufs4-base.patch"
+  patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs4-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs4-mmap.patch"
+  patch -p1 -i "${srcdir}/aufs4-standalone.patch"
   patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   patch -p1 -i "${srcdir}/vfs-ino.patch"
   
@@ -250,7 +250,7 @@ package_linux-headers() {
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/mm"
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
-  #aufs3-util need
+  #aufs4-util need
   sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files

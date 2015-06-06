@@ -1,5 +1,5 @@
 --- /dev/null
-+++ linux-3.19/Documentation/ABI/testing/debugfs-aufs	2015-02-17 20:21:42.217675416 -0500
++++ linux-4.0/Documentation/ABI/testing/debugfs-aufs	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,50 @@
 +What:		/debug/aufs/si_<id>/
 +Date:		March 2009
@@ -52,7 +52,7 @@
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
 --- /dev/null
-+++ linux-3.19/Documentation/ABI/testing/sysfs-aufs	2015-02-17 20:21:42.217675416 -0500
++++ linux-4.0/Documentation/ABI/testing/sysfs-aufs	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,31 @@
 +What:		/sys/fs/aufs/si_<id>/
 +Date:		March 2009
@@ -86,10 +86,10 @@
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/README	2015-02-17 20:21:42.217675416 -0500
-@@ -0,0 +1,371 @@
++++ linux-4.0/Documentation/filesystems/aufs/README	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,383 @@
 +
-+Aufs3 -- advanced multi layered unification filesystem version 3.x
++Aufs4 -- advanced multi layered unification filesystem version 4.x
 +http://aufs.sf.net
 +Junjiro R. Okajima
 +
@@ -97,7 +97,7 @@
 +0. Introduction
 +----------------------------------------
 +In the early days, aufs was entirely re-designed and re-implemented
-+Unionfs Version 1.x series. After many original ideas, approaches,
++Unionfs Version 1.x series. Adding many original ideas, approaches,
 +improvements and implementations, it becomes totally different from
 +Unionfs while keeping the basic features.
 +Recently, Unionfs Version 2.x series begin taking some of the same
@@ -105,7 +105,7 @@
 +Unionfs is being developed by Professor Erez Zadok at Stony Brook
 +University and his team.
 +
-+Aufs3 supports linux-3.0 and later.
++Aufs4 supports linux-4.0 and later, and for linux-3.x series try aufs3.
 +If you want older kernel version support, try aufs2-2.6.git or
 +aufs2-standalone.git repository, aufs1 from CVS on SourceForge.
 +
@@ -132,7 +132,12 @@
 +- dynamic branch manipulation, add, del.
 +- etc...
 +
-+Also there are many enhancements in aufs1, such as:
++Also there are many enhancements in aufs, such as:
++- test only the highest one for the directory permission (dirperm1)
++- copyup on open (coo=)
++- 'move' policy for copy-up between two writable branches, after
++  checking free space.
++- xattr, acl
 +- readdir(3) in userspace.
 +- keep inode number by external inode number table
 +- keep the timestamps of file/dir in internal copyup operation
@@ -162,75 +167,82 @@
 +- userspace wrapper for pathconf(3)/fpathconf(3) with _PC_LINK_MAX.
 +- and more...
 +
-+Currently these features are dropped temporary from aufs3.
++Currently these features are dropped temporary from aufs4.
 +See design/08plan.txt in detail.
-+- test only the highest one for the directory permission (dirperm1)
-+- copyup on open (coo=)
 +- nested mount, i.e. aufs as readonly no-whiteout branch of another aufs
 +  (robr)
 +- statistics of aufs thread (/sys/fs/aufs/stat)
-+- delegation mode (dlgt)
-+  a delegation of the internal branch access to support task I/O
-+  accounting, which also supports Linux Security Modules (LSM) mainly
-+  for Suse AppArmor.
-+- intent.open/create (file open in a single lookup)
 +
 +Features or just an idea in the future (see also design/*.txt),
 +- reorder the branch index without del/re-add.
 +- permanent xino files for NFSD
 +- an option for refreshing the opened files after add/del branches
-+- 'move' policy for copy-up between two writable branches, after
-+  checking free space.
 +- light version, without branch manipulation. (unnecessary?)
 +- copyup in userspace
 +- inotify in userspace
 +- readv/writev
-+- xattr, acl
 +
 +
 +2. Download
 +----------------------------------------
-+There were three GIT trees for aufs3, aufs3-linux.git,
-+aufs3-standalone.git, and aufs-util.git. Note that there is no "3" in
++There are three GIT trees for aufs4, aufs4-linux.git,
++aufs4-standalone.git, and aufs-util.git. Note that there is no "4" in
 +"aufs-util.git."
-+While the aufs-util is always necessary, you need either of aufs3-linux
-+or aufs3-standalone.
++While the aufs-util is always necessary, you need either of aufs4-linux
++or aufs4-standalone.
 +
-+The aufs3-linux tree includes the whole linux mainline GIT tree,
++The aufs4-linux tree includes the whole linux mainline GIT tree,
 +git://git.kernel.org/.../torvalds/linux.git.
 +And you cannot select CONFIG_AUFS_FS=m for this version, eg. you cannot
-+build aufs3 as an external kernel module.
++build aufs4 as an external kernel module.
++Several extra patches are not included in this tree. Only
++aufs4-standalone tree contains them. They are describe in the later
++section "Configuration and Compilation."
 +
-+On the other hand, the aufs3-standalone tree has only aufs source files
++On the other hand, the aufs4-standalone tree has only aufs source files
 +and necessary patches, and you can select CONFIG_AUFS_FS=m.
++But you need to apply all aufs patches manually.
 +
-+You will find GIT branches whose name is in form of "aufs3.x" where "x"
-+represents the linux kernel version, "linux-3.x". For instance,
-+"aufs3.0" is for linux-3.0. For latest "linux-3.x-rcN", use
-+"aufs3.x-rcN" branch.
++You will find GIT branches whose name is in form of "aufs4.x" where "x"
++represents the linux kernel version, "linux-4.x". For instance,
++"aufs4.0" is for linux-4.0. For latest "linux-4.x-rcN", use
++"aufs4.x-rcN" branch.
 +
-+o aufs3-linux tree
++o aufs4-linux tree
 +$ git clone --reference /your/linux/git/tree \
-+	git://git.code.sf.net/p/aufs/aufs3-linux aufs-aufs3-linux \
-+	aufs3-linux.git
++	git://github.com/sfjro/aufs4-linux.git aufs4-linux.git
 +- if you don't have linux GIT tree, then remove "--reference ..."
-+$ cd aufs3-linux.git
-+$ git checkout origin/aufs3.0
++$ cd aufs4-linux.git
++$ git checkout origin/aufs4.0
 +
-+o aufs3-standalone tree
-+$ git clone git://git.code.sf.net/p/aufs/aufs3-standalone \
-+	aufs3-standalone.git
-+$ cd aufs3-standalone.git
-+$ git checkout origin/aufs3.0
++Or You may want to directly git-pull aufs into your linux GIT tree, and
++leave the patch-work to GIT.
++$ cd /your/linux/git/tree
++$ git remote add aufs4 git://github.com/sfjro/aufs4-linux.git
++$ git fetch aufs4
++$ git checkout -b my4.0 v4.0
++$ (add your local change...)
++$ git pull aufs4 aufs4.0
++- now you have v4.0 + your_changes + aufs4.0 in you my4.0 branch.
++- you may need to solve some conflicts between your_changes and
++  aufs4.0. in this case, git-rerere is recommended so that you can
++  solve the similar conflicts automatically when you upgrade to 4.1 or
++  later in the future.
++
++o aufs4-standalone tree
++$ git clone git://github.com/sfjro/aufs4-standalone.git aufs4-standalone.git
++$ cd aufs4-standalone.git
++$ git checkout origin/aufs4.0
 +
 +o aufs-util tree
-+$ git clone git://git.code.sf.net/p/aufs/aufs-util \
-+	aufs-util.git
++$ git clone git://git.code.sf.net/p/aufs/aufs-util aufs-util.git
++- note that the public aufs-util.git is on SourceForge instead of
++  GitHUB.
 +$ cd aufs-util.git
-+$ git checkout origin/aufs3.0
++$ git checkout origin/aufs4.0
 +
-+Note: The 3.x-rcN branch is to be used with `rc' kernel versions ONLY.
-+The minor version number, 'x' in '3.x', of aufs may not always
++Note: The 4.x-rcN branch is to be used with `rc' kernel versions ONLY.
++The minor version number, 'x' in '4.x', of aufs may not always
 +follow the minor version number of the kernel.
 +Because changes in the kernel that cause the use of a new
 +minor version number do not always require changes to aufs-util.
@@ -242,8 +254,8 @@
 +nearest lower number.
 +
 +For (an unreleased) example:
-+If you are using "linux-3.10" and the "aufs3.10" branch
-+does not exist in aufs-util repository, then "aufs3.9", "aufs3.8"
++If you are using "linux-4.10" and the "aufs4.10" branch
++does not exist in aufs-util repository, then "aufs4.9", "aufs4.8"
 +or something numerically smaller is the branch for your kernel.
 +
 +Also you can view all branches by
@@ -254,19 +266,19 @@
 +----------------------------------------
 +Make sure you have git-checkout'ed the correct branch.
 +
-+For aufs3-linux tree,
++For aufs4-linux tree,
 +- enable CONFIG_AUFS_FS.
 +- set other aufs configurations if necessary.
 +
-+For aufs3-standalone tree,
++For aufs4-standalone tree,
 +There are several ways to build.
 +
 +1.
-+- apply ./aufs3-kbuild.patch to your kernel source files.
-+- apply ./aufs3-base.patch too.
-+- apply ./aufs3-mmap.patch too.
-+- apply ./aufs3-standalone.patch too, if you have a plan to set
-+  CONFIG_AUFS_FS=m. otherwise you don't need ./aufs3-standalone.patch.
++- apply ./aufs4-kbuild.patch to your kernel source files.
++- apply ./aufs4-base.patch too.
++- apply ./aufs4-mmap.patch too.
++- apply ./aufs4-standalone.patch too, if you have a plan to set
++  CONFIG_AUFS_FS=m. otherwise you don't need ./aufs4-standalone.patch.
 +- copy ./{Documentation,fs,include/uapi/linux/aufs_type.h} files to your
 +  kernel source tree. Never copy $PWD/include/uapi/linux/Kbuild.
 +- enable CONFIG_AUFS_FS, you can select either
@@ -283,9 +295,9 @@
 +
 +2.
 +- module only (CONFIG_AUFS_FS=m).
-+- apply ./aufs3-base.patch to your kernel source files.
-+- apply ./aufs3-mmap.patch too.
-+- apply ./aufs3-standalone.patch too.
++- apply ./aufs4-base.patch to your kernel source files.
++- apply ./aufs4-mmap.patch too.
++- apply ./aufs4-standalone.patch too.
 +- build your kernel, don't forget "make headers_install", and reboot.
 +- edit ./config.mk and set other aufs configurations if necessary.
 +  Note: You should read $PWD/fs/aufs/Kconfig carefully which describes
@@ -304,7 +316,7 @@
 +    available in aufs standalone version's Makefile only), or copy
 +    $PWD/usr/include/linux/aufs_type.h to /usr/include/linux or wherever
 +    you like manually. By default, the target directory is $PWD/usr.
-+- no need to apply aufs3-kbuild.patch, nor copying source files to your
++- no need to apply aufs4-kbuild.patch, nor copying source files to your
 +  kernel source tree.
 +
 +Note: The header file aufs_type.h is necessary to build aufs-util
@@ -324,9 +336,9 @@
 +  then run "make install_ulib" too. And refer to the aufs manual in
 +  detail.
 +
-+There several other patches in aufs3-standalone.git. They are all
++There several other patches in aufs4-standalone.git. They are all
 +optional. When you meet some problems, they will help you.
-+- aufs3-loopback.patch
++- aufs4-loopback.patch
 +  Supports a nested loopback mount in a branch-fs. This patch is
 +  unnecessary until aufs produces a message like "you may want to try
 +  another patch for loopback file".
@@ -460,8 +472,8 @@
 +# mode: text;
 +# End: ;
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/design/01intro.txt	2015-02-17 20:21:42.217675416 -0500
-@@ -0,0 +1,161 @@
++++ linux-4.0/Documentation/filesystems/aufs/design/01intro.txt	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,170 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
@@ -492,7 +504,7 @@
 +- multi layered stackable unification filesystem, the member directory
 +  is called as a branch.
 +- branch permission and attribute, 'readonly', 'real-readonly',
-+  'readwrite', 'whiteout-able', 'link-able whiteout' and their
++  'readwrite', 'whiteout-able', 'link-able whiteout', etc. and their
 +  combination.
 +- internal "file copy-on-write".
 +- logical deletion, whiteout.
@@ -543,11 +555,16 @@
 +- unnecessary copy-up may happen, for example mmap(MAP_PRIVATE) after
 +  open(O_RDWR).
 +
-+Unionfs has a longer history. When I started implementing a stacking filesystem
-+(Aug 2005), it already existed. It has virtual super_block, inode,
-+dentry and file objects and they have an array pointing lower same kind
-+objects. After contributing many patches for Unionfs, I re-started my
-+project AUFS (Jun 2006).
++In linux-3.18, "overlay" filesystem (formerly known as "overlayfs") was
++merged into mainline. This is another implementation of UnionMount as a
++separated filesystem. All the limitations and known problems which
++UnionMount are equally inherited to "overlay" filesystem.
++
++Unionfs has a longer history. When I started implementing a stackable
++filesystem (Aug 2005), it already existed. It has virtual super_block,
++inode, dentry and file objects and they have an array pointing lower
++same kind objects. After contributing many patches for Unionfs, I
++re-started my project AUFS (Jun 2006).
 +
 +In AUFS, the structure of filesystem resembles to Unionfs, but I
 +implemented my own ideas, approaches and enhancements and it became
@@ -569,11 +586,14 @@
 +- DM snapshot-merge may help a lot when users try merging. in the
 +  fs-layer union, users will use rsync(1).
 +
++You may want to read my old paper "Filesystems in LiveCD"
++(http://aufs.sourceforge.net/aufs2/report/sq/sq.pdf).
 +
-+Several characters/aspects of aufs
++
++Several characters/aspects/persona of aufs
 +----------------------------------------------------------------------
 +
-+Aufs has several characters or aspects.
++Aufs has several characters, aspects or persona.
 +1. a filesystem, callee of VFS helper
 +2. sub-VFS, caller of VFS helper for branches
 +3. a virtual filesystem which maintains persistent inode number
@@ -604,10 +624,11 @@
 +numbers. This is particularly important to support exporting a
 +filesystem via NFS. Aufs is a virtual filesystem which doesn't have a
 +backend block device for its own. But some storage is necessary to
-+maintain inode number. It may be a large space and may not suit to keep
-+in memory. Aufs rents some space from its first writable branch
-+filesystem (by default) and creates file(s) on it. These files are
-+created by aufs internally and removed soon (currently) keeping opened.
++keep and maintain the inode numbers. It may be a large space and may not
++suit to keep in memory. Aufs rents some space from its first writable
++branch filesystem (by default) and creates file(s) on it. These files
++are created by aufs internally and removed soon (currently) keeping
++opened.
 +Note: Because these files are removed, they are totally gone after
 +      unmounting aufs. It means the inode numbers are not persistent
 +      across unmount or reboot. I have a plan to make them really
@@ -624,8 +645,8 @@
 +helper, instead of doing in kernel space. Actually I am still thinking
 +about it. But currently I have implemented it in kernel space.
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/design/02struct.txt	2015-02-17 20:21:42.217675416 -0500
-@@ -0,0 +1,251 @@
++++ linux-4.0/Documentation/filesystems/aufs/design/02struct.txt	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,258 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
@@ -657,18 +678,18 @@
 +
 +Aufs lookup operation finds /ro/fileA and gets dentry for that. These
 +pointers are stored in a aufs dentry. The array in aufs dentry will be,
-+- [0] = NULL
++- [0] = NULL (because /rw/fileA doesn't exist)
 +- [1] = /ro/fileA
 +
 +This style of an array is essentially same to the aufs
 +superblock/inode/dentry/file objects.
 +
 +Because aufs supports manipulating branches, ie. add/delete/change
-+dynamically, these objects has its own generation. When branches are
-+changed, the generation in aufs superblock is incremented. And a
-+generation in other object are compared when it is accessed.
-+When a generation in other objects are obsoleted, aufs refreshes the
-+internal array.
++branches dynamically, these objects has its own generation. When
++branches are changed, the generation in aufs superblock is
++incremented. And a generation in other object are compared when it is
++accessed. When a generation in other objects are obsoleted, aufs
++refreshes the internal array.
 +
 +
 +Superblock
@@ -676,8 +697,8 @@
 +Additionally aufs superblock has some data for policies to select one
 +among multiple writable branches, XIB files, pseudo-links and kobject.
 +See below in detail.
-+About the policies which supports copy-down a directory, see policy.txt
-+too.
++About the policies which supports copy-down a directory, see
++wbr_policy.txt too.
 +
 +
 +Branch and XINO(External Inode Number Translation Table)
@@ -697,13 +718,20 @@
 +might appear. If your branch filesystem consumes disk space for such
 +holes, then you should specify 'xino=' option at mounting aufs.
 +
++Aufs has a mount option to free the disk blocks for such holes in XINO
++files on tmpfs or ramdisk. But it is not so effective actually. If you
++meet a problem of disk shortage due to XINO files, then you should try
++"tmpfs-ino.patch" (and "vfs-ino.patch" too) in aufs4-standalone.git.
++The patch localizes the assignment inumbers per tmpfs-mount and avoid
++the holes in XINO files.
++
 +Also a writable branch has three kinds of "whiteout bases". All these
-+are existed when the branch is joined to aufs and the names are
++are existed when the branch is joined to aufs, and their names are
 +whiteout-ed doubly, so that users will never see their names in aufs
 +hierarchy.
-+1. a regular file which will be linked to all whiteouts.
++1. a regular file which will be hardlinked to all whiteouts.
 +2. a directory to store a pseudo-link.
-+3. a directory to store an "orphan-ed" file temporary.
++3. a directory to store an "orphan"-ed file temporary.
 +
 +1. Whiteout Base
 +   When you remove a file on a readonly branch, aufs handles it as a
@@ -720,8 +748,8 @@
 +   creating a file under this dir, the file is unlinked.
 +
 +Because aufs supports manipulating branches, ie. add/delete/change
-+dynamically, a branch has its own id. When the branch order changes, aufs
-+finds the new index by searching the branch id.
++dynamically, a branch has its own id. When the branch order changes,
++aufs finds the new index by searching the branch id.
 +
 +
 +Pseudo-link
@@ -734,7 +762,7 @@
 +simple list. If fileB is read after unlinking fileA, aufs returns
 +filedata from the pseudo-link instead of the lower readonly
 +branch. Because the pseudo-link is based upon the inode, to keep the
-+inode number by xino (see above) is important.
++inode number by xino (see above) is essentially necessary.
 +
 +All the hardlinks under the Pseudo-link Directory of the writable branch
 +should be restored in a proper location later. Aufs provides a utility
@@ -752,12 +780,13 @@
 +XIB(external inode number bitmap)
 +----------------------------------------------------------------------
 +Addition to the xino file per a branch, aufs has an external inode number
-+bitmap in a superblock object. It is also a file such like a xino file.
++bitmap in a superblock object. It is also an internal file such like a
++xino file.
 +It is a simple bitmap to mark whether the aufs inode number is in-use or
 +not.
 +To reduce the file I/O, aufs prepares a single memory page to cache xib.
 +
-+Aufs implements a feature to truncate/refresh both of xino and xib to
++As well as XINO files, aufs has a feature to truncate/refresh XIB to
 +reduce the number of consumed disk blocks for these files.
 +
 +
@@ -769,7 +798,7 @@
 +with eliminating the whiteout-ed ones, and sets it to file (dir)
 +object. So the file object has its entry list until it is closed. The
 +entry list will be updated when the file position is zero and becomes
-+old. This decision is made in aufs automatically.
++obsoleted. This decision is made in aufs automatically.
 +
 +The dynamically allocated memory block for the name of entries has a
 +unit of 512 bytes (by default) and stores the names contiguously (no
@@ -808,9 +837,8 @@
 +its completion. This approach solves a problem of a signal handler
 +simply.
 +If aufs didn't adopt the workqueue and changed the privilege of the
-+process, and if the mkdir/write call arises SIGXFSZ or other signal,
-+then the user process might gain a privilege or the generated core file
-+was owned by a superuser.
++process, then the process may receive the unexpected SIGXFSZ or other
++signals.
 +
 +Also aufs uses the system global workqueue ("events" kernel thread) too
 +for asynchronous tasks, such like handling inotify/fsnotify, re-creating a
@@ -828,7 +856,7 @@
 +
 +Basically the whiteout represents "logical deletion" which stops aufs to
 +lookup further, but also it represents "dir is opaque" which also stop
-+lookup.
++further lookup.
 +
 +In aufs, rmdir(2) and rename(2) for dir uses whiteout alternatively.
 +In order to make several functions in a single systemcall to be
@@ -836,7 +864,7 @@
 +unique whiteouted name.
 +For example, in rename(2) dir where the target dir already existed, aufs
 +renames the target dir to a temporary unique whiteouted name before the
-+actual rename on a branch and then handles other actions (make it opaque,
++actual rename on a branch, and then handles other actions (make it opaque,
 +update the attributes, etc). If an error happens in these actions, aufs
 +simply renames the whiteouted name back and returns an error. If all are
 +succeeded, aufs registers a function to remove the whiteouted unique
@@ -866,7 +894,7 @@
 +- diropq for the ancestor directories may exist on the upper branch.
 +- free space on the lower branch will reduce.
 +- another access to the file may happen during moving-down, including
-+  UDBA.
++  UDBA (see "Revalidate Dentry and UDBA").
 +- the file should not be hard-linked nor pseudo-linked. they should be
 +  handled by auplink utility later.
 +
@@ -878,8 +906,8 @@
 +
 +For this purpose, use "aumvdown" command in aufs-util.git.
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/design/03lookup.txt	2015-02-17 20:21:42.221008670 -0500
-@@ -0,0 +1,133 @@
++++ linux-4.0/Documentation/filesystems/aufs/design/03lookup.txt	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,113 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
@@ -899,23 +927,13 @@
 +Lookup in a Branch
 +----------------------------------------------------------------------
 +Since aufs has a character of sub-VFS (see Introduction), it operates
-+lookup for branches as VFS does. It may be a heavy work. Generally
-+speaking struct nameidata is a bigger structure and includes many
-+information. But almost all lookup operation in aufs is the simplest
-+case, ie. lookup only an entry directly connected to its parent. Digging
-+down the directory hierarchy is unnecessary.
++lookup for branches as VFS does. It may be a heavy work. But almost all
++lookup operation in aufs is the simplest case, ie. lookup only an entry
++directly connected to its parent. Digging down the directory hierarchy
++is unnecessary. VFS has a function lookup_one_len() for that use, and
++aufs calls it.
 +
-+VFS has a function lookup_one_len() for that use, but it is not usable
-+for a branch filesystem which requires struct nameidata. So aufs
-+implements a simple lookup wrapper function. When a branch filesystem
-+allows NULL as nameidata, it calls lookup_one_len(). Otherwise it builds
-+a simplest nameidata and calls lookup_hash().
-+Here aufs applies "a principle in NFSD", ie. if the filesystem supports
-+NFS-export, then it has to support NULL as a nameidata parameter for
-+->create(), ->lookup() and ->d_revalidate(). So the lookup wrapper in
-+aufs tests if ->s_export_op in the branch is NULL or not.
-+
-+When a branch is a remote filesystem, aufs basically trusts its
++When a branch is a remote filesystem, aufs basically relies upon its
 +->d_revalidate(), also aufs forces the hardest revalidate tests for
 +them.
 +For d_revalidate, aufs implements three levels of revalidate tests. See
@@ -930,7 +948,7 @@
 +- "dirA" exists under /ro, but /rw. and its mode is 0700.
 +- user invoked "chmod a+rx /au/dirA"
 +- the internal copy-up is activated and "/rw/dirA" is created and its
-+  permission bits are set to world readble.
++  permission bits are set to world readable.
 +- then "/au/dirA" becomes world readable?
 +
 +In this case, /ro/dirA is still 0700 since it exists in readonly branch,
@@ -939,8 +957,9 @@
 +allowed it by chmod. Should really aufs rejects showing the entries
 +under /ro/dirA?
 +
-+To be honest, I don't have a best solution for this case. So aufs
-+implements 'dirperm1' and 'nodirperm1' and leave it to users.
++To be honest, I don't have a good solution for this case. So aufs
++implements 'dirperm1' and 'nodirperm1' mount options, and leave it to
++users.
 +When dirperm1 is specified, aufs checks only the highest one for the
 +directory permission, and shows the entries. Otherwise, as usual, checks
 +every dir existing on all branches and rejects the request.
@@ -948,17 +967,6 @@
 +As a side effect, dirperm1 option improves the performance of aufs
 +because the number of permission check is reduced when the number of
 +branch is many.
-+
-+
-+Loopback Mount
-+----------------------------------------------------------------------
-+Basically aufs supports any type of filesystem and block device for a
-+branch (actually there are some exceptions). But it is prohibited to add
-+a loopback mounted one whose backend file exists in a filesystem which is
-+already added to aufs. The reason is to protect aufs from a recursive
-+lookup. If it was allowed, the aufs lookup operation might re-enter a
-+lookup for the loopback mounted branch in the same context, and will
-+cause a deadlock.
 +
 +
 +Revalidate Dentry and UDBA (User's Direct Branch Access)
@@ -1010,12 +1018,12 @@
 +   itself.
 +3. No Extra Validation
 +   This is the simplest test and doesn't add any additional revalidation
-+   test, and skip therevalidatin in step 4. It is useful and improves
++   test, and skip the revalidation in step 4. It is useful and improves
 +   aufs performance when system surely hide the aufs branches from user,
 +   by over-mounting something (or another method).
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/design/04branch.txt	2015-02-17 20:21:42.221008670 -0500
-@@ -0,0 +1,75 @@
++++ linux-4.0/Documentation/filesystems/aufs/design/04branch.txt	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,74 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
 +# 
@@ -1041,8 +1049,7 @@
 +Add a Branch
 +----------------------------------------------------------------------
 +o Confirm the adding dir exists outside of aufs, including loopback
-+  mount.
-+- and other various attributes...
++  mount, and its various attributes.
 +o Initialize the xino file and whiteout bases if necessary.
 +  See struct.txt.
 +
@@ -1057,7 +1064,7 @@
 +  writable branch, and the writable branch is world-writable, then a
 +  malicious guy may create /etc/passwd on the writable branch directly
 +  and the infected file will be valid in aufs.
-+  I am afraid it can be a security issue, but nothing to do except
++  I am afraid it can be a security issue, but aufs can do nothing except
 +  producing a warning.
 +
 +
@@ -1092,7 +1099,7 @@
 +  - a regular file on the branch is opened for write and there is no
 +    same named entry on the upper branch.
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/design/05wbr_policy.txt	2015-02-17 20:21:42.221008670 -0500
++++ linux-4.0/Documentation/filesystems/aufs/design/05wbr_policy.txt	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,64 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -1117,9 +1124,9 @@
 +writable branch which has the parent (or ancestor) dir of the target
 +file is chosen (top-down-parent policy).
 +By user's request, aufs implements some other policies to select the
-+writable branch, for file creation two policies, round-robin and
-+most-free-space policies. For copy-up three policies, top-down-parent,
-+bottom-up-parent and bottom-up policies.
++writable branch, for file creation several policies, round-robin,
++most-free-space, and other policies. For copy-up, top-down-parent,
++bottom-up-parent, bottom-up and others.
 +
 +As expected, the round-robin policy selects the branch in circular. When
 +you have two writable branches and creates 10 new files, 5 files will be
@@ -1159,7 +1166,7 @@
 +  one. If the selected branch is readonly, then aufs follows the
 +  copyup policy.
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/design/06fhsm.txt	2015-02-17 20:21:42.221008670 -0500
++++ linux-4.0/Documentation/filesystems/aufs/design/06fhsm.txt	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,120 @@
 +
 +# Copyright (C) 2011-2015 Junjiro R. Okajima
@@ -1183,9 +1190,9 @@
 +----------------------------------------------------------------------
 +Hierarchical Storage Management (or HSM) is a well-known feature in the
 +storage world. Aufs provides this feature as file-based with multiple
-+writable branches, based upon the principle of "Colder-Lower".
++writable branches, based upon the principle of "Colder, the Lower".
 +Here the word "colder" means that the less used files, and "lower" means
-+that the position in the order of the stacked branches.
++that the position in the order of the stacked branches vertically.
 +These multiple writable branches are prioritized, ie. the topmost one
 +should be the fastest drive and be used heavily.
 +
@@ -1282,7 +1289,7 @@
 +And of course, in every step, an error may happen. So the operation
 +should restore the original file state after an error happens.
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/design/06mmap.txt	2015-02-17 20:21:42.221008670 -0500
++++ linux-4.0/Documentation/filesystems/aufs/design/06mmap.txt	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,46 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -1306,7 +1313,7 @@
 +interaction with aufs. It means aufs_mmap() calls the branch fs's
 +->mmap().
 +This approach is simple and good, but there is one problem.
-+Under /proc, several entries show the mmap-ped files by its path (with
++Under /proc, several entries show the mmapped files by its path (with
 +device and inode number), and the printed path will be the path on the
 +branch fs's instead of virtual aufs's.
 +This is not a problem in most cases, but some utilities lsof(1) (and its
@@ -1323,7 +1330,7 @@
 +  incremented.
 +- merging vma maintains the ref count too.
 +
-+This is not a good approach. It just faking the printed path. But it
++This is not a good approach. It just fakes the printed path. But it
 +leaves all behaviour around f_mapping unchanged. This is surely an
 +advantage.
 +Actually aufs had adopted another complicated approach which calls
@@ -1331,7 +1338,7 @@
 +approach, aufs met a hard problem and I could not solve it without
 +switching the approach.
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/design/06xattr.txt	2015-02-17 20:21:42.221008670 -0500
++++ linux-4.0/Documentation/filesystems/aufs/design/06xattr.txt	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,96 @@
 +
 +# Copyright (C) 2014-2015 Junjiro R. Okajima
@@ -1355,7 +1362,7 @@
 +----------------------------------------------------------------------
 +For the inode standard attributes (owner, group, timestamps, etc.), aufs
 +shows the values from the topmost existing file. This behaviour is good
-+for the non-dir entreis since the bahaviour exactly matches the shown
++for the non-dir entries since the bahaviour exactly matches the shown
 +information. But for the directories, aufs considers all the same named
 +entries on the lower branches. Which means, if one of the lower entry
 +rejects readdir call, then aufs returns an error even if the topmost
@@ -1368,14 +1375,14 @@
 +
 +A similar issue can happen around XATTR.
 +getxattr(2) and listxattr(2) families behave as if dirperm1 option is
-+always set. Otherwise these very unpleasant situation can happen.
-+- listxattr(2) may return the duplicated entires.
++always set. Otherwise these very unpleasant situation would happen.
++- listxattr(2) may return the duplicated entries.
 +- users may not be able to remove or reset the XATTR forever,
 +
 +
 +XATTR/EA support in the internal (copy,move)-(up,down)
 +----------------------------------------------------------------------
-+Generally the extended attributes of inode are categorazied as these.
++Generally the extended attributes of inode are categorized as these.
 +- "security" for LSM and capability.
 +- "system" for posix ACL, 'acl' mount option is required for the branch
 +  fs generally.
@@ -1389,12 +1396,12 @@
 +
 +In copy-up, the support for XATTR on the dst branch may differ from the
 +src branch. In this case, the copy-up operation will get an error and
-+the original user operation which triggered the copy-up fails. It can
-+happen that even all copy-up will fail.
++the original user operation which triggered the copy-up will fail. It
++can happen that even all copy-up will fail.
 +When both of src and dst branches support XATTR and if an error occurs
 +during copying XATTR, then the copy-up should fail obviously. That is a
 +good reason and aufs should return an error to userspace. But when only
-+the src branch support XATTR, aufs should not return an error.
++the src branch support that XATTR, aufs should not return an error.
 +For example, the src branch supports ACL but the dst branch doesn't
 +because the dst branch may natively un-support it or temporary
 +un-support it due to "noacl" mount option. Of course, the dst branch fs
@@ -1408,15 +1415,15 @@
 +
 +For the copy-up operation, there two basic approaches.
 +- copy the specified XATTR only (by category above), and return the
-+  error if it happens inconditionally.
++  error unconditionally if it happens.
 +- copy all XATTR, and ignore the error on the specified category only.
 +
 +In order to support XATTR and to implement the correct behaviour, aufs
-+chooses the latter approach and introduces some attributes for its
-+branch, "icexsec", "icexsys", "icextr", "icexusr", and "icexoth".
++chooses the latter approach and introduces some new branch attributes,
++"icexsec", "icexsys", "icextr", "icexusr", and "icexoth".
 +They correspond to the XATTR namespaces (see above). Additionally, to be
-+convenient, "icex" is also provided which means all "ix*" attributes are
-+set.
++convenient, "icex" is also provided which means all "icex*" attributes
++are set (here the word "icex" stands for "ignore copy-error on XATTR").
 +
 +The meaning of these attributes is to ignore the error from setting
 +XATTR on that branch.
@@ -1430,7 +1437,7 @@
 +Do we need another attribute to stop copying XATTR? I am unsure. For
 +now, aufs implements the branch attributes to ignore the error.
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/design/07export.txt	2015-02-17 20:21:42.221008670 -0500
++++ linux-4.0/Documentation/filesystems/aufs/design/07export.txt	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,58 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -1472,10 +1479,10 @@
 +  + find the index of a branch from its id in handle, and check it is
 +    still exist in aufs.
 +  + 1st level: get the inode number from handle and search it in cache.
-+  + 2nd level: if not found, get the parent inode number from handle and
-+    search it in cache. and then open the parent dir, find the matching
-+    inode number by vfs_readdir() and get its name, and call
-+    lookup_one_len() for the target dentry.
++  + 2nd level: if not found in cache, get the parent inode number from
++    the handle and search it in cache. and then open the found parent
++    dir, find the matching inode number by vfs_readdir() and get its
++    name, and call lookup_one_len() for the target dentry.
 +  + 3rd level: if the parent dir is not cached, call
 +    exportfs_decode_fh() for a branch and get the parent on a branch,
 +    build a pathname of it, convert it a pathname in aufs, call
@@ -1491,7 +1498,7 @@
 +- readdir(): call lockdep_on/off() because filldir in NFSD calls
 +  lookup_one_len(), vfs_getattr(), encode_fh() and others.
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/design/08shwh.txt	2015-02-17 20:21:42.221008670 -0500
++++ linux-4.0/Documentation/filesystems/aufs/design/08shwh.txt	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,52 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -1546,8 +1553,8 @@
 +This new squashfs archive can be stored on the boot device and the
 +initramfs will use it to replace the old one at the next boot.
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/design/10dynop.txt	2015-02-17 20:21:42.221008670 -0500
-@@ -0,0 +1,46 @@
++++ linux-4.0/Documentation/filesystems/aufs/design/10dynop.txt	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,47 @@
 +
 +# Copyright (C) 2010-2015 Junjiro R. Okajima
 +#
@@ -1572,91 +1579,31 @@
 +operation. Some FS have multiple sets of them. For instance, ext2 has
 +three sets, one for XIP, for NOBH, and for normal.
 +Since aufs overrides and redirects these operations, sometimes aufs has
-+to change its behaviour according to the branch FS type. More imporantly
++to change its behaviour according to the branch FS type. More importantly
 +VFS acts differently if a function (member in the struct) is set or
 +not. It means aufs should have several sets of operations and select one
 +among them according to the branch FS definition.
 +
-+In order to solve this problem and not to affect the behavour of VFS,
++In order to solve this problem and not to affect the behaviour of VFS,
 +aufs defines these operations dynamically. For instance, aufs defines
-+aio_read function for struct file_operations, but it may not be set to
-+the file_operations. When the branch FS doesn't have it, aufs doesn't
-+set it to its file_operations while the function definition itself is
-+still alive. So the behaviour of io_submit(2) will not change, and it
-+will return an error when aio_read is not defined.
++dummy direct_IO function for struct address_space_operations, but it may
++not be set to the address_space_operations actually. When the branch FS
++doesn't have it, aufs doesn't set it to its address_space_operations
++while the function definition itself is still alive. So the behaviour
++itself will not change, and it will return an error when direct_IO is
++not set.
 +
 +The lifetime of these dynamically generated operation object is
 +maintained by aufs branch object. When the branch is removed from aufs,
 +the reference counter of the object is decremented. When it reaches
 +zero, the dynamically generated operation object will be freed.
 +
-+This approach is designed to support AIO (io_submit), Direcit I/O and
-+XIP mainly.
-+Currently this approach is applied to file_operations and
-+vm_operations_struct for regular files only.
++This approach is designed to support AIO (io_submit), Direct I/O and
++XIP (DAX) mainly.
++Currently this approach is applied to address_space_operations for
++regular files only.
 --- /dev/null
-+++ linux-3.19/Documentation/filesystems/aufs/design/99plan.txt	2015-02-17 20:21:42.221008670 -0500
-@@ -0,0 +1,58 @@
-+
-+# Copyright (C) 2005-2015 Junjiro R. Okajima
-+# 
-+# This program is free software; you can redistribute it and/or modify
-+# it under the terms of the GNU General Public License as published by
-+# the Free Software Foundation; either version 2 of the License, or
-+# (at your option) any later version.
-+# 
-+# This program is distributed in the hope that it will be useful,
-+# but WITHOUT ANY WARRANTY; without even the implied warranty of
-+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+# GNU General Public License for more details.
-+# 
-+# You should have received a copy of the GNU General Public License
-+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-+
-+Plan
-+
-+Restoring some features which was implemented in aufs1.
-+They were dropped in aufs2 in order to make source files simpler and
-+easier to be reviewed.
-+
-+
-+Being Another Aufs's Readonly Branch (robr)
-+----------------------------------------------------------------------
-+Aufs1 allows aufs to be another aufs's readonly branch.
-+This feature was developed by a user's request. But it may not be used
-+currecnly.
-+
-+
-+Refresh the Opened File (refrof)
-+----------------------------------------------------------------------
-+This option is implemented in aufs1 but incomplete.
-+
-+When user reads from a file, he expects to get its latest filedata
-+generally. If the file is removed and a new same named file is created,
-+the content he gets is unchanged, ie. the unlinked filedata.
-+
-+Let's try case study again.
-+- aufs has two branches.
-+  /au = /rw + /ro
-+- "fileA" exists under /ro, but /rw.
-+- user opened "/au/fileA".
-+- he or someone else inserts a branch (/new) between /rw and /ro.
-+  /au = /rw + /new + /ro
-+- the new branch has "fileA".
-+- user reads from the opened "fileA"
-+- which filedata should aufs return, from /ro or /new?
-+
-+Some people says it has to be "from /ro" and it is a semantics of Unix.
-+The others say it should be "from /new" because the file is not removed
-+and it is equivalent to the case of someone else modifies the file.
-+
-+Here again I don't have a best and final answer. I got an idea to
-+implement 'refrof' and 'norefrof' option. When 'refrof' (REFResh the
-+Opened File) is specified (by default), aufs returns the filedata from
-+/new.
-+Otherwise from /new.
---- /dev/null
-+++ linux-3.19/fs/aufs/Kconfig	2015-02-17 20:21:42.221008670 -0500
++++ linux-4.0/fs/aufs/Kconfig	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,185 @@
 +config AUFS_FS
 +	tristate "Aufs (Advanced multi layered unification filesystem) support"
@@ -1844,7 +1791,7 @@
 +	When aufs supports Magic SysRq, enabled automatically.
 +endif
 --- /dev/null
-+++ linux-3.19/fs/aufs/Makefile	2015-02-17 20:21:42.221008670 -0500
++++ linux-4.0/fs/aufs/Makefile	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,44 @@
 +
 +include ${src}/magic.mk
@@ -1891,7 +1838,7 @@
 +aufs-$(CONFIG_AUFS_DEBUG) += debug.o
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
 --- /dev/null
-+++ linux-3.19/fs/aufs/aufs.h	2015-02-17 20:21:42.221008670 -0500
++++ linux-4.0/fs/aufs/aufs.h	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,59 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -1953,8 +1900,8 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/branch.c	2015-02-17 20:21:42.221008670 -0500
-@@ -0,0 +1,1410 @@
++++ linux-4.0/fs/aufs/branch.c	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,1406 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -2759,7 +2706,6 @@
 +	unsigned long long ull, max;
 +	aufs_bindex_t bstart;
 +	struct file *file, **array;
-+	struct inode *inode;
 +	struct dentry *root;
 +	struct au_hfile *hfile;
 +
@@ -2780,8 +2726,7 @@
 +		/* AuDbg("%pD\n", file); */
 +		fi_read_lock(file);
 +		bstart = au_fbstart(file);
-+		inode = file_inode(file);
-+		if (!S_ISDIR(inode->i_mode)) {
++		if (!d_is_dir(file->f_path.dentry)) {
 +			hfile = &au_fi(file)->fi_htop;
 +			if (hfile->hf_br->br_id == br_id)
 +				err = -EBUSY;
@@ -2814,7 +2759,7 @@
 +			break;
 +
 +		/* AuDbg("%pD\n", file); */
-+		AuDebugOn(!S_ISDIR(file_inode(file)->i_mode));
++		AuDebugOn(!d_is_dir(file->f_path.dentry));
 +		bfound = -1;
 +		fidir = au_fi(file)->fi_hdir;
 +		AuDebugOn(!fidir);
@@ -3159,7 +3104,6 @@
 +	aufs_bindex_t br_id;
 +	unsigned char verbose, writer;
 +	struct file *file, *hf, **array;
-+	struct inode *inode;
 +	struct au_hfile *hfile;
 +
 +	mnt_flags = au_mntflags(sb);
@@ -3188,10 +3132,9 @@
 +			goto out_array;
 +		}
 +
-+		inode = file_inode(file);
 +		hfile = &au_fi(file)->fi_htop;
 +		hf = hfile->hf_file;
-+		if (!S_ISREG(inode->i_mode)
++		if (!d_is_reg(file->f_path.dentry)
 +		    || !(file->f_mode & FMODE_WRITE)
 +		    || hfile->hf_br->br_id != br_id
 +		    || !(hf->f_mode & FMODE_WRITE))
@@ -3366,7 +3309,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/branch.h	2015-02-17 20:21:42.221008670 -0500
++++ linux-4.0/fs/aufs/branch.h	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,267 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -3636,7 +3579,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_BRANCH_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/conf.mk	2015-02-17 20:21:42.221008670 -0500
++++ linux-4.0/fs/aufs/conf.mk	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,38 @@
 +
 +AuConfStr = CONFIG_AUFS_FS=${CONFIG_AUFS_FS}
@@ -3677,8 +3620,8 @@
 +
 +-include ${srctree}/${src}/conf_priv.mk
 --- /dev/null
-+++ linux-3.19/fs/aufs/cpup.c	2015-02-17 20:21:42.221008670 -0500
-@@ -0,0 +1,1303 @@
++++ linux-4.0/fs/aufs/cpup.c	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,1308 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -3847,6 +3790,8 @@
 +	       struct au_cpup_reg_attr *h_src_attr)
 +{
 +	int err, sbits, icex;
++	unsigned int mnt_flags;
++	unsigned char verbose;
 +	struct iattr ia;
 +	struct path h_path;
 +	struct inode *h_isrc, *h_idst;
@@ -3898,8 +3843,11 @@
 +	}
 +
 +	icex = br->br_perm & AuBrAttr_ICEX;
-+	if (!err)
-+		err = au_cpup_xattr(h_path.dentry, h_src, icex);
++	if (!err) {
++		mnt_flags = au_mntflags(dst->d_sb);
++		verbose = !!au_opt_test(mnt_flags, VERBOSE);
++		err = au_cpup_xattr(h_path.dentry, h_src, icex, verbose);
++	}
 +
 +	return err;
 +}
@@ -4501,7 +4449,7 @@
 +	return err;
 +}
 +
-+#if 0 /* unused */
++#if 0 /* reserved */
 +struct au_cpup_single_args {
 +	int *errp;
 +	struct au_cp_generic *cpg;
@@ -4557,7 +4505,7 @@
 +	return do_sio;
 +}
 +
-+#if 0 /* unused */
++#if 0 /* reserved */
 +int au_sio_cpup_single(struct au_cp_generic *cpg, struct dentry *dst_parent)
 +{
 +	int err, wkq_err;
@@ -4768,7 +4716,7 @@
 +
 +	dget(wh_dentry);
 +	h_path.dentry = wh_dentry;
-+	if (!S_ISDIR(wh_dentry->d_inode->i_mode)) {
++	if (!d_is_dir(wh_dentry)) {
 +		/* no delegation since it is just created */
 +		err = vfsub_unlink(h_parent->d_inode, &h_path,
 +				   /*delegated*/NULL, /*force*/0);
@@ -4983,7 +4931,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/cpup.h	2015-02-17 20:21:42.221008670 -0500
++++ linux-4.0/fs/aufs/cpup.h	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,94 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -5080,7 +5028,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_CPUP_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/dbgaufs.c	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/dbgaufs.c	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,432 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -5441,7 +5389,7 @@
 +void dbgaufs_si_fin(struct au_sbinfo *sbinfo)
 +{
 +	/*
-+	 * This function is a dynamic '__init' function actually,
++	 * This function is a dynamic '__fin' function actually,
 +	 * so the tiny check for si_rwsem is unnecessary.
 +	 */
 +	/* AuRwMustWriteLock(&sbinfo->si_rwsem); */
@@ -5515,7 +5463,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/dbgaufs.h	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/dbgaufs.h	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,48 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -5566,7 +5514,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __DBGAUFS_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/dcsub.c	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/dcsub.c	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,224 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -5793,8 +5741,8 @@
 +	return path_is_under(path + 0, path + 1);
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/dcsub.h	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,125 @@
++++ linux-4.0/fs/aufs/dcsub.h	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,132 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -5823,8 +5771,6 @@
 +
 +#include <linux/dcache.h>
 +#include <linux/fs.h>
-+
-+struct dentry;
 +
 +struct au_dpage {
 +	int ndentry;
@@ -5913,6 +5859,15 @@
 +		&& !memcmp(a->name, b->name, a->len);
 +}
 +
++/*
++ * by the commit
++ * 360f547 2015-01-25 dcache: let the dentry count go down to zero without
++ *			taking d_lock
++ * the type of d_lockref.count became int, but the inlined function d_count()
++ * still returns unsigned int.
++ * I don't know why. Maybe it is for every d_count() users?
++ * Anyway au_dcount() lives on.
++ */
 +static inline int au_dcount(struct dentry *d)
 +{
 +	return (int)d_count(d);
@@ -5921,8 +5876,8 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DCSUB_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/debug.c	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,522 @@
++++ linux-4.0/fs/aufs/debug.c	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,438 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -5944,7 +5899,6 @@
 + * debug print functions
 + */
 +
-+#include <linux/vt_kern.h>
 +#include "aufs.h"
 +
 +/* Returns 0, or -errno.  arg is in kp->arg. */
@@ -6277,42 +6231,6 @@
 +
 +/* ---------------------------------------------------------------------- */
 +
-+void au_dbg_sleep_jiffy(int jiffy)
-+{
-+	while (jiffy)
-+		jiffy = schedule_timeout_uninterruptible(jiffy);
-+}
-+
-+void au_dbg_iattr(struct iattr *ia)
-+{
-+#define AuBit(name)					\
-+	do {						\
-+		if (ia->ia_valid & ATTR_ ## name)	\
-+			dpri(#name "\n");		\
-+	} while (0)
-+	AuBit(MODE);
-+	AuBit(UID);
-+	AuBit(GID);
-+	AuBit(SIZE);
-+	AuBit(ATIME);
-+	AuBit(MTIME);
-+	AuBit(CTIME);
-+	AuBit(ATIME_SET);
-+	AuBit(MTIME_SET);
-+	AuBit(FORCE);
-+	AuBit(ATTR_FLAG);
-+	AuBit(KILL_SUID);
-+	AuBit(KILL_SGID);
-+	AuBit(FILE);
-+	AuBit(KILL_PRIV);
-+	AuBit(OPEN);
-+	AuBit(TIMES_SET);
-+#undef	AuBit
-+	dpri("ia_file %p\n", ia->ia_file);
-+}
-+
-+/* ---------------------------------------------------------------------- */
-+
 +void __au_dbg_verify_dinode(struct dentry *dentry, const char *func, int line)
 +{
 +	struct inode *h_inode, *inode = dentry->d_inode;
@@ -6345,29 +6263,6 @@
 +			BUG();
 +		}
 +	}
-+}
-+
-+void au_dbg_verify_dir_parent(struct dentry *dentry, unsigned int sigen)
-+{
-+	struct dentry *parent;
-+
-+	parent = dget_parent(dentry);
-+	AuDebugOn(!S_ISDIR(dentry->d_inode->i_mode));
-+	AuDebugOn(IS_ROOT(dentry));
-+	AuDebugOn(au_digen_test(parent, sigen));
-+	dput(parent);
-+}
-+
-+void au_dbg_verify_nondir_parent(struct dentry *dentry, unsigned int sigen)
-+{
-+	struct dentry *parent;
-+	struct inode *inode;
-+
-+	parent = dget_parent(dentry);
-+	inode = dentry->d_inode;
-+	AuDebugOn(inode && S_ISDIR(dentry->d_inode->i_mode));
-+	AuDebugOn(au_digen_test(parent, sigen));
-+	dput(parent);
 +}
 +
 +void au_dbg_verify_gen(struct dentry *parent, unsigned int sigen)
@@ -6404,26 +6299,6 @@
 +
 +/* ---------------------------------------------------------------------- */
 +
-+void au_debug_sbinfo_init(struct au_sbinfo *sbinfo __maybe_unused)
-+{
-+#ifdef AuForceNoPlink
-+	au_opt_clr(sbinfo->si_mntflags, PLINK);
-+#endif
-+#ifdef AuForceNoXino
-+	au_opt_clr(sbinfo->si_mntflags, XINO);
-+#endif
-+#ifdef AuForceNoRefrof
-+	au_opt_clr(sbinfo->si_mntflags, REFROF);
-+#endif
-+#ifdef AuForceHnotify
-+	au_opt_set_udba(sbinfo->si_mntflags, UDBA_HNOTIFY);
-+#endif
-+#ifdef AuForceRd0
-+	sbinfo->si_rdblk = 0;
-+	sbinfo->si_rdhash = 0;
-+#endif
-+}
-+
 +int __init au_debug_init(void)
 +{
 +	aufs_bindex_t bindex;
@@ -6439,15 +6314,11 @@
 +	pr_warn("CONFIG_4KSTACKS is defined.\n");
 +#endif
 +
-+#ifdef AuForceNoBrs
-+	sysaufs_brs = 0;
-+#endif
-+
 +	return 0;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/debug.h	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,262 @@
++++ linux-4.0/fs/aufs/debug.h	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,225 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -6556,8 +6427,6 @@
 +
 +/* ---------------------------------------------------------------------- */
 +
-+struct au_sbinfo;
-+struct au_finfo;
 +struct dentry;
 +#ifdef CONFIG_AUFS_DEBUG
 +extern struct mutex au_dbg_mtx;
@@ -6575,19 +6444,13 @@
 +struct super_block;
 +void au_dpri_sb(struct super_block *sb);
 +
-+void au_dbg_sleep_jiffy(int jiffy);
-+struct iattr;
-+void au_dbg_iattr(struct iattr *ia);
-+
 +#define au_dbg_verify_dinode(d) __au_dbg_verify_dinode(d, __func__, __LINE__)
 +void __au_dbg_verify_dinode(struct dentry *dentry, const char *func, int line);
-+void au_dbg_verify_dir_parent(struct dentry *dentry, unsigned int sigen);
-+void au_dbg_verify_nondir_parent(struct dentry *dentry, unsigned int sigen);
 +void au_dbg_verify_gen(struct dentry *parent, unsigned int sigen);
 +void au_dbg_verify_kthread(void);
 +
 +int __init au_debug_init(void);
-+void au_debug_sbinfo_init(struct au_sbinfo *sbinfo);
++
 +#define AuDbgWhlist(w) do { \
 +	mutex_lock(&au_dbg_mtx); \
 +	AuDbg(#w "\n"); \
@@ -6637,41 +6500,16 @@
 +	mutex_unlock(&au_dbg_mtx); \
 +} while (0)
 +
-+#define AuDbgSleep(sec) do { \
-+	AuDbg("sleep %d sec\n", sec); \
-+	ssleep(sec); \
-+} while (0)
-+
-+#define AuDbgSleepJiffy(jiffy) do { \
-+	AuDbg("sleep %d jiffies\n", jiffy); \
-+	au_dbg_sleep_jiffy(jiffy); \
-+} while (0)
-+
-+#define AuDbgIAttr(ia) do { \
-+	AuDbg("ia_valid 0x%x\n", (ia)->ia_valid); \
-+	au_dbg_iattr(ia); \
-+} while (0)
-+
 +#define AuDbgSym(addr) do {				\
 +	char sym[KSYM_SYMBOL_LEN];			\
 +	sprint_symbol(sym, (unsigned long)addr);	\
 +	AuDbg("%s\n", sym);				\
 +} while (0)
-+
-+#define AuInfoSym(addr) do {				\
-+	char sym[KSYM_SYMBOL_LEN];			\
-+	sprint_symbol(sym, (unsigned long)addr);	\
-+	AuInfo("%s\n", sym);				\
-+} while (0)
 +#else
 +AuStubVoid(au_dbg_verify_dinode, struct dentry *dentry)
-+AuStubVoid(au_dbg_verify_dir_parent, struct dentry *dentry, unsigned int sigen)
-+AuStubVoid(au_dbg_verify_nondir_parent, struct dentry *dentry,
-+	   unsigned int sigen)
 +AuStubVoid(au_dbg_verify_gen, struct dentry *parent, unsigned int sigen)
 +AuStubVoid(au_dbg_verify_kthread, void)
 +AuStubInt0(__init au_debug_init, void)
-+AuStubVoid(au_debug_sbinfo_init, struct au_sbinfo *sbinfo)
 +
 +#define AuDbgWhlist(w)		do {} while (0)
 +#define AuDbgVdir(v)		do {} while (0)
@@ -6680,11 +6518,7 @@
 +#define AuDbgDentry(d)		do {} while (0)
 +#define AuDbgFile(f)		do {} while (0)
 +#define AuDbgSb(sb)		do {} while (0)
-+#define AuDbgSleep(sec)		do {} while (0)
-+#define AuDbgSleepJiffy(jiffy)	do {} while (0)
-+#define AuDbgIAttr(ia)		do {} while (0)
 +#define AuDbgSym(addr)		do {} while (0)
-+#define AuInfoSym(addr)		do {} while (0)
 +#endif /* CONFIG_AUFS_DEBUG */
 +
 +/* ---------------------------------------------------------------------- */
@@ -6711,8 +6545,8 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DEBUG_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/dentry.c	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,1096 @@
++++ linux-4.0/fs/aufs/dentry.c	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,1097 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -6760,7 +6594,7 @@
 +	     struct au_do_lookup_args *args)
 +{
 +	struct dentry *h_dentry;
-+	struct inode *h_inode, *inode;
++	struct inode *h_inode;
 +	struct au_branch *br;
 +	int wh_found, opq;
 +	unsigned char wh_able;
@@ -6790,8 +6624,12 @@
 +		h_dentry = vfsub_lkup_one(&dentry->d_name, h_parent);
 +	else
 +		h_dentry = au_sio_lkup_one(&dentry->d_name, h_parent);
-+	if (IS_ERR(h_dentry))
++	if (IS_ERR(h_dentry)) {
++		if (PTR_ERR(h_dentry) == -ENAMETOOLONG
++		    && !allow_neg)
++			h_dentry = NULL;
 +		goto out;
++	}
 +
 +	h_inode = h_dentry->d_inode;
 +	if (!h_inode) {
@@ -6807,9 +6645,9 @@
 +		au_set_dbstart(dentry, bindex);
 +	au_set_h_dptr(dentry, bindex, h_dentry);
 +
-+	inode = dentry->d_inode;
-+	if (!h_inode || !S_ISDIR(h_inode->i_mode) || !wh_able
-+	    || (inode && !S_ISDIR(inode->i_mode)))
++	if (!d_is_dir(h_dentry)
++	    || !wh_able
++	    || (d_is_positive(dentry) && !d_is_dir(dentry)))
 +		goto out; /* success */
 +
 +	mutex_lock_nested(&h_inode->i_mutex, AuLsc_I_CHILD);
@@ -6868,7 +6706,7 @@
 +		goto out;
 +
 +	inode = dentry->d_inode;
-+	isdir = !!(inode && S_ISDIR(inode->i_mode));
++	isdir = !!d_is_dir(dentry);
 +	if (!type)
 +		au_fset_lkup(args.flags, ALLOW_NEG);
 +	dirperm1 = !!au_opt_test(au_mntflags(sb), DIRPERM1);
@@ -6889,12 +6727,10 @@
 +			continue;
 +		}
 +		h_parent = au_h_dptr(parent, bindex);
-+		if (!h_parent)
-+			continue;
-+		h_dir = h_parent->d_inode;
-+		if (!h_dir || !S_ISDIR(h_dir->i_mode))
++		if (!h_parent || !d_is_dir(h_parent))
 +			continue;
 +
++		h_dir = h_parent->d_inode;
 +		mutex_lock_nested(&h_dir->i_mutex, AuLsc_I_PARENT);
 +		h_dentry = au_do_lookup(h_parent, dentry, bindex, &whname,
 +					&args);
@@ -6902,7 +6738,8 @@
 +		err = PTR_ERR(h_dentry);
 +		if (IS_ERR(h_dentry))
 +			goto out_parent;
-+		au_fclr_lkup(args.flags, ALLOW_NEG);
++		if (h_dentry)
++			au_fclr_lkup(args.flags, ALLOW_NEG);
 +		if (dirperm1)
 +			au_fset_lkup(args.flags, IGNORE_PERM);
 +
@@ -7237,11 +7074,9 @@
 +static void au_hide(struct dentry *dentry)
 +{
 +	int err;
-+	struct inode *inode;
 +
 +	AuDbgDentry(dentry);
-+	inode = dentry->d_inode;
-+	if (inode && S_ISDIR(inode->i_mode)) {
++	if (d_is_dir(dentry)) {
 +		/* shrink_dcache_parent(dentry); */
 +		err = au_hide_children(dentry);
 +		if (unlikely(err))
@@ -7810,7 +7645,7 @@
 +	.d_release		= aufs_d_release
 +};
 --- /dev/null
-+++ linux-3.19/fs/aufs/dentry.h	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/dentry.h	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,233 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -8046,7 +7881,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DENTRY_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/dinfo.c	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/dinfo.c	2015-05-04 17:40:14.212504948 -0400
 @@ -0,0 +1,544 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -8593,8 +8428,8 @@
 +	return -1;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/dir.c	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,645 @@
++++ linux-4.0/fs/aufs/dir.c	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,747 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -8658,8 +8493,7 @@
 +
 +	sz = 0;
 +	if (file) {
-+		AuDebugOn(!file_inode(file));
-+		AuDebugOn(!S_ISDIR(file_inode(file)->i_mode));
++		AuDebugOn(!d_is_dir(file->f_path.dentry));
 +
 +		bend = au_fbend_dir(file);
 +		for (bindex = au_fbstart(file);
@@ -8671,8 +8505,7 @@
 +		}
 +	} else {
 +		AuDebugOn(!dentry);
-+		AuDebugOn(!dentry->d_inode);
-+		AuDebugOn(!S_ISDIR(dentry->d_inode->i_mode));
++		AuDebugOn(!d_is_dir(dentry));
 +
 +		bend = au_dbtaildir(dentry);
 +		for (bindex = au_dbstart(dentry);
@@ -8692,6 +8525,110 @@
 +		sz = AUFS_RDBLK_DEF;
 +	}
 +	return sz;
++}
++
++struct au_dir_ts_arg {
++	struct dentry *dentry;
++	aufs_bindex_t brid;
++};
++
++static void au_do_dir_ts(void *arg)
++{
++	struct au_dir_ts_arg *a = arg;
++	struct au_dtime dt;
++	struct path h_path;
++	struct inode *dir, *h_dir;
++	struct super_block *sb;
++	struct au_branch *br;
++	struct au_hinode *hdir;
++	int err;
++	aufs_bindex_t bstart, bindex;
++
++	sb = a->dentry->d_sb;
++	dir = a->dentry->d_inode;
++	if (!dir)
++		goto out;
++	/* no dir->i_mutex lock */
++	aufs_read_lock(a->dentry, AuLock_DW | AuLock_DIR); /* noflush */
++
++	bstart = au_ibstart(dir);
++	bindex = au_br_index(sb, a->brid);
++	if (bindex < bstart)
++		goto out_unlock;
++
++	br = au_sbr(sb, bindex);
++	h_path.dentry = au_h_dptr(a->dentry, bindex);
++	if (!h_path.dentry)
++		goto out_unlock;
++	h_path.mnt = au_br_mnt(br);
++	au_dtime_store(&dt, a->dentry, &h_path);
++
++	br = au_sbr(sb, bstart);
++	if (!au_br_writable(br->br_perm))
++		goto out_unlock;
++	h_path.dentry = au_h_dptr(a->dentry, bstart);
++	h_path.mnt = au_br_mnt(br);
++	err = vfsub_mnt_want_write(h_path.mnt);
++	if (err)
++		goto out_unlock;
++	hdir = au_hi(dir, bstart);
++	au_hn_imtx_lock_nested(hdir, AuLsc_I_PARENT);
++	h_dir = au_h_iptr(dir, bstart);
++	if (h_dir->i_nlink
++	    && timespec_compare(&h_dir->i_mtime, &dt.dt_mtime) < 0) {
++		dt.dt_h_path = h_path;
++		au_dtime_revert(&dt);
++	}
++	au_hn_imtx_unlock(hdir);
++	vfsub_mnt_drop_write(h_path.mnt);
++	au_cpup_attr_timesizes(dir);
++
++out_unlock:
++	aufs_read_unlock(a->dentry, AuLock_DW);
++out:
++	dput(a->dentry);
++	au_nwt_done(&au_sbi(sb)->si_nowait);
++	kfree(arg);
++}
++
++void au_dir_ts(struct inode *dir, aufs_bindex_t bindex)
++{
++	int perm, wkq_err;
++	aufs_bindex_t bstart;
++	struct au_dir_ts_arg *arg;
++	struct dentry *dentry;
++	struct super_block *sb;
++
++	IMustLock(dir);
++
++	dentry = d_find_any_alias(dir);
++	AuDebugOn(!dentry);
++	sb = dentry->d_sb;
++	bstart = au_ibstart(dir);
++	if (bstart == bindex) {
++		au_cpup_attr_timesizes(dir);
++		goto out;
++	}
++
++	perm = au_sbr_perm(sb, bstart);
++	if (!au_br_writable(perm))
++		goto out;
++
++	arg = kmalloc(sizeof(*arg), GFP_NOFS);
++	if (!arg)
++		goto out;
++
++	arg->dentry = dget(dentry); /* will be dput-ted by au_do_dir_ts() */
++	arg->brid = au_sbr_id(sb, bindex);
++	wkq_err = au_wkq_nowait(au_do_dir_ts, arg, sb, /*flags*/0);
++	if (unlikely(wkq_err)) {
++		pr_err("wkq %d\n", wkq_err);
++		dput(dentry);
++		kfree(arg);
++	}
++
++out:
++	dput(dentry);
 +}
 +
 +/* ---------------------------------------------------------------------- */
@@ -9241,8 +9178,8 @@
 +	.fsync		= aufs_fsync_dir
 +};
 --- /dev/null
-+++ linux-3.19/fs/aufs/dir.h	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,130 @@
++++ linux-4.0/fs/aufs/dir.h	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,131 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -9335,6 +9272,7 @@
 +void au_add_nlink(struct inode *dir, struct inode *h_dir);
 +void au_sub_nlink(struct inode *dir, struct inode *h_dir);
 +loff_t au_dir_size(struct file *file, struct dentry *dentry);
++void au_dir_ts(struct inode *dir, aufs_bindex_t bsrc);
 +int au_test_empty_lower(struct dentry *dentry);
 +int au_test_empty(struct dentry *dentry, struct au_nhash *whlist);
 +
@@ -9374,8 +9312,8 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIR_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/dynop.c	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,379 @@
++++ linux-4.0/fs/aufs/dynop.c	2015-05-04 17:40:14.212504948 -0400
+@@ -0,0 +1,369 @@
 +/*
 + * Copyright (C) 2010-2015 Junjiro R. Okajima
 + *
@@ -9564,9 +9502,8 @@
 +	DySetAop(invalidatepage);
 +	DySetAop(releasepage);
 +	DySetAop(freepage);
-+	/* these two will be changed according to an aufs mount option */
++	/* this one will be changed according to an aufs mount option */
 +	DySetAop(direct_IO);
-+	DySetAop(get_xip_mem);
 +	DySetAop(migratepage);
 +	DySetAop(launder_page);
 +	DySetAop(is_partially_uptodate);
@@ -9576,7 +9513,6 @@
 +	DySetAop(swap_deactivate);
 +
 +	DyDbgSize(cnt, *h_aop);
-+	dyaop->da_get_xip_mem = h_aop->get_xip_mem;
 +}
 +
 +/* ---------------------------------------------------------------------- */
@@ -9640,21 +9576,13 @@
 + * of the succeeding I/O. The dio mount option enables O_DIRECT and makes
 + * open(O_DIRECT) always succeed, but the succeeding I/O may return an error.
 + * See the aufs manual in detail.
-+ *
-+ * To keep this behaviour, aufs has to set NULL to ->get_xip_mem too, and the
-+ * performance of fadvise() and madvise() may be affected.
 + */
 +static void dy_adx(struct au_dyaop *dyaop, int do_dx)
 +{
-+	if (!do_dx) {
++	if (!do_dx)
 +		dyaop->da_op.direct_IO = NULL;
-+		dyaop->da_op.get_xip_mem = NULL;
-+	} else {
++	else
 +		dyaop->da_op.direct_IO = aufs_aop.direct_IO;
-+		dyaop->da_op.get_xip_mem = aufs_aop.get_xip_mem;
-+		if (!dyaop->da_get_xip_mem)
-+			dyaop->da_op.get_xip_mem = NULL;
-+	}
 +}
 +
 +static struct au_dyaop *dy_aget(struct au_branch *br,
@@ -9756,8 +9684,8 @@
 +		WARN_ON(!list_empty(&dynop[i].head));
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/dynop.h	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,75 @@
++++ linux-4.0/fs/aufs/dynop.h	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,74 @@
 +/*
 + * Copyright (C) 2010-2015 Junjiro R. Okajima
 + *
@@ -9784,7 +9712,8 @@
 +
 +#ifdef __KERNEL__
 +
-+#include "inode.h"
++#include <linux/fs.h>
++#include <linux/kref.h>
 +
 +enum {AuDy_AOP, AuDyLast};
 +
@@ -9814,8 +9743,6 @@
 +struct au_dyaop {
 +	struct au_dykey			da_key;
 +	struct address_space_operations	da_op; /* not const */
-+	int (*da_get_xip_mem)(struct address_space *, pgoff_t, int,
-+			      void **, unsigned long *);
 +};
 +
 +/* ---------------------------------------------------------------------- */
@@ -9834,7 +9761,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DYNOP_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/export.c	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/export.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,831 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -10668,7 +10595,7 @@
 +	atomic_set(&sbinfo->si_xigen_next, u);
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/f_op.c	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/f_op.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,814 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -11485,7 +11412,7 @@
 +	.fallocate	= aufs_fallocate
 +};
 --- /dev/null
-+++ linux-3.19/fs/aufs/fhsm.c	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/fhsm.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,426 @@
 +/*
 + * Copyright (C) 2011-2015 Junjiro R. Okajima
@@ -11914,8 +11841,8 @@
 +		seq_printf(seq, ",fhsm_sec=%u", u);
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/file.c	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,829 @@
++++ linux-4.0/fs/aufs/file.c	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,819 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -12041,7 +11968,7 @@
 +		.pin	= &pin,
 +		.flags	= AuCpup_DTIME | AuCpup_HOPEN
 +	};
-+	struct inode *inode, *delegated;
++	struct inode *delegated;
 +	struct super_block *sb;
 +	struct au_sbinfo *sbinfo;
 +	struct au_fhsm *fhsm;
@@ -12051,8 +11978,7 @@
 +	struct au_hinode *hdir;
 +
 +	DiMustWriteLock(dentry);
-+	inode = dentry->d_inode;
-+	IiMustWriteLock(inode);
++	IiMustWriteLock(dentry->d_inode);
 +
 +	err = 0;
 +	if (IS_ROOT(dentry))
@@ -12074,7 +12000,7 @@
 +	cmoo = au_br_cmoo(br->br_perm);
 +	if (!cmoo)
 +		goto out;
-+	if (!S_ISREG(inode->i_mode))
++	if (!d_is_reg(dentry))
 +		cmoo &= AuBrAttr_COO_ALL;
 +	if (!cmoo)
 +		goto out;
@@ -12672,14 +12598,6 @@
 +			      struct iov_iter *iter, loff_t offset)
 +{ BUG(); return 0; }
 +
-+/*
-+ * it will never be called, but madvise and fadvise behaves differently
-+ * when get_xip_mem is defined
-+ */
-+static int aufs_get_xip_mem(struct address_space *mapping, pgoff_t pgoff,
-+			    int create, void **kmem, unsigned long *pfn)
-+{ BUG(); return 0; }
-+
 +/* they will never be called. */
 +#ifdef CONFIG_AUFS_DEBUG
 +static int aufs_write_begin(struct file *file, struct address_space *mapping,
@@ -12725,7 +12643,6 @@
 +const struct address_space_operations aufs_aop = {
 +	.readpage		= aufs_readpage,
 +	.direct_IO		= aufs_direct_IO,
-+	.get_xip_mem		= aufs_get_xip_mem,
 +#ifdef CONFIG_AUFS_DEBUG
 +	.writepage		= aufs_writepage,
 +	/* no writepages, because of writepage */
@@ -12746,7 +12663,7 @@
 +#endif /* CONFIG_AUFS_DEBUG */
 +};
 --- /dev/null
-+++ linux-3.19/fs/aufs/file.h	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/file.h	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,284 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -13033,7 +12950,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FILE_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/finfo.c	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/finfo.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,156 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -13192,8 +13109,8 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/fstype.h	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,469 @@
++++ linux-4.0/fs/aufs/fstype.h	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,388 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -13305,60 +13222,6 @@
 +#endif
 +}
 +
-+static inline int au_test_ocfs2(struct super_block *sb __maybe_unused)
-+{
-+#if defined(CONFIG_OCFS2_FS) || defined(CONFIG_OCFS2_FS_MODULE)
-+	return sb->s_magic == OCFS2_SUPER_MAGIC;
-+#else
-+	return 0;
-+#endif
-+}
-+
-+static inline int au_test_ocfs2_dlmfs(struct super_block *sb __maybe_unused)
-+{
-+#if defined(CONFIG_OCFS2_FS_O2CB) || defined(CONFIG_OCFS2_FS_O2CB_MODULE)
-+	return sb->s_magic == DLMFS_MAGIC;
-+#else
-+	return 0;
-+#endif
-+}
-+
-+static inline int au_test_coda(struct super_block *sb __maybe_unused)
-+{
-+#if defined(CONFIG_CODA_FS) || defined(CONFIG_CODA_FS_MODULE)
-+	return sb->s_magic == CODA_SUPER_MAGIC;
-+#else
-+	return 0;
-+#endif
-+}
-+
-+static inline int au_test_v9fs(struct super_block *sb __maybe_unused)
-+{
-+#if defined(CONFIG_9P_FS) || defined(CONFIG_9P_FS_MODULE)
-+	return sb->s_magic == V9FS_MAGIC;
-+#else
-+	return 0;
-+#endif
-+}
-+
-+static inline int au_test_ext4(struct super_block *sb __maybe_unused)
-+{
-+#if defined(CONFIG_EXT4_FS) || defined(CONFIG_EXT4_FS_MODULE)
-+	return sb->s_magic == EXT4_SUPER_MAGIC;
-+#else
-+	return 0;
-+#endif
-+}
-+
-+static inline int au_test_sysv(struct super_block *sb __maybe_unused)
-+{
-+#if defined(CONFIG_SYSV_FS) || defined(CONFIG_SYSV_FS_MODULE)
-+	return !strcmp(au_sbtype(sb), "sysv");
-+#else
-+	return 0;
-+#endif
-+}
-+
 +static inline int au_test_ramfs(struct super_block *sb)
 +{
 +	return sb->s_magic == RAMFS_MAGIC;
@@ -13408,15 +13271,6 @@
 +		|| sb->s_magic == MINIX2_SUPER_MAGIC2
 +		|| sb->s_magic == MINIX_SUPER_MAGIC
 +		|| sb->s_magic == MINIX_SUPER_MAGIC2;
-+#else
-+	return 0;
-+#endif
-+}
-+
-+static inline int au_test_cifs(struct super_block *sb __maybe_unused)
-+{
-+#if defined(CONFIG_CIFS_FS) || defined(CONFIGCIFS_FS_MODULE)
-+	return sb->s_magic == CIFS_MAGIC_NUMBER;
 +#else
 +	return 0;
 +#endif
@@ -13551,10 +13405,7 @@
 +{
 +	return au_test_nfs(sb)
 +		|| au_test_fuse(sb)
-+		/* || au_test_ocfs2(sb) */	/* untested */
 +		/* || au_test_btrfs(sb) */	/* untested */
-+		/* || au_test_coda(sb) */	/* untested */
-+		/* || au_test_v9fs(sb) */	/* untested */
 +		;
 +}
 +
@@ -13567,10 +13418,6 @@
 +		|| au_test_btrfs(sb)
 +		|| au_test_ubifs(sb)
 +		|| au_test_hfsplus(sb)	/* maintained, but incorrect */
-+		/* || au_test_ext4(sb) */	/* untested */
-+		/* || au_test_ocfs2(sb) */	/* untested */
-+		/* || au_test_ocfs2_dlmfs(sb) */ /* untested */
-+		/* || au_test_sysv(sb) */	/* untested */
 +		/* || au_test_minix(sb) */	/* untested */
 +		;
 +}
@@ -13582,7 +13429,6 @@
 +static inline int au_test_fs_bad_iattr(struct super_block *sb)
 +{
 +	return au_test_fs_bad_iattr_size(sb)
-+		/* || au_test_cifs(sb) */	/* untested */
 +		|| au_test_fat(sb)
 +		|| au_test_msdos(sb)
 +		|| au_test_vfat(sb);
@@ -13607,17 +13453,7 @@
 +	return au_test_nfs(sb)
 +		|| au_test_fuse(sb)
 +		|| au_test_ubifs(sb)
-+		/* || au_test_cifs(sb) */	/* untested */
 +		;
-+}
-+
-+/*
-+ * filesystems which requires replacing i_mapping.
-+ */
-+static inline int au_test_fs_bad_mapping(struct super_block *sb)
-+{
-+	return au_test_fuse(sb)
-+		|| au_test_ubifs(sb);
 +}
 +
 +/* temporary support for i#1 in cramfs */
@@ -13664,7 +13500,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FSTYPE_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/hfsnotify.c	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/hfsnotify.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,288 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -13955,7 +13791,7 @@
 +	.init_br	= au_hfsn_init_br
 +};
 --- /dev/null
-+++ linux-3.19/fs/aufs/hfsplus.c	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/hfsplus.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,56 @@
 +/*
 + * Copyright (C) 2010-2015 Junjiro R. Okajima
@@ -13998,7 +13834,7 @@
 +
 +	h_file = NULL;
 +	if (au_test_hfsplus(h_dentry->d_sb)
-+	    && S_ISREG(h_dentry->d_inode->i_mode))
++	    && d_is_reg(h_dentry))
 +		h_file = au_h_open(dentry, bindex,
 +				   O_RDONLY | O_NOATIME | O_LARGEFILE,
 +				   /*file*/NULL, force_wr);
@@ -14014,7 +13850,7 @@
 +	}
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/hnotify.c	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/hnotify.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,714 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -14731,8 +14567,8 @@
 +		au_hn_destroy_cache();
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/i_op.c	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,1299 @@
++++ linux-4.0/fs/aufs/i_op.c	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,1297 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -15015,8 +14851,7 @@
 +		h_parent = au_h_dptr(parent, bcpup);
 +		h_dir = h_parent->d_inode;
 +		mutex_lock_nested(&h_dir->i_mutex, AuLsc_I_PARENT);
-+		err = au_lkup_neg(dentry, bcpup,
-+				  au_ftest_wrdir(add_entry, TMP_WHENTRY));
++		err = au_lkup_neg(dentry, bcpup, /*wh*/0);
 +		/* todo: no unlock here */
 +		mutex_unlock(&h_dir->i_mutex);
 +
@@ -15050,7 +14885,6 @@
 +	aufs_bindex_t bcpup, bstart, src_bstart;
 +	const unsigned char add_entry
 +		= au_ftest_wrdir(args->flags, ADD_ENTRY)
-+		| au_ftest_wrdir(args->flags, TMP_WHENTRY)
 +		| au_ftest_wrdir(args->flags, TMPFILE);
 +	struct super_block *sb;
 +	struct dentry *parent;
@@ -15372,11 +15206,11 @@
 +		.flags		= 0
 +	};
 +
-+	bstart = au_dbstart(dentry);
-+	inode = dentry->d_inode;
-+	if (S_ISDIR(inode->i_mode))
++	if (d_is_dir(dentry))
 +		au_fset_wrdir(wr_dir_args.flags, ISDIR);
 +	/* plink or hi_wh() case */
++	bstart = au_dbstart(dentry);
++	inode = dentry->d_inode;
 +	ibstart = au_ibstart(inode);
 +	if (bstart != ibstart && !au_test_ro(inode->i_sb, ibstart, inode))
 +		wr_dir_args.force_btgt = ibstart;
@@ -15498,7 +15332,7 @@
 +
 +	if (ia->ia_valid & ATTR_FILE) {
 +		/* currently ftruncate(2) only */
-+		AuDebugOn(!S_ISREG(inode->i_mode));
++		AuDebugOn(!d_is_reg(dentry));
 +		file = ia->ia_file;
 +		err = au_reval_and_lock_fdi(file, au_reopen_nondir, /*wlock*/1);
 +		if (unlikely(err))
@@ -16033,8 +15867,8 @@
 +	.update_time	= aufs_update_time
 +};
 --- /dev/null
-+++ linux-3.19/fs/aufs/i_op_add.c	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,891 @@
++++ linux-4.0/fs/aufs/i_op_add.c	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,894 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -16094,8 +15928,7 @@
 +		d_instantiate(dentry, inode);
 +		dir = dentry->d_parent->d_inode; /* dir inode is locked */
 +		IMustLock(dir);
-+		if (au_ibstart(dir) == au_dbstart(dentry))
-+			au_cpup_attr_timesizes(dir);
++		au_dir_ts(dir, bindex);
 +		dir->i_version++;
 +		au_fhsm_wrote(sb, bindex, /*force*/0);
 +		return 0; /* success */
@@ -16238,6 +16071,11 @@
 +	if (bcpup != au_dbwh(dentry))
 +		goto out; /* success */
 +
++	/*
++	 * ENAMETOOLONG here means that if we allowed create such name, then it
++	 * would not be able to removed in the future. So we don't allow such
++	 * name here and we don't handle ENAMETOOLONG differently here.
++	 */
 +	wh_dentry = au_wh_lkup(h_parent, &dentry->d_name, br);
 +
 +out_unpin:
@@ -16777,9 +16615,8 @@
 +			goto out_revert;
 +	}
 +
++	au_dir_ts(dir, a->bdst);
 +	dir->i_version++;
-+	if (au_ibstart(dir) == au_dbstart(dentry))
-+		au_cpup_attr_timesizes(dir);
 +	inc_nlink(inode);
 +	inode->i_ctime = dir->i_ctime;
 +	d_instantiate(dentry, au_igrab(inode));
@@ -16927,8 +16764,8 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/i_op_del.c	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,507 @@
++++ linux-4.0/fs/aufs/i_op_del.c	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,506 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -17194,8 +17031,7 @@
 +	d_drop(dentry);
 +	inode->i_ctime = dir->i_ctime;
 +
-+	if (au_ibstart(dir) == bindex)
-+		au_cpup_attr_timesizes(dir);
++	au_dir_ts(dir, bindex);
 +	dir->i_version++;
 +}
 +
@@ -17254,7 +17090,7 @@
 +	inode = dentry->d_inode;
 +	IMustLock(inode);
 +	err = -EISDIR;
-+	if (unlikely(S_ISDIR(inode->i_mode)))
++	if (unlikely(d_is_dir(dentry)))
 +		goto out_unlock; /* possible? */
 +
 +	bstart = au_dbstart(dentry);
@@ -17355,7 +17191,7 @@
 +	inode = dentry->d_inode;
 +	IMustLock(inode);
 +	err = -ENOTDIR;
-+	if (unlikely(!S_ISDIR(inode->i_mode)))
++	if (unlikely(!d_is_dir(dentry)))
 +		goto out_unlock; /* possible? */
 +
 +	err = -ENOMEM;
@@ -17437,8 +17273,8 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/i_op_ren.c	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,1034 @@
++++ linux-4.0/fs/aufs/i_op_ren.c	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,1015 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -17473,7 +17309,6 @@
 +#define AuRen_MNT_WRITE	(1 << 4)
 +#define AuRen_DT_DSTDIR	(1 << 5)
 +#define AuRen_DIROPQ	(1 << 6)
-+#define AuRen_CPUP	(1 << 7)
 +#define au_ftest_ren(flags, name)	((flags) & AuRen_##name)
 +#define au_fset_ren(flags, name) \
 +	do { (flags) |= AuRen_##name; } while (0)
@@ -17582,20 +17417,6 @@
 +	/* au_set_h_dptr(a->src_dentry, a->btgt, NULL); */
 +	if (rerr)
 +		RevertFailure("rename %pd", a->src_dentry);
-+}
-+
-+static void au_ren_rev_cpup(int err, struct au_ren_args *a)
-+{
-+	int rerr;
-+
-+	a->h_path.dentry = a->dst_h_dentry;
-+	/* no delegation since it is just created */
-+	rerr = vfsub_unlink(a->dst_h_dir, &a->h_path, /*delegated*/NULL,
-+			    /*force*/0);
-+	au_set_h_dptr(a->src_dentry, a->btgt, NULL);
-+	au_set_dbstart(a->src_dentry, a->src_bstart);
-+	if (rerr)
-+		RevertFailure("unlink %pd", a->dst_h_dentry);
 +}
 +
 +static void au_ren_rev_whtmp(int err, struct au_ren_args *a)
@@ -17832,10 +17653,7 @@
 +	if (au_ftest_ren(a->flags, DIROPQ))
 +		au_ren_rev_diropq(err, a);
 +out_rename:
-+	if (!au_ftest_ren(a->flags, CPUP))
-+		au_ren_rev_rename(err, a);
-+	else
-+		au_ren_rev_cpup(err, a);
++	au_ren_rev_rename(err, a);
 +	dput(a->h_dst);
 +out_whtmp:
 +	if (a->thargs)
@@ -18094,8 +17912,7 @@
 +		au_cpup_attr_nlink(dir, /*force*/1);
 +	}
 +
-+	if (au_ibstart(dir) == a->btgt)
-+		au_cpup_attr_timesizes(dir);
++	au_dir_ts(dir, a->btgt);
 +
 +	if (au_ftest_ren(a->flags, ISSAMEDIR))
 +		return;
@@ -18104,8 +17921,7 @@
 +	dir->i_version++;
 +	if (au_ftest_ren(a->flags, ISDIR))
 +		au_cpup_attr_nlink(dir, /*force*/1);
-+	if (au_ibstart(dir) == a->btgt)
-+		au_cpup_attr_timesizes(dir);
++	au_dir_ts(dir, a->btgt);
 +}
 +
 +static void au_ren_refresh(struct au_ren_args *a)
@@ -18296,9 +18112,10 @@
 +
 +	err = -ENOTDIR;
 +	flags = AuLock_FLUSH | AuLock_NOPLM | AuLock_GEN;
-+	if (S_ISDIR(a->src_inode->i_mode)) {
++	if (d_is_dir(a->src_dentry)) {
 +		au_fset_ren(a->flags, ISDIR);
-+		if (unlikely(a->dst_inode && !S_ISDIR(a->dst_inode->i_mode)))
++		if (unlikely(d_is_positive(a->dst_dentry)
++			     && !d_is_dir(a->dst_dentry)))
 +			goto out_free;
 +		err = aufs_read_and_write_lock2(a->dst_dentry, a->src_dentry,
 +						AuLock_DIR | flags);
@@ -18474,7 +18291,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/iinfo.c	2015-02-17 20:21:42.224341924 -0500
++++ linux-4.0/fs/aufs/iinfo.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,277 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -18754,8 +18571,8 @@
 +	AuRwDestroy(&iinfo->ii_rwsem);
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/inode.c	2015-02-17 20:21:42.224341924 -0500
-@@ -0,0 +1,496 @@
++++ linux-4.0/fs/aufs/inode.c	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,495 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -19092,7 +18909,7 @@
 +/* todo: return with unlocked? */
 +struct inode *au_new_inode(struct dentry *dentry, int must_new)
 +{
-+	struct inode *inode, *h_inode;
++	struct inode *inode;
 +	struct dentry *h_dentry;
 +	struct super_block *sb;
 +	struct mutex *mtx;
@@ -19103,15 +18920,14 @@
 +	sb = dentry->d_sb;
 +	bstart = au_dbstart(dentry);
 +	h_dentry = au_h_dptr(dentry, bstart);
-+	h_inode = h_dentry->d_inode;
-+	h_ino = h_inode->i_ino;
++	h_ino = h_dentry->d_inode->i_ino;
 +
 +	/*
 +	 * stop 'race'-ing between hardlinks under different
 +	 * parents.
 +	 */
 +	mtx = NULL;
-+	if (!S_ISDIR(h_inode->i_mode))
++	if (!d_is_dir(h_dentry))
 +		mtx = &au_sbr(sb, bstart)->br_xino.xi_nondir_mtx;
 +
 +new_ino:
@@ -19139,10 +18955,10 @@
 +	AuDbg("%lx, new %d\n", inode->i_state, !!(inode->i_state & I_NEW));
 +	if (inode->i_state & I_NEW) {
 +		/* verbose coding for lock class name */
-+		if (unlikely(S_ISLNK(h_inode->i_mode)))
++		if (unlikely(d_is_symlink(h_dentry)))
 +			au_rw_class(&au_ii(inode)->ii_rwsem,
 +				    au_lc_key + AuLcSymlink_IIINFO);
-+		else if (unlikely(S_ISDIR(h_inode->i_mode)))
++		else if (unlikely(d_is_dir(h_dentry)))
 +			au_rw_class(&au_ii(inode)->ii_rwsem,
 +				    au_lc_key + AuLcDir_IIINFO);
 +		else /* likely */
@@ -19253,8 +19069,8 @@
 +	return au_test_h_perm(h_inode, mask);
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/inode.h	2015-02-17 20:21:42.227675178 -0500
-@@ -0,0 +1,667 @@
++++ linux-4.0/fs/aufs/inode.h	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,670 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -19412,9 +19228,8 @@
 +
 +/* au_wr_dir flags */
 +#define AuWrDir_ADD_ENTRY	1
-+#define AuWrDir_TMP_WHENTRY	(1 << 1)
-+#define AuWrDir_ISDIR		(1 << 2)
-+#define AuWrDir_TMPFILE		(1 << 3)
++#define AuWrDir_ISDIR		(1 << 1)
++#define AuWrDir_TMPFILE		(1 << 2)
 +#define au_ftest_wrdir(flags, name)	((flags) & AuWrDir_##name)
 +#define au_fset_wrdir(flags, name) \
 +	do { (flags) |= AuWrDir_##name; } while (0)
@@ -19520,6 +19335,7 @@
 +#ifdef CONFIG_PROC_FS
 +/* plink.c */
 +int au_plink_maint(struct super_block *sb, int flags);
++struct au_sbinfo;
 +void au_plink_maint_leave(struct au_sbinfo *sbinfo);
 +int au_plink_maint_enter(struct super_block *sb);
 +#ifdef CONFIG_AUFS_DEBUG
@@ -19551,7 +19367,8 @@
 +
 +#ifdef CONFIG_AUFS_XATTR
 +/* xattr.c */
-+int au_cpup_xattr(struct dentry *h_dst, struct dentry *h_src, int ignore_flags);
++int au_cpup_xattr(struct dentry *h_dst, struct dentry *h_src, int ignore_flags,
++		  unsigned int verbose);
 +ssize_t aufs_listxattr(struct dentry *dentry, char *list, size_t size);
 +ssize_t aufs_getxattr(struct dentry *dentry, const char *name, void *value,
 +		      size_t size);
@@ -19562,7 +19379,7 @@
 +/* void au_xattr_init(struct super_block *sb); */
 +#else
 +AuStubInt0(au_cpup_xattr, struct dentry *h_dst, struct dentry *h_src,
-+	   int ignore_flags);
++	   int ignore_flags, unsigned int verbose);
 +/* AuStubVoid(au_xattr_init, struct super_block *sb); */
 +#endif
 +
@@ -19812,6 +19629,7 @@
 +	}
 +}
 +
++#if 0 /* reserved */
 +static inline void au_pin_set_parent(struct au_pin *pin, struct dentry *parent)
 +{
 +	if (pin) {
@@ -19819,6 +19637,7 @@
 +		pin->parent = dget(parent);
 +	}
 +}
++#endif
 +
 +/* ---------------------------------------------------------------------- */
 +
@@ -19923,7 +19742,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_INODE_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/ioctl.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/ioctl.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,219 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -20145,7 +19964,7 @@
 +}
 +#endif
 --- /dev/null
-+++ linux-3.19/fs/aufs/loop.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/loop.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,145 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -20293,7 +20112,7 @@
 +	kfree(au_warn_loopback_array);
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/loop.h	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/loop.h	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,52 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -20348,31 +20167,13 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LOOP_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/magic.mk	2015-02-17 20:21:42.227675178 -0500
-@@ -0,0 +1,54 @@
++++ linux-4.0/fs/aufs/magic.mk	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,30 @@
 +
 +# defined in ${srctree}/fs/fuse/inode.c
 +# tristate
 +ifdef CONFIG_FUSE_FS
 +ccflags-y += -DFUSE_SUPER_MAGIC=0x65735546
-+endif
-+
-+# defined in ${srctree}/fs/ocfs2/ocfs2_fs.h
-+# tristate
-+ifdef CONFIG_OCFS2_FS
-+ccflags-y += -DOCFS2_SUPER_MAGIC=0x7461636f
-+endif
-+
-+# defined in ${srctree}/fs/ocfs2/dlm/userdlm.h
-+# tristate
-+ifdef CONFIG_OCFS2_FS_O2CB
-+ccflags-y += -DDLMFS_MAGIC=0x76a9f425
-+endif
-+
-+# defined in ${srctree}/fs/cifs/cifsfs.c
-+# tristate
-+ifdef CONFIG_CIFS_FS
-+ccflags-y += -DCIFS_MAGIC_NUMBER=0xFF534D42
 +endif
 +
 +# defined in ${srctree}/fs/xfs/xfs_sb.h
@@ -20387,12 +20188,6 @@
 +ccflags-y += -DCONFIGFS_MAGIC=0x62656570
 +endif
 +
-+# defined in ${srctree}/fs/9p/v9fs.h
-+# tristate
-+ifdef CONFIG_9P_FS
-+ccflags-y += -DV9FS_MAGIC=0x01021997
-+endif
-+
 +# defined in ${srctree}/fs/ubifs/ubifs.h
 +# tristate
 +ifdef CONFIG_UBIFS_FS
@@ -20405,7 +20200,7 @@
 +ccflags-y += -DHFSPLUS_SUPER_MAGIC=0x482b
 +endif
 --- /dev/null
-+++ linux-3.19/fs/aufs/module.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/module.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,210 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -20618,7 +20413,7 @@
 +module_init(aufs_init);
 +module_exit(aufs_exit);
 --- /dev/null
-+++ linux-3.19/fs/aufs/module.h	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/module.h	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,104 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -20725,7 +20520,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_MODULE_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/mvdown.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/mvdown.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,694 @@
 +/*
 + * Copyright (C) 2011-2015 Junjiro R. Okajima
@@ -21422,8 +21217,8 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/opts.c	2015-02-17 20:21:42.227675178 -0500
-@@ -0,0 +1,1850 @@
++++ linux-4.0/fs/aufs/opts.c	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,1835 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -21454,11 +21249,11 @@
 +
 +enum {
 +	Opt_br,
-+	Opt_add, Opt_del, Opt_mod, Opt_reorder, Opt_append, Opt_prepend,
-+	Opt_idel, Opt_imod, Opt_ireorder,
-+	Opt_dirwh, Opt_rdcache, Opt_rdblk, Opt_rdhash, Opt_rendir,
++	Opt_add, Opt_del, Opt_mod, Opt_append, Opt_prepend,
++	Opt_idel, Opt_imod,
++	Opt_dirwh, Opt_rdcache, Opt_rdblk, Opt_rdhash,
 +	Opt_rdblk_def, Opt_rdhash_def,
-+	Opt_xino, Opt_zxino, Opt_noxino,
++	Opt_xino, Opt_noxino,
 +	Opt_trunc_xino, Opt_trunc_xino_v, Opt_notrunc_xino,
 +	Opt_trunc_xino_path, Opt_itrunc_xino,
 +	Opt_trunc_xib, Opt_notrunc_xib,
@@ -21466,13 +21261,10 @@
 +	Opt_plink, Opt_noplink, Opt_list_plink,
 +	Opt_udba,
 +	Opt_dio, Opt_nodio,
-+	/* Opt_lock, Opt_unlock, */
-+	Opt_cmd, Opt_cmd_args,
 +	Opt_diropq_a, Opt_diropq_w,
 +	Opt_warn_perm, Opt_nowarn_perm,
 +	Opt_wbr_copyup, Opt_wbr_create,
 +	Opt_fhsm_sec,
-+	Opt_refrof, Opt_norefrof,
 +	Opt_verbose, Opt_noverbose,
 +	Opt_sum, Opt_nosum, Opt_wsum,
 +	Opt_dirperm1, Opt_nodirperm1,
@@ -21556,11 +21348,6 @@
 +	{Opt_dirperm1, "dirperm1"},
 +	{Opt_nodirperm1, "nodirperm1"},
 +
-+	{Opt_rendir, "rendir=%d"},
-+
-+	{Opt_refrof, "refrof"},
-+	{Opt_norefrof, "norefrof"},
-+
 +	{Opt_verbose, "verbose"},
 +	{Opt_verbose, "v"},
 +	{Opt_noverbose, "noverbose"},
@@ -21630,14 +21417,19 @@
 +	int v;
 +
 +	v = *val;
++	if (!v)
++		goto out;
 +	p = tbl;
-+	while (p->token) {
-+		if ((v & p->token) == p->token) {
++	while (p->pattern) {
++		if (p->token
++		    && (v & p->token) == p->token) {
 +			*val &= ~p->token;
 +			return p->pattern;
 +		}
 +		p++;
 +	}
++
++out:
 +	return NULL;
 +}
 +
@@ -21656,13 +21448,17 @@
 +	{AuBrAttr_COO_ALL, AUFS_BRATTR_COO_ALL},
 +	/* 'unpin' attrib is meaningless since linux-3.18-rc1 */
 +	{AuBrAttr_UNPIN, AUFS_BRATTR_UNPIN},
++#ifdef CONFIG_AUFS_FHSM
 +	{AuBrAttr_FHSM, AUFS_BRATTR_FHSM},
++#endif
++#ifdef CONFIG_AUFS_XATTR
 +	{AuBrAttr_ICEX, AUFS_BRATTR_ICEX},
 +	{AuBrAttr_ICEX_SEC, AUFS_BRATTR_ICEX_SEC},
 +	{AuBrAttr_ICEX_SYS, AUFS_BRATTR_ICEX_SYS},
 +	{AuBrAttr_ICEX_TR, AUFS_BRATTR_ICEX_TR},
 +	{AuBrAttr_ICEX_USR, AUFS_BRATTR_ICEX_USR},
 +	{AuBrAttr_ICEX_OTH, AUFS_BRATTR_ICEX_OTH},
++#endif
 +
 +	/* ro/rr branch */
 +	{AuBrRAttr_WH, AUFS_BRRATTR_WH},
@@ -22065,7 +21861,6 @@
 +			u.xino_itrunc = &opt->xino_itrunc;
 +			AuDbg("trunc_xino %d\n", u.xino_itrunc->bindex);
 +			break;
-+
 +		case Opt_noxino:
 +			AuLabel(noxino);
 +			break;
@@ -22117,12 +21912,6 @@
 +			break;
 +		case Opt_nowarn_perm:
 +			AuLabel(nowarn_perm);
-+			break;
-+		case Opt_refrof:
-+			AuLabel(refrof);
-+			break;
-+		case Opt_norefrof:
-+			AuLabel(norefrof);
 +			break;
 +		case Opt_verbose:
 +			AuLabel(verbose);
@@ -22610,8 +22399,6 @@
 +		case Opt_diropq_w:
 +		case Opt_warn_perm:
 +		case Opt_nowarn_perm:
-+		case Opt_refrof:
-+		case Opt_norefrof:
 +		case Opt_verbose:
 +		case Opt_noverbose:
 +		case Opt_sum:
@@ -22799,13 +22586,6 @@
 +		break;
 +	case Opt_nowarn_perm:
 +		au_opt_clr(sbinfo->si_mntflags, WARN_PERM);
-+		break;
-+
-+	case Opt_refrof:
-+		au_opt_set(sbinfo->si_mntflags, REFROF);
-+		break;
-+	case Opt_norefrof:
-+		au_opt_clr(sbinfo->si_mntflags, REFROF);
 +		break;
 +
 +	case Opt_verbose:
@@ -23275,8 +23055,8 @@
 +	return au_mntflags(sb) & AuOptMask_UDBA;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/opts.h	2015-02-17 20:21:42.227675178 -0500
-@@ -0,0 +1,213 @@
++++ linux-4.0/fs/aufs/opts.h	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,210 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -23304,7 +23084,6 @@
 +#ifdef __KERNEL__
 +
 +#include <linux/path.h>
-+#include "branch.h"
 +
 +struct file;
 +struct super_block;
@@ -23322,7 +23101,6 @@
 +#define AuOpt_PLINK		(1 << 6)	/* pseudo-link */
 +#define AuOpt_DIRPERM1		(1 << 7)	/* ignore the lower dir's perm
 +						   bits */
-+#define AuOpt_REFROF		(1 << 8)	/* unimplemented */
 +#define AuOpt_ALWAYS_DIROPQ	(1 << 9)	/* policy to creating diropq */
 +#define AuOpt_SUM		(1 << 10)	/* summation for statfs(2) */
 +#define AuOpt_SUM_W		(1 << 11)	/* unimplemented */
@@ -23472,6 +23250,7 @@
 +
 +/* ---------------------------------------------------------------------- */
 +
++/* opts.c */
 +void au_optstr_br_perm(au_br_perm_str_t *str, int perm);
 +const char *au_optstr_udba(int udba);
 +const char *au_optstr_wbr_copyup(int wbr_copyup);
@@ -23486,12 +23265,10 @@
 +
 +unsigned int au_opt_udba(struct super_block *sb);
 +
-+/* ---------------------------------------------------------------------- */
-+
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_OPTS_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/plink.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/plink.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,532 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -24026,7 +23803,7 @@
 +	}
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/poll.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/poll.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,55 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -24084,7 +23861,7 @@
 +	return mask;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/posix_acl.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/posix_acl.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,99 @@
 +/*
 + * Copyright (C) 2014-2015 Junjiro R. Okajima
@@ -24186,7 +23963,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/procfs.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/procfs.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,169 @@
 +/*
 + * Copyright (C) 2010-2015 Junjiro R. Okajima
@@ -24358,7 +24135,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/rdu.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/rdu.c	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,388 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -24749,7 +24526,7 @@
 +}
 +#endif
 --- /dev/null
-+++ linux-3.19/fs/aufs/rwsem.h	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/rwsem.h	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,191 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -24943,8 +24720,8 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_RWSEM_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/sbinfo.c	2015-02-17 20:21:42.227675178 -0500
-@@ -0,0 +1,353 @@
++++ linux-4.0/fs/aufs/sbinfo.c	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,352 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -25071,7 +24848,6 @@
 +	sbinfo->si_sb = sb;
 +	sb->s_fs_info = sbinfo;
 +	si_pid_set(sb);
-+	au_debug_sbinfo_init(sbinfo);
 +	return 0; /* success */
 +
 +out_br:
@@ -25299,7 +25075,7 @@
 +	spin_unlock(&sbinfo->au_si_pid.tree_lock);
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/spl.h	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/spl.h	2015-05-04 17:40:14.215838207 -0400
 @@ -0,0 +1,111 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -25413,8 +25189,8 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SPL_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/super.c	2015-02-17 20:21:42.227675178 -0500
-@@ -0,0 +1,1009 @@
++++ linux-4.0/fs/aufs/super.c	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,1006 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -25437,11 +25213,9 @@
 + */
 +
 +#include <linux/mm.h>
-+#include <linux/module.h>
 +#include <linux/seq_file.h>
 +#include <linux/statfs.h>
 +#include <linux/vmalloc.h>
-+#include <linux/writeback.h>
 +#include "aufs.h"
 +
 +/*
@@ -25677,7 +25451,6 @@
 +	AuBool(PLINK, plink);
 +	AuBool(DIO, dio);
 +	AuBool(DIRPERM1, dirperm1);
-+	/* AuBool(REFROF, refrof); */
 +
 +	v = sbinfo->si_wbr_create;
 +	if (v != AuWbrCreate_Def)
@@ -26425,8 +26198,8 @@
 +	.owner		= THIS_MODULE,
 +};
 --- /dev/null
-+++ linux-3.19/fs/aufs/super.h	2015-02-17 20:21:42.227675178 -0500
-@@ -0,0 +1,641 @@
++++ linux-4.0/fs/aufs/super.h	2015-05-04 17:40:14.215838207 -0400
+@@ -0,0 +1,636 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -26454,6 +26227,7 @@
 +#ifdef __KERNEL__
 +
 +#include <linux/fs.h>
++#include <linux/kobject.h>
 +#include "rwsem.h"
 +#include "spl.h"
 +#include "wkq.h"
@@ -26546,7 +26320,7 @@
 +	/* branch management */
 +	unsigned int		si_generation;
 +
-+	/* see above flags */
++	/* see AuSi_ flags */
 +	unsigned char		au_si_status;
 +
 +	aufs_bindex_t		si_bend;
@@ -26607,12 +26381,6 @@
 +	 * Otherwise, remove all whiteouts and the dir in rmdir(2).
 +	 */
 +	unsigned int		si_dirwh;
-+
-+	/*
-+	 * rename(2) a directory with all children.
-+	 */
-+	/* reserved for future use */
-+	/* int			si_rendir; */
 +
 +	/* pseudo_link list */
 +	struct au_sphlhead	si_plink[AuPlink_NHASH];
@@ -26968,7 +26736,7 @@
 +	return locked;
 +}
 +
-+#if 0 /* unused */
++#if 0 /* reserved */
 +static inline int si_read_trylock(struct super_block *sb, int flags)
 +{
 +	if (au_ftest_lock(flags, FLUSH))
@@ -26983,7 +26751,7 @@
 +	__si_read_unlock(sb);
 +}
 +
-+#if 0 /* unused */
++#if 0 /* reserved */
 +static inline int si_write_trylock(struct super_block *sb, int flags)
 +{
 +	if (au_ftest_lock(flags, FLUSH))
@@ -26998,7 +26766,7 @@
 +	__si_write_unlock(sb);
 +}
 +
-+#if 0 /* unused */
++#if 0 /* reserved */
 +static inline void si_downgrade_lock(struct super_block *sb)
 +{
 +	__si_downgrade_lock(sb);
@@ -27069,7 +26837,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SUPER_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/sysaufs.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/sysaufs.c	2015-05-04 17:40:14.249170796 -0400
 @@ -0,0 +1,104 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -27176,7 +26944,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/sysaufs.h	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/sysaufs.h	2015-05-04 17:40:14.249170796 -0400
 @@ -0,0 +1,101 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -27280,7 +27048,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __SYSAUFS_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/sysfs.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/sysfs.c	2015-05-04 17:40:14.249170796 -0400
 @@ -0,0 +1,372 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -27655,7 +27423,7 @@
 +	}
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/sysrq.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/sysrq.c	2015-05-04 17:40:14.249170796 -0400
 @@ -0,0 +1,157 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -27815,7 +27583,7 @@
 +		pr_err("err %d (ignored)\n", err);
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/vdir.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/vdir.c	2015-05-04 17:40:14.249170796 -0400
 @@ -0,0 +1,889 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -28707,8 +28475,8 @@
 +	return 0;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/vfsub.c	2015-02-17 20:21:42.227675178 -0500
-@@ -0,0 +1,796 @@
++++ linux-4.0/fs/aufs/vfsub.c	2015-05-04 17:40:14.249170796 -0400
+@@ -0,0 +1,795 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -28730,7 +28498,6 @@
 + * sub-routines for VFS
 + */
 +
-+#include <linux/ima.h>
 +#include <linux/namei.h>
 +#include <linux/security.h>
 +#include <linux/splice.h>
@@ -29506,8 +29273,8 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/vfsub.h	2015-02-17 20:21:42.227675178 -0500
-@@ -0,0 +1,301 @@
++++ linux-4.0/fs/aufs/vfsub.h	2015-05-04 17:40:14.249170796 -0400
+@@ -0,0 +1,276 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -29535,7 +29302,6 @@
 +#ifdef __KERNEL__
 +
 +#include <linux/fs.h>
-+#include <linux/lglock.h>
 +#include <linux/mount.h>
 +#include <linux/xattr.h>
 +#include "debug.h"
@@ -29630,12 +29396,14 @@
 +	lockdep_on();
 +}
 +
++#if 0 /* reserved */
 +static inline void vfsub_mnt_drop_write_file(struct file *file)
 +{
 +	lockdep_off();
 +	mnt_drop_write_file(file);
 +	lockdep_on();
 +}
++#endif
 +
 +/* ---------------------------------------------------------------------- */
 +
@@ -29687,11 +29455,13 @@
 +	return flags;
 +}
 +
++#if 0 /* reserved */
 +static inline void vfsub_file_accessed(struct file *h_file)
 +{
 +	file_accessed(h_file);
 +	vfsub_update_h_iattr(&h_file->f_path, /*did*/NULL); /*ignore*/
 +}
++#endif
 +
 +static inline void vfsub_touch_atime(struct vfsmount *h_mnt,
 +				     struct dentry *h_dentry)
@@ -29707,7 +29477,7 @@
 +static inline int vfsub_update_time(struct inode *h_inode, struct timespec *ts,
 +				    int flags)
 +{
-+	return update_time(h_inode, ts, flags);
++	return generic_update_time(h_inode, ts, flags);
 +	/* no vfsub_update_h_iattr() since we don't have struct path */
 +}
 +
@@ -29741,34 +29511,6 @@
 +	err = vfs_llseek(file, offset, origin);
 +	lockdep_on();
 +	return err;
-+}
-+
-+/* ---------------------------------------------------------------------- */
-+
-+/* dirty workaround for strict type of fmode_t */
-+union vfsub_fmu {
-+	fmode_t fm;
-+	unsigned int ui;
-+};
-+
-+static inline unsigned int vfsub_fmode_to_uint(fmode_t fm)
-+{
-+	union vfsub_fmu u = {
-+		.fm = fm
-+	};
-+
-+	BUILD_BUG_ON(sizeof(u.fm) != sizeof(u.ui));
-+
-+	return u.ui;
-+}
-+
-+static inline fmode_t vfsub_uint_to_fmode(unsigned int ui)
-+{
-+	union vfsub_fmu u = {
-+		.ui = ui
-+	};
-+
-+	return u.fm;
 +}
 +
 +/* ---------------------------------------------------------------------- */
@@ -29810,7 +29552,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_VFSUB_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/wbr_policy.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/wbr_policy.c	2015-05-04 17:40:14.249170796 -0400
 @@ -0,0 +1,765 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -30578,8 +30320,8 @@
 +	}
 +};
 --- /dev/null
-+++ linux-3.19/fs/aufs/whout.c	2015-02-17 20:21:42.227675178 -0500
-@@ -0,0 +1,1056 @@
++++ linux-4.0/fs/aufs/whout.c	2015-05-04 17:40:14.249170796 -0400
+@@ -0,0 +1,1064 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -30655,15 +30397,18 @@
 +	else
 +		wh_dentry = au_sio_lkup_one(wh_name, h_parent);
 +	err = PTR_ERR(wh_dentry);
-+	if (IS_ERR(wh_dentry))
++	if (IS_ERR(wh_dentry)) {
++		if (err == -ENAMETOOLONG)
++			err = 0;
 +		goto out;
++	}
 +
 +	err = 0;
 +	if (!wh_dentry->d_inode)
 +		goto out_wh; /* success */
 +
 +	err = 1;
-+	if (S_ISREG(wh_dentry->d_inode->i_mode))
++	if (d_is_reg(wh_dentry))
 +		goto out_wh; /* success */
 +
 +	err = -EIO;
@@ -30836,7 +30581,7 @@
 +		err = PTR_ERR(h_path.dentry);
 +	else {
 +		if (h_path.dentry->d_inode
-+		    && S_ISREG(h_path.dentry->d_inode->i_mode))
++		    && d_is_reg(h_path.dentry))
 +			err = do_unlink_wh(h_parent->d_inode, &h_path);
 +		dput(h_path.dentry);
 +	}
@@ -30898,7 +30643,7 @@
 +		if (au_test_nfs(path->dentry->d_sb))
 +			mode |= S_IXUGO;
 +		err = vfsub_mkdir(h_dir, path, mode);
-+	} else if (S_ISDIR(path->dentry->d_inode->i_mode))
++	} else if (d_is_dir(path->dentry))
 +		err = 0;
 +	else
 +		pr_err("unknown %pd exists\n", path->dentry);
@@ -30993,7 +30738,7 @@
 +	if (!base[AuBrWh_BASE].dentry->d_inode) {
 +		h_path->dentry = base[AuBrWh_BASE].dentry;
 +		err = vfsub_create(h_dir, h_path, WH_MASK, /*want_excl*/true);
-+	} else if (S_ISREG(base[AuBrWh_BASE].dentry->d_inode->i_mode))
++	} else if (d_is_reg(base[AuBrWh_BASE].dentry))
 +		err = 0;
 +	else
 +		pr_err("unknown %pd2 exists\n", base[AuBrWh_BASE].dentry);
@@ -31515,6 +31260,7 @@
 +		   struct dentry *wh_dentry, struct au_nhash *whlist)
 +{
 +	int err;
++	unsigned int h_nlink;
 +	struct path h_tmp;
 +	struct inode *wh_inode, *h_dir;
 +	struct au_branch *br;
@@ -31551,14 +31297,18 @@
 +	if (!err) {
 +		h_tmp.dentry = wh_dentry;
 +		h_tmp.mnt = au_br_mnt(br);
++		h_nlink = h_dir->i_nlink;
 +		err = vfsub_rmdir(h_dir, &h_tmp);
++		/* some fs doesn't change the parent nlink in some cases */
++		h_nlink -= h_dir->i_nlink;
 +	}
 +
 +	if (!err) {
 +		if (au_ibstart(dir) == bindex) {
 +			/* todo: dir->i_mutex is necessary */
 +			au_cpup_attr_timesizes(dir);
-+			vfsub_drop_nlink(dir);
++			if (h_nlink)
++				vfsub_drop_nlink(dir);
 +		}
 +		return 0; /* success */
 +	}
@@ -31637,7 +31387,7 @@
 +	}
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/whout.h	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/whout.h	2015-05-04 17:40:14.249170796 -0400
 @@ -0,0 +1,85 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -31669,9 +31419,9 @@
 +
 +/* whout.c */
 +int au_wh_name_alloc(struct qstr *wh, const struct qstr *name);
-+struct au_branch;
 +int au_wh_test(struct dentry *h_parent, struct qstr *wh_name, int try_sio);
 +int au_diropq_test(struct dentry *h_dentry);
++struct au_branch;
 +struct dentry *au_whtmp_lkup(struct dentry *h_parent, struct au_branch *br,
 +			     struct qstr *prefix);
 +int au_whtmp_ren(struct dentry *h_dentry, struct au_branch *br);
@@ -31725,7 +31475,7 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WHOUT_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/wkq.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/wkq.c	2015-05-04 17:40:14.249170796 -0400
 @@ -0,0 +1,213 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -31941,7 +31691,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/fs/aufs/wkq.h	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/wkq.h	2015-05-04 17:40:14.249170796 -0400
 @@ -0,0 +1,91 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -32035,8 +31785,8 @@
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WKQ_H__ */
 --- /dev/null
-+++ linux-3.19/fs/aufs/xattr.c	2015-02-17 20:21:42.227675178 -0500
-@@ -0,0 +1,334 @@
++++ linux-4.0/fs/aufs/xattr.c	2015-05-04 17:40:14.249170796 -0400
+@@ -0,0 +1,338 @@
 +/*
 + * Copyright (C) 2014-2015 Junjiro R. Okajima
 + *
@@ -32101,7 +31851,8 @@
 +static const int au_xattr_out_of_list = AuBrAttr_ICEX_OTH << 1;
 +
 +static int au_do_cpup_xattr(struct dentry *h_dst, struct dentry *h_src,
-+			    char *name, char **buf, unsigned int ignore_flags)
++			    char *name, char **buf, unsigned int ignore_flags,
++			    unsigned int verbose)
 +{
 +	int err;
 +	ssize_t ssz;
@@ -32124,7 +31875,8 @@
 +	err = vfsub_setxattr(h_dst, name, *buf, ssz, /*flags*/0);
 +	mutex_lock_nested(&h_idst->i_mutex, AuLsc_I_CHILD2);
 +	if (unlikely(err)) {
-+		AuDbg("%s, err %d\n", name, err);
++		if (verbose || au_debug_test())
++			pr_err("%s, err %d\n", name, err);
 +		err = au_xattr_ignore(err, name, ignore_flags);
 +	}
 +
@@ -32132,7 +31884,8 @@
 +	return err;
 +}
 +
-+int au_cpup_xattr(struct dentry *h_dst, struct dentry *h_src, int ignore_flags)
++int au_cpup_xattr(struct dentry *h_dst, struct dentry *h_src, int ignore_flags,
++		  unsigned int verbose)
 +{
 +	int err, unlocked, acl_access, acl_default;
 +	ssize_t ssz;
@@ -32140,7 +31893,7 @@
 +	char *value, *p, *o, *e;
 +
 +	/* try stopping to update the source inode while we are referencing */
-+	/* there should not be the parent-child relation ship between them */
++	/* there should not be the parent-child relationship between them */
 +	h_isrc = h_src->d_inode;
 +	h_idst = h_dst->d_inode;
 +	mutex_unlock(&h_idst->i_mutex);
@@ -32187,7 +31940,8 @@
 +		acl_default |= !strncmp(p, XATTR_NAME_POSIX_ACL_DEFAULT,
 +					sizeof(XATTR_NAME_POSIX_ACL_DEFAULT)
 +					- 1);
-+		err = au_do_cpup_xattr(h_dst, h_src, p, &value, ignore_flags);
++		err = au_do_cpup_xattr(h_dst, h_src, p, &value, ignore_flags,
++				       verbose);
 +		p += strlen(p) + 1;
 +	}
 +	AuTraceErr(err);
@@ -32195,13 +31949,13 @@
 +	if (!err && !acl_access) {
 +		err = au_do_cpup_xattr(h_dst, h_src,
 +				       XATTR_NAME_POSIX_ACL_ACCESS, &value,
-+				       ignore_flags);
++				       ignore_flags, verbose);
 +		AuTraceErr(err);
 +	}
 +	if (!err && !acl_default) {
 +		err = au_do_cpup_xattr(h_dst, h_src,
 +				       XATTR_NAME_POSIX_ACL_DEFAULT, &value,
-+				       ignore_flags);
++				       ignore_flags, verbose);
 +		AuTraceErr(err);
 +	}
 +
@@ -32372,7 +32126,7 @@
 +}
 +#endif
 --- /dev/null
-+++ linux-3.19/fs/aufs/xino.c	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/fs/aufs/xino.c	2015-05-04 17:40:14.249170796 -0400
 @@ -0,0 +1,1318 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -33693,7 +33447,7 @@
 +	return err;
 +}
 --- /dev/null
-+++ linux-3.19/include/uapi/linux/aufs_type.h	2015-02-17 20:21:42.227675178 -0500
++++ linux-4.0/include/uapi/linux/aufs_type.h	2015-05-04 17:40:14.252504055 -0400
 @@ -0,0 +1,419 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -33736,7 +33490,7 @@
 +
 +#include <linux/limits.h>
 +
-+#define AUFS_VERSION	"3.19-20150216"
++#define AUFS_VERSION	"4.0-20150427"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
@@ -33891,10 +33645,10 @@
 +			       "+" AUFS_BRATTR_COO_REG		\
 +			       "+" AUFS_BRATTR_FHSM		\
 +			       "+" AUFS_BRATTR_UNPIN		\
-+			       "+" AUFS_BRATTR_ICEX_SEC	\
-+			       "+" AUFS_BRATTR_ICEX_SYS	\
-+			       "+" AUFS_BRATTR_ICEX_USR	\
-+			       "+" AUFS_BRATTR_ICEX_OTH	\
++			       "+" AUFS_BRATTR_ICEX_SEC		\
++			       "+" AUFS_BRATTR_ICEX_SYS		\
++			       "+" AUFS_BRATTR_ICEX_USR		\
++			       "+" AUFS_BRATTR_ICEX_OTH		\
 +			       "+" AUFS_BRWATTR_NLWH)
 +
 +typedef struct {
