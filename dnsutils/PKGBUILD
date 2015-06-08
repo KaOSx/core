@@ -1,24 +1,21 @@
 
 pkgname=dnsutils
 # _pkver when P version used.
-pkgver=9.9.5
-_pkgver=9.9.5
+pkgver=9.10.2
+_pkgver=9.10.2
 pkgrel=1
-pkgdesc="Various DNS utilities - dig host nslookup nsupdate"
+pkgdesc="DNS utilities, tools, name resolver and domain name authority server"
 arch=('x86_64')
 url="https://www.isc.org/software/bind"
 license=('custom:ISC')
 depends=('openssl')
 options=('makeflags')
-source=("http://ftp.isc.org/isc/bind9/${_pkgver}/bind-${_pkgver}.tar.gz"
-	'tools-only.patch')
-md5sums=('e676c65cad5234617ee22f48e328c24e'
-         '0f2865c239cd247e5ed45b09f90575f7')
+source=("http://ftp.isc.org/isc/bind9/${_pkgver}/bind-${_pkgver}.tar.gz")
+md5sums=('dca7a9967947bffa98547fca6130fc04')
 
 build() {
 	cd "${srcdir}/bind-${_pkgver}"
 
-	#patch -p1 -i "${srcdir}/tools-only.patch"
 	export STD_CDEFINES='-DDIG_SIGCHASE'
 
 	./configure \
