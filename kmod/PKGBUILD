@@ -1,18 +1,17 @@
 
 pkgname=kmod
-pkgver=20
+pkgver=21
 pkgrel=1
-_kver=3.18.7-1
+_kver=4.0.5-1
 pkgdesc="Linux kernel module handling"
 arch=('x86_64')
 url='http://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary'
 license=('GPL2')
 depends=('glibc' 'zlib')
-checkdepends=('linux-headers')
 options=('!libtool')
 source=("ftp://ftp.kernel.org/pub/linux/utils/kernel/$pkgname/$pkgname-$pkgver.tar.xz"
         "depmod-search.conf")
-md5sums=('d6f4fef718a50bd88080de6a43bc64d8'
+md5sums=('ee246fab2e1cba9fbdcad6a86ec31531'
          '9ae9acc68ca27134f55a0959073b8e53')
 
 build() {
@@ -20,13 +19,13 @@ build() {
 
   ./configure \
     --sysconfdir=/etc \
-    --with-zlib 
+    --with-zlib \
+    --disable-test-modules
   make
 }
 
 check() {
-  # Changes with 20 http://git.kernel.org/cgit/utils/kernel/kmod/kmod.git/tree/NEWS
-  make -C "$pkgname-$pkgver" check KDIR="/lib/modules/$_kver/build/Makefile" KVER="$_kver"
+  make -C "$pkgname-$pkgver" check 
 }
 
 package() {
