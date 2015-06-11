@@ -1,8 +1,8 @@
 
 pkgname=dnsutils
 # _pkver when P version used.
-pkgver=9.10.2
-_pkgver=9.10.2
+pkgver=9.10.2.1
+_pkgver=9.10.2-P1
 pkgrel=1
 pkgdesc="DNS utilities, tools, name resolver and domain name authority server"
 arch=('x86_64')
@@ -11,7 +11,7 @@ license=('custom:ISC')
 depends=('openssl')
 options=('makeflags')
 source=("http://ftp.isc.org/isc/bind9/${_pkgver}/bind-${_pkgver}.tar.gz")
-md5sums=('dca7a9967947bffa98547fca6130fc04')
+md5sums=('7550a262cbd0753e49f77fb4ef721522')
 
 build() {
 	cd "${srcdir}/bind-${_pkgver}"
