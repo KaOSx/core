@@ -1,7 +1,7 @@
 
 pkgname=s-nail
-pkgver=14.8.0
-_pkgver=14_8_0
+pkgver=14.8.1
+_pkgver=14_8_1
 pkgrel=1
 pkgdesc="Mail processing system and commandline utility for sending email"
 arch=('x86_64')
@@ -15,7 +15,7 @@ conflicts=('mailx')
 replaces=('mailx')
 provides=('mailx')
 source=("http://sourceforge.net/projects/s-nail/files/${pkgname}-${_pkgver}.tar.xz")
-md5sums=('cd0c700cf5a5d95ab26845aeb2192e8c')
+md5sums=('6fbaa365fa4d393ee8e1c0f753578ed0')
 
 build() {
   cd $srcdir/${pkgname}-${pkgver}
