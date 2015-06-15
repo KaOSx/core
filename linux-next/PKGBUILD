@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.1-rc7
+_basekernel=4.1-rc8
 _srcname=linux-4.0
-pkgver=4.1rc7
+pkgver=4.1rc8
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -12,7 +12,7 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.1-rc7.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.1-rc8.tar.xz"
         #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -30,7 +30,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.1-rc7.tar.
         'linux-next.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('7d6d143c9e2d14ec036f645bb69605c8'
+md5sums=('3182b33bf6bc187bbd17f02a5b799c16'
          #'d634b677385910495fd0c831c0cc5520'
          'b2468fdad0c82c30de426150ed3debe2'
          '16c0e0545aaeb2907d1c2b902a0aac44'
