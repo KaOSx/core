@@ -1,6 +1,6 @@
 
 pkgname=libtirpc
-pkgver=0.3.1
+pkgver=0.3.2
 pkgrel=1
 pkgdesc="Transport Independent RPC library (SunRPC replacement)"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('libgssglue')
 backup=('etc/netconfig')
 options=('!libtool')
 source=("http://downloads.sourceforge.net/sourceforge/libtirpc/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('bf1905c13cdfc232ee0cf117c74d4a5b')
+md5sums=('373d5ad46b1d19759ec763a9f0afcf4d')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
