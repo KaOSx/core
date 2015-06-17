@@ -1,4 +1,5 @@
 
+# install polkit in chroot on any update to check for pam issues
 pkgname=libtirpc
 pkgver=0.3.2
 pkgrel=1
