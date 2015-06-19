@@ -1,6 +1,6 @@
 
 pkgname=systemd
-pkgver=220
+pkgver=221
 pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
@@ -31,10 +31,10 @@ provides=("udev=$pkgver" 'gummiboot')
 groups=('base')
 install="systemd.install"
 options=('!libtool')
-#source=("http://www.freedesktop.org/software/$pkgname/$pkgname-$pkgver.tar.xz"
+source=("http://www.freedesktop.org/software/systemd/systemd-$pkgver.tar.xz"
 # commit/?id=c4e87748d5d3f574d335a87e3a6272276814b2fd
 # github move https://github.com/systemd/systemd/tree/c4e87748d5d3f574d335a87e3a6272276814b2fd
-source=("git://anongit.freedesktop.org/systemd/systemd.git"
+#source=("git://anongit.freedesktop.org/systemd/systemd.git"
         'initcpio-hook-udev'
         'initcpio-install-systemd'
         'initcpio-install-udev'
@@ -42,9 +42,9 @@ source=("git://anongit.freedesktop.org/systemd/systemd.git"
         'KaOS.conf'
         'KaOS_fallback.conf'
         'splash.bmp')
-md5sums=('SKIP'
+md5sums=('b4d5a253841cf28a98b7ec99c45e3716'
          'b2da235893d76ed6b810fa5e8d2afe67'
-         '23a62cf191530cef3d405a724b183d61'
+         'e84d194cd77b3ba9ca0968c09e632f06'
          'bde43090d4ac0ef048e3eaee8202a407'
          '30b74b38eaf1178bbc540bda9a24bfe2'
          'eb444ae327472b98a65631ede777720a'
@@ -52,38 +52,35 @@ md5sums=('SKIP'
          'd7eec59a2aaa54770d22ccfa52d0ac2b')
 
 build() {
-  cd "$pkgname"
+  cd "$pkgname-$pkgver"
   #rm src/journal/audit_type-to-name.h
   #rm src/udev/keyboard-keys-from-name.gperf
   
-  ./autogen.sh
+  #./autogen.sh
   ./configure \
       --libexecdir=/usr/lib \
       --localstatedir=/var \
       --sysconfdir=/etc \
-      --enable-introspection \
       --enable-compat-libs \
       --enable-split-usr \
       --enable-lz4 \
       --enable-efi \
       --enable-gnuefi \
-      --disable-gtk-doc \
       --disable-audit \
       --disable-ima \
       --disable-kdbus \
-      --disable-networkd \
-      --disable-gudev 
+      --disable-networkd 
       #--with-firmware-path=/usr/lib/firmware/updates:/lib/firmware/updates:/usr/lib/firmware:/lib/firmware
 
   make
 }
 
 check() {
-  make -C "$pkgname" check || true
+  make -C "$pkgname-$pkgver" check || true
 }
 
 package() {
-  make -C "$pkgname" DESTDIR="$pkgdir" install
+  make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
 
   install -dm755 "$pkgdir/bin"
   ln -s ../usr/lib/systemd/systemd "$pkgdir/bin/systemd"
@@ -100,7 +97,7 @@ package() {
 
   ln -s ../lib/systemd/systemd-udevd "$pkgdir/usr/bin/udevd"
 
-  install -m644 "systemd/tmpfiles.d/legacy.conf" "$pkgdir/usr/lib/tmpfiles.d"
+  install -m644 "systemd-$pkgver/tmpfiles.d/legacy.conf" "$pkgdir/usr/lib/tmpfiles.d"
 
   # Replace in optical 
   sed -i 's#GROUP="dialout"#GROUP="uucp"#g;
