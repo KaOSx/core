@@ -9,7 +9,7 @@ url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1')
 depends=('acl' 'bash' 'glibc' 'glib2' 'kmod' 'hwids' 'util-linux' 'kbd' 'libcap' 'libxslt'
          'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn' 'lz4') # 'audit') 
-makedepends=('docbook-xsl' 'gobject-introspection' 'gperf' 'intltool' 'cryptsetup' 'python2' 'python2-lxml'
+makedepends=('docbook-xsl' 'gperf' 'intltool' 'cryptsetup' 'python2' 'python2-lxml'
              'libmicrohttpd' 'gnu-efi-libs')
 optdepends=('cryptsetup: required for encrypted block devices'
             'libmicrohttpd: systemd-journal-gatewayd')
