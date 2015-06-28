@@ -1,14 +1,14 @@
 
 pkgname=libcroco
 pkgver=0.6.8
-pkgrel=7
+pkgrel=8
 pkgdesc="A CSS parsing library"
 arch=('x86_64')
 depends=('glib2' 'libxml2')
 makedepends=('intltool')
 license=('LGPL')
 options=('!libtool')
-source=("http://ftp.gnome.org/pub/gnome/sources/$pkgname/0.6/$pkgname-$pkgver.tar.xz")
+source=("http://ftp.gnome.org/pub/gnome/sources/libcroco/0.6/$pkgname-$pkgver.tar.xz")
 url="http://www.gnome.org"
 md5sums=('767e73c4174f75b99695d4530fd9bb80')
 
