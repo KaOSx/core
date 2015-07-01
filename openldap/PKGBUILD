@@ -1,7 +1,7 @@
 
 pkgbase=openldap
 pkgname=('libldap' 'openldap')
-pkgver=2.4.40
+pkgver=2.4.41
 pkgrel=1
 arch=('x86_64')
 url="http://www.openldap.org/"
@@ -12,7 +12,7 @@ source=("ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/${pkgbase}-${pkgve
         'slapd.service'
         'slapd.tmpfiles'
         'ntlm.patch')
-md5sums=('423c1f23d2a0cb96b3e9baf7e9d7dda7'
+md5sums=('3f1a4cea52827e18feaedfdc1634b5d0'
          'cbe2bd85be8d98851f640d20930ca9ea'
          'df81b171ef4a99d6002f9f96774f64c7'
          '4258ddbef923d1f29f2843bc050f8c56')
@@ -69,7 +69,6 @@ package_libldap() {
   done
   install -Dm644 doc/man/man5/ldap.conf.5.tmp "${pkgdir}"/usr/share/man/man5/ldap.conf.5
   
-# get rid of duplicate default conf files
   rm "${pkgdir}"/etc/openldap/*.default
 
   ln -sf liblber.so "${pkgdir}"/usr/lib/liblber.so.2
@@ -94,7 +93,6 @@ package_openldap() {
   rm "${pkgdir}"/usr/share/man/man5/ldap.conf.5
   rm -r "${pkgdir}"/run
 
-# get rid of duplicate default conf files
   rm "${pkgdir}"/etc/openldap/*.default
 
   ln -s ../lib/slapd "${pkgdir}"/usr/sbin/slapd
