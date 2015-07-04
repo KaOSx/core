@@ -3,7 +3,7 @@ pkgbase="linux-lts"
 pkgname=('linux-lts' 'linux-lts-headers' 'linux-lts-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=3.10
-pkgver=3.10.73
+pkgver=3.10.83
 pkgrel=1
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 arch=('x86_64')
@@ -18,7 +18,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/linux-$_basekernel.tar.xz"
         'linux-lts.preset'
         'change-default-console-loglevel.patch')
 md5sums=('4f25cd5bec5f8d5a7d935b3f2ccb8481'
-         'e1a7c68b8980758cb8279b6615945d5a'
+         '0424393bfb6bc7f830ed92ad512c6d90'
          '0242fe5bf621f3bfcf51b110cdbbbc8e'
          '232b52576a62c7a333e9fe7a1e1ca359'
          '9d3c56a4b999c8bfbd4018089a62f662')
