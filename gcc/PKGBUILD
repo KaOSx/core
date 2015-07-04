@@ -4,10 +4,10 @@
 # http://www.linuxfromscratch.org/lfs/view/7.6/chapter06/gcc.html
 
 pkgname=('gcc' 'gcc-libs') 
-pkgver=4.9.2
+pkgver=4.9.3
 _pkgver=4.9
 #_snapshot=4.8-20130718
-pkgrel=2
+pkgrel=1
 pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
@@ -17,11 +17,9 @@ checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
 source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2"
 #source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.bz2"
-        'gcc-4.8-filename-output.patch'
         'isl-0.13.patch')
-md5sums=('4df8ee253b7f3863ad0b86359cd39c43'
-         '40cb437805e2f7a006aa0d0c3098ab0f'
-         'f26ae06b9cbc8abe86f5ee4dc5737da8')
+md5sums=('6f831b4d251872736e8e9cc09746f327'
+         'db1ada9c85f31df28f35320615d17f34')
 
   _basedir="gcc-${pkgver}"
   #_basedir="gcc-${_snapshot}"
@@ -39,7 +37,6 @@ build() {
   
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
   
-  patch -p0 -i ${srcdir}/gcc-4.8-filename-output.patch
   patch -p1 -i ${srcdir}/isl-0.13.patch
   
   # using -pipe causes spurious test-suite failures

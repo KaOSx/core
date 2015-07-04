@@ -1,6 +1,6 @@
 
 pkgname=coreutils
-pkgver=8.23
+pkgver=8.24
 pkgrel=1
 pkgdesc="The basic file, shell and text manipulation utilities of the GNU operating system"
 arch=('x86_64')
@@ -10,7 +10,7 @@ groups=('base')
 depends=('glibc' 'pam' 'acl' 'gmp' 'libcap')
 install=${pkgname}.install
 source=("ftp://ftp.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.xz")
-md5sums=('abed135279f87ad6762ce57ff6d89c41')
+md5sums=('40efdbce865d2458d8da0a9dcee7c16c')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
@@ -22,7 +22,8 @@ build() {
 
 check() {
   cd ${srcdir}/${pkgname}-${pkgver}
-  
+  # https://groups.google.com/forum/#!topic/address-sanitizer/jEvOJgkDqQk
+  LD_PRELOAD=libasan.so.2
   make RUN_EXPENSIVE_TESTS=yes check
 }
 
