@@ -1,7 +1,7 @@
 
 pkgname=openssl
-_ver=1.0.2c
-pkgver=1.0.2.3
+_ver=1.0.2d
+pkgver=1.0.2.4
 pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
