@@ -1,0 +1,29 @@
+
+pkgname=bridge-utils
+pkgver=1.5.1
+pkgrel=1
+_commit=a42ed4ef1ea288bcc904b8aa188031d1024affe3
+pkgdesc="EEE 802.1d ethernet bridging (plus Spanning Tree protocol) for the linux kernel."
+arch='x86_64'
+url="http://www.linuxfoundation.org/collaborate/workgroups/networking/bridge"
+license=('GPL')
+depends=('glibc' 'iptables')
+source=("https://github.com/Gandi/bridge-utils/archive/${_commit}.zip")
+md5sums=('f36389c8d7858f48f60371a1626c5984')
+
+build() {
+  cd ${pkgname}-${_commit}
+  
+  aclocal
+  autoconf
+  ./configure --prefix=/usr \
+      --sbindir=/usr/bin \
+      --sysconfdir=/etc
+  make
+}
+
+package() {
+  cd ${pkgname}-${_commit}
+  
+  make DESTDIR=${pkgdir} install
+}
