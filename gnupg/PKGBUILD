@@ -1,13 +1,14 @@
 
 pkgname=gnupg
 pkgver=2.1.6
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU Privacy Guard 2 - a PGP replacement tool"
 arch=('x86_64')
 license=('GPL')
 url="http://www.gnupg.org/"
 depends=('libldap' 'curl' 'bzip2' 'zlib' 'libksba' 'libgcrypt' 'libgpg-error'
-	 'npth' 'libusb-compat' 'libassuan' 'texinfo' 'readline' 'pinentry' 'gnutls')
+	 'npth' 'libassuan' 'texinfo' 'readline' 'pinentry' 'gnutls') # 'libusb')
+#makedepends=('libusb-compat')
 install=${pkgname}.install
 # https://www.gnupg.org/faq/whats-new-in-2.1.html
 conflicts=('gnupg2' 'dirmngr')
