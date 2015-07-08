@@ -1,6 +1,6 @@
 
 pkgname=systemd
-pkgver=221
+pkgver=222
 pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
@@ -31,7 +31,7 @@ provides=("udev=$pkgver" 'gummiboot')
 groups=('base')
 install="systemd.install"
 options=('!libtool')
-source=("http://www.freedesktop.org/software/systemd/systemd-$pkgver.tar.xz"
+source=("https://github.com/systemd/systemd/archive/v$pkgver.tar.gz"
 # commit/?id=c4e87748d5d3f574d335a87e3a6272276814b2fd
 # github move https://github.com/systemd/systemd/tree/c4e87748d5d3f574d335a87e3a6272276814b2fd
 #source=("git://anongit.freedesktop.org/systemd/systemd.git"
@@ -42,7 +42,7 @@ source=("http://www.freedesktop.org/software/systemd/systemd-$pkgver.tar.xz"
         'KaOS.conf'
         'KaOS_fallback.conf'
         'splash.bmp')
-md5sums=('b4d5a253841cf28a98b7ec99c45e3716'
+md5sums=('a18881dc123141b0c61f95d8f8941801'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'e84d194cd77b3ba9ca0968c09e632f06'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -56,7 +56,7 @@ build() {
   #rm src/journal/audit_type-to-name.h
   #rm src/udev/keyboard-keys-from-name.gperf
   
-  #./autogen.sh
+  ./autogen.sh
   ./configure \
       --libexecdir=/usr/lib \
       --localstatedir=/var \
