@@ -10,17 +10,19 @@ url="https://github.com/systemd/python-systemd"
 depends=('systemd' 'python2')
 makedepends=('python2-sphinx')
 source=("https://github.com/systemd/python-systemd/archive/v$pkgver.tar.gz")
+#source=("git://github.com/systemd/python-systemd")
 md5sums=('6902e5588397c796c85febc8334d434b')
 
 build() {
-  cd ${_pkgname}-${pkgver}
+  cd ${_pkgname}-$pkgver
 
   python2 setup.py build
   make
+  make sphinx-html
 }
 
 package() {
-  cd ${_pkgname}-${pkgver}
+  cd ${_pkgname}-$pkgver
 
   python2 setup.py install
 }

@@ -1,6 +1,6 @@
 
 pkgname=wireless-regdb
-pkgver=2015.05.15
+pkgver=2015.06.05
 pkgrel=1
 pkgdesc="Central Regulatory Domain Database"
 arch=('x86_64')
@@ -12,7 +12,7 @@ makedepends=('crda')
 install=wireless-regdb.install
 source=("https://www.kernel.org/pub/software/network/${pkgname}/${pkgname}-${pkgver}.tar.xz"
         'crda.conf.d')
-md5sums=('2698615f0d871077a05849887e8fa80d'
+md5sums=('7c7e1aec3a8621417d224d600bbb9612'
          '2374dcf1c6530332f375e5362b80169b')
 
 package() {
