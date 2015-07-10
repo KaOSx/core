@@ -7,22 +7,24 @@ pkgdesc="Python module for native access to the systemd facilities."
 arch=('x86_64')
 license=('LGPLv2+')
 url="https://github.com/systemd/python-systemd"
-depends=('systemd' 'python2')
-makedepends=('python2-sphinx')
+depends=('python2')
+makedepends=('python2-sphinx' 'python2-lxml' 'systemd')
 source=("https://github.com/systemd/python-systemd/archive/v$pkgver.tar.gz")
 #source=("git://github.com/systemd/python-systemd")
 md5sums=('6902e5588397c796c85febc8334d434b')
 
 build() {
   cd ${_pkgname}-$pkgver
+  
+  make systemd/id128-constants.h
 
   python2 setup.py build
   make
-  make sphinx-html
+  #make SPHINX_BUILD=sphinx-build-2 sphinx-html
 }
 
 package() {
   cd ${_pkgname}-$pkgver
 
-  python2 setup.py install
+  python2 setup.py install --root=$pkgdir/
 }
