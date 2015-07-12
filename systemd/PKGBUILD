@@ -75,9 +75,9 @@ build() {
   make
 }
 
-#check() {
-  # make -C "$pkgname-$pkgver" check || true
-#}
+check() {
+  make -C "$pkgname-$pkgver" check || true
+}
 
 package() {
   make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
