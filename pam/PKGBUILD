@@ -1,6 +1,6 @@
 
 pkgname=pam
-pkgver=1.2.0
+pkgver=1.2.1
 pkgrel=1
 pkgdesc="PAM (Pluggable Authentication Modules) library"
 arch=('x86_64')
@@ -15,7 +15,7 @@ source=("http://www.linux-pam.org/library/Linux-PAM-$pkgver.tar.bz2"
         'other'
         'glibc216.patch')
 options=('!libtool' '!emptydirs')
-md5sums=('ee4a480d77b341c99e8b1375f8f180c0'
+md5sums=('9dc53067556d2dd567808fd509519dd6'
          'da6a46e5f8cd3eaa7cbc4fc3a7e2b555'
          '6e6c8719e5989d976a14610f340bd33a'
          '0b5f56559484af741005db19ecfdd709')
