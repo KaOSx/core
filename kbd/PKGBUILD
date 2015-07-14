@@ -1,6 +1,6 @@
 
 pkgname=kbd
-pkgver=2.0.2
+pkgver=2.0.3
 pkgrel=1
 pkgdesc="Keytable files and keyboard utilities"
 arch=('x86_64')
@@ -8,8 +8,8 @@ url="http://www.kbd-project.org"
 license=('GPL')
 depends=('glibc' 'pam')
 makedepends=('check')
-source=("ftp://ftp.altlinux.org/pub/people/legion/kbd/${pkgname}-${pkgver}.tar.gz")
-md5sums=('f1f75f0dd5f7dde89ce47585274366f8')
+source=("ftp://ftp.kernel.org/pub/linux/utils/kbd/${pkgname}-${pkgver}.tar.gz")
+md5sums=('15ccfead0cdd3b5e74d875348b184ded')
 
 build() {
   cd ${startdir}/src/${pkgname}-${pkgver}
