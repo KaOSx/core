@@ -1,14 +1,14 @@
 
 pkgname=intltool
-pkgver=0.50.2
-pkgrel=3
+pkgver=0.51.0
+pkgrel=1
 pkgdesc="The internationalization tool collection"
 arch=('x86_64')
 url="https://edge.launchpad.net/intltool"
 license=('GPL')
 depends=('perl-xml-parser')
 source=("http://edge.launchpad.net/intltool/trunk/${pkgver}/+download/${pkgname}-${pkgver}.tar.gz")
-md5sums=('23fbd879118253cb99aeac067da5f591')
+md5sums=('12e517cac2b57a0121cda351570f1e63')
 
 build() {
 	cd ${srcdir}/${pkgname}-${pkgver}

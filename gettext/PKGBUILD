@@ -1,6 +1,6 @@
 
 pkgname=gettext
-pkgver=0.19.5
+pkgver=0.19.5.1
 pkgrel=1
 pkgdesc="GNU internationalization library"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('acl' 'gcc-libs' 'glib2' 'libcroco' 'sh' 'libunistring')
 options=('!libtool')
 install=gettext.install
 source=("ftp://ftp.gnu.org/pub/gnu/gettext/${pkgname}-${pkgver}.tar.gz")
-md5sums=('0f3c108d64e8dcd9e6fbdff4ca722feb')
+md5sums=('2b2ab90f6405a414bbe30cf6655f3e28')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
