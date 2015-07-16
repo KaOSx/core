@@ -1,7 +1,7 @@
  
 pkgname=asciidoc
 pkgver=8.6.9
-pkgrel=1
+pkgrel=2
 pkgdesc='Text document format for short documents, articles, books and UNIX man pages.'
 arch=('x86_64')
 url='http://www.methods.co.nz/asciidoc/'
@@ -13,17 +13,11 @@ optdepends=('lilypond: music-filter'
             'dblatex: pdf generation'
             'lynx: text generation'
             'w3m: text generation (alternative to lynx)')
-source=("http://downloads.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+source=("http://sourceforge.net/projects/asciidoc/files/asciidoc/${pkgver}/${pkgname}-${pkgver}.tar.gz")
 md5sums=('c59018f105be8d022714b826b0be130a')
 
 build() {
   cd ${pkgname}-${pkgver}
-
-  # python2 fix
-  for file in asciidocapi.py a2x.py asciidoc.py filters/music/music2png.py filters/latex/latex2png.py \
-      filters/code/code-filter.py filters/graphviz/graphviz2png.py; do
-    sed -i 's_#!/usr/bin/env python_#!/usr/bin/env python2_' $file
-  done
 
   ./configure \
     --prefix=/usr \
@@ -35,9 +29,6 @@ package() {
 
   make install DESTDIR=${pkgdir}
 
-  install -Dm644 asciidocapi.py \
-    ${pkgdir}/usr/lib/python2.7/site-packages/asciidocapi.py
-
-  install -Dm644 vim/syntax/asciidoc.vim \
-    ${pkgdir}/usr/share/vim/vimfiles/syntax/asciidoc.vim
+  install -Dm644 asciidocapi.py ${pkgdir}/usr/lib/python2.7/site-packages/asciidocapi.py
+  install -Dm644 vim/syntax/asciidoc.vim ${pkgdir}/usr/share/vim/vimfiles/syntax/asciidoc.vim
 }

@@ -1,7 +1,7 @@
 
 pkgname=gdbm
 pkgver=1.11
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU database library"
 url="http://www.gnu.org/software/gdbm/gdbm.html"
 license=('GPL')
@@ -14,15 +14,9 @@ install=gdbm.install
 md5sums=('72c832680cf0999caedbe5b265c8c1bd'
          '2a5979910c338dabda6935263b3d8af9')
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${srcdir}/${pkgname}-${pkgver}
 
-  # Prevent gdbm from storing uninitialized memory content
-  # to database files. This patch improves security, as the
-  # uninitialized memory might contain sensitive informations
-  # from other applications.
-  # https://bugzilla.redhat.com/show_bug.cgi?id=4457
-  # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=208927
-  patch -p1 -i ../gdbm-1.10-zeroheaders.patch
+  patch -p1 -i ${srcdir}/gdbm-1.10-zeroheaders.patch
 
   ./configure --prefix=/usr \
               --mandir=/usr/share/man \
@@ -32,18 +26,17 @@ build() {
 }
 
 check() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${srcdir}/${pkgname}-${pkgver}
   
   make check
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  make DESTDIR="${pkgdir}" install
+  cd ${srcdir}/${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
 
-  # create symlinks for compatibility
-  install -dm755 "${pkgdir}"/usr/include/gdbm
-  ln -sf ../gdbm.h "${pkgdir}"/usr/include/gdbm/gdbm.h
-  ln -sf ../ndbm.h "${pkgdir}"/usr/include/gdbm/ndbm.h
-  ln -sf ../dbm.h  "${pkgdir}"/usr/include/gdbm/dbm.h
+  install -dm755 ${pkgdir}/usr/include/gdbm
+  ln -sf ../gdbm.h ${pkgdir}/usr/include/gdbm/gdbm.h
+  ln -sf ../ndbm.h ${pkgdir}/usr/include/gdbm/ndbm.h
+  ln -sf ../dbm.h  ${pkgdir}/usr/include/gdbm/dbm.h
 }
