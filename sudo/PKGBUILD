@@ -2,7 +2,7 @@
 pkgname=sudo
 pkgver=1.8.14
 _pkgver=1.8.14
-pkgrel=1
+pkgrel=2
 pkgdesc="Give certain users the ability to run some commands as root."
 arch=('x86_64')
 url="http://www.sudo.ws/sudo/"
@@ -28,8 +28,7 @@ build() {
               --with-env-editor \
               --with-all-insults \
               --with-logfac=auth \
-              --enable-tmpfiles.d \
-              --with-sssd 
+              --enable-tmpfiles.d 
 
   make
 }
