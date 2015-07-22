@@ -1,7 +1,7 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=binutils
-pkgver=2.25
+pkgver=2.25.1
 pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
@@ -13,12 +13,12 @@ checkdepends=('dejagnu' 'bc')
 options=('!libtool' '!distcc' '!ccache')
 install=binutils.install
 source=("ftp://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.gz")
-md5sums=('ab6719fd7434caf07433ec834db8ad4f')
+md5sums=('ace2b75f6240f566a6c42a1bdacf30bf')
 
 prepare() {
   cd ${srcdir}/binutils-${pkgver}
   
-  # libiberty configure tests for header files using "$CPP $CPPFLAGS"
+  # libiberty configure tests 
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
   
   mkdir ${srcdir}/binutils-build
@@ -34,7 +34,6 @@ build() {
     --enable-plugins --enable-threads --enable-shared \
     --disable-werror --disable-multilib 
 
-  # check the host environment and makes sure all the necessary tools are available
   make configure-host
 
   make tooldir=${pkgdir}/usr
@@ -43,7 +42,6 @@ build() {
 check() {
   cd ${srcdir}/binutils-build
 
-  # unset LDFLAGS as testsuite makes assumptions about which ones are active
   # do not abort on errors - manually check log files
   make LDFLAGS="" -k check || true
 }
