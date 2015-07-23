@@ -55,7 +55,7 @@ build() {
   #rm src/journal/audit_type-to-name.h
   #rm src/udev/keyboard-keys-from-name.gperf
   
-  NTP_SERVERS="0.kaos.pool.ntp.org 1.kaos.pool.ntp.org 2.kaos.pool.ntp.org 3.kaos.pool.ntp.org"
+  NTP_SERVERS="0.north-america.pool.ntp.org 1.north-america.pool.ntp.org 2.north-america.pool.ntp.org 3.north-america.pool.ntp.org"
   
   ./autogen.sh
   ./configure \

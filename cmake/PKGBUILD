@@ -1,6 +1,6 @@
 
 pkgname=cmake
-pkgver=3.2.3
+pkgver=3.3.0
 pkgrel=1
 pkgdesc="A cross-platform open-source make system"
 arch=('x86_64')
@@ -9,8 +9,8 @@ url="http://www.cmake.org"
 depends=('curl' 'libarchive' 'shared-mime-info')
 makedepends=('qt5-base')
 install=${pkgname}.install
-source=("http://www.cmake.org/files/v3.2/${pkgname}-${pkgver}.tar.gz")
-md5sums=('d51c92bf66b1e9d4fe2b7aaedd51377c')
+source=("http://www.cmake.org/files/v3.3/${pkgname}-${pkgver}.tar.gz")
+md5sums=('b1d4823e3f74c961486d9f253da9825d')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
