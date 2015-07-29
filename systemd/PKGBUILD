@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=222
-pkgrel=2
+pkgver=223
+pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -41,7 +41,7 @@ source=("https://github.com/systemd/systemd/archive/v$pkgver.tar.gz"
         'KaOS.conf'
         'KaOS_fallback.conf'
         'splash.bmp')
-md5sums=('a18881dc123141b0c61f95d8f8941801'
+md5sums=('fd7b7c622fc2b7deed44f9722227d488'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'e84d194cd77b3ba9ca0968c09e632f06'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -72,7 +72,7 @@ build() {
       --disable-kdbus \
       --disable-networkd \
       --without-python \
-      --with-ntp-servers=${NTP_SERVERS}
+      --with-ntp-servers="${NTP_SERVERS}"
       #--with-firmware-path=/usr/lib/firmware/updates:/lib/firmware/updates:/usr/lib/firmware:/lib/firmware
 
   make
