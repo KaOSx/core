@@ -1,6 +1,6 @@
 
 pkgname=systemd
-pkgver=223
+pkgver=224
 pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
@@ -41,7 +41,7 @@ source=("https://github.com/systemd/systemd/archive/v$pkgver.tar.gz"
         'KaOS.conf'
         'KaOS_fallback.conf'
         'splash.bmp')
-md5sums=('fd7b7c622fc2b7deed44f9722227d488'
+md5sums=('fad64d2ae64af4b6034950e91b2c8e2b'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'e84d194cd77b3ba9ca0968c09e632f06'
          'bde43090d4ac0ef048e3eaee8202a407'
