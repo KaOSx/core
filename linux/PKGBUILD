@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.0
-pkgver=4.0.5
+_basekernel=4.1
+pkgver=4.1.4
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.0.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.1.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -28,18 +28,18 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.0.tar.xz"
         'linux.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('a86916bd12798220da9eb4a1eec3616d'
-         'd634b677385910495fd0c831c0cc5520'
-         '1b54aa7c101f740d17095ebfd13440b1'
-         '16c0e0545aaeb2907d1c2b902a0aac44'
-         'cf70388424ba3280dea7d31228cee547'
-         '8a1d8b17f6baa4049bda05d5ff3a6264'
-         '0ee3b68cabc215608569849f968fb801'
-         '45d777cffc2b178c8f06eef5143f869c'
-         '0ae60b54c1c7e8f0e2878fb080566109'
+md5sums=('fe9dc0f6729f36400ea81aa41d614c37'
+         'd7e306b17b0b5d49120adeee1a6bf4a8'
+         'be61f2b5e30f511cb6064aae5ae4710e'
+         'a814b81d048f41fc8c629188b711bb0b'
+         '3ed267a5711ca985019168b7214a4dd3'
+         '6529bf89e3791cb55901a296b016cb74'
+         '8469f01ed403e3edfaf718fa71b79df1'
+         '2fba1d2e4e28256c94d2b3368690f5c2'
+         'bfc907fb290e2bfe7989452d166267ae'
          '260b2e47579140f61546f37d90e0b527'
-         'b8d46df172964def0b7ba2065cda0cba'
-         'f7dcd5370aaeb7f7a1c617c83b124809'
+         '87d271a57d027e167771fed536ea74e8'
+         '594b1469fd62c84223a858d3253a7b3b'
          'eb14dcfd80c00852ef81ded6e826826a'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47')
