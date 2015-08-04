@@ -1,6 +1,6 @@
 
 pkgname=swig
-pkgver=3.0.6
+pkgver=3.0.7
 pkgrel=1
 pkgdesc="A compiler that makes it easy to integrate C and C++ code with scripting languages"
 arch=('x86_64')
@@ -8,7 +8,7 @@ url="http://www.swig.org/"
 license=('custom')
 depends=('pcre' 'zlib')
 source=("http://downloads.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.gz")  
-md5sums=('df43ae271642bcfa61c1e59f970f9963')
+md5sums=('7fff46c84b8c630ede5b0f0827e3d90a')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
