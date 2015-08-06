@@ -1,6 +1,6 @@
 
 pkgname=subversion
-pkgver=1.8.13
+pkgver=1.9.0
 pkgrel=1
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
@@ -20,7 +20,7 @@ source=("http://apache.mirror.rafal.ca/subversion/$pkgname-$pkgver.tar.bz2"
 	'svnserve.tmpfiles'
 	'svnserve.service'
         'subversion.rpath.fix.patch')
-md5sums=('4413417b529d7bdf82f74e50df02e88b'
+md5sums=('20ae7b0d4ef07eeaf73eb4e23317b495'
          'a0db6dd43af33952739b6ec089852630'
          'c459e299192552f61578f3438abf0664'
          'bb2857eceafcfac35dde39dcffad2314'
@@ -32,9 +32,8 @@ build() {
 
    export PYTHON=/usr/bin/python2
 
-   patch -p0 -i ../subversion.rpath.fix.patch
-   sed -i 's|/usr/bin/env python|/usr/bin/env python2|' tools/hook-scripts/{,mailer/{,tests/}}*.py
-
+   #patch -p0 -i ../subversion.rpath.fix.patch
+   
    # configure
    autoreconf
    ./configure --prefix=/usr \
