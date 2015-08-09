@@ -1,14 +1,14 @@
 
 pkgname=ncurses
-pkgver=5.9
-pkgrel=7
+pkgver=6.0
+pkgrel=1
 pkgdesc="System V Release 4.0 curses emulation library"
 arch=('x86_64')
 url="http://www.gnu.org/software/ncurses/"
 license=('MIT')
 depends=('glibc')
 source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('8cb9c412e5f2d96bc6f459aa8c6282a1')
+md5sums=('ee13d052e1ead260d7c28071f46eefb1')
 
 build() {
   cd "${srcdir}"
