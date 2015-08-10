@@ -1,7 +1,7 @@
 
 pkgname=gnutls
-pkgver=3.4.4
-_pkgver=3.4.4
+pkgver=3.4.4.1
+_pkgver=3.4.4.1
 pkgrel=1
 pkgdesc="Secure communications library implementing the SSL, TLS and DTLS protocols and technologies around them"
 arch=('x86_64')
@@ -10,9 +10,9 @@ url="http://www.gnu.org/software/gnutls/"
 install=gnutls.install
 options=('libtool')
 depends=('gcc-libs' 'libtasn1>=3.6' 'readline' 'zlib' 'texinfo' 'nettle' 'p11-kit')
-makepends=('datefudge' 'valgrind' 'strace' 'autogen')
+makepends=('datefudge' 'valgrind' 'strace')
 source=("ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/${pkgname}-${pkgver}.tar.xz")
-md5sums=('1a0367a01dacaf0e91464e6fa54891fa')
+md5sums=('474efaba6fd6c6c6c0ebac2a3f431946')
 
 build() {
   cd "${srcdir}/${pkgname}-${_pkgver}"
@@ -20,9 +20,7 @@ build() {
   ./configure --prefix=/usr \
        --with-zlib \
        --disable-guile \
-       --disable-static \
-       --without-idn \
-       --enable-local-libopts
+       --disable-static
   make 
 }
 
