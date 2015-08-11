@@ -1,6 +1,6 @@
 
 pkgname=openssh
-pkgver=6.9p1
+pkgver=7.0p1
 pkgrel=1
 pkgdesc='Free version of the SSH connectivity tools'
 arch=('x86_64')
@@ -16,7 +16,7 @@ source=("ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgver}
 	'sshd.service'
 	'sshd@.service'
 	'sshd.socket')
-md5sums=('0b161c44fc31fbc6b76a6f8ae639f16f'
+md5sums=('831883f251ac34f0ab9c812acc24ee69'
          'e2cea70ac13af7e63d40eb04415eacd5'
          '9d71ea52cd15e9d7c172b7b71cb03bc0'
          '234ac4883cc28c56a4c236867124c3e4'
