@@ -1,7 +1,7 @@
 
 pkgname=procps-ng
 pkgver=3.3.11
-pkgrel=1
+pkgrel=2
 pkgdesc='Utilities for monitoring your system and its processes'
 arch=('x86_64')
 url="http://sourceforge.net/projects/procps-ng/"
@@ -16,7 +16,7 @@ md5sums=('6cc5b94c1c5b8cbc89ad345a7b522f74')
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
   
-  ./configure --exec-prefix=/ --prefix=/usr --sysconfdir=/etc --libdir=/usr/lib
+  ./configure --exec-prefix=/ --prefix=/usr --sysconfdir=/etc--libdir=/usr/lib --bindir=/usr/bin --with-systemd --disable-kill
   make
 }
 
@@ -24,8 +24,4 @@ package() {
   cd "${pkgname}-${pkgver}"
   
   make DESTDIR="${pkgdir}" install
-
-  # provided by util-linux
-  rm "${pkgdir}/bin/kill"
-  rm "${pkgdir}/usr/share/man/man1/kill.1"
 }
