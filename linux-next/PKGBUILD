@@ -2,17 +2,17 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.2-rc8
+_basekernel=4.2
 _srcname=linux-4.2
 pkgver=4.2.0
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-#source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.2-rc8.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
+#source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.2-rc8.tar.xz"
         #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -31,8 +31,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.2-rc8.tar.
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch'
         'MT7601.bin')
-md5sums=('b1f06f0ec0d4a790c4e813480e901a47'
-         'fa94712ae60b7a9b6a94896f6c756386'
+md5sums=('3d5ea06d767e2f35c999eeadafc76523'
+         'd5d346400907389e7d78163dd6ca4a16'
          'a814b81d048f41fc8c629188b711bb0b'
          '3ed267a5711ca985019168b7214a4dd3'
          '6529bf89e3791cb55901a296b016cb74'
