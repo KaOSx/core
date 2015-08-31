@@ -16,7 +16,7 @@ Server = http://kaos.youm.org/$repo
 Server = http://nyxi.eu/mirrors/kaos/$repo
 
 # South-Africa
-Server = http://ftp.wa.co.za/pub/koas/$repo
+Server = http://ftp.wa.co.za/pub/kaos/$repo
 
 # United States
 Server = http://mirror.dacentec.com/kaosx/$repo
