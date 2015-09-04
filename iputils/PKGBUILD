@@ -1,7 +1,7 @@
 
 pkgname=iputils
-pkgver=20121221
-pkgrel=4
+pkgver=20150815
+pkgrel=1
 pkgdesc="IP Configuration Utilities (and Ping)."
 arch=('x86_64')
 license=('GPL')
@@ -11,17 +11,13 @@ depends=('glibc' 'openssl' 'sysfsutils' 'libcap')
 makedepends=('libxslt' 'opensp')
 backup=(etc/xinetd.d/tftp)
 install=${pkgname}.install
-source=("http://www.skbuff.net/${pkgname}/${pkgname}-s${pkgver}.tar.bz2"
-        'tftp.xinetd'
-        'recverr.patch')
-md5sums=('6072aef64205720dd1893b375e184171'
-         'b5f1b81ea53983c402a46e85501858b3'
-         'b75f5f267b3c47b35a94ac0a79767388')
+source=("https://github.com/iputils/iputils/archive/s${pkgver}.tar.gz"
+        'tftp.xinetd')
+md5sums=('df73d2afa5350e53ffa3a11530172c87'
+         'b5f1b81ea53983c402a46e85501858b3')
 
 build() {
   cd "${srcdir}/${pkgname}-s${pkgver}"
-  # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=709052
-  patch -p1 -i  "${srcdir}"/recverr.patch
 
   make USE_GNUTLS=no CCOPTOPT="$CFLAGS"
 }
@@ -34,8 +30,8 @@ package() {
   install -m755 arping clockdiff rarpd rdisc tftpd tracepath tracepath6 \
     "${pkgdir}"/usr/sbin/
 
-  install -m755 ping{,6} "${pkgdir}"/usr/bin/
-   ln -sf /usr/bin/ping{,6}  "${pkgdir}"/bin/
+  install -m755 ping "${pkgdir}"/usr/bin/
+   ln -sf /usr/bin/ping  "${pkgdir}"/bin/
 
   install -dm755 "${pkgdir}"/etc/xinetd.d/
   install -m644 "${srcdir}"/tftp.xinetd "${pkgdir}"/etc/xinetd.d/tftp
