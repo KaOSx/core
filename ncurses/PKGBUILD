@@ -11,62 +11,40 @@ source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz")
 md5sums=('ee13d052e1ead260d7c28071f46eefb1')
 
 build() {
-  cd "${srcdir}"
-  mkdir -p ncurses{,w}-build
+  cd ${pkgname}-${pkgver}
   
-  cd "${srcdir}/ncursesw-build"
-  ${srcdir}/${pkgname}-${pkgver}/configure --prefix=/usr \
+  ./configure --prefix=/usr \
       --mandir=/usr/share/man \
+      --with-pkg-config=/usr/lib/pkgconfig \
+      --with-pkg-config-libdir=/usr/lib/pkgconfig \
       --with-shared \
       --with-normal \
       --without-debug \
       --without-ada \
       --enable-widec \
-      --enable-pc-files
-  make 
-
-  # external binary support 
-  cd ${srcdir}/ncurses-build
-  ${srcdir}/${pkgname}-${pkgver}/configure --prefix=/usr \
-      --with-shared \
-      --with-normal \
-      --without-debug \
-      --without-ada \
-      --with-chtype=long
+      --enable-pc-files \
+      --with-cxx-binding \
+      --with-cxx-shared \
+      --enable-ext-colors \
+      --enable-ext-mouse
   make 
 }
 
 package() {
-  cd "${srcdir}/ncursesw-build"
+  cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
-
-  # link to non-wide-character ncurses libraries
-  for lib in curses ncurses form panel menu ; do \
-    echo "INPUT(-l${lib}w)" >"${pkgdir}/usr/lib/lib${lib}.so" ; \
-    ln -s "lib${lib}w.a" "${pkgdir}/usr/lib/lib${lib}.a" ; \
-  done
-  ln -s libncurses++w.a "${pkgdir}/usr/lib/libncurses++.a"
   
   for lib in ncurses ncurses++ form panel menu; do
+    echo "INPUT(-l${lib}w)" > "$pkgdir"/usr/lib/lib${lib}.so
     ln -s ${lib}w.pc ${pkgdir}/usr/lib/pkgconfig/${lib}.pc
   done
 
   # look for -lcurses during build
   echo "INPUT(-lncursesw)" >"${pkgdir}/usr/lib/libcursesw.so"
-  ln -sf libncurses.so "${pkgdir}/usr/lib/libcurses.so"
-  ln -sf libncursesw.a "${pkgdir}/usr/lib/libcursesw.a"
-  ln -sf libncurses.a "${pkgdir}/usr/lib/libcurses.a"
-
-   # non-widec compatibility libraries
-  cd ${srcdir}/ncurses-build
-  for lib in ncurses form panel menu; do
-    install -Dm755 lib/lib${lib}.so.${pkgver} ${pkgdir}/usr/lib/lib${lib}.so.${pkgver}
-    ln -s lib${lib}.so.${pkgver} ${pkgdir}/usr/lib/lib${lib}.so.5
-  done
+  ln -sf libncurses.so ${pkgdir}/usr/lib/libcurses.so
 
   # install license
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  install -d -m755 "${pkgdir}/usr/share/licenses/${pkgname}"
-  grep -B 100 '$Id' README > "${pkgdir}/usr/share/licenses/${pkgname}/license.txt"
+  install -d -m755 ${pkgdir}/usr/share/licenses/${pkgname}
+  grep -B 100 '$Id' README > ${pkgdir}/usr/share/licenses/${pkgname}/license.txt
 }
 

@@ -1,6 +1,6 @@
 
 pkgname=util-linux
-pkgver=2.26.2
+pkgver=2.27
 pkgrel=1
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
@@ -12,7 +12,7 @@ conflicts=('util-linux-ng' 'eject')
 provides=("util-linux-ng=${pkgver}" 'eject')
 license=('GPL2')
 options=('!libtool')
-source=("ftp://ftp.kernel.org/pub/linux/utils/${pkgname}/v2.26/${pkgname}-${pkgver}.tar.xz"
+source=("ftp://ftp.kernel.org/pub/linux/utils/${pkgname}/v2.27/${pkgname}-${pkgver}.tar.xz"
         'uuidd.tmpfiles'
         'pam-login'
         'pam-common'
@@ -28,7 +28,7 @@ backup=(etc/pam.d/chfn
         etc/pam.d/su
         etc/pam.d/su-l)
 install=util-linux.install
-md5sums=('9bdf368c395f1b70325d0eb22c7f48fb'
+md5sums=('5b06bbda9309624ee7add15bc8d8ca22'
          'a39554bfd65cccfd8254bb46922f4a67'
          '4368b3f98abd8a32662e094c54e7f9b1'
          'a31374fef2cba0ca34dfc7078e2969e4'

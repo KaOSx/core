@@ -1,7 +1,7 @@
 
 pkgname=cmake
 pkgver=3.3.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A cross-platform open-source make system"
 arch=('x86_64')
 license=('custom')
@@ -9,11 +9,15 @@ url="http://www.cmake.org"
 depends=('curl' 'libarchive' 'shared-mime-info')
 makedepends=('qt5-base')
 install=${pkgname}.install
-source=("http://www.cmake.org/files/v3.3/${pkgname}-${pkgver}.tar.gz")
-md5sums=('52638576f4e1e621fed6c3410d3a1b12')
+source=("http://www.cmake.org/files/v3.3/${pkgname}-${pkgver}.tar.gz"
+        'cmake_min.patch')
+md5sums=('52638576f4e1e621fed6c3410d3a1b12'
+         'c737f00913e9237883a0870f99251612')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
+  # fix builds of old kdelibs 4 depending apps
+  patch -p1 -i $srcdir/cmake_min.patch
 
   ./bootstrap --prefix=/usr \
     --mandir=/share/man \

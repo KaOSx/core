@@ -1,7 +1,7 @@
 
 pkgname=dialog
 pkgver=1.2_20150528
-pkgrel=1
+pkgrel=2
 pkgdesc="A tool to display dialog boxes from shell scripts"
 arch=('x86_64')
 url="http://invisible-island.net/dialog/"
