@@ -1,96 +1,97 @@
 
-_grub_lua_ver=24
-_grub_ntldr_ver=21
-_grub_915_ver=9
+# Major contributions to this PKGBUILD from:
+# Keshav Amburay <(the ddoott ridikulus ddoott rat) (aatt) (gemmaeiil) (ddoott) (ccoomm)>
+# https://aur.archlinux.org/packages/grub-git
 
-pkgname=('grub-common' 'grub-bios' 'grub-efi')
-pkgbase=grub
-pkgver=2.00
-pkgrel=8
+pkgname=grub
+pkgdesc="GNU GRand Unified Bootloader"
+pkgver=2.01.80
+pkgrel=1
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
 license=('GPL3')
-makedepends=('xz' 'bdf-unifont' 'ttf-dejavu' 'python2' 'autogen' 'bdf-unifont'
-             'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse' 'dosfstools' 'efibootmgr')
-
-source=("http://ftp.gnu.org/gnu/grub/grub-${pkgver}.tar.xz"
-        "http://sourceforge.net/projects/kaosx/files/sources/grub/grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
-        "http://sourceforge.net/projects/kaosx/files/sources/grub/grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz"
-        "http://sourceforge.net/projects/kaosx/files/sources/grub/grub2_extras_915resolution_r${_grub_915_ver}.tar.xz"
-        'grub_mkconfig_fixes.patch'
+backup=('boot/grub/grub.cfg' 'etc/default/grub' 'etc/grub.d/40_custom')
+install=grub.install
+options=('!makeflags')
+conflicts=('grub-common' 'grub-bios' 'grub-efi')
+provides=('grub-common' 'grub-bios' 'grub-efi')
+replaces=('grub-common' 'grub-bios' 'grub-efi')
+depends=('sh' 'xz' 'gettext' 'device-mapper')
+makedepends=('git' 'rsync' 'xz' 'freetype2' 'ttf-dejavu' 'python3' 'autogen'
+             'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse' 'bdf-unifont')
+optdepends=('freetype2: For grub-mkfont usage'
+            'fuse: For grub-mount usage'
+            'dosfstools: For grub-mkrescue FAT FS and EFI support' 
+            'efibootmgr: For grub-install EFI support'
+            'libisoburn: Provides xorriso for generating grub rescue iso using grub-mkrescue'
+            'os-prober: To detect other OSes when generating grub.cfg in BIOS systems'
+            'mtools: For grub-mkrescue FAT FS support')
+source=("grub::git+git://git.sv.gnu.org/grub.git#branch=master"
+        "grub-extras::git+git://git.sv.gnu.org/grub-extras.git#branch=master"
+        'grub-10_linux-detect-initramfs.patch'
         'grub.default'
-        'grub.cfg'
-        'grub_bzr_export.sh'
-        'grub-2.00-mkinitcpio-0.15.patch')
-
-noextract=("grub2_extras_lua_r${_grub_lua_ver}.tar.xz"
-           "grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz"
-           "grub2_extras_915resolution_r${_grub_915_ver}.tar.xz")
-
-md5sums=('a1043102fbc7bcedbf53e7ee3d17ab91'
-         '704ea9f250b6137f05fa0197fd07053a'
-         '77f7d5f8ce395663cd7fff4d37099957'
-         'a80e2b1d3bab778c3b6117d5a698992f'
-         '0e596579198d0820550377c3d4077bd2'
+        'grub.cfg')
+md5sums=('SKIP'
+         'SKIP'
+         '945527e0de8d384166a4cf23439ae9ee'
          '2f372ff858b5ad59b8b7d34dee56cd67'
-         '1c03f9a8196beee4321e89d87862c69b'
-         'f343ed2340ebc86c427873641bb72419'
-         'f0c3c72f965c4dd7f05b4f752992e699')
-         
+         '1c03f9a8196beee4321e89d87862c69b')
+
 prepare() {
-	cd "${srcdir}/grub-${pkgver}"
+	
+	cd "${srcdir}/grub/"
+	
 	## Apply fix for mkinitcpio 0.15 rw changes
-	patch -p0 -i "${srcdir}/grub-2.00-mkinitcpio-0.15.patch"
+	patch -p1 -i "${srcdir}/grub-10_linux-detect-initramfs.patch"
+	
+	## Fix DejaVuSans.ttf location so that grub-mkfont can create *.pf2 files for starfield theme
+	sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i "${srcdir}/grub/configure.ac"
+	
+	## Fix mkinitcpio 'rw' 
+	sed 's| ro | rw |g' -i "${srcdir}/grub/util/grub.d/10_linux.in"
+	
+	## Fix OS naming
+	sed 's|GNU/Linux|Linux|' -i "${srcdir}/grub/util/grub.d/10_linux.in"
+	
+	## Pull in latest language files
+	./linguas.sh
+	
+	## Remove not working langs which need LC_ALL=C.UTF-8
+	sed -e 's#en@cyrillic en@greek##g' -i "${srcdir}/grub/po/LINGUAS"
 }
 
 _build_grub-common_and_bios() {
-
-	## copy the source for building the common/bios package
-	cp -r "${srcdir}/grub-${pkgver}" "${srcdir}/grub_bios-${pkgver}"
-	cd "${srcdir}/grub_bios-${pkgver}"
-
-	## Apply fixes to enable grub-mkconfig detect kernels and initramfs
-	patch -p1 -i "${srcdir}/grub_mkconfig_fixes.patch"
-	echo
-
-	## fix unifont.bdf location so that grub-mkfont can create *.pf2 files
-	sed 's|/usr/share/fonts/unifont|/usr/share/fonts/unifont /usr/share/fonts/misc|g' -i "${srcdir}/grub_bios-${pkgver}/configure.ac"
-
-	## fix DejaVuSans.ttf location so that grub-mkfont can create *.pf2 files for starfield theme
-	sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i "${srcdir}/grub_bios-${pkgver}/configure.ac"
 	
-	sed -i -e '/gets is a security/d' "${srcdir}/grub-2.00/grub-core/gnulib/stdio.in.h"
-
-	## add the grub-extra sources
-	export GRUB_CONTRIB="${srcdir}/grub_bios-${pkgver}/grub-extras/"
-	install -d "${srcdir}/grub_bios-${pkgver}/grub-extras"
-
-	bsdtar xf "${srcdir}/grub2_extras_lua_r${_grub_lua_ver}.tar.xz" \
-		-C "${srcdir}/grub_bios-${pkgver}/grub-extras"
-
-	bsdtar xf "${srcdir}/grub2_extras_ntldr-img_r${_grub_ntldr_ver}.tar.xz" \
-		-C "${srcdir}/grub_bios-${pkgver}/grub-extras"
-
-	bsdtar xf "${srcdir}/grub2_extras_915resolution_r${_grub_915_ver}.tar.xz" \
-		-C "${srcdir}/grub_bios-${pkgver}/grub-extras"
-
-	## Requires python2
-	# sed 's|python |python2 |g' -i "${srcdir}/grub_bios-${pkgver}/autogen.sh"
-
-	## start the actual build process
-	cd "${srcdir}/grub_bios-${pkgver}"
+	## Copy the source for building the bios part
+	cp -r "${srcdir}/grub" "${srcdir}/grub-bios"
+	cd "${srcdir}/grub-bios/"
+	
+	## Add the grub-extra sources for bios build
+	install -d "${srcdir}/grub-bios/grub-extras"
+	export GRUB_CONTRIB="${srcdir}/grub-bios/grub-extras/"
+	
+	## Unset all compiler FLAGS for bios build
+	unset CFLAGS
+	unset CPPFLAGS
+	unset CXXFLAGS
+	unset LDFLAGS
+	unset MAKEFLAGS
+	
+	cd "${srcdir}/grub-bios/"
+	
+	## Run autogen.sh for bios build
 	./autogen.sh
-	echo
-
-	CFLAGS="" ./configure \
+	
+	## Run ./configure for bios build
+	./configure \
 		--with-platform="pc" \
-		--target="x86_64" \
-		--host="x86_64-unknown-linux-gnu" \
+		--target="i386" \
 		--enable-efiemu \
 		--enable-mm-debug \
 		--enable-nls \
 		--enable-device-mapper \
 		--enable-cache-stats \
+		--enable-boot-time \
 		--enable-grub-mkfont \
 		--enable-grub-mount \
 		--prefix="/usr" \
@@ -100,43 +101,44 @@ _build_grub-common_and_bios() {
 		--infodir="/usr/share/info" \
 		--datarootdir="/usr/share" \
 		--sysconfdir="/etc" \
-		--program-prefix="" \
+	 	--program-prefix="" \
 		--with-bootdir="/boot" \
 		--with-grubdir="grub" \
-		--disable-werror \
-		--disable-docs
-	echo
-
-	CFLAGS="" make
-	echo
-
+		--disable-silent-rules \
+		--disable-werror
+	
+	## Run make for bios build
+	make
 }
 
 _build_grub-efi() {
-
-	## copy the source for building the efi package
-	cp -r "${srcdir}/grub-${pkgver}" "${srcdir}/grub_efi-${pkgver}"
-	cd "${srcdir}/grub_efi-${pkgver}"
-
-	export GRUB_CONTRIB="${srcdir}/grub_efi-${pkgver}/grub-extras/"
-	install -d "${srcdir}/grub_efi-${pkgver}/grub-extras"
-
-	bsdtar xf "${srcdir}/grub2_extras_lua_r${_grub_lua_ver}.tar.xz" \
-		-C "${srcdir}/grub_efi-${pkgver}/grub-extras"
-
-	cd "${srcdir}/grub_efi-${pkgver}"
+	
+	## Copy the source for building the efi part"
+	cp -r "${srcdir}/grub" "${srcdir}/grub-efi-x86_64"
+	cd "${srcdir}/grub-efi-x86_64/"
+	
+	## Unset all compiler FLAGS for x86_64 efi build
+	unset CFLAGS
+	unset CPPFLAGS
+	unset CXXFLAGS
+	unset LDFLAGS
+	unset MAKEFLAGS
+	
+	cd "${srcdir}/grub-efi-x86_64/"
+	
+	## Run autogen.sh for efi build
 	./autogen.sh
-	echo
-
-	CFLAGS="" ./configure \
+	
+	## Run ./configure for efi build
+	./configure \
 		--with-platform="efi" \
 		--target="x86_64" \
-		--host="x86_64-unknown-linux-gnu" \
 		--disable-efiemu \
 		--enable-mm-debug \
 		--enable-nls \
 		--enable-device-mapper \
 		--enable-cache-stats \
+		--enable-boot-time \
 		--enable-grub-mkfont \
 		--enable-grub-mount \
 		--prefix="/usr" \
@@ -149,104 +151,68 @@ _build_grub-efi() {
 		--program-prefix="" \
 		--with-bootdir="/boot" \
 		--with-grubdir="grub" \
+		--disable-silent-rules \
 		--disable-werror
-	echo
-
-	CFLAGS="" make
-	echo
-
+	
+	## Run make for efi build
+	make
+	
 }
 
 build() {
-	_EFIEMU="--enable-efiemu"
-
-	cd "${srcdir}/grub-${pkgver}"
-	# _get_locale_files
 	
-	sed -i -e '/gets is a security/d' "${srcdir}/grub-2.00/grub-core/gnulib/stdio.in.h"
-	sed -i 's/grub-dev.texi//g' "${srcdir}/grub-2.00/docs/Makefile.am" || true
-
+	cd "${srcdir}/grub/"
+	
+	## Build grub bios
 	_build_grub-common_and_bios
-	echo
-
+	
+	## Build grub efi"
 	_build_grub-efi
-	echo
-
 }
 
-package_grub-common() {
-
-	pkgdesc="GNU GRand Unified Bootloader - Utilities and Common Files"
-	depends=('sh' 'xz' 'freetype2' 'gettext' 'device-mapper' 'fuse')
-	conflicts=('grub-legacy' 'grub')
-	replaces=('grub2-common')
-	provides=('grub2-common')
-	backup=('boot/grub/grub.cfg' 'etc/default/grub' 'etc/grub.d/40_custom')
-	optdepends=('os-prober: to detect any other OS when generating grub.cfg in BIOS systems'
-	            'mtools: for grub-mkrescue FAT FS support')
-	install="grub.install"
-	options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
-
-	cd "${srcdir}/grub_bios-${pkgver}"
+_package_grub-common_and_bios() {
+	
+	cd "${srcdir}/grub-bios/"
+	
+	## Run make install for bios build
 	make DESTDIR="${pkgdir}/" bashcompletiondir="/usr/share/bash-completion/completions" install
 	echo
-
-	## install /etc/default/grub (used by grub-mkconfig)
-	install -D -m0644 "${srcdir}/grub.default" "${pkgdir}/etc/default/grub"
-
-	## install grub.cfg (needed so it doesn't get removed on upgrading because it was previously here)
-	install -D -m0644 "${srcdir}/grub.cfg" "${pkgdir}/boot/grub/grub.cfg"
-
-	# remove platform specific files
-	rm -rf "${pkgdir}/usr/lib/grub/i386-pc/"
 	
-	# fix boot error message "error: file `/grub/locale/en.mo.gz` not found"
-	mkdir -p "${pkgdir}/boot/grub/locale"
-	cp "${pkgdir}/usr/share/locale/en@quot/LC_MESSAGES/grub.mo" "${pkgdir}/boot/grub/locale/en.mo"
-
-}
-
-package_grub-bios() {
-
-	pkgdesc="GNU GRand Unified Bootloader - x86_64 PC BIOS Modules"
-	depends=("grub-common=${pkgver}")
-	options=('!strip' '!emptydirs')
-	replaces=('grub2-bios')
-	provides=('grub2-bios')
-
-	cd "${srcdir}/grub_bios-${pkgver}"
-	make DESTDIR="${pkgdir}/" install
-	echo
-
-	## remove non platform-specific files
-	rm -rf "${pkgdir}"/{boot,etc,usr/{share,bin,sbin}}
-
-	## remove gdb debugging related files
+	## Remove gdb debugging related files for bios build
 	rm -f "${pkgdir}/usr/lib/grub/i386-pc"/*.module || true
 	rm -f "${pkgdir}/usr/lib/grub/i386-pc"/*.image || true
 	rm -f "${pkgdir}/usr/lib/grub/i386-pc"/{kernel.exec,gdb_grub,gmodule.pl} || true
-
+	
+	## Install /etc/default/grub (used by grub-mkconfig)"
+	install -D -m0644 "${srcdir}/grub.default" "${pkgdir}/etc/default/grub"
+	
+	## Install grub.cfg for backup array
+	install -D -m0644 "${srcdir}/grub.cfg" "${pkgdir}/boot/grub/grub.cfg"
+	
 }
 
-package_grub-efi() {
-
-	pkgdesc="GNU GRand Unified Bootloader - UEFI Modules"
-	depends=("grub-common=${pkgver}" 'dosfstools' 'efibootmgr')
-	provides=('grub-efi-x86_64')
-	replaces=('grub-efi-x86_64')
-	conflicts=('grub-efi-x86_64')
-	options=('!strip' '!emptydirs')
-
-	cd "${srcdir}/grub_efi-${pkgver}"
-	make DESTDIR="${pkgdir}/" install
-	echo
-
-	## remove non platform-specific files
-	rm -rf "${pkgdir}"/{boot,etc,usr/{share,bin,sbin}}
-
-	## remove gdb debugging related files
+_package_grub-efi() {
+	
+	cd "${srcdir}/grub-efi-x86_64/"
+	
+	## Run make install for efi build
+	make DESTDIR="${pkgdir}/" bashcompletiondir="/usr/share/bash-completion/completions" install
+	
+	## Remove gdb debugging related files for efi build
 	rm -f "${pkgdir}/usr/lib/grub/x86_64-efi"/*.module || true
 	rm -f "${pkgdir}/usr/lib/grub/x86_64-efi"/*.image || true
 	rm -f "${pkgdir}/usr/lib/grub/x86_64-efi"/{kernel.exec,gdb_grub,gmodule.pl} || true
+	
+}
 
+package() {
+	
+	cd "${srcdir}/grub/"
+	
+	## Package grub x86_64 efi 
+	_package_grub-efi
+	
+	## Package grub bios 
+	_package_grub-common_and_bios
+	
 }
