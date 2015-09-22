@@ -4,8 +4,8 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.2
 _srcname=linux-4.2
-pkgver=4.2.0
-pkgrel=3
+pkgver=4.2.1
+pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.2-rc8.tar.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -32,7 +32,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'i8042-fix-aliases.patch'
         'MT7601.bin')
 md5sums=('3d5ea06d767e2f35c999eeadafc76523'
-         'd5d346400907389e7d78163dd6ca4a16'
+         '3e1cc007d930f8760ef0730609dca035'
+         '2c4fd2c458fea76276fdd83a28c1e811'
          'a814b81d048f41fc8c629188b711bb0b'
          '3ed267a5711ca985019168b7214a4dd3'
          '6529bf89e3791cb55901a296b016cb74'
@@ -54,7 +55,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  #patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
