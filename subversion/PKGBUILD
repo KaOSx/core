@@ -1,6 +1,6 @@
 
 pkgname=subversion
-pkgver=1.9.1
+pkgver=1.9.2
 pkgrel=1
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
@@ -20,7 +20,7 @@ source=("http://apache.mirror.rafal.ca/subversion/$pkgname-$pkgver.tar.bz2"
 	'svnserve.tmpfiles'
 	'svnserve.service'
         'subversion.rpath.fix.patch')
-md5sums=('8e879b61fffe3ac0cf16aeae1e8eda32'
+md5sums=('0a7e55bb58fe77072f19e108a56b468b'
          'a0db6dd43af33952739b6ec089852630'
          'c459e299192552f61578f3438abf0664'
          'bb2857eceafcfac35dde39dcffad2314'
