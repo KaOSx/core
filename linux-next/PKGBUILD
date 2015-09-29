@@ -32,24 +32,21 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'i8042-fix-aliases.patch'
         'MT7601.bin')
 md5sums=('3d5ea06d767e2f35c999eeadafc76523'
-         '3e1cc007d930f8760ef0730609dca035'
+         '5c032ad548007cb8e28e0163c85dc5f9'
          '2c4fd2c458fea76276fdd83a28c1e811'
-         'a814b81d048f41fc8c629188b711bb0b'
-         '3ed267a5711ca985019168b7214a4dd3'
-         '6529bf89e3791cb55901a296b016cb74'
-         '8469f01ed403e3edfaf718fa71b79df1'
-         '2fba1d2e4e28256c94d2b3368690f5c2'
-         'bfc907fb290e2bfe7989452d166267ae'
+         '189441aa21b8e99784169d0d3a2f13da'
+         '6acb564e9362002e3ff15502bcc7730a'
+         '55f8cd963380904430ad98539ec45fbf'
+         '859cdd5ecef409b4808c558f6c9a0312'
+         '6c0a8149ee2e3456916b87e567490b4d'
+         'ea09934ac824d417fbec35e2e2582e7e'
          '260b2e47579140f61546f37d90e0b527'
-         '87d271a57d027e167771fed536ea74e8'
-         '594b1469fd62c84223a858d3253a7b3b'
+         '3690719bd4e4046a985f0a0d8ed35ff7'
+         '906935dff84ae64c35a6b083fb9e6f40'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47'
          '696cedb8e76ecc0cda9f9b0d3972c64d')
-         
-# module rc6 md5sums
-# 664af6e5b48228db9ec5ab07e50138d5  /lib/modules/3.13.0-1-next/modules.symbols
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
