@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.2
 _srcname=linux-4.2
-pkgver=4.2.2
+pkgver=4.2.3
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -32,7 +32,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'i8042-fix-aliases.patch'
         'MT7601.bin')
 md5sums=('3d5ea06d767e2f35c999eeadafc76523'
-         '5c032ad548007cb8e28e0163c85dc5f9'
+         '6a7355d968116129c19dc053fb2d557a'
          '2c4fd2c458fea76276fdd83a28c1e811'
          '189441aa21b8e99784169d0d3a2f13da'
          '6acb564e9362002e3ff15502bcc7730a'
