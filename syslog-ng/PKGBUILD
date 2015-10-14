@@ -1,6 +1,6 @@
 
 pkgname=syslog-ng
-pkgver=3.6.3
+pkgver=3.6.4
 pkgrel=1
 pkgdesc="Next-generation syslogd with advanced networking and filtering capabilities"
 arch=('x86_64')
@@ -17,7 +17,7 @@ backup=('etc/syslog-ng/scl.conf'
 source=("http://www.balabit.com/downloads/files/syslog-ng/sources/$pkgver/source/${pkgname}_$pkgver.tar.gz"
         'syslog-ng.conf'
         'syslog-ng.logrotate')
-md5sums=('1c45f6ff694a3b1a3d528e45af3a0862'
+md5sums=('e9f401615e92e5eb27396c995c1446ba'
          'b7afe73b7faef3d80e76943f1f5989d3'
          '0c0d5149bd3e8d666c506351edecbe71')
 
