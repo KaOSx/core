@@ -1,6 +1,6 @@
 
 pkgname=syslog-ng
-pkgver=3.6.4
+pkgver=3.7.2
 pkgrel=1
 pkgdesc="Next-generation syslogd with advanced networking and filtering capabilities"
 arch=('x86_64')
@@ -14,15 +14,15 @@ options=('!libtool')
 backup=('etc/syslog-ng/scl.conf'
         'etc/syslog-ng/syslog-ng.conf'
         'etc/logrotate.d/syslog-ng')
-source=("http://www.balabit.com/downloads/files/syslog-ng/sources/$pkgver/source/${pkgname}_$pkgver.tar.gz"
+source=("https://github.com/balabit/syslog-ng/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.gz"
         'syslog-ng.conf'
         'syslog-ng.logrotate')
-md5sums=('e9f401615e92e5eb27396c995c1446ba'
+md5sums=('ee8d4f3952b976ebe4b743d9db1b235a'
          'b7afe73b7faef3d80e76943f1f5989d3'
          '0c0d5149bd3e8d666c506351edecbe71')
 
 build() {
-  cd "$pkgname-$pkgver"
+  cd "${pkgname}-${pkgver}"
 
   ./configure \
     --prefix=/usr \
@@ -34,13 +34,14 @@ build() {
     --disable-spoof-source \
     --enable-systemd \
     --enable-ipv6 \
-    --with-systemdsystemunitdir=/usr/lib/systemd/system
+    --with-systemdsystemunitdir=/usr/lib/systemd/system \
+    --with-python=2.7
 
-  make
+  make -j1
 }
 
 package() {
-  make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
+  make -C "${pkgname}-${pkgver}" DESTDIR="$pkgdir" install
 
   install -dm755 "$pkgdir/var/lib/syslog-ng" "$pkgdir/etc/syslog-ng/patterndb.d"
   install -Dm644 "$srcdir/syslog-ng.conf" "$pkgdir/etc/syslog-ng/syslog-ng.conf"
