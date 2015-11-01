@@ -1,7 +1,7 @@
 
 pkgname=rpcbind
 pkgver=0.2.3
-pkgrel=2
+pkgrel=3
 pkgdesc="portmap replacement which supports RPC over various protocols"
 arch=('x86_64')
 depends=('bash' 'glibc' 'libtirpc')
@@ -12,16 +12,19 @@ source=("http://downloads.sourceforge.net/sourceforge/rpcbind/rpcbind-$pkgver.ta
 	'rpcbind-sunrpc.patch'
 	'rpcbind.socket'
 	'rpcbind.service'
-	'rpcbind.conf')
+	'rpcbind.conf'
+	'libtirpc1.0.patch')
 md5sums=('c8875246b2688a1adfbd6ad43480278d'
          '30956322214e2eaee8d479f25c607533'
          'e5a205cd7402fedaf74a744b2a22f0ad'
          '0f493a590c250267034e230e7bf1f894'
-         '66ffa1a249150edaa9fae9101ec416de')
+         '66ffa1a249150edaa9fae9101ec416de'
+         '6417a10272a6bf06d30fa7f0cf15cbf1')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
   patch -p1 -i $srcdir/rpcbind-sunrpc.patch
+  patch -p1 -i $srcdir/libtirpc1.0.patch
   
   ./configure --prefix=/usr \
         --with-rpcuser=rpc \
