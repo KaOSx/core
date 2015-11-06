@@ -1,7 +1,7 @@
 
 pkgname=rpcbind
 pkgver=0.2.3
-pkgrel=3
+pkgrel=4
 pkgdesc="portmap replacement which supports RPC over various protocols"
 arch=('x86_64')
 depends=('bash' 'glibc' 'libtirpc')

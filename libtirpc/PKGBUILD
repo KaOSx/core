@@ -2,7 +2,7 @@
 # install polkit in chroot on any update to check for pam issues
 pkgname=libtirpc
 pkgver=1.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Transport Independent RPC library (SunRPC replacement)"
 arch=('x86_64')
 url="http://libtirpc.sourceforge.net/"
@@ -10,11 +10,15 @@ license=('BSD')
 depends=('libgssglue')
 backup=('etc/netconfig')
 options=('!libtool')
-source=("http://downloads.sourceforge.net/sourceforge/libtirpc/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('36ce1c0ff80863bb0839d54aa0b94014')
+source=("http://downloads.sourceforge.net/sourceforge/libtirpc/${pkgname}-${pkgver}.tar.bz2"
+        'rwlock_unlocks.patch')
+md5sums=('36ce1c0ff80863bb0839d54aa0b94014'
+         '625729308df789bffe52c305af08b0d6')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
+  # https://sourceforge.net/p/libtirpc/mailman/message/34594076/
+  patch -p1 -i ${srcdir}/rwlock_unlocks.patch
   
   ./configure --prefix=/usr --sysconf=/etc
   make
