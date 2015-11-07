@@ -2,8 +2,8 @@
 
 pkgbase=glib2
 pkgname=('glib2' 'glib2-docs')
-pkgver=2.44.1
-_pkgver=2.44
+pkgver=2.46.1
+_pkgver=2.46
 pkgrel=1
 pkgdesc="Common C routines used by GTK+ and other libs"
 url="http://www.gtk.org/"
@@ -11,7 +11,7 @@ arch=('x86_64')
 makedepends=('pkg-config' 'python2' 'libxslt' 'docbook-xml' 'pcre' 'libffi' 'elfutils')
 source=("http://ftp.gnome.org/pub/GNOME/sources/glib/${_pkgver}/glib-$pkgver.tar.xz"
         'revert-warn-glib-compile-schemas.patch')
-md5sums=('83efba4722a9674b97437d1d99af79db'
+md5sums=('c90e93ceb45100ffc1d40ec5d2ca3248'
          '3265d1afbcf1f5f308e26c3f9f6ca899')
 
 prepare() {
