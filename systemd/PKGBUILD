@@ -1,7 +1,7 @@
 
 pkgname=systemd
 pkgver=227
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -124,13 +124,16 @@ package() {
   chmod 2755 "$pkgdir/var/log/journal"{,/remote}
   
   # Make journalctl persistent, set max
-  sed -i -e 's/#SystemMaxUse=/SystemMaxUse=25M/' ${pkgdir}/etc/systemd/journald.conf
+  sed -i -e 's|#SystemMaxUse=|SystemMaxUse=25M|' ${pkgdir}/etc/systemd/journald.conf
   
   # Install systemd-boot files, ex-gummi
   install -D -m0644 "${srcdir}/loader.conf" "${pkgdir}/usr/lib/systemd/boot/loader/loader.conf"
   install -D -m0644 "${srcdir}/KaOS.conf" "${pkgdir}/usr/lib/systemd/boot/loader/entries/KaOS.conf"
   install -D -m0644 "${srcdir}/KaOS_fallback.conf" "${pkgdir}/usr/lib/systemd/boot/loader/entries/KaOS_fallback.conf"
   install -D -m0644 "${srcdir}/splash.bmp" "${pkgdir}/usr/lib/systemd/boot/splash.bmp"
+  
+  # adjust incorrect default PAM config
+  sed 's|system-auth|system-login|g' -i "$pkgdir/etc/pam.d/systemd-user"
 }
 
 
