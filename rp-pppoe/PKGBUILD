@@ -1,7 +1,7 @@
 
 pkgname=rp-pppoe
-pkgver=3.11
-pkgrel=5
+pkgver=3.12
+pkgrel=1
 pkgdesc="Roaring Penguin's Point-to-Point Protocol over Ethernet client"
 arch=('x86_64')
 url="http://www.roaringpenguin.com/pppoe/"
@@ -13,9 +13,9 @@ backup=(etc/ppp/{pppoe.conf,firewall-standalone,firewall-masq,pppoe-server-optio
 source=("http://www.roaringpenguin.com/files/download/rp-pppoe-${pkgver}.tar.gz"
         'adsl.service'
         'kmode.patch')
-md5sums=('13b5900c56bd602df6cc526e5e520722'
+md5sums=('216eb52b69062b92a64ee37fd71f4b66'
          'ae14bb45cdd6aad31395a301f96ddd82'
-         '125372c49bbd978d138433846283f82a')
+         '7f1bea3193b381bfaeb6cab1e0478300')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}/src"
