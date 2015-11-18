@@ -1,7 +1,7 @@
-aufs4.2 loopback patch
+aufs4.3 loopback patch
 
 diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index 23103ad..5c3263f 100644
+index 291ec9e..1b8190d 100644
 --- a/drivers/block/loop.c
 +++ b/drivers/block/loop.c
 @@ -417,7 +417,7 @@ static int do_req_filebacked(struct loop_device *lo, struct request *rq)
@@ -193,11 +193,11 @@ index 91c2ce7..d4ee5a7 100644
  		if (file->f_mapping != h_file->f_mapping) {
  			file->f_mapping = h_file->f_mapping;
 diff --git a/fs/aufs/loop.c b/fs/aufs/loop.c
-index a93c36e..c2c2e7a 100644
+index f324758..4555e7b 100644
 --- a/fs/aufs/loop.c
 +++ b/fs/aufs/loop.c
-@@ -130,3 +130,19 @@ void au_loopback_fin(void)
- 	symbol_put(loop_backing_file);
+@@ -131,3 +131,19 @@ void au_loopback_fin(void)
+ 		symbol_put(loop_backing_file);
  	kfree(au_warn_loopback_array);
  }
 +
@@ -242,10 +242,10 @@ index 6d9864d..3322557 100644
  
  #endif /* __KERNEL__ */
 diff --git a/fs/aufs/super.c b/fs/aufs/super.c
-index 7ae6ea1..1a30dc7 100644
+index 3fe10d3..2f32d58 100644
 --- a/fs/aufs/super.c
 +++ b/fs/aufs/super.c
-@@ -807,7 +807,10 @@ static const struct super_operations aufs_sop = {
+@@ -841,7 +841,10 @@ static const struct super_operations aufs_sop = {
  	.statfs		= aufs_statfs,
  	.put_super	= aufs_put_super,
  	.sync_fs	= aufs_sync_fs,
@@ -258,10 +258,10 @@ index 7ae6ea1..1a30dc7 100644
  
  /* ---------------------------------------------------------------------- */
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 0e3fd62..999456d 100644
+index fabd9d7a..90174cf 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
-@@ -1724,6 +1724,10 @@ struct super_operations {
+@@ -1734,6 +1734,10 @@ struct super_operations {
  				  struct shrink_control *);
  	long (*free_cached_objects)(struct super_block *,
  				    struct shrink_control *);
