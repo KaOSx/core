@@ -1,7 +1,7 @@
 
 pkgname=libxml2
-pkgver=2.9.2
-pkgrel=2
+pkgver=2.9.3
+pkgrel=1
 pkgdesc="XML parsing library, version 2"
 arch=('x86_64')
 license=('MIT')
@@ -11,7 +11,7 @@ options=('!libtool')
 url="http://www.xmlsoft.org/"
 source=("ftp://ftp.xmlsoft.org/${pkgname}/${pkgname}-${pkgver}.tar.gz"
         "http://www.w3.org/XML/Test/xmlts20080827.tar.gz")
-md5sums=('9e6a9aca9d155737868b3dc5fd82f788'
+md5sums=('daece17e045f1c107610e137ab50c179'
          'ae3d1ebe000a3972afa104ca7f0e1b4a')
 
 build() {
