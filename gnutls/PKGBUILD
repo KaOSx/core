@@ -1,7 +1,7 @@
 
 pkgname=gnutls
-pkgver=3.4.6
-_pkgver=3.4.6
+pkgver=3.4.7
+_pkgver=3.4.7
 pkgrel=1
 pkgdesc="Secure communications library implementing the SSL, TLS and DTLS protocols and technologies around them"
 arch=('x86_64')
@@ -12,7 +12,7 @@ options=('libtool')
 depends=('gcc-libs' 'libtasn1>=3.6' 'readline' 'zlib' 'texinfo' 'nettle' 'p11-kit')
 makepends=('datefudge' 'valgrind' 'strace')
 source=("ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/${pkgname}-${pkgver}.tar.xz")
-md5sums=('4f2c4b4483da65de7edfeb050911fafb')
+md5sums=('e7556cec73c8b34fd2ff0b591e24e44c')
 
 build() {
   cd "${srcdir}/${pkgname}-${_pkgver}"
