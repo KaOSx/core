@@ -1,6 +1,6 @@
 
 pkgname=libassuan
-pkgver=2.4.0
+pkgver=2.4.1
 pkgrel=1
 pkgdesc="A IPC library used by some GnuPG related software"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('libgpg-error')
 options=('!libtool')
 source=("ftp://ftp.gnupg.org/gcrypt/$pkgname/$pkgname-$pkgver.tar.bz2")
 install=libassuan.install
-md5sums=('27b0c99c924b96d19a23eb00b75a0f59')
+md5sums=('e1e8b6e6493d4cdfc0f6e2de2fb74830')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
