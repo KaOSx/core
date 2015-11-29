@@ -1,7 +1,7 @@
 
 pkgname=e2fsprogs
 pkgver=1.42.13
-pkgrel=1
+pkgrel=2
 pkgdesc="Ext2/3/4 filesystem utilities"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'MIT')
@@ -18,9 +18,6 @@ md5sums=('bc759fc62666786f5436e2075beb3265'
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-
-  # Remove unnecessary init.d directory
-  sed -i '/init\.d/s|^|#|' misc/Makefile.in
 
   ./configure --prefix=/usr \
       --with-root-prefix="" \
@@ -48,6 +45,9 @@ package() {
   # remove references to build directory
   sed -i -e 's#^SS_DIR=.*#SS_DIR="/usr/share/ss"#' "${pkgdir}/usr/bin/mk_cmds"
   sed -i -e 's#^ET_DIR=.*#ET_DIR="/usr/share/et"#' "${pkgdir}/usr/bin/compile_et"
+  
+  # addition for zulucrypt
+  ln -sf /sbin/mkfs.ext4 ${pkgdir}/usr/bin/mkfs.ext4
 
   install -Dm644 "${srcdir}/MIT-LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/MIT-LICENSE"
 }
