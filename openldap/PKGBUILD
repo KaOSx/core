@@ -1,8 +1,8 @@
 
 pkgbase=openldap
 pkgname=('libldap' 'openldap')
-pkgver=2.4.42
-pkgrel=2
+pkgver=2.4.43
+pkgrel=1
 arch=('x86_64')
 url="http://www.openldap.org/"
 license=('custom')
@@ -12,7 +12,7 @@ source=("ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/${pkgbase}-${pkgve
         'slapd.service'
         'slapd.tmpfiles'
         'ntlm.patch')
-md5sums=('47c8e2f283647a6105b8b0325257e922'
+md5sums=('49ca65e27891fcf977d78c10f073c705'
          'cbe2bd85be8d98851f640d20930ca9ea'
          'df81b171ef4a99d6002f9f96774f64c7'
          '4258ddbef923d1f29f2843bc050f8c56')
