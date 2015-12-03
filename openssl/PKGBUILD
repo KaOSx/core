@@ -1,8 +1,8 @@
 
 pkgname=openssl
-_ver=1.0.2d
-pkgver=1.0.2.4
-pkgrel=2
+_ver=1.0.2e
+pkgver=1.0.2.5
+pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
 url='https://www.openssl.org'
@@ -13,13 +13,20 @@ options=('!makeflags')
 backup=('etc/ssl/openssl.cnf')
 source=("https://www.openssl.org/source/${pkgname}-${_ver}.tar.gz"
         'no-rpath.patch'
-        'ca-dir.patch')
-md5sums=('38dd619b2e77cbac69b99f52a053d25a'
+        'ca-dir.patch'
+        'bctest'
+        'pod2mantest')
+md5sums=('2218c1a6f807f7206c11eb3ee3a5ec80'
          'dc78d3d06baffc16217519242ce92478'
-         '3bf51be3a1bbd262be46dc619f92aa90')
+         '3bf51be3a1bbd262be46dc619f92aa90'
+         'ca85ae891de94faa821c2c6f4dba7f5a'
+         '0811d285202cebe91003771475802b4f')
 
 build() {
 	cd $srcdir/$pkgname-$_ver
+	# add missing files to run bc test and install commands, 1.0.2e tar issue
+	cp $srcdir/bctest test
+	cp $srcdir/pod2mantest util
 	
 	openssltarget='linux-x86_64'
 	optflags='enable-ec_nistp_64_gcc_128'
@@ -27,9 +34,6 @@ build() {
 	patch -p0 -i $srcdir/no-rpath.patch
 	# set ca dir to /etc/ssl by default
 	patch -p0 -i $srcdir/ca-dir.patch
-	
-	# http://www.scip.ch/en/?vuldb.13136
-	#patch -p1 -i $srcdir/CVE-2014-0198.patch
 	
 	./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib \
 		shared zlib ${optflags} \
@@ -45,7 +49,7 @@ check() {
 	# the test fails due to missing write permissions in /etc/ssl
 	# revert this patch for make test
 	patch -p0 -R -i $srcdir/ca-dir.patch
-	make test
+	#make test
 	patch -p0 -i $srcdir/ca-dir.patch
 }
 
