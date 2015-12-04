@@ -2,7 +2,7 @@
 pkgname=openssl
 _ver=1.0.2e
 pkgver=1.0.2.5
-pkgrel=1
+pkgrel=2
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
 url='https://www.openssl.org'
@@ -16,7 +16,7 @@ source=("https://www.openssl.org/source/${pkgname}-${_ver}.tar.gz"
         'ca-dir.patch'
         'bctest'
         'pod2mantest')
-md5sums=('2218c1a6f807f7206c11eb3ee3a5ec80'
+md5sums=('5262bfa25b60ed9de9f28d5d52d77fc5'
          'dc78d3d06baffc16217519242ce92478'
          '3bf51be3a1bbd262be46dc619f92aa90'
          'ca85ae891de94faa821c2c6f4dba7f5a'
@@ -25,8 +25,8 @@ md5sums=('2218c1a6f807f7206c11eb3ee3a5ec80'
 build() {
 	cd $srcdir/$pkgname-$_ver
 	# add missing files to run bc test and install commands, 1.0.2e tar issue
-	cp $srcdir/bctest test
-	cp $srcdir/pod2mantest util
+	#cp $srcdir/bctest test
+	#cp $srcdir/pod2mantest util
 	
 	openssltarget='linux-x86_64'
 	optflags='enable-ec_nistp_64_gcc_128'
