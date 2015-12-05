@@ -1,14 +1,14 @@
 
 pkgname=systemd
 pkgver=228
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1')
 depends=('acl' 'bash' 'glibc' 'kmod' 'hwids' 'util-linux' 'kbd' 'libcap' 'libxslt' 'iptables'
-         'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn' 'lz4' 'python2-systemd') # 'audit') 
+         'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn' 'lz4' 'python2-systemd' 'quota') # 'audit') 
 makedepends=('docbook-xsl' 'gperf' 'intltool' 'cryptsetup' 'libmicrohttpd' 'gnu-efi-libs')
 optdepends=('cryptsetup: required for encrypted block devices'
             'libmicrohttpd: systemd-journal-gatewayd')

@@ -1,0 +1,29 @@
+
+pkgname=quota
+pkgver=4.02
+pkgrel=1
+pkgdesc="Tools and patches for the Linux Diskquota system as part of the Linux kernel"
+arch=('x86_64')
+url="http://sourceforge.net/projects/linuxquota/"
+license=('GPL-2')
+depends=('e2fsprogs' 'libldap')
+source=("http://downloads.sourceforge.net/sourceforge/linuxquota/${pkgname}-${pkgver}.tar.gz")
+md5sums=('a8a5df262261e659716ccad2a5d6df0d')
+
+build() {
+  cd ${pkgname}-tools
+  
+  ./configure --prefix=/usr \
+    --sysconfdir=/etc \
+    --enable-ldap
+  make
+}
+
+package() {
+  cd ${pkgname}-tools
+  make ROOTDIR=${pkgdir} STRIP="" install
+  
+  install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+  # part of glibc, remove full dir
+  rm -rf ${pkgdir}/usr/include
+}
