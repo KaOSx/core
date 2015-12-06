@@ -1,7 +1,7 @@
 
 pkgname=python2
-pkgver=2.7.10
-pkgrel=2
+pkgver=2.7.11
+pkgrel=1
 _pybasever=2.7
 pkgdesc="A high-level scripting language"
 arch=('x86_64')
@@ -10,7 +10,7 @@ url="http://www.python.org"
 depends=('db' 'bzip2' 'gdbm' 'openssl' 'zlib' 'expat' 'sqlite' 'libffi')
 makedepends=('tk')
 source=("http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz")
-md5sums=('c685ef0b8e9f27b5e3db5db12b268ac6')
+md5sums=('1dbcc848b4cd8399a8199d000f9f823c')
 
 build() {
   cd "${srcdir}/Python-${pkgver}"
