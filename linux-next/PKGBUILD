@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.3
 _srcname=linux-4.3
-pkgver=4.3.0
+pkgver=4.3.1
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -32,16 +32,17 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'i8042-fix-aliases.patch'
         'MT7601.bin')
 md5sums=('58b35794eee3b6d52ce7be39357801e7'
-         '2c4fd2c458fea76276fdd83a28c1e811'
-         '189441aa21b8e99784169d0d3a2f13da'
-         '6acb564e9362002e3ff15502bcc7730a'
-         '55f8cd963380904430ad98539ec45fbf'
-         '859cdd5ecef409b4808c558f6c9a0312'
-         '6c0a8149ee2e3456916b87e567490b4d'
-         '8ef8330ac8debce097a0b1dfd88179e6'
+         '6c2dcd8d314f687f317b44820151dd92'
+         'cc742ca20e85ac30b2040855de73c31d'
+         'e41826f2a3f53cf9208d2a8cf05baf88'
+         'ccff9177a9c1abf744b3cf549abd4b8e'
+         '2d8d4aa3cf5eab19b1a627f8fca5a7d3'
+         'd08700345ceb4fbbdd89708d28f8afee'
+         'a2ee3b357e458b6ab3562ffce3c4d3c9'
+         'f14e76047e7b500d0a2692458b3c95f1'
          '260b2e47579140f61546f37d90e0b527'
-         '3690719bd4e4046a985f0a0d8ed35ff7'
-         '906935dff84ae64c35a6b083fb9e6f40'
+         '58315fa0415b8e63f334e2874fc860a8'
+         '3b16b19947680d4e8fac8b9f5fecdd98'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47'
