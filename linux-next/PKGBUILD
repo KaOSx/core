@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 _basekernel=4.3
 _srcname=linux-4.3
 pkgver=4.3.1
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -29,11 +29,10 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         'change-default-console-loglevel.patch'
-        'i8042-fix-aliases.patch'
-        'MT7601.bin')
+        'i8042-fix-aliases.patch')
 md5sums=('58b35794eee3b6d52ce7be39357801e7'
          '6c2dcd8d314f687f317b44820151dd92'
-         'cc742ca20e85ac30b2040855de73c31d'
+         '11e260cd45863c0eb3c89357341b9ffa'
          'e41826f2a3f53cf9208d2a8cf05baf88'
          'ccff9177a9c1abf744b3cf549abd4b8e'
          '2d8d4aa3cf5eab19b1a627f8fca5a7d3'
@@ -45,8 +44,7 @@ md5sums=('58b35794eee3b6d52ce7be39357801e7'
          '3b16b19947680d4e8fac8b9f5fecdd98'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a262bedf26f26b7698143fc23de98457'
-         '93dbf73af819b77f03453a9c6de2bb47'
-         '696cedb8e76ecc0cda9f9b0d3972c64d')
+         '93dbf73af819b77f03453a9c6de2bb47')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -143,9 +141,6 @@ package_linux-next() {
   # add real version for building modules and running depmod from post_install/upgrade
   mkdir -p "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--NEXT}"
   echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--NEXT}/version"
-  
-  # temp add mt7601 firmware until is added to linux-firmware
-  install -D -m755 ${srcdir}/MT7601.bin ${pkgdir}/lib/firmware/mt7601u.bin
   
 }
 
