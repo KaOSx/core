@@ -1,7 +1,7 @@
 
 pkgname=isl
 pkgver=0.13
-pkgrel=2
+pkgrel=3
 pkgdesc="Library for manipulating sets and relations of integer points bounded by linear constraints"
 arch=('x86_64')
 url="https://www.ohloh.net/p/isl"

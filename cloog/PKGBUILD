@@ -1,7 +1,7 @@
 
 pkgname=cloog
 pkgver=0.18.1
-pkgrel=4
+pkgrel=5
 pkgdesc="Library that generates loops for scanning polyhedra"
 arch=('x86_64')
 url="http://www.bastoul.net/cloog/"

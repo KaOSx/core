@@ -2,14 +2,14 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.21
+pkgver=2.22
 pkgrel=1
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="http://www.gnu.org/software/libc"
 license=('GPL' 'LGPL')
 groups=('base')
-depends=('linux-api-headers>=4.0' 'tzdata')
+depends=('linux-api-headers>=4.3' 'tzdata')
 makedepends=('gcc>=4.9')
 backup=(etc/gai.conf
         etc/locale.gen
@@ -17,16 +17,19 @@ backup=(etc/gai.conf
 options=('!strip')
 install=glibc.install
 source=("http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
+        "http://www.linuxfromscratch.org/patches/lfs/development/glibc-2.22-largefile-1.patch"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('9cb398828e8f84f57d1f7d5588cf40cd'
+md5sums=('e51e02bf552a0a1fbbdc948fb2f5e83c'
+         '203fe9133e82f2b59969c116b70fd84e'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
          '8b3298de2392a10905a64ceccf56d2c1')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
+  patch -p1 -i $srcdir/glibc-2.22-largefile-1.patch
   
   cd ${srcdir}
   mkdir glibc-build
@@ -34,7 +37,7 @@ build() {
 
   echo "slibdir=/lib" >> configparms
   
-  # remove hardening options for building libraries
+  # remove stack protector for libs
   CFLAGS=${CFLAGS/-fstack-protector/}
   CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
 
@@ -51,24 +54,23 @@ build() {
       --enable-multi-arch \
       --disable-werror
 
-  # build libraries with hardening disabled
+  # build libs without stack protector
   echo "build-programs=no" >> configparms
   make
   
-  # re-enable hardening for programs
+  # build bins with stack protector
   sed -i "/build-programs=/s#no#yes#" configparms
   echo "CC += -fstack-protector -D_FORTIFY_SOURCE=2" >> configparms
   echo "CXX += -fstack-protector -D_FORTIFY_SOURCE=2" >> configparms
   make
 
-  # remove harding in preparation to run test-suite
+  # no stack protector for running tests
   sed -i '5,7d' configparms
 }
 
 check() {
-  LDFLAGS=${LDFLAGS/--as-needed,/}
-
   cd ${srcdir}/glibc-build
+  
   make check || true
 }
 
@@ -98,7 +100,7 @@ package() {
 
   # fix for the linker
   sed -i '/RTLDLIST/s%lib64%lib%' ${pkgdir}/usr/bin/ldd
-  # Comply with multilib binaries, they look for the linker in /lib64
+  # Needed to set this? keep lib64 dir for now
   #mkdir ${pkgdir}/lib64
   cd ${pkgdir}/lib64
   ln -v -s ../lib/ld-2* .
@@ -116,8 +118,9 @@ package() {
                       lib/libnss_{compat,dns,files,hesiod,nis,nisplus}-*.so \
                       lib/{libdl,libm,libnsl,libresolv,librt,libutil}-*.so \
                       lib/{libmemusage,libpcprofile,libSegFault}.so \
-                      usr/lib/{audit,gconv}/*.so
+                      usr/lib/{audit,gconv}/*.so \
+                      lib/libmvec-*.so
 
-  # Add /usr/lib32 to the default library search path
+  # Still needed?  Add /usr/lib32 to the default library search path
   install -Dm644 "$srcdir/glibc.conf" "$pkgdir/etc/ld.so.conf.d/glibc.conf"
 }
