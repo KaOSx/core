@@ -1,6 +1,6 @@
 
 pkgname=openvpn
-pkgver=2.3.8
+pkgver=2.3.9
 pkgrel=1
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
@@ -10,10 +10,10 @@ license=('custom')
 backup=(usr/share/openvpn/easy-rsa/vars
         usr/share/openvpn/easy-rsa/openssl.cnf)
 source=("http://swupdate.openvpn.net/community/releases/openvpn-${pkgver}.tar.xz"
-        "https://github.com/OpenVPN/easy-rsa/archive/2.2.2.tar.gz"
+        "https://github.com/OpenVPN/easy-rsa/archive/3.0.1.tar.gz"
 	'openvpn@.service')
-md5sums=('acc5ea4b08ad53173784520acbd4e9c3'
-         '040238338980617bc9c2df4274349593'
+md5sums=('6968d05713bb778984cb48a3009132de'
+         'aa58cbecda1d5ed6df6bb65e990e42a1'
          'c0275a1192a7e3c0a167a0dc4809dbaa')
 
 build() {
@@ -29,10 +29,10 @@ build() {
   make
 
   # Build easy-rsa
-  cd $srcdir/easy-rsa-2.2.2
-  autoreconf -i
-  ./configure --prefix=/usr --with-easyrsadir=/usr/share/openvpn/easy-rsa
-  make
+  #cd $srcdir/easy-rsa-3.0.1
+  #autoreconf -i
+  #./configure --prefix=/usr --with-easyrsadir=/usr/share/openvpn/easy-rsa
+  #make
 }
 
 package() {
@@ -40,18 +40,26 @@ package() {
   # Install openvpn
   make DESTDIR=$pkgdir install
   install -d -m755 $pkgdir/etc/openvpn
-  # Install examples
+
   install -d -m755 $pkgdir/usr/share/openvpn
   cp -r sample/sample-config-files $pkgdir/usr/share/openvpn/examples
-  # Install license
+
   install -D -m644 COPYING $pkgdir/usr/share/licenses/$pkgname/COPYING
-  # Install contrib
+
   install -d -m755 $pkgdir/usr/share/openvpn/contrib
   cp -r contrib $pkgdir/usr/share/openvpn
+  
   # Install easy-rsa
-  cd $srcdir/easy-rsa-2.2.2
-  make install DESTDIR=$pkgdir
-  rm -f ${pkgdir}/usr/share/openvpn/easy-rsa/openssl-0.9.?.cnf
+  cd $srcdir/easy-rsa-3.0.1
+  install -d ${pkgdir}/usr/share/doc/easy-rsa/
+  mv doc/* ${pkgdir}/usr/share/doc/easy-rsa/
+  rmdir doc
+  install -d ${pkgdir}/usr/share/licenses/easy-rsa/
+  mv COPYING ${pkgdir}/usr/share/licenses/easy-rsa/
+
+  install -d ${pkgdir}/usr/share/easy-rsa/
+  mv easyrsa3/* ${pkgdir}/usr/share/easy-rsa/
+  
   # install systemd units
   install -Dm644 "$srcdir/openvpn@.service" "$pkgdir/usr/lib/systemd/system/openvpn@.service"
 }
