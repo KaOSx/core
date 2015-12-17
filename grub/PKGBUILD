@@ -5,7 +5,7 @@
 
 pkgname=grub
 pkgdesc="GNU GRand Unified Bootloader"
-pkgver=2.01.80
+pkgver=2.01.81
 pkgrel=1
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
