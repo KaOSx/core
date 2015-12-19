@@ -1,7 +1,7 @@
 
 pkgname=iptables
-pkgver=1.4.21
-pkgrel=2
+pkgver=1.6.0
+pkgrel=1
 pkgdesc="A Linux kernel packet control tool"
 arch=('x86_64')
 license=('GPL2')
@@ -20,7 +20,7 @@ source=("http://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.t
         'iptables.service'
         'ip6tables.service'
         'iptables-flush')
-md5sums=('536d048c8e8eeebcd9757d0863ebb0c0'
+md5sums=('27ba3451cb622467fc9267a176f19a31'
          '14186bbafe21bb0638c0cb8e0903c829'
          '88fe330e810bb89b3aa08747bae3e3f9'
          '3ae6e25f397195611bab943945ff31ee'
@@ -28,7 +28,6 @@ md5sums=('536d048c8e8eeebcd9757d0863ebb0c0'
          '07f769473723984ecd1d13ef841c0222'
          '0e202e7eaab6692d2dcf9ea04766db5c'
          '07423e206c5c7a61689eebf12a1dbe52'
-         '7f75e269d7efd463a0d1e4456c6b3b35'
          '0b63db98a863cb2050e3b4596605a8ca'
          'af1ec8be985119b2a3e1b16f1a7f5968'
          'a19e0630d200f066522f0baef815dd75')
@@ -43,7 +42,8 @@ build() {
      --sysconfdir=/etc \
      --with-xtlibdir=/usr/lib/iptables \
      --enable-devel \
-     --enable-shared
+     --enable-shared \
+     --disable-nftables
   make
 }
 
