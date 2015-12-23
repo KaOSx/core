@@ -7,7 +7,7 @@ Server = http://www.lasca.ic.unicamp.br/pub/kaos/$repo
 #Server = ftp://ftp.lasca.ic.unicamp.br/pub/kaos/$repo
 
 # Germany
-Server = http://mirror3.layerjet.com/kaos/$repo
+Server = http://mirror6.layerjet.com/kaos/$repo
 
 # France
 Server = http://kaos.youm.org/$repo
