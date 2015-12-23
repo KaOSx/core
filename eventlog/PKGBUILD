@@ -1,18 +1,19 @@
 
 pkgname=eventlog
 pkgver=0.2.12
-pkgrel=4
+_pkgver=0.2
+pkgrel=5
 pkgdesc="A new API to format and send structured log messages"
 arch=('x86_64')
 url="http://www.balabit.com/support/community/products/"
 license=('BSD')
 depends=('glibc')
 options=('!libtool')
-source=("http://www.balabit.com/downloads/files/eventlog/${pkgver%.*}/eventlog_${pkgver}.tar.gz")
-sha1sums=('3e35a634e7de029ab9d36995a085bfcb00ed6a4d')
+source=("http://www.balabit.com/downloads/files/eventlog/${_pkgver}/eventlog_${pkgver}.tar.gz")
+md5sums=('3d6ebda8a161d36cb40d09328f78786b')
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr \
               --sysconfdir=/etc \
@@ -21,7 +22,7 @@ build() {
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   
   make DESTDIR=${pkgdir} install 
   install -D -m644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE

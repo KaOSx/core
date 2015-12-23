@@ -1,7 +1,7 @@
 
 pkgname=docbook-xml
 pkgver=4.5
-pkgrel=8
+pkgrel=9
 pkgdesc="A widely used XML scheme for writing documentation and help"
 arch=('x86_64')
 url="http://www.oasis-open.org/docbook/"
