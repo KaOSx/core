@@ -2,7 +2,7 @@
 pkgname=wireless_tools
 pkgver=29.9
 _pkgver=30
-pkgrel=1
+pkgrel=2
 pkgdesc="Wireless Tools"
 arch=('x86_64')
 url="http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html"
@@ -12,17 +12,18 @@ source=("http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/wireless_tools.30.
 md5sums=('ca91ba7c7eff9bfff6926b1a34a4697d')
 
 build() {
-	cd ${srcdir}/wireless_tools.${_pkgver}
-	sed '/BUILD_STATIC =/d' -i Makefile
-	
-	make
+  ${pkgname}.${_pkgver}
+  sed '/BUILD_STATIC =/d' -i Makefile
+
+  make
 }
 
 package() {
-	cd ${srcdir}/wireless_tools.${_pkgver}
-	make INSTALL_DIR="${pkgdir}/usr/sbin" \
-	INSTALL_LIB="${pkgdir}/usr/lib" \
-	INSTALL_INC="${pkgdir}/usr/include" \
-	INSTALL_MAN="${pkgdir}/usr/share/man" \
-	install
+  ${pkgname}.${_pkgver}
+  
+  make INSTALL_DIR="${pkgdir}/usr/sbin" \
+    INSTALL_LIB="${pkgdir}/usr/lib" \
+    INSTALL_INC="${pkgdir}/usr/include" \
+    INSTALL_MAN="${pkgdir}/usr/share/man" \
+  install
 }

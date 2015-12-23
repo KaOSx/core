@@ -1,27 +1,28 @@
 
 pkgname=python2-m2crypto
-pkgver=0.22.3
-pkgrel=2
+pkgver=0.22.5
+pkgrel=1
 pkgdesc="A crypto and SSL toolkit for Python"
 arch=('x86_64')
-url="http://wiki.osafoundation.org/bin/view/Projects/MeTooCrypto"
+url="https://gitlab.com/m2crypto/m2crypto"
 license=('BSD')
 depends=('python2' 'openssl')
 makedepends=('swig' 'python2-distribute')
-#source=("http://pypi.python.org/packages/source/M/M2Crypto/M2Crypto-${pkgver}.tar.gz")
-source=("https://github.com/martinpaljak/M2Crypto/archive/v${pkgver}.tar.gz")
-md5sums=('b99418d3797b28d95b784a0a56735923')
+source=("http://pypi.python.org/packages/source/M/M2Crypto/M2Crypto-${pkgver}.tar.gz"
+        "https://gitlab.com/m2crypto/m2crypto/raw/master/LICENCE")
+md5sums=('f84eb07aa1687f39bc26ee7b1ba5a105'
+         'b0e1f0b7d0ce8a62c18b1287b991800e')
 
 build() {
-  cd "${srcdir}/M2Crypto-${pkgver}"
+  cd M2Crypto-${pkgver}
    
   python setup.py build
 }
 
 package() {
-  cd "${srcdir}/M2Crypto-${pkgver}"
+  cd M2Crypto-${pkgver}
   
-  python2 setup.py install --root="${pkgdir}/" --optimize=1
+  python2 setup.py install --root=${pkgdir}/ --optimize=1
 
-  install -D -m644 LICENCE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -D -m644 ${srcdir}/LICENCE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }

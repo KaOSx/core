@@ -1,7 +1,7 @@
 
 pkgname=mlocate
 pkgver=0.26
-pkgrel=3
+pkgrel=4
 pkgdesc="Faster merging drop-in for slocate"
 arch=('x86_64')
 url="http://carolina.mff.cuni.cz/~trmac/blog/mlocate"
@@ -18,7 +18,7 @@ md5sums=('539e6f86bf387358aa2b14d5f880e49a'
          '8d7bfb770a97b30ae430999359628cc0')
 
 build() {
-  cd $srcdir/$pkgname-$pkgver
+  cd $pkgname-$pkgver
 
   sed -i '/^groupname /s/mlocate/locate/' Makefile.in
   ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var/lib
@@ -27,12 +27,12 @@ build() {
 }
 
 check() {
-  cd $srcdir/$pkgname-$pkgver
+  cd $pkgname-$pkgver
   make check
 }
 
 package() {
-  cd $srcdir/$pkgname-$pkgver
+  cd $pkgname-$pkgver
   make DESTDIR=$pkgdir install
 
   ln -sv locate $pkgdir/usr/bin/slocate
