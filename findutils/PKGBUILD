@@ -1,7 +1,7 @@
 
 pkgname=findutils
 pkgver=4.4.2
-pkgrel=7
+pkgrel=8
 pkgdesc="GNU utilities to locate files"
 arch=('x86_64')
 license=('GPL3')
@@ -13,10 +13,7 @@ install=findutils.install
 md5sums=('351cc4adb07d54877fa15f75fb77d39f')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-
-  # Don't build or install locate because we use mlocate,
-  # which is a secure version of locate.
+  cd ${pkgname}-${pkgver}
   sed -i '/^SUBDIRS/s/locate//' Makefile.in
 
   ./configure --prefix=/usr
@@ -24,14 +21,14 @@ build() {
 }
 
 check() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   make check
 }
 
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   make DESTDIR=$pkgdir install
 }
