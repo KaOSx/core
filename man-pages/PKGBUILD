@@ -1,6 +1,6 @@
 
 pkgname=man-pages
-pkgver=4.03
+pkgver=4.04
 _posixver=2013-a
 pkgrel=1
 pkgdesc="Linux man pages"
@@ -11,7 +11,7 @@ groups=('base')
 depends=()
 source=("http://www.kernel.org/pub/linux/docs/man-pages/$pkgname-$pkgver.tar.xz"
 	"http://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/$pkgname-posix-${_posixver}.tar.xz")
-md5sums=('3835788d4422b92ac565b4bd97d295f6'
+md5sums=('c20326ff9687f3ded1c24aa319a3880d'
          '825fde78e6fddd02426ecdd50e2cbe0d')
 
 build() {
