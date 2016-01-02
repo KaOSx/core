@@ -1,6 +1,6 @@
 
 pkgname=docbook-xsl
-pkgver=1.79.0
+pkgver=1.79.1
 pkgrel=1
 pkgdesc="XML stylesheets for Docbook-xml transformations."
 arch=('x86_64')
@@ -9,7 +9,7 @@ url="http://scrollkeeper.sourceforge.net/docbook.shtml"
 depends=('libxml2' 'libxslt' 'docbook-xml')
 source=("http://downloads.sourceforge.net/sourceforge/docbook/docbook-xsl-${pkgver}.tar.bz2")
 install=docbook-xsl.install
-md5sums=('7a55c875fe0e5f67991c662bf6715603')
+md5sums=('b48cbf929a2ad85e6672f710777ca7bc')
 groups=('base-devel')
 
 package() {
