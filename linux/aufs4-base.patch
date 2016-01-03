@@ -1,10 +1,10 @@
-aufs4.2 base patch
+aufs4.3 base patch
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index b60e2b2..ae084ca 100644
+index 747c653..53ecc33 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1941,6 +1941,19 @@ F:	include/linux/audit.h
+@@ -1985,6 +1985,19 @@ F:	include/linux/audit.h
  F:	include/uapi/linux/audit.h
  F:	kernel/audit*
  
@@ -25,7 +25,7 @@ index b60e2b2..ae084ca 100644
  M:	Miguel Ojeda Sandonis <miguel.ojeda.sandonis@gmail.com>
  W:	http://miguelojeda.es/auxdisplay.htm
 diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index f7a4c9d..23103ad 100644
+index 674f800a..291ec9e 100644
 --- a/drivers/block/loop.c
 +++ b/drivers/block/loop.c
 @@ -560,6 +560,24 @@ static inline int is_loop_device(struct file *file)
@@ -54,7 +54,7 @@ index f7a4c9d..23103ad 100644
  
  static ssize_t loop_attr_show(struct device *dev, char *page,
 diff --git a/fs/dcache.c b/fs/dcache.c
-index 9b5fe50..aa8310e 100644
+index 5c33aeb..8aa7f26 100644
 --- a/fs/dcache.c
 +++ b/fs/dcache.c
 @@ -1167,7 +1167,7 @@ enum d_walk_ret {
@@ -140,10 +140,10 @@ index f87d308..9a290b3 100644
  static inline void fput_light(struct file *file, int fput_needed)
  {
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 84b783f..0e3fd62 100644
+index 72d8a84..fabd9d7a 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
-@@ -1677,6 +1677,12 @@ ssize_t rw_copy_check_uvector(int type, const struct iovec __user * uvector,
+@@ -1687,6 +1687,12 @@ ssize_t rw_copy_check_uvector(int type, const struct iovec __user * uvector,
  			      struct iovec *fast_pointer,
  			      struct iovec **ret_pointer);
  
