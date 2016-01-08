@@ -11,3 +11,11 @@ post_install() {
 
 _EOF
 }
+
+post_upgrade() {
+
+    if [ ! -f /boot/loader/loader.conf ] && ! grep -q NotoSans-Bold-14.pf2 /boot/grub/grub.cfg; then
+      grub-mkconfig -o /boot/grub/grub.cfg
+    fi
+  
+}

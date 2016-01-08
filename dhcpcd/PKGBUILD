@@ -1,6 +1,6 @@
 
 pkgname=dhcpcd
-pkgver=6.9.4
+pkgver=6.10.0
 pkgrel=1
 pkgdesc="RFC2131 compliant DHCP client daemon"
 url="http://roy.marples.name/projects/dhcpcd/"
@@ -14,7 +14,7 @@ options=('emptydirs')
 source=("http://roy.marples.name/downloads/dhcpcd/$pkgname-$pkgver.tar.xz" 
 	'dhcpcd@.service'
 	'dhcpcd.service')
-md5sums=('02f5043a415cd4b6d089631a0cd95f5b'
+md5sums=('f39c5773e7c4bea352d9fb7367c899de'
          '3b47ff473ee7f7b03062818b94fd3ed5'
          'c10ec3816b13fd5d59f696f7154f445a')
 
