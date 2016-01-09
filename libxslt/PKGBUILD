@@ -1,7 +1,7 @@
 
 pkgname=libxslt
 pkgver=1.1.28
-pkgrel=3
+pkgrel=4
 pkgdesc="XML stylesheet transformation library"
 arch=('x86_64')
 url="http://xmlsoft.org/XSLT/"
@@ -9,11 +9,15 @@ license=('custom')
 depends=('libxml2' 'libgcrypt')
 makedepends=('python2')
 options=('!libtool')
-source=("ftp://xmlsoft.org/libxslt/${pkgname}-${pkgver}.tar.gz")
-md5sums=('9667bf6f9310b957254fdcf6596600b7')
+source=("ftp://xmlsoft.org/libxslt/${pkgname}-${pkgver}.tar.gz"
+        'CVE-2015-7995.patch')
+md5sums=('9667bf6f9310b957254fdcf6596600b7'
+         'bc83986b1fdea63a05922ee3ffb66255')
 
 build() {
   cd ${pkgname}-${pkgver}
+  # http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7995
+  patch -p1 -i ${srcdir}/CVE-2015-7995.patch
   
   ./configure --prefix=/usr 
   make 
