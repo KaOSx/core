@@ -286,4 +286,9 @@ package_linux-next-docs() {
 
   # remove a file already in linux package
   rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/DocBook/Makefile"
+  # remove a files already in linux-headers
+  rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/kbuild/Kconfig.recursion-issue-01"
+  rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/kbuild/Kconfig.recursion-issue-02"
+  rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/kbuild/Kconfig.select-break"
+  
 }
