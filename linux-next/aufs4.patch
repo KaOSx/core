@@ -1,6 +1,6 @@
-diff -Naur null/Documentation/ABI/testing/debugfs-aufs linux-4.3/Documentation/ABI/testing/debugfs-aufs
+diff -Naur null/Documentation/ABI/testing/debugfs-aufs linux-4.4/Documentation/ABI/testing/debugfs-aufs
 --- /dev/null
-+++ linux-4.3/Documentation/ABI/testing/debugfs-aufs	2015-12-25 20:15:16.910566799 -0500
++++ linux-4.4/Documentation/ABI/testing/debugfs-aufs	2016-01-17 15:54:52.806213751 -0500
 @@ -0,0 +1,50 @@
 +What:		/debug/aufs/si_<id>/
 +Date:		March 2009
@@ -52,9 +52,9 @@ diff -Naur null/Documentation/ABI/testing/debugfs-aufs linux-4.3/Documentation/A
 +		be created.
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
-diff -Naur null/Documentation/ABI/testing/sysfs-aufs linux-4.3/Documentation/ABI/testing/sysfs-aufs
+diff -Naur null/Documentation/ABI/testing/sysfs-aufs linux-4.4/Documentation/ABI/testing/sysfs-aufs
 --- /dev/null
-+++ linux-4.3/Documentation/ABI/testing/sysfs-aufs	2015-12-25 20:15:16.910566799 -0500
++++ linux-4.4/Documentation/ABI/testing/sysfs-aufs	2016-01-17 15:54:52.806213751 -0500
 @@ -0,0 +1,31 @@
 +What:		/sys/fs/aufs/si_<id>/
 +Date:		March 2009
@@ -87,9 +87,9 @@ diff -Naur null/Documentation/ABI/testing/sysfs-aufs linux-4.3/Documentation/ABI
 +		even if it is the default path.
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
-diff -Naur null/Documentation/filesystems/aufs/design/01intro.txt linux-4.3/Documentation/filesystems/aufs/design/01intro.txt
+diff -Naur null/Documentation/filesystems/aufs/design/01intro.txt linux-4.4/Documentation/filesystems/aufs/design/01intro.txt
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/design/01intro.txt	2015-12-25 20:15:16.911566804 -0500
++++ linux-4.4/Documentation/filesystems/aufs/design/01intro.txt	2016-01-17 15:54:52.807213728 -0500
 @@ -0,0 +1,170 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -261,9 +261,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/01intro.txt linux-4.3/Docu
 +Some people may think it is better to pass such work to user space
 +helper, instead of doing in kernel space. Actually I am still thinking
 +about it. But currently I have implemented it in kernel space.
-diff -Naur null/Documentation/filesystems/aufs/design/02struct.txt linux-4.3/Documentation/filesystems/aufs/design/02struct.txt
+diff -Naur null/Documentation/filesystems/aufs/design/02struct.txt linux-4.4/Documentation/filesystems/aufs/design/02struct.txt
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/design/02struct.txt	2015-12-25 20:15:16.911566804 -0500
++++ linux-4.4/Documentation/filesystems/aufs/design/02struct.txt	2016-01-17 15:54:52.807213728 -0500
 @@ -0,0 +1,258 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -523,9 +523,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/02struct.txt linux-4.3/Doc
 +- etc.
 +
 +For this purpose, use "aumvdown" command in aufs-util.git.
-diff -Naur null/Documentation/filesystems/aufs/design/03atomic_open.txt linux-4.3/Documentation/filesystems/aufs/design/03atomic_open.txt
+diff -Naur null/Documentation/filesystems/aufs/design/03atomic_open.txt linux-4.4/Documentation/filesystems/aufs/design/03atomic_open.txt
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/design/03atomic_open.txt	2015-12-25 20:15:16.911566804 -0500
++++ linux-4.4/Documentation/filesystems/aufs/design/03atomic_open.txt	2016-01-17 15:54:52.807213728 -0500
 @@ -0,0 +1,85 @@
 +
 +# Copyright (C) 2015 Junjiro R. Okajima
@@ -612,9 +612,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/03atomic_open.txt linux-4.
 +       ->atomic_open() are lost. in the ordinary case, the checks are
 +       done by VFS:do_last(), lookup_open() and atomic_open(). some can
 +       be implemented in aufs, but not all I am afraid.
-diff -Naur null/Documentation/filesystems/aufs/design/03lookup.txt linux-4.3/Documentation/filesystems/aufs/design/03lookup.txt
+diff -Naur null/Documentation/filesystems/aufs/design/03lookup.txt linux-4.4/Documentation/filesystems/aufs/design/03lookup.txt
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/design/03lookup.txt	2015-12-25 20:15:16.911566804 -0500
++++ linux-4.4/Documentation/filesystems/aufs/design/03lookup.txt	2016-01-17 15:54:52.807213728 -0500
 @@ -0,0 +1,113 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -729,9 +729,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/03lookup.txt linux-4.3/Doc
 +   test, and skip the revalidation in step 4. It is useful and improves
 +   aufs performance when system surely hide the aufs branches from user,
 +   by over-mounting something (or another method).
-diff -Naur null/Documentation/filesystems/aufs/design/04branch.txt linux-4.3/Documentation/filesystems/aufs/design/04branch.txt
+diff -Naur null/Documentation/filesystems/aufs/design/04branch.txt linux-4.4/Documentation/filesystems/aufs/design/04branch.txt
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/design/04branch.txt	2015-12-25 20:15:16.911566804 -0500
++++ linux-4.4/Documentation/filesystems/aufs/design/04branch.txt	2016-01-17 15:54:52.807213728 -0500
 @@ -0,0 +1,74 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -807,9 +807,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/04branch.txt linux-4.3/Doc
 +  - a file on the branch is mmap-ed.
 +  - a regular file on the branch is opened for write and there is no
 +    same named entry on the upper branch.
-diff -Naur null/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-4.3/Documentation/filesystems/aufs/design/05wbr_policy.txt
+diff -Naur null/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-4.4/Documentation/filesystems/aufs/design/05wbr_policy.txt
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/design/05wbr_policy.txt	2015-12-25 20:15:16.911566804 -0500
++++ linux-4.4/Documentation/filesystems/aufs/design/05wbr_policy.txt	2016-01-17 15:54:52.807213728 -0500
 @@ -0,0 +1,64 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -875,9 +875,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-4.3
 +  where the source and the target exists and selects the higher
 +  one. If the selected branch is readonly, then aufs follows the
 +  copyup policy.
-diff -Naur null/Documentation/filesystems/aufs/design/06fhsm.txt linux-4.3/Documentation/filesystems/aufs/design/06fhsm.txt
+diff -Naur null/Documentation/filesystems/aufs/design/06fhsm.txt linux-4.4/Documentation/filesystems/aufs/design/06fhsm.txt
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/design/06fhsm.txt	2015-12-25 20:15:16.911566804 -0500
++++ linux-4.4/Documentation/filesystems/aufs/design/06fhsm.txt	2016-01-17 15:54:52.807213728 -0500
 @@ -0,0 +1,120 @@
 +
 +# Copyright (C) 2011-2015 Junjiro R. Okajima
@@ -999,9 +999,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06fhsm.txt linux-4.3/Docum
 +
 +And of course, in every step, an error may happen. So the operation
 +should restore the original file state after an error happens.
-diff -Naur null/Documentation/filesystems/aufs/design/06mmap.txt linux-4.3/Documentation/filesystems/aufs/design/06mmap.txt
+diff -Naur null/Documentation/filesystems/aufs/design/06mmap.txt linux-4.4/Documentation/filesystems/aufs/design/06mmap.txt
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/design/06mmap.txt	2015-12-25 20:15:16.911566804 -0500
++++ linux-4.4/Documentation/filesystems/aufs/design/06mmap.txt	2016-01-17 15:54:52.807213728 -0500
 @@ -0,0 +1,72 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -1075,9 +1075,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06mmap.txt linux-4.3/Docum
 +  equivalent to vm_prfile described above.
 +
 +I have to give up this "looks-smater" approach.
-diff -Naur null/Documentation/filesystems/aufs/design/06xattr.txt linux-4.3/Documentation/filesystems/aufs/design/06xattr.txt
+diff -Naur null/Documentation/filesystems/aufs/design/06xattr.txt linux-4.4/Documentation/filesystems/aufs/design/06xattr.txt
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/design/06xattr.txt	2015-12-25 20:15:16.911566804 -0500
++++ linux-4.4/Documentation/filesystems/aufs/design/06xattr.txt	2016-01-17 15:54:52.807213728 -0500
 @@ -0,0 +1,96 @@
 +
 +# Copyright (C) 2014-2015 Junjiro R. Okajima
@@ -1175,9 +1175,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06xattr.txt linux-4.3/Docu
 +Some contradiction may happen I am afraid.
 +Do we need another attribute to stop copying XATTR? I am unsure. For
 +now, aufs implements the branch attributes to ignore the error.
-diff -Naur null/Documentation/filesystems/aufs/design/07export.txt linux-4.3/Documentation/filesystems/aufs/design/07export.txt
+diff -Naur null/Documentation/filesystems/aufs/design/07export.txt linux-4.4/Documentation/filesystems/aufs/design/07export.txt
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/design/07export.txt	2015-12-25 20:15:16.911566804 -0500
++++ linux-4.4/Documentation/filesystems/aufs/design/07export.txt	2016-01-17 15:54:52.807213728 -0500
 @@ -0,0 +1,58 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -1237,9 +1237,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/07export.txt linux-4.3/Doc
 +  convert it into ESTALE for NFSD.
 +- readdir(): call lockdep_on/off() because filldir in NFSD calls
 +  lookup_one_len(), vfs_getattr(), encode_fh() and others.
-diff -Naur null/Documentation/filesystems/aufs/design/08shwh.txt linux-4.3/Documentation/filesystems/aufs/design/08shwh.txt
+diff -Naur null/Documentation/filesystems/aufs/design/08shwh.txt linux-4.4/Documentation/filesystems/aufs/design/08shwh.txt
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/design/08shwh.txt	2015-12-25 20:15:16.912566809 -0500
++++ linux-4.4/Documentation/filesystems/aufs/design/08shwh.txt	2016-01-17 15:54:52.808213705 -0500
 @@ -0,0 +1,52 @@
 +
 +# Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -1293,9 +1293,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/08shwh.txt linux-4.3/Docum
 +
 +This new squashfs archive can be stored on the boot device and the
 +initramfs will use it to replace the old one at the next boot.
-diff -Naur null/Documentation/filesystems/aufs/design/10dynop.txt linux-4.3/Documentation/filesystems/aufs/design/10dynop.txt
+diff -Naur null/Documentation/filesystems/aufs/design/10dynop.txt linux-4.4/Documentation/filesystems/aufs/design/10dynop.txt
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/design/10dynop.txt	2015-12-25 20:15:16.912566809 -0500
++++ linux-4.4/Documentation/filesystems/aufs/design/10dynop.txt	2016-01-17 15:54:52.808213705 -0500
 @@ -0,0 +1,47 @@
 +
 +# Copyright (C) 2010-2015 Junjiro R. Okajima
@@ -1344,10 +1344,10 @@ diff -Naur null/Documentation/filesystems/aufs/design/10dynop.txt linux-4.3/Docu
 +XIP (DAX) mainly.
 +Currently this approach is applied to address_space_operations for
 +regular files only.
-diff -Naur null/Documentation/filesystems/aufs/README linux-4.3/Documentation/filesystems/aufs/README
+diff -Naur null/Documentation/filesystems/aufs/README linux-4.4/Documentation/filesystems/aufs/README
 --- /dev/null
-+++ linux-4.3/Documentation/filesystems/aufs/README	2015-12-25 20:15:16.910566799 -0500
-@@ -0,0 +1,383 @@
++++ linux-4.4/Documentation/filesystems/aufs/README	2016-01-17 15:54:52.806213751 -0500
+@@ -0,0 +1,390 @@
 +
 +Aufs4 -- advanced multi layered unification filesystem version 4.x
 +http://aufs.sf.net
@@ -1456,7 +1456,7 @@ diff -Naur null/Documentation/filesystems/aufs/README linux-4.3/Documentation/fi
 +And you cannot select CONFIG_AUFS_FS=m for this version, eg. you cannot
 +build aufs4 as an external kernel module.
 +Several extra patches are not included in this tree. Only
-+aufs4-standalone tree contains them. They are describe in the later
++aufs4-standalone tree contains them. They are described in the later
 +section "Configuration and Compilation."
 +
 +On the other hand, the aufs4-standalone tree has only aufs source files
@@ -1612,6 +1612,13 @@ diff -Naur null/Documentation/filesystems/aufs/README linux-4.3/Documentation/fi
 +  duplication of inode number, which is important for backup tools and
 +  other utilities. When you find aufs XINO files for tmpfs branch
 +  growing too much, try this patch.
++- lockdep-debug.patch
++  Because aufs is not only an ordinary filesystem (callee of VFS), but
++  also a caller of VFS functions for branch filesystems, subclassing of
++  the internal locks for LOCKDEP is necessary. LOCKDEP is a debugging
++  feature of linux kernel. If you enable CONFIG_LOCKDEP, then you will
++  need to apply this debug patch to expand several constant values.
++  If don't know what LOCKDEP, then you don't have apply this patch.
 +
 +
 +4. Usage
@@ -1731,9 +1738,9 @@ diff -Naur null/Documentation/filesystems/aufs/README linux-4.3/Documentation/fi
 +# Local variables: ;
 +# mode: text;
 +# End: ;
-diff -Naur null/fs/aufs/aufs.h linux-4.3/fs/aufs/aufs.h
+diff -Naur null/fs/aufs/aufs.h linux-4.4/fs/aufs/aufs.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/aufs.h	2015-12-25 20:15:16.913566814 -0500
++++ linux-4.4/fs/aufs/aufs.h	2016-01-17 15:54:52.809213682 -0500
 @@ -0,0 +1,59 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -1794,9 +1801,9 @@ diff -Naur null/fs/aufs/aufs.h linux-4.3/fs/aufs/aufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_H__ */
-diff -Naur null/fs/aufs/branch.c linux-4.3/fs/aufs/branch.c
+diff -Naur null/fs/aufs/branch.c linux-4.4/fs/aufs/branch.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/branch.c	2015-12-25 20:15:16.914566818 -0500
++++ linux-4.4/fs/aufs/branch.c	2016-01-17 15:54:52.809213682 -0500
 @@ -0,0 +1,1407 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -3205,9 +3212,9 @@ diff -Naur null/fs/aufs/branch.c linux-4.3/fs/aufs/branch.c
 +
 +	return err;
 +}
-diff -Naur null/fs/aufs/branch.h linux-4.3/fs/aufs/branch.h
+diff -Naur null/fs/aufs/branch.h linux-4.4/fs/aufs/branch.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/branch.h	2015-12-25 20:15:16.914566818 -0500
++++ linux-4.4/fs/aufs/branch.h	2016-01-17 15:54:52.809213682 -0500
 @@ -0,0 +1,279 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -3488,9 +3495,9 @@ diff -Naur null/fs/aufs/branch.h linux-4.3/fs/aufs/branch.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_BRANCH_H__ */
-diff -Naur null/fs/aufs/conf.mk linux-4.3/fs/aufs/conf.mk
+diff -Naur null/fs/aufs/conf.mk linux-4.4/fs/aufs/conf.mk
 --- /dev/null
-+++ linux-4.3/fs/aufs/conf.mk	2015-12-25 20:15:16.914566818 -0500
++++ linux-4.4/fs/aufs/conf.mk	2016-01-17 15:54:52.809213682 -0500
 @@ -0,0 +1,38 @@
 +
 +AuConfStr = CONFIG_AUFS_FS=${CONFIG_AUFS_FS}
@@ -3530,9 +3537,9 @@ diff -Naur null/fs/aufs/conf.mk linux-4.3/fs/aufs/conf.mk
 +${obj}/sysfs.o: ${AuConfName}
 +
 +-include ${srctree}/${src}/conf_priv.mk
-diff -Naur null/fs/aufs/cpup.c linux-4.3/fs/aufs/cpup.c
+diff -Naur null/fs/aufs/cpup.c linux-4.4/fs/aufs/cpup.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/cpup.c	2015-12-25 20:15:16.915566823 -0500
++++ linux-4.4/fs/aufs/cpup.c	2016-01-17 15:54:52.810213659 -0500
 @@ -0,0 +1,1319 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -4853,9 +4860,9 @@ diff -Naur null/fs/aufs/cpup.c linux-4.3/fs/aufs/cpup.c
 +	dput(parent);
 +	return err;
 +}
-diff -Naur null/fs/aufs/cpup.h linux-4.3/fs/aufs/cpup.h
+diff -Naur null/fs/aufs/cpup.h linux-4.4/fs/aufs/cpup.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/cpup.h	2015-12-25 20:15:16.915566823 -0500
++++ linux-4.4/fs/aufs/cpup.h	2016-01-17 15:54:52.810213659 -0500
 @@ -0,0 +1,94 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -4951,9 +4958,9 @@ diff -Naur null/fs/aufs/cpup.h linux-4.3/fs/aufs/cpup.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_CPUP_H__ */
-diff -Naur null/fs/aufs/dbgaufs.c linux-4.3/fs/aufs/dbgaufs.c
+diff -Naur null/fs/aufs/dbgaufs.c linux-4.4/fs/aufs/dbgaufs.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/dbgaufs.c	2015-12-25 20:15:16.915566823 -0500
++++ linux-4.4/fs/aufs/dbgaufs.c	2016-01-17 15:54:52.810213659 -0500
 @@ -0,0 +1,432 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -5387,9 +5394,9 @@ diff -Naur null/fs/aufs/dbgaufs.c linux-4.3/fs/aufs/dbgaufs.c
 +		err = 0;
 +	return err;
 +}
-diff -Naur null/fs/aufs/dbgaufs.h linux-4.3/fs/aufs/dbgaufs.h
+diff -Naur null/fs/aufs/dbgaufs.h linux-4.4/fs/aufs/dbgaufs.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/dbgaufs.h	2015-12-25 20:15:16.915566823 -0500
++++ linux-4.4/fs/aufs/dbgaufs.h	2016-01-17 15:54:52.810213659 -0500
 @@ -0,0 +1,48 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -5439,9 +5446,9 @@ diff -Naur null/fs/aufs/dbgaufs.h linux-4.3/fs/aufs/dbgaufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __DBGAUFS_H__ */
-diff -Naur null/fs/aufs/dcsub.c linux-4.3/fs/aufs/dcsub.c
+diff -Naur null/fs/aufs/dcsub.c linux-4.4/fs/aufs/dcsub.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/dcsub.c	2015-12-25 20:15:16.916566828 -0500
++++ linux-4.4/fs/aufs/dcsub.c	2016-01-17 15:54:52.810213659 -0500
 @@ -0,0 +1,224 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -5667,9 +5674,9 @@ diff -Naur null/fs/aufs/dcsub.c linux-4.3/fs/aufs/dcsub.c
 +
 +	return path_is_under(path + 0, path + 1);
 +}
-diff -Naur null/fs/aufs/dcsub.h linux-4.3/fs/aufs/dcsub.h
+diff -Naur null/fs/aufs/dcsub.h linux-4.4/fs/aufs/dcsub.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/dcsub.h	2015-12-25 20:15:16.916566828 -0500
++++ linux-4.4/fs/aufs/dcsub.h	2016-01-17 15:54:52.810213659 -0500
 @@ -0,0 +1,136 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -5807,9 +5814,9 @@ diff -Naur null/fs/aufs/dcsub.h linux-4.3/fs/aufs/dcsub.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DCSUB_H__ */
-diff -Naur null/fs/aufs/debug.c linux-4.3/fs/aufs/debug.c
+diff -Naur null/fs/aufs/debug.c linux-4.4/fs/aufs/debug.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/debug.c	2015-12-25 20:15:16.916566828 -0500
++++ linux-4.4/fs/aufs/debug.c	2016-01-17 15:54:52.810213659 -0500
 @@ -0,0 +1,438 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -6249,9 +6256,9 @@ diff -Naur null/fs/aufs/debug.c linux-4.3/fs/aufs/debug.c
 +
 +	return 0;
 +}
-diff -Naur null/fs/aufs/debug.h linux-4.3/fs/aufs/debug.h
+diff -Naur null/fs/aufs/debug.h linux-4.4/fs/aufs/debug.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/debug.h	2015-12-25 20:15:16.916566828 -0500
++++ linux-4.4/fs/aufs/debug.h	2016-01-17 15:54:52.810213659 -0500
 @@ -0,0 +1,225 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -6478,9 +6485,9 @@ diff -Naur null/fs/aufs/debug.h linux-4.3/fs/aufs/debug.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DEBUG_H__ */
-diff -Naur null/fs/aufs/dentry.c linux-4.3/fs/aufs/dentry.c
+diff -Naur null/fs/aufs/dentry.c linux-4.4/fs/aufs/dentry.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/dentry.c	2015-12-25 20:15:16.916566828 -0500
++++ linux-4.4/fs/aufs/dentry.c	2016-01-17 15:54:52.811213636 -0500
 @@ -0,0 +1,1136 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -7618,9 +7625,9 @@ diff -Naur null/fs/aufs/dentry.c linux-4.3/fs/aufs/dentry.c
 +const struct dentry_operations aufs_dop_noreval = {
 +	.d_release		= aufs_d_release
 +};
-diff -Naur null/fs/aufs/dentry.h linux-4.3/fs/aufs/dentry.h
+diff -Naur null/fs/aufs/dentry.h linux-4.4/fs/aufs/dentry.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/dentry.h	2015-12-25 20:15:16.916566828 -0500
++++ linux-4.4/fs/aufs/dentry.h	2016-01-17 15:54:52.811213636 -0500
 @@ -0,0 +1,234 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -7856,9 +7863,9 @@ diff -Naur null/fs/aufs/dentry.h linux-4.3/fs/aufs/dentry.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DENTRY_H__ */
-diff -Naur null/fs/aufs/dinfo.c linux-4.3/fs/aufs/dinfo.c
+diff -Naur null/fs/aufs/dinfo.c linux-4.4/fs/aufs/dinfo.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/dinfo.c	2015-12-25 20:15:16.916566828 -0500
++++ linux-4.4/fs/aufs/dinfo.c	2016-01-17 15:54:52.811213636 -0500
 @@ -0,0 +1,550 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -8410,9 +8417,9 @@ diff -Naur null/fs/aufs/dinfo.c linux-4.3/fs/aufs/dinfo.c
 +			return bindex;
 +	return -1;
 +}
-diff -Naur null/fs/aufs/dir.c linux-4.3/fs/aufs/dir.c
+diff -Naur null/fs/aufs/dir.c linux-4.4/fs/aufs/dir.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/dir.c	2015-12-25 20:15:16.917566833 -0500
++++ linux-4.4/fs/aufs/dir.c	2016-01-17 15:54:52.811213636 -0500
 @@ -0,0 +1,753 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -9167,9 +9174,9 @@ diff -Naur null/fs/aufs/dir.c linux-4.3/fs/aufs/dir.c
 +	.flush		= aufs_flush_dir,
 +	.fsync		= aufs_fsync_dir
 +};
-diff -Naur null/fs/aufs/dir.h linux-4.3/fs/aufs/dir.h
+diff -Naur null/fs/aufs/dir.h linux-4.4/fs/aufs/dir.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/dir.h	2015-12-25 20:15:16.917566833 -0500
++++ linux-4.4/fs/aufs/dir.h	2016-01-17 15:54:52.811213636 -0500
 @@ -0,0 +1,131 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -9302,9 +9309,9 @@ diff -Naur null/fs/aufs/dir.h linux-4.3/fs/aufs/dir.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIR_H__ */
-diff -Naur null/fs/aufs/dynop.c linux-4.3/fs/aufs/dynop.c
+diff -Naur null/fs/aufs/dynop.c linux-4.4/fs/aufs/dynop.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/dynop.c	2015-12-25 20:15:16.917566833 -0500
++++ linux-4.4/fs/aufs/dynop.c	2016-01-17 15:54:52.811213636 -0500
 @@ -0,0 +1,369 @@
 +/*
 + * Copyright (C) 2010-2015 Junjiro R. Okajima
@@ -9675,9 +9682,9 @@ diff -Naur null/fs/aufs/dynop.c linux-4.3/fs/aufs/dynop.c
 +	for (i = 0; i < AuDyLast; i++)
 +		WARN_ON(!list_empty(&dynop[i].head));
 +}
-diff -Naur null/fs/aufs/dynop.h linux-4.3/fs/aufs/dynop.h
+diff -Naur null/fs/aufs/dynop.h linux-4.4/fs/aufs/dynop.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/dynop.h	2015-12-25 20:15:16.917566833 -0500
++++ linux-4.4/fs/aufs/dynop.h	2016-01-17 15:54:52.811213636 -0500
 @@ -0,0 +1,74 @@
 +/*
 + * Copyright (C) 2010-2015 Junjiro R. Okajima
@@ -9753,9 +9760,9 @@ diff -Naur null/fs/aufs/dynop.h linux-4.3/fs/aufs/dynop.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DYNOP_H__ */
-diff -Naur null/fs/aufs/export.c linux-4.3/fs/aufs/export.c
+diff -Naur null/fs/aufs/export.c linux-4.4/fs/aufs/export.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/export.c	2015-12-25 20:15:16.917566833 -0500
++++ linux-4.4/fs/aufs/export.c	2016-01-17 15:54:52.811213636 -0500
 @@ -0,0 +1,832 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -10589,9 +10596,9 @@ diff -Naur null/fs/aufs/export.c linux-4.3/fs/aufs/export.c
 +	BUILD_BUG_ON(sizeof(u) != sizeof(int));
 +	atomic_set(&sbinfo->si_xigen_next, u);
 +}
-diff -Naur null/fs/aufs/fhsm.c linux-4.3/fs/aufs/fhsm.c
+diff -Naur null/fs/aufs/fhsm.c linux-4.4/fs/aufs/fhsm.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/fhsm.c	2015-12-25 20:15:16.917566833 -0500
++++ linux-4.4/fs/aufs/fhsm.c	2016-01-17 15:54:52.812213613 -0500
 @@ -0,0 +1,426 @@
 +/*
 + * Copyright (C) 2011-2015 Junjiro R. Okajima
@@ -11019,9 +11026,9 @@ diff -Naur null/fs/aufs/fhsm.c linux-4.3/fs/aufs/fhsm.c
 +	if (u != AUFS_FHSM_CACHE_DEF_SEC)
 +		seq_printf(seq, ",fhsm_sec=%u", u);
 +}
-diff -Naur null/fs/aufs/file.c linux-4.3/fs/aufs/file.c
+diff -Naur null/fs/aufs/file.c linux-4.4/fs/aufs/file.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/file.c	2015-12-25 20:15:16.918566838 -0500
++++ linux-4.4/fs/aufs/file.c	2016-01-17 15:54:52.812213613 -0500
 @@ -0,0 +1,844 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -11867,9 +11874,9 @@ diff -Naur null/fs/aufs/file.c linux-4.3/fs/aufs/file.c
 +	.swap_deactivate	= aufs_swap_deactivate
 +#endif /* CONFIG_AUFS_DEBUG */
 +};
-diff -Naur null/fs/aufs/file.h linux-4.3/fs/aufs/file.h
+diff -Naur null/fs/aufs/file.h linux-4.4/fs/aufs/file.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/file.h	2015-12-25 20:15:16.918566838 -0500
++++ linux-4.4/fs/aufs/file.h	2016-01-17 15:54:52.812213613 -0500
 @@ -0,0 +1,291 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -12162,9 +12169,9 @@ diff -Naur null/fs/aufs/file.h linux-4.3/fs/aufs/file.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FILE_H__ */
-diff -Naur null/fs/aufs/finfo.c linux-4.3/fs/aufs/finfo.c
+diff -Naur null/fs/aufs/finfo.c linux-4.4/fs/aufs/finfo.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/finfo.c	2015-12-25 20:15:16.918566838 -0500
++++ linux-4.4/fs/aufs/finfo.c	2016-01-17 15:54:52.812213613 -0500
 @@ -0,0 +1,156 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -12322,9 +12329,9 @@ diff -Naur null/fs/aufs/finfo.c linux-4.3/fs/aufs/finfo.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/f_op.c linux-4.3/fs/aufs/f_op.c
+diff -Naur null/fs/aufs/f_op.c linux-4.4/fs/aufs/f_op.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/f_op.c	2015-12-25 20:15:16.917566833 -0500
++++ linux-4.4/fs/aufs/f_op.c	2016-01-17 15:54:52.812213613 -0500
 @@ -0,0 +1,738 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -13064,9 +13071,9 @@ diff -Naur null/fs/aufs/f_op.c linux-4.3/fs/aufs/f_op.c
 +#endif
 +	.fallocate	= aufs_fallocate
 +};
-diff -Naur null/fs/aufs/fstype.h linux-4.3/fs/aufs/fstype.h
+diff -Naur null/fs/aufs/fstype.h linux-4.4/fs/aufs/fstype.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/fstype.h	2015-12-25 20:15:16.918566838 -0500
++++ linux-4.4/fs/aufs/fstype.h	2016-01-17 15:54:52.812213613 -0500
 @@ -0,0 +1,400 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -13468,9 +13475,9 @@ diff -Naur null/fs/aufs/fstype.h linux-4.3/fs/aufs/fstype.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FSTYPE_H__ */
-diff -Naur null/fs/aufs/hfsnotify.c linux-4.3/fs/aufs/hfsnotify.c
+diff -Naur null/fs/aufs/hfsnotify.c linux-4.4/fs/aufs/hfsnotify.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/hfsnotify.c	2015-12-25 20:15:16.918566838 -0500
++++ linux-4.4/fs/aufs/hfsnotify.c	2016-01-17 15:54:52.812213613 -0500
 @@ -0,0 +1,288 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -13760,9 +13767,9 @@ diff -Naur null/fs/aufs/hfsnotify.c linux-4.3/fs/aufs/hfsnotify.c
 +	.fin_br		= au_hfsn_fin_br,
 +	.init_br	= au_hfsn_init_br
 +};
-diff -Naur null/fs/aufs/hfsplus.c linux-4.3/fs/aufs/hfsplus.c
+diff -Naur null/fs/aufs/hfsplus.c linux-4.4/fs/aufs/hfsplus.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/hfsplus.c	2015-12-25 20:15:16.918566838 -0500
++++ linux-4.4/fs/aufs/hfsplus.c	2016-01-17 15:54:52.812213613 -0500
 @@ -0,0 +1,56 @@
 +/*
 + * Copyright (C) 2010-2015 Junjiro R. Okajima
@@ -13820,9 +13827,9 @@ diff -Naur null/fs/aufs/hfsplus.c linux-4.3/fs/aufs/hfsplus.c
 +		au_sbr_put(dentry->d_sb, bindex);
 +	}
 +}
-diff -Naur null/fs/aufs/hnotify.c linux-4.3/fs/aufs/hnotify.c
+diff -Naur null/fs/aufs/hnotify.c linux-4.4/fs/aufs/hnotify.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/hnotify.c	2015-12-25 20:15:16.918566838 -0500
++++ linux-4.4/fs/aufs/hnotify.c	2016-01-17 15:54:52.812213613 -0500
 @@ -0,0 +1,710 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -14534,9 +14541,9 @@ diff -Naur null/fs/aufs/hnotify.c linux-4.3/fs/aufs/hnotify.c
 +	if (au_cachep[AuCache_HNOTIFY])
 +		au_hn_destroy_cache();
 +}
-diff -Naur null/fs/aufs/iinfo.c linux-4.3/fs/aufs/iinfo.c
+diff -Naur null/fs/aufs/iinfo.c linux-4.4/fs/aufs/iinfo.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/iinfo.c	2015-12-25 20:15:16.919566842 -0500
++++ linux-4.4/fs/aufs/iinfo.c	2016-01-17 15:54:52.813213590 -0500
 @@ -0,0 +1,277 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -14815,10 +14822,10 @@ diff -Naur null/fs/aufs/iinfo.c linux-4.3/fs/aufs/iinfo.c
 +	iinfo->ii_hinode = NULL;
 +	AuRwDestroy(&iinfo->ii_rwsem);
 +}
-diff -Naur null/fs/aufs/inode.c linux-4.3/fs/aufs/inode.c
+diff -Naur null/fs/aufs/inode.c linux-4.4/fs/aufs/inode.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/inode.c	2015-12-25 20:15:16.919566842 -0500
-@@ -0,0 +1,528 @@
++++ linux-4.4/fs/aufs/inode.c	2016-01-17 15:54:52.813213590 -0500
+@@ -0,0 +1,527 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -15107,8 +15114,7 @@ diff -Naur null/fs/aufs/inode.c linux-4.3/fs/aufs/inode.c
 +static int reval_inode(struct inode *inode, struct dentry *dentry)
 +{
 +	int err;
-+	unsigned int gen;
-+	struct au_iigen iigen;
++	unsigned int gen, igflags;
 +	aufs_bindex_t bindex, bend;
 +	struct inode *h_inode, *h_dinode;
 +	struct dentry *h_dentry;
@@ -15133,9 +15139,9 @@ diff -Naur null/fs/aufs/inode.c linux-4.3/fs/aufs/inode.c
 +			continue;
 +
 +		err = 0;
-+		gen = au_iigen(inode, &iigen);
++		gen = au_iigen(inode, &igflags);
 +		if (gen == au_digen(dentry)
-+		    && !au_ig_ftest(iigen.ig_flags, HALF_REFRESHED))
++		    && !au_ig_ftest(igflags, HALF_REFRESHED))
 +			break;
 +
 +		/* fully refresh inode using dentry */
@@ -15347,9 +15353,9 @@ diff -Naur null/fs/aufs/inode.c linux-4.3/fs/aufs/inode.c
 +		mask |= MAY_READ; /* force permission check */
 +	return au_test_h_perm(h_inode, mask);
 +}
-diff -Naur null/fs/aufs/inode.h linux-4.3/fs/aufs/inode.h
+diff -Naur null/fs/aufs/inode.h linux-4.4/fs/aufs/inode.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/inode.h	2015-12-25 20:15:16.920566847 -0500
++++ linux-4.4/fs/aufs/inode.h	2016-01-17 15:54:52.813213590 -0500
 @@ -0,0 +1,685 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -15775,7 +15781,7 @@ diff -Naur null/fs/aufs/inode.h linux-4.3/fs/aufs/inode.h
 +#endif
 +}
 +
-+static inline unsigned int au_iigen(struct inode *inode, struct au_iigen *iigen_arg)
++static inline unsigned int au_iigen(struct inode *inode, unsigned int *igflags)
 +{
 +	unsigned int gen;
 +	struct au_iinfo *iinfo;
@@ -15784,8 +15790,8 @@ diff -Naur null/fs/aufs/inode.h linux-4.3/fs/aufs/inode.h
 +	iinfo = au_ii(inode);
 +	iigen = &iinfo->ii_generation;
 +	spin_lock(&iigen->ig_spin);
-+	if (iigen_arg)
-+		*iigen_arg = *iigen;
++	if (igflags)
++		*igflags = iigen->ig_flags;
 +	gen = iigen->ig_generation;
 +	spin_unlock(&iigen->ig_spin);
 +
@@ -16036,9 +16042,9 @@ diff -Naur null/fs/aufs/inode.h linux-4.3/fs/aufs/inode.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_INODE_H__ */
-diff -Naur null/fs/aufs/ioctl.c linux-4.3/fs/aufs/ioctl.c
+diff -Naur null/fs/aufs/ioctl.c linux-4.4/fs/aufs/ioctl.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/ioctl.c	2015-12-25 20:15:16.920566847 -0500
++++ linux-4.4/fs/aufs/ioctl.c	2016-01-17 15:54:52.813213590 -0500
 @@ -0,0 +1,219 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -16259,9 +16265,9 @@ diff -Naur null/fs/aufs/ioctl.c linux-4.3/fs/aufs/ioctl.c
 +	return aufs_ioctl_nondir(file, cmd, (unsigned long)compat_ptr(arg));
 +}
 +#endif
-diff -Naur null/fs/aufs/i_op_add.c linux-4.3/fs/aufs/i_op_add.c
+diff -Naur null/fs/aufs/i_op_add.c linux-4.4/fs/aufs/i_op_add.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/i_op_add.c	2015-12-25 20:15:16.919566842 -0500
++++ linux-4.4/fs/aufs/i_op_add.c	2016-01-17 15:54:52.813213590 -0500
 @@ -0,0 +1,932 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -17195,9 +17201,9 @@ diff -Naur null/fs/aufs/i_op_add.c linux-4.3/fs/aufs/i_op_add.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/i_op.c linux-4.3/fs/aufs/i_op.c
+diff -Naur null/fs/aufs/i_op.c linux-4.4/fs/aufs/i_op.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/i_op.c	2015-12-25 20:15:16.919566842 -0500
++++ linux-4.4/fs/aufs/i_op.c	2016-01-17 15:54:52.813213590 -0500
 @@ -0,0 +1,1484 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -18683,9 +18689,9 @@ diff -Naur null/fs/aufs/i_op.c linux-4.3/fs/aufs/i_op.c
 +		.update_time	= aufs_update_time
 +	}
 +};
-diff -Naur null/fs/aufs/i_op_del.c linux-4.3/fs/aufs/i_op_del.c
+diff -Naur null/fs/aufs/i_op_del.c linux-4.4/fs/aufs/i_op_del.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/i_op_del.c	2015-12-25 20:15:16.919566842 -0500
++++ linux-4.4/fs/aufs/i_op_del.c	2016-01-17 15:54:52.813213590 -0500
 @@ -0,0 +1,510 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -19197,9 +19203,9 @@ diff -Naur null/fs/aufs/i_op_del.c linux-4.3/fs/aufs/i_op_del.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur null/fs/aufs/i_op_ren.c linux-4.3/fs/aufs/i_op_ren.c
+diff -Naur null/fs/aufs/i_op_ren.c linux-4.4/fs/aufs/i_op_ren.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/i_op_ren.c	2015-12-25 20:15:16.919566842 -0500
++++ linux-4.4/fs/aufs/i_op_ren.c	2016-01-17 15:54:52.813213590 -0500
 @@ -0,0 +1,1015 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -20216,9 +20222,9 @@ diff -Naur null/fs/aufs/i_op_ren.c linux-4.3/fs/aufs/i_op_ren.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur null/fs/aufs/Kconfig linux-4.3/fs/aufs/Kconfig
+diff -Naur null/fs/aufs/Kconfig linux-4.4/fs/aufs/Kconfig
 --- /dev/null
-+++ linux-4.3/fs/aufs/Kconfig	2015-12-25 20:15:16.913566814 -0500
++++ linux-4.4/fs/aufs/Kconfig	2016-01-17 15:54:52.809213682 -0500
 @@ -0,0 +1,185 @@
 +config AUFS_FS
 +	tristate "Aufs (Advanced multi layered unification filesystem) support"
@@ -20405,9 +20411,9 @@ diff -Naur null/fs/aufs/Kconfig linux-4.3/fs/aufs/Kconfig
 +	Automatic configuration for internal use.
 +	When aufs supports Magic SysRq, enabled automatically.
 +endif
-diff -Naur null/fs/aufs/loop.c linux-4.3/fs/aufs/loop.c
+diff -Naur null/fs/aufs/loop.c linux-4.4/fs/aufs/loop.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/loop.c	2015-12-25 20:15:16.920566847 -0500
++++ linux-4.4/fs/aufs/loop.c	2016-01-17 15:54:52.813213590 -0500
 @@ -0,0 +1,146 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -20555,9 +20561,9 @@ diff -Naur null/fs/aufs/loop.c linux-4.3/fs/aufs/loop.c
 +		symbol_put(loop_backing_file);
 +	kfree(au_warn_loopback_array);
 +}
-diff -Naur null/fs/aufs/loop.h linux-4.3/fs/aufs/loop.h
+diff -Naur null/fs/aufs/loop.h linux-4.4/fs/aufs/loop.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/loop.h	2015-12-25 20:15:16.920566847 -0500
++++ linux-4.4/fs/aufs/loop.h	2016-01-17 15:54:52.813213590 -0500
 @@ -0,0 +1,52 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -20611,9 +20617,9 @@ diff -Naur null/fs/aufs/loop.h linux-4.3/fs/aufs/loop.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LOOP_H__ */
-diff -Naur null/fs/aufs/magic.mk linux-4.3/fs/aufs/magic.mk
+diff -Naur null/fs/aufs/magic.mk linux-4.4/fs/aufs/magic.mk
 --- /dev/null
-+++ linux-4.3/fs/aufs/magic.mk	2015-12-25 20:15:16.920566847 -0500
++++ linux-4.4/fs/aufs/magic.mk	2016-01-17 15:54:52.813213590 -0500
 @@ -0,0 +1,30 @@
 +
 +# defined in ${srctree}/fs/fuse/inode.c
@@ -20645,9 +20651,9 @@ diff -Naur null/fs/aufs/magic.mk linux-4.3/fs/aufs/magic.mk
 +ifdef CONFIG_HFSPLUS_FS
 +ccflags-y += -DHFSPLUS_SUPER_MAGIC=0x482b
 +endif
-diff -Naur null/fs/aufs/Makefile linux-4.3/fs/aufs/Makefile
+diff -Naur null/fs/aufs/Makefile linux-4.4/fs/aufs/Makefile
 --- /dev/null
-+++ linux-4.3/fs/aufs/Makefile	2015-12-25 20:15:16.913566814 -0500
++++ linux-4.4/fs/aufs/Makefile	2016-01-17 15:54:52.809213682 -0500
 @@ -0,0 +1,44 @@
 +
 +include ${src}/magic.mk
@@ -20693,9 +20699,9 @@ diff -Naur null/fs/aufs/Makefile linux-4.3/fs/aufs/Makefile
 +aufs-$(CONFIG_AUFS_BR_HFSPLUS) += hfsplus.o
 +aufs-$(CONFIG_AUFS_DEBUG) += debug.o
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
-diff -Naur null/fs/aufs/module.c linux-4.3/fs/aufs/module.c
+diff -Naur null/fs/aufs/module.c linux-4.4/fs/aufs/module.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/module.c	2015-12-25 20:15:16.920566847 -0500
++++ linux-4.4/fs/aufs/module.c	2016-01-17 15:54:52.814213567 -0500
 @@ -0,0 +1,221 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -20918,9 +20924,9 @@ diff -Naur null/fs/aufs/module.c linux-4.3/fs/aufs/module.c
 +
 +module_init(aufs_init);
 +module_exit(aufs_exit);
-diff -Naur null/fs/aufs/module.h linux-4.3/fs/aufs/module.h
+diff -Naur null/fs/aufs/module.h linux-4.4/fs/aufs/module.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/module.h	2015-12-25 20:15:16.920566847 -0500
++++ linux-4.4/fs/aufs/module.h	2016-01-17 15:54:52.814213567 -0500
 @@ -0,0 +1,104 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -21026,9 +21032,9 @@ diff -Naur null/fs/aufs/module.h linux-4.3/fs/aufs/module.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_MODULE_H__ */
-diff -Naur null/fs/aufs/mvdown.c linux-4.3/fs/aufs/mvdown.c
+diff -Naur null/fs/aufs/mvdown.c linux-4.4/fs/aufs/mvdown.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/mvdown.c	2015-12-25 20:15:16.920566847 -0500
++++ linux-4.4/fs/aufs/mvdown.c	2016-01-17 15:54:52.814213567 -0500
 @@ -0,0 +1,703 @@
 +/*
 + * Copyright (C) 2011-2015 Junjiro R. Okajima
@@ -21733,9 +21739,9 @@ diff -Naur null/fs/aufs/mvdown.c linux-4.3/fs/aufs/mvdown.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur null/fs/aufs/opts.c linux-4.3/fs/aufs/opts.c
+diff -Naur null/fs/aufs/opts.c linux-4.4/fs/aufs/opts.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/opts.c	2015-12-25 20:15:16.920566847 -0500
++++ linux-4.4/fs/aufs/opts.c	2016-01-17 15:54:52.814213567 -0500
 @@ -0,0 +1,1859 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -23596,9 +23602,9 @@ diff -Naur null/fs/aufs/opts.c linux-4.3/fs/aufs/opts.c
 +{
 +	return au_mntflags(sb) & AuOptMask_UDBA;
 +}
-diff -Naur null/fs/aufs/opts.h linux-4.3/fs/aufs/opts.h
+diff -Naur null/fs/aufs/opts.h linux-4.4/fs/aufs/opts.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/opts.h	2015-12-25 20:15:16.921566852 -0500
++++ linux-4.4/fs/aufs/opts.h	2016-01-17 15:54:52.814213567 -0500
 @@ -0,0 +1,211 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -23811,9 +23817,9 @@ diff -Naur null/fs/aufs/opts.h linux-4.3/fs/aufs/opts.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_OPTS_H__ */
-diff -Naur null/fs/aufs/plink.c linux-4.3/fs/aufs/plink.c
+diff -Naur null/fs/aufs/plink.c linux-4.4/fs/aufs/plink.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/plink.c	2015-12-25 20:15:16.921566852 -0500
++++ linux-4.4/fs/aufs/plink.c	2016-01-17 15:54:52.814213567 -0500
 @@ -0,0 +1,528 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -24343,9 +24349,9 @@ diff -Naur null/fs/aufs/plink.c linux-4.3/fs/aufs/plink.c
 +		}
 +	}
 +}
-diff -Naur null/fs/aufs/poll.c linux-4.3/fs/aufs/poll.c
+diff -Naur null/fs/aufs/poll.c linux-4.4/fs/aufs/poll.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/poll.c	2015-12-25 20:15:16.921566852 -0500
++++ linux-4.4/fs/aufs/poll.c	2016-01-17 15:54:52.814213567 -0500
 @@ -0,0 +1,52 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -24399,9 +24405,9 @@ diff -Naur null/fs/aufs/poll.c linux-4.3/fs/aufs/poll.c
 +	AuTraceErr((int)mask);
 +	return mask;
 +}
-diff -Naur null/fs/aufs/posix_acl.c linux-4.3/fs/aufs/posix_acl.c
+diff -Naur null/fs/aufs/posix_acl.c linux-4.4/fs/aufs/posix_acl.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/posix_acl.c	2015-12-25 20:15:16.921566852 -0500
++++ linux-4.4/fs/aufs/posix_acl.c	2016-01-17 15:54:52.814213567 -0500
 @@ -0,0 +1,99 @@
 +/*
 + * Copyright (C) 2014-2015 Junjiro R. Okajima
@@ -24502,9 +24508,9 @@ diff -Naur null/fs/aufs/posix_acl.c linux-4.3/fs/aufs/posix_acl.c
 +	mutex_unlock(&inode->i_mutex);
 +	return err;
 +}
-diff -Naur null/fs/aufs/procfs.c linux-4.3/fs/aufs/procfs.c
+diff -Naur null/fs/aufs/procfs.c linux-4.4/fs/aufs/procfs.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/procfs.c	2015-12-25 20:15:16.921566852 -0500
++++ linux-4.4/fs/aufs/procfs.c	2016-01-17 15:54:52.814213567 -0500
 @@ -0,0 +1,169 @@
 +/*
 + * Copyright (C) 2010-2015 Junjiro R. Okajima
@@ -24675,9 +24681,9 @@ diff -Naur null/fs/aufs/procfs.c linux-4.3/fs/aufs/procfs.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/rdu.c linux-4.3/fs/aufs/rdu.c
+diff -Naur null/fs/aufs/rdu.c linux-4.4/fs/aufs/rdu.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/rdu.c	2015-12-25 20:15:16.921566852 -0500
++++ linux-4.4/fs/aufs/rdu.c	2016-01-17 15:54:52.814213567 -0500
 @@ -0,0 +1,388 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -25067,9 +25073,9 @@ diff -Naur null/fs/aufs/rdu.c linux-4.3/fs/aufs/rdu.c
 +	return err;
 +}
 +#endif
-diff -Naur null/fs/aufs/rwsem.h linux-4.3/fs/aufs/rwsem.h
+diff -Naur null/fs/aufs/rwsem.h linux-4.4/fs/aufs/rwsem.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/rwsem.h	2015-12-25 20:15:16.921566852 -0500
++++ linux-4.4/fs/aufs/rwsem.h	2016-01-17 15:54:52.815213544 -0500
 @@ -0,0 +1,191 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -25262,9 +25268,9 @@ diff -Naur null/fs/aufs/rwsem.h linux-4.3/fs/aufs/rwsem.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_RWSEM_H__ */
-diff -Naur null/fs/aufs/sbinfo.c linux-4.3/fs/aufs/sbinfo.c
+diff -Naur null/fs/aufs/sbinfo.c linux-4.4/fs/aufs/sbinfo.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/sbinfo.c	2015-12-25 20:15:16.921566852 -0500
++++ linux-4.4/fs/aufs/sbinfo.c	2016-01-17 15:54:52.815213544 -0500
 @@ -0,0 +1,366 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -25632,9 +25638,9 @@ diff -Naur null/fs/aufs/sbinfo.c linux-4.3/fs/aufs/sbinfo.c
 +	p = radix_tree_delete(&sbinfo->au_si_pid.tree, current->pid);
 +	spin_unlock(&sbinfo->au_si_pid.tree_lock);
 +}
-diff -Naur null/fs/aufs/spl.h linux-4.3/fs/aufs/spl.h
+diff -Naur null/fs/aufs/spl.h linux-4.4/fs/aufs/spl.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/spl.h	2015-12-25 20:15:16.921566852 -0500
++++ linux-4.4/fs/aufs/spl.h	2016-01-17 15:54:52.815213544 -0500
 @@ -0,0 +1,111 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -25747,9 +25753,9 @@ diff -Naur null/fs/aufs/spl.h linux-4.3/fs/aufs/spl.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SPL_H__ */
-diff -Naur null/fs/aufs/super.c linux-4.3/fs/aufs/super.c
+diff -Naur null/fs/aufs/super.c linux-4.4/fs/aufs/super.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/super.c	2015-12-25 20:15:16.921566852 -0500
++++ linux-4.4/fs/aufs/super.c	2016-01-17 15:54:52.815213544 -0500
 @@ -0,0 +1,1039 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -26790,9 +26796,9 @@ diff -Naur null/fs/aufs/super.c linux-4.3/fs/aufs/super.c
 +	/* no need to __module_get() and module_put(). */
 +	.owner		= THIS_MODULE,
 +};
-diff -Naur null/fs/aufs/super.h linux-4.3/fs/aufs/super.h
+diff -Naur null/fs/aufs/super.h linux-4.4/fs/aufs/super.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/super.h	2015-12-25 20:15:16.921566852 -0500
++++ linux-4.4/fs/aufs/super.h	2016-01-17 15:54:52.815213544 -0500
 @@ -0,0 +1,641 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -27435,9 +27441,9 @@ diff -Naur null/fs/aufs/super.h linux-4.3/fs/aufs/super.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SUPER_H__ */
-diff -Naur null/fs/aufs/sysaufs.c linux-4.3/fs/aufs/sysaufs.c
+diff -Naur null/fs/aufs/sysaufs.c linux-4.4/fs/aufs/sysaufs.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/sysaufs.c	2015-12-25 20:15:16.922566857 -0500
++++ linux-4.4/fs/aufs/sysaufs.c	2016-01-17 15:54:52.815213544 -0500
 @@ -0,0 +1,104 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -27543,9 +27549,9 @@ diff -Naur null/fs/aufs/sysaufs.c linux-4.3/fs/aufs/sysaufs.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/sysaufs.h linux-4.3/fs/aufs/sysaufs.h
+diff -Naur null/fs/aufs/sysaufs.h linux-4.4/fs/aufs/sysaufs.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/sysaufs.h	2015-12-25 20:15:16.922566857 -0500
++++ linux-4.4/fs/aufs/sysaufs.h	2016-01-17 15:54:52.815213544 -0500
 @@ -0,0 +1,101 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -27648,9 +27654,9 @@ diff -Naur null/fs/aufs/sysaufs.h linux-4.3/fs/aufs/sysaufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __SYSAUFS_H__ */
-diff -Naur null/fs/aufs/sysfs.c linux-4.3/fs/aufs/sysfs.c
+diff -Naur null/fs/aufs/sysfs.c linux-4.4/fs/aufs/sysfs.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/sysfs.c	2015-12-25 20:15:16.922566857 -0500
++++ linux-4.4/fs/aufs/sysfs.c	2016-01-17 15:54:52.815213544 -0500
 @@ -0,0 +1,376 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -28028,9 +28034,9 @@ diff -Naur null/fs/aufs/sysfs.c linux-4.3/fs/aufs/sysfs.c
 +		}
 +	}
 +}
-diff -Naur null/fs/aufs/sysrq.c linux-4.3/fs/aufs/sysrq.c
+diff -Naur null/fs/aufs/sysrq.c linux-4.4/fs/aufs/sysrq.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/sysrq.c	2015-12-25 20:15:16.922566857 -0500
++++ linux-4.4/fs/aufs/sysrq.c	2016-01-17 15:54:52.815213544 -0500
 @@ -0,0 +1,157 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -28189,9 +28195,9 @@ diff -Naur null/fs/aufs/sysrq.c linux-4.3/fs/aufs/sysrq.c
 +	if (unlikely(err))
 +		pr_err("err %d (ignored)\n", err);
 +}
-diff -Naur null/fs/aufs/vdir.c linux-4.3/fs/aufs/vdir.c
+diff -Naur null/fs/aufs/vdir.c linux-4.4/fs/aufs/vdir.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/vdir.c	2015-12-25 20:15:16.922566857 -0500
++++ linux-4.4/fs/aufs/vdir.c	2016-01-17 15:54:52.815213544 -0500
 @@ -0,0 +1,888 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -29081,9 +29087,9 @@ diff -Naur null/fs/aufs/vdir.c linux-4.3/fs/aufs/vdir.c
 +	/* smp_mb(); */
 +	return 0;
 +}
-diff -Naur null/fs/aufs/vfsub.c linux-4.3/fs/aufs/vfsub.c
+diff -Naur null/fs/aufs/vfsub.c linux-4.4/fs/aufs/vfsub.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/vfsub.c	2015-12-25 20:15:16.922566857 -0500
++++ linux-4.4/fs/aufs/vfsub.c	2016-01-17 15:54:52.816213521 -0500
 @@ -0,0 +1,848 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -29933,9 +29939,9 @@ diff -Naur null/fs/aufs/vfsub.c linux-4.3/fs/aufs/vfsub.c
 +
 +	return err;
 +}
-diff -Naur null/fs/aufs/vfsub.h linux-4.3/fs/aufs/vfsub.h
+diff -Naur null/fs/aufs/vfsub.h linux-4.4/fs/aufs/vfsub.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/vfsub.h	2015-12-25 20:15:16.922566857 -0500
++++ linux-4.4/fs/aufs/vfsub.h	2016-01-17 15:54:52.816213521 -0500
 @@ -0,0 +1,287 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -30224,9 +30230,9 @@ diff -Naur null/fs/aufs/vfsub.h linux-4.3/fs/aufs/vfsub.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_VFSUB_H__ */
-diff -Naur null/fs/aufs/wbr_policy.c linux-4.3/fs/aufs/wbr_policy.c
+diff -Naur null/fs/aufs/wbr_policy.c linux-4.4/fs/aufs/wbr_policy.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/wbr_policy.c	2015-12-25 20:15:16.922566857 -0500
++++ linux-4.4/fs/aufs/wbr_policy.c	2016-01-17 15:54:52.816213521 -0500
 @@ -0,0 +1,765 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -30993,9 +30999,9 @@ diff -Naur null/fs/aufs/wbr_policy.c linux-4.3/fs/aufs/wbr_policy.c
 +		.fin	= au_wbr_create_fin_mfs
 +	}
 +};
-diff -Naur null/fs/aufs/whout.c linux-4.3/fs/aufs/whout.c
+diff -Naur null/fs/aufs/whout.c linux-4.4/fs/aufs/whout.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/whout.c	2015-12-25 20:15:16.922566857 -0500
++++ linux-4.4/fs/aufs/whout.c	2016-01-17 15:54:52.816213521 -0500
 @@ -0,0 +1,1060 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -32057,9 +32063,9 @@ diff -Naur null/fs/aufs/whout.c linux-4.3/fs/aufs/whout.c
 +		au_whtmp_rmdir_free(args);
 +	}
 +}
-diff -Naur null/fs/aufs/whout.h linux-4.3/fs/aufs/whout.h
+diff -Naur null/fs/aufs/whout.h linux-4.4/fs/aufs/whout.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/whout.h	2015-12-25 20:15:16.922566857 -0500
++++ linux-4.4/fs/aufs/whout.h	2016-01-17 15:54:52.816213521 -0500
 @@ -0,0 +1,85 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -32146,9 +32152,9 @@ diff -Naur null/fs/aufs/whout.h linux-4.3/fs/aufs/whout.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WHOUT_H__ */
-diff -Naur null/fs/aufs/wkq.c linux-4.3/fs/aufs/wkq.c
+diff -Naur null/fs/aufs/wkq.c linux-4.4/fs/aufs/wkq.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/wkq.c	2015-12-25 20:15:16.923566862 -0500
++++ linux-4.4/fs/aufs/wkq.c	2016-01-17 15:54:52.816213521 -0500
 @@ -0,0 +1,213 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -32363,9 +32369,9 @@ diff -Naur null/fs/aufs/wkq.c linux-4.3/fs/aufs/wkq.c
 +
 +	return err;
 +}
-diff -Naur null/fs/aufs/wkq.h linux-4.3/fs/aufs/wkq.h
+diff -Naur null/fs/aufs/wkq.h linux-4.4/fs/aufs/wkq.h
 --- /dev/null
-+++ linux-4.3/fs/aufs/wkq.h	2015-12-25 20:15:16.923566862 -0500
++++ linux-4.4/fs/aufs/wkq.h	2016-01-17 15:54:52.816213521 -0500
 @@ -0,0 +1,91 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -32458,9 +32464,9 @@ diff -Naur null/fs/aufs/wkq.h linux-4.3/fs/aufs/wkq.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WKQ_H__ */
-diff -Naur null/fs/aufs/xattr.c linux-4.3/fs/aufs/xattr.c
+diff -Naur null/fs/aufs/xattr.c linux-4.4/fs/aufs/xattr.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/xattr.c	2015-12-25 20:15:16.923566862 -0500
++++ linux-4.4/fs/aufs/xattr.c	2016-01-17 15:54:52.816213521 -0500
 @@ -0,0 +1,344 @@
 +/*
 + * Copyright (C) 2014-2015 Junjiro R. Okajima
@@ -32806,10 +32812,10 @@ diff -Naur null/fs/aufs/xattr.c linux-4.3/fs/aufs/xattr.c
 +	/* sb->s_xattr = au_xattr_handlers; */
 +}
 +#endif
-diff -Naur null/fs/aufs/xino.c linux-4.3/fs/aufs/xino.c
+diff -Naur null/fs/aufs/xino.c linux-4.4/fs/aufs/xino.c
 --- /dev/null
-+++ linux-4.3/fs/aufs/xino.c	2015-12-25 20:15:16.923566862 -0500
-@@ -0,0 +1,1296 @@
++++ linux-4.4/fs/aufs/xino.c	2016-01-17 15:54:52.816213521 -0500
+@@ -0,0 +1,1318 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
 + *
@@ -32865,6 +32871,9 @@ diff -Naur null/fs/aufs/xino.c linux-4.3/fs/aufs/xino.c
 +
 +/* ---------------------------------------------------------------------- */
 +
++static ssize_t xino_fwrite_wkq(vfs_writef_t func, struct file *file, void *buf,
++			       size_t size, loff_t *pos);
++
 +static ssize_t do_xino_fwrite(vfs_writef_t func, struct file *file, void *kbuf,
 +			      size_t size, loff_t *pos)
 +{
@@ -32874,14 +32883,26 @@ diff -Naur null/fs/aufs/xino.c linux-4.3/fs/aufs/xino.c
 +		void *k;
 +		const char __user *u;
 +	} buf;
++	int i;
++	const int prevent_endless = 10;
 +
++	i = 0;
 +	buf.k = kbuf;
 +	oldfs = get_fs();
 +	set_fs(KERNEL_DS);
 +	do {
-+		/* todo: signal_pending? */
 +		err = func(file, buf.u, size, pos);
-+	} while (err == -EAGAIN || err == -EINTR);
++		if (err == -EINTR
++		    && !au_wkq_test()
++		    && fatal_signal_pending(current)) {
++			set_fs(oldfs);
++			err = xino_fwrite_wkq(func, file, kbuf, size, pos);
++			BUG_ON(err == -EINTR);
++			oldfs = get_fs();
++			set_fs(KERNEL_DS);
++		}
++	} while (i++ < prevent_endless
++		 && (err == -EAGAIN || err == -EINTR));
 +	set_fs(oldfs);
 +
 +#if 0 /* reserved for future use */
@@ -32907,35 +32928,42 @@ diff -Naur null/fs/aufs/xino.c linux-4.3/fs/aufs/xino.c
 +	*a->errp = do_xino_fwrite(a->func, a->file, a->buf, a->size, a->pos);
 +}
 +
++static ssize_t xino_fwrite_wkq(vfs_writef_t func, struct file *file, void *buf,
++			       size_t size, loff_t *pos)
++{
++	ssize_t err;
++	int wkq_err;
++	struct do_xino_fwrite_args args = {
++		.errp	= &err,
++		.func	= func,
++		.file	= file,
++		.buf	= buf,
++		.size	= size,
++		.pos	= pos
++	};
++
++	/*
++	 * it breaks RLIMIT_FSIZE and normal user's limit,
++	 * users should care about quota and real 'filesystem full.'
++	 */
++	wkq_err = au_wkq_wait(call_do_xino_fwrite, &args);
++	if (unlikely(wkq_err))
++		err = wkq_err;
++
++	return err;
++}
++
 +ssize_t xino_fwrite(vfs_writef_t func, struct file *file, void *buf,
 +		    size_t size, loff_t *pos)
 +{
 +	ssize_t err;
 +
-+	/* todo: signal block and no wkq? */
 +	if (rlimit(RLIMIT_FSIZE) == RLIM_INFINITY) {
 +		lockdep_off();
 +		err = do_xino_fwrite(func, file, buf, size, pos);
 +		lockdep_on();
-+	} else {
-+		/*
-+		 * it breaks RLIMIT_FSIZE and normal user's limit,
-+		 * users should care about quota and real 'filesystem full.'
-+		 */
-+		int wkq_err;
-+		struct do_xino_fwrite_args args = {
-+			.errp	= &err,
-+			.func	= func,
-+			.file	= file,
-+			.buf	= buf,
-+			.size	= size,
-+			.pos	= pos
-+		};
-+
-+		wkq_err = au_wkq_wait(call_do_xino_fwrite, &args);
-+		if (unlikely(wkq_err))
-+			err = wkq_err;
-+	}
++	} else
++		err = xino_fwrite_wkq(func, file, buf, size, pos);
 +
 +	return err;
 +}
@@ -34106,9 +34134,9 @@ diff -Naur null/fs/aufs/xino.c linux-4.3/fs/aufs/xino.c
 +out:
 +	return err;
 +}
-diff -Naur null/include/uapi/linux/aufs_type.h linux-4.3/include/uapi/linux/aufs_type.h
+diff -Naur null/include/uapi/linux/aufs_type.h linux-4.4/include/uapi/linux/aufs_type.h
 --- /dev/null
-+++ linux-4.3/include/uapi/linux/aufs_type.h	2015-12-25 20:15:16.923566862 -0500
++++ linux-4.4/include/uapi/linux/aufs_type.h	2016-01-17 15:54:52.817213498 -0500
 @@ -0,0 +1,419 @@
 +/*
 + * Copyright (C) 2005-2015 Junjiro R. Okajima
@@ -34151,7 +34179,7 @@ diff -Naur null/include/uapi/linux/aufs_type.h linux-4.3/include/uapi/linux/aufs
 +
 +#include <linux/limits.h>
 +
-+#define AUFS_VERSION	"4.3-20151221"
++#define AUFS_VERSION	"4.4-20160118"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
