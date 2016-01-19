@@ -4,7 +4,7 @@ pkgname=('linux' 'linux-headers' 'linux-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.3
 pkgver=4.3.3
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -27,7 +27,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.3.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         'change-default-console-loglevel.patch'
-        'i8042-fix-aliases.patch')
+        'i8042-fix-aliases.patch'
+        'CVE-2016-0728.patch')
 md5sums=('58b35794eee3b6d52ce7be39357801e7'
          'd3235b3640ae6ac1ab579171943fda4b'
          'e9199a84ccad78fa0d2c10a177c554ed'
@@ -42,7 +43,8 @@ md5sums=('58b35794eee3b6d52ce7be39357801e7'
          '3b16b19947680d4e8fac8b9f5fecdd98'
          'eb14dcfd80c00852ef81ded6e826826a'
          'a262bedf26f26b7698143fc23de98457'
-         '93dbf73af819b77f03453a9c6de2bb47')
+         '93dbf73af819b77f03453a9c6de2bb47'
+         'f1c7d9961ce421641e51d8fc641abf56')
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -59,6 +61,8 @@ prepare() {
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
   
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
+  
+  patch -p1 -i "${srcdir}/CVE-2016-0728.patch"
   
   #aufs patches for Live:
   patch -p1 -i "${srcdir}/aufs4.patch"
