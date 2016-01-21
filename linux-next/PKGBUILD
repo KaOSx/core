@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 _basekernel=4.4
 _srcname=linux-4.4
 pkgver=4.4.0
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.2-rc8.tar.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        ##"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -31,27 +31,31 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch'
-        'drv_probe.patch')
+        'drv_probe.patch'
+        'CVE-2016-0728.patch')
 md5sums=('9a78fa2eb6c68ca5a40ed5af08142599'
-         '11e260cd45863c0eb3c89357341b9ffa'
-         'c30706859048a9fb97cc8b7003e89aaf'
-         'ccff9177a9c1abf744b3cf549abd4b8e'
-         '2d8d4aa3cf5eab19b1a627f8fca5a7d3'
-         'd08700345ceb4fbbdd89708d28f8afee'
-         'a2ee3b357e458b6ab3562ffce3c4d3c9'
-         'ffe72ca6003d8bc2074e2cf445e1a1da'
+         '779072fa9d790a78f36413b76a637e31'
+         'ff5323e9b212e6b2f4f79d21e38afd3f'
+         '4745bb9f5096541916595f7a7bf38588'
+         '1527ec87bea6a7eb61b09248d096ee52'
+         '5633c08eb2c3542c3deb5975820e5a88'
+         'b0c03d29896022cd0f91e955b3f4ea42'
+         '3e6ce0f00495122550c55d4d9dc82d79'
          '260b2e47579140f61546f37d90e0b527'
-         '58315fa0415b8e63f334e2874fc860a8'
-         '3b16b19947680d4e8fac8b9f5fecdd98'
+         '6884431ddb662115eed49d69ad246648'
+         'd0452c0b415482de8e6ec81060cb912e'
+         '994289bb10367215ece27442f90cfba5'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a262bedf26f26b7698143fc23de98457'
-         '93dbf73af819b77f03453a9c6de2bb47')
+         '93dbf73af819b77f03453a9c6de2bb47'
+         '52cff8a01c28fc20caf5edce684d1caf'
+         'f1c7d9961ce421641e51d8fc641abf56')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -64,6 +68,8 @@ build() {
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
   # https://bugzilla.kernel.org/show_bug.cgi?id=110751
   patch -p1 -i "${srcdir}/drv_probe.patch"
+  
+  patch -p1 -i "${srcdir}/CVE-2016-0728.patch"
 
   #aufs patches for Live:
   patch -p1 -i "${srcdir}/aufs4.patch"
