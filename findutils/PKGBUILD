@@ -1,7 +1,7 @@
 
 pkgname=findutils
-pkgver=4.4.2
-pkgrel=8
+pkgver=4.6.0
+pkgrel=1
 pkgdesc="GNU utilities to locate files"
 arch=('x86_64')
 license=('GPL3')
@@ -10,13 +10,15 @@ depends=('glibc' 'sh')
 url="http://www.gnu.org/software/findutils"
 source=("ftp://ftp.gnu.org/pub/gnu/findutils/findutils-$pkgver.tar.gz")
 install=findutils.install
-md5sums=('351cc4adb07d54877fa15f75fb77d39f')
+md5sums=('9936aa8009438ce185bea2694a997fc1')
 
 build() {
   cd ${pkgname}-${pkgver}
-  sed -i '/^SUBDIRS/s/locate//' Makefile.in
 
-  ./configure --prefix=/usr
+  ./configure --prefix=/usr \
+    --with-packager="KaOS" \
+    --with-packager-bug-reports="https://github.com/KaOSx/core/issues" \
+    --libexecdir=/usr/lib
   make
 }
 
@@ -29,6 +31,12 @@ check() {
 
 package() {
   cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
   
-  make DESTDIR=$pkgdir install
+  # files used from mlocate
+  rm ${pkgdir}/usr/bin/locate
+  rm ${pkgdir}/usr/bin/updatedb
+  rm ${pkgdir}/usr/share/man/man1/locate.1
+  rm ${pkgdir}/usr/share/man/man1/updatedb.1
+  rm -r ${pkgdir}/usr/share/man/man5
 }
