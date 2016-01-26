@@ -1,20 +1,20 @@
 
 pkgname=logrotate
-pkgver=3.9.1
+pkgver=3.9.2
 pkgrel=1
 pkgdesc="Rotates system logs automatically"
-url='https://fedorahosted.org/logrotate/'
+url='https://github.com/logrotate/logrotate'
 arch=('x86_64')
 license=('GPL')
 groups=('base')
 depends=('popt' 'gzip' 'acl')
 backup=('etc/logrotate.conf')
-source=("https://fedorahosted.org/releases/l/o/logrotate/logrotate-${pkgver}.tar.gz"
+source=("https://github.com/logrotate/logrotate/archive/${pkgver}.tar.gz"
         'logrotate.conf' 
         'logrotate.service'
         'logrotate.timer'
         'path.patch')
-md5sums=('4492b145b6d542e4a2f41e77fa199ab0'
+md5sums=('584bca013dcceeb23b06b27d6d0342fb'
          '416de14f92ef4361adad8b6e7065245a'
          '57039a96a716391fad46c7eb1bf47b52'
          '287c2ad9b074cb5478db7692f385827c'
