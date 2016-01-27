@@ -1,6 +1,7 @@
 
 pkgname=dialog
-pkgver=1.2_20150920
+pkgver=1.3_20160126
+_pkgver=1.3-20160126
 pkgrel=1
 pkgdesc="A tool to display dialog boxes from shell scripts"
 arch=('x86_64')
@@ -8,18 +9,18 @@ url="http://invisible-island.net/dialog/"
 license=('LGPL2.1')
 depends=('ncurses' 'sh')
 # version at http://invisible-island.net/dialog/CHANGES.html
-source=("ftp://invisible-island.net/dialog/${pkgname}-${pkgver/_/-}.tgz")
-md5sums=('2b7c002b0a88ce1e0014af34b6b1ebdc')
+source=("ftp://invisible-island.net/dialog/${pkgname}-${_pkgver}.tgz")
+md5sums=('d10ecf2b4ee83c78df9cc3b610a4301e')
 
 build() {
-  cd "${srcdir}/$pkgname-${pkgver/_/-}"
+  cd $pkgname-${_pkgver}
   
   ./configure --prefix=/usr --mandir=/usr/share/man --with-ncursesw --enable-nls
   make 
 }
 
 package() {
-  cd "${srcdir}/$pkgname-${pkgver/_/-}"
+  cd $pkgname-${_pkgver}
   
   make DESTDIR=${pkgdir} install install-lib
 }
