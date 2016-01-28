@@ -1,8 +1,8 @@
 
 pkgname=openssl
-_ver=1.0.2e
-pkgver=1.0.2.5
-pkgrel=2
+_ver=1.0.2f
+pkgver=1.0.2.6
+pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
 url='https://www.openssl.org'
@@ -16,7 +16,7 @@ source=("https://www.openssl.org/source/${pkgname}-${_ver}.tar.gz"
         'ca-dir.patch'
         'bctest'
         'pod2mantest')
-md5sums=('5262bfa25b60ed9de9f28d5d52d77fc5'
+md5sums=('b3bf73f507172be9292ea2a8c28b659d'
          'dc78d3d06baffc16217519242ce92478'
          '3bf51be3a1bbd262be46dc619f92aa90'
          'ca85ae891de94faa821c2c6f4dba7f5a'
