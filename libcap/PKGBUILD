@@ -1,7 +1,7 @@
 
 pkgname=libcap
-pkgver=2.24
-pkgrel=2
+pkgver=2.25
+pkgrel=1
 pkgdesc="POSIX 1003.1e capabilities"
 arch=('x86_64')
 url="http://www.kernel.org/pub/linux/libs/security/linux-privs/"
@@ -9,16 +9,16 @@ license=('GPL')
 depends=('glibc' 'attr')
 options=('!staticlibs')
 source=("https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/${pkgname}-${pkgver}.tar.xz")
-md5sums=('d43ab9f680435a7fff35b4ace8d45b80')
+md5sums=('6666b839e5d46c2ad33fc8aa2ceb5f77')
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   
   make
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   make prefix=/usr lib=/lib DESTDIR=${pkgdir} RAISE_SETFCAP=no install
 
   install -Dm644 pam_cap/capability.conf \
