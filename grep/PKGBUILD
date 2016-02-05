@@ -1,6 +1,6 @@
 
 pkgname=grep
-pkgver=2.22
+pkgver=2.23
 pkgrel=1
 pkgdesc="A string search utility"
 arch=('x86_64')
@@ -11,24 +11,24 @@ depends=('glibc' 'pcre' 'sh')
 makedepends=('texinfo>=4.8a')
 install="${pkgname}.install"
 source=("ftp://ftp.gnu.org/gnu/grep/${pkgname}-${pkgver}.tar.xz")
-md5sums=('e1015e951a49a82b02e38891026ef5df')
+md5sums=('f46aa9d0d2577b9212a104348a286787')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr --without-included-regex
   make
 }
 
 check() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   make check
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR=${pkgdir} install
 }
 
