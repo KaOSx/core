@@ -1,6 +1,6 @@
 
 pkgname=ed
-pkgver=1.12
+pkgver=1.13
 pkgrel=1
 pkgdesc="A POSIX-compliant line editor"
 arch=('x86_64')
@@ -11,10 +11,10 @@ groups=('base-devel')
 depends=('glibc' 'sh')
 options=('!emptydirs')
 source=("ftp://ftp.gnu.org/gnu/ed/${pkgname}-${pkgver}.tar.lz")
-md5sums=('67c96fc79c29e86fb8002759c4a20e16')
+md5sums=('1c789b7043b4d56169b8d2bdb249fe41')
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/ --mandir=/usr/share/man --infodir=/usr/share/info
   make
@@ -22,11 +22,11 @@ build() {
 
 check() {
 
-  make -C "$pkgname-$pkgver" check
+  make -C $pkgname-$pkgver check
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
 
   cd ${pkgdir}/usr/share/info
