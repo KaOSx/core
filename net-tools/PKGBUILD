@@ -1,7 +1,7 @@
 
 pkgname=net-tools
-pkgver=1.60.3
-_commit=adf6f5793fb74c723391a14efa8c2e4c7ef354f0
+pkgver=1.60.4
+_commit=bd8bceaed2311651710331a7f8990c3e31be9840
 pkgrel=1
 pkgdesc="Configuration tools for Linux networking"
 arch=('x86_64')
@@ -10,18 +10,18 @@ url="http://www.tazenda.demon.co.uk/phil/net-tools"
 groups=('base')
 depends=('glibc')
 makedepends=('git')
-source=("https://github.com/ecki/net-tools/archive/${_commit}.zip")
+source=("http://sourceforge.net/code-snapshots/git/n/ne/net-tools/code.git/net-tools-code-${_commit}.zip")
 options=('!makeflags')
-md5sums=('441f2b3b9ebaa3c28566e81d9f4b0033')
+md5sums=('3196ca64d2a1b789cf44c11ccac2de26')
 
 build() {
-  cd ${srcdir}/${pkgname}-${_commit}
+  cd ${srcdir}/${pkgname}-code-${_commit}
   
   yes "" | make
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${_commit}
+  cd ${srcdir}/${pkgname}-code-${_commit}
   make DESTDIR=${pkgdir} update
 
   # the following is provided by yp-tools
