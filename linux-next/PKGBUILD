@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.4
 _srcname=linux-4.4
-pkgver=4.4.1
+pkgver=4.4.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -30,11 +30,10 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         'change-default-console-loglevel.patch'
-        'i8042-fix-aliases.patch'
-        'drv_probe.patch')
+        'i8042-fix-aliases.patch')
 md5sums=('9a78fa2eb6c68ca5a40ed5af08142599'
-         'd9e951895c8c249f0bf52d85f3e63bce'
-         '779072fa9d790a78f36413b76a637e31'
+         'abdfe599a4ea827f9975cf0631148e70'
+         '0c85346d85d9dfbd077e286706eafa70'
          'ff5323e9b212e6b2f4f79d21e38afd3f'
          '4745bb9f5096541916595f7a7bf38588'
          '1527ec87bea6a7eb61b09248d096ee52'
@@ -47,8 +46,7 @@ md5sums=('9a78fa2eb6c68ca5a40ed5af08142599'
          '994289bb10367215ece27442f90cfba5'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a262bedf26f26b7698143fc23de98457'
-         '93dbf73af819b77f03453a9c6de2bb47'
-         '52cff8a01c28fc20caf5edce684d1caf')
+         '93dbf73af819b77f03453a9c6de2bb47')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -65,8 +63,6 @@ build() {
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
   
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
-  # https://bugzilla.kernel.org/show_bug.cgi?id=110751
-  patch -p1 -i "${srcdir}/drv_probe.patch"
 
   #aufs patches for Live:
   patch -p1 -i "${srcdir}/aufs4.patch"
