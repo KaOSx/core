@@ -7,7 +7,7 @@ arch=('x86_64')
 url="http://www.gnu.org/software/ncurses/"
 license=('MIT')
 depends=('glibc')
-source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+source=("ftp://ftp.gnu.org/pub/gnu/ncurses/${pkgname}-${pkgver}.tar.gz")
 md5sums=('ee13d052e1ead260d7c28071f46eefb1')
 
 build() {
