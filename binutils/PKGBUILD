@@ -8,7 +8,7 @@ arch=('x86_64')
 url="http://www.gnu.org/software/binutils/"
 license=('GPL')
 groups=('base-devel')
-depends=('glibc>=2.21' 'zlib')
+depends=('glibc>=2.23' 'zlib')
 checkdepends=('dejagnu' 'bc')
 options=('!libtool' '!distcc' '!ccache')
 install=binutils.install

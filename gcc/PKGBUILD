@@ -74,18 +74,18 @@ check() {
 
   # increase stack size to prevent test failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=31827
-  #ulimit -s 32768
+  ulimit -s 32768
 
   # do not abort on error as some are "expected"
-  #make -k check || true
-  #${srcdir}/${_basedir}/contrib/test_summary
+  make -k check || true
+  ${srcdir}/${_basedir}/contrib/test_summary
 }
 
 package_gcc-libs()
 {
   pkgdesc="Runtime libraries shipped by GCC"
   groups=('base')
-  depends=('glibc>=2.21')
+  depends=('glibc>=2.23')
   options=('!emptydirs' '!strip')
   install=gcc-libs.install
   
@@ -129,7 +129,7 @@ package_gcc-libs()
 package_gcc()
 {
   pkgdesc="The GNU Compiler Collection"
-  depends=("gcc-libs=$pkgver-$pkgrel" 'binutils>=2.25' 'libmpc' 'cloog')
+  depends=("gcc-libs=$pkgver-$pkgrel" 'binutils>=2.26' 'libmpc' 'cloog')
   groups=('base-devel')
   install=gcc.install
   conflicts=('gcc-fortran'
