@@ -2,14 +2,14 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.22
+pkgver=2.23
 pkgrel=1
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="http://www.gnu.org/software/libc"
 license=('GPL' 'LGPL')
 groups=('base')
-depends=('linux-api-headers>=4.3' 'tzdata')
+depends=('linux-api-headers>=4.4' 'tzdata')
 makedepends=('gcc>=4.9')
 backup=(etc/gai.conf
         etc/locale.gen
@@ -21,7 +21,7 @@ source=("http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('e51e02bf552a0a1fbbdc948fb2f5e83c'
+md5sums=('456995968f3acadbed39f5eba31678df'
          '203fe9133e82f2b59969c116b70fd84e'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
@@ -29,7 +29,7 @@ md5sums=('e51e02bf552a0a1fbbdc948fb2f5e83c'
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
-  patch -p1 -i $srcdir/glibc-2.22-largefile-1.patch
+  #patch -p1 -i $srcdir/glibc-2.22-largefile-1.patch
   
   cd ${srcdir}
   mkdir glibc-build

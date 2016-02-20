@@ -7,12 +7,12 @@ pkgname=('gcc' 'gcc-libs')
 pkgver=4.9.3
 _pkgver=4.9
 #_snapshot=4.8-20130718
-pkgrel=2
+pkgrel=3
 pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
 url="http://gcc.gnu.org"
-makedepends=('binutils>=2.25' 'libmpc' 'cloog' 'doxygen')
+makedepends=('binutils>=2.26' 'libmpc' 'cloog' 'doxygen')
 checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
 source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2"
@@ -74,11 +74,11 @@ check() {
 
   # increase stack size to prevent test failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=31827
-  ulimit -s 32768
+  #ulimit -s 32768
 
   # do not abort on error as some are "expected"
-  make -k check || true
-  ${srcdir}/${_basedir}/contrib/test_summary
+  #make -k check || true
+  #${srcdir}/${_basedir}/contrib/test_summary
 }
 
 package_gcc-libs()

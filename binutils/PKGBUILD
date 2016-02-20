@@ -1,8 +1,8 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=binutils
-pkgver=2.25.1
-pkgrel=2
+pkgver=2.26
+pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
 url="http://www.gnu.org/software/binutils/"
@@ -13,7 +13,7 @@ checkdepends=('dejagnu' 'bc')
 options=('!libtool' '!distcc' '!ccache')
 install=binutils.install
 source=("ftp://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.gz")
-md5sums=('ace2b75f6240f566a6c42a1bdacf30bf')
+md5sums=('d66e2b663757cbf5d4b060feb4ef6b4b')
 
 prepare() {
   cd ${srcdir}/binutils-${pkgver}
