@@ -6,6 +6,9 @@
 Server = http://www.lasca.ic.unicamp.br/pub/kaos/$repo
 #Server = ftp://ftp.lasca.ic.unicamp.br/pub/kaos/$repo
 
+# Czech Republic
+Server = http://193.86.184.157/kaos/$repo
+
 # Germany
 Server = http://mirror6.layerjet.com/kaos/$repo
 
@@ -21,6 +24,6 @@ Server = http://ftp.wa.co.za/pub/kaos/$repo
 # United States
 Server = http://mirror.dacentec.com/kaosx/$repo
 Server = http://kaosx.tk/repo/$repo
-Server = http://kaosx.us/repo/$repo
+Server = https://kaosx.us/repo/$repo
 
 
