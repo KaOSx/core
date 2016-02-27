@@ -1,6 +1,6 @@
 
 pkgname=nano
-pkgver=2.5.2
+pkgver=2.5.3
 pkgrel=1
 pkgdesc="Pico editor clone with enhancements"
 arch=('x86_64')
@@ -12,7 +12,7 @@ makedepends=('groff')
 source=("http://www.nano-editor.org/dist/v2.5/nano-${pkgver}.tar.gz")
 backup=(etc/nanorc)
 install=nano.install
-md5sums=('036830de22b8a76a0e6f84c0cb36ff12')
+md5sums=('a04d77611422ab4b6a7b489650c7a793')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
