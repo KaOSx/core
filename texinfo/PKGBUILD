@@ -1,6 +1,6 @@
 
 pkgname=texinfo
-pkgver=6.0
+pkgver=6.1
 pkgrel=1
 pkgdesc="Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file"
 arch=('x86_64')
@@ -10,7 +10,7 @@ groups=('base')
 depends=('ncurses' 'findutils' 'gzip' 'sh' 'perl')
 install=texinfo.install
 source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('02818e62a5b8ae0213a7ff572991bb50')
+md5sums=('1d7ec1888fae00730693597852b00cde')
 
 build() {
    cd ${srcdir}/${pkgname}-${pkgver}
