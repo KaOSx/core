@@ -1,6 +1,6 @@
 
 pkgname=openssh
-pkgver=7.1p2
+pkgver=7.2p1
 pkgrel=1
 pkgdesc='Free version of the SSH connectivity tools'
 arch=('x86_64')
@@ -16,7 +16,7 @@ source=("ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgver}
 	'sshd.service'
 	'sshd@.service'
 	'sshd.socket')
-md5sums=('4d8547670e2a220d5ef805ad9e47acf2'
+md5sums=('b984775f0cfff1f7ff18b8797fce8a28'
          'e2cea70ac13af7e63d40eb04415eacd5'
          '9d71ea52cd15e9d7c172b7b71cb03bc0'
          '234ac4883cc28c56a4c236867124c3e4'
@@ -60,9 +60,6 @@ package() {
 	install -Dm644 ../sshd.confd "${pkgdir}"/etc/conf.d/sshd
 
 	install -Dm644 LICENCE "${pkgdir}/usr/share/licenses/${pkgname}/LICENCE"
-
-	rm "${pkgdir}"/usr/share/man/man1/slogin.1
-	ln -sf ssh.1.gz "${pkgdir}"/usr/share/man/man1/slogin.1.gz
 
 	# additional contrib scripts
 	install -Dm755 contrib/findssl.sh "${pkgdir}"/usr/bin/findssl.sh
