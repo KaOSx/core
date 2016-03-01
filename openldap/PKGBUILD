@@ -2,11 +2,11 @@
 pkgbase=openldap
 pkgname=('libldap' 'openldap')
 pkgver=2.4.44
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.openldap.org/"
 license=('custom')
-makedepends=('libltdl' 'libsasl' 'e2fsprogs' 'util-linux' 'groff')
+makedepends=('libtool' 'libsasl' 'e2fsprogs' 'util-linux' 'groff')
 options=('!makeflags')
 source=("ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/${pkgbase}-${pkgver}.tgz"
         'slapd.service'
@@ -79,7 +79,7 @@ package_libldap() {
 
 package_openldap() {
   pkgdesc="Lightweight Directory Access Protocol (LDAP) client and server"
-  depends=("libldap>=${pkgver}" 'libltdl' 'util-linux')
+  depends=("libldap>=${pkgver}" 'libtool' 'util-linux')
   backup=('etc/openldap/slapd.conf' 'etc/conf.d/slapd')
   options=('!libtool' 'emptydirs')
   install=openldap.install

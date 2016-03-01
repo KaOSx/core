@@ -2,13 +2,13 @@
 pkgname=libevent
 pkgver=2.0.22
 _pkgver=2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="An event notification library"
 license=('GPL2')
 arch=('x86_64')
 url="http://libevent.org/"
 depends=('openssl')
-source=("http://sourceforge.net/projects/levent/files/libevent/libevent-${_pkgver}/${pkgname}-${pkgver}-stable.tar.gz")
+source=("https://github.com/libevent/libevent/releases/download/release-${pkgver}-stable/${pkgname}-${pkgver}-stable.tar.gz")
 md5sums=('c4c56f986aa985677ca1db89630a2e11')
          
 build() {
