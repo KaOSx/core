@@ -1,7 +1,7 @@
 
 pkgname=libsasl
 pkgver=2.1.26
-pkgrel=2
+pkgrel=3
 pkgdesc="Cyrus Simple Authentication Service Layer (SASL) library"
 arch=('x86_64')
 url="http://cyrusimap.web.cmu.edu/downloads.html#sasl"
