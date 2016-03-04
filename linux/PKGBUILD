@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.3
-pkgver=4.3.3
-pkgrel=2
+_basekernel=4.4
+pkgver=4.4.4
+pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.3.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.4.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -22,29 +22,29 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.3.tar.xz"
         'aufs4-kbuild.patch'
         'aufs4.patch'
         'config.aufs'
+        'lockdep-debug.patch'
         'tmpfs-idr.patch'
         'vfs-ino.patch'
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         'change-default-console-loglevel.patch'
-        'i8042-fix-aliases.patch'
-        'CVE-2016-0728.patch')
-md5sums=('58b35794eee3b6d52ce7be39357801e7'
-         'd3235b3640ae6ac1ab579171943fda4b'
-         'e9199a84ccad78fa0d2c10a177c554ed'
-         'c30706859048a9fb97cc8b7003e89aaf'
-         'ccff9177a9c1abf744b3cf549abd4b8e'
-         '2d8d4aa3cf5eab19b1a627f8fca5a7d3'
-         'd08700345ceb4fbbdd89708d28f8afee'
-         'a2ee3b357e458b6ab3562ffce3c4d3c9'
-         'ffe72ca6003d8bc2074e2cf445e1a1da'
+        'i8042-fix-aliases.patch')
+md5sums=('9a78fa2eb6c68ca5a40ed5af08142599'
+         '07e9b2c5d0daf7fc2a1ee26a52adcbc0'
+         '0324602d712d8262781fe468177bed5d'
+         'ff5323e9b212e6b2f4f79d21e38afd3f'
+         '4745bb9f5096541916595f7a7bf38588'
+         '1527ec87bea6a7eb61b09248d096ee52'
+         '5633c08eb2c3542c3deb5975820e5a88'
+         'b0c03d29896022cd0f91e955b3f4ea42'
+         '3e6ce0f00495122550c55d4d9dc82d79'
          '260b2e47579140f61546f37d90e0b527'
-         '58315fa0415b8e63f334e2874fc860a8'
-         '3b16b19947680d4e8fac8b9f5fecdd98'
+         '6884431ddb662115eed49d69ad246648'
+         'd0452c0b415482de8e6ec81060cb912e'
+         '994289bb10367215ece27442f90cfba5'
          'eb14dcfd80c00852ef81ded6e826826a'
          'a262bedf26f26b7698143fc23de98457'
-         '93dbf73af819b77f03453a9c6de2bb47'
-         'f1c7d9961ce421641e51d8fc641abf56')
+         '93dbf73af819b77f03453a9c6de2bb47')
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -62,8 +62,6 @@ prepare() {
   
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
   
-  patch -p1 -i "${srcdir}/CVE-2016-0728.patch"
-  
   #aufs patches for Live:
   patch -p1 -i "${srcdir}/aufs4.patch"
   patch -p1 -i "${srcdir}/aufs4-base.patch"
@@ -71,6 +69,7 @@ prepare() {
   patch -p1 -i "${srcdir}/aufs4-loopback.patch"
   patch -p1 -i "${srcdir}/aufs4-mmap.patch"
   patch -p1 -i "${srcdir}/aufs4-standalone.patch"
+  patch -p1 -i "${srcdir}/lockdep-debug.patch"
   patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   patch -p1 -i "${srcdir}/vfs-ino.patch"
   
@@ -294,4 +293,8 @@ package_linux-docs() {
 
   # remove a file already in linux package
   rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/DocBook/Makefile"
+  # remove a files already in linux-headers
+  rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/kbuild/Kconfig.recursion-issue-01"
+  rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/kbuild/Kconfig.recursion-issue-02"
+  rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/kbuild/Kconfig.select-break"
 }
