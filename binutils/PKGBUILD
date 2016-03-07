@@ -2,7 +2,7 @@
 
 pkgname=binutils
 pkgver=2.26
-pkgrel=1
+pkgrel=2
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
 url="http://www.gnu.org/software/binutils/"
@@ -12,14 +12,18 @@ depends=('glibc>=2.23' 'zlib')
 checkdepends=('dejagnu' 'bc')
 options=('!libtool' '!distcc' '!ccache')
 install=binutils.install
-source=("ftp://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.gz")
-md5sums=('d66e2b663757cbf5d4b060feb4ef6b4b')
+source=("ftp://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.gz"
+        'linker_script.patch')
+md5sums=('d66e2b663757cbf5d4b060feb4ef6b4b'
+         'd83f94beb2f8eb63f742a41e03e06db3')
 
 prepare() {
   cd ${srcdir}/binutils-${pkgver}
   
   # libiberty configure tests 
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
+  # https://sourceware.org/bugzilla/show_bug.cgi?id=19698 akonadi/mariadb linking errors
+  patch -p1 -i $srcdir/linker_script.patch
   
   mkdir ${srcdir}/binutils-build
 }
