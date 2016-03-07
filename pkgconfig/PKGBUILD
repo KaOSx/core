@@ -1,6 +1,6 @@
 
 pkgname=pkg-config
-pkgver=0.29
+pkgver=0.29.1
 pkgrel=1
 pkgdesc="A system for managing library compile/link flags"
 arch=('x86_64')
@@ -12,7 +12,7 @@ provides=("pkgconfig=${pkgver}")
 conflicts=('pkgconfig')
 replaces=('pkgconfig')
 source=("http://pkg-config.freedesktop.org/releases/${pkgname}-${pkgver}.tar.gz")
-md5sums=('77f27dce7ef88d0634d0d6f90e03a77f')
+md5sums=('f739a28cae4e0ca291f82d1d41ef107d')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
