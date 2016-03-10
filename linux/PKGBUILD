@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=4.4
-pkgver=4.4.4
+pkgver=4.4.5
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -30,7 +30,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.4.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('9a78fa2eb6c68ca5a40ed5af08142599'
-         '07e9b2c5d0daf7fc2a1ee26a52adcbc0'
+         'edddb33405ea1ab02b90eb9cecaa43f6'
          '0324602d712d8262781fe468177bed5d'
          'ff5323e9b212e6b2f4f79d21e38afd3f'
          '4745bb9f5096541916595f7a7bf38588'
