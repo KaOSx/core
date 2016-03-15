@@ -5,11 +5,11 @@ _kernelname=${pkgname#linux}
 _basekernel=4.5
 _srcname=linux-4.5
 pkgver=4.5.0
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.2-rc8.tar.xz"
@@ -32,7 +32,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('a60d48eee08ec0536d5efb17ca819aef'
-         '0c85346d85d9dfbd077e286706eafa70'
+         '7bf995d79a312500c7276c19f6f6ac06'
          'ff5323e9b212e6b2f4f79d21e38afd3f'
          '4745bb9f5096541916595f7a7bf38588'
          '1527ec87bea6a7eb61b09248d096ee52'
