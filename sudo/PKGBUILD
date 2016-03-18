@@ -1,6 +1,6 @@
 
 pkgname=sudo
-pkgver=1.8.15
+pkgver=1.8.16
 _pkgver=1.8.14p3
 pkgrel=1
 pkgdesc="Give certain users the ability to run some commands as root."
@@ -13,7 +13,7 @@ install=sudo.install
 options=('!libtool')
 source=("ftp://ftp.sudo.ws/pub/sudo/${pkgname}-${pkgver}.tar.gz"
         'sudo.pam')
-md5sums=('7cf6b9b76d0478a572432bed481dd7b5'
+md5sums=('a977449587dc857e129bb20555b46af4'
          'a929068d0916daae0cf69bc8435c054e')
 
 build() {
