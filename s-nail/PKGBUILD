@@ -1,11 +1,10 @@
 
 pkgname=s-nail
-pkgver=14.8.6
-_pkgver=14_8_6
+pkgver=14.8.8
 pkgrel=1
 pkgdesc="Mail processing system and commandline utility for sending email"
 arch=('x86_64')
-url="http://sdaoden.users.sourceforge.net/code.html#s-naill"
+url="https://www.sdaoden.eu/code.html#s-naill"
 license=('BSD')
 groups=('base')
 depends=('openssl' 'krb5')
@@ -14,11 +13,11 @@ backup=('etc/mail.rc')
 conflicts=('mailx')
 replaces=('mailx')
 provides=('mailx')
-source=("http://sourceforge.net/projects/s-nail/files/${pkgname}-${_pkgver}.tar.xz")
-md5sums=('870220957cd3706558e71e935eca0897')
+source=("http://www.sdaoden.eu/downloads/${pkgname}-${pkgver}.tar.xz")
+md5sums=('53e353b4975ea7dcd161dd1423e3867a')
 
 build() {
-  cd $srcdir/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
 
   make PREFIX=/usr \
        SYSCONFDIR=/etc \
@@ -33,13 +32,13 @@ build() {
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
-  make DESTDIR="${pkgdir}" packager-install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} packager-install
 
   # For compatibility with the old mailx program
-  ln -sf mail "${pkgdir}"/usr/bin/mailx
-  ln -sf mail "${pkgdir}"/usr/bin/nail
-  ln -sf mail.1.gz "${pkgdir}"/usr/share/man/man1/mailx.1.gz
+  ln -sf mail ${pkgdir}/usr/bin/mailx
+  ln -sf mail ${pkgdir}/usr/bin/nail
+  ln -sf mail.1.gz ${pkgdir}/usr/share/man/man1/mailx.1.gz
 
-  install -D -m0644 COPYING "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
+  install -D -m0644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }
