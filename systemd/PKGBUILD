@@ -75,6 +75,7 @@ build() {
       --disable-kdbus \
       --disable-networkd \
       --without-python \
+      --with-default-dnssec=no \
       --with-ntp-servers="${NTP_SERVERS}"
       #--with-firmware-path=/usr/lib/firmware/updates:/lib/firmware/updates:/usr/lib/firmware:/lib/firmware
 
