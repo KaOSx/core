@@ -1,7 +1,7 @@
 
 pkgname=repo-clean
 pkgver=0.1.4
-pkgrel=19
+pkgrel=20
 pkgdesc="Clean utility for Pacman repository"
 arch=('x86_64')
 url="http://code.google.com/p/repo-clean/"
