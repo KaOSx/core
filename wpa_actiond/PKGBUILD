@@ -1,23 +1,23 @@
 
 pkgname=wpa_actiond
 pkgver=1.4
-pkgrel=2
+pkgrel=3
 pkgdesc="Daemon that connects to wpa_supplicant and handles connect and disconnect events"
 arch=('x86_64')
 url="http://projects.archlinux.org/wpa_actiond.git/"
 license=('GPL')
 depends=('glibc' 'wpa_supplicant')
-source=("ftp://ftp.archlinux.org/other/wpa_actiond/$pkgname-$pkgver.tar.xz")
+source=("https://sources.archlinux.org/other/wpa_actiond/$pkgname-$pkgver.tar.xz")
 md5sums=('865da85b30e41555b6d3ca6b4ad4c306')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   make CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}"
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
-  install -D -m755 wpa_actiond "${pkgdir}/usr/sbin/wpa_actiond"
+  install -D -m755 wpa_actiond ${pkgdir}/usr/sbin/wpa_actiond
 }

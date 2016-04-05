@@ -1,7 +1,7 @@
 
 pkgname=tar
 pkgver=1.28
-pkgrel=1
+pkgrel=2
 pkgdesc="Utility used to store, backup, and transport files"
 arch=('x86_64')
 url="http://www.gnu.org/software/tar/tar.html"
@@ -14,20 +14,20 @@ source=("ftp://ftp.gnu.org/gnu/tar/$pkgname-$pkgver.tar.bz2")
 md5sums=('8f32b2bc1ed7ddf4cf4e4a39711341b0')
 
 build() {
-  cd ${srcdir}/$pkgname-$pkgver
+  cd $pkgname-$pkgver
   
   ./configure --prefix=/usr --libexecdir=/usr/lib/tar --bindir=/bin
   make 
 }
 
 check() {
-  cd ${srcdir}/$pkgname-$pkgver
+  cd $pkgname-$pkgver
   
   make check
 }
 
 package() {
-  cd ${srcdir}/$pkgname-$pkgver
+  cd $pkgname-$pkgver
   
   make DESTDIR=${pkgdir} install
 }

@@ -1,7 +1,7 @@
 
 pkgname=b43-fwcutter
 pkgver=019
-pkgrel=1
+pkgrel=2
 pkgdesc="firmware extractor for the bcm43xx kernel module"
 url="http://wireless.kernel.org/en/users/Drivers/b43"
 depends=('glibc')
@@ -11,15 +11,15 @@ source=("http://bues.ch/b43/fwcutter/${pkgname}-${pkgver}.tar.bz2")
 md5sums=('19d1f4226a625756726bdf7ed5dc2a0a')
 
 build() {
-	cd ${srcdir}/${pkgname}-${pkgver}
-	
-	make
+    cd ${pkgname}-${pkgver}
+
+    make
 }
 
 package() {
-	cd $srcdir/${pkgname}-${pkgver}
-	
-	install -D -m755 b43-fwcutter ${pkgdir}/usr/bin/b43-fwcutter
-	install -D -m644 b43-fwcutter.1 ${pkgdir}/usr/share/man/man1/b43-fwcutter.1
+    cd ${pkgname}-${pkgver}
+
+    install -D -m755 b43-fwcutter ${pkgdir}/usr/bin/b43-fwcutter
+    install -D -m644 b43-fwcutter.1 ${pkgdir}/usr/share/man/man1/b43-fwcutter.1
 }
 

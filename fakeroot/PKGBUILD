@@ -1,7 +1,7 @@
 
 pkgname=fakeroot
 pkgver=1.20.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Gives a fake root environment, useful for building packages as a non-privileged user."
 arch=('x86_64')
 license=('GPL')
@@ -10,11 +10,11 @@ groups=('base-devel')
 install="fakeroot.install"
 depends=('glibc' 'filesystem' 'util-linux' 'sed' 'sh')
 options=('!libtool')
-source=("http://ftp.debian.org/debian/pool/main/f/${pkgname}/${pkgname}_${pkgver}.orig.tar.bz2")
+source=("http://ftp.debian.org/debian/pool/main/f/fakeroot/${pkgname}_${pkgver}.orig.tar.bz2")
 md5sums=('a4b4564a75024aa96c86e4d1017ac786')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr \
         --libdir=/usr/lib/libfakeroot \
@@ -25,12 +25,12 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  make DESTDIR="${pkgdir}" install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
   
-  install -d -m755 "${pkgdir}/etc/ld.so.conf.d"
-  echo '/usr/lib/libfakeroot' > "${pkgdir}/etc/ld.so.conf.d/fakeroot.conf"
+  install -d -m755 ${pkgdir}/etc/ld.so.conf.d
+  echo '/usr/lib/libfakeroot' > ${pkgdir}/etc/ld.so.conf.d/fakeroot.conf
   
-  install -D -m644 "${srcdir}/${pkgname}-${pkgver}/README" "${pkgdir}/usr/share/doc/${pkgname}/README"
+  install -D -m644 ${srcdir}/${pkgname}-${pkgver}/README ${pkgdir}/usr/share/doc/${pkgname}/README
 }
 

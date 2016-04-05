@@ -1,7 +1,7 @@
 
 pkgname=reiserfsprogs
 pkgver=3.6.24
-pkgrel=2
+pkgrel=3
 pkgdesc="Reiserfs utilities"
 arch=('x86_64')
 url="http://www.kernel.org/pub/linux/utils/fs/reiserfs/README"
@@ -12,20 +12,20 @@ source=("http://ftp.kernel.org/pub/linux/kernel/people/jeffm/reiserfsprogs/v${pk
 md5sums=('66787380fb418ff7d88a23e47cda7af6')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr --sbindir=/sbin
   make
 }
 
 check() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   make check
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR=${pkgdir} install
 }

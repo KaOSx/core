@@ -1,7 +1,7 @@
 
 pkgname=make
 pkgver=4.1
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU make utility to maintain groups of programs"
 arch=('x86_64')
 url="http://www.gnu.org/software/make"
@@ -9,25 +9,25 @@ license=('GPL3')
 groups=('base-devel')
 depends=('glibc' 'sh' 'guile')
 install=$pkgname.install
-source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.bz2")
+source=("ftp://ftp.gnu.org/gnu/make/${pkgname}-${pkgver}.tar.bz2")
 md5sums=('57a7a224a822f94789a587ccbcedff69')
 
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr
   make
 }
 
 check() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   
   make check
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   
   make DESTDIR=${pkgdir} install
 }

@@ -1,7 +1,7 @@
 
 pkgname=db
 pkgver=5.3.28
-pkgrel=2
+pkgrel=3
 pkgdesc="The Berkeley DB embedded database system"
 arch=('x86_64')
 url="http://www.oracle.com/technology/software/products/berkeley-db/index.html"
@@ -12,7 +12,7 @@ source=("http://download.oracle.com/berkeley-db/db-${pkgver}.tar.gz")
 md5sums=('b99454564d5b4479750567031d66fe24')
 
 build() {
-  cd ${srcdir}/$pkgname-${pkgver}/build_unix
+  cd $pkgname-${pkgver}/build_unix
   
   ../dist/configure --prefix=/usr \
      --enable-compat185 \
@@ -24,7 +24,7 @@ build() {
 }
 
 package() {
-  cd ${srcdir}/$pkgname-${pkgver}/build_unix
+  cd $pkgname-${pkgver}/build_unix
   make DESTDIR=${pkgdir} install
   
   rm -rf ${pkgdir}/usr/docs
