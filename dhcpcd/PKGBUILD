@@ -20,6 +20,7 @@ md5sums=('b8e2e9b38db95314991c1774542a8cdc'
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
+   sed -i -e 's|#include "queue.h"|#include "compat/queue.h"|' eloop.c
 
   ./configure --libexecdir=/usr/lib/dhcpcd \
        --dbdir=/var/lib/dhcpcd \
