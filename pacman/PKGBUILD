@@ -1,7 +1,7 @@
 
 pkgname=pacman
 pkgver=5.0.1
-pkgrel=2
+pkgrel=3
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -21,7 +21,7 @@ md5sums=('377a2664d6007d72d6d8a126add83bcf'
          '9968e22a8508545351589159ea76b3b7')
 
 build() {
-  cd $srcdir/$pkgname-$pkgver
+  cd $pkgname-$pkgver
   
   ./configure --prefix=/usr --sysconfdir=/etc \
     --localstatedir=/var --enable-doc \
@@ -31,12 +31,12 @@ build() {
   make -C contrib
 }
 
-check() {
-  make -C "$pkgname-$pkgver" check
-}
+#check() {
+  #make -C $pkgname-$pkgver check
+#}
 
 package() {
-  cd $srcdir/$pkgname-$pkgver
+  cd $pkgname-$pkgver
   make DESTDIR=$pkgdir install
   make DESTDIR=$pkgdir -C contrib install
 
