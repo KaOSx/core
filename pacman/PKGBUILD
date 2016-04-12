@@ -31,9 +31,9 @@ build() {
   make -C contrib
 }
 
-#check() {
-  #make -C $pkgname-$pkgver check
-#}
+check() {
+  make -C $pkgname-$pkgver check
+}
 
 package() {
   cd $pkgname-$pkgver

@@ -4,8 +4,8 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.5
 _srcname=linux-4.5
-pkgver=4.5.0
-pkgrel=2
+pkgver=4.5.1
+pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.2-rc8.tar.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -32,17 +32,18 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('a60d48eee08ec0536d5efb17ca819aef'
-         '7bf995d79a312500c7276c19f6f6ac06'
-         'ff5323e9b212e6b2f4f79d21e38afd3f'
-         '4745bb9f5096541916595f7a7bf38588'
-         '1527ec87bea6a7eb61b09248d096ee52'
-         '5633c08eb2c3542c3deb5975820e5a88'
-         'b0c03d29896022cd0f91e955b3f4ea42'
-         '3e6ce0f00495122550c55d4d9dc82d79'
+         '1df9ff0283c1732ebbf7c55f340a121b'
+         '91b19c7dd02cc9997967ebccb6852899'
+         'f513275bd730714a5fb242669259344c'
+         '7fa633d76ca4766522aefe441cdde951'
+         '65f540dcd57d32f57b9bd61a4bf58028'
+         '6096e9869b5146607082fb045cd52854'
+         '58bdafa3f57bed063c593a5887c70f00'
+         '7d21fa345d52bc70cbfa1e979b691c4e'
          '260b2e47579140f61546f37d90e0b527'
-         '6884431ddb662115eed49d69ad246648'
-         'd0452c0b415482de8e6ec81060cb912e'
-         '994289bb10367215ece27442f90cfba5'
+         'a8dede2df738a41cf44a8d3870dc2f18'
+         '950cb30ee1d9160e2af3b96c9ed1e2ae'
+         '68694f289d3debb692b9dd32b05d1dc2'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47')
@@ -51,7 +52,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
