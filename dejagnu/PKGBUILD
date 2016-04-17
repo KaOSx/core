@@ -1,6 +1,6 @@
 
 pkgname=dejagnu
-pkgver=1.5.3
+pkgver=1.6
 pkgrel=1
 pkgdesc="Framework for testing other programs"
 arch=('x86_64')
@@ -11,7 +11,7 @@ makedepends=('dejagnu')
 options=('!libtool')
 install=dejagnu.install
 source=("http://ftp.gnu.org/gnu/dejagnu/${pkgname}-${pkgver}.tar.gz")
-md5sums=('5bda2cdb1af51a80aecce58d6e42bd2f')
+md5sums=('1fdc2eb0d592c4f89d82d24dfdf02f0b')
 
 
 build() {

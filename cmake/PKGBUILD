@@ -13,7 +13,7 @@ source=("http://www.cmake.org/files/v3.5/${pkgname}-${pkgver}.tar.gz")
 md5sums=('701386a1b5ec95f8d1075ecf96383e02')
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
 
   ./bootstrap --prefix=/usr \
     --mandir=/share/man \
@@ -26,7 +26,7 @@ build() {
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
 
   install -Dm644 Copyright.txt ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
