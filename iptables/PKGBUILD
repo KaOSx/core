@@ -33,7 +33,7 @@ md5sums=('27ba3451cb622467fc9267a176f19a31'
          'a19e0630d200f066522f0baef815dd75')
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
 
   rm include/linux/types.h
 
@@ -48,20 +48,20 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR=${pkgdir} install
 
   # http://www.spinics.net/lists/netfilter-devel/msg24969.html
-  chrpath --delete "${pkgdir}"/usr/lib/iptables/*.so
+  chrpath --delete ${pkgdir}/usr/lib/iptables/*.so
 
-  cd "${srcdir}"
-  install -D -m644 empty.rules "${pkgdir}"/etc/iptables/empty.rules
-  install -D -m644 simple_firewall.rules "${pkgdir}"/etc/iptables/simple_firewall.rules
+  cd ${srcdir}
+  install -D -m644 empty.rules ${pkgdir}/etc/iptables/empty.rules
+  install -D -m644 simple_firewall.rules ${pkgdir}/etc/iptables/simple_firewall.rules
 
-  mkdir -p "${pkgdir}"/var/lib/{iptables,ip6tables}
-  install -m644 empty-{filter,mangle,nat,raw,security}.rules "${pkgdir}"/var/lib/iptables
-  install -m644 empty-{filter,mangle,nat,raw,security}.rules "${pkgdir}"/var/lib/ip6tables
+  mkdir -p ${pkgdir}/var/lib/{iptables,ip6tables}
+  install -m644 empty-{filter,mangle,nat,raw,security}.rules ${pkgdir}/var/lib/iptables
+  install -m644 empty-{filter,mangle,nat,raw,security}.rules ${pkgdir}/var/lib/ip6tables
 
   # systemd 
   install -Dm644 ${srcdir}/iptables.service ${pkgdir}/usr/lib/systemd/system/iptables.service
