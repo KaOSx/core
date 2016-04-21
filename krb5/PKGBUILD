@@ -1,6 +1,6 @@
 
 pkgname=krb5
-pkgver=1.14.1
+pkgver=1.14.2
 _pkgver=1.14
 pkgrel=1
 pkgdesc="The Kerberos network authentication system"
@@ -18,7 +18,7 @@ source=("http://web.mit.edu/kerberos/dist/krb5/${_pkgver}/${pkgname}-${pkgver}.t
 	'krb5-kpropd.service'
 	'krb5-kpropd@.service'
 	'krb5-kpropd.socket')
-md5sums=('8f8311b1938d980b59d568a9481dbbdf'
+md5sums=('2e35f0af0344d68aba99cef616d3a64f'
          'a1eb1629bef5427b18f521eff4de61b3'
          'd2c898d376ebe5c62b873da7cab0f7e7'
          'f0245d33083337f95654f4caf1d32f57'
@@ -29,13 +29,13 @@ md5sums=('8f8311b1938d980b59d568a9481dbbdf'
 
 build() {
    tar xf ${pkgname}-${pkgver}.tar.gz
-   cd "${srcdir}/${pkgname}-${pkgver}"
+   cd ${pkgname}-${pkgver}
    
-   patch -p1 -i "${srcdir}"/krb5-config_LDFLAGS.patch
+   patch -p1 -i ${srcdir}/krb5-config_LDFLAGS.patch
 
    sed -i "/KRB5ROOT=/s/\/local//" src/util/ac_check_krb5.m4
    
-   cd "${srcdir}/${pkgname}-${pkgver}/src"
+   cd src
 
    export CFLAGS+=" -fPIC -fno-strict-aliasing -fstack-protector-all"
    export CPPFLAGS+=" -I/usr/include/et"
@@ -54,23 +54,23 @@ build() {
 }
 
 package() {
-   cd "${srcdir}/${pkgname}-${pkgver}/src"
-   make DESTDIR="${pkgdir}" EXAMPLEDIR="/usr/share/doc/${pkgname}/examples" install
+   cd ${pkgname}-${pkgver}/src
+   make DESTDIR=${pkgdir} EXAMPLEDIR="/usr/share/doc/${pkgname}/examples" install
 
    # KDC config file
-   install -dm 755 "${pkgdir}"/var/lib/krb5kdc
-   install -pm 644 config-files/kdc.conf "${pkgdir}"/var/lib/krb5kdc/kdc.conf
+   install -dm 755 ${pkgdir}/var/lib/krb5kdc
+   install -pm 644 config-files/kdc.conf ${pkgdir}/var/lib/krb5kdc/kdc.conf
    
-   install -m 644 plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} "${pkgdir}"/usr/share/doc/${pkgname}/examples
+   install -m 644 plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} ${pkgdir}/usr/share/doc/${pkgname}/examples
 
    # Default configuration file
-   install -dm 755 "${pkgdir}"/etc
-   install -pm 644 config-files/krb5.conf "${pkgdir}"/etc/krb5.conf
+   install -dm 755 ${pkgdir}/etc
+   install -pm 644 config-files/krb5.conf ${pkgdir}/etc/krb5.conf
 
-   install -Dm644 "${srcdir}"/${pkgname}-${pkgver}/NOTICE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
+   install -Dm644 ${srcdir}/${pkgname}-${pkgver}/NOTICE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 
    # install systemd units
-   install -dm 755 "${pkgdir}"/usr/lib/systemd/system
+   install -dm 755 ${pkgdir}/usr/lib/systemd/system
    install -m 644 ../../krb5-{kadmind.service,kdc.service,kpropd.service,kpropd@.service,kpropd.socket} \
-      "${pkgdir}"/usr/lib/systemd/system
+      ${pkgdir}/usr/lib/systemd/system
 }

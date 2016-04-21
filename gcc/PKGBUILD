@@ -32,14 +32,12 @@ build() {
   sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
   
   sed -i '/m64=/s/lib64/lib/' gcc/config/i386/t-linux64
-
-  echo ${pkgver} > gcc/BASE-VER
   
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
   
   patch -p1 -i ${srcdir}/isl-0.13.patch
   
-  # using -pipe causes spurious test-suite failures
+  # using -pipe causes test-suite failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=48565
   CFLAGS=${CFLAGS/-pipe/}
   CXXFLAGS=${CXXFLAGS/-pipe/}
@@ -72,11 +70,9 @@ build() {
 check() {
   cd ${srcdir}/gcc-build
 
-  # increase stack size to prevent test failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=31827
   ulimit -s 32768
 
-  # do not abort on error as some are "expected"
   make -k check || true
   ${srcdir}/${_basedir}/contrib/test_summary
 }
@@ -118,10 +114,8 @@ package_gcc-libs()
     make -C $CHOST/$lib DESTDIR=${pkgdir} install-info
   done
 
-  # remove static libraries
   find ${pkgdir} -name *.a -delete
   
-  # Install Runtime Library Exception
   install -Dm644 ${srcdir}/${_basedir}/COPYING.RUNTIME \
     ${pkgdir}/usr/share/licenses/gcc-libs/RUNTIME.LIBRARY.EXCEPTION
 }
