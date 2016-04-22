@@ -40,7 +40,7 @@ md5sums=('e534e6ccc49107e5d31c329af798ef7d'
          '6969307eef026979703a6eba33c2e3eb')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr \
               --libdir=/usr/lib \
@@ -54,42 +54,43 @@ build() {
               --enable-mesg \
               --enable-socket-activation \
               --with-python=3
+              #--enable-libmount-force-mountinfo systemd 230 need?
 
   make
 }
 
 # only bc test fails, leaving dep to test the rest
-#check() {
-#  make -C "${pkgname}-${pkgver}" check
-#}
+check() {
+  make -C ${pkgname}-${pkgver} check
+}
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR=${pkgdir} install
 
-  cd "${pkgdir}"
+  cd ${pkgdir}
   
-  chmod 4755 "$pkgdir"/usr/bin/{newgrp,ch{sh,fn}}
+  chmod 4755 ${pkgdir}/usr/bin/{newgrp,ch{sh,fn}}
 
-  install -Dm644 "$srcdir/pam-common" "$pkgdir/etc/pam.d/chfn"
-  install -m644 "$srcdir/pam-common" "$pkgdir/etc/pam.d/chsh"
-  install -m644 "$srcdir/pam-login" "$pkgdir/etc/pam.d/login"
-  install -m644 "$srcdir/pam-su" "${pkgdir}/etc/pam.d/su"
-  install -m644 "$srcdir/pam-su" "${pkgdir}/etc/pam.d/su-l"
+  install -Dm644 ${srcdir}/pam-common ${pkgdir}/etc/pam.d/chfn
+  install -m644 ${srcdir}/pam-common ${pkgdir}/etc/pam.d/chsh
+  install -m644 ${srcdir}/pam-login ${pkgdir}/etc/pam.d/login
+  install -m644 ${srcdir}/pam-su ${pkgdir}/etc/pam.d/su
+  install -m644 ${srcdir}/pam-su ${pkgdir}/etc/pam.d/su-l
   # Pam helper files
-  install -m644 "$srcdir/system-auth" "${pkgdir}/etc/pam.d/system-auth"
-  install -m644 "$srcdir/system-local-login" "${pkgdir}/etc/pam.d/system-local-login"
-  install -m644 "$srcdir/system-login" "${pkgdir}/etc/pam.d/system-login"
-  install -m644 "$srcdir/system-remote-login" "${pkgdir}/etc/pam.d/system-remote-login"
-  install -m644 "$srcdir/system-services" "${pkgdir}/etc/pam.d/system-services"
+  install -m644 ${srcdir}/system-auth ${pkgdir}/etc/pam.d/system-auth
+  install -m644 ${srcdir}/system-local-login ${pkgdir}/etc/pam.d/system-local-login
+  install -m644 ${srcdir}/system-login ${pkgdir}/etc/pam.d/system-login
+  install -m644 ${srcdir}/system-remote-login ${pkgdir}/etc/pam.d/system-remote-login
+  install -m644 ${srcdir}/system-services ${pkgdir}/etc/pam.d/system-services
 
-  install -Dm644 "$srcdir/uuidd.tmpfiles" "$pkgdir/usr/lib/tmpfiles.d/uuidd.conf"
+  install -Dm644 ${srcdir}/uuidd.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/uuidd.conf
   # fdisk fix for live-mode, until all moves to /usr
-  ln -s /sbin/fdisk "$pkgdir/usr/bin/fdisk"
+  ln -s /sbin/fdisk ${pkgdir}/usr/bin/fdisk
   # udisks2 fixes until all moves to /usr
-  ln -s /bin/mount "$pkgdir/usr/bin/mount"
-  ln -s /bin/umount "$pkgdir/usr/bin/umount"
+  ln -s /bin/mount ${pkgdir}/usr/bin/mount
+  ln -s /bin/umount ${pkgdir}/usr/bin/umount
 }
 
 
