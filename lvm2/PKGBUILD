@@ -1,7 +1,7 @@
 
 pkgbase=lvm2
 pkgname=('lvm2' 'device-mapper')
-pkgver=2.02.150
+pkgver=2.02.151
 pkgrel=1
 arch=('x86_64')
 url="http://sourceware.org/lvm2/"
@@ -13,14 +13,14 @@ source=("http://mirrors.kernel.org/sources.redhat.com/lvm2/LVM2.${pkgver}.tgz"
         'lvm2_hook'
         '11-dm-initramfs.rules'
         'sd-lvm2')
-md5sums=('4ec33d0914d870388f9020607e2d3998'
+md5sums=('295ba39a9cb2106a349694693e913a62'
          '8cfc93d5fe9be1cd0a37dd4fbe3cc2ec'
          'b25cfb248e66e0f76e7aafa6715d620a'
          '69e40679cd8b3658bfc619e48baae125'
          '00e15be4621b47c8940c64c419bf7ff3')
 
 build() {
-  cd "${srcdir}/LVM2.${pkgver}"
+  cd LVM2.${pkgver}
   unset LDFLAGS
 
   ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --with-udev-prefix=/usr \
@@ -37,15 +37,15 @@ package_device-mapper() {
   url="http://sourceware.org/dm/"
   depends=('glibc' 'systemd')
 
-  cd "${srcdir}/LVM2.${pkgver}"
-  make DESTDIR="${pkgdir}" install_device-mapper
+  cd LVM2.${pkgver}
+  make DESTDIR=${pkgdir} install_device-mapper
   # extra udev rule for device-mapper in initramfs
-  install -D -m644 "${srcdir}/11-dm-initramfs.rules" "${pkgdir}/usr/lib/initcpio/udev/11-dm-initramfs.rules"
-  # Install socket and service
-  make DESTDIR="${pkgdir}" install_systemd_units
-  rm -f "${pkgdir}/usr/lib/systemd/system/"{blk-availability.service,lvm2-*}
-  install -d -m755 "${pkgdir}/usr/lib/systemd/system/sockets.target.wants"
-  ln -sf ../dm-event.socket "${pkgdir}/usr/lib/systemd/system/sockets.target.wants/dm-event.socket"
+  install -D -m644 ${srcdir}/11-dm-initramfs.rules ${pkgdir}/usr/lib/initcpio/udev/11-dm-initramfs.rules
+
+  make DESTDIR=${pkgdir} install_systemd_units
+  rm -f ${pkgdir}/usr/lib/systemd/system/{blk-availability.service,lvm2-*}
+  install -d -m755 ${pkgdir}/usr/lib/systemd/system/sockets.target.wants
+  ln -sf ../dm-event.socket ${pkgdir}/usr/lib/systemd/system/sockets.target.wants/dm-event.socket
 }
 
 package_lvm2() {
@@ -56,22 +56,22 @@ package_lvm2() {
   options=('!makeflags')
   install=lvm2.install
 
-  cd "${srcdir}/LVM2.${pkgver}"
-  make DESTDIR="${pkgdir}" install_lvm2
+  cd LVM2.${pkgver}
+  make DESTDIR=${pkgdir} install_lvm2
   # install applib
-  make -C liblvm DESTDIR="${pkgdir}" install
+  make -C liblvm DESTDIR=${pkgdir} install
   # /etc directories
-  install -d "${pkgdir}"/etc/lvm/{archive,backup}
-  # mkinitcpio hook
-  install -D -m644 "${srcdir}/lvm2_hook" "${pkgdir}/usr/lib/initcpio/hooks/lvm2"
-  install -D -m644 "${srcdir}/lvm2_install" "${pkgdir}/usr/lib/initcpio/install/lvm2"
-  install -D -m644 "${srcdir}/sd-lvm2" "${pkgdir}/usr/lib/initcpio/install/sd-lvm2"
-  # systemd support
-  make DESTDIR="${pkgdir}" install_systemd_units
-  rm -f "${pkgdir}/usr/lib/systemd/system/"dm-*
-  install -d -m755 "${pkgdir}/usr/lib/systemd/system/sysinit.target.wants"
-  ln -sf /usr/lib/systemd/system/lvm2-lvmetad.socket "${pkgdir}/usr/lib/systemd/system/sysinit.target.wants/lvm2-lvmetad.socket"
-  make DESTDIR="${pkgdir}" install_systemd_generators
+  install -d ${pkgdir}/etc/lvm/{archive,backup}
+
+  install -D -m644 ${srcdir}/lvm2_hook ${pkgdir}/usr/lib/initcpio/hooks/lvm2
+  install -D -m644 ${srcdir}/lvm2_install ${pkgdir}/usr/lib/initcpio/install/lvm2
+  install -D -m644 ${srcdir}/sd-lvm2 ${pkgdir}/usr/lib/initcpio/install/sd-lvm2
+ 
+  make DESTDIR=${pkgdir} install_systemd_units
+  rm -f ${pkgdir}/usr/lib/systemd/system/dm-*
+  install -d -m755 ${pkgdir}/usr/lib/systemd/system/sysinit.target.wants
+  ln -sf /usr/lib/systemd/system/lvm2-lvmetad.socket ${pkgdir}/usr/lib/systemd/system/sysinit.target.wants/lvm2-lvmetad.socket
+  make DESTDIR=${pkgdir} install_systemd_generators
   # enable lvmetad
   sed 's|use_lvmetad = 0|use_lvmetad = 1|' -i "${pkgdir}/etc/lvm/lvm.conf"
 }
