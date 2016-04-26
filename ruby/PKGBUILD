@@ -1,8 +1,8 @@
 
 pkgname=('ruby' 'ruby-docs')
-pkgver=2.3.0
-_pkgver=2.3.0
-pkgrel=2
+pkgver=2.3.1
+_pkgver=2.3.1
+pkgrel=1
 pkgdesc="An object-oriented language for quick and easy programming"
 arch=('x86_64')
 url="http://www.ruby-lang.org/en/"
@@ -11,10 +11,10 @@ makedepends=('gdbm' 'db' 'openssl' 'zlib' 'readline' 'tk' 'libffi'
              'doxygen' 'libyaml')
 options=('!emptydirs')
 source=("http://cache.ruby-lang.org/pub/ruby/2.3/${pkgname}-${_pkgver}.tar.xz")
-md5sums=('92ef54e033fb95ec9bdf7023666e5f1f')
+md5sums=('01e9d172a5c33b385e92fc0cc2899766')
 
 build() {
-  cd "${srcdir}/${pkgname}-${_pkgver}"
+  cd ${pkgname}-${_pkgver}
   
   ./configure --prefix=/usr \
       --sysconfdir=/etc \
@@ -29,17 +29,17 @@ package_ruby() {
   conflicts=('rubygems' 'rake')
   optdepends=('tk: for Ruby/TK')
 
-  cd "${srcdir}/${pkgname}-${_pkgver}"
-  make DESTDIR="${pkgdir}" install-nodoc
-  install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+  cd ${pkgname}-${_pkgver}
+  make DESTDIR=${pkgdir} install-nodoc
+  install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/COPYING
 }
 
 package_ruby-docs() {
   pkgdesc="Documentation files for ruby"
   depends=('ruby')
 
-  cd "${srcdir}/ruby-${_pkgver}"
-  make -j1 DESTDIR="${pkgdir}" install-doc install-capi
-  install -Dm644 COPYING "${pkgdir}/usr/share/licenses/ruby-docs/LICENSE"
-  install -D -m644 BSDL "${pkgdir}/usr/share/licenses/ruby-docs/BSDL"
+  cd ruby-${_pkgver}
+  make -j1 DESTDIR=${pkgdir} install-doc install-capi
+  install -Dm644 COPYING ${pkgdir}/usr/share/licenses/ruby-docs/LICENSE
+  install -D -m644 BSDL ${pkgdir}/usr/share/licenses/ruby-docs/BSDL
 }
