@@ -4,24 +4,28 @@ pkgbase=glib2
 pkgname=('glib2' 'glib2-docs')
 pkgver=2.46.2
 _pkgver=2.46
-pkgrel=1
+pkgrel=2
 pkgdesc="Common C routines used by GTK+ and other libs"
 url="http://www.gtk.org/"
 arch=('x86_64')
 makedepends=('pkg-config' 'python2' 'libxslt' 'docbook-xml' 'pcre' 'libffi' 'elfutils')
-source=("http://ftp.gnome.org/pub/GNOME/sources/glib/${_pkgver}/glib-$pkgver.tar.xz"
-        'revert-warn-glib-compile-schemas.patch')
+source=("http://ftp.gnome.org/pub/GNOME/sources/glib/${_pkgver}/glib-${pkgver}.tar.xz"
+        'revert-warn-glib-compile-schemas.patch'
+        'gio-querymodules.hook'
+        'glib-compile-schemes.hook')
 md5sums=('7f815d6e46df68e070cb421ed7f1139e'
-         '3265d1afbcf1f5f308e26c3f9f6ca899')
+         '3265d1afbcf1f5f308e26c3f9f6ca899'
+         'a52ea506b5cf162a4f72d09cc33fae50'
+         '9e25d7de10bc4dc105f171e9ae46ef69')
 
 prepare() {
-  cd glib-$pkgver
+  cd glib-${pkgver}
   
   patch -Rp1 -i ../revert-warn-glib-compile-schemas.patch
 }
   
 build() {
-  cd glib-$pkgver
+  cd glib-${pkgver}
   
   PYTHON=/usr/bin/python2 ./configure --prefix=/usr --libdir=/usr/lib \
       --sysconfdir=/etc \
@@ -35,14 +39,18 @@ package_glib2() {
   options=('!docs' '!libtool' '!emptydirs')
   license=('LGPL')
 
-  cd glib-$pkgver
-  make completiondir=/usr/share/bash-completion/completions DESTDIR="$pkgdir" install
+  cd glib-${pkgver}
+  make completiondir=/usr/share/bash-completion/completions DESTDIR=${pkgdir} install
 
-  for _i in "$pkgdir/usr/share/bash-completion/completions/"*; do
+  for _i in ${pkgdir}/usr/share/bash-completion/completions/*; do
       chmod -x "$_i"
   done
 
-  rm -rf "$pkgdir/usr/share/gdb/"
+  rm -rf ${pkgdir}/usr/share/gdb/
+  
+  install -dm755 ${pkgdir}/usr/share/libalpm/hooks/
+  install -m644 ../glib-compile-schemes.hook ${pkgdir}/usr/share/libalpm/hooks/
+  install -m644 ../gio-querymodules.hook ${pkgdir}/usr/share/libalpm/hooks/
 }
 
 package_glib2-docs() {
@@ -50,10 +58,10 @@ package_glib2-docs() {
   license=('custom')
   options=('docs' '!emptydirs')
   
-  cd glib-$pkgver/docs
-  make DESTDIR="${pkgdir}" install
-  install -m755 -d "${pkgdir}/usr/share/licenses/glib2-docs"
-  install -m644 reference/COPYING "${pkgdir}/usr/share/licenses/glib2-docs/"
+  cd glib-${pkgver}/docs
+  make DESTDIR=${pkgdir} install
+  install -m755 -d ${pkgdir}/usr/share/licenses/glib2-docs
+  install -m644 reference/COPYING ${pkgdir}/usr/share/licenses/glib2-docs/
 
-  rm -rf "${pkgdir}/usr/share/man"
+  rm -rf ${pkgdir}/usr/share/man
 }

@@ -1,20 +1,21 @@
 
 pkgname=shared-mime-info
 pkgver=1.6
-pkgrel=1
+pkgrel=2
 pkgdesc="Freedesktop.org Shared MIME Info"
 arch=('x86_64')
 url="http://freedesktop.org/Software/shared-mime-info"
 license=('GPL')
 depends=('libxml2' 'glib2')
 makedepends=('intltool' 'pkgconfig')
-install=shared-mime-info.install
 options=('!makeflags')
-source=("http://freedesktop.org/~hadess/${pkgname}-${pkgver}.tar.xz")
-md5sums=('10abc5c4e6b22223ff05c3bd70ff9e8f')
+source=("http://freedesktop.org/~hadess/${pkgname}-${pkgver}.tar.xz"
+        'update-mime-database.hook')
+md5sums=('10abc5c4e6b22223ff05c3bd70ff9e8f'
+         'fc48155d8fb2147b8fc72597e79936b4')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   # stop pacman datasync after each package
   export ac_cv_func_fdatasync=no
   
@@ -23,13 +24,14 @@ build() {
 }
 
 check() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   make -k check
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
   
-  make DESTDIR="${pkgdir}" install
+  install -Dm644 ../update-mime-database.hook ${pkgdir}/usr/share/libalpm/hooks/update-mime-database.hook
 }
