@@ -1,6 +1,6 @@
 
 pkgname=gzip
-pkgver=1.7
+pkgver=1.8
 pkgrel=1
 pkgdesc="GNU compression utility"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('glibc' 'bash')
 makedepends=('patch' 'less')
 install=gzip.install
 source=("ftp://ftp.gnu.org/pub/gnu/gzip/gzip-${pkgver}.tar.xz")
-md5sums=('d9ae97206a703a20e6c1c868deb3eb47')
+md5sums=('f7caabb65cddc1a4165b398009bd05b9')
 
 build() {
   cd ${pkgname}-${pkgver}
