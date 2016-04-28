@@ -1,7 +1,7 @@
 
 pkgname=tar
 pkgver=1.28
-pkgrel=2
+pkgrel=3
 pkgdesc="Utility used to store, backup, and transport files"
 arch=('x86_64')
 url="http://www.gnu.org/software/tar/tar.html"
@@ -9,7 +9,6 @@ license=('GPL3')
 groups=('base')
 depends=('glibc' 'sh')
 options=('!emptydirs')
-install=tar.install
 source=("ftp://ftp.gnu.org/gnu/tar/$pkgname-$pkgver.tar.bz2")
 md5sums=('8f32b2bc1ed7ddf4cf4e4a39711341b0')
 

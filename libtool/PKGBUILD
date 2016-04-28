@@ -2,7 +2,7 @@
 
 pkgname=libtool
 pkgver=2.4.6
-pkgrel=5
+pkgrel=6
 pkgdesc="A generic library support script"
 arch=('x86_64')
 url="http://www.gnu.org/software/libtool"
@@ -14,14 +14,13 @@ groups=('base-devel')
 provides=('libltdl')
 conflicts=('libltdl')
 replaces=('libltdl')
-install=libtool.install
 source=("ftp://ftp.gnu.org/pub/gnu/libtool/${pkgname}-${pkgver}.tar.xz"
         'no-clean-gnulib.patch')
 md5sums=('1bfb9b923f2c1339b4d2ce1807064aa5'
          '23c8ef65f19705239f1aa362f429e3ad')
 
 build() {
-  cd "${srcdir}/${pkgbase}-${pkgver}"
+  cd ${pkgbase}-${pkgver}
   # https://bugs.gentoo.org/527200  build failures with 2.4.3 in ocatve & groff
   #patch -p1 -i "${srcdir}/no-clean-gnulib.patch"
   
@@ -30,13 +29,13 @@ build() {
 }
 
 check() {
-  cd "${srcdir}/${pkgbase}-${pkgver}"
+  cd ${pkgbase}-${pkgver}
   
   make check
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   make DESTDIR=${pkgdir} install
 }

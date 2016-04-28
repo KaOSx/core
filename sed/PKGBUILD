@@ -3,7 +3,7 @@
 
 pkgname=sed
 pkgver=4.2.2
-pkgrel=4
+pkgrel=5
 pkgdesc="GNU stream editor"
 arch=('x86_64')
 url="http://www.gnu.org/software/sed"
@@ -11,7 +11,6 @@ license=('GPL3')
 groups=('base')
 depends=('acl' 'sh')
 makedepends=('gettext')
-install=sed.install
 source=("ftp://ftp.gnu.org/pub/gnu/sed/${pkgname}-${pkgver}.tar.gz")
 md5sums=('4111de4faa3b9848a0686b2f260c5056')
 

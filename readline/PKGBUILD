@@ -3,7 +3,7 @@ pkgname=readline
 _basever=6.3
 _patchlevel=008 #prepare for some patches
 pkgver=$_basever.$_patchlevel
-pkgrel=2
+pkgrel=3
 pkgdesc="GNU readline library"
 arch=('x86_64')
 url="http://tiswww.case.edu/php/chet/readline/rltop.html"
@@ -11,7 +11,6 @@ license=('GPL')
 depends=('glibc' 'ncurses')
 backup=('etc/inputrc')
 options=('!emptydirs')
-install='readline.install'
 source=("http://ftp.gnu.org/gnu/readline/readline-$_basever.tar.gz"
         'inputrc')
 if [ $_patchlevel -gt 00 ]; then
@@ -31,7 +30,7 @@ md5sums=('33c8fb279e981274f485fd91da77e94a'
          'ee1c04072154826870848d8b218d7b04')
 
 build() {
-  cd ${srcdir}/${pkgname}-$_basever
+  cd ${pkgname}-$_basever
   for (( p=1; p<=$((10#${_patchlevel})); p++ )); do
     msg "applying patch readline${_basever//./}-$(printf "%03d" $p)"
     patch -p0 -i $srcdir/readline${_basever//./}-$(printf "%03d" $p)
@@ -47,7 +46,7 @@ build() {
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-$_basever
+  cd ${pkgname}-$_basever
   make DESTDIR=${pkgdir} install
   
   install -Dm644 ${srcdir}/inputrc ${pkgdir}/etc/inputrc

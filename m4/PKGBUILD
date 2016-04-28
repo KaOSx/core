@@ -6,7 +6,6 @@ pkgdesc="m4 macro processor"
 arch=('x86_64')
 license=('GPL3')
 url="http://www.gnu.org/software/m4"
-install=m4.install
 groups=('base-devel')
 depends=('glibc' 'bash')
 source=("ftp://ftp.gnu.org/gnu/m4/$pkgname-$pkgver.tar.xz")
