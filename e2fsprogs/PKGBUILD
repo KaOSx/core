@@ -1,7 +1,7 @@
 
 pkgname=e2fsprogs
 pkgver=1.42.13
-pkgrel=2
+pkgrel=3
 pkgdesc="Ext2/3/4 filesystem utilities"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'MIT')
@@ -12,12 +12,11 @@ makedepends=('bc')
 source=("http://downloads.sourceforge.net/sourceforge/e2fsprogs/${pkgname}-${pkgver}.tar.gz"
         'MIT-LICENSE')
 backup=('etc/mke2fs.conf')
-install=${pkgname}.install
 md5sums=('bc759fc62666786f5436e2075beb3265'
          '035b7c69b7a2cecf996a4708c262245e')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr \
       --with-root-prefix="" \
@@ -37,17 +36,17 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   make -j1 DESTDIR="${pkgdir}" install install-libs
 
-  sed -i -e 's/^AWK=.*/AWK=awk/' "${pkgdir}/usr/bin/compile_et"
+  sed -i -e 's/^AWK=.*/AWK=awk/' ${pkgdir}/usr/bin/compile_et
   
   # remove references to build directory
-  sed -i -e 's#^SS_DIR=.*#SS_DIR="/usr/share/ss"#' "${pkgdir}/usr/bin/mk_cmds"
-  sed -i -e 's#^ET_DIR=.*#ET_DIR="/usr/share/et"#' "${pkgdir}/usr/bin/compile_et"
+  sed -i -e 's#^SS_DIR=.*#SS_DIR="/usr/share/ss"#' ${pkgdir}/usr/bin/mk_cmds
+  sed -i -e 's#^ET_DIR=.*#ET_DIR="/usr/share/et"#' ${pkgdir}/usr/bin/compile_et
   
   # addition for zulucrypt
   ln -sf /sbin/mkfs.ext4 ${pkgdir}/usr/bin/mkfs.ext4
 
-  install -Dm644 "${srcdir}/MIT-LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/MIT-LICENSE"
+  install -Dm644 ${srcdir}/MIT-LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/MIT-LICENSE
 }

@@ -1,7 +1,7 @@
 
 pkgname=flex
 pkgver=2.6.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A tool for generating text-scanning programs"
 arch=('x86_64')
 url="https://github.com/westes/flex"
@@ -9,7 +9,6 @@ license=('custom')
 groups=('base-devel')
 depends=('glibc' 'm4' 'sh')
 makedepends=('help2man')
-install=flex.install
 source=("https://github.com/westes/flex/releases/download/v${pkgver}/flex-${pkgver}.tar.xz")
 md5sums=('cd3c86290fc2676a641aefafeb10848a')
 

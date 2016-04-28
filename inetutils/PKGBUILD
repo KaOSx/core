@@ -1,7 +1,7 @@
 
 pkgname=inetutils
 pkgver=1.9.4
-pkgrel=2
+pkgrel=3
 pkgdesc="A collection of common network programs."
 arch=('x86_64')
 url="http://www.gnu.org/software/inetutils/"
@@ -10,7 +10,6 @@ depends=('readline' 'ncurses' 'pam')
 makedepends=('help2man')
 backup=('etc/conf.d/ftpd' 'etc/xinetd.d/telnet' 'etc/xinetd.d/talk')
 options=('!emptydirs')
-install="inetutils.install"
 source=("http://ftp.gnu.org/gnu/inetutils/${pkgname}-${pkgver}.tar.gz"
         'ftpd.conf' 'telnet.xinetd' 'talk.xinetd' 'rlogin.xinetd'
         'rsh.xinetd' 'ftpd.service')
@@ -23,7 +22,7 @@ md5sums=('04852c26c47cc8c6b825f2b74f191f52'
          'c04b4f0d41d9b59081f314335f8d9d60')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr --libexec=/usr/sbin --localstatedir=/var \
     --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info \
@@ -47,24 +46,25 @@ build() {
 }
 
 check() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
+  
   make check
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  make DESTDIR="${pkgdir}" install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
   
-  install -d "${pkgdir}/bin"
-  ln -s /usr/bin/hostname "${pkgdir}/bin/hostname"
-  ln -s /usr/bin/dnsdomainname "${pkgdir}/bin/dnsdomainname"
+  install -d ${pkgdir}/bin
+  ln -s /usr/bin/hostname ${pkgdir}/bin/hostname
+  ln -s /usr/bin/dnsdomainname ${pkgdir}/bin/dnsdomainname
 
 
-  install -D -m644 "${srcdir}/ftpd.service" "${pkgdir}/usr/lib/systemd/system/ftpd.service"
-  install -D -m644 "${srcdir}/ftpd.conf" "${pkgdir}/etc/conf.d/ftpd"
-  install -D -m644 "${srcdir}/telnet.xinetd" "${pkgdir}/etc/xinetd.d/telnet"
-  install -D -m644 "${srcdir}/talk.xinetd" "${pkgdir}/etc/xinetd.d/talk"
-  install -D -m644 "${srcdir}/rlogin.xinetd" "${pkgdir}/etc/xinetd.d/rlogin"
-  install -D -m644 "${srcdir}/rsh.xinetd" "${pkgdir}/etc/xinetd.d/rsh"
+  install -D -m644 ${srcdir}/ftpd.service ${pkgdir}/usr/lib/systemd/system/ftpd.service
+  install -D -m644 ${srcdir}/ftpd.conf ${pkgdir}/etc/conf.d/ftpd
+  install -D -m644 ${srcdir}/telnet.xinetd ${pkgdir}/etc/xinetd.d/telnet
+  install -D -m644 ${srcdir}/talk.xinetd ${pkgdir}/etc/xinetd.d/talk
+  install -D -m644 ${srcdir}/rlogin.xinetd ${pkgdir}/etc/xinetd.d/rlogin
+  install -D -m644 ${srcdir}/rsh.xinetd ${pkgdir}/etc/xinetd.d/rsh
 }
 

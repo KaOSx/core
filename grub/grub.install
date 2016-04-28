@@ -14,20 +14,5 @@ EOM
   
   grub-mkconfig -o /boot/grub/grub.cfg.example 2> /dev/null
   echo "done."
-
-  for file in ${filelist[@]}; do
-    install-info ${infodir}/${file}.gz ${infodir}/dir 2> /dev/null
-  done
 }
 
-post_upgrade() {
-  for file in ${filelist[@]}; do
-    install-info ${infodir}/${file}.gz ${infodir}/dir 2> /dev/null
-  done
-}
-
-pre_remove() {
-  for file in ${filelist[@]}; do
-    install-info --delete ${infodir}/${file} ${infodir}/dir 2> /dev/null
-  done
-}

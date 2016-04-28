@@ -1,25 +1,24 @@
 
 pkgname=cpio
 pkgver=2.12
-pkgrel=2
+pkgrel=3
 pkgdesc="A tool to copy files into or out of a cpio or tar archive"
 arch=('x86_64')
 license=('GPL')
 url="http://www.gnu.org/software/cpio"
 depends=('glibc')
 source=("ftp://ftp.gnu.org/gnu/cpio/cpio-${pkgver}.tar.gz")
-install=cpio.install
 md5sums=('fc207561a86b63862eea4b8300313e86')
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr --mandir=/usr/share/man
   make
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   
   make DESTDIR=${pkgdir} install
   

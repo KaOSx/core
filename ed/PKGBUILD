@@ -1,12 +1,11 @@
 
 pkgname=ed
 pkgver=1.13
-pkgrel=1
+pkgrel=2
 pkgdesc="A POSIX-compliant line editor"
 arch=('x86_64')
 license=('GPL')
 url="http://www.gnu.org/software/ed/ed.html"
-install=ed.install
 groups=('base-devel')
 depends=('glibc' 'sh')
 options=('!emptydirs')

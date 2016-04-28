@@ -1,7 +1,7 @@
 
 pkgname=gettext
 pkgver=0.19.7
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU internationalization library"
 arch=('x86_64')
 url="http://www.gnu.org/software/gettext"
@@ -9,20 +9,19 @@ license=('GPL')
 groups=('base')
 depends=('acl' 'gcc-libs' 'glib2' 'libcroco' 'sh' 'libunistring')
 options=('!libtool')
-install=gettext.install
 source=("ftp://ftp.gnu.org/pub/gnu/gettext/${pkgname}-${pkgver}.tar.gz")
 md5sums=('87c4ab267c4dce8a75db5d057bb3c92f')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr --enable-csharp
   make
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR=${pkgdir} install
 }
 

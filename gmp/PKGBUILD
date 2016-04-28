@@ -1,19 +1,18 @@
 
 pkgname=gmp
 pkgver=6.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A free library for arbitrary precision arithmetic"
 arch=('x86_64')
 url="http://gmplib.org/"
 depends=('gcc-libs' 'sh')
 license=('LGPL3' 'GPL')
 options=('!libtool')
-install=gmp.install
 source=("ftp://ftp.gmplib.org/pub/gmp-${pkgver}/gmp-${pkgver}.tar.xz")
 md5sums=('a9868ef2556ad6a2909babcd1428f3c7')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   ./configure --build=${CHOST} \
     --prefix=/usr \
@@ -23,13 +22,13 @@ build() {
 }
 
 check() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   make check
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR=${pkgdir} install
 }

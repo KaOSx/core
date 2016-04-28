@@ -1,14 +1,13 @@
 
 pkgname=gpm
 pkgver=1.20.7
-pkgrel=3
+pkgrel=4
 pkgdesc="A mouse server for the console and xterm"
 arch=('x86_64')
 url="http://unix.schottelius.org/gpm/"
 license=('GPL')
 depends=('ncurses' 'bash')
 options=('!makeflags')
-install=gpm.install
 source=("http://www.nico.schottelius.org/software/gpm/archives/${pkgname}-${pkgver}.tar.lzma"
         'gpm.sh'
         'gpm.service')
@@ -17,7 +16,7 @@ md5sums=('fa8a6fe09826896625ca557ac5e42ed7'
          '5e5547fb272befeeb8bcb07fa2426c5e')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   ./autogen.sh
   ./configure --prefix=/usr --sysconfdir=/etc
@@ -25,14 +24,14 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  make DESTDIR="${pkgdir}" install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
   
-  install -D -m755 ../gpm.sh "${pkgdir}/etc/profile.d/gpm.sh"
-  install -D -m644 ../gpm.service "${pkgdir}/usr/lib/systemd/system/gpm.service"
+  install -D -m755 ../gpm.sh ${pkgdir}/etc/profile.d/gpm.sh
+  install -D -m644 ../gpm.service ${pkgdir}/usr/lib/systemd/system/gpm.service
 
 # library fixes
-  cd "${pkgdir}/usr/lib/"
+  cd ${pkgdir}/usr/lib/
   ln -s libgpm.so.2.* libgpm.so
-  chmod 755 "${pkgdir}"/usr/lib/libgpm.so.*
+  chmod 755 ${pkgdir}/usr/lib/libgpm.so.*
 }

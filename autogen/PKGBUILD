@@ -1,26 +1,25 @@
 
 pkgname=autogen
 pkgver=5.18.7
-pkgrel=1
+pkgrel=2
 pkgdesc="A tool designed to simplify the creation and maintenance of programs that contain large amounts of repetitious text"
 arch=('x86_64')
 url="http://autogen.sourceforge.net/"
 license=('GPL3')
 depends=('guile' 'libxml2')
 options=('!libtool')
-install=autogen.install
 source=("http://ftp.gnu.org/gnu/autogen/${pkgname}-${pkgver}.tar.xz")
 md5sums=('59644e59d30a5ca458d140d61e1fb24d')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr 
   make 
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
-  make DESTDIR="${pkgdir}" install 
+  make DESTDIR=${pkgdir} install 
 } 

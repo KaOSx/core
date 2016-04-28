@@ -1,7 +1,7 @@
 
 pkgname=grep
 pkgver=2.25
-pkgrel=1
+pkgrel=2
 pkgdesc="A string search utility"
 arch=('x86_64')
 license=('GPL3')
@@ -9,7 +9,6 @@ url="http://www.gnu.org/software/grep/grep.html"
 groups=('base')
 depends=('glibc' 'pcre' 'sh')
 makedepends=('texinfo>=4.8a')
-install="${pkgname}.install"
 source=("ftp://ftp.gnu.org/gnu/grep/${pkgname}-${pkgver}.tar.xz")
 md5sums=('04e96b0e6f0fe6a180ae62c88fcd0af6')
 
