@@ -1,8 +1,8 @@
 #!/bin/sh
 
-sd_booted() {
-  [[ -d run/systemd/system && ! -L run/systemd/system ]]
-}
+#sd_booted() {
+#  [[ -d run/systemd/system && ! -L run/systemd/system ]]
+#}
  
 add_privs() {
   if ! setcap "$2" "$1" 2>/dev/null; then
@@ -17,9 +17,9 @@ post_common() {
   udevadm hwdb --update
   journalctl --update-catalog
 
-  if sd_booted; then
-    systemctl --system daemon-reexec
-  fi
+  #if sd_booted; then
+  #  systemctl --system daemon-reexec
+  #fi
 }
 
 _208_changes() {
@@ -49,9 +49,9 @@ post_install() {
 post_upgrade() {
   post_common
   
-  if sd_booted; then
-    systemctl restart systemd-logind.service
-  fi
+  #if sd_booted; then
+  #  systemctl restart systemd-logind.service
+  #fi
   
   if [ "$(vercmp 208-1 "$2")" -eq 1 ]; then
     _208_changes

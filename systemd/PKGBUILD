@@ -1,7 +1,7 @@
 
 pkgname=systemd
 pkgver=229
-pkgrel=3
+pkgrel=4
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -26,11 +26,11 @@ backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/udev/udev.conf)
 conflicts=('gummiboot')
 replaces=('gummiboot')
-provides=("udev=$pkgver" 'gummiboot')
+provides=("udev=${pkgver}" 'gummiboot')
 groups=('base')
 install="systemd.install"
 options=('!libtool')
-source=("https://github.com/systemd/systemd/archive/v$pkgver.tar.gz"
+source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'initcpio-hook-udev'
         'initcpio-install-systemd'
         'initcpio-install-udev'
@@ -38,6 +38,7 @@ source=("https://github.com/systemd/systemd/archive/v$pkgver.tar.gz"
         'KaOS.conf'
         'KaOS_fallback.conf'
         'splash.bmp'
+        'systemd-tmpfiles.hook'
         "https://github.com/systemd/systemd/commit/6d2353394fc33e923d1ab464c8f88df2a5105ffb.patch")
 md5sums=('5d696f65381b2608da70544df07c2b3c'
          'b2da235893d76ed6b810fa5e8d2afe67'
@@ -47,10 +48,11 @@ md5sums=('5d696f65381b2608da70544df07c2b3c'
          'eb444ae327472b98a65631ede777720a'
          'b8d8ebeab17edbe91209e705cfc9e774'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
+         '7d5910d12fdfce56228a1aac8c3d618c'
          'b651cd7f7ee0949c2e8d3b5a9f433450')
 
 build() {
-  cd "$pkgname-$pkgver"
+  cd ${pkgname}-${pkgver}
   #rm src/journal/audit_type-to-name.h
   #rm src/udev/keyboard-keys-from-name.gperf
   
@@ -84,61 +86,64 @@ build() {
 }
 
 check() {
-  make -C "$pkgname-$pkgver" check || true
+  make -C ${pkgname}-${pkgver} check || true
 }
 
 package() {
-  make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
+  make -C ${pkgname}-${pkgver} DESTDIR=${pkgdir} install
 
-  install -dm755 "$pkgdir/bin"
-  ln -s ../usr/lib/systemd/systemd "$pkgdir/bin/systemd"
+  install -dm755 ${pkgdir}/bin
+  ln -s ../usr/lib/systemd/systemd ${pkgdir}/bin/systemd
 
-  install -dm755 "$pkgdir/sbin"
+  install -dm755 ${pkgdir}/sbin
   for tool in runlevel reboot shutdown poweroff halt telinit; do
-    ln -s '/usr/bin/systemctl' "$pkgdir/sbin/$tool"
+    ln -s '/usr/bin/systemctl' ${pkgdir}/sbin/$tool
   done
 
-  ln -s '../usr/lib/systemd/systemd' "$pkgdir/sbin/init"
+  ln -s '../usr/lib/systemd/systemd' ${pkgdir}/sbin/init
 
-  install -d "$pkgdir/sbin"
-  ln -s ../usr/bin/udevadm "$pkgdir/sbin/udevadm"
+  install -d ${pkgdir}/sbin
+  ln -s ../usr/bin/udevadm ${pkgdir}/sbin/udevadm
 
-  ln -s ../lib/systemd/systemd-udevd "$pkgdir/usr/bin/udevd"
+  ln -s ../lib/systemd/systemd-udevd ${pkgdir}/usr/bin/udevd
 
-  install -m644 "systemd-$pkgver/tmpfiles.d/legacy.conf" "$pkgdir/usr/lib/tmpfiles.d"
+  install -m644 systemd-${pkgver}/tmpfiles.d/legacy.conf ${pkgdir}/usr/lib/tmpfiles.d
 
   # Replace in optical 
   sed -i 's#GROUP="dialout"#GROUP="uucp"#g;
           s#GROUP="tape"#GROUP="storage"#g;
-          s#GROUP="cdrom"#GROUP="optical"#g' "$pkgdir"/usr/lib/udev/rules.d/*.rules
+          s#GROUP="cdrom"#GROUP="optical"#g' ${pkgdir}/usr/lib/udev/rules.d/*.rules
   sed -i 's/dialout/uucp/g;
           s/tape/storage/g;
-          s/cdrom/optical/g' "$pkgdir"/usr/lib/sysusers.d/basic.conf
+          s/cdrom/optical/g' ${pkgdir}/usr/lib/sysusers.d/basic.conf
           
   # add mkinitcpio hooks
-  install -Dm644 "$srcdir/initcpio-install-systemd" "$pkgdir/usr/lib/initcpio/install/systemd"
-  install -Dm644 "$srcdir/initcpio-install-udev" "$pkgdir/usr/lib/initcpio/install/udev"
-  install -Dm644 "$srcdir/initcpio-hook-udev" "$pkgdir/usr/lib/initcpio/hooks/udev"
+  install -Dm644 ${srcdir}/initcpio-install-systemd ${pkgdir}/usr/lib/initcpio/install/systemd
+  install -Dm644 ${srcdir}/initcpio-install-udev ${pkgdir}/usr/lib/initcpio/install/udev
+  install -Dm644 ${srcdir}/initcpio-hook-udev ${pkgdir}/usr/lib/initcpio/hooks/udev
   
-  rm -r "$pkgdir/usr/lib/rpm"
-  rm "$pkgdir/usr/lib/sysctl.d/50-coredump.conf"
+  rm -r ${pkgdir}/usr/lib/rpm
+  rm ${pkgdir}/usr/lib/sysctl.d/50-coredump.conf
   
   # 208 changed permissions for /var/log/journal
-  #install -o root -g systemd-journal -dm2755 "$pkgdir/var/log/journal"
-  chown root:systemd-journal "$pkgdir/var/log/journal"
-  chmod 2755 "$pkgdir/var/log/journal"{,/remote}
+  #install -o root -g systemd-journal -dm2755 ${pkgdir}/var/log/journal
+  chown root:systemd-journal ${pkgdir}/var/log/journal
+  chmod 2755 ${pkgdir}/var/log/journal{,/remote}
   
   # Make journalctl persistent, set max
   sed -i -e 's|#SystemMaxUse=|SystemMaxUse=25M|' ${pkgdir}/etc/systemd/journald.conf
   
   # Install systemd-boot files, ex-gummi
-  install -D -m0644 "${srcdir}/loader.conf" "${pkgdir}/usr/lib/systemd/boot/loader/loader.conf"
-  install -D -m0644 "${srcdir}/KaOS.conf" "${pkgdir}/usr/lib/systemd/boot/loader/entries/KaOS.conf"
-  install -D -m0644 "${srcdir}/KaOS_fallback.conf" "${pkgdir}/usr/lib/systemd/boot/loader/entries/KaOS_fallback.conf"
-  install -D -m0644 "${srcdir}/splash.bmp" "${pkgdir}/usr/lib/systemd/boot/splash.bmp"
+  install -D -m0644 ${srcdir}/loader.conf ${pkgdir}/usr/lib/systemd/boot/loader/loader.conf
+  install -D -m0644 ${srcdir}/KaOS.conf ${pkgdir}/usr/lib/systemd/boot/loader/entries/KaOS.conf
+  install -D -m0644 ${srcdir}/KaOS_fallback.conf ${pkgdir}/usr/lib/systemd/boot/loader/entries/KaOS_fallback.conf
+  install -D -m0644 ${srcdir}/splash.bmp ${pkgdir}/usr/lib/systemd/boot/splash.bmp
   
   # adjust incorrect default PAM config
-  sed 's|system-auth|system-login|g' -i "$pkgdir/etc/pam.d/systemd-user"
+  sed 's|system-auth|system-login|g' -i ${pkgdir}/etc/pam.d/systemd-user
+  
+  # pacman hook
+  install -Dm644 ../systemd-tmpfiles.hook ${pkgdir}/usr/share/libalpm/hooks/systemd-tmpfiles.hook
 }
 
 

@@ -1,7 +1,7 @@
 
 pkgname=subversion
-pkgver=1.9.3
-pkgrel=2
+pkgver=1.9.4
+pkgrel=1
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
 license=('APACHE')
@@ -13,14 +13,13 @@ makedepends=('krb5' 'apache' 'python2' 'perl' 'swig' 'ruby' 'java-runtime'
 url="http://subversion.apache.org/"
 provides=('svn')
 options=('!makeflags' '!libtool')
-install=${pkgname}.install
-source=("http://apache.mirror.rafal.ca/subversion/$pkgname-$pkgver.tar.bz2"
+source=("http://apache.mirror.rafal.ca/subversion/${pkgname}-${pkgver}.tar.bz2"
         'svn'
         'svnserve.conf' 
-	'svnserve.tmpfiles'
-	'svnserve.service'
+        'svnserve.tmpfiles'
+        'svnserve.service'
         'subversion.rpath.fix.patch')
-md5sums=('243036eb28b50ce517fc228eb3250add'
+md5sums=('29121a038f87641055a8183f49e9739f'
          'a0db6dd43af33952739b6ec089852630'
          'c459e299192552f61578f3438abf0664'
          'bb2857eceafcfac35dde39dcffad2314'
@@ -28,9 +27,7 @@ md5sums=('243036eb28b50ce517fc228eb3250add'
          '6b4340ba9d8845cd8497e013ae01be3f')
 
 build() {
-   cd "${srcdir}/${pkgname}-${pkgver}"
-
-   export PYTHON=/usr/bin/python2
+   cd ${pkgname}-${pkgver}
 
    #patch -p0 -i ../subversion.rpath.fix.patch
    
@@ -56,31 +53,31 @@ build() {
 }
 
 package() {
-   cd "${srcdir}/${pkgname}-${pkgver}"
+   cd ${pkgname}-${pkgver}
 
-   export LD_LIBRARY_PATH="${pkgdir}"/usr/lib:${LD_LIBRARY_PATH}
-   make DESTDIR="${pkgdir}" INSTALLDIRS=vendor \
+   export LD_LIBRARY_PATH=${pkgdir}/usr/lib:${LD_LIBRARY_PATH}
+   make DESTDIR=${pkgdir} INSTALLDIRS=vendor \
      swig_pydir=/usr/lib/python2.7/site-packages/libsvn \
      swig_pydir_extra=/usr/lib/python2.7/site-packages/svn \
      install install-swig-py install-swig-pl install-javahl # install-swig-rb
 
-   install -d "${pkgdir}"/usr/share/subversion
-   cp -a tools/hook-scripts "${pkgdir}"/usr/share/subversion/
-   rm "${pkgdir}"/usr/share/subversion/hook-scripts/*.in
+   install -d ${pkgdir}/usr/share/subversion
+   cp -a tools/hook-scripts ${pkgdir}/usr/share/subversion/
+   rm ${pkgdir}/usr/share/subversion/hook-scripts/*.in
 
-   rm "${pkgdir}"/usr/lib/perl5/vendor_perl/auto/SVN/_Core/.packlist
-   rm -r "${pkgdir}"/usr/lib/perl5/core_perl
+   rm ${pkgdir}/usr/lib/perl5/vendor_perl/auto/SVN/_Core/.packlist
+   rm -r ${pkgdir}/usr/lib/perl5/core_perl
 
    ## svnserve
-   install -D -m 644 "${srcdir}"/svnserve.conf "${pkgdir}"/etc/conf.d/svnserve
+   install -D -m 644 ${srcdir}/svnserve.conf ${pkgdir}/etc/conf.d/svnserve
 
    # systemd
-   install -D -m 644 "${srcdir}"/svnserve.service  "${pkgdir}"/usr/lib/systemd/system/svnserve.service
-   install -D -m 644 "${srcdir}"/svnserve.tmpfiles "${pkgdir}"/usr/lib/tmpfiles.d/svnserve.conf
+   install -D -m 644 ${srcdir}/svnserve.service  ${pkgdir}/usr/lib/systemd/system/svnserve.service
+   install -D -m 644 ${srcdir}/svnserve.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/svnserve.conf
 
    # bash completion
    install -Dm 644 tools/client-side/bash_completion \
-     "${pkgdir}"/usr/share/bash-completion/completions/subversion
+     ${pkgdir}/usr/share/bash-completion/completions/subversion
    for i in svn svnadmin svndumpfilter svnlook svnsync svnversion; do
       ln -sf subversion "${pkgdir}"/usr/share/bash-completion/completions/${i}
    done

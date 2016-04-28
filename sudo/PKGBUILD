@@ -2,14 +2,13 @@
 pkgname=sudo
 pkgver=1.8.16
 _pkgver=1.8.14p3
-pkgrel=1
+pkgrel=2
 pkgdesc="Give certain users the ability to run some commands as root."
 arch=('x86_64')
 url="http://www.sudo.ws/sudo/"
 license=('custom')
 depends=('glibc' 'pam' 'libldap')
 backup=('etc/sudoers' 'etc/pam.d/sudo')
-install=sudo.install
 options=('!libtool')
 source=("ftp://ftp.sudo.ws/pub/sudo/${pkgname}-${pkgver}.tar.gz"
         'sudo.pam')
@@ -17,7 +16,7 @@ md5sums=('a977449587dc857e129bb20555b46af4'
          'a929068d0916daae0cf69bc8435c054e')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr \
               --with-pam \
@@ -34,25 +33,25 @@ build() {
 }
 
 check() {
-  cd "$srcdir/$pkgname-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   make check
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   # This is to ensure consistency with the permissions specified
   # in the 'filesystem' package.
-  install -d -m755 "${pkgdir}/var/lib"
+  install -d -m755 ${pkgdir}/var/lib
 
-  make DESTDIR="${pkgdir}" install
-  install -D -m644 "${srcdir}/sudo.pam" "${pkgdir}/etc/pam.d/sudo"
+  make DESTDIR=${pkgdir} install
+  install -D -m644 ${srcdir}/sudo.pam ${pkgdir}/etc/pam.d/sudo
   
   # changes with 1.8.10, added .install for this
-  rmdir "$pkgdir/run/sudo"
-  rmdir "$pkgdir/run"
+  rmdir ${pkgdir}/run/sudo
+  rmdir ${pkgdir}/run
 
-  install -D -m644 doc/LICENSE "${pkgdir}/usr/share/licenses/sudo/LICENSE"
+  install -D -m644 doc/LICENSE ${pkgdir}/usr/share/licenses/sudo/LICENSE
 }
 
