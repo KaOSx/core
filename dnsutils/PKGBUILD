@@ -1,8 +1,8 @@
 
 pkgname=dnsutils
 # _pkver when P version used.
-pkgver=9.10.3.4
-_pkgver=9.10.3-P4
+pkgver=9.10.4
+_pkgver=9.10.4
 pkgrel=1
 pkgdesc="DNS utilities, tools, name resolver and domain name authority server"
 arch=('x86_64')
@@ -11,10 +11,10 @@ license=('custom:ISC')
 depends=('openssl')
 options=('makeflags')
 source=("http://ftp.isc.org/isc/bind9/${_pkgver}/bind-${_pkgver}.tar.gz")
-md5sums=('173ce5e83e9ba31f8368367ee1ff7807')
+md5sums=('f2167f42e6f1baad42c637d8771c9675')
 
 build() {
-	cd "${srcdir}/bind-${_pkgver}"
+	cd bind-${_pkgver}
 
 	export STD_CDEFINES='-DDIG_SIGCHASE'
 
@@ -30,8 +30,8 @@ build() {
 }
 
 package() {
-	cd "${srcdir}/bind-${_pkgver}"
+	cd bind-${_pkgver}
 	
-	install -Dm644 COPYRIGHT "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-	cd bin; make DESTDIR="${pkgdir}" install
+	install -Dm644 COPYRIGHT ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+	cd bin; make DESTDIR=${pkgdir} install
 }
