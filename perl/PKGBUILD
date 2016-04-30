@@ -1,6 +1,6 @@
 
 pkgname=perl
-pkgver=5.22.1
+pkgver=5.22.2
 pkgrel=1
 pkgdesc="A highly capable, feature-rich programming language"
 arch=('x86_64')
@@ -8,7 +8,7 @@ license=('GPL' 'PerlArtistic')
 url="http://www.perl.org"
 groups=('base')
 depends=('gdbm' 'db' 'coreutils' 'glibc' 'sh')
-provides=('perl-archive-tar=2.04
+provides=(perl-archive-tar=2.04
             perl-attribute-handlers=0.97
             perl-autodie=2.26
             perl-autoloader=5.74
@@ -70,7 +70,7 @@ provides=('perl-archive-tar=2.04
             perl-math-complex=1.59
             perl-memoize=1.03
             perl-mime-base64=3.15
-            perl-module-corelist=5.20151213
+            perl-module-corelist=5.20160429
             perl-module-load=0.32
             perl-module-load-conditional=0.64
             perl-module-loaded=0.08
@@ -121,17 +121,17 @@ provides=('perl-archive-tar=2.04
             perl-version=0.9909
             perl-win32=0.52
             perl-win32api-file=0.1202
-            perl-xsloader=0.20')
+            perl-xsloader=0.20)
 source=("http://www.cpan.org/src/5.0/perl-${pkgver}.tar.bz2"
         'perlbin.sh'
         'perlbin.csh')
 options=('makeflags' '!purge' 'emptydirs')
-md5sums=('67242b9bd642b458bec884ed2a040910'
+md5sums=('24ec0b41fdd1a4cce0e66811ae1f5e1b'
          'd42c73468e596309f85908ee94a633e5'
          '1f0cbbee783e8a6d32f01be5118e0d5e')
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
 
   ./Configure -des -Dusethreads -Duseshrplib -Doptimize="${CFLAGS}" \
     -Dprefix=/usr -Dvendorprefix=/usr \
@@ -153,16 +153,16 @@ build() {
 }
 
 check() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   TEST_JOBS=$(echo $MAKEFLAGS | sed 's/.*-j\([0-9][0-9]*\).*/\1/') make test_harness || true
  
   make test
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   LD_PRELOAD="/usr/lib/libfakeroot/libfakeroot.so" 
-  make DESTDIR=$pkgdir install
+  make DESTDIR=${pkgdir} install
 
   ### Perl Settings ###
   # Change man page extensions for site and vendor module builds, no email address
@@ -185,20 +185,20 @@ package() {
                   ${pkgdir}/etc/profile.d/perlbin.csh
   
   # add default dir                
-  install -d -m755 $pkgdir/usr/bin/vendor_perl
-  install -d -m755 $pkgdir/usr/bin/site_perl
+  install -d -m755 ${pkgdir}/usr/bin/vendor_perl
+  install -d -m755 ${pkgdir}/usr/bin/site_perl
   
-  rm $pkgdir/usr/bin/perl$pkgver
+  rm ${pkgdir}/usr/bin/perl$pkgver
   (cd ${pkgdir}/usr/bin/core_perl;  ln -sf c2ph pstruct; ln -sf s2p psed)
 
   # Remove all pod files *except* those under /usr/share/perl5/core_perl/pod/
-  rm -f $pkgdir/usr/share/perl5/core_perl/*.pod
-  for d in $pkgdir/usr/share/perl5/core_perl/*; do
+  rm -f ${pkgdir}/usr/share/perl5/core_perl/*.pod
+  for d in ${pkgdir}/usr/share/perl5/core_perl/*; do
     if [ -d $d -a $(basename $d) != "pod" ]; then
       find $d -name *.pod -delete
     fi
   done
 
-  find $pkgdir/usr/lib -name *.pod -delete
-  find $pkgdir -name .packlist -delete
+  find ${pkgdir}/usr/lib -name *.pod -delete
+  find ${pkgdir} -name .packlist -delete
 }
