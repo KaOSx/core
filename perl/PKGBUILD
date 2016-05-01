@@ -8,7 +8,7 @@ license=('GPL' 'PerlArtistic')
 url="http://www.perl.org"
 groups=('base')
 depends=('gdbm' 'db' 'coreutils' 'glibc' 'sh')
-provides=(perl-archive-tar=2.04
+provides=('perl-archive-tar=2.04
             perl-attribute-handlers=0.97
             perl-autodie=2.26
             perl-autoloader=5.74
@@ -121,7 +121,7 @@ provides=(perl-archive-tar=2.04
             perl-version=0.9909
             perl-win32=0.52
             perl-win32api-file=0.1202
-            perl-xsloader=0.20)
+            perl-xsloader=0.20')
 source=("http://www.cpan.org/src/5.0/perl-${pkgver}.tar.bz2"
         'perlbin.sh'
         'perlbin.csh')
