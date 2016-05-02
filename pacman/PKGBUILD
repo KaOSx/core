@@ -1,7 +1,7 @@
 
 pkgname=pacman
 pkgver=5.0.1
-pkgrel=3
+pkgrel=4
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -45,7 +45,7 @@ package() {
   install -m644 $srcdir/makepkg.conf $pkgdir/etc/
 
   # completion files
-  install -Dm644 contrib/bash_completion "$pkgdir/usr/share/bash-completion/completions/pacman"
+  install -Dm644 contrib/bash_completion $pkgdir/usr/share/bash-completion/completions/pacman
   for f in makepkg pacman-key; do
     ln -s pacman "$pkgdir/usr/share/bash-completion/completions/$f"
   done
