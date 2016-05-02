@@ -1,6 +1,6 @@
 
 pkgname=btrfs-progs
-pkgver=4.5.1
+pkgver=4.5.2
 pkgrel=1
 pkgdesc="Btrfs filesystem utilities."
 arch=('x86_64')
@@ -12,12 +12,12 @@ options=('!staticlibs')
 source=("https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/${pkgname}-v${pkgver}.tar.xz"
 	'initcpio-install-btrfs'
 	'initcpio-hook-btrfs')
-md5sums=('31be62e9a772f297669b2ee14dc85c27'
+md5sums=('10d57fdfc791825e906aa7bd783d2da3'
          '5642e1524eefddf9195693cd114ecc65'
          '85ff8daca50a5ba3dff3c3e641d38b1e')
 
 build() {
-   cd $srcdir/${pkgname}-v${pkgver}
+   cd ${pkgname}-v${pkgver}
    
    ./configure --prefix=/usr
    make  
@@ -25,13 +25,13 @@ build() {
 }
 
 package() {
-   cd $srcdir/${pkgname}-v${pkgver}
-   make prefix=$pkgdir/usr install
-   install -Dm755 btrfs-select-super $pkgdir/usr/bin
+   cd ${pkgname}-v${pkgver}
+   make prefix=${pkgdir}/usr install
+   install -Dm755 btrfs-select-super ${pkgdir}/usr/bin
 
    mkdir -p ${pkgdir}/sbin
    ln -sf /usr/bin/btrfs ${pkgdir}/sbin/btrfs
 
-   install -Dm644 "$srcdir/initcpio-install-btrfs" "$pkgdir/usr/lib/initcpio/install/btrfs"
-   install -Dm644 "$srcdir/initcpio-hook-btrfs" "$pkgdir/usr/lib/initcpio/hooks/btrfs"
+   install -Dm644 ${srcdir}/initcpio-install-btrfs ${pkgdir}/usr/lib/initcpio/install/btrfs
+   install -Dm644 ${srcdir}/initcpio-hook-btrfs ${pkgdir}/usr/lib/initcpio/hooks/btrfs
 }
