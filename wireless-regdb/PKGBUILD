@@ -1,6 +1,6 @@
 
 pkgname=wireless-regdb
-pkgver=2015.10.22
+pkgver=2016.05.02
 pkgrel=1
 pkgdesc="Central Regulatory Domain Database"
 arch=('x86_64')
@@ -12,11 +12,11 @@ makedepends=('crda')
 install=wireless-regdb.install
 source=("https://www.kernel.org/pub/software/network/${pkgname}/${pkgname}-${pkgver}.tar.xz"
         'crda.conf.d')
-md5sums=('f787fb05278c3c68e7391954b7788cd4'
+md5sums=('9bf27cd5901225584b60d32dea31b027'
          '2374dcf1c6530332f375e5362b80169b')
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
   
   install -D -m644 ${srcdir}/${pkgname}-${pkgver}/sforshee.key.pub.pem ${pkgdir}/usr/lib/crda/pubkeys/sforshee.key.pub.pem
