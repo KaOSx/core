@@ -30,6 +30,7 @@ build() {
   make
 
   # check to remove soon, Suse maintenance of pam_unix2 stopped years ago
+  # source ftp://ftp.suse.com/pub/people/kukuk/pam/pam_unix2 no longer available
   cd $srcdir/pam_unix2-2.9.1
   patch -p1 -i ../glibc216.patch
   
@@ -42,7 +43,6 @@ package() {
   make DESTDIR=$pkgdir install
   install -D -m644 ../other $pkgdir/etc/pam.d/other
 
-  # source ftp://ftp.suse.com/pub/people/kukuk/pam/pam_unix2 no longer available
   cd $srcdir/pam_unix2-2.9.1
   make DESTDIR=$pkgdir install
 
