@@ -1,6 +1,6 @@
 
 pkgname=dhcpcd
-pkgver=6.10.3
+pkgver=6.11.0
 pkgrel=1
 pkgdesc="RFC2131 compliant DHCP client daemon"
 url="http://roy.marples.name/projects/dhcpcd/"
@@ -14,12 +14,12 @@ options=('emptydirs')
 source=("http://roy.marples.name/downloads/dhcpcd/$pkgname-$pkgver.tar.xz" 
 	'dhcpcd@.service'
 	'dhcpcd.service')
-md5sums=('818c284742908e26af4a3a5c6d1e5297'
+md5sums=('8c1340a53fd7e56d32bb6fef6e1354ee'
          '3b47ff473ee7f7b03062818b94fd3ed5'
          'c10ec3816b13fd5d59f696f7154f445a')
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   sed -i -e 's|#include "queue.h"|#include "compat/queue.h"|' eloop.c
 
   ./configure --libexecdir=/usr/lib/dhcpcd \
@@ -30,7 +30,7 @@ build() {
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
 
   # Create Binary Symlink
@@ -38,14 +38,14 @@ package() {
   ln -sf /sbin/dhcpcd ${pkgdir}/usr/sbin/dhcpcd
 
   # Install License
-  install -d $pkgdir/usr/share/licenses/$pkgname
-  sed 26q "$srcdir/$pkgname-$pkgver/control.h" \
+  install -d ${pkgdir}/usr/share/licenses/$pkgname
+  sed 26q ${srcdir}/$pkgname-$pkgver/control.h \
         >> ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 
   # Set Options in /etc/dhcpcd.conf
   echo noipv4ll >> ${pkgdir}/etc/dhcpcd.conf # Disable ip4vall
 
   # install systemd unit
-  install -Dm644 "$srcdir/dhcpcd@.service" "$pkgdir/usr/lib/systemd/system/dhcpcd@.service"
-  install -Dm644 "$srcdir/dhcpcd.service" "$pkgdir/usr/lib/systemd/system/dhcpcd.service"
+  install -Dm644 ${srcdir}/dhcpcd@.service ${pkgdir}/usr/lib/systemd/system/dhcpcd@.service
+  install -Dm644 ${srcdir}/dhcpcd.service ${pkgdir}/usr/lib/systemd/system/dhcpcd.service
 }
