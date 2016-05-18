@@ -1,6 +1,6 @@
 
 pkgname=curl
-pkgver=7.48.0
+pkgver=7.49.0
 pkgrel=1
 pkgdesc="An URL retrival utility and library"
 arch=('x86_64')
@@ -10,11 +10,11 @@ depends=('zlib' 'openssl' 'bash' 'ca-certificates' 'libssh2' 'libidn')
 options=('!libtool')
 source=("http://curl.haxx.se/download/${pkgname}-${pkgver}.tar.bz2"
         'curlbuild.h')
-md5sums=('d42e0fc34a5cace5739631cc040974fe'
+md5sums=('7416aaff4a9210b43edda7615ffa4169'
          '751bd433ede935c8fae727377625a8ae')
 
 build() {
-    cd ${srcdir}/${pkgname}-${pkgver}
+    cd ${pkgname}-${pkgver}
 
     ./configure \
         --with-random=/dev/urandom \
@@ -33,12 +33,12 @@ build() {
 }
 
 package() {
-    cd ${srcdir}/${pkgname}-${pkgver}
+    cd ${pkgname}-${pkgver}
     make DESTDIR=${pkgdir} install
     
     install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/COPYING
     install -Dm644 docs/libcurl/libcurl.m4 ${pkgdir}/usr/share/aclocal/libcurl.m4
     
-    mv "${pkgdir}/usr/include/curl/curlbuild.h" "${pkgdir}/usr/include/curl/curlbuild-64.h"
-    install -m 644 ${srcdir}/curlbuild.h "${pkgdir}/usr/include/curl/curlbuild.h"
+    mv ${pkgdir}/usr/include/curl/curlbuild.h ${pkgdir}/usr/include/curl/curlbuild-64.h
+    install -m 644 ${srcdir}/curlbuild.h ${pkgdir}/usr/include/curl/curlbuild.h
 }
