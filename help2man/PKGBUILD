@@ -1,6 +1,6 @@
 
 pkgname=help2man
-pkgver=1.47.3
+pkgver=1.47.4
 pkgrel=1
 pkgdesc="Conversion tool to create man files"
 arch=('x86_64')
@@ -8,10 +8,10 @@ url="http://www.gnu.org/software/help2man/"
 license=('GPL')
 depends=('perl-locale-gettext')
 source=("http://ftp.gnu.org/gnu/help2man/${pkgname}-${pkgver}.tar.xz")
-md5sums=('d1d44a7a7b2bd61755a2045d96ecaea0')
+md5sums=('544aca496a7d89de3e5d99e56a2f03d3')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr \
               --mandir=/usr/share/man \
@@ -21,7 +21,7 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR=${pkgdir} install
 }

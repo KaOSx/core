@@ -1,7 +1,7 @@
 
 pkgname=iproute2
-pkgver=4.5.0
-pkgrel=2
+pkgver=4.6.0
+pkgrel=1
 pkgdesc="IP Routing Utilities"
 arch=('x86_64')
 license=('GPL2')
@@ -10,37 +10,36 @@ depends=('linux-atm' 'perl')
 makedepends=('iptables')
 options=('!makeflags')
 backup=('etc/iproute2/ematch_map' 'etc/iproute2/rt_dsfield' 'etc/iproute2/rt_protos' \
-	'etc/iproute2/rt_realms' 'etc/iproute2/rt_scopes' 'etc/iproute2/rt_tables')
-source=("http://www.kernel.org/pub/linux/utils/net/$pkgname/$pkgname-$pkgver.tar.xz"
-	'iproute2-fhs.patch')
-md5sums=('b9ee1cbba7e20e04dfdd4b3055181955'
-         '1b15a4b4eccbc5d573b7a542de73ed6b')
+        'etc/iproute2/rt_realms' 'etc/iproute2/rt_scopes' 'etc/iproute2/rt_tables')
+source=("http://www.kernel.org/pub/linux/utils/net/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+        'iproute2-fhs.patch')
+md5sums=('d015e437e4f744d51d3a1a53341826d5'
+         '80f2f7a2c7dd2a01d6c8234145d94561')
 
 prepare() {
-  cd $srcdir/iproute2-$pkgver
+  cd ${pkgname}-${pkgver}
   patch -p1 -i ${srcdir}/iproute2-fhs.patch
 
-  # do not treat warnings as errors
-  sed -i 's/-Werror//' Makefile
+  sed -i 's|-Werror||' Makefile
 }
 
 build() {
-  cd $srcdir/$pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
 
   ./configure
    make
 }
    
 package() {
-  cd $srcdir/iproute2-$pkgver
+  cd ${pkgname}-${pkgver}
   make DESTDIR=$pkgdir install
   
   # allow loopback to be started before /usr is mounted
-  mkdir -p "$pkgdir/sbin"
-  mv "$pkgdir/usr/sbin/ip" "$pkgdir/sbin/ip"
-  ln -s /sbin/ip "$pkgdir/usr/sbin/ip"
+  mkdir -p ${pkgdir}/sbin
+  mv ${pkgdir}/usr/sbin/ip ${pkgdir}/sbin/ip
+  ln -s /sbin/ip ${pkgdir}/usr/sbin/ip
 
-  # libnetlink isn't installed
+  # add libnetlink
   install -Dm644 include/libnetlink.h ${pkgdir}/usr/include/libnetlink.h
   install -Dm644 lib/libnetlink.a ${pkgdir}/usr/lib/libnetlink.a
 }

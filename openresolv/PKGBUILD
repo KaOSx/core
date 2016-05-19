@@ -1,6 +1,6 @@
 
 pkgname=openresolv
-pkgver=3.7.2
+pkgver=3.8.1
 pkgrel=1
 pkgdesc="resolv.conf management framework (resolvconf)"
 arch=('x86_64')
@@ -12,21 +12,21 @@ backup=('etc/resolvconf.conf')
 provides=('resolvconf')
 source=("http://roy.marples.name/downloads/openresolv/${pkgname}-${pkgver}.tar.xz"
         'fs33801.patch')
-md5sums=('6452490418e6be1674c015082b3af058'
+md5sums=('378cac69367745c03a932559298d6b0d'
          '1e58ffbd83c55a7c51afb8a5d8b74742')
 
 build() {
-  cd "$srcdir/$pkgname-$pkgver"
-  patch -p1 -i $srcdir/fs33801.patch
+  cd ${pkgname}-${pkgver}
+  #patch -p1 -i ${srcdir}/fs33801.patch
 
   ./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/resolvconf
 }
 
 package() {
-  cd "$srcdir/$pkgname-$pkgver"
-  make DESTDIR="$pkgdir" install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
 
-  mkdir -p "$pkgdir/usr/share/licenses/$pkgname"
-  sed -n '2,25{s:^# \?::;p}' resolvconf.in > "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  mkdir -p ${pkgdir}/usr/share/licenses/${pkgname}
+  sed -n '2,25{s:^# \?::;p}' resolvconf.in > ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }
 
