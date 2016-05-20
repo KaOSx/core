@@ -1,6 +1,6 @@
 
 pkgname=pciutils
-pkgver=3.4.1
+pkgver=3.5.0
 pkgrel=1
 pkgdesc="PCI bus configuration space access library and tools"
 arch=('x86_64')
@@ -11,23 +11,23 @@ optdepends=('sh: required by update-pciids')
 depends=('glibc' 'hwids' 'kmod')
 makedepends=('wget')
 source=("ftp://ftp.kernel.org/pub/software/utils/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('35763bb1eab7bc9bf6eb6efb72cbc8a1')
+md5sums=('df8671a14c6dc1fe8eb7f7708a5e56c1')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   ./update-pciids.sh
   
   make OPT="${CFLAGS} -fPIC -DPIC" ZLIB=no SHARED=no PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man all
-  cp lib/libpci.a "${srcdir}/"
+  cp lib/libpci.a ${srcdir}/
   make clean
   make OPT="${CFLAGS}" ZLIB=no SHARED=yes PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man all
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  make SHARED=yes PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man DESTDIR="${pkgdir}" install install-lib
+  cd ${pkgname}-${pkgver}
+  make SHARED=yes PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man DESTDIR=${pkgdir} install install-lib
   
-  install -m644 "${srcdir}/libpci.a" "${pkgdir}/usr/lib/"
+  install -m644 ${srcdir}/libpci.a ${pkgdir}/usr/lib/
   # part of hwids package
   rm -rf $pkgdir/usr/{sbin/update-pciids,share/{man/man8/update-pciids.8.gz,hwdata}}
 }
