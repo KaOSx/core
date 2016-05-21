@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 _basekernel=4.6
 _srcname=linux-4.6
 pkgver=4.6.0
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -30,12 +30,14 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         'change-default-console-loglevel.patch'
-        'i8042-fix-aliases.patch')
+        'i8042-fix-aliases.patch'
+        'intel_ucode_in-kernel_fw_with_initrd_test.patch')
 md5sums=('d2927020e24a76da4ab482a8bc3e9ef3'
          'a28933bf17b26e06b63bd8f4363f93ce'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a262bedf26f26b7698143fc23de98457'
-         '93dbf73af819b77f03453a9c6de2bb47')
+         '93dbf73af819b77f03453a9c6de2bb47'
+         '84e8cd974858406175887645d6e5c173')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -52,6 +54,9 @@ build() {
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
   
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
+  
+  # fix intel microcode early loading, build-in option since 4.6
+  patch -p1 -i "${srcdir}/intel_ucode_in-kernel_fw_with_initrd_test.patch"
 
   #aufs patches for Live:
   #patch -p1 -i "${srcdir}/aufs4.patch"
