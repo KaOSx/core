@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=229
-pkgrel=4
+pkgver=230
+pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -38,9 +38,8 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'KaOS.conf'
         'KaOS_fallback.conf'
         'splash.bmp'
-        'systemd-tmpfiles.hook'
-        "https://github.com/systemd/systemd/commit/6d2353394fc33e923d1ab464c8f88df2a5105ffb.patch")
-md5sums=('5d696f65381b2608da70544df07c2b3c'
+        'systemd-tmpfiles.hook')
+md5sums=('f2f10a6f100c38582b4f02d60210227d'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'e84d194cd77b3ba9ca0968c09e632f06'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -48,8 +47,7 @@ md5sums=('5d696f65381b2608da70544df07c2b3c'
          'eb444ae327472b98a65631ede777720a'
          'b8d8ebeab17edbe91209e705cfc9e774'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
-         '7d5910d12fdfce56228a1aac8c3d618c'
-         'b651cd7f7ee0949c2e8d3b5a9f433450')
+         '7d5910d12fdfce56228a1aac8c3d618c')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -57,8 +55,6 @@ build() {
   #rm src/udev/keyboard-keys-from-name.gperf
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
-  # simple fix for ugly cgroup warning
-  patch -p1 -i $srcdir/6d2353394fc33e923d1ab464c8f88df2a5105ffb.patch
   
   NTP_SERVERS="0.north-america.pool.ntp.org 1.north-america.pool.ntp.org 2.north-america.pool.ntp.org 3.north-america.pool.ntp.org"
   
@@ -67,7 +63,6 @@ build() {
       --libexecdir=/usr/lib \
       --localstatedir=/var \
       --sysconfdir=/etc \
-      --enable-compat-libs \
       --enable-split-usr \
       --enable-lz4 \
       --enable-efi \
