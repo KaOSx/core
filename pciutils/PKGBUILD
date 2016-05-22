@@ -1,7 +1,7 @@
 
 pkgname=pciutils
-pkgver=3.5.0
-pkgrel=2
+pkgver=3.5.1
+pkgrel=1
 pkgdesc="PCI bus configuration space access library and tools"
 arch=('x86_64')
 license=('GPL2')
@@ -10,15 +10,11 @@ url="http://mj.ucw.cz/pciutils.html"
 optdepends=('sh: required by update-pciids') 
 depends=('glibc' 'hwids' 'kmod')
 makedepends=('wget')
-source=("ftp://ftp.kernel.org/pub/software/utils/${pkgname}/${pkgname}-${pkgver}.tar.xz"
-        'pci_init.patch')
-md5sums=('df8671a14c6dc1fe8eb7f7708a5e56c1'
-         '5436901ee68b90ea8ed0222655fe0349')
+source=("ftp://ftp.kernel.org/pub/software/utils/${pkgname}/${pkgname}-${pkgver}.tar.xz")
+md5sums=('0879a8f7ac51f4e874cfc6b3521a13cc')
 
 build() {
   cd ${pkgname}-${pkgver}
-  # http://thread.gmane.org/gmane.linux.kernel.pci/51865
-  patch -p1 -i ${srcdir}/pci_init.patch
   
   ./update-pciids.sh
   
