@@ -1,6 +1,6 @@
 
 pkgname=swig
-pkgver=3.0.8
+pkgver=3.0.9
 pkgrel=1
 pkgdesc="A compiler that makes it easy to integrate C and C++ code with scripting languages"
 arch=('x86_64')
@@ -8,21 +8,21 @@ url="http://www.swig.org/"
 license=('custom')
 depends=('pcre' 'zlib')
 source=("http://downloads.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.gz")  
-md5sums=('c96a1d5ecb13d38604d7e92148c73c97')
+md5sums=('4bc5f46a6cdedbd8f579b25fafc96fd6')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr
   make
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  make DESTDIR="${pkgdir}" install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
 
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-  install -D -m644 LICENSE-UNIVERSITIES "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE-UNIVERSITIES"
+  cd ${srcdir}/${pkgname}-${pkgver}
+  install -D -m644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+  install -D -m644 LICENSE-UNIVERSITIES ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE-UNIVERSITIES
 }
 
