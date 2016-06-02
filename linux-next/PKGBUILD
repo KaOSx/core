@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 _basekernel=4.6
 _srcname=linux-4.6
 pkgver=4.6.1
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -69,7 +69,7 @@ build() {
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
   
   # fix intel microcode early loading, build-in option since 4.6
-  patch -p1 -i "${srcdir}/intel_ucode_like_upstream.patch"
+  patch -p1 -i "${srcdir}/intel_ucode_in-kernel_fw_with_initrd_test.patch"
 
   #aufs patches for Live:
   patch -p1 -i "${srcdir}/aufs4.patch"
