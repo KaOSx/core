@@ -1,6 +1,6 @@
 
 pkgname=cryptsetup
-pkgver=1.7.1
+pkgver=1.7.2
 pkgrel=1
 pkgdesc="Utility used to conveniently setup disk encryption based on DMCrypt kernel module."
 arch=('x86_64')
@@ -12,18 +12,18 @@ options=('!libtool' '!emptydirs')
 source=("https://www.kernel.org/pub/linux/utils/cryptsetup/v1.7/${pkgname}-${pkgver}.tar.xz"
         'encrypt_hook'
         'encrypt_install')
-md5sums=('e38da1c80088cbaaccf931ef61e726dc'
+md5sums=('a11a140cea496961222170944db01fc1'
          'c279d86d6dc18322c054d2272ebb9e90'
          'abe9bb42341e8f2ecd2b07e4244ac066')
 build() {
-  cd $pkgname-${pkgver}
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr --disable-static
   make
 }
 
 package() {
-  cd $pkgname-${pkgver}
+  cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
 
   install -D -m644 ${srcdir}/encrypt_hook ${pkgdir}/usr/lib/initcpio/hooks/encrypt
