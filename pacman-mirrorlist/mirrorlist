@@ -24,6 +24,6 @@ Server = http://ftp.wa.co.za/pub/kaos/$repo
 # United States
 Server = http://mirror.dacentec.com/kaosx/$repo
 Server = http://kaosx.tk/repo/$repo
-Server = https://kaosx.us/repo/$repo
+Server = https://repo.kaosx.us/$repo
 
 

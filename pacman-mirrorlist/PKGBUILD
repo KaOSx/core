@@ -1,6 +1,6 @@
 
 pkgname=pacman-mirrorlist
-pkgver=20160508
+pkgver=20160605
 pkgrel=1
 pkgdesc="KaOS mirror list for use by pacman"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('mirror-check')
 groups=('base')
 backup=(etc/pacman.d/mirrorlist)
 source=('mirrorlist')
-md5sums=('edd87b9dfcafa4ac6b87a7dbb08618d1')
+md5sums=('04a45fe37b3da2c8b6cf5f0b50dd8813')
 
 package() {
   mkdir -p $pkgdir/etc/pacman.d
