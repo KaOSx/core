@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.4
-pkgver=4.4.5
+_basekernel=4.6
+pkgver=4.6.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.4.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.6.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -28,23 +28,25 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.4.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         'change-default-console-loglevel.patch'
-        'i8042-fix-aliases.patch')
-md5sums=('9a78fa2eb6c68ca5a40ed5af08142599'
-         'edddb33405ea1ab02b90eb9cecaa43f6'
-         '0324602d712d8262781fe468177bed5d'
-         'ff5323e9b212e6b2f4f79d21e38afd3f'
-         '4745bb9f5096541916595f7a7bf38588'
-         '1527ec87bea6a7eb61b09248d096ee52'
-         '5633c08eb2c3542c3deb5975820e5a88'
-         'b0c03d29896022cd0f91e955b3f4ea42'
-         '3e6ce0f00495122550c55d4d9dc82d79'
+        'i8042-fix-aliases.patch'
+        'intel_ucode_in-kernel_fw_with_initrd_test.patch')
+md5sums=('d2927020e24a76da4ab482a8bc3e9ef3'
+         'c064bbe8108b8e5304f3db2130a96845'
+         '239c5222b0b9f825dc095ddb0fd63a00'
+         'ad43fba30f7c3f50f6bf4edeb5776e75'
+         'c6f83060c8329f3d3eaec5241640df56'
+         '807a5f9ef724151c84245f3b841c14b0'
+         '64e87d44eb9ed8fcd6c1b186f8e7c624'
+         '7a9403985b1a18e2c65e2f30853f387e'
+         '55da4f9afb8a65ff67447f3501c04310'
          '260b2e47579140f61546f37d90e0b527'
-         '6884431ddb662115eed49d69ad246648'
-         'd0452c0b415482de8e6ec81060cb912e'
-         '994289bb10367215ece27442f90cfba5'
+         '8611800f1fb9af44c47d49ab2f9d91bd'
+         '45a3e0a14a8ed527ca21e521a71a25e3'
+         '68694f289d3debb692b9dd32b05d1dc2'
          'eb14dcfd80c00852ef81ded6e826826a'
          'a262bedf26f26b7698143fc23de98457'
-         '93dbf73af819b77f03453a9c6de2bb47')
+         '93dbf73af819b77f03453a9c6de2bb47'
+         '84e8cd974858406175887645d6e5c173')
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -61,6 +63,9 @@ prepare() {
   patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
   
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
+  
+  # fix intel microcode early loading, build-in option since 4.6
+  patch -p1 -i "${srcdir}/intel_ucode_in-kernel_fw_with_initrd_test.patch"
   
   #aufs patches for Live:
   patch -p1 -i "${srcdir}/aufs4.patch"
