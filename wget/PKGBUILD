@@ -1,7 +1,7 @@
 
 pkgname=wget
-pkgver=1.17.1
-pkgrel=3
+pkgver=1.18
+pkgrel=1
 pkgdesc="A network utility to retrieve files from the Web"
 arch=('x86_64')
 url="http://www.gnu.org/software/wget/wget.html"
@@ -12,7 +12,7 @@ optdepends=('ca-certificates: HTTPS downloads')
 backup=('etc/wgetrc')
 source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
         '0001-main.c-Need-to-explicitly-disallow-show_progress-in-.patch')
-md5sums=('b0d58ef4963690e71effba24c105ed52'
+md5sums=('af9ca95a4bb8ac4a9bf10aeae66fa5ec'
          '87ebe95f2c403e041fab209610e695ae')
 
 build() {
