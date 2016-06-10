@@ -1,7 +1,7 @@
 
 pkgname=e2fsprogs
-pkgver=1.43
-pkgrel=1
+pkgver=1.43.1
+pkgrel=2
 pkgdesc="Ext2/3/4 filesystem utilities"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'MIT')
@@ -12,7 +12,7 @@ makedepends=('bc')
 source=("https://www.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${pkgver}/${pkgname}-${pkgver}.tar.xz"
         'MIT-LICENSE')
 backup=('etc/mke2fs.conf')
-md5sums=('88a144bc46d3ecf98a8fce71ecdaff38'
+md5sums=('b65349d85892c42d8106db7687853cbc'
          '035b7c69b7a2cecf996a4708c262245e')
 
 build() {
@@ -39,11 +39,14 @@ package() {
   cd ${pkgname}-${pkgver}
   make -j1 DESTDIR="${pkgdir}" install install-libs
 
-  sed -i -e 's/^AWK=.*/AWK=awk/' ${pkgdir}/usr/bin/compile_et
+  sed -i -e 's|^AWK=.*|AWK=awk|' ${pkgdir}/usr/bin/compile_et
   
   # remove references to build directory
-  sed -i -e 's#^SS_DIR=.*#SS_DIR="/usr/share/ss"#' ${pkgdir}/usr/bin/mk_cmds
-  sed -i -e 's#^ET_DIR=.*#ET_DIR="/usr/share/et"#' ${pkgdir}/usr/bin/compile_et
+  sed -i -e 's|^SS_DIR=.*|SS_DIR="/usr/share/ss"|' ${pkgdir}/usr/bin/mk_cmds
+  sed -i -e 's|^ET_DIR=.*|ET_DIR="/usr/share/et"|' ${pkgdir}/usr/bin/compile_et
+  # remove 64bit ref, new for e2fsprogs 1.43
+  # possible breaks calamares installs https://github.com/calamares/calamares/wiki/Deployment-Practices
+  sed -i -e 's|huge_file,flex_bg,64bit,dir_nlink|huge_file,flex_bg,dir_nlink|' ${pkgdir}/etc/mke2fs.conf
   
   # addition for zulucrypt
   ln -sf /sbin/mkfs.ext4 ${pkgdir}/usr/bin/mkfs.ext4
