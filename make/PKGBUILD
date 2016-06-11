@@ -1,23 +1,18 @@
 
 pkgname=make
-pkgver=4.2
-pkgrel=3
+pkgver=4.2.1
+pkgrel=1
 pkgdesc="GNU make utility to maintain groups of programs"
 arch=('x86_64')
 url="http://www.gnu.org/software/make"
 license=('GPL3')
 groups=('base-devel')
 depends=('glibc' 'sh' 'guile')
-source=("ftp://ftp.gnu.org/gnu/make/${pkgname}-${pkgver}.tar.bz2"
-        'parallel_build.patch')
-md5sums=('85ad14d08766201ffe71efa866f4fb91'
-         '5223072dd0e421f37eae76b6cb26e301')
+source=("ftp://ftp.gnu.org/gnu/make/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('15b012617e7c44c0ed482721629577ac')
 
 build() {
   cd ${pkgname}-${pkgver}
-  # fix for parallel builds 
-  # http://git.savannah.gnu.org/cgit/make.git/commit/?id=4762480ae9cb8df4878286411f178d32db14eff0
-  patch -p1 -i ${srcdir}/parallel_build.patch
 
   ./configure --prefix=/usr
   make
