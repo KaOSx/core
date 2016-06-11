@@ -1,6 +1,6 @@
 
 pkgname=btrfs-progs
-pkgver=4.5.3
+pkgver=4.6
 pkgrel=1
 pkgdesc="Btrfs filesystem utilities."
 arch=('x86_64')
@@ -10,24 +10,22 @@ depends=('glibc' 'e2fsprogs' 'lzo2' 'asciidoc')
 makedepends=('git' 'xmlto')
 options=('!staticlibs')
 source=("https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/${pkgname}-v${pkgver}.tar.xz"
-	'initcpio-install-btrfs'
-	'initcpio-hook-btrfs')
-md5sums=('3feb593cb52df7570769559366d5e320'
+        'initcpio-install-btrfs'
+        'initcpio-hook-btrfs')
+md5sums=('7a585b757571ca6dcdf0cccf9f1ade78'
          '5642e1524eefddf9195693cd114ecc65'
          '85ff8daca50a5ba3dff3c3e641d38b1e')
 
 build() {
    cd ${pkgname}-v${pkgver}
    
-   ./configure --prefix=/usr
+   ./configure --prefix=/usr 
    make  
-   make btrfs-select-super
 }
 
 package() {
    cd ${pkgname}-v${pkgver}
-   make prefix=${pkgdir}/usr install
-   install -Dm755 btrfs-select-super ${pkgdir}/usr/bin
+   make prefix=${pkgdir}/usr udevdir=${pkgdir}/usr/lib/udev install
 
    mkdir -p ${pkgdir}/sbin
    ln -sf /usr/bin/btrfs ${pkgdir}/sbin/btrfs
