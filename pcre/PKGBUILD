@@ -1,6 +1,6 @@
 
 pkgname=pcre
-pkgver=8.38
+pkgver=8.39
 pkgrel=1
 pkgdesc="A library that implements Perl 5-style regular expressions"
 arch=('x86_64')
@@ -9,10 +9,10 @@ license=('BSD')
 depends=('gcc-libs' 'readline' 'zlib' 'bzip2' 'libedit')
 options=('!libtool')
 source=("ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('00aabbfe56d5a48b270f999b508c5ad2')
+md5sums=('e3fca7650a0556a2647821679d81f585')
 
 build() {
-  cd "${srcdir}"/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr \
         --enable-utf \
@@ -27,14 +27,14 @@ build() {
 }
 
 check() {
-  cd "${srcdir}"/${pkgname}-${pkgver} 
+  cd ${pkgname}-${pkgver} 
   
   make -j1 check
 }
 
 package() {
-  cd "${srcdir}"/${pkgname}-${pkgver}
-  make DESTDIR="${pkgdir}" install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
 
-  install -Dm644 LICENCE "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE
+  install -Dm644 LICENCE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }
