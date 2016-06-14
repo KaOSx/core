@@ -1,7 +1,7 @@
 
 pkgname=cryptsetup
 pkgver=1.7.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Utility used to conveniently setup disk encryption based on DMCrypt kernel module."
 arch=('x86_64')
 license=('GPL')
@@ -11,14 +11,18 @@ depends=('device-mapper' 'libgcrypt' 'popt' 'util-linux')
 options=('!libtool' '!emptydirs')
 source=("https://www.kernel.org/pub/linux/utils/cryptsetup/v1.7/${pkgname}-${pkgver}.tar.xz"
         'encrypt_hook'
-        'encrypt_install')
+        'encrypt_install'
+        'sd-encrypt')
 md5sums=('a11a140cea496961222170944db01fc1'
          'c279d86d6dc18322c054d2272ebb9e90'
-         'abe9bb42341e8f2ecd2b07e4244ac066')
+         'b20fc8f9c304e8b63eff3435d540e41c'
+         '8861a7518f4dfd9062d1312aebf71155')
 build() {
   cd ${pkgname}-${pkgver}
   
-  ./configure --prefix=/usr --disable-static
+  ./configure --prefix=/usr \
+        --disable-static \
+        --enable-cryptsetup-reencrypt
   make
 }
 
@@ -28,5 +32,6 @@ package() {
 
   install -D -m644 ${srcdir}/encrypt_hook ${pkgdir}/usr/lib/initcpio/hooks/encrypt
   install -D -m644 ${srcdir}/encrypt_install ${pkgdir}/usr/lib/initcpio/install/encrypt
+  install -D -m644 ${srcdir}/sd-encrypt ${pkgdir}/usr/lib/initcpio/install/sd-encrypt
 }
 
