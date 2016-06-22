@@ -4,7 +4,7 @@ pkgname=('linux' 'linux-headers' 'linux-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.6
 pkgver=4.6.2
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -32,7 +32,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.6.tar.xz"
         'intel_ucode_in-kernel_fw_with_initrd_test.patch')
 md5sums=('d2927020e24a76da4ab482a8bc3e9ef3'
          'c064bbe8108b8e5304f3db2130a96845'
-         '239c5222b0b9f825dc095ddb0fd63a00'
+         '8ff32a10d95b2f80b1f4c0f615ee9361'
          'ad43fba30f7c3f50f6bf4edeb5776e75'
          'c6f83060c8329f3d3eaec5241640df56'
          '807a5f9ef724151c84245f3b841c14b0'
