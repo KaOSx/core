@@ -4,8 +4,8 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.6
 _srcname=linux-4.6
-pkgver=4.6.2
-pkgrel=2
+pkgver=4.6.3
+pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -31,11 +31,10 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'linux-next.preset'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch'
-        'intel_ucode_in-kernel_fw_with_initrd_test.patch'
-        'intel_ucode_like_upstream.patch')
+        'intel_ucode_in-kernel_fw_with_initrd_test.patch')
 md5sums=('d2927020e24a76da4ab482a8bc3e9ef3'
-         'c064bbe8108b8e5304f3db2130a96845'
-         '2cb7cb0777a3751a0d6dbd40c7150a98'
+         '0d59cb81eb7c0daf0f5019deda65af90'
+         'deb421c5e21ee9dba8963585317b1156'
          'ad43fba30f7c3f50f6bf4edeb5776e75'
          'c6f83060c8329f3d3eaec5241640df56'
          '807a5f9ef724151c84245f3b841c14b0'
@@ -49,8 +48,7 @@ md5sums=('d2927020e24a76da4ab482a8bc3e9ef3'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47'
-         '84e8cd974858406175887645d6e5c173'
-         '7475d84839358d65ba1daae5624247ad')
+         '84e8cd974858406175887645d6e5c173')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
