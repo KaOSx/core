@@ -1,6 +1,6 @@
 
 pkgname=python2
-pkgver=2.7.11
+pkgver=2.7.12
 pkgrel=2
 _pybasever=2.7
 pkgdesc="A high-level scripting language"
@@ -10,10 +10,10 @@ url="http://www.python.org"
 depends=('db' 'bzip2' 'gdbm' 'openssl' 'zlib' 'expat' 'sqlite' 'libffi')
 makedepends=('tk')
 source=("http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz")
-md5sums=('1dbcc848b4cd8399a8199d000f9f823c')
+md5sums=('57dffcee9cee8bb2ab5f82af1d8e9a69')
 
 build() {
-  cd "${srcdir}/Python-${pkgver}"
+  cd Python-${pkgver}
 
   # http://bugs.python.org/issue10835 
   sed -i "/progname =/s/python/python${_pybasever}/" Python/pythonrun.c
@@ -35,40 +35,40 @@ build() {
              --enable-unicode=ucs4 \
              --with-threads \
              --with-system-ffi \
-	     --with-dbmliborder=gdbm:ndbm \
+             --with-dbmliborder=gdbm:ndbm \
              --with-system-expat
   
   make 
 }
 
 package() {
-  cd "${srcdir}/Python-${pkgver}"
-  make DESTDIR="${pkgdir}" altinstall maninstall
+  cd Python-${pkgver}
+  make DESTDIR=${pkgdir} altinstall maninstall
 
-  ln -sf "python${_pybasever}"        "${pkgdir}/usr/bin/python"
-  ln -sf "python${_pybasever}"        "${pkgdir}/usr/bin/python2"
-  ln -sf "python${_pybasever}-config" "${pkgdir}/usr/bin/python2-config"
-  ln -sf "python${_pybasever}.1"      "${pkgdir}/usr/share/man/man1/python2.1"
+  ln -sf python${_pybasever}        ${pkgdir}/usr/bin/python
+  ln -sf python${_pybasever}        ${pkgdir}/usr/bin/python2
+  ln -sf python${_pybasever}-config ${pkgdir}/usr/bin/python2-config
+  ln -sf python${_pybasever}.1      ${pkgdir}/usr/share/man/man1/python2.1
 
-  ln -sf "../../libpython${_pybasever}.so" \
-    "${pkgdir}/usr/lib/python${_pybasever}/config/libpython${_pybasever}.so"
+  ln -sf ../../libpython${_pybasever}.so \
+    ${pkgdir}/usr/lib/python${_pybasever}/config/libpython${_pybasever}.so
 
-  mv "${pkgdir}/usr/bin/smtpd.py" "${pkgdir}/usr/lib/python${_pybasever}"
+  mv ${pkgdir}/usr/bin/smtpd.py ${pkgdir}/usr/lib/python${_pybasever}
 
-  install -dm755 "${pkgdir}/usr/lib/python${_pybasever}/Tools"/{i18n,scripts}
+  install -dm755 ${pkgdir}/usr/lib/python${_pybasever}/Tools/{i18n,scripts}
   install -m755 Tools/i18n/{msgfmt,pygettext}.py \
-    "${pkgdir}/usr/lib/python${_pybasever}/Tools/i18n"
+    ${pkgdir}/usr/lib/python${_pybasever}/Tools/i18n
   install -m755 Tools/scripts/{README,*py} \
-    "${pkgdir}/usr/lib/python${_pybasever}/Tools/scripts"
+    ${pkgdir}/usr/lib/python${_pybasever}/Tools/scripts
 
   # clean up #!s
-  find "${pkgdir}/usr/lib/python${_pybasever}" -name '*.py' | \
-    xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python2|"
+  find ${pkgdir}/usr/lib/python${_pybasever}" -name '*.py' | \
+    xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python2|
 
   # clean-up reference to build directory
   sed -i "s#${srcdir}/Python-${pkgver}:##" \
-    "${pkgdir}/usr/lib/python${_pybasever}/config/Makefile"
+    ${pkgdir}/usr/lib/python${_pybasever}/config/Makefile
 
-  install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -Dm644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }  
 
