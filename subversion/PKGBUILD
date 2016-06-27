@@ -1,14 +1,14 @@
 
 pkgname=subversion
 pkgver=1.9.4
-pkgrel=1
+pkgrel=2
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
 license=('APACHE')
 depends=('db' 'serf' 'apr-util' 'sqlite3' 'file' 'systemd')
-optdepends=('kwallet' 'bash-completion: for svn bash completion')
+#optdepends=('kwallet' 'bash-completion: for svn bash completion')
 makedepends=('krb5' 'apache' 'python2' 'perl' 'swig' 'ruby' 'java-runtime' 
-             'autoconf' 'e2fsprogs' 'kdelibs')
+             'autoconf' 'e2fsprogs') # 'kwallet')
 #backup=('etc/xinetd.d/svn' 'etc/conf.d/svnserve')
 url="http://subversion.apache.org/"
 provides=('svn')
@@ -42,7 +42,7 @@ build() {
                --with-sqlite=/usr \
                --enable-javahl \
                --without-gnome-keyring \
-               --with-kwallet \
+               --without-kwallet \
                --disable-static \
                --libexecdir=/usr/lib
 
