@@ -1,6 +1,6 @@
 
 pkgname=linux-firmware
-pkgver=20160620
+pkgver=20160628
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
@@ -55,9 +55,9 @@ package() {
   install -Dm644 LICEN* WHENCE ${pkgdir}/usr/share/licenses/linux-firmware/
 
   # microcode reload for older systems not using early
-  install -d ${pkgdir}/usr/lib/tmpfiles.d
-  echo 'w /sys/devices/system/cpu/microcode/reload - - - - 1' \
-    >${pkgdir}/usr/lib/tmpfiles.d/${pkgname}.conf
+  #install -d ${pkgdir}/usr/lib/tmpfiles.d
+  #echo 'w /sys/devices/system/cpu/microcode/reload - - - - 1' \
+  #  >${pkgdir}/usr/lib/tmpfiles.d/${pkgname}.conf
 
   # install b43-firmware
   b43-fwcutter -w ${pkgdir}/lib/firmware/ ${srcdir}/broadcom-wl-${_b43}/linux/wl_apsta.o
