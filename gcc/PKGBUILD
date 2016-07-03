@@ -189,6 +189,10 @@ package_gcc()
   rm $pkgdir/usr/share/info/libquadmath*
   rm $pkgdir/usr/share/locale/de/LC_MESSAGES/libstdc++.mo
   rm $pkgdir/usr/share/locale/fr/LC_MESSAGES/libstdc++.mo
+  
+  # use from go
+  rm $pkgdir/usr/bin/go
+  rm $pkgdir/usr/bin/gofmt
 
   # POSIX conformance launcher scripts for c89 and c99
   cat > $pkgdir/usr/bin/c89 <<"EOF"

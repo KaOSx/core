@@ -2,7 +2,7 @@
 pkgname=efivar
 _pkgname=vathpela-efivar
 _commit=70e63d4
-pkgver=0.23
+pkgver=0.24
 pkgrel=1
 pkgdesc="Library to manipulate EFI variables"
 arch=('x86_64')
@@ -12,11 +12,11 @@ depends=('popt')
 options=('zipman' 'docs' '!makeflags')
 source=("https://github.com/rhinstaller/efivar/releases/download/${pkgver}/efivar-${pkgver}.tar.bz2"
         'compiler.patch')
-md5sums=('bff7aa95fdb2f5d79f4aa9721dca2bbd'
+md5sums=('38b6912e870e8a735e3a488e8e62d348'
          '76d1d1cc85f021ea9d820395af8fa8d4')
 
 build() {
-	cd "${srcdir}/${pkgname}-${pkgver}/"
+	cd ${pkgname}-${pkgver}/
 	#patch -p1 -i $srcdir/compiler.patch
 	
 	unset CFLAGS
@@ -25,7 +25,7 @@ build() {
 	unset LDFLAGS
 	unset MAKEFLAGS
 	
-	sed 's|-rpath=$(TOPDIR)/src/|-rpath=$(libdir)|g' -i "${srcdir}/${pkgname}-${pkgver}/src/test/Makefile" || true
+	sed 's|-rpath=$(TOPDIR)/src/|-rpath=$(libdir)|g' -i ${srcdir}/${pkgname}-${pkgver}/src/test/Makefile || true
 	sed 's|-O0|-Os|g' -i "${srcdir}/efivar/Make.defaults" || true
 	
 	make libdir="/usr/lib/" bindir="/usr/bin/" mandir="/usr/share/man/" includedir="/usr/include/" V=1 -j1
@@ -34,10 +34,10 @@ build() {
 
 package() {
 	
-	cd "${srcdir}/${pkgname}-${pkgver}/"
+	cd ${pkgname}-${pkgver}/
 	
-	make -j1 V=1 DESTDIR="${pkgdir}/" libdir="/usr/lib/" bindir="/usr/bin/" mandir="/usr/share/man/" includedir="/usr/include/" install
+	make -j1 V=1 DESTDIR=${pkgdir}/ libdir="/usr/lib/" bindir="/usr/bin/" mandir="/usr/share/man/" includedir="/usr/include/" install
 	echo
 	
-	rm "${pkgdir}/usr/bin/efivar-static"
+	rm ${pkgdir}/usr/bin/efivar-static
 }
