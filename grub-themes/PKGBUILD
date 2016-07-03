@@ -2,7 +2,7 @@
 pkgname=grub-theme-midna
 _pkgname=midna
 pkgver=2.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Midna Grub-theme."
 url="http://kaosx.us"
 arch=('x86_64')

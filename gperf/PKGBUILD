@@ -1,7 +1,7 @@
 
 pkgname=gperf
 pkgver=3.0.4
-pkgrel=8
+pkgrel=9
 pkgdesc="Perfect hash function generator."
 arch=('x86_64')
 url="http://www.gnu.org/software/gperf/"

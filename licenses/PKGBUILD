@@ -1,7 +1,7 @@
 
 pkgname=licenses
 pkgver=20151223
-pkgrel=1
+pkgrel=2
 pkgdesc="The standard licenses distribution package"
 arch=('x86_64')
 license=('custom:none')
@@ -56,7 +56,7 @@ md5sums=('3b83ef96387f14655fc854ddc3c6bd57'
          'd09c120ca7db95ef2aeecec0cb08293b'
          'b4a94da2a1f918b217ef5156634fc9e0'
          'a45bb1bbeed9e26b26c5763df1d3913d'
-         '837b32593517ae48b9c3b5c87a5d288c'
+         '8a960b08d972f43f91ae84a6f00dcbfb'
          'f083e41c43db25e18f36c91e57750b64'
          'a055911c32fb4ed6e96c453ceaeba857'
          '6f2095b5d61770740852873b195a4d21'

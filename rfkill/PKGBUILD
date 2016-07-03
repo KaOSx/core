@@ -1,7 +1,7 @@
 
 pkgname=rfkill
 pkgver=0.5
-pkgrel=3
+pkgrel=4
 pkgdesc="Tool to query and set the rfkill state of wireless devices"
 arch=('x86_64')
 url="http://linuxwireless.org/en/users/Documentation/rfkill"

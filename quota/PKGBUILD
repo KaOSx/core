@@ -1,7 +1,7 @@
 
 pkgname=quota
 pkgver=4.03
-pkgrel=1
+pkgrel=2
 pkgdesc="Tools and patches for the Linux Diskquota system as part of the Linux kernel"
 arch=('x86_64')
 url="http://sourceforge.net/projects/linuxquota/"

@@ -2,7 +2,7 @@
 pkgname=perl-test-pod
 _realname=Test-Pod
 pkgver=1.51
-pkgrel=1
+pkgrel=2
 pkgdesc="Check for POD errors in files"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')

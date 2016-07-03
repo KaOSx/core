@@ -1,7 +1,7 @@
 
 pkgname=libcap
 pkgver=2.25
-pkgrel=1
+pkgrel=2
 pkgdesc="POSIX 1003.1e capabilities"
 arch=('x86_64')
 url="http://www.kernel.org/pub/linux/libs/security/linux-privs/"

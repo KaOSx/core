@@ -1,7 +1,7 @@
 
 pkgname=tar
 pkgver=1.29
-pkgrel=1
+pkgrel=2
 pkgdesc="Utility used to store, backup, and transport files"
 arch=('x86_64')
 url="http://www.gnu.org/software/tar/tar.html"

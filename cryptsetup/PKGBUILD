@@ -1,7 +1,7 @@
 
 pkgname=cryptsetup
 pkgver=1.7.2
-pkgrel=3
+pkgrel=4
 pkgdesc="Utility used to conveniently setup disk encryption based on DMCrypt kernel module."
 arch=('x86_64')
 license=('GPL')

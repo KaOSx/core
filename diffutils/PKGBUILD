@@ -1,7 +1,7 @@
 
 pkgname=diffutils
 pkgver=3.3
-pkgrel=4
+pkgrel=5
 pkgdesc="Utility programs used for creating patch files"
 arch=('x86_64')
 url="http://www.gnu.org/software/diffutils"

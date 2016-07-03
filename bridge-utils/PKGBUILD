@@ -1,7 +1,7 @@
 
 pkgname=bridge-utils
 pkgver=1.5.1
-pkgrel=1
+pkgrel=2
 _commit=a42ed4ef1ea288bcc904b8aa188031d1024affe3
 pkgdesc="EEE 802.1d ethernet bridging (plus Spanning Tree protocol) for the linux kernel."
 arch='x86_64'

@@ -2,7 +2,7 @@
 pkgname=man-pages
 pkgver=4.06
 _posixver=2013-a
-pkgrel=1
+pkgrel=2
 pkgdesc="Linux man pages"
 arch=('x86_64')
 license=('GPL')

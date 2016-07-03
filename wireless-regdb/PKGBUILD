@@ -1,7 +1,7 @@
 
 pkgname=wireless-regdb
 pkgver=2016.06.10
-pkgrel=1
+pkgrel=2
 pkgdesc="Central Regulatory Domain Database"
 arch=('x86_64')
 url="http://wireless.kernel.org/en/developers/Regulatory/CRDA"

@@ -1,7 +1,7 @@
 
 pkgname=attr
 pkgver=2.4.47
-pkgrel=3
+pkgrel=4
 pkgdesc="Extended attribute support library for ACL support"
 arch=('x86_64')
 url="http://oss.sgi.com/projects/xfs/"

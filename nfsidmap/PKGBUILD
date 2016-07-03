@@ -2,7 +2,7 @@
 pkgname=nfsidmap
 pkgver=0.26
 _pkgver=0-26
-pkgrel=1
+pkgrel=2
 pkgdesc="Library to help mapping IDs, mainly for NFSv4"
 arch=('x86_64')
 url="http://www.citi.umich.edu/projects/nfsv4/linux/"

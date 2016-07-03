@@ -1,7 +1,7 @@
 
 pkgname=filesystem
 pkgver=2016.01
-pkgrel=1
+pkgrel=2
 _codename=2016
 pkgdesc='Base filesystem'
 arch=('x86_64')

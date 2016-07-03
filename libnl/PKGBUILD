@@ -2,7 +2,7 @@
 pkgname=libnl
 pkgver=3.2.27
 _pkgver=3_2_27
-pkgrel=1
+pkgrel=2
 pkgdesc="Library for applications dealing with netlink sockets"
 arch=('x86_64')
 url="http://www.infradead.org/~tgr/libnl/"

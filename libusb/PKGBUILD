@@ -1,7 +1,7 @@
 
 pkgname=libusb
 pkgver=1.0.20
-pkgrel=1
+pkgrel=2
 pkgdesc="Library that provides generic access to USB device"
 arch=('x86_64')
 url="http://libusb.info"
@@ -15,20 +15,20 @@ source=("http://sourceforge.net/projects/libusb/files/libusb-1.0/${pkgname}-${pk
 md5sums=('1d4eb194eaaa2bcfbba28102768c7dbf')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr --disable-static
-  make
+  make -j1
 }
 
 check() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   make check
 }
 
 package () {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR=${pkgdir} install
 }

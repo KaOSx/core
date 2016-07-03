@@ -1,7 +1,7 @@
 
 pkgname=hwids
 pkgver=20160421
-pkgrel=1
+pkgrel=2
 pkgdesc="Hardware identification databases"
 url="https://github.com/gentoo/hwids"
 license=('GPL2')

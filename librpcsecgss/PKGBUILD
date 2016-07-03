@@ -1,7 +1,7 @@
 
 pkgname=librpcsecgss
 pkgver=0.19
-pkgrel=3
+pkgrel=4
 pkgdesc="Library for RPCSECGSS support"
 arch=('x86_64')
 url="http://www.citi.umich.edu/projects/nfsv4/linux/"

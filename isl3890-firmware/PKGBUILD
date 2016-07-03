@@ -1,7 +1,7 @@
 
 pkgname=isl3890-firmware
 pkgver=2.13.25.0
-pkgrel=4
+pkgrel=5
 pkgdesc="Firmware for wireless card 3Com 3CRWE154G72"
 arch=('x86_64')
 url="http://wireless.kernel.org/en/users/Drivers/p54/devices"

@@ -1,7 +1,7 @@
 
 pkgname=usbutils
 pkgver=008
-pkgrel=2
+pkgrel=3
 pkgdesc="USB Device Utilities"
 arch=('x86_64')
 license=('GPL')

@@ -1,7 +1,7 @@
 
 pkgname=swig
 pkgver=3.0.10
-pkgrel=1
+pkgrel=2
 pkgdesc="A compiler that makes it easy to integrate C and C++ code with scripting languages"
 arch=('x86_64')
 url="http://www.swig.org/"

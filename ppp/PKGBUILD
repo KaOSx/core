@@ -1,7 +1,7 @@
 
 pkgname=ppp
 pkgver=2.4.7
-pkgrel=2
+pkgrel=3
 pkgdesc="Daemon which implements the Point-to-Point Protocol for dial-up networking"
 arch=('x86_64') 
 url="http://www.samba.org/ppp/"

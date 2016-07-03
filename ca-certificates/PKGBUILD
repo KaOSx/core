@@ -1,7 +1,7 @@
 
 pkgname=ca-certificates
 pkgver=20160104
-pkgrel=1
+pkgrel=2
 pkgdesc='Common CA certificates'
 arch=('x86_64')
 url='http://packages.qa.debian.org/c/ca-certificates.html'

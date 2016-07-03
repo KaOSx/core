@@ -1,7 +1,7 @@
 
 pkgname=libassuan
 pkgver=2.4.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A IPC library used by some GnuPG related software"
 arch=('x86_64')
 license=('GPL')

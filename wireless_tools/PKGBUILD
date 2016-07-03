@@ -2,7 +2,7 @@
 pkgname=wireless_tools
 pkgver=29.9
 _pkgver=30
-pkgrel=2
+pkgrel=3
 pkgdesc="Wireless Tools"
 arch=('x86_64')
 url="http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html"

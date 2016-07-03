@@ -1,7 +1,7 @@
 
 pkgname=libseccomp
 pkgver=2.3.1
-pkgrel=1
+pkgrel=2
 pkgdesc='Library that provides an easy to use, platform independent, interface to the Linux Kernel syscall filtering mechanism.'
 arch=('x86_64')
 license=('LGPL2.1')

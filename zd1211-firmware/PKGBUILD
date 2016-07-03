@@ -1,7 +1,7 @@
 
 pkgname=zd1211-firmware
 pkgver=1.5
-pkgrel=2
+pkgrel=3
 pkgdesc="Firmware for the in-kernel26 zd1211rw wireless driver"
 arch=('x86_64')
 url="http://zd1211.wiki.sourceforge.net/"

@@ -1,7 +1,7 @@
 
 pkgname=datefudge
 pkgver=1.21
-pkgrel=1
+pkgrel=2
 pkgdesc="A program (and preload library) to fake system date"
 arch=('x86_64')
 url="http://packages.qa.debian.org/d/datefudge.html"

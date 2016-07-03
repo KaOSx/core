@@ -1,7 +1,7 @@
 
 pkgname=kmod
 pkgver=22
-pkgrel=1
+pkgrel=2
 #_kver=4.0.5-1
 pkgdesc="Linux kernel module handling"
 arch=('x86_64')

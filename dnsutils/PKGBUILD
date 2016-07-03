@@ -3,7 +3,7 @@ pkgname=dnsutils
 # _pkver when P version used.
 pkgver=9.10.4.1
 _pkgver=9.10.4-P1
-pkgrel=1
+pkgrel=2
 pkgdesc="DNS utilities, tools, name resolver and domain name authority server"
 arch=('x86_64')
 url="https://www.isc.org/software/bind"

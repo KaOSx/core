@@ -1,7 +1,7 @@
 
 pkgname=b43-fwcutter
 pkgver=019
-pkgrel=2
+pkgrel=3
 pkgdesc="firmware extractor for the bcm43xx kernel module"
 url="http://wireless.kernel.org/en/users/Drivers/b43"
 depends=('glibc')

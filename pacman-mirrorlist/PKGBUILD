@@ -1,7 +1,7 @@
 
 pkgname=pacman-mirrorlist
 pkgver=20160622
-pkgrel=1
+pkgrel=2
 pkgdesc="KaOS mirror list for use by pacman"
 arch=('x86_64')
 url="http://www.archlinux.org/pacman/"

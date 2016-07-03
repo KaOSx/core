@@ -1,7 +1,7 @@
 
 pkgname=ed
 pkgver=1.13
-pkgrel=2
+pkgrel=3
 pkgdesc="A POSIX-compliant line editor"
 arch=('x86_64')
 license=('GPL')

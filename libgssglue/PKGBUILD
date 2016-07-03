@@ -1,7 +1,7 @@
 
 pkgname=libgssglue
 pkgver=0.4
-pkgrel=4
+pkgrel=5
 pkgdesc="Exports a gssapi interface which calls other random gssapi libraries"
 arch=('x86_64')
 url="http://www.citi.umich.edu/projects/nfsv4/linux/"

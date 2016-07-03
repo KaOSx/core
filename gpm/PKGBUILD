@@ -1,7 +1,7 @@
 
 pkgname=gpm
 pkgver=1.20.7
-pkgrel=4
+pkgrel=5
 pkgdesc="A mouse server for the console and xterm"
 arch=('x86_64')
 url="http://unix.schottelius.org/gpm/"

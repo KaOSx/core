@@ -2,7 +2,7 @@
 pkgname=bzr
 pkgver=2.7.0
 _pkgver=2.7
-pkgrel=1
+pkgrel=2
 pkgdesc="Bazaar is a version control system that helps you track project history over time and to collaborate easily with others."
 arch=('x86_64')
 url="http://bazaar.canonical.com/en/"

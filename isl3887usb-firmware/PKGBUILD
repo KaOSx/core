@@ -1,7 +1,7 @@
 
 pkgname=isl3887usb-firmware
 pkgver=2.13.25.0
-pkgrel=4
+pkgrel=5
 pkgdesc="Firmware for wireless cards using isl3887usb"
 arch=('x86_64')
 url="http://wireless.kernel.org/en/users/Drivers/p54/devices"

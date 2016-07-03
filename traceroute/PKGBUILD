@@ -1,7 +1,7 @@
 
 pkgname=traceroute
 pkgver=2.1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Tracks the route taken by packets over an IP network"
 arch=('x86_64')
 url="http://traceroute.sourceforge.net/"

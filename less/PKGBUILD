@@ -1,7 +1,7 @@
 
 pkgname=less
 pkgver=483
-pkgrel=1
+pkgrel=2
 pkgdesc="Terminal based program for viewing text files"
 license=('GPL3')
 arch=('x86_64')

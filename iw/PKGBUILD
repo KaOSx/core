@@ -1,7 +1,7 @@
 
 pkgname=iw
 pkgver=4.7
-pkgrel=1
+pkgrel=2
 pkgdesc="nl80211 based CLI configuration utility for wireless devices"
 arch=('x86_64')
 url="http://wireless.kernel.org/en/users/Documentation/iw"
