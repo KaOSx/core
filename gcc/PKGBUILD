@@ -4,22 +4,23 @@
 # http://www.linuxfromscratch.org/lfs/view/7.6/chapter06/gcc.html
 
 pkgname=('gcc' 'gcc-libs') 
-pkgver=4.9.3
-_pkgver=4.9
+pkgver=5.4.0
+_pkgver=5
 #_snapshot=4.8-20130718
-pkgrel=3
+_islver=0.15
+pkgrel=1
 pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
 url="http://gcc.gnu.org"
-makedepends=('binutils>=2.26' 'libmpc' 'cloog' 'doxygen')
+makedepends=('binutils>=2.26.1' 'libmpc' 'doxygen')
 checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
 source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2"
 #source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.bz2"
-        'isl-0.13.patch')
-md5sums=('6f831b4d251872736e8e9cc09746f327'
-         'db1ada9c85f31df28f35320615d17f34')
+        "ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2")
+md5sums=('4c626ac2a83ef30dfb9260e6f59c2b30'
+         '8428efbbc6f6e2810ce5c1ba73ecf98c')
 
   _basedir="gcc-${pkgver}"
   #_basedir="gcc-${_snapshot}"
@@ -27,6 +28,8 @@ md5sums=('6f831b4d251872736e8e9cc09746f327'
 
 build() {
   cd ${srcdir}/${_basedir}
+  
+  ln -s ../isl-${_islver} isl
 
   # Do not run fixincludes
   sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
@@ -35,7 +38,7 @@ build() {
   
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
   
-  patch -p1 -i ${srcdir}/isl-0.13.patch
+  #patch -p1 -i ${srcdir}/isl-0.13.patch
   
   # using -pipe causes test-suite failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=48565
@@ -43,23 +46,23 @@ build() {
   CXXFLAGS=${CXXFLAGS/-pipe/}
 
   cd ${srcdir}
-  mkdir gcc-build && cd gcc-build
+  mkdir gcc-build  
+  cd gcc-build
 
   ${srcdir}/${_basedir}/configure --prefix=/usr \
       --libdir=/usr/lib --libexecdir=/usr/lib \
       --mandir=/usr/share/man --infodir=/usr/share/info \
       --with-bugurl=https://github.com/KaOSx/core/issues \
       --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++ \
-      --enable-shared --enable-threads=posix \
-      --with-system-zlib --enable-__cxa_atexit \
+      --enable-shared --enable-threads=posix --enable-libmpx \
+      --with-system-zlib --with-isl --enable-__cxa_atexit \
       --disable-libunwind-exceptions --enable-clocale=gnu \
-      --disable-libstdcxx-pch --disable-libssp\
+      --disable-libstdcxx-pch --disable-libssp \
       --enable-gnu-unique-object --enable-linker-build-id \
-      --enable-cloog-backend=isl --disable-cloog-version-check --disable-isl-version-check\
       --enable-lto --enable-plugin --enable-install-libiberty \
-      --with-linker-hash-style=gnu  \
+      --with-linker-hash-style=gnu --enable-gnu-indirect-function \
       --disable-multilib --disable-werror \
-      --enable-checking=release
+      --enable-checking=release 
   make
 
   # make documentation
@@ -83,7 +86,6 @@ package_gcc-libs()
   groups=('base')
   depends=('glibc>=2.23')
   options=('!emptydirs' '!strip')
-  install=gcc-libs.install
   
   cd ${srcdir}/gcc-build
 
@@ -107,6 +109,8 @@ package_gcc-libs()
   make -C $CHOST/libobjc DESTDIR=${pkgdir} install-libs
   
   make -C $CHOST/libstdc++-v3/po DESTDIR=${pkgdir} install
+  
+  make -C $CHOST/libmpx DESTDIR=${pkgdir} install
 
   for lib in libgomp \
              libitm \
@@ -123,9 +127,8 @@ package_gcc-libs()
 package_gcc()
 {
   pkgdesc="The GNU Compiler Collection"
-  depends=("gcc-libs=$pkgver-$pkgrel" 'binutils>=2.26' 'libmpc' 'cloog')
+  depends=("gcc-libs=$pkgver-$pkgrel" 'binutils>=2.26.1' 'libmpc')
   groups=('base-devel')
-  install=gcc.install
   conflicts=('gcc-fortran'
              'gcc-objc'
              'gcc-ada'
@@ -171,8 +174,10 @@ package_gcc()
   rm $pkgdir/usr/lib/libgcc*
   rm $pkgdir/usr/lib/libgfortran.so*
   rm $pkgdir/usr/lib/libgomp.so*
+  rm $pkgdir/usr/lib/libgomp-plugin*
   rm $pkgdir/usr/lib/libitm.so*
   rm $pkgdir/usr/lib/liblsan*
+  rm $pkgdir/usr/lib/libmpx*
   rm $pkgdir/usr/lib/libobjc*
   rm $pkgdir/usr/lib/libquadmath*
   rm $pkgdir/usr/lib/libstdc++.so*

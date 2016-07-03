@@ -1,7 +1,7 @@
 
 pkgname=dejagnu
 pkgver=1.6
-pkgrel=2
+pkgrel=3
 pkgdesc="Framework for testing other programs"
 arch=('x86_64')
 url="http://www.gnu.org/software/dejagnu/"

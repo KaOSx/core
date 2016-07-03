@@ -3,14 +3,14 @@
 
 pkgname=glibc
 pkgver=2.23
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="http://www.gnu.org/software/libc"
 license=('GPL' 'LGPL')
 groups=('base')
-depends=('linux-api-headers>=4.4' 'tzdata')
-makedepends=('gcc>=4.9')
+depends=('linux-api-headers>=4.6' 'tzdata')
+makedepends=('gcc>=5.4')
 backup=(etc/gai.conf
         etc/locale.gen
         etc/nscd.conf)
