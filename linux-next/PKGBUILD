@@ -90,6 +90,9 @@ build() {
 
   # set extraversion to pkgrel
   sed -ri "s|^(EXTRAVERSION =).*|\1 -${pkgrel}|" Makefile
+  
+  export KBUILD_BUILD_USER="k"
+  export KBUILD_BUILD_HOST="`uname -m`.kaosx.us"
 
   # get kernel version
   make prepare

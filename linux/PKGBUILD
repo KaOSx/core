@@ -93,6 +93,9 @@ prepare() {
 build() {
   cd "${srcdir}/linux-${_basekernel}"
   
+  export KBUILD_BUILD_USER="k"
+  export KBUILD_BUILD_HOST="`uname -m`.kaosx.us"
+  
   # get kernel version
   make prepare
   
