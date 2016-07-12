@@ -2,8 +2,6 @@
 # KaOS repository mirrorlist
 #
 
-Server = http://mirror.dacentec.com/kaosx/$repo
-
 # Germany
 Server = http://mirror6.layerjet.com/kaos/$repo
 
@@ -24,6 +22,7 @@ Server = http://nyxi.eu/mirrors/kaos/$repo
 Server = http://ftp.wa.co.za/pub/kaos/$repo
 
 # United States
+Server = http://mirror.dacentec.com/kaosx/$repo
 Server = http://kaosx.tk/repo/$repo
 Server = https://repo.kaosx.us/$repo
 
