@@ -1,7 +1,7 @@
 
 pkgname=libgpg-error
-pkgver=1.23
-pkgrel=2
+pkgver=1.24
+pkgrel=1
 pkgdesc="Support library for libgcrypt"
 arch=('x86_64')
 url="http://www.gnupg.org"
@@ -9,7 +9,7 @@ license=('LGPL')
 depends=('glibc' 'sh')
 options=('!libtool')
 source=("ftp://ftp.gnupg.org/gcrypt/libgpg-error/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('5bc2d7ec28f91f883fb6f23d5c784ca7')
+md5sums=('feb42198c0aaf3b28eabe8f41a34b983')
 
 build() {
   cd ${pkgname}-${pkgver}

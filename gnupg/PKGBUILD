@@ -1,19 +1,19 @@
 
 pkgname=gnupg
-pkgver=2.1.13
-pkgrel=2
+pkgver=2.1.14
+pkgrel=1
 pkgdesc="GNU Privacy Guard 2 - a PGP replacement tool"
 arch=('x86_64')
 license=('GPL')
 url="http://www.gnupg.org/"
 depends=('libldap' 'curl' 'bzip2' 'zlib' 'libksba' 'libgcrypt' 'libgpg-error'
-	 'npth' 'libassuan' 'texinfo' 'readline' 'pinentry' 'gnutls') # 'libusb')
+        'npth' 'libassuan' 'texinfo' 'readline' 'pinentry' 'gnutls') # 'libusb')
 # https://www.gnupg.org/faq/whats-new-in-2.1.html
 conflicts=('gnupg2' 'dirmngr')
 provides=("gnupg2=${pkgver}" 'dirmngr')
 replaces=('gnupg2' 'dirmngr')
 source=("ftp://ftp.gnupg.org/gcrypt/gnupg/gnupg-$pkgver.tar.bz2")
-md5sums=('6aa46856e4f39b1b559792f003aae986')
+md5sums=('46cf0a42ffad6c2615cafd633580b2de')
 
 build() {
 	cd gnupg-$pkgver
@@ -40,6 +40,6 @@ package() {
 	ln -s gpg2 ${pkgdir}/usr/bin/gpg
 	ln -s gpgv2 ${pkgdir}/usr/bin/gpgv
 	ln -s gpg2.1.gz ${pkgdir}/usr/share/man/man1/gpg.1.gz
-	rm ${pkgdir}/usr/share/gnupg/com-certs.pem 
+	#rm ${pkgdir}/usr/share/gnupg/com-certs.pem 
 }
 
