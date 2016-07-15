@@ -1,7 +1,7 @@
 
 pkgname=guile
-pkgver=2.0.11
-pkgrel=5
+pkgver=2.0.12
+pkgrel=1
 pkgdesc="GNU Ubiquitous Intelligent Language for Extensions, the official extension language for the GNU operating system"
 url="http://www.gnu.org/software/guile/"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL')
 depends=('gmp' 'libltdl' 'ncurses' 'texinfo' 'gc' 'libffi' 'libunistring')
 source=("ftp://ftp.gnu.org/pub/gnu/guile/${pkgname}-${pkgver}.tar.gz")
 options=('!libtool')
-md5sums=('e532c68c6f17822561e3001136635ddd')
+md5sums=('666000e0842a81c81fbbb48c7c5c27ef')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -25,5 +25,5 @@ package() {
   make DESTDIR=${pkgdir} install
   
   # stop elfutils warnings
-  rm $pkgdir/usr/lib/libguile-2.0.so.22.7.2-gdb.scm
+  #rm $pkgdir/usr/lib/libguile-2.0.so.22.7.2-gdb.scm
 }
