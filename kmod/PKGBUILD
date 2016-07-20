@@ -1,7 +1,7 @@
 
 pkgname=kmod
-pkgver=22
-pkgrel=2
+pkgver=23
+pkgrel=1
 #_kver=4.0.5-1
 pkgdesc="Linux kernel module handling"
 arch=('x86_64')
@@ -9,13 +9,13 @@ url='http://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary'
 license=('GPL2')
 depends=('glibc' 'zlib')
 options=('!libtool')
-source=("ftp://ftp.kernel.org/pub/linux/utils/kernel/kmod/$pkgname-$pkgver.tar.xz"
+source=("ftp://ftp.kernel.org/pub/linux/utils/kernel/kmod/${pkgname}-${pkgver}.tar.xz"
         "depmod-search.conf")
-md5sums=('4371b847f3fbfaa4e9aa890ad616748f'
+md5sums=('3cf469f40ec2ed51f56ba45ea03793e7'
          '9ae9acc68ca27134f55a0959073b8e53')
 
 build() {
-  cd "$pkgname-$pkgver"
+  cd ${pkgname}-${pkgver}
 
   ./configure \
     --sysconfdir=/etc \
@@ -25,23 +25,23 @@ build() {
 }
 
 check() {
-  make -C "$pkgname-$pkgver" check 
+  make -C ${pkgname}-${pkgver} check 
 }
 
 package() {
-  make -C "$pkgname-$pkgver" DESTDIR="$pkgdir" install
+  make -C${pkgname}-${pkgver} DESTDIR=${pkgdir} install
 
   # extra directories
-  install -dm755 "$pkgdir"/{etc,usr/lib}/{depmod,modprobe}.d "$pkgdir/sbin"
+  install -dm755 ${pkgdir}/{etc,usr/lib}/{depmod,modprobe}.d ${pkgdir}/sbin
   
   # add symlinks to kmod
-  ln -s ../usr/bin/kmod "$pkgdir/sbin/modprobe"
-  ln -s ../usr/bin/kmod "$pkgdir/sbin/depmod"
+  ln -s ../usr/bin/kmod ${pkgdir}/sbin/modprobe
+  ln -s ../usr/bin/kmod ${pkgdir}/sbin/depmod
 
   for tool in {ins,ls,rm,dep}mod mod{probe,info}; do
-    ln -s kmod "$pkgdir/usr/bin/$tool"
+    ln -s kmod ${pkgdir}/usr/bin/$tool
   done
 
   # install depmod.d file for search/ dir
-  install -Dm644 "$srcdir/depmod-search.conf" "$pkgdir/usr/lib/depmod.d/search.conf"
+  install -Dm644 ${srcdir}/depmod-search.conf ${pkgdir}/usr/lib/depmod.d/search.conf
 }
