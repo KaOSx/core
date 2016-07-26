@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=230
-pkgrel=2
+pkgver=231
+pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -39,7 +39,7 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'KaOS_fallback.conf'
         'splash.bmp'
         'systemd-tmpfiles.hook')
-md5sums=('f2f10a6f100c38582b4f02d60210227d'
+md5sums=('e6fa7f4a9c06f0427ff0539a90c69390'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -69,7 +69,6 @@ build() {
       --enable-gnuefi \
       --disable-audit \
       --disable-ima \
-      --disable-kdbus \
       --disable-networkd \
       --without-python \
       --with-default-dnssec=no \
