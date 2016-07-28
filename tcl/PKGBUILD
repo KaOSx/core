@@ -1,18 +1,18 @@
 
 pkgname=tcl
-pkgver=8.6.5
+pkgver=8.6.6
 _pkgver=8.6
-pkgrel=3
+pkgrel=1
 pkgdesc="The Tcl scripting language"
 arch=('x86_64')
 url="http://tcl.sourceforge.net/"
 license=('custom')
 depends=('glibc' 'zlib')
 source=("http://downloads.sourceforge.net/sourceforge/tcl/tcl${pkgver}-src.tar.gz")
-md5sums=('142c042eac036af6ee5c4b889874c41d')
+md5sums=('5193aea8107839a79df8ac709552ecb7')
 
 build() {
-  cd ${srcdir}/tcl${pkgver}/unix
+  cd tcl${pkgver}/unix
   # Already in sqlite3:
   rm -rf ${srcdir}/tcl${pkgver}/pkgs/sqlite3*
 
@@ -27,14 +27,14 @@ build() {
 }
 
 check() {
-  cd ${srcdir}/tcl${pkgver}/unix
+  cd tcl${pkgver}/unix
   
   #make test
 }
 
 package()
 {
-  cd ${srcdir}/tcl${pkgver}/unix
+  cd tcl${pkgver}/unix
   
   make INSTALL_ROOT=${pkgdir} install install-private-headers
   ln -sf tclsh${_pkgver} ${pkgdir}/usr/bin/tclsh
