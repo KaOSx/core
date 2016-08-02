@@ -2,6 +2,9 @@
 # KaOS repository mirrorlist
 #
 
+# Default mirror, Frankfurt, Germany
+Server = https://kaos-frankfurt.tk/repo/$repo
+
 # Australia
 Server = http://45.32.188.144/repo/$repo
 
