@@ -1,7 +1,7 @@
 
 pkgname=logrotate
-pkgver=3.9.2
-pkgrel=2
+pkgver=3.10.0
+pkgrel=1
 pkgdesc="Rotates system logs automatically"
 url='https://github.com/logrotate/logrotate'
 arch=('x86_64')
@@ -14,7 +14,7 @@ source=("https://github.com/logrotate/logrotate/archive/${pkgver}.tar.gz"
         'logrotate.service'
         'logrotate.timer'
         'path.patch')
-md5sums=('584bca013dcceeb23b06b27d6d0342fb'
+md5sums=('3995acb2791a8dfd81b5ffc0046d0e71'
          '416de14f92ef4361adad8b6e7065245a'
          '57039a96a716391fad46c7eb1bf47b52'
          '287c2ad9b074cb5478db7692f385827c'
