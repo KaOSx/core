@@ -1,34 +1,33 @@
 
 pkgname=net-tools
-pkgver=1.60.4
-_commit=bd8bceaed2311651710331a7f8990c3e31be9840
-pkgrel=2
+pkgver=1.60.5
+_commit=115f1af2494ded1fcd21c8419d5e289bc4df380f
+pkgrel=1
 pkgdesc="Configuration tools for Linux networking"
 arch=('x86_64')
 license=('GPL')
-url="http://www.tazenda.demon.co.uk/phil/net-tools"
+url="https://sourceforge.net/projects/net-tools/"
 groups=('base')
 depends=('glibc')
-makedepends=('git')
 source=("http://sourceforge.net/code-snapshots/git/n/ne/net-tools/code.git/net-tools-code-${_commit}.zip")
 options=('!makeflags')
-md5sums=('3196ca64d2a1b789cf44c11ccac2de26')
+md5sums=('243819dfa4505832f74bd436d3389148')
 
 build() {
-  cd ${srcdir}/${pkgname}-code-${_commit}
+  cd ${pkgname}-code-${_commit}
   
   yes "" | make
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-code-${_commit}
+  cd ${pkgname}-code-${_commit}
   make DESTDIR=${pkgdir} update
 
   # the following is provided by yp-tools
-  rm "${pkgdir}"/bin/{nis,yp}domainname
-  rm "${pkgdir}"/usr/share/man/man1/{nis,yp}domainname.1
+  rm ${pkgdir}/bin/{nis,yp}domainname
+  rm ${pkgdir}/usr/share/man/man1/{nis,yp}domainname.1
 
   # hostname is provided by inetutils
-  rm "${pkgdir}"/bin/{hostname,dnsdomainname,domainname}
-  rm -rf "${pkgdir}"/usr/share/man/man1
+  rm ${pkgdir}/bin/{hostname,dnsdomainname,domainname}
+  rm -rf ${pkgdir}/usr/share/man/man1
 }

@@ -1,8 +1,8 @@
 
 pkgname=xfsprogs
-pkgver=4.5.0
-_pkgver=4.5.0
-pkgrel=2
+pkgver=4.7.0
+_pkgver=4.7.0
+pkgrel=1
 pkgdesc="XFS filesystem utilities"
 arch=('x86_64')
 license=('LGPL')
@@ -11,10 +11,10 @@ groups=('base')
 depends=('util-linux')
 options=('!makeflags' '!libtool')
 source=("ftp://oss.sgi.com/projects/xfs/cmd_tars/${pkgname}-${_pkgver}.tar.gz")
-md5sums=('fcba94b6c74b726dac956d7a650c0c31')
+md5sums=('ae82b0ab63e89cfda52fb9859855bafa')
 
 build() {
-  cd "${srcdir}/${pkgname}-${_pkgver}"
+  cd ${pkgname}-${_pkgver}
   
   export OPTIMIZER="-march=${CARCH/_/-} -O1"
   export DEBUG=-DNDEBUG
@@ -23,12 +23,12 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${_pkgver}" 
-  make DIST_ROOT="${pkgdir}" install install-dev
+  cd ${pkgname}-${_pkgver}
+  make DIST_ROOT=${pkgdir} install install-dev
   
-  chown -R root $pkgdir
-  chgrp -R root $pkgdir
-  mv "${pkgdir}"/lib/libhandle.so* "${pkgdir}/usr/lib/"
-  rm -rf "${pkgdir}/lib"
+  chown -R root ${pkgdir}
+  chgrp -R root ${pkgdir}
+  mv ${pkgdir}/lib/libhandle.so* ${pkgdir}/usr/lib/
+  rm -rf ${pkgdir}/lib
 }
 
