@@ -1,7 +1,7 @@
 
 pkgname=diffutils
-pkgver=3.3
-pkgrel=5
+pkgver=3.4
+pkgrel=1
 pkgdesc="Utility programs used for creating patch files"
 arch=('x86_64')
 url="http://www.gnu.org/software/diffutils"
@@ -9,12 +9,12 @@ license=('GPL3')
 groups=('base')
 depends=('glibc' 'sh')
 source=("ftp://ftp.gnu.org/gnu/diffutils/${pkgname}-${pkgver}.tar.xz")
-md5sums=('99180208ec2a82ce71f55b0d7389f1b3')
+md5sums=('df9ca465f30307cffd03da176a43a5d4')
 
 build() {
   cd ${pkgname}-${pkgver}
   # copyright test fails, known upstream, fixed for next release, disable this 1 test
-  echo 'exit 0' > gnulib-tests/test-update-copyright.sh || die
+  #echo 'exit 0' > gnulib-tests/test-update-copyright.sh || die
   
   ./configure --prefix=/usr \
     --with-packager="KaOS" \
