@@ -1,9 +1,9 @@
 
 pkgbase="sqlite"
 pkgname=('sqlite' 'sqlite-tcl' 'sqlite-doc') 
-_amalgamationver=3140000
-_docver=3140000
-pkgver=3.14.0
+_amalgamationver=3140100
+_docver=3140100
+pkgver=3.14.1
 pkgrel=1
 pkgdesc="A C library that implements an SQL database engine"
 arch=('x86_64')
@@ -11,11 +11,11 @@ license=('custom')
 url="http://www.sqlite.org/"
 makedepends=('tcl' 'readline>=6.0.00')
 source=("http://www.sqlite.org/2016/sqlite-autoconf-$_amalgamationver.tar.gz"
-	"http://www.sqlite.org/2016/sqlite-doc-${_docver}.zip"
-	'license.txt')
+        "http://www.sqlite.org/2016/sqlite-doc-${_docver}.zip"
+        'license.txt')
 options=('!libtool' '!emptydirs' '!makeflags')
-md5sums=('1813c764b0ee422adcd1978ea73a3445'
-         '3f1f750445c1fa50b5d4d2185553ac8b'
+md5sums=('3634a90a3f49541462bcaed3474b2684'
+         '494287b4dc0d2696e0ca1e7462e518da'
          'c1cdbc5544034d9012e421e75a5e4890')
 
 build() {
