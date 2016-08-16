@@ -34,21 +34,22 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'intel_ucode_in-kernel_fw_with_initrd_test.patch'
         'btrfs-crash-fix.patch')
 md5sums=('5276563eb1f39a048e4a8a887408c031'
-         '59d1af310bf583b93ad2c18b5834a742'
-         'ad43fba30f7c3f50f6bf4edeb5776e75'
-         'c6f83060c8329f3d3eaec5241640df56'
-         '807a5f9ef724151c84245f3b841c14b0'
-         '64e87d44eb9ed8fcd6c1b186f8e7c624'
-         '7a9403985b1a18e2c65e2f30853f387e'
-         '55da4f9afb8a65ff67447f3501c04310'
+         '6be2a0822e942f00570dc7998c3e308c'
+         '3045aceec0ccf6b1abcb97c976fdcc27'
+         '8f27c5c81ba413e043e6d89ba0d684f9'
+         'ea2e794f3c4d58154613e2614d7a4d2c'
+         '7cbdfb1ad2a75a4fffc0834a0cf974c9'
+         '95f240eab494d7c14a74b60ba7e7fd96'
+         '4a4f05580a36501bc8032601cd2cf00f'
          '260b2e47579140f61546f37d90e0b527'
-         '8611800f1fb9af44c47d49ab2f9d91bd'
-         '45a3e0a14a8ed527ca21e521a71a25e3'
-         '68694f289d3debb692b9dd32b05d1dc2'
+         '97d061f2179c49d28c75a76aad131a3c'
+         '322bbecd301047e85c4ae1044c17fcda'
+         '4083e94bf2ca74732596800a1ff12221'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47'
-         '84e8cd974858406175887645d6e5c173')
+         '84e8cd974858406175887645d6e5c173'
+         '38ae3698b34615d59e5524c284bdc6fa')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
