@@ -1,7 +1,7 @@
 
 pkgname=util-linux
 pkgver=2.28.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -35,7 +35,7 @@ md5sums=('e2d863efaf4fd330a42c5efe9f1b02b4'
          'fa85e5cce5d723275b14365ba71a8aad'
          '6116b8e199a3dfd26a085a67a718435d'
          '477237985820117a0e6e1b13a86eb599'
-         '7464f86d346b22dd07b433c341a33aab'
+         '34959361be0e1c13c24ce6af84e1eb22'
          '477237985820117a0e6e1b13a86eb599'
          '6969307eef026979703a6eba33c2e3eb')
 
