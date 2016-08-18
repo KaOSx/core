@@ -1,6 +1,6 @@
 
 pkgname=efibootmgr
-pkgver=0.12.2
+pkgver=13
 _commit=0bb83cf5640ef834eb4c32a146d140c40034247b
 pkgrel=1
 pkgdesc="Tool to modify UEFI Firmware Boot Manager Variables."
@@ -9,12 +9,12 @@ url="https://github.com/rhinstaller/efibootmgr"
 license=('GPL2')
 depends=('zlib' 'pciutils' 'efivar')
 options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
-#source=("https://github.com/rhinstaller/efibootmgr/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.bz2")
-source=("https://github.com/rhinstaller/efibootmgr/archive/${_commit}.zip")
-md5sums=('175576e1be35fcceb1676d803cca621e')
+source=("https://github.com/rhinstaller/efibootmgr/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.bz2")
+#source=("https://github.com/rhinstaller/efibootmgr/archive/${_commit}.zip")
+md5sums=('77d07acffe5b6f1ac4857088f12c35fb')
 
 build () {	
-	cd ${pkgname}-${_commit}/
+	cd ${pkgname}-${pkgver}/
 	
 	make EXTRA_CFLAGS="-Os"
 	echo
@@ -22,7 +22,7 @@ build () {
 
 
 package() {
-    cd ${pkgname}-${_commit}/
+    cd ${pkgname}-${pkgver}/
         
     install -d ${pkgdir}/usr/bin/
     install -d ${pkgdir}/usr/share/man/man8/
