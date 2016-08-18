@@ -2,7 +2,7 @@
 pkgname=efivar
 _pkgname=vathpela-efivar
 _commit=70e63d4
-pkgver=26
+pkgver=27
 pkgrel=1
 pkgdesc="Library to manipulate EFI variables"
 arch=('x86_64')
@@ -10,9 +10,10 @@ url="https://github.com/rhinstaller/efivar"
 license=('LGPL2.1')
 depends=('popt')
 options=('zipman' 'docs' '!makeflags')
-source=("https://github.com/rhinstaller/efivar/releases/download/${pkgver}/efivar-${pkgver}.tar.bz2"
+#source=("https://github.com/rhinstaller/efivar/releases/download/${pkgver}/efivar-${pkgver}.tar.bz2"
+source=("https://github.com/rhinstaller/efivar/archive/${pkgver}.tar.gz"
         'compiler.patch')
-md5sums=('84aaf1924413f0d394e02f63bbafb3db'
+md5sums=('ee8bfff6decefd0535b7d05b28376c1a'
          '76d1d1cc85f021ea9d820395af8fa8d4')
 
 build() {
