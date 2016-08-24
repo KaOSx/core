@@ -1,7 +1,7 @@
 
 pkgname=openvpn
-pkgver=2.3.11
-pkgrel=2
+pkgver=2.3.12
+pkgrel=1
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
 url="http://openvpn.net/index.php/open-source.html"
@@ -11,13 +11,13 @@ backup=(usr/share/openvpn/easy-rsa/vars
         usr/share/openvpn/easy-rsa/openssl.cnf)
 source=("http://swupdate.openvpn.net/community/releases/openvpn-${pkgver}.tar.xz"
         "https://github.com/OpenVPN/easy-rsa/archive/3.0.1.tar.gz"
-	'openvpn@.service')
-md5sums=('fe17a25235d65e60af8986c6c78c4650'
+        'openvpn@.service')
+md5sums=('63326bab2ebb9efe3c7becaa4f15e1c1'
          'aa58cbecda1d5ed6df6bb65e990e42a1'
          'c0275a1192a7e3c0a167a0dc4809dbaa')
 
 build() {
-  cd $srcdir/$pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   
   # Build openvpn
   CFLAGS="$CFLAGS -DPLUGIN_LIBDIR=\\\"/usr/lib/openvpn\\\""
@@ -36,21 +36,21 @@ build() {
 }
 
 package() {
-  cd $srcdir/$pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   # Install openvpn
-  make DESTDIR=$pkgdir install
-  install -d -m755 $pkgdir/etc/openvpn
+  make DESTDIR=${pkgdir} install
+  install -d -m755 ${pkgdir}/etc/openvpn
 
-  install -d -m755 $pkgdir/usr/share/openvpn
-  cp -r sample/sample-config-files $pkgdir/usr/share/openvpn/examples
+  install -d -m755 ${pkgdir}/usr/share/openvpn
+  cp -r sample/sample-config-files ${pkgdir}/usr/share/openvpn/examples
 
-  install -D -m644 COPYING $pkgdir/usr/share/licenses/$pkgname/COPYING
+  install -D -m644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/COPYING
 
-  install -d -m755 $pkgdir/usr/share/openvpn/contrib
-  cp -r contrib $pkgdir/usr/share/openvpn
+  install -d -m755 ${pkgdir}/usr/share/openvpn/contrib
+  cp -r contrib ${pkgdir}/usr/share/openvpn
   
   # Install easy-rsa
-  cd $srcdir/easy-rsa-3.0.1
+  cd ${srcdir}/easy-rsa-3.0.1
   install -d ${pkgdir}/usr/share/doc/easy-rsa/
   mv doc/* ${pkgdir}/usr/share/doc/easy-rsa/
   rmdir doc
@@ -61,5 +61,5 @@ package() {
   mv easyrsa3/* ${pkgdir}/usr/share/easy-rsa/
   
   # install systemd units
-  install -Dm644 "$srcdir/openvpn@.service" "$pkgdir/usr/lib/systemd/system/openvpn@.service"
+  install -Dm644 ${srcdir}/openvpn@.service ${pkgdir}/usr/lib/systemd/system/openvpn@.service
 }
