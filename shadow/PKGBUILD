@@ -1,10 +1,10 @@
 
 pkgname=shadow
-pkgver=4.2.1
-pkgrel=3
+pkgver=4.3.1
+pkgrel=1
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
-url='http://pkg-shadow.alioth.debian.org/'
+url='https://github.com/shadow-maint/shadow'
 license=('BSD')
 groups=('base')
 depends=('bash' 'pam' 'acl')
@@ -15,7 +15,7 @@ backup=(etc/login.defs
         etc/default/useradd)
 options=('!libtool')
 install='shadow.install'
-source=("http://pkg-shadow.alioth.debian.org/releases/${pkgname}-${pkgver}.tar.xz"
+source=("https://github.com/shadow-maint/shadow/archive/${pkgver}.tar.gz"
         'LICENSE'
         'chgpasswd'
         'chpasswd'
@@ -28,7 +28,7 @@ source=("http://pkg-shadow.alioth.debian.org/releases/${pkgname}-${pkgver}.tar.x
         'useradd.defaults'
         'xstrdup.patch'
         'shadow-strncpy-usage.patch')
-md5sums=('2bfafe7d4962682d31b5eba65dba4fc8'
+md5sums=('b6b48ef1af4eb088937c8cc47e317009'
          'bdf93c7bc4b751277159c5de8fc34df2'
          '65e9ebce249a5b9ed021e2790452b9e1'
          'f6760e9701d7ed2cd91371d427faed2a'
@@ -43,7 +43,7 @@ md5sums=('2bfafe7d4962682d31b5eba65dba4fc8'
          '8a9152e7448a0f9d1d07ed0016776e16')
 
 build() {
-  cd "${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   # avoid transitive linking issues with binutils 2.22
   sed -i '/^user\(mod\|add\)_LDADD/s|$| -lattr|' src/Makefile.am
@@ -51,12 +51,16 @@ build() {
   # link to glibc's crypt(3)
   LDFLAGS+=" -lcrypt"
 
-  patch -p1 <"${srcdir}/xstrdup.patch"
-  patch -p1 <"${srcdir}/shadow-strncpy-usage.patch"
+  patch -p1 -i ${srcdir}/xstrdup.patch
+  patch -p1 -i ${srcdir}/shadow-strncpy-usage.patch
 
   # supress etc/pam.d/*
-  sed -i '/^SUBDIRS/s/pam.d//' etc/Makefile.in
+  sed -i '/^SUBDIRS/s/pam.d//' etc/Makefile.am
+  
+  sed -i 's|--without-libpam|--with-libpam|' autogen.sh
+  sed -i 's|--with-selinux|--without-selinux|' autogen.sh
 
+  ./autogen.sh
   ./configure \
     --prefix=/usr \
     --libdir=/lib \
@@ -64,21 +68,21 @@ build() {
     --sysconfdir=/etc \
     --with-libpam \
     --with-group-name-max-length=32 \
-    --without-selinux
+    --with-selinux=no
 
   make
 }
 
 package() {
-  cd "${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR=${pkgdir} install
 
   # license
-  install -Dm644 "${srcdir}/LICENSE" "${pkgdir}/usr/share/licenses/shadow/LICENSE"
+  install -Dm644 ${srcdir}/LICENSE ${pkgdir}/usr/share/licenses/shadow/LICENSE
 
   # useradd defaults
-  install -Dm644 "$srcdir/useradd.defaults" "${pkgdir}/etc/default/useradd"
+  install -Dm644 ${srcdir}/useradd.defaults ${pkgdir}/etc/default/useradd
 
   # systemd timer
   install -D -m644 ${srcdir}/shadow.timer ${pkgdir}/usr/lib/systemd/system/shadow.timer
@@ -87,33 +91,33 @@ package() {
   ln -s ../shadow.timer ${pkgdir}//usr/lib/systemd/system/multi-user.target.wants/shadow.timer
 
   # login.defs
-  install -Dm644 "${srcdir}/login.defs" "${pkgdir}/etc/login.defs"
+  install -Dm644 ${srcdir}/login.defs ${pkgdir}/etc/login.defs
 
   # PAM config - custom
-  install -dm755 "${pkgdir}/etc/pam.d"
-  install -t "${pkgdir}/etc/pam.d" -m644 "${srcdir}"/{passwd,chgpasswd,chpasswd,newusers}
+  install -dm755 ${pkgdir}/etc/pam.d
+  install -t ${pkgdir}/etc/pam.d -m644 ${srcdir}/{passwd,chgpasswd,chpasswd,newusers}
 
   # PAM config - from tarball
-  install -Dm644 etc/pam.d/groupmems "${pkgdir}/etc/pam.d/groupmems"
+  install -Dm644 etc/pam.d/groupmems ${pkgdir}/etc/pam.d/groupmems
 
   # we use the 'useradd' PAM file for other similar utilities
   for file in chage groupadd groupdel groupmod shadow \
       useradd usermod userdel; do
-    install -Dm644 "${srcdir}/defaults.pam" "${pkgdir}/etc/pam.d/$file"
+    install -Dm644 ${srcdir}/defaults.pam ${pkgdir}/etc/pam.d/$file
   done
 
   # Remove utilities provided by util-linux
   rm \
-      "$pkgdir"/usr/bin/{chsh,chfn,sg} \
-      "$pkgdir"/bin/{login,su} \
-      "$pkgdir"/usr/sbin/{vipw,vigr} \
-      "$pkgdir"/sbin/nologin
+      ${pkgdir}/usr/bin/{chsh,chfn,sg} \
+      ${pkgdir}/bin/{login,su} \
+      ${pkgdir}/usr/sbin/{vipw,vigr} \
+      ${pkgdir}/sbin/nologin
 
   # but we keep newgrp, as sg is really an alias to it
-  mv "$pkgdir"/usr/bin/{newgrp,sg}
+  mv ${pkgdir}/usr/bin/{newgrp,sg}
 
   # ...and their many man pages
-  find "$pkgdir"/usr/share/man \
+  find ${pkgdir}/usr/share/man \
       '(' -name 'chsh.1'  -o \
           -name 'chfn.1'  -o \
           -name 'su.1'    -o \
@@ -124,6 +128,6 @@ package() {
           -name 'newgrp.1' ')' \
       -delete
   rmdir \
-      "$pkgdir"/usr/share/man/{fi,id,zh_TW}/man1 \
-      "$pkgdir"/usr/share/man/{fi,ko/man8}
+      ${pkgdir}/usr/share/man/{fi,id,zh_TW}/man1 \
+      ${pkgdir}/usr/share/man/{fi,ko/man8}
 }
