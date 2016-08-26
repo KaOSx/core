@@ -1,14 +1,14 @@
 
 pkgname=elfutils
-pkgver=0.166
-pkgrel=2
+pkgver=0.167
+pkgrel=1
 pkgdesc="Collection of libraries and utilities for working with ELF object files and DWARF debugging information."
 arch=('x86_64')
 url="https://fedorahosted.org/elfutils/"
 license=('LGPL3' 'GPL' 'GPL3')
 depends=('gcc-libs' 'zlib' 'bzip2' 'xz')
 source=("https://fedorahosted.org/releases/e/l/elfutils/${pkgver}/elfutils-${pkgver}.tar.bz2")
-md5sums=('d4e462b7891915dc5326bccefa2024ff')
+md5sums=('efc6c2067dfad5646777e93e85222e8f')
 
 build() {
   cd ${pkgname}-${pkgver}
