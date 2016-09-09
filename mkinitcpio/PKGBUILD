@@ -1,6 +1,6 @@
 
 pkgname=mkinitcpio
-pkgver=20
+pkgver=21
 pkgrel=1
 pkgdesc="Modular initramfs image creation utility"
 arch=('x86_64')
@@ -15,7 +15,7 @@ backup=('etc/mkinitcpio.conf')
 source=("https://sources.archlinux.org/other/mkinitcpio/${pkgname}-${pkgver}.tar.gz"
         'init.diff')
 install=mkinitcpio.install
-md5sums=('ea812dc1dbcba48f0651e94553dc0ce6'
+md5sums=('e1d32f25095f427e351fa24f0d81f699'
          '5bce3b1cf3de654151d5522086431624')
 
 build() {
