@@ -1,6 +1,6 @@
 
 pkgname=texinfo
-pkgver=6.2
+pkgver=6.3
 pkgrel=1
 pkgdesc="Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file"
 arch=('x86_64')
@@ -8,16 +8,16 @@ url="http://www.gnu.org/software/texinfo/"
 license=('GPL3')
 groups=('base')
 depends=('ncurses' 'findutils' 'gzip' 'sh' 'perl')
-source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+source=("https://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
         'texinfo-install.hook'
         'texinfo-remove.hook')
-md5sums=('2e9954ba5939f5fca1daa6aac1027eb2'
+md5sums=('32baefe5c7080dfb512a4eac5ce67b2a'
          '9a98fb162650ff3065f9a4ebec22db36'
          '5590fb3ef9ec309c98f5a4d85eca49da')
 
 build() {
    cd ${pkgname}-${pkgver}
-   sed -i 's|6.0|6.2|' tp/Texinfo/Convert/XSParagraph/TestXS.pm
+   #sed -i 's|6.0|6.2|' tp/Texinfo/Convert/XSParagraph/TestXS.pm
    
    ./configure --prefix=/usr --libexecdir=/usr/lib
    make

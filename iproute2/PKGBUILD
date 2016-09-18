@@ -11,7 +11,7 @@ makedepends=('iptables')
 options=('!makeflags')
 backup=('etc/iproute2/ematch_map' 'etc/iproute2/rt_dsfield' 'etc/iproute2/rt_protos' \
         'etc/iproute2/rt_realms' 'etc/iproute2/rt_scopes' 'etc/iproute2/rt_tables')
-source=("http://www.kernel.org/pub/linux/utils/net/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+source=("https://www.kernel.org/pub/linux/utils/net/${pkgname}/${pkgname}-${pkgver}.tar.xz"
         'iproute2-fhs.patch')
 md5sums=('d4b205830cdc2702f8a0cbd6232129cd'
          '80f2f7a2c7dd2a01d6c8234145d94561')
