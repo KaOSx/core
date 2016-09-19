@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.8-rc6
+_basekernel=4.8-rc7
 _srcname=linux-4.8
-pkgver=4.8RC6
+pkgver=4.8RC7
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -12,7 +12,7 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode')
 options=('!strip')
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.8-rc6.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.8-rc7.tar.xz"
         #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -32,9 +32,9 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.8-rc6.tar.
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch'
         'intel_ucode_in-kernel_fw_with_initrd_test.patch')
-md5sums=('d52ab34af191e43750b74acbba988071'
+md5sums=('d46744eef99663d55a18e82474d8ad00'
          #'803bdedd9b9cd4ef43d9d5d41801f234'
-         '85fb8a4bfc53ea3924334dfd872b9b9e'
+         '00854c983e9ddee5c496b5325adee5cc'
          '3045aceec0ccf6b1abcb97c976fdcc27'
          '8f27c5c81ba413e043e6d89ba0d684f9'
          'ea2e794f3c4d58154613e2614d7a4d2c'
