@@ -1,10 +1,10 @@
---- Makefile.shared.orig	2016-08-25 13:28:27.586203917 -0400
-+++ Makefile.shared	2016-08-25 13:30:00.053286991 -0400
-@@ -176,7 +176,7 @@
- 	ALLSYMSFLAGS='-Wl,--whole-archive'; \
+--- Makefile.shared.no-rpath	2005-06-23 22:47:54.000000000 +0200
++++ Makefile.shared	2005-11-16 22:35:37.000000000 +0100
+@@ -153,7 +153,7 @@
  	NOALLSYMSFLAGS='-Wl,--no-whole-archive'; \
- 	$(DO_GNU_SO_COMMON)
--DO_GNU_APP=LDFLAGS="$(CFLAGS) $(LDFLAGS) -Wl,-rpath,$(LIBRPATH)"
+ 	SHAREDFLAGS="$(CFLAGS) $(SHARED_LDFLAGS) -shared -Wl,-Bsymbolic -Wl,-soname=$$SHLIB$$SHLIB_SOVER$$SHLIB_SUFFIX"
+ 
+-DO_GNU_APP=LDFLAGS="$(CFLAGS) -Wl,-rpath,$(LIBRPATH)"
 +DO_GNU_APP=LDFLAGS="$(CFLAGS)"
  
  #This is rather special.  It's a special target with which one can link

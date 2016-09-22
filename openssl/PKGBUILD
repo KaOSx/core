@@ -1,7 +1,7 @@
 
 pkgname=openssl
-pkgver=1.1.0
-_pkgver=1.1.0
+pkgver=1.0.2.9
+_pkgver=1.0.2i
 pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
@@ -16,9 +16,9 @@ source=("https://www.openssl.org/source/${pkgname}-${_pkgver}.tar.gz"
         'ca-dir.patch'
         'bctest'
         'pod2mantest')
-md5sums=('dbef70de4a1a4bdd78ab7c6547e5211d'
-         '75ee892d2a0de9a164d90d561729652d'
-         '381ecca640ea989c8deb57e8a2505c8c'
+md5sums=('678374e63f8df456a697d3e5e5a931fb'
+         'dc78d3d06baffc16217519242ce92478'
+         '3bf51be3a1bbd262be46dc619f92aa90'
          'ca85ae891de94faa821c2c6f4dba7f5a'
          '0811d285202cebe91003771475802b4f')
 
@@ -55,7 +55,7 @@ check() {
 
 package() {
 	cd ${pkgname}-${_pkgver}
-	make DESTDIR=${pkgdir} MANDIR=/usr/share/man MANSUFFIX=ssl install
+	make INSTALL_PREFIX=${pkgdir} MANDIR=/usr/share/man MANSUFFIX=ssl install
 	
 	install -D -m644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }

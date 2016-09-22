@@ -1,0 +1,11 @@
+--- Makefile.shared.orig	2016-08-25 13:28:27.586203917 -0400
++++ Makefile.shared	2016-08-25 13:30:00.053286991 -0400
+@@ -176,7 +176,7 @@
+ 	ALLSYMSFLAGS='-Wl,--whole-archive'; \
+ 	NOALLSYMSFLAGS='-Wl,--no-whole-archive'; \
+ 	$(DO_GNU_SO_COMMON)
+-DO_GNU_APP=LDFLAGS="$(CFLAGS) $(LDFLAGS) -Wl,-rpath,$(LIBRPATH)"
++DO_GNU_APP=LDFLAGS="$(CFLAGS)"
+ 
+ #This is rather special.  It's a special target with which one can link
+ #applications without bothering with any features that have anything to
