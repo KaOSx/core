@@ -1,7 +1,7 @@
 
 pkgname=shadow
 pkgver=4.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
 url='https://github.com/shadow-maint/shadow'
@@ -28,7 +28,8 @@ source=("https://github.com/shadow-maint/shadow/archive/${pkgver}.tar.gz"
         'shadow.timer'
         'useradd.defaults'
         'xstrdup.patch'
-        'shadow-strncpy-usage.patch')
+        'shadow-strncpy-usage.patch'
+        "https://github.com/shadow-maint/shadow/commit/507f96cdeb54079fb636c7ce21e371f7a16a520e.diff")
 md5sums=('fdff62fb8a992ac1f94aee68b8628994'
          'bdf93c7bc4b751277159c5de8fc34df2'
          '65e9ebce249a5b9ed021e2790452b9e1'
@@ -41,7 +42,8 @@ md5sums=('fdff62fb8a992ac1f94aee68b8628994'
          '5bd14862ace022d6682b179c18fe30de'
          '352d2524bfa911d1c50c8fcef57d3acc'
          '0eebe9d13065bec4b5d7ccf3bf46c509'
-         '8a9152e7448a0f9d1d07ed0016776e16')
+         '8a9152e7448a0f9d1d07ed0016776e16'
+         '588766835a82c60f20531e060f805ecb')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -54,6 +56,7 @@ build() {
 
   patch -p1 -i ${srcdir}/xstrdup.patch
   patch -p1 -i ${srcdir}/shadow-strncpy-usage.patch
+  patch -p1 -i ${srcdir}/507f96cdeb54079fb636c7ce21e371f7a16a520e.diff
 
   # supress etc/pam.d/*
   sed -i '/^SUBDIRS/s/pam.d//' etc/Makefile.am
