@@ -6,11 +6,11 @@ pkgdesc='Common CA certificates'
 arch=('x86_64')
 url='http://packages.qa.debian.org/c/ca-certificates.html'
 license=('MPL' 'GPL')
-source=("http://ftp.debian.org/debian/pool/main/c/${pkgname}/${pkgname}_${pkgver}.tar.xz")
 depends=('bash' 'run-parts' 'openssl' 'findutils' 'coreutils' 'sed')
 makedepends=('ruby' 'python2')
 install=ca-certificates.install
 backup=('etc/ca-certificates.conf')
+source=("http://ftp.debian.org/debian/pool/main/c/${pkgname}/${pkgname}_${pkgver}.tar.xz")
 md5sums=('d9665a83d0d3ef8176a38e6aa20458e9')
 
 build() {
