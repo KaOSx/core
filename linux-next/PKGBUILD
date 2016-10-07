@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.8
 _srcname=linux-4.8
-pkgver=4.8.0
+pkgver=4.8.1
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.8-rc8.tar.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -32,7 +32,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('c1af0afbd3df35c1ccdc7a5118cd2d07'
-         #'803bdedd9b9cd4ef43d9d5d41801f234'
+         '349734be5387f1605074515ad7207627'
          '00854c983e9ddee5c496b5325adee5cc'
          '3045aceec0ccf6b1abcb97c976fdcc27'
          '8f27c5c81ba413e043e6d89ba0d684f9'
