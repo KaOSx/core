@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 _basekernel=4.8
 _srcname=linux-4.8
 pkgver=4.8.1
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -33,17 +33,17 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'i8042-fix-aliases.patch')
 md5sums=('c1af0afbd3df35c1ccdc7a5118cd2d07'
          '349734be5387f1605074515ad7207627'
-         '00854c983e9ddee5c496b5325adee5cc'
-         '3045aceec0ccf6b1abcb97c976fdcc27'
-         '8f27c5c81ba413e043e6d89ba0d684f9'
-         'ea2e794f3c4d58154613e2614d7a4d2c'
-         '0825a3c9b7a631cba42e84267ddd63ba'
-         '95f240eab494d7c14a74b60ba7e7fd96'
-         '4a4f05580a36501bc8032601cd2cf00f'
+         'a11eeb1e6ee029148665a7f020f8429c'
+         '7facf31341f95bf197b9b95aa3a07859'
+         '4bff74676c79e1803b19537e02a39cb6'
+         '481426eb4b9817d34b5ff56388152b18'
+         'd4bd9323b3f64c531c06307794e58f05'
+         '491da72491064082be5adc516d9ac410'
+         '19fb6b95e053a89a4c29745557227af0'
          '260b2e47579140f61546f37d90e0b527'
-         '97d061f2179c49d28c75a76aad131a3c'
-         '322bbecd301047e85c4ae1044c17fcda'
-         '4083e94bf2ca74732596800a1ff12221'
+         '283a86c849bb9b6c38c112c964e13b78'
+         'dc8cb1e216d4d509b814ec25d934c4d7'
+         '9e8c1c9b95f748fdb51f0ab1ba55b257'
          '7b2ca9cdb5555219f793b5a807b05870'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47')
