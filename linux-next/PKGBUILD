@@ -4,8 +4,8 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.8
 _srcname=linux-4.8
-pkgver=4.8.1
-pkgrel=2
+pkgver=4.8.2
+pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -32,7 +32,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('c1af0afbd3df35c1ccdc7a5118cd2d07'
-         '349734be5387f1605074515ad7207627'
+         '7bbd3c729fa79169f7234ae3ed06b46c'
          'a11eeb1e6ee029148665a7f020f8429c'
          '7facf31341f95bf197b9b95aa3a07859'
          '4bff74676c79e1803b19537e02a39cb6'
