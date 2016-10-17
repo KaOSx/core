@@ -1,7 +1,7 @@
 
 pkgname=python2-systemd
 _pkgname=python-systemd
-pkgver=232
+pkgver=233
 pkgrel=1
 pkgdesc="Python module for native access to the systemd facilities."
 arch=('x86_64')
@@ -9,12 +9,11 @@ license=('LGPLv2+')
 url="https://github.com/systemd/python-systemd"
 depends=('python2')
 makedepends=('python2-sphinx' 'python2-lxml' 'systemd')
-source=("https://github.com/systemd/python-systemd/archive/v$pkgver.tar.gz")
-#source=("git://github.com/systemd/python-systemd")
-md5sums=('e1645ff186712ade50c3c8e8a359c181')
+source=("https://github.com/systemd/python-systemd/archive/v${pkgver}.tar.gz")
+md5sums=('daa3ecd2c78c538cda7e8c9a7c7d8556')
 
 build() {
-  cd ${_pkgname}-$pkgver
+  cd ${_pkgname}-${pkgver}
 
   python2 setup.py build
   make
@@ -22,7 +21,7 @@ build() {
 }
 
 package() {
-  cd ${_pkgname}-$pkgver
+  cd ${_pkgname}-${pkgver}
 
-  python2 setup.py install --root=$pkgdir/
+  python2 setup.py install --root=${pkgdir}/
 }
