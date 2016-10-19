@@ -1,18 +1,17 @@
 
 pkgname=bridge-utils
-pkgver=1.5.1
-pkgrel=2
-_commit=a42ed4ef1ea288bcc904b8aa188031d1024affe3
+pkgver=1.6
+pkgrel=1
 pkgdesc="EEE 802.1d ethernet bridging (plus Spanning Tree protocol) for the linux kernel."
 arch='x86_64'
 url="http://www.linuxfoundation.org/collaborate/workgroups/networking/bridge"
 license=('GPL')
 depends=('glibc' 'iptables')
-source=("https://github.com/Gandi/bridge-utils/archive/${_commit}.zip")
-md5sums=('f36389c8d7858f48f60371a1626c5984')
+source=("https://www.kernel.org/pub/linux/utils/net/bridge-utils/${pkgname}-${pkgver}.tar.xz")
+md5sums=('541ae1c50cc268056693608920e6c908')
 
 build() {
-  cd ${pkgname}-${_commit}
+  cd ${pkgname}-${pkgver}
   
   aclocal
   autoconf
@@ -23,7 +22,7 @@ build() {
 }
 
 package() {
-  cd ${pkgname}-${_commit}
+  cd ${pkgname}-${pkgver}
   
   make DESTDIR=${pkgdir} install
 }

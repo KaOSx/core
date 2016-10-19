@@ -1,7 +1,7 @@
 
 pkgname=hdparm
-pkgver=9.48
-pkgrel=2
+pkgver=9.49
+pkgrel=1
 pkgdesc="A shell utility for manipulating Linux IDE drive/driver parameters"
 arch=('x86_64')
 url="http://sourceforge.net/projects/hdparm/"
@@ -11,25 +11,25 @@ optdepends=('sh: required by idectl and ultrabayd')
 source=("http://downloads.sourceforge.net/sourceforge/hdparm/${pkgname}-${pkgver}.tar.gz"
         'wiper.sh.2_6.max-ranges.patch')
 options=('emptydirs')
-md5sums=('213efdbe7471fad3408198918e164354'
+md5sums=('f9f3f076471c9bf45515e3f13c08bfd5'
          'd91213801094931a02e54283cb1b7375')
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   patch -p1 -i $srcdir/wiper.sh.2_6.max-ranges.patch
   
   make
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
 
   mkdir -p ${pkgdir}/{usr,sbin}
   make DESTDIR=${pkgdir} install
   install -m755 contrib/idectl ${pkgdir}/sbin
   install -m755 contrib/ultrabayd ${pkgdir}/sbin
 
-  install -D -m 0644 $srcdir/$pkgname-$pkgver/wiper/README.txt $pkgdir/usr/share/doc/wiper/README.txt
-  install -D -m 0755 $srcdir/$pkgname-$pkgver/wiper/wiper.sh $pkgdir/usr/sbin/wiper.sh
-  install -D -m 644 LICENSE.TXT $pkgdir/usr/share/licenses/hdparm/LICENSE.TXT
+  install -D -m 0644 wiper/README.txt ${pkgdir}/usr/share/doc/wiper/README.txt
+  install -D -m 0755 wiper/wiper.sh ${pkgdir}/usr/sbin/wiper.sh
+  install -D -m 644 LICENSE.TXT ${pkgdir}/usr/share/licenses/hdparm/LICENSE.TXT
 }
