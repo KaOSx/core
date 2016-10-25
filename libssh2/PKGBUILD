@@ -1,16 +1,16 @@
 
 pkgname=libssh2
-pkgver=1.7.0
-pkgrel=3
+pkgver=1.8.0
+pkgrel=1
 pkgdesc="A library implementing the SSH2 protocol as defined by Internet Drafts"
-url="http://www.libssh2.org/"
+url="https://www.libssh2.org/"
 arch=('x86_64')
 license=('BSD')
 depends=('openssl')
 makedepends=('zlib')
 options=('!libtool')
-source=("http://www.libssh2.org/download/$pkgname-$pkgver.tar.gz")
-md5sums=('b01662a210e94cccf2f76094db7dac5c')
+source=("https://www.libssh2.org/download/$pkgname-$pkgver.tar.gz")
+md5sums=('3d1147cae66e2959ea5441b183de1b1c')
 
 build() {
   cd ${srcdir}/${pkgname}-${pkgver}
