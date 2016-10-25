@@ -8,18 +8,18 @@ arch=('x86_64')
 url="http://www.greenwoodsoftware.com/less"
 depends=('glibc' 'ncurses' 'pcre')
 groups=('base')
-source=("http://www.greenwoodsoftware.com/less/$pkgname-$pkgver.tar.gz")
+source=("http://www.greenwoodsoftware.com/less/${pkgname}-${pkgver}.tar.gz")
 md5sums=('702622dbb4601bd6266d022bd6dffd5e')
 
 build() {
-  cd $srcdir/$pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   
   sh configure --prefix=/usr --sysconfdir=/etc --with-regex=pcre
   make
 }
 
 package() {
-  cd $srcdir/$pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   
   make DESTDIR=${pkgdir} install
 }
