@@ -1,17 +1,17 @@
 
 pkgname=xfsprogs
-pkgver=4.7.0
-_pkgver=4.7.0
+pkgver=4.8.0
+_pkgver=4.8.0
 pkgrel=1
 pkgdesc="XFS filesystem utilities"
 arch=('x86_64')
 license=('LGPL')
-url="http://oss.sgi.com/projects/xfs/"
+url="http://xfs.org/index.php/Main_Page"
 groups=('base')
 depends=('util-linux')
 options=('!makeflags' '!libtool')
-source=("ftp://oss.sgi.com/projects/xfs/cmd_tars/${pkgname}-${_pkgver}.tar.gz")
-md5sums=('ae82b0ab63e89cfda52fb9859855bafa')
+source=("https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/${pkgname}-${_pkgver}.tar.xz")
+md5sums=('4f047bc9a28b48a95c6db0ad5ce4dbcb')
 
 build() {
   cd ${pkgname}-${_pkgver}
