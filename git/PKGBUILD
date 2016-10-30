@@ -1,6 +1,6 @@
 
 pkgname=git
-pkgver=2.10.1
+pkgver=2.10.2
 pkgrel=1
 pkgdesc="Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency."
 arch=('x86_64')
@@ -16,8 +16,8 @@ source=("https://www.kernel.org/pub/software/scm/git/git-${pkgver}.tar.xz"
         "https://www.kernel.org/pub/software/scm/git/git-manpages-${pkgver}.tar.xz"
         'git-daemon@.service'
         'git-daemon.socket')
-md5sums=('a9e1bf842497fc3a23e86424018b3499'
-         'db36c72c3bf78fa6060ae64c303dddad'
+md5sums=('3cd1dca37be60668f482545716923b72'
+         '6dc2a09d58a7aea20329b56a1efcb058'
          '042524f942785772d7bd52a1f02fe5ae'
          'f67869315c2cc112e076f0c73f248002')
 
