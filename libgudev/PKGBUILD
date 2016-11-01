@@ -1,32 +1,32 @@
 
 pkgname=libgudev
 pkgver=230
-pkgrel=2
+pkgrel=3
 pkgdesc="UDev GObject bindings"
 arch=('x86_64')
 license=('LGPL')
 url="https://git.gnome.org/browse/libgudev"
 depends=('systemd' 'glib2')
 makedepends=('gobject-introspection')
-source=("http://ftp.gnome.org/pub/gnome/sources/libgudev/$pkgver/$pkgname-$pkgver.tar.xz")
+source=("http://ftp.gnome.org/pub/gnome/sources/libgudev/${pkgver}/${pkgname}-${pkgver}.tar.xz")
 #source=("https://github.com/systemd-devs/libgudev/archive/$pkgname-$pkgver.tar.gz")
 md5sums=('e4dee8f3f349e9372213d33887819a4d')
 
 build() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr
   make
 }
 
 check() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
 
   make check
 }
 
 package() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
 
-  make DESTDIR="$pkgdir" install
+  make DESTDIR=${pkgdir} install
 }

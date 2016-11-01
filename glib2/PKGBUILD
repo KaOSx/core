@@ -1,9 +1,8 @@
 
-
 pkgbase=glib2
 pkgname=('glib2' 'glib2-docs')
-pkgver=2.48.2
-_pkgver=2.48
+pkgver=2.50.1
+_pkgver=2.50
 pkgrel=1
 pkgdesc="Common C routines used by GTK+ and other libs"
 url="http://www.gtk.org/overview.php"
@@ -13,7 +12,7 @@ source=("http://ftp.gnome.org/pub/GNOME/sources/glib/${_pkgver}/glib-${pkgver}.t
         'revert-warn-glib-compile-schemas.patch'
         'gio-querymodules.hook'
         'glib-compile-schemes.hook')
-md5sums=('f4ac1aa2efd4f5798c37625ea697ac57'
+md5sums=('6baee4d7e3b1ec791b4ced93976365ee'
          '3265d1afbcf1f5f308e26c3f9f6ca899'
          'a52ea506b5cf162a4f72d09cc33fae50'
          '9e25d7de10bc4dc105f171e9ae46ef69')
@@ -45,8 +44,6 @@ package_glib2() {
   for _i in ${pkgdir}/usr/share/bash-completion/completions/*; do
       chmod -x "$_i"
   done
-
-  rm -rf ${pkgdir}/usr/share/gdb/
   
   install -dm755 ${pkgdir}/usr/share/libalpm/hooks/
   install -m644 ../glib-compile-schemes.hook ${pkgdir}/usr/share/libalpm/hooks/

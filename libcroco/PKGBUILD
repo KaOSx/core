@@ -1,7 +1,7 @@
 
 pkgname=libcroco
 pkgver=0.6.11
-pkgrel=3
+pkgrel=4
 pkgdesc="A CSS parsing library"
 arch=('x86_64')
 url="http://www.gnome.org"
@@ -9,18 +9,18 @@ depends=('glib2' 'libxml2')
 makedepends=('intltool')
 license=('LGPL')
 options=('!libtool')
-source=("http://ftp.gnome.org/pub/gnome/sources/libcroco/0.6/$pkgname-$pkgver.tar.xz")
+source=("http://ftp.gnome.org/pub/gnome/sources/libcroco/0.6/${pkgname}-${pkgver}.tar.xz")
 md5sums=('dabc1911dfbfa85f8e6859ca47863168')
 
 build() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr --disable-static
   make
 }
 
 package() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   
-  make DESTDIR="$pkgdir" install
+  make DESTDIR=${pkgdir} install
 }
