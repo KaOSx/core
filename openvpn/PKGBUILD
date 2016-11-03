@@ -1,6 +1,6 @@
 
 pkgname=openvpn
-pkgver=2.3.12
+pkgver=2.3.13
 pkgrel=1
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
@@ -9,10 +9,10 @@ depends=('openssl' 'lzo2' 'iproute2')
 license=('custom')
 backup=(usr/share/openvpn/easy-rsa/vars
         usr/share/openvpn/easy-rsa/openssl.cnf)
-source=("http://swupdate.openvpn.net/community/releases/openvpn-${pkgver}.tar.xz"
+source=("https://swupdate.openvpn.net/community/releases/openvpn-${pkgver}.tar.xz"
         "https://github.com/OpenVPN/easy-rsa/archive/3.0.1.tar.gz"
         'openvpn@.service')
-md5sums=('63326bab2ebb9efe3c7becaa4f15e1c1'
+md5sums=('4955e1d35bf5dc2c3ed9b98c280ee661'
          'aa58cbecda1d5ed6df6bb65e990e42a1'
          'c0275a1192a7e3c0a167a0dc4809dbaa')
 
@@ -22,7 +22,6 @@ build() {
   # Build openvpn
   CFLAGS="$CFLAGS -DPLUGIN_LIBDIR=\\\"/usr/lib/openvpn\\\""
      ./configure --prefix=/usr \
-        --enable-password-save \
         --mandir=/usr/share/man \
         --enable-iproute2 \
         --enable-systemd
