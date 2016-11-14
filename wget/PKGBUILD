@@ -1,13 +1,13 @@
 
 pkgname=wget
 pkgver=1.18
-pkgrel=2
+pkgrel=3
 pkgdesc="A network utility to retrieve files from the Web"
 arch=('x86_64')
 url="http://www.gnu.org/software/wget/wget.html"
 license=('GPL3')
 groups=('base')
-depends=('glibc' 'openssl' 'libidn' 'util-linux' 'pcre')
+depends=('glibc' 'openssl' 'libidn' 'util-linux' 'pcre' 'libpsl')
 optdepends=('ca-certificates: HTTPS downloads')
 backup=('etc/wgetrc')
 source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
