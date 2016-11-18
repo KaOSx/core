@@ -1,7 +1,7 @@
 
 pkgname=grub-theme-midna
 _pkgname=midna
-pkgver=2.4
+pkgver=3.0
 pkgrel=1
 pkgdesc="Midna Grub-theme."
 url="http://kaosx.us"
@@ -10,7 +10,7 @@ license=('GPL' 'CC-SA')
 depends=('grub-common')
 install=grub-themes.install
 source=("http://sourceforge.net/projects/kaosx/files/sources/grub-themes/${_pkgname}-${pkgver}.tar.xz")
-md5sums=('f5829a801bfffc5dae00aa546fad8737')
+md5sums=('16f248ce02508a077d1357840e58902d')
  
 package() {
   cd ${srcdir}
