@@ -1,7 +1,7 @@
 
 pkgname=zlib
 pkgver=1.2.8
-pkgrel=5
+pkgrel=6
 pkgdesc='Compression library implementing the deflate compression method found in gzip and PKZIP'
 arch=('x86_64')
 license=('custom')
@@ -11,23 +11,32 @@ source=("http://zlib.net/current/zlib-${pkgver}.tar.gz")
 md5sums=('44d667c142d7cda120332623eab69f40')
 
 build() {
-	cd ${srcdir}/zlib-$pkgver
+	cd zlib-${pkgver}
 	
 	./configure --prefix=/usr
 	make
 
 	grep -A 24 '^  Copyright' zlib.h > LICENSE
+	
+	cd contrib/minizip
+	
+	autoreconf --install
+	./configure --prefix=/usr
+	make
 }
 
 check() {
-	cd ${srcdir}/zlib-$pkgver
+	cd zlib-${pkgver}
 	
 	make test
 }
 
 package() {
-	cd ${srcdir}/zlib-$pkgver
+	cd zlib-${pkgver}
 	
 	make install DESTDIR=${pkgdir}
 	install -D -m644 LICENSE ${pkgdir}/usr/share/licenses/zlib/LICENSE
+	
+	cd contrib/minizip
+	make install DESTDIR=${pkgdir}
 }
