@@ -2,7 +2,7 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.9-RC6
+_basekernel=4.9-rc6
 _srcname=linux-4.9
 pkgver=4.9RC6
 pkgrel=1
@@ -12,8 +12,8 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode')
 options=('!strip')
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-#ource=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.8-rc8.tar.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.9-rc6.tar.xz"
+        ##"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -32,9 +32,8 @@ options=('!strip')
         '99-linux-next.hook'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('c1af0afbd3df35c1ccdc7a5118cd2d07'
-         '38e85040e09193251766975d6fd30d08'
-         '76def9d231bde05f04141f3eee6f2ded'
+md5sums=('e5b1ab103230a9c9be71473f30eb8bc6'
+         '93658ba595f0f5eb394657810bd3c53e'
          '7facf31341f95bf197b9b95aa3a07859'
          '4bff74676c79e1803b19537e02a39cb6'
          '481426eb4b9817d34b5ff56388152b18'
@@ -46,6 +45,7 @@ md5sums=('c1af0afbd3df35c1ccdc7a5118cd2d07'
          'dc8cb1e216d4d509b814ec25d934c4d7'
          '9e8c1c9b95f748fdb51f0ab1ba55b257'
          '7b2ca9cdb5555219f793b5a807b05870'
+         'ae97691ba50d387f3ab98585514e3b22'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47')
 
