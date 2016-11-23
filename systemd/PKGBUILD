@@ -1,7 +1,7 @@
 
 pkgname=systemd
 pkgver=232
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -38,7 +38,8 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'KaOS.conf'
         'KaOS_fallback.conf'
         'splash.bmp'
-        'systemd-tmpfiles.hook')
+        'systemd-tmpfiles.hook'
+        "https://github.com/systemd/systemd/commit/843d5baf6aad6c53fc00ea8d95d83209a4f92de1.diff")
 md5sums=('3e3a0b14050eff62e68be72142181730'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
@@ -47,7 +48,8 @@ md5sums=('3e3a0b14050eff62e68be72142181730'
          'eb444ae327472b98a65631ede777720a'
          'b8d8ebeab17edbe91209e705cfc9e774'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
-         '7d5910d12fdfce56228a1aac8c3d618c')
+         '7d5910d12fdfce56228a1aac8c3d618c'
+         '30ac6477920c184f1a537d46fb194ec3')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -55,6 +57,10 @@ build() {
   #rm src/udev/keyboard-keys-from-name.gperf
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
+  # revert cgroup switch https://github.com/systemd/systemd/commit/843d5baf6aad6c53fc00ea8d95d83209a4f92de1
+  patch -p1 -i ${srcdir}/843d5baf6aad6c53fc00ea8d95d83209a4f92de1.diff
+  # adjust for new lz4 ways
+  sed -i 's|liblz4 >= 125|liblz4 >= 1.7.3|' configure.ac
   
   NTP_SERVERS="0.north-america.pool.ntp.org 1.north-america.pool.ntp.org 2.north-america.pool.ntp.org 3.north-america.pool.ntp.org"
   
