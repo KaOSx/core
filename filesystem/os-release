@@ -3,6 +3,6 @@ VERSION="2016"
 ID=kaos
 PRETTY_NAME="KaOS (2016)"
 ANSI_COLOR="0;36"
-HOME_URL="http://kaosx.us/"
+HOME_URL="https://kaosx.us/"
 
 

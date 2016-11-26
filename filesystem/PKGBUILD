@@ -1,12 +1,12 @@
 
 pkgname=filesystem
-pkgver=2016.01
-pkgrel=2
+pkgver=2016.11
+pkgrel=1
 _codename=2016
 pkgdesc='Base filesystem'
 arch=('x86_64')
 license=('GPL')
-url='http://kaosx.us'
+url='https://kaosx.us'
 groups=('base')
 install='filesystem.install'
 depends=('iana-etc' 'bash' 'coreutils')
@@ -17,11 +17,11 @@ backup=('etc/fstab' 'etc/crypttab' 'etc/group' 'etc/hosts' 'etc/ld.so.conf' 'etc
         'etc/machine-info' 'etc/vconsole.conf')
 source=('group' 'issue' 'nsswitch.conf' 'securetty' 'host.conf' 'ld.so.conf'
         'passwd' 'shadow' 'fstab' 'crypttab' 'hosts' 'hostname' 'motd' 'resolv.conf' 'shells'
-        'gshadow' 'profile' 'modprobe.d.usb-load-ehci-first' 'machine-info' 'os-release'
+        'gshadow' 'profile' 'machine-info' 'os-release'
         'vconsole.conf' 'locale.sh')
 md5sums=('1109716df48ad1bfbf08520ea12fe347'
          'db5338e17b20e85deaf85a16d30f5d65'
-         '13753e4e0964f3652b0cc60a28528bdf'
+         'f3cad1dd5ccc7b1bab3e8deb0cd1b42d'
          '4c4540eeb748bf1f71d631b8c1dcf0b3'
          'f28150d4c0b22a017be51b9f7f9977ed'
          '6e488ffecc8ba142c0cf7e2d7aeb832e'
@@ -36,9 +36,8 @@ md5sums=('1109716df48ad1bfbf08520ea12fe347'
          '22518e922891f9359f971f4f5b4e793c'
          '09bce9236c3729d31aaa528bcf5d198e'
          'f3b6ae7db8adffaaa4bffc6099dcbd50'
-         'a8a962370cd0128465d514e6a1f74130'
          '13d8d253ae8613ba2474683f585e73db'
-         '9e3cae407bd4d5d4ce246a6bdf4f6a0a'
+         '977e87d4fc7b9314165732affb932135'
          '201bbb8b4734d2f46afe1e24d7cc6173'
          '08565c934ec0d6b90da1165ee9cf82dc')
 
@@ -68,7 +67,6 @@ package() {
 		install -m600 ${srcdir}/${f} etc/
 	done
 	touch etc/KaOS-release
-	install -D -m644 ${srcdir}/modprobe.d.usb-load-ehci-first usr/lib/modprobe.d/usb-load-ehci-first.conf
 	install -m755 ${srcdir}/locale.sh etc/profile.d/locale.sh
 
 	# setup /var
