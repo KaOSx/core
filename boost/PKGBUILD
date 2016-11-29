@@ -9,13 +9,16 @@ arch=('x86_64')
 url="http://www.boost.org/"
 license=('custom')
 makedepends=('icu>=56.1' 'python2' 'python3' 'bzip2' 'zlib' 'openmpi') 
-source=("http://downloads.sourceforge.net/boost/${pkgbase}_${_pkgver}.tar.gz")
+source=("http://downloads.sourceforge.net/boost/${pkgbase}_${_pkgver}.tar.gz"
+        "https://github.com/boostorg/build/commit/78ffbe094400d277627b2c19ceb182d637b8baca.diff")
 license=('custom')
 md5sums=('874805ba2e2ee415b1877ef3297bf8ad')
 
 build() {
   export _stagedir="${srcdir}/stagedir"
   local JOBS="$(sed -e 's/.*\(-j *[0-9]\+\).*/\1/' <<< ${MAKEFLAGS})"
+  # keep option to build for python3, this reverts change in 1.62
+  patch -p1 -R -i ${srcdir}/78ffbe094400d277627b2c19ceb182d637b8baca.diff
 
   cd "${srcdir}"/${pkgbase}_${_pkgver}
   ./bootstrap.sh --with-toolset=gcc --with-icu --with-python=/usr/bin/python2
