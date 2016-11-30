@@ -1,15 +1,15 @@
 
 pkgname=coreutils
-pkgver=8.25
-pkgrel=3
+pkgver=8.26
+pkgrel=1
 pkgdesc="The basic file, shell and text manipulation utilities of the GNU operating system"
 arch=('x86_64')
 license=('GPL3')
-url="http://www.gnu.org/software/coreutils"
+url="https://www.gnu.org/software/coreutils"
 groups=('base')
 depends=('glibc' 'pam' 'acl' 'gmp' 'libcap')
-source=("ftp://ftp.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.xz")
-md5sums=('070e43ba7f618d747414ef56ab248a48')
+source=("https://ftp.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.xz")
+md5sums=('d5aa2072f662d4118b9f4c63b94601a6')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -21,8 +21,7 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-  # https://groups.google.com/forum/#!topic/address-sanitizer/jEvOJgkDqQk
-  #LD_PRELOAD=libasan.so.2
+  # one fail: FAIL tests/df/df-symlink.sh (exit status: 1)
   make RUN_EXPENSIVE_TESTS=yes check
 }
 
