@@ -1,6 +1,6 @@
 
 pkgname=logrotate
-pkgver=3.10.0
+pkgver=3.11.0
 pkgrel=1
 pkgdesc="Rotates system logs automatically"
 url='https://github.com/logrotate/logrotate'
@@ -14,15 +14,15 @@ source=("https://github.com/logrotate/logrotate/archive/${pkgver}.tar.gz"
         'logrotate.service'
         'logrotate.timer'
         'path.patch')
-md5sums=('3995acb2791a8dfd81b5ffc0046d0e71'
+md5sums=('03cb3fea0a6c2e91affe5b02d6932ae5'
          '416de14f92ef4361adad8b6e7065245a'
          '57039a96a716391fad46c7eb1bf47b52'
          '287c2ad9b074cb5478db7692f385827c'
          'e76526bcd6fc33c9d921e1cb1eff1ffb')
 
 build() {
-  cd $srcdir/${pkgname}-${pkgver}
-  patch -p0 -i "$srcdir/path.patch"
+  cd ${pkgname}-${pkgver}
+  patch -p0 -i ${srcdir}/path.patch
   
   ./autogen.sh
   ./configure --prefix=/usr \
@@ -33,13 +33,13 @@ build() {
 }
 
 check() {
-	cd "$srcdir/${pkgname}-${pkgver}"
+	cd ${pkgname}-${pkgver}
 	
 	make test
 }
 
 package() {
-  cd $srcdir/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   make DESTDIR=$pkgdir install
   
   install -dm755 $pkgdir/etc/logrotate.d
