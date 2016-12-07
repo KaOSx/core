@@ -1,10 +1,10 @@
 
 pkgname=openvpn
-pkgver=2.3.13
+pkgver=2.3.14
 pkgrel=1
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
-url="http://openvpn.net/index.php/open-source.html"
+url="https://openvpn.net/index.php/open-source.html"
 depends=('openssl' 'lzo2' 'iproute2')
 license=('custom')
 backup=(usr/share/openvpn/easy-rsa/vars
@@ -12,7 +12,7 @@ backup=(usr/share/openvpn/easy-rsa/vars
 source=("https://swupdate.openvpn.net/community/releases/openvpn-${pkgver}.tar.xz"
         "https://github.com/OpenVPN/easy-rsa/archive/3.0.1.tar.gz"
         'openvpn@.service')
-md5sums=('4955e1d35bf5dc2c3ed9b98c280ee661'
+md5sums=('70fc1e9c74ba2e6d7f7e320313dc3a7b'
          'aa58cbecda1d5ed6df6bb65e990e42a1'
          'c0275a1192a7e3c0a167a0dc4809dbaa')
 
