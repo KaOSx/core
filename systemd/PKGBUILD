@@ -139,8 +139,9 @@ package() {
   install -D -m0644 ${srcdir}/KaOS_fallback.conf ${pkgdir}/usr/lib/systemd/boot/loader/entries/KaOS_fallback.conf
   install -D -m0644 ${srcdir}/splash.bmp ${pkgdir}/usr/lib/systemd/boot/splash.bmp
   
-  # adjust incorrect default PAM config
-  sed 's|system-auth|system-login|g' -i ${pkgdir}/etc/pam.d/systemd-user
+  # adjust default PAM config
+  sed 's|account required pam_unix.so|account  include system-login|g' -i ${pkgdir}/etc/pam.d/systemd-user
+  sed 's|session optional pam_systemd.so|session  include system-login|g' -i ${pkgdir}/etc/pam.d/systemd-user
   
   # pacman hook
   install -Dm644 ../systemd-tmpfiles.hook ${pkgdir}/usr/share/libalpm/hooks/systemd-tmpfiles.hook
