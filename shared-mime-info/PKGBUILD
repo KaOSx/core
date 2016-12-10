@@ -1,6 +1,6 @@
 
 pkgname=shared-mime-info
-pkgver=1.7
+pkgver=1.8
 pkgrel=1
 pkgdesc="Freedesktop.org Shared MIME Info"
 arch=('x86_64')
@@ -11,7 +11,7 @@ makedepends=('intltool' 'pkgconfig')
 options=('!makeflags')
 source=("http://freedesktop.org/~hadess/${pkgname}-${pkgver}.tar.xz"
         'update-mime-database.hook')
-md5sums=('c6fea618f135b3b8e676c84cd9153917'
+md5sums=('f6dcadce764605552fc956563efa058c'
          'fc48155d8fb2147b8fc72597e79936b4')
 
 build() {

@@ -8,15 +8,15 @@ url="http://code.google.com/p/repo-clean/"
 license=('GPL')
 depends=('boost-libs' 'pacman') 
 makedepends=('boost' 'cmake' 'gcc' 'scons')
-source=("https://github.com/downloads/luolimao/repo-clean-xz/$pkgname-xz-$pkgver.tar.bz2")
+source=("https://github.com/downloads/luolimao/repo-clean-xz/${pkgname}-xz-${pkgver}.tar.bz2")
 md5sums=('b9d7ddfe83ef1c6e19786d6d428ade6e')
 
 build() {
-  cd $srcdir/$pkgname-xz-$pkgver
+  cd ${pkgname}-xz-${pkgver}
   
   scons
 }
 
 package() {
-  cp -rf $pkgname-xz-$pkgver/dist/ "$pkgdir"/usr/
+  cp -rf ${pkgname}-xz-${pkgver}/dist/ ${pkgdir}/usr/
 }
