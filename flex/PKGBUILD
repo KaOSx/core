@@ -1,7 +1,7 @@
 
 pkgname=flex
 pkgver=2.6.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A tool for generating text-scanning programs"
 arch=('x86_64')
 url="https://github.com/westes/flex"
@@ -9,8 +9,22 @@ license=('custom')
 groups=('base-devel')
 depends=('glibc' 'm4' 'sh')
 makedepends=('help2man')
-source=("https://github.com/westes/flex/releases/download/v${pkgver}/flex-${pkgver}.tar.gz")
-md5sums=('cc6d76c333db7653d5caf423a3335239')
+source=("https://github.com/westes/flex/releases/download/v${pkgver}/flex-${pkgver}.tar.gz"
+        "https://github.com/westes/flex/commit/347652c32b4614995acd4ee0d686499da2070d9e.diff"
+        "https://github.com/westes/flex/commit/e1038db19a6fda98a19a1df4d5f62c74c63b57d5.diff"
+        "https://github.com/westes/flex/commit/c8ad3d682fb0ea39e30a70449c7f88b8cd8da6b4.diff")
+md5sums=('cc6d76c333db7653d5caf423a3335239'
+         'cdb30806043a426d1525b672121faf0d'
+         '2a8d8665c14feec56c6b441c1faa371c'
+         '75205653bbf3e43b77be143dfffda4cc')
+
+prepare() {
+  cd ${pkgname}-${pkgver}
+  # fix build issues with 2.6.2 https://github.com/westes/flex/issues/113
+  patch -p1 -i ${srcdir}/347652c32b4614995acd4ee0d686499da2070d9e.diff
+  patch -p1 -i ${srcdir}/e1038db19a6fda98a19a1df4d5f62c74c63b57d5.diff
+  patch -p1 -i ${srcdir}/c8ad3d682fb0ea39e30a70449c7f88b8cd8da6b4.diff
+}
 
 build() {
   cd ${pkgname}-${pkgver} 
