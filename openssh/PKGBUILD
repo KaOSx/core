@@ -1,11 +1,11 @@
 
 pkgname=openssh
-pkgver=7.3p1
+pkgver=7.4p1
 pkgrel=1
 pkgdesc='Free version of the SSH connectivity tools'
 arch=('x86_64')
 license=('custom:BSD')
-url='http://www.openssh.org/portable.html'
+url='https://www.openssh.org/portable.html'
 backup=('etc/ssh/ssh_config' 'etc/ssh/sshd_config' 'etc/pam.d/sshd')
 depends=('krb5' 'openssl' 'libedit')
 makedepends=('linux-headers')
@@ -16,7 +16,7 @@ source=("http://mirror.jmu.edu/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgver}
         'sshd.service'
         'sshd@.service'
         'sshd.socket')
-md5sums=('dfadd9f035d38ce5d58a3bf130b86d08'
+md5sums=('b2db2a83caf66a208bb78d6d287cdaa3'
          'e2cea70ac13af7e63d40eb04415eacd5'
          '9d71ea52cd15e9d7c172b7b71cb03bc0'
          '234ac4883cc28c56a4c236867124c3e4'
