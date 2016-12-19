@@ -1,6 +1,6 @@
 
 pkgname=libpsl
-pkgver=0.16.0
+pkgver=0.16.1
 pkgrel=1
 pkgdesc="Provides functions to work with the Mozilla Public Suffix List."
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('MIT')
 depends=('icu')
 makedepends=('python2')
 source=("https://github.com/rockdaboot/libpsl/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('2f177e860a1697731ce6470580444eb1')
+md5sums=('bd17d30d3483f929d97cf202fcb64d4e')
 
 build() {
   cd ${pkgname}-${pkgver}
