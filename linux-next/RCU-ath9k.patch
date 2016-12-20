@@ -1,0 +1,12 @@
+diff --git a/drivers/net/wireless/ath/ath9k/xmit.c b/drivers/net/wireless/ath/ath9k/xmit.c
+index 52bfbb988611..857d5ae09a1d 100644
+--- a/drivers/net/wireless/ath/ath9k/xmit.c
++++ b/drivers/net/wireless/ath/ath9k/xmit.c
+@@ -2787,6 +2787,7 @@ void ath_tx_edma_tasklet(struct ath_softc *sc)
+ 		fifo_list = &txq->txq_fifo[txq->txq_tailidx];
+ 		if (list_empty(fifo_list)) {
+ 			ath_txq_unlock(sc, txq);
++			rcu_read_unlock();
+ 			return;
+ 		}
+ 
