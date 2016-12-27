@@ -1,6 +1,6 @@
 
 pkgname=openvpn
-pkgver=2.3.14
+pkgver=2.4.0
 pkgrel=1
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
@@ -12,7 +12,7 @@ backup=(usr/share/openvpn/easy-rsa/vars
 source=("https://swupdate.openvpn.net/community/releases/openvpn-${pkgver}.tar.xz"
         "https://github.com/OpenVPN/easy-rsa/archive/3.0.1.tar.gz"
         'openvpn@.service')
-md5sums=('70fc1e9c74ba2e6d7f7e320313dc3a7b'
+md5sums=('e49431542f065dd60a0181233927669e'
          'aa58cbecda1d5ed6df6bb65e990e42a1'
          'c0275a1192a7e3c0a167a0dc4809dbaa')
 
@@ -38,7 +38,8 @@ package() {
   cd ${pkgname}-${pkgver}
   # Install openvpn
   make DESTDIR=${pkgdir} install
-  install -d -m755 ${pkgdir}/etc/openvpn
+  install -d -m755 ${pkgdir}/etc/openvpn/client
+  install -d -m755 ${pkgdir}/etc/openvpn/server
 
   install -d -m755 ${pkgdir}/usr/share/openvpn
   cp -r sample/sample-config-files ${pkgdir}/usr/share/openvpn/examples
@@ -47,6 +48,10 @@ package() {
 
   install -d -m755 ${pkgdir}/usr/share/openvpn/contrib
   cp -r contrib ${pkgdir}/usr/share/openvpn
+  
+  # install systemd units
+  install -Dm644 distro/systemd/openvpn-client@.service ${pkgdir}/usr/lib/systemd/system/openvpn-client@.service
+  install -Dm644 distro/systemd/openvpn-server@.service ${pkgdir}/usr/lib/systemd/system/openvpn-server@.service
   
   # Install easy-rsa
   cd ${srcdir}/easy-rsa-3.0.1
@@ -58,7 +63,4 @@ package() {
 
   install -d ${pkgdir}/usr/share/easy-rsa/
   mv easyrsa3/* ${pkgdir}/usr/share/easy-rsa/
-  
-  # install systemd units
-  install -Dm644 ${srcdir}/openvpn@.service ${pkgdir}/usr/lib/systemd/system/openvpn@.service
 }
