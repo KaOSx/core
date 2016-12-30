@@ -1,0 +1,28 @@
+#!/bin/bash
+
+server=$(inxi -G | grep "Display Server: N/A")
+
+post_upgrade() {
+  (( $(vercmp $2 '2.4') > 0 )) && return
+  
+  if [[ -n ${server} ]]; then
+
+    # 2.4 warning
+    echo -e "The upgrade from openvpn $2 to openvpn $1 made changes that requires"
+    echo -e "manual intervention:"
+    echo -e " * Configuration has moved to directories. Move your files"
+    echo -e "   from /etc/openvpn/ to /etc/openvpn/server/ or /etc/openvpn/client/."
+    echo -e " * The systemd unit openvpn@.service was replaced with openvpn-client@.service"
+    echo -e "   and openvpn-server@.service. Restart and reenable accordingly. \e[0m"
+
+  else
+  
+    kdialog --msgbox "The upgrade from openvpn $2 to openvpn $1 made changes that requires manual intervention:<br>
+        Configuration has moved to directories.<br>
+        Move your files from /etc/openvpn/ to /etc/openvpn/server/ or /etc/openvpn/client/.<br><br>
+        The systemd unit openvpn@.service was replaced with openvpn-client@.service and openvpn-server@.service.<br>
+        Restart and reenable accordingly."
+  fi
+}
+
+

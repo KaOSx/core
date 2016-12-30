@@ -1,12 +1,13 @@
 
 pkgname=openvpn
 pkgver=2.4.0
-pkgrel=1
+pkgrel=3
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
 url="https://openvpn.net/index.php/open-source.html"
 depends=('openssl' 'lzo2' 'iproute2')
 license=('custom')
+install=openvpn.install
 backup=(usr/share/openvpn/easy-rsa/vars
         usr/share/openvpn/easy-rsa/openssl.cnf)
 source=("https://swupdate.openvpn.net/community/releases/openvpn-${pkgver}.tar.xz"
