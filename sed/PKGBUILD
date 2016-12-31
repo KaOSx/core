@@ -2,8 +2,8 @@
 # rebuild libtool on any update
 
 pkgname=sed
-pkgver=4.2.2
-pkgrel=6
+pkgver=4.3
+pkgrel=1
 pkgdesc="GNU stream editor"
 arch=('x86_64')
 url="http://www.gnu.org/software/sed"
@@ -11,8 +11,8 @@ license=('GPL3')
 groups=('base')
 depends=('acl' 'sh')
 makedepends=('gettext')
-source=("ftp://ftp.gnu.org/pub/gnu/sed/${pkgname}-${pkgver}.tar.gz")
-md5sums=('4111de4faa3b9848a0686b2f260c5056')
+source=("http://meyering.net/sed/sed-${pkgver}.tar.xz")
+md5sums=('1957fe58dffa4a4106c1f1d7cc8dee18')
 
 build() {
   cd ${pkgname}-${pkgver}
