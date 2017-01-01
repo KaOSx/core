@@ -1,14 +1,14 @@
 
 pkgname=zlib
-pkgver=1.2.8
-pkgrel=6
+pkgver=1.2.9
+pkgrel=1
 pkgdesc='Compression library implementing the deflate compression method found in gzip and PKZIP'
 arch=('x86_64')
 license=('custom')
 url="http://www.zlib.net/"
 depends=('glibc')
 source=("http://zlib.net/current/zlib-${pkgver}.tar.gz")
-md5sums=('44d667c142d7cda120332623eab69f40')
+md5sums=('e453644539a07783aa525e834491134e')
 
 build() {
 	cd zlib-${pkgver}
