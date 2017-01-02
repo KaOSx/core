@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=4.8
-pkgver=4.8.6
+pkgver=4.8.15
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -27,11 +27,12 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.8.tar.xz"
         'vfs-ino.patch'
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
+        '99-linux.hook'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('c1af0afbd3df35c1ccdc7a5118cd2d07'
-         '666753363fd69ac2c1a94f4349a7197e'
-         'ad2960f8e976c035a8ef45f6c1b0e57c'
+         '86db5795a46ccbc4eec8cfbe47382aaa'
+         'f44f7013a5405e9cd4b9875730839de6'
          '7facf31341f95bf197b9b95aa3a07859'
          '4bff74676c79e1803b19537e02a39cb6'
          '481426eb4b9817d34b5ff56388152b18'
@@ -43,6 +44,7 @@ md5sums=('c1af0afbd3df35c1ccdc7a5118cd2d07'
          'dc8cb1e216d4d509b814ec25d934c4d7'
          '9e8c1c9b95f748fdb51f0ab1ba55b257'
          'eb14dcfd80c00852ef81ded6e826826a'
+         '0b73d293ca1ab91748ae2d2c39921532'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47')
 
@@ -126,8 +128,9 @@ package_linux() {
   # add vmlinux
   install -D -m644 vmlinux "${pkgdir}/usr/src/linux-${_kernver}/vmlinux"
 
-  # install fallback mkinitcpio.conf file and preset file for kernel
+  # install fallback mkinitcpio preset file and pacman hook for kernel
   install -D -m644 "${srcdir}/linux.preset" "${pkgdir}/etc/mkinitcpio.d/linux.preset"
+  install -D -m644 "${srcdir}/99-linux.hook" "${pkgdir}/usr/share/libalpm/hooks/99-${pkgbase}.hook"
 
   # set correct depmod command for install
   sed \
