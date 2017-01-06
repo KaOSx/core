@@ -1,11 +1,11 @@
 #!/bin/bash
 
-server=$(inxi -G | grep "Display Server: N/A")
+desktop=$(echo ${DESKTOP_SESSION})
 
 post_upgrade() {
   (( $(vercmp $2 '2.4') > 0 )) && return
   
-  if [[ -n ${server} ]]; then
+  if [[ -z ${desktop} ]]; then
 
     # 2.4 warning
     echo -e "The upgrade from openvpn $2 to openvpn $1 made changes that requires"

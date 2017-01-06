@@ -1,14 +1,14 @@
 
 pkgname=gperf
-pkgver=3.0.4
-pkgrel=9
+pkgver=3.1
+pkgrel=1
 pkgdesc="Perfect hash function generator."
 arch=('x86_64')
 url="http://www.gnu.org/software/gperf/"
 license=('GPL3')
 depends=('gcc-libs' 'texinfo')
 source=("ftp://ftp.gnu.org/gnu/gperf/${pkgname}-${pkgver}.tar.gz")
-md5sums=('c1f1db32fb6598d6a93e6e88796a8632')
+md5sums=('9e251c0a618ad0824b51117d5d9db87e')
 
 build() {
   cd ${pkgname}-${pkgver}
