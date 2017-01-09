@@ -1,7 +1,7 @@
 
 pkgname=kbd
-pkgver=2.0.3
-pkgrel=2
+pkgver=2.0.4
+pkgrel=1
 pkgdesc="Keytable files and keyboard utilities"
 arch=('x86_64')
 url="http://www.kbd-project.org"
@@ -9,13 +9,12 @@ license=('GPL')
 depends=('glibc' 'pam')
 makedepends=('check')
 source=("ftp://ftp.kernel.org/pub/linux/utils/kbd/${pkgname}-${pkgver}.tar.gz")
-md5sums=('15ccfead0cdd3b5e74d875348b184ded')
+md5sums=('c69fce737a5fd0fa686cbfc4f611a220')
 
 build() {
-  cd ${startdir}/src/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
 
-  # rename keymap files with the same names
-  # this should be removed when upstream adopts the change
+  # Rename conflicting keymaps to have unique names
   mv data/keymaps/i386/qwertz/cz{,-qwertz}.map
   mv data/keymaps/i386/olpc/es{,-olpc}.map
   mv data/keymaps/i386/olpc/pt{,-olpc}.map
@@ -23,12 +22,15 @@ build() {
   mv data/keymaps/i386/fgGIod/trf{,-fgGIod}.map
   mv data/keymaps/i386/colemak/{en-latin9,colemak}.map
 
-  ./configure --prefix=/usr --datadir=/usr/share/kbd --mandir=/usr/share/man
+  ./configure --prefix=/usr \
+    --datadir=/usr/share/kbd \
+    --mandir=/usr/share/man
+    
   make KEYCODES_PROGS=yes RESIZECONS_PROGS=yes
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   
   make KEYCODES_PROGS=yes RESIZECONS_PROGS=yes DESTDIR=${pkgdir} install
 }
