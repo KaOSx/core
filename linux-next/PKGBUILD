@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.9
 _srcname=linux-4.9
-pkgver=4.9.1
+pkgver=4.9.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -34,7 +34,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'i8042-fix-aliases.patch'
         'RCU-ath9k.patch')
 md5sums=('0a68ef3615c64bd5ee54a3320e46667d'
-         'c737ff83f354f95aae69bd0ebac358a0'
+         '165df28884bd2600d1a2d0bced94a992'
          '93658ba595f0f5eb394657810bd3c53e'
          '14abc6b175a8dbb2ba8d1a2852bab0e4'
          'b972552a35fc7b44704bfa3201683986'
@@ -69,7 +69,7 @@ build() {
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
   
   # https://patchwork.ozlabs.org/patch/706835/
-  patch -p1 -i "${srcdir}/RCU-ath9k.patch"
+  #patch -p1 -i "${srcdir}/RCU-ath9k.patch"
 
   #aufs patches for Live:
   patch -p1 -i "${srcdir}/aufs4.patch"
