@@ -1,7 +1,7 @@
 
 pkgname=pacman
 pkgver=5.0.1
-pkgrel=5
+pkgrel=6
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -13,7 +13,7 @@ checkdepends=('python2' 'fakechroot')
 backup=(etc/pacman.conf etc/makepkg.conf)
 options=('!libtool')
 #install=pacman.install
-source=("https://sources.archlinux.org/other/pacman/$pkgname-$pkgver.tar.gz"
+source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
         'pacman.conf'
         'makepkg.conf')
 md5sums=('377a2664d6007d72d6d8a126add83bcf'
@@ -21,7 +21,7 @@ md5sums=('377a2664d6007d72d6d8a126add83bcf'
          '9968e22a8508545351589159ea76b3b7')
 
 build() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr --sysconfdir=/etc \
     --localstatedir=/var --enable-doc \
@@ -32,23 +32,26 @@ build() {
 }
 
 check() {
-  make -C $pkgname-$pkgver check
+  make -C ${pkgname}-${pkgver} check
 }
 
 package() {
-  cd $pkgname-$pkgver
-  make DESTDIR=$pkgdir install
-  make DESTDIR=$pkgdir -C contrib install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
+  make DESTDIR=${pkgdir} -C contrib install
 
-  mkdir -p $pkgdir/etc
-  install -m644 $srcdir/pacman.conf $pkgdir/etc/pacman.conf
-  install -m644 $srcdir/makepkg.conf $pkgdir/etc/
+  mkdir -p ${pkgdir}/etc
+  install -m644 $srcdir/pacman.conf ${pkgdir}/etc/pacman.conf
+  install -m644 $srcdir/makepkg.conf ${pkgdir}/etc/
 
   # completion files
-  install -Dm644 contrib/bash_completion $pkgdir/usr/share/bash-completion/completions/pacman
+  install -Dm644 contrib/bash_completion ${pkgdir}/usr/share/bash-completion/completions/pacman
   for f in makepkg pacman-key; do
-    ln -s pacman "$pkgdir/usr/share/bash-completion/completions/$f"
+    ln -s pacman "${pkgdir}/usr/share/bash-completion/completions/$f"
   done
-  install -Dm644 contrib/zsh_completion $pkgdir/usr/share/zsh/site-functions/_pacman
+  install -Dm644 contrib/zsh_completion ${pkgdir}/usr/share/zsh/site-functions/_pacman
+  
+  # stop rankmirrors fail
+  sed -e 's|/core}"|/core}" echo|' -i ${pkgdir}/usr/bin/rankmirrors
 }
 
