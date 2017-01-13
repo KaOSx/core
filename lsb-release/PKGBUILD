@@ -1,7 +1,7 @@
 
 pkgname=lsb-release
 pkgver=1.4
-pkgrel=11
+pkgrel=12
 pkgdesc="LSB version query program."
 arch=('x86_64')
 url="http://www.linuxbase.org/"
@@ -11,19 +11,19 @@ source=("http://downloads.sourceforge.net/lsb/${pkgname}-${pkgver}.tar.gz")
 md5sums=('30537ef5a01e0ca94b7b8eb6a36bb1e4')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
   make
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  make prefix="${pkgdir}/usr" mandir="${pkgdir}/usr/share/man" install
+  cd ${pkgname}-${pkgver}
+  make prefix=${pkgdir}/usr mandir=${pkgdir}/usr/share/man install
 
-  install -d -m755 "${pkgdir}/etc"
-  echo "LSB_VERSION=$pkgver" >> "$pkgdir/etc/lsb-release"
-  echo "DISTRIB_ID=KaOS" >> "$pkgdir/etc/lsb-release"
-  echo "DISTRIB_RELEASE=rolling" >> "$pkgdir/etc/lsb-release"
-  echo "DISTRIB_DESCRIPTION=\"KaOS\"" >> "$pkgdir/etc/lsb-release" 
+  install -d -m755 ${pkgdir}/etc
+  echo LSB_VERSION=${pkgver} >> ${pkgdir}/etc/lsb-release
+  echo DISTRIB_ID=KaOS >> ${pkgdir}/etc/lsb-release
+  echo DISTRIB_RELEASE=rolling >> ${pkgdir}/etc/lsb-release
+  echo DISTRIB_DESCRIPTION=\"KaOS\" >> ${pkgdir}/etc/lsb-release
 }
 
