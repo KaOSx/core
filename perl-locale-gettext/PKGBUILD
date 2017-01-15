@@ -1,21 +1,21 @@
 
 pkgname=perl-locale-gettext
-_realname=gettext
+_pkgname=gettext
 pkgver=1.05
-pkgrel=6
+pkgrel=7
 pkgdesc="Permits access from Perl to the gettext() family of functions"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
-url="http://search.cpan.org/dist/${_realname}/"
+url="http://search.cpan.org/dist/${_pkgname}/"
 depends=('gettext' 'perl')
 options=('!emptydirs')
-source=("http://search.cpan.org/CPAN/authors/id/P/PV/PVANDRY/${_realname}-${pkgver}.tar.gz"
+source=("http://search.cpan.org/CPAN/authors/id/P/PV/PVANDRY/${_pkgname}-${pkgver}.tar.gz"
         'compatibility-with-POSIX-module.patch')
 md5sums=('f3d3f474a1458f37174c410dfef61a46'
          '854302f34d01a2f8ae739187788973dd')
 
 build() {
-  cd "${srcdir}/${_realname}-${pkgver}"
+  cd ${_pkgname}-${pkgver}
 
   patch -p1 -i ${srcdir}/compatibility-with-POSIX-module.patch
   # install module in vendor directories.
@@ -24,16 +24,16 @@ build() {
 }
 
 check() {
-  cd "${srcdir}/${_realname}-${pkgver}"
+  cd ${_pkgname}-${pkgver}
   
   make test
 }
 
 package() {
-  cd "${srcdir}/${_realname}-${pkgver}"
-  make install DESTDIR="${pkgdir}"
+  cd ${_pkgname}-${pkgver}
+  make install DESTDIR=${pkgdir}
 
   # remove perllocal.pod and .packlist
-  find "${pkgdir}" -name perllocal.pod -delete
-  find "${pkgdir}" -name .packlist -delete
+  find ${pkgdir} -name perllocal.pod -delete
+  find ${pkgdir} -name .packlist -delete
 }

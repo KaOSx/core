@@ -1,28 +1,48 @@
-## arg 1:  the new package version
-post_install() {
-cat << 'EOM'
-  ==> PLEASE NOTE:
-  ==> Extended configuration options for NFS (clients & server) are available in
-  ==> /etc/conf.d/nfs-common.conf and in /etc/conf.d/nfs-server.conf   
-EOM
+#!/bin/bash
+
+desktop=$(ps -e | grep kwin)
+timestamp=$( date +%F-%T )
+
+post_upgrade() {
+  (( $(vercmp $2 '2.1.1.-1') > 0 )) && return
+  
+    if [[ -n ${desktop} ]]; then
+
+        kdialog --yesno "The upgrade from nfs-utils $2 to nfs-utils $1 made changes that requires manual intervention:<br>
+        All the daemon configurations now go through one file, /etc/nfs.conf. See man nfs.conf<br><br>
+        The command line options in the systemd service files have been removed. <br>
+        This means the configuration file under /etc/sysconfig or /etc/defaults will no longer work. <br>
+        Move your settings accordingly. <br><br>
+        Do you want to save this output?"
+
+        save=${?}
+
+            if [[ ${save} == 1 ]]; then
+
+                kdialog --msgbox "Output not saved"
+
+            else
+
+                echo "The upgrade from nfs-utils $2 to nfs-utils $1 made changes that requires manual intervention:<br>
+                All the daemon configurations now go through one file, /etc/nfs.conf. See man nfs.conf<br><br>
+                The command line options in the systemd service files have been removed. <br>
+                This means the configuration file under /etc/sysconfig or /etc/defaults will no longer work. <br>
+                Move your settings accordingly." > /var/log/update${timestamp}.txt
+
+                kdialog --msgbox "Output is saved in /var/log/update${timestamp}.txt"
+                
+            fi   
+
+    else
+
+        echo -e " The upgrade from nfs-utils $2 to nfs-utils $1 made changes that requires"
+        echo -e " manual intervention:"
+        echo -e " All the daemon configurations now go through one file, /etc/nfs.conf. See nfs.conf(5)"
+        echo -e " The command line options in the systemd service files have been removed."
+        echo -e " This means the configuration file under /etc/sysconfig or /etc/defaults will no longer work."
+        echo -e " Move your settings accordingly. \e[0m"
+
+    fi
 }
 
-## arg 1:  the new package version
-## arg 2:  the old package version
-post_upgrade() {
-  if [ "$(vercmp $2 1.3.0-1)" -lt 0 ]; then
-cat << 'EOM'
-  ==> IMPORTANT 1.3.0 NFS UTILS CHANGES:
-  ==> This is a rather important upgrade, you are going to have to change systemd services files.
-  ==> NFS-SERVER:
-  ==> systemctl enable nfs-server.service
-  ==> NFS-CLIENT:
-  ==> systemctl enable nfs-client.target
-  ==>
-  ==> Extended configuration options for NFS (clients & server) are available in:
-  ==> /etc/conf.d/nfs-common
-  ==> /etc/conf.d/nfs-server
-  ==> Please change them to your needs.
-EOM
-  fi
-}
+

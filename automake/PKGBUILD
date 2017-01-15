@@ -1,7 +1,7 @@
 
 pkgname=automake
 pkgver=1.15
-pkgrel=4
+pkgrel=5
 pkgdesc="A GNU tool for automatically creating Makefiles"
 arch=('x86_64')
 license=('GPL')

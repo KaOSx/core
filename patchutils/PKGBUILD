@@ -1,25 +1,25 @@
 
 pkgname=patchutils
 pkgver=0.3.4
-pkgrel=3
+pkgrel=4
 pkgdesc="A small collection of programs that operate on patch files"
 license=('GPL')
 url="http://cyberelk.net/tim/patchutils/"
 depends=('perl')
 arch=('x86_64')
-source=("http://cyberelk.net/tim/data/patchutils/stable/$pkgname-$pkgver.tar.xz")
+source=("http://cyberelk.net/tim/data/patchutils/stable/${pkgname}-${pkgver}.tar.xz")
 md5sums=('ee95b5993d07ccdf27ca9f2cc4e6ffee')
 
 build() {
-  cd $srcdir/$pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr
   make
 }
 
 package() {
-  cd $srcdir/$pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
 
-  make DESTDIR=$pkgdir install
+  make DESTDIR=${pkgdir} install
 }
 

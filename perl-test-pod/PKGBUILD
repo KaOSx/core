@@ -1,32 +1,32 @@
 
 pkgname=perl-test-pod
-_realname=Test-Pod
+_pkgname=Test-Pod
 pkgver=1.51
-pkgrel=2
+pkgrel=3
 pkgdesc="Check for POD errors in files"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
-url="http://search.cpan.org/dist/${_realname}/"
+url="http://search.cpan.org/dist/${_pkgname}/"
 depends=('perl')
 options=('!emptydirs')
-source=("http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/${_realname}-${pkgver}.tar.gz")
+source=("http://search.cpan.org/CPAN/authors/id/E/ET/ETHER/${_pkgname}-${pkgver}.tar.gz")
 md5sums=('f806aa84de2f0c0fba48b3a5a8a4aecf')
 
 build() {
-  cd ${srcdir}/${_realname}-${pkgver}
+  cd ${_pkgname}-${pkgver}
 
   perl Makefile.PL INSTALLDIRS=vendor
   make 
 }
 
 check() {
-  cd ${srcdir}/${_realname}-${pkgver}
+  cd ${_pkgname}-${pkgver}
   
   make test
 }
 
 package() {
-  cd ${srcdir}/${_realname}-${pkgver}
+  cd ${_pkgname}-${pkgver}
   
   make DESTDIR=${pkgdir} install 
 
