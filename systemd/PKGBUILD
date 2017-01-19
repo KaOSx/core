@@ -1,7 +1,7 @@
 
 pkgname=systemd
 pkgver=232
-pkgrel=2
+pkgrel=3
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -39,7 +39,8 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'KaOS_fallback.conf'
         'splash.bmp'
         'systemd-tmpfiles.hook'
-        "https://github.com/systemd/systemd/commit/843d5baf6aad6c53fc00ea8d95d83209a4f92de1.diff")
+        "https://github.com/systemd/systemd/commit/843d5baf6aad6c53fc00ea8d95d83209a4f92de1.diff"
+        "https://github.com/systemd/systemd/commit/c9f7b4d356a453a01aa77a6bb74ca7ef49732c08.diff")
 md5sums=('3e3a0b14050eff62e68be72142181730'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
@@ -49,7 +50,8 @@ md5sums=('3e3a0b14050eff62e68be72142181730'
          'b8d8ebeab17edbe91209e705cfc9e774'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
          '7d5910d12fdfce56228a1aac8c3d618c'
-         '30ac6477920c184f1a537d46fb194ec3')
+         '30ac6477920c184f1a537d46fb194ec3'
+         '5bce98bbc4528b64d9bde495fbf4c813')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -59,6 +61,8 @@ build() {
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
   # revert cgroup switch https://github.com/systemd/systemd/commit/843d5baf6aad6c53fc00ea8d95d83209a4f92de1
   patch -p1 -i ${srcdir}/843d5baf6aad6c53fc00ea8d95d83209a4f92de1.diff
+  # fix for gperf 3.1, use src/network/networkd-netdev.h for patch to apply
+  patch -p1 -i ${srcdir}/c9f7b4d356a453a01aa77a6bb74ca7ef49732c08.diff
   # adjust for new lz4 ways
   sed -i 's|liblz4 >= 125|liblz4 >= 1.7.3|' configure.ac
   
@@ -123,7 +127,6 @@ package() {
   install -Dm644 ${srcdir}/initcpio-hook-udev ${pkgdir}/usr/lib/initcpio/hooks/udev
   
   rm -r ${pkgdir}/usr/lib/rpm
-  rm ${pkgdir}/usr/lib/sysctl.d/50-coredump.conf
   
   # 208 changed permissions for /var/log/journal
   #install -o root -g systemd-journal -dm2755 ${pkgdir}/var/log/journal

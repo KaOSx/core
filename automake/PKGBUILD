@@ -1,7 +1,7 @@
 
 pkgname=automake
 pkgver=1.15
-pkgrel=5
+pkgrel=6
 pkgdesc="A GNU tool for automatically creating Makefiles"
 arch=('x86_64')
 license=('GPL')
@@ -15,6 +15,8 @@ md5sums=('9a1ddb0e053474d9d1105cfe39b0c48d')
 
 build() {
   cd ${pkgname}-${pkgver}
+  # Fix a warning that is caused by perl-5.22 and later
+  sed -i 's:/\\\${:/\\\$\\{:' bin/automake.in
   
   ./configure --prefix=/usr
   make
@@ -22,6 +24,8 @@ build() {
 
 check(){
   cd ${pkgname}-${pkgver}
+  # see http://www.linuxfromscratch.org/lfs/view/development/chapter06/automake.html
+  sed -i "s:./configure:LEXLIB=/usr/lib/libfl.a &:" t/lex-{clean,depend}-cxx.sh
  
   make check
 }
