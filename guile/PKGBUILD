@@ -1,7 +1,7 @@
 
 pkgname=guile
 pkgver=2.0.13
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU Ubiquitous Intelligent Language for Extensions, the official extension language for the GNU operating system"
 url="http://www.gnu.org/software/guile/"
 arch=('x86_64')
@@ -25,5 +25,6 @@ package() {
   make DESTDIR=${pkgdir} install
   
   # stop elfutils warnings
-  #rm $pkgdir/usr/lib/libguile-2.0.so.22.7.2-gdb.scm
+  mkdir -p ${pkgdir}/usr/share/gdb/auto-load/usr/lib
+  mv ${pkgdir}/usr/lib/libguile-2.0.so.*gdb.scm ${pkgdir}/usr/share/gdb/auto-load/usr/lib
 }
