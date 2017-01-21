@@ -10,7 +10,7 @@ depends=('mirror-check')
 groups=('base')
 backup=(etc/pacman.d/mirrorlist)
 source=('mirrorlist')
-md5sums=('e11b43b0aa747c650fc9d34e35ae06e3')
+md5sums=('371bf06656aff74ad9007de6cb84aa1d')
 
 package() {
   mkdir -p $pkgdir/etc/pacman.d
