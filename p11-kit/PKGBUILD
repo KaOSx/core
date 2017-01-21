@@ -1,28 +1,28 @@
 
 pkgname=p11-kit
-pkgver=0.23.2
-pkgrel=2
+pkgver=0.23.3
+pkgrel=1
 pkgdesc="Library to work with PKCS#11 modules"
 arch=('x86_64')
-url="http://p11-glue.freedesktop.org"
+url="https://p11-glue.freedesktop.org"
 license=('BSD')
 depends=('glibc' 'libtasn1' 'libffi')
 options=('!libtool')
-source=("http://p11-glue.freedesktop.org/releases/$pkgname-$pkgver.tar.gz")
-md5sums=('738af2442331fc22f440df9bee9b062a')
+source=("https://github.com/p11-glue/p11-kit/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('9f138da1455e99bc49182ada540c8845')
 
 build() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr \
-              --sysconfdir=/etc \
-              --with-module-path=/usr/lib/pkcs11
+    --sysconfdir=/etc \
+    --with-module-path=/usr/lib/pkcs11
   make
 }
 
 package() {
-  cd  $pkgname-$pkgver
-  make DESTDIR="$pkgdir" install
+  cd  ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
 
-  install -Dm644 COPYING $pkgdir/usr/share/licenses/$pkgname/COPYING
+  install -Dm644 COPYING $pkgdir/usr/share/licenses/${pkgname}/COPYING
 }
