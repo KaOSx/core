@@ -2,13 +2,13 @@
 pkgbase=lvm2
 pkgname=('lvm2' 'device-mapper')
 pkgver=2.02.168
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
-url="http://sourceware.org/lvm2/"
+url="https://sourceware.org/lvm2/"
 license=('GPL2' 'LGPL2.1')
 groups=('base')
 makedepends=('systemd')
-source=("http://mirrors.kernel.org/sources.redhat.com/lvm2/LVM2.${pkgver}.tgz"
+source=("https://mirrors.kernel.org/sources.redhat.com/lvm2/LVM2.${pkgver}.tgz"
         'lvm2_install'
         'lvm2_hook'
         '11-dm-initramfs.rules'

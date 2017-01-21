@@ -1,7 +1,7 @@
 
 pkgname=gnupg
 pkgver=2.1.17
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU Privacy Guard 2 - a PGP replacement tool"
 arch=('x86_64')
 license=('GPL')

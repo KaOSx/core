@@ -1,7 +1,7 @@
 
 pkgname=bash
-_basever=4.3
-_patchlevel=048
+_basever=4.4
+_patchlevel=011
 pkgver=${_basever}.${_patchlevel}
 pkgrel=1
 pkgdesc="The GNU Bourne Again shell"
@@ -10,9 +10,9 @@ license=('GPL')
 url="http://www.gnu.org/software/bash/bash.html"
 groups=('base')
 backup=(etc/bash.bash{rc,_logout} etc/skel/.bash{rc,_profile,_logout})
-depends=('readline>=6.3' 'glibc')
+depends=('readline>=7.0' 'glibc')
 provides=('sh')
-source=("http://ftp.gnu.org/gnu/bash/bash-${_basever}.tar.gz"
+source=("https://ftp.gnu.org/gnu/bash/bash-${_basever}.tar.gz"
         'dot.bashrc'
         'dot.bash_profile'
         'dot.bash_logout'
@@ -23,60 +23,23 @@ if [ ${_patchlevel} -gt 000 ]; then
         source=(${source[@]} http://ftp.gnu.org/gnu/bash/bash-${_basever}-patches/bash${_basever//./}-$(printf "%03d" $p))
     done
 fi
-md5sums=('81348932d5da294953e15d4814c74dd1'
+md5sums=('148888a7c95ac23705559b6f477dfe25'
          '027d6bd8f5f6a06b75bb7698cb478089'
          '2902e0fee7a9168f3a4fd2ccd60ff047'
          '42f4400ed2314bd7519c020d0187edc5'
          '3546099a1b2f667adc9794f52e78e35b'
          '472f536d7c9e8250dc4568ec4cfaf294'
-         '1ab682b4e36afa4cf1b426aa7ac81c0d'
-         '8fc22cf50ec85da00f6af3d66f7ddc1b'
-         'a41728eca78858758e26b5dea64ae506'
-         'bf8d53d227829d67235927689a03cc7a'
-         'c0c00935c8b8ffff76e8ab77e7be7d15'
-         '6f01e364cd092faa28dd7119f47ddb5f'
-         'dcf471d222bcd83283d3094e6ceeb6f8'
-         'f7553416646dc26c266454c78a916d36'
-         '7e73d2151f4064b484a4ba2c4b09960e'
-         'a275463d21735bb6d7161f9fbd320d8f'
-         'c17103ee20420d77e46b224c8d3fceda'
-         '3e2a057a19d02b3f92a3a09eacbc03ae'
-         'fb377143a996d4ff087a2771bc8332f9'
-         '1a1aaecc99a9d0cbc310e8e247dcc8b6'
-         '4f04387458a3c1b4d460d199f49991a8'
-         '90e759709720c4f877525bebc9d5dc06'
-         '11e4046e1b86070f6adbb7ffc89641be'
-         'cd5a9b46f5bea0dc0248c93c7dfac011'
-         'cff4dc024d9d3456888aaaf8a36ca774'
-         '167839c5f147347f4a03d88ab97ff787'
-         '1d350671c48dec30b34d8b81f09cd79d'
-         '11c349af66a55481a3215ef2520bec36'
-         'b3cb0d80fd0c47728264405cbb3b23c7'
-         'b5ea5600942acceb4b6f07313d2de74e'
-         '193c06f578d38ffdbaebae9c51a7551f'
-         '922578e2be7ed03729454e92ee8d3f3a'
-         '8ff6948b16f2db5c29b1b9ae1085bbe7'
-         'dd51fa67913b5dca45a702b672b3323f'
-         '0729364c977ef4271e9f8dfafadacf67'
-         'efb709fdb1368945513de23ccbfae053'
-         '236df1ac1130a033ed0dbe2d2115f28f'
-         '2360f7e79cfb28526f80021025ea5909'
-         'b551c4ee7b8713759e4143499d0bbd48'
-         'c9a56fbe0348e05a886dff97f2872b74'
-         'e564e8ab44ed1ca3a4e315a9f6cabdc9'
-         'b00ff66c41a7c0f06e191200981980b0'
-         'be2a7b05f6ae560313f3c9d5f7127bda'
-         '61e0522830b24fbe8c0d1b010f132470'
-         'a4775487abe958536751c8ce53cdf6f9'
-         '80d3587c58854e226055ef099ffeb535'
-         '20bf63eef7cb441c0b1cc49ef3191d03'
-         '70790646ae61e207c995e44931390e50'
-         '855a46955cb251534e80b4732b748e37'
-         '29623d3282fcbb37e1158136509b5bb8'
-         '4473244ca5abfd4b018ea26dc73e7412'
-         '7e5fb09991c077076b86e0e057798913'
-         '8483153bad1a6f52cadc3bd9a8df7835'
-         'e9f5dc12a32b2e0d3961344e794f92b3')
+         '817d01a6c0af6f79308a8b7b649e53d8'
+         '765e14cff12c7284009772e8e24f2fe0'
+         '49e7da93bf07f510a2eb6bb43ac3e5a2'
+         '4557d674ab5831a5fa98052ab19edaf4'
+         'cce96dd77cdd1d293beec10848f6cbb5'
+         'd3379f8d8abce5c6ee338f931ad008d5'
+         'ec38c76ca439ca7f9c178e9baede84fc'
+         'e0ba18c1e3b94f905da9b5bf9d38b58b'
+         'e952d4f44e612048930c559d90eb99bb'
+         '57b5b35955d68f9a09dbef6b86d2c782'
+         'cc896e1fa696b93ded568e557e2392d5')
 
 build() {
   cd ${pkgname}-${_basever}

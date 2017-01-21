@@ -1,9 +1,9 @@
 
 pkgname=readline
-_basever=6.3
-_patchlevel=008 #prepare for some patches
+_basever=7.0
+_patchlevel=001 #prepare for some patches
 pkgver=$_basever.$_patchlevel
-pkgrel=5
+pkgrel=1
 pkgdesc="GNU readline library"
 arch=('x86_64')
 url="http://tiswww.case.edu/php/chet/readline/rltop.html"
@@ -11,26 +11,19 @@ license=('GPL')
 depends=('glibc' 'ncurses')
 backup=('etc/inputrc')
 options=('!emptydirs')
-source=("http://ftp.gnu.org/gnu/readline/readline-$_basever.tar.gz"
+source=("https://ftp.gnu.org/gnu/readline/readline-$_basever.tar.gz"
         'inputrc')
 if [ $_patchlevel -gt 00 ]; then
     for (( p=1; p<=$((10#${_patchlevel})); p++ )); do
-        source=(${source[@]} http://ftp.gnu.org/gnu/readline/readline-$_basever-patches/readline${_basever//./}-$(printf "%03d" $p))
+        source=(${source[@]} http://ftp.gnu.org/gnu/readline/readline-${_basever}-patches/readline${_basever//./}-$(printf "%03d" $p))
     done
 fi
-md5sums=('33c8fb279e981274f485fd91da77e94a'
+md5sums=('205b03a87fc83dab653b628c59b9fc91'
          '58d54966c1191db45973cb3191ac621a'
-         '4343f5ea9b0f42447f102fb61576b398'
-         '700295212f7e2978577feaee584afddb'
-         'af4963862f5156fbf9111c2c6fa86ed7'
-         '11f9def89803a5052db3ba72394ce14f'
-         '93721c31cd225393f80cb3aadb165544'
-         '71dc6ecce66d1489b96595f55d142a52'
-         '062a08ed60679d3c4878710b3d595b65'
-         'ee1c04072154826870848d8b218d7b04')
+         'e299384458a4cbefaaac3f30e9cc2bba')
 
 build() {
-  cd ${pkgname}-$_basever
+  cd ${pkgname}-${_basever}
   for (( p=1; p<=$((10#${_patchlevel})); p++ )); do
     msg "applying patch readline${_basever//./}-$(printf "%03d" $p)"
     patch -p0 -i $srcdir/readline${_basever//./}-$(printf "%03d" $p)
@@ -46,7 +39,7 @@ build() {
 }
 
 package() {
-  cd ${pkgname}-$_basever
+  cd ${pkgname}-${_basever}
   make DESTDIR=${pkgdir} install
   
   install -Dm644 ${srcdir}/inputrc ${pkgdir}/etc/inputrc

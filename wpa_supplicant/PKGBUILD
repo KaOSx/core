@@ -1,7 +1,7 @@
 
 pkgname=wpa_supplicant
 pkgver=2.6
-pkgrel=1
+pkgrel=2
 pkgdesc="A utility providing key negotiation for WPA wireless networks"
 arch=('x86_64')
 depends=('openssl' 'dbus' 'readline' 'libnl')
@@ -9,39 +9,39 @@ license=('GPL')
 groups=('base')
 backup=('etc/wpa_supplicant.conf')
 url="http://hostap.epitest.fi/wpa_supplicant"
-source=("http://hostap.epitest.fi/releases/wpa_supplicant-$pkgver.tar.gz"
+source=("http://hostap.epitest.fi/releases/wpa_supplicant-${pkgver}.tar.gz"
         'config')
 md5sums=('091569eb4440b7d7f2b4276dbfc03c3c'
          '78bc0d6b6db02d4d58982d870e0a0c26')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}/"
+  cd ${pkgname}-${pkgver}/
   #patch -p1 -i "${srcdir}"/openssl.patch
   
-  cd "${pkgname}/"
-  cp "${srcdir}/config" ./.config
+  cd ${pkgname}/
+  cp ${srcdir}/config ./.config
   sed -i 's@/usr/local@$(PREFIX)@g' Makefile
   
   make PREFIX=/usr
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}/${pkgname}"
-  make PREFIX=/usr DESTDIR="${pkgdir}" install
+  cd ${pkgname}-${pkgver}/${pkgname}
+  make PREFIX=/usr DESTDIR=${pkgdir} install
   
-  install -m755 -d "${pkgdir}/etc"
-  install -m644 wpa_supplicant.conf "${pkgdir}/etc/wpa_supplicant.conf"
-  install -d -m755 "${pkgdir}/usr/share/man/man"{5,8}
-  install -m644 doc/docbook/*.5 "${pkgdir}/usr/share/man/man5/"
-  install -m644 doc/docbook/*.8 "${pkgdir}/usr/share/man/man8/"
-  rm -f "${pkgdir}/usr/share/man/man8/wpa_"{priv,gui}.8
+  install -m755 -d ${pkgdir}/etc
+  install -m644 wpa_supplicant.conf ${pkgdir}/etc/wpa_supplicant.conf
+  install -d -m755 ${pkgdir}/usr/share/man/man{5,8}
+  install -m644 doc/docbook/*.5 ${pkgdir}/usr/share/man/man5/
+  install -m644 doc/docbook/*.8 ${pkgdir}/usr/share/man/man8/
+  rm -f ${pkgdir}/usr/share/man/man8/wpa_{priv,gui}.8
 
-  install -m755 -d "${pkgdir}/usr/share/dbus-1/system-services"
-  install -m644 dbus/{fi.epitest.hostap.WPASupplicant.service,fi.w1.wpa_supplicant1.service} "${pkgdir}/usr/share/dbus-1/system-services/"
+  install -m755 -d ${pkgdir}/usr/share/dbus-1/system-services
+  install -m644 dbus/{fi.epitest.hostap.WPASupplicant.service,fi.w1.wpa_supplicant1.service} ${pkgdir}/usr/share/dbus-1/system-services/
 
-  install -m755 -d "${pkgdir}/etc/dbus-1/system.d"
-  install -m644 dbus/dbus-wpa_supplicant.conf "${pkgdir}/etc/dbus-1/system.d/wpa_supplicant.conf"
+  install -m755 -d ${pkgdir}/etc/dbus-1/system.d
+  install -m644 dbus/dbus-wpa_supplicant.conf ${pkgdir}/etc/dbus-1/system.d/wpa_supplicant.conf
 
-  install -d -m755 "${pkgdir}/usr/lib/systemd/system"
-  install -m644 systemd/*.service "${pkgdir}/usr/lib/systemd/system/"
+  install -d -m755 ${pkgdir}/usr/lib/systemd/system
+  install -m644 systemd/*.service ${pkgdir}/usr/lib/systemd/system/
 }
