@@ -1,12 +1,12 @@
 
 pkgname=syslog-ng
-pkgver=3.7.3
-pkgrel=2
+pkgver=3.9.1
+pkgrel=1
 pkgdesc="Next-generation syslogd with advanced networking and filtering capabilities"
 arch=('x86_64')
 license=('GPL2')
 url="http://www.balabit.com/network-security/syslog-ng/"
-depends=('glib2' 'eventlog' 'openssl' 'libcap' 'awk' 'systemd')
+depends=('glib2' 'eventlog' 'openssl' 'libcap' 'awk' 'systemd' 'json-c')
 makedepends=('flex' 'pkg-config' 'python2' 'libxslt')
 optdepends=('logrotate: for rotating log files')
 provides=('logger')
@@ -17,12 +17,12 @@ backup=('etc/syslog-ng/scl.conf'
 source=("https://github.com/balabit/syslog-ng/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.gz"
         'syslog-ng.conf'
         'syslog-ng.logrotate')
-md5sums=('803d61a713d6d41a973942d417fec999'
+md5sums=('1b48da9ef620cf06e55e481b5abb677a'
          'b7afe73b7faef3d80e76943f1f5989d3'
          '0c0d5149bd3e8d666c506351edecbe71')
 
 build() {
-  cd "${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   ./configure \
     --prefix=/usr \
@@ -35,15 +35,17 @@ build() {
     --enable-systemd \
     --enable-ipv6 \
     --with-systemdsystemunitdir=/usr/lib/systemd/system \
-    --with-python=2.7
+    --with-python=2.7 \
+    --with-jsonc=system
 
   make -j1
 }
 
 package() {
-  make -C "${pkgname}-${pkgver}" DESTDIR="$pkgdir" install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
 
-  install -dm755 "$pkgdir/var/lib/syslog-ng" "$pkgdir/etc/syslog-ng/patterndb.d"
-  install -Dm644 "$srcdir/syslog-ng.conf" "$pkgdir/etc/syslog-ng/syslog-ng.conf"
-  install -Dm644 "$srcdir/syslog-ng.logrotate" "$pkgdir/etc/logrotate.d/syslog-ng"
+  install -dm755 ${pkgdir}/var/lib/syslog-ng ${pkgdir}/etc/syslog-ng/patterndb.d
+  #install -Dm644 ${srcdir}/syslog-ng.conf ${pkgdir}/etc/syslog-ng/syslog-ng.conf
+  install -Dm644 ${srcdir}/syslog-ng.logrotate ${pkgdir}/etc/logrotate.d/syslog-ng
 }
