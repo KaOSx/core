@@ -4,30 +4,30 @@ pkgver=2.0.22
 _pkgver=2.0
 pkgrel=3
 pkgdesc="An event notification library"
-license=('GPL2')
 arch=('x86_64')
 url="http://libevent.org/"
+license=('GPL2')
 depends=('openssl')
 source=("https://github.com/libevent/libevent/releases/download/release-${pkgver}-stable/${pkgname}-${pkgver}-stable.tar.gz")
 md5sums=('c4c56f986aa985677ca1db89630a2e11')
          
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}-stable"
+  cd ${pkgname}-${pkgver}-stable
   
   ./configure --prefix=/usr --sysconfdir=/etc
   make 
 }
 
 check() {
-  cd "${srcdir}/${pkgname}-${pkgver}-stable"
+  cd ${pkgname}-${pkgver}-stable
   
   make check
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}-stable"
-  make DESTDIR="${pkgdir}" install
+  cd ${pkgname}-${pkgver}-stable
+  make DESTDIR=${pkgdir} install
   
-  install -Dm 644 LICENSE "${pkgdir}"/usr/share/licenses/libevent/LICENSE
+  install -Dm 644 LICENSE ${pkgdir}/usr/share/licenses/libevent/LICENSE
 }
 
