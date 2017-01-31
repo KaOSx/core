@@ -130,6 +130,6 @@ elif [ "${_mode}" == "--help" ]; then
   
 else
 
-  exit cli_mode
+  cli_mode
   
 fi
