@@ -71,12 +71,13 @@ function results_dialog(){
 }
 
 function cli_mode() {
+  local ret_code=0
   echo " "
   
   if [ ! -f "/etc/pacman.conf" ]; then
     echo -e "\e[00;31mError. Could not find '/etc/pacman.conf'\e[00m"
     echo " "
-    exit
+    exit 1
   fi
   
   echo -e "\e[01;33mChecking ${_repos[@]}...\e[00m"
@@ -91,11 +92,15 @@ function cli_mode() {
     fi
     
     md5sum -b /tmp/.${UID}mirrordb.tmp | sed 's/mirror/main/' > /tmp/.${UID}checkmd5.tmp
-    md5sum -c /tmp/.${UID}checkmd5.tmp >/dev/null 2>/dev/null &&
-        echo -e "\e[01;37m[$repo]\e[00m \e[00;32mis synced\e[00m." ||
+    if md5sum -c /tmp/.${UID}checkmd5.tmp >/dev/null 2>/dev/null; then
+      echo -e "\e[01;37m[$repo]\e[00m \e[00;32mis synced\e[00m."
+    else
         echo -e "\e[01;37m[$repo]\e[00m \e[00;31mis not synced\e[00m."
+        ret code=10
+    fi
   done
   echo " "
+  return ${ret_code}
 }
 
 if [ "${_mode}" == "--gui" ]; then
