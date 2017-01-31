@@ -96,7 +96,8 @@ function cli_mode() {
       echo -e "\e[01;37m[$repo]\e[00m \e[00;32mis synced\e[00m."
     else
         echo -e "\e[01;37m[$repo]\e[00m \e[00;31mis not synced\e[00m."
-        ret code=10
+        echo -e "\e[01;37mDo not update, wait for your mirror to sync\e[00m."
+        ret_code=10
     fi
   done
   echo " "

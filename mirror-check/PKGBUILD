@@ -1,16 +1,16 @@
 
 pkgname=mirror-check
-pkgver=2.3
-pkgrel=2
+pkgver=2.4
+pkgrel=1
 pkgdesc="Checks whether the locally used mirror is synced with the main mirror"
 arch=('x86_64')
-url="http://kaosx.us"
+url="https://kaosx.us"
 license=('GPL2')
 makedepends=('asciidoc')
 source=('mirror-check'
         'mirror-check.desktop')
         #'mirror-check.svg')
-md5sums=('b3589933783713d09d4bbcf7389ea992'
+md5sums=('4dd1cf2df57dfcdb78b8279db0546c19'
          'aff18a3883a298752fac09d3ce096429')
 
 package() {
