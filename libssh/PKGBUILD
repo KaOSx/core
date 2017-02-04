@@ -1,21 +1,20 @@
 
 pkgname=libssh
-pkgver=0.7.3
-pkgrel=3
+pkgver=0.7.4
+pkgrel=1
 pkgdesc="Library for accessing ssh client services through C libraries"
-url="http://www.libssh.org/"
+url="https://www.libssh.org/"
 license=('LGPL')
 arch=('x86_64')
 depends=('openssl')
 makedepends=('cmake' 'doxygen')
-source=("https://red.libssh.org/attachments/download/195/${pkgname}-${pkgver}.tar.xz")
-md5sums=('05465da8004f3258db946346213209de')
+source=("https://red.libssh.org/attachments/download/210/${pkgname}-${pkgver}.tar.xz")
+md5sums=('ec36040a9d0cc343ba78edf3b6580855')
 
 build() {
-  cd "${srcdir}"
-  mkdir build
-  
+  mkdir -p build
   cd build
+  
   cmake ../${pkgname}-${pkgver} \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release
@@ -23,7 +22,7 @@ build() {
 }
 
 package(){
-  cd "${srcdir}"/build
+  cd build
   
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR=${pkgdir} install
 }
