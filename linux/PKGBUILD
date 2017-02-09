@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.8
-pkgver=4.8.15
+_basekernel=4.9
+pkgver=4.9.9
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.8.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.9.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -30,19 +30,19 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.8.tar.xz"
         '99-linux.hook'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('c1af0afbd3df35c1ccdc7a5118cd2d07'
-         '86db5795a46ccbc4eec8cfbe47382aaa'
-         'f44f7013a5405e9cd4b9875730839de6'
-         '7facf31341f95bf197b9b95aa3a07859'
-         '4bff74676c79e1803b19537e02a39cb6'
-         '481426eb4b9817d34b5ff56388152b18'
-         'd4bd9323b3f64c531c06307794e58f05'
-         '491da72491064082be5adc516d9ac410'
-         '19fb6b95e053a89a4c29745557227af0'
+md5sums=('0a68ef3615c64bd5ee54a3320e46667d'
+         '7248f04515b22e23540afab0850ac9a4'
+         'e5d63096e8fdb16b2c1beac9ced1e195'
+         '14abc6b175a8dbb2ba8d1a2852bab0e4'
+         'b972552a35fc7b44704bfa3201683986'
+         '9aef073d96fb8dc306920fcba3d798e8'
+         '6db17a209f0480cfca04beb3bdd699be'
+         '8a0c461e468dfd59198ac318b04b9660'
+         '85ec06dafe89c97ae0e03668fc60a35f'
          '260b2e47579140f61546f37d90e0b527'
-         '283a86c849bb9b6c38c112c964e13b78'
-         'dc8cb1e216d4d509b814ec25d934c4d7'
-         '9e8c1c9b95f748fdb51f0ab1ba55b257'
+         '50108cace344bc825d35ce9d15d4459c'
+         '303ce60a478b3ab57f6f65199190f114'
+         '035cfb8aa33366e0ed4bde9cccbea10c'
          'eb14dcfd80c00852ef81ded6e826826a'
          '0b73d293ca1ab91748ae2d2c39921532'
          'a262bedf26f26b7698143fc23de98457'
