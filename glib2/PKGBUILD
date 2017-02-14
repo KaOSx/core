@@ -1,18 +1,18 @@
 
 pkgbase=glib2
 pkgname=('glib2' 'glib2-docs')
-pkgver=2.50.2
+pkgver=2.50.3
 _pkgver=2.50
 pkgrel=1
 pkgdesc="Common C routines used by GTK+ and other libs"
-url="http://www.gtk.org/overview.php"
+url="https://www.gtk.org/overview.php"
 arch=('x86_64')
 makedepends=('pkg-config' 'python3' 'libxslt' 'docbook-xml' 'pcre' 'libffi' 'elfutils')
-source=("http://ftp.gnome.org/pub/GNOME/sources/glib/${_pkgver}/glib-${pkgver}.tar.xz"
+source=("https://ftp.gnome.org/pub/GNOME/sources/glib/${_pkgver}/glib-${pkgver}.tar.xz"
         'revert-warn-glib-compile-schemas.patch'
         'gio-querymodules.hook'
         'glib-compile-schemes.hook')
-md5sums=('5eeb2bfaf78a07be59585e8b6e80b1d6'
+md5sums=('381ab22934f296750d036aa55a397ded'
          '3265d1afbcf1f5f308e26c3f9f6ca899'
          'a52ea506b5cf162a4f72d09cc33fae50'
          '9e25d7de10bc4dc105f171e9ae46ef69')
