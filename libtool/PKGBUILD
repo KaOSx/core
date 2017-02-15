@@ -2,13 +2,13 @@
 
 pkgname=libtool
 pkgver=2.4.6
-pkgrel=8
+pkgrel=9
 pkgdesc="A generic library support script"
 arch=('x86_64')
 url="https://www.gnu.org/software/libtool"
 license=('GPL')
 options=('!libtool')
-depends=('sed' 'grep' 'sh' 'tar' 'gcc=5.4.0') # Needed by libtoolize
+depends=('sed' 'grep' 'sh' 'tar' 'gcc=5.4.1') # Needed by libtoolize
 makedepends=('help2man')
 groups=('base-devel')
 provides=('libltdl')

@@ -2,14 +2,14 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.23
-pkgrel=2
+pkgver=2.25
+pkgrel=1
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="http://www.gnu.org/software/libc"
 license=('GPL' 'LGPL')
 groups=('base')
-depends=('linux-api-headers>=4.6' 'tzdata')
+depends=('linux-api-headers>=4.9' 'tzdata')
 makedepends=('gcc>=5.4')
 backup=(etc/gai.conf
         etc/locale.gen
@@ -17,12 +17,12 @@ backup=(etc/gai.conf
 options=('!strip')
 install=glibc.install
 source=("http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
-        "http://www.linuxfromscratch.org/patches/lfs/development/glibc-2.22-largefile-1.patch"
+        #"http://www.linuxfromscratch.org/patches/lfs/development/glibc-2.22-largefile-1.patch"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('456995968f3acadbed39f5eba31678df'
-         '203fe9133e82f2b59969c116b70fd84e'
+md5sums=('1496c3bf41adf9db0ebd0af01f202eed'
+         #'203fe9133e82f2b59969c116b70fd84e'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
          '8b3298de2392a10905a64ceccf56d2c1')
@@ -65,11 +65,15 @@ build() {
   make
 
   # no stack protector for running tests
-  sed -i '5,7d' configparms
+  #sed -i '5,7d' configparms
 }
 
 check() {
   cd ${srcdir}/glibc-build
+  
+  # no stack protector for running tests
+  sed -i '5,7d' configparms
+  sed -i '/FORTIFY/d' configparms
   
   make check || true
 }
@@ -112,7 +116,7 @@ package() {
                         usr/lib/getconf/* \
                         usr/sbin/{iconvconfig,nscd}
 
-  strip $STRIP_STATIC usr/lib/*.a 
+  #strip $STRIP_STATIC usr/lib/*.a 
 
   strip $STRIP_SHARED lib/{libanl,libBrokenLocale,libcidn,libcrypt}-*.so \
                       lib/libnss_{compat,dns,files,hesiod,nis,nisplus}-*.so \

@@ -1,7 +1,7 @@
 
 pkgname=fakeroot
-pkgver=1.21
-pkgrel=1
+pkgver=1.20.2
+pkgrel=4
 pkgdesc="Gives a fake root environment, useful for building packages as a non-privileged user."
 arch=('x86_64')
 license=('GPL')
@@ -10,13 +10,16 @@ groups=('base-devel')
 install="fakeroot.install"
 depends=('glibc' 'filesystem' 'util-linux' 'sed' 'sh')
 options=('!libtool')
-source=("http://ftp.debian.org/debian/pool/main/f/fakeroot/${pkgname}_${pkgver}.orig.tar.gz")
-md5sums=('be5c9a0e516869fca4a6758105968e5a')
+source=("http://ftp.debian.org/debian/pool/main/f/fakeroot/${pkgname}_${pkgver}.orig.tar.bz2"
+        "dlsym.patch")
+md5sums=('a4b4564a75024aa96c86e4d1017ac786'
+         '62f6a56ee03486d2d8d178b922c612cd')
 
 build() {
   cd ${pkgname}-${pkgver}
+  patch -p1 -i $srcdir/dlsym.patch
 
-  ./bootstrap
+  #./bootstrap
   ./configure --prefix=/usr \
         --libdir=/usr/lib/libfakeroot \
         --disable-static \
