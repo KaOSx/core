@@ -1,4 +1,5 @@
 
+# with cmake build, always check for .so up
 pkgname=libarchive
 pkgver=3.3.0
 _pkgver=3.3.0
