@@ -1,7 +1,7 @@
 
 pkgname=libarchive
-pkgver=3.2.2
-_pkgver=3.2.2
+pkgver=3.3.0
+_pkgver=3.3.0
 pkgrel=1
 pkgdesc="library that can create and read several streaming archive formats"
 arch=('x86_64')
@@ -10,7 +10,7 @@ license=('BSD')
 depends=('zlib' 'bzip2' 'xz' 'acl' 'openssl' 'expat' 'lzo2' 'attr')
 makedepends=('cmake' 'clang')
 source=("https://github.com/libarchive/libarchive/archive/v${_pkgver}.tar.gz")
-md5sums=('eb7774849c5db9cde9eaa56892197aa3')
+md5sums=('053e16573e665af7d6e011e8b59d1436')
 
 build() {
   mkdir -p build
