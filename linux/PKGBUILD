@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=4.9
-pkgver=4.9.10
+pkgver=4.9.12
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -31,7 +31,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.9.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('0a68ef3615c64bd5ee54a3320e46667d'
-         'db8c6368d73fedb650dd60f4b9c12039'
+         'ced440f98d136be403d38c53cb8fce9d'
          'e5d63096e8fdb16b2c1beac9ced1e195'
          '14abc6b175a8dbb2ba8d1a2852bab0e4'
          'b972552a35fc7b44704bfa3201683986'
