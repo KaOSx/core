@@ -1,6 +1,6 @@
 
 pkgname=kmod
-pkgver=23
+pkgver=24
 pkgrel=1
 #_kver=4.0.5-1
 pkgdesc="Linux kernel module handling"
@@ -11,7 +11,7 @@ depends=('glibc' 'zlib')
 options=('!libtool')
 source=("ftp://ftp.kernel.org/pub/linux/utils/kernel/kmod/${pkgname}-${pkgver}.tar.xz"
         "depmod-search.conf")
-md5sums=('3cf469f40ec2ed51f56ba45ea03793e7'
+md5sums=('08297dfb6f2b3f625f928ca3278528af'
          '9ae9acc68ca27134f55a0959073b8e53')
 
 build() {
