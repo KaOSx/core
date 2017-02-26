@@ -5,21 +5,21 @@ _pkgver=30
 pkgrel=3
 pkgdesc="Wireless Tools"
 arch=('x86_64')
-url="http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html"
+url="https://hewlettpackard.github.io/wireless-tools/Tools.html"
 license=('GPL')
 depends=('glibc')
-source=("http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/wireless_tools.30.pre9.tar.gz")
+source=("https://hewlettpackard.github.io/wireless-tools/wireless_tools.30.pre9.tar.gz")
 md5sums=('ca91ba7c7eff9bfff6926b1a34a4697d')
 
 build() {
-  ${pkgname}.${_pkgver}
+  cd ${pkgname}.${_pkgver}
   sed '/BUILD_STATIC =/d' -i Makefile
 
   make
 }
 
 package() {
-  ${pkgname}.${_pkgver}
+  cd ${pkgname}.${_pkgver}
   
   make INSTALL_DIR="${pkgdir}/usr/sbin" \
     INSTALL_LIB="${pkgdir}/usr/lib" \
