@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=232
-pkgrel=3
+pkgver=233
+pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -41,7 +41,7 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'systemd-tmpfiles.hook'
         "https://github.com/systemd/systemd/commit/843d5baf6aad6c53fc00ea8d95d83209a4f92de1.diff"
         "https://github.com/systemd/systemd/commit/c9f7b4d356a453a01aa77a6bb74ca7ef49732c08.diff")
-md5sums=('3e3a0b14050eff62e68be72142181730'
+md5sums=('11d3ff48f3361b8bdcfcdc076a31b537'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -60,11 +60,7 @@ build() {
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
   # revert cgroup switch https://github.com/systemd/systemd/commit/843d5baf6aad6c53fc00ea8d95d83209a4f92de1
-  patch -p1 -i ${srcdir}/843d5baf6aad6c53fc00ea8d95d83209a4f92de1.diff
-  # fix for gperf 3.1, use src/network/networkd-netdev.h for patch to apply
-  patch -p1 -i ${srcdir}/c9f7b4d356a453a01aa77a6bb74ca7ef49732c08.diff
-  # adjust for new lz4 ways
-  sed -i 's|liblz4 >= 125|liblz4 >= 1.7.3|' configure.ac
+  #patch -p1 -i ${srcdir}/843d5baf6aad6c53fc00ea8d95d83209a4f92de1.diff
   
   NTP_SERVERS="0.north-america.pool.ntp.org 1.north-america.pool.ntp.org 2.north-america.pool.ntp.org 3.north-america.pool.ntp.org"
   
@@ -83,7 +79,10 @@ build() {
       --without-python \
       --with-default-dnssec=no \
       --without-kill-user-processes \
-      --with-ntp-servers="${NTP_SERVERS}"
+      --with-ntp-servers="${NTP_SERVERS}" \
+      --with-default-hierarchy=hybrid \
+      --with-dbuspolicydir=/etc/dbus-1/system.d \
+      --with-fallback-hostname=KaOS
       #--with-firmware-path=/usr/lib/firmware/updates:/lib/firmware/updates:/usr/lib/firmware:/lib/firmware
 
   make
