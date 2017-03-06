@@ -1,7 +1,7 @@
 
 pkgname=ppp
 pkgver=2.4.7
-pkgrel=3
+pkgrel=4
 pkgdesc="Daemon which implements the Point-to-Point Protocol for dial-up networking"
 arch=('x86_64') 
 url="http://www.samba.org/ppp/"
@@ -22,7 +22,8 @@ source=("https://ftp.samba.org/pub/ppp/ppp-${pkgver}.tar.gz"
         'ipv6-up'
         'ipv6-down'
         'ipv6-up.d.iface-config.sh'
-        'ppp.service')
+        'ppp.service'
+        'fix-linux-vs-glibc-headers-compile-error-mess.patch')
 md5sums=('78818f40e6d33a1d1de68a1551f6595a'
          '7a9259a8f038073eeea7e4552ff1849f'
          '48c024f73a80c8b69c4def22f86902cc'
@@ -36,7 +37,8 @@ md5sums=('78818f40e6d33a1d1de68a1551f6595a'
          '252d7aeed930135adbba2e9d142f6896'
          '6709475ae49b5149f67209f3835d717e'
          '6da32ca59ff9ef6ba31db47344c29300'
-         'ee9604daf0056e79e80817c76d1d9627')
+         'ee9604daf0056e79e80817c76d1d9627'
+         '1400025c09e0084d3fd75eed8574494b')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -55,6 +57,9 @@ build() {
   sed -i "s:^#HAVE_INET6=y:HAVE_INET6=y:" pppd/Makefile.linux
   # Microsoft proprietary Callback Control Protocol
   sed -i "s:^#CBCP=y:CBCP=y:" pppd/Makefile.linux 
+  
+  #fix from FW for glibc 2.25
+  patch -p1 -i ${srcdir}/fix-linux-vs-glibc-headers-compile-error-mess.patch
 
   ./configure --prefix=/usr
   make 

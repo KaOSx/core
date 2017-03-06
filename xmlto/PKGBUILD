@@ -5,6 +5,8 @@ pkgrel=2
 pkgdesc="Convert xml to many other formats"
 arch=('x86_64')
 url="http://cyberelk.net/tim/software/xmlto/"
+# should move soon to:
+# https://pagure.io/xmlto
 license=('GPL')
 depends=('libxslt' 'perl-yaml-syck' 'perl-test-pod')
 makedepends=('docbook-xsl')

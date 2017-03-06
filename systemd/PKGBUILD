@@ -1,7 +1,7 @@
 
 pkgname=systemd
 pkgver=233
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -81,8 +81,8 @@ build() {
       --without-kill-user-processes \
       --with-ntp-servers="${NTP_SERVERS}" \
       --with-default-hierarchy=hybrid \
-      --with-dbuspolicydir=/etc/dbus-1/system.d \
       --with-fallback-hostname=KaOS
+      #--with-dbuspolicydir=/etc/dbus-1/system.d 
       #--with-firmware-path=/usr/lib/firmware/updates:/lib/firmware/updates:/usr/lib/firmware:/lib/firmware
 
   make

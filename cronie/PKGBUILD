@@ -4,6 +4,8 @@ pkgver=1.5.1
 pkgrel=2
 pkgdesc='Daemon that runs specified programs at scheduled times and related tools'
 url='https://fedorahosted.org/cronie/'
+# should move soon to:
+# https://pagure.io/cronie
 license=('custom:BSD')
 arch=('x86_64')
 depends=('pam' 'bash' 'run-parts')
