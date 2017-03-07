@@ -1,6 +1,6 @@
 
 pkgname=efibootmgr
-pkgver=14
+pkgver=15
 _commit=0bb83cf5640ef834eb4c32a146d140c40034247b
 pkgrel=1
 pkgdesc="Tool to modify UEFI Firmware Boot Manager Variables."
@@ -11,12 +11,12 @@ depends=('zlib' 'pciutils' 'efivar')
 options=('strip' 'purge' 'docs' 'zipman' '!emptydirs')
 source=("https://github.com/rhinstaller/efibootmgr/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.bz2")
 #source=("https://github.com/rhinstaller/efibootmgr/archive/${_commit}.zip")
-md5sums=('f74e87963c2c5cb1bf6d588675dbd9b4')
+md5sums=('62597b082f27da940bf18f0ec8c5907b')
 
 build () {	
 	cd ${pkgname}-${pkgver}/
 	
-	make EXTRA_CFLAGS="-Os"
+	make EXTRA_CFLAGS="-Os" EFIDIR="/boot"
 	echo
 }
 
