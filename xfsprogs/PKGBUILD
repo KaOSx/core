@@ -1,7 +1,7 @@
 
 pkgname=xfsprogs
-pkgver=4.9.0
-_pkgver=4.9.0
+pkgver=4.10.0
+_pkgver=4.10.0
 pkgrel=1
 pkgdesc="XFS filesystem utilities"
 arch=('x86_64')
@@ -11,7 +11,7 @@ groups=('base')
 depends=('util-linux')
 options=('!makeflags' '!libtool')
 source=("https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/${pkgname}-${_pkgver}.tar.xz")
-md5sums=('829d61dfb90d59844e54972444f5425a')
+md5sums=('ddbb04493addf014db07a7e2b96b2804')
 
 build() {
   cd ${pkgname}-${_pkgver}
