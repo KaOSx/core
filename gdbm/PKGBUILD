@@ -1,7 +1,7 @@
 
 pkgname=gdbm
-pkgver=1.12
-pkgrel=2
+pkgver=1.13
+pkgrel=1
 pkgdesc="GNU database library"
 url="http://www.gnu.org/software/gdbm/gdbm.html"
 license=('GPL')
@@ -10,12 +10,12 @@ depends=('glibc' 'sh')
 source=("ftp://ftp.gnu.org/gnu/gdbm/${pkgname}-${pkgver}.tar.gz"
         'gdbm-1.10-zeroheaders.patch')
 options=('!libtool' '!makeflags')
-md5sums=('9ce96ff4c99e74295ea19040931c8fb9'
+md5sums=('8929dcda2a8de3fd2367bdbf66769376'
          '2a5979910c338dabda6935263b3d8af9')
 build() {
   cd ${pkgname}-${pkgver}
 
-  patch -p1 -i ${srcdir}/gdbm-1.10-zeroheaders.patch
+  #patch -p1 -i ${srcdir}/gdbm-1.10-zeroheaders.patch
 
   ./configure --prefix=/usr \
               --mandir=/usr/share/man \
