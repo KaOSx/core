@@ -1,7 +1,7 @@
 
 pkgname=netctl
-pkgver=1.12
-pkgrel=2
+pkgver=1.13
+pkgrel=1
 pkgdesc="Profile based systemd network management"
 url="http://projects.archlinux.org/netctl.git/"
 license=("GPL")
@@ -15,13 +15,13 @@ optdepends=('dialog: for the menu based wifi assistant'
             'wpa_actiond: for automatic wireless connections through netctl-auto'
             'ppp: for pppoe connections')
 source=("https://sources.archlinux.org/other/packages/netctl/netctl-${pkgver}.tar.xz")
-md5sums=('8b7ccdfb585ea50f5b9022c265ba8c96')
+md5sums=('a8ae5a62d10d7660bb2dd43faee8b794')
 
 package() {
-  cd "$srcdir/netctl-${pkgver}"
-  make DESTDIR="$pkgdir" install
+  cd netctl-${pkgver}
+  make DESTDIR=${pkgdir} install
 
   # Shell Completion
-  install -D -m644 contrib/bash-completion "$pkgdir/usr/share/bash-completion/completions/netctl"
-  install -D -m644 contrib/zsh-completion "$pkgdir/usr/share/zsh/site-functions/_netctl"
+  install -D -m644 contrib/bash-completion ${pkgdir}/usr/share/bash-completion/completions/netctl
+  install -D -m644 contrib/zsh-completion ${pkgdir}/usr/share/zsh/site-functions/_netctl
 }

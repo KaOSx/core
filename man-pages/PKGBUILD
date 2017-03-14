@@ -1,6 +1,6 @@
 
 pkgname=man-pages
-pkgver=4.09
+pkgver=4.10
 _posixver=2013-a
 pkgrel=1
 pkgdesc="Linux man pages"
@@ -11,7 +11,7 @@ groups=('base')
 depends=()
 source=("http://www.kernel.org/pub/linux/docs/man-pages/$pkgname-$pkgver.tar.xz"
         "http://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/$pkgname-posix-${_posixver}.tar.xz")
-md5sums=('91c721409bbf823d8f62bee3a1fe8ae3'
+md5sums=('c76a2844ea70e374fdff9c2e61bbe85b'
          '825fde78e6fddd02426ecdd50e2cbe0d')
 
 build() {
@@ -34,16 +34,21 @@ package() {
   install -m644 ${srcdir}/$pkgname-posix-${_posixver}/POSIX-COPYRIGHT ${pkgdir}/usr/share/licenses/${pkgname}/POSIX-COPYRIGHT
 
   cd ${pkgdir}/usr/share/man
-  # these are included in coreutils 
+  # part of coreutils 
   rm -f man1/{chgrp,chmod,chown,cp,dir,dd}.1
   rm -f man1/{df,dircolors,du,install,ln,ls}.1
   rm -f man1/{mkdir,mkfifo,mknod,mv,rm,rmdir}.1
   rm -f man1/{touch,vdir}.1
-  # this is included in shadow
+  # part of shadow
   rm -f man5/passwd.5
   rm -f man3/getspnam.3
-  # this is included in diffutils
+  # part of diffutils
   rm -f man1/diff.1
-  # this is included in xf86-input-mouse
+  # part of xf86-input-mouse
   rm -f man4/mouse.4
+  # part of keyutils
+  rm -f man7/keyrings.7
+  rm -f man7/*keyring.7
+  # part of libbsd
+  rm -f man3/explicit_bzero.3
 }
