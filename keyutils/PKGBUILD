@@ -1,7 +1,7 @@
 
 pkgname=keyutils
 pkgver=1.5.9
-pkgrel=3
+pkgrel=4
 pkgdesc="Linux Key Management Utilities"
 arch=('x86_64')
 url="http://www.kernel.org"
@@ -19,6 +19,8 @@ build() {
 
 package() {
   cd ${pkgname}-${pkgver}
-  
   make DESTDIR=${pkgdir} LIBDIR="/usr/lib" USRLIBDIR="/usr/lib"  install
+  
+  # use from man-pages 4.10 & up
+  rm -r ${pkgdir}/usr/share/man/man7
 }

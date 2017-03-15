@@ -2,7 +2,7 @@
 pkgname=man-pages
 pkgver=4.10
 _posixver=2013-a
-pkgrel=1
+pkgrel=2
 pkgdesc="Linux man pages"
 arch=('x86_64')
 license=('GPL')
@@ -46,9 +46,6 @@ package() {
   rm -f man1/diff.1
   # part of xf86-input-mouse
   rm -f man4/mouse.4
-  # part of keyutils
-  rm -f man7/keyrings.7
-  rm -f man7/*keyring.7
   # part of libbsd
   rm -f man3/explicit_bzero.3
 }
