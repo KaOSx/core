@@ -1,7 +1,7 @@
 
 pkgname=keyutils
-pkgver=1.5.9
-pkgrel=4
+pkgver=1.5.10
+pkgrel=1
 pkgdesc="Linux Key Management Utilities"
 arch=('x86_64')
 url="http://www.kernel.org"
@@ -9,7 +9,7 @@ license=('GPL2' 'LGPL2.1')
 depends=('glibc' 'sh')
 backup=('etc/request-key.conf')
 source=("http://people.redhat.com/~dhowells/keyutils/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('7f8ac985c45086b5fbcd12cecd23cf07')
+md5sums=('3771676319bc7b84b1549b5c63ff5243')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -19,8 +19,6 @@ build() {
 
 package() {
   cd ${pkgname}-${pkgver}
-  make DESTDIR=${pkgdir} LIBDIR="/usr/lib" USRLIBDIR="/usr/lib"  install
   
-  # use from man-pages 4.10 & up
-  rm -r ${pkgdir}/usr/share/man/man7
+  make DESTDIR=${pkgdir} LIBDIR="/usr/lib" USRLIBDIR="/usr/lib"  install
 }
