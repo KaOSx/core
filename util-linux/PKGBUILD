@@ -1,7 +1,8 @@
 
 pkgname=util-linux
 pkgver=2.29.2
-pkgrel=1
+_pkgver=2.29
+pkgrel=2
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -12,7 +13,7 @@ conflicts=('util-linux-ng' 'eject')
 provides=("util-linux-ng=${pkgver}" 'eject')
 license=('GPL2')
 options=('!libtool')
-source=("ftp://ftp.kernel.org/pub/linux/utils/${pkgname}/v2.29/${pkgname}-${pkgver}.tar.xz"
+source=("https://www.kernel.org/pub/linux/utils/util-linux/v${_pkgver}/${pkgname}-${pkgver}.tar.xz"
         'uuidd.tmpfiles'
         'pam-login'
         'pam-common'
