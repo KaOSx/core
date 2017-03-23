@@ -83,6 +83,8 @@ package_boost-libs() {
 
     install -d -m 755 "${pkgdir}"/usr
     cp -a "${_stagedir}"/lib "${pkgdir}"/usr
+    # included in boost:
+    rm "${pkgdir}"/usr/lib/*.a
 
     # license
     install -D -m644 "${srcdir}/${pkgbase}_${_pkgver}/LICENSE_1_0.txt" \
