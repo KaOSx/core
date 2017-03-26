@@ -1,24 +1,24 @@
 
 pkgname=krb5
-pkgver=1.14.4
-_pkgver=1.14
+pkgver=1.15.1
+_pkgver=1.15
 pkgrel=1
 pkgdesc="The Kerberos network authentication system"
 arch=('x86_64')
-url="http://web.mit.edu/kerberos/"
+url="https://web.mit.edu/kerberos/"
 license=('custom')
 depends=('e2fsprogs' 'libldap' 'keyutils')
 makedepends=('perl')
 options=('!emptydirs')
 backup=('etc/krb5.conf' 'var/lib/krb5kdc/kdc.conf')
-source=("http://web.mit.edu/kerberos/dist/krb5/${_pkgver}/${pkgname}-${pkgver}.tar.gz"
+source=("https://web.mit.edu/kerberos/dist/krb5/${_pkgver}/${pkgname}-${pkgver}.tar.gz"
         'krb5-config_LDFLAGS.patch'
         'krb5-kadmind.service'
         'krb5-kdc.service'
 	'krb5-kpropd.service'
 	'krb5-kpropd@.service'
 	'krb5-kpropd.socket')
-md5sums=('ba90f5701fc2dda76133c1f34ba4ee80'
+md5sums=('8022f3a1cde8463e44fd35ef42731f85'
          'a1eb1629bef5427b18f521eff4de61b3'
          'd2c898d376ebe5c62b873da7cab0f7e7'
          'f0245d33083337f95654f4caf1d32f57'
