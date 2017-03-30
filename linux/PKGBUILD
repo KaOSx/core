@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.9
-pkgver=4.9.12
+_basekernel=4.10
+pkgver=4.10.7
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.9.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.10.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -30,18 +30,18 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.9.tar.xz"
         '99-linux.hook'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('0a68ef3615c64bd5ee54a3320e46667d'
-         'ced440f98d136be403d38c53cb8fce9d'
-         'e5d63096e8fdb16b2c1beac9ced1e195'
-         '14abc6b175a8dbb2ba8d1a2852bab0e4'
-         'b972552a35fc7b44704bfa3201683986'
-         '9aef073d96fb8dc306920fcba3d798e8'
-         '6db17a209f0480cfca04beb3bdd699be'
-         '8a0c461e468dfd59198ac318b04b9660'
-         '85ec06dafe89c97ae0e03668fc60a35f'
+md5sums=('b5e7f6b9b2fe1b6cc7bc56a3a0bfc090'
+         'facc00ceac59ff5e754aa04496ee4b50'
+         '445d00d2f08e235179522f31cef89436'
+         '786d01b3defa125a1a8210d8f8aa7caf'
+         '3dba9271977ec767a5018841fcd1fe2c'
+         'b314d8be01a3d88d04ce94497325e70a'
+         'ced3d46a65b4534ee48881844f8f6775'
+         '26505a8e9685ced85dec5a5cc8b5ddcd'
+         '4f43ae41cd111730bf7755372d068c5b'
          '260b2e47579140f61546f37d90e0b527'
-         '50108cace344bc825d35ce9d15d4459c'
-         '303ce60a478b3ab57f6f65199190f114'
+         '6d16159a4a4b74a87b107c5f43725bc3'
+         'fee007e7290f8dce1cd57ca95748240b'
          '035cfb8aa33366e0ed4bde9cccbea10c'
          'eb14dcfd80c00852ef81ded6e826826a'
          '0b73d293ca1ab91748ae2d2c39921532'
@@ -60,7 +60,7 @@ prepare() {
   # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
   # remove this when a Kconfig knob is made available by upstream
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
-  patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
+  ##patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
   
   patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
   
