@@ -8,7 +8,8 @@ url="http://expat.sourceforge.net/"
 license=('custom')
 depends=('glibc')
 options=('!libtool')
-source=("http://downloads.sourceforge.net/sourceforge/expat/${pkgname}-${pkgver}.tar.bz2")
+# moved to https://github.com/libexpat/libexpat
+source=("https://downloads.sourceforge.net/sourceforge/expat/${pkgname}-${pkgver}.tar.bz2")
 md5sums=('2f47841c829facb346eb6e3fab5212e2')
 
 build() {
