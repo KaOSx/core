@@ -1,6 +1,6 @@
 
 pkgname=dbus
-pkgver=1.10.16
+pkgver=1.10.18
 pkgrel=1
 pkgdesc="Freedesktop.org message bus system"
 url="http://www.freedesktop.org/Software/dbus"
@@ -11,7 +11,7 @@ makedepends=('libx11' 'systemd' 'xmlto')
 options=('!libtool')
 source=("http://dbus.freedesktop.org/releases/dbus/dbus-${pkgver}.tar.gz"
         '30-dbus')
-md5sums=('7f06c43736874c1ff50ae20392955511'
+md5sums=('1209c455598165a0c5263d4201894179'
          '3314d727fa57fc443fce25b5cbeebbcc')
 
 build() {
