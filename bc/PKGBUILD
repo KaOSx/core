@@ -1,7 +1,7 @@
 
 pkgname=bc
-pkgver=1.07
-pkgrel=2
+pkgver=1.07.1
+pkgrel=1
 pkgdesc="An arbitrary precision calculator language"
 arch=('x86_64')
 url="https://www.gnu.org/software/bc/"
@@ -10,14 +10,12 @@ depends=('readline')
 #source=("https://ftp.gnu.org/gnu/bc/${pkgname}-${pkgver}.tar.gz"
 source=("https://mirror.clarkson.edu/gnu/bc/${pkgname}-${pkgver}.tar.gz"
         'bc-1.06-void.patch')
-md5sums=('e91638a947beadabf4d7770bdbb3d512'
+md5sums=('cda93857418655ea43590736fc3ca9fc'
          'fe85d42dd4151801e9b8c2d2c4d990bf')
 
 build() {
   cd ${pkgname}-${pkgver}
   #patch -p0 -i ${srcdir}/bc-1.06-void.patch
-  # fix kernel build hang
-  sed -i -e "s|return (' ');|return (':');|" bc/execute.c
   
   ./configure --prefix=/usr --mandir=/usr/share/man \
     --infodir=/usr/share/info --with-readline 
