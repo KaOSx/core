@@ -5,10 +5,10 @@ pkgrel=5
 pkgdesc="Package of M4 macros that produce shell scripts to automatically configure software source code packages."
 arch=('x86_64')
 license=('GPL2' 'GPL3' 'custom')
-url="http://www.gnu.org/software/autoconf"
+url="https://www.gnu.org/software/autoconf"
 groups=('base-devel')
 depends=('awk' 'm4' 'diffutils' 'bash')
-source=("ftp://ftp.gnu.org/pub/gnu/autoconf/${pkgname}-${pkgver}.tar.xz")
+source=("https://ftp.gnu.org/gnu/autoconf/${pkgname}-${pkgver}.tar.xz")
 md5sums=('50f97f4159805e374639a73e2636f22e')
 
 build() {
