@@ -1,7 +1,7 @@
 
 pkgname=icu
-pkgver=58.2
-_pkgver=58_2
+pkgver=59.1
+_pkgver=59_1
 pkgrel=1
 pkgdesc="International Components for Unicode library"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('gcc-libs' 'sh')
 source=("http://download.icu-project.org/files/icu4c/${pkgver}/${pkgname}4c-${_pkgver}-src.tgz"
         'icu.8198.revert.icu5431.patch'
         'keyword-list.diff')
-md5sums=('fac212b32b7ec7ab007a12dff1f3aea1'
+md5sums=('54923fa9fab5b2b83f235fb72523de37'
          'ebd5470fc969c75e52baf4af94a9ee82'
          '451c5b7becb908374518a292c5300b5b')
 
@@ -20,7 +20,7 @@ build() {
   # fix Malayalam encoding https://bugzilla.redhat.com/show_bug.cgi?id=654200
   #patch -Rp3 -i ${srcdir}/icu.8198.revert.icu5431.patch
   # http://bugs.icu-project.org/trac/changeset/39484
-  patch -p4 -i ${srcdir}/keyword-list.diff
+  #patch -p4 -i ${srcdir}/keyword-list.diff
   
   ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
   make 
