@@ -1,7 +1,7 @@
 
 pkgname=systemd
 pkgver=233
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -39,8 +39,7 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'KaOS_fallback.conf'
         'splash.bmp'
         'systemd-tmpfiles.hook'
-        "https://github.com/systemd/systemd/commit/843d5baf6aad6c53fc00ea8d95d83209a4f92de1.diff"
-        "https://github.com/systemd/systemd/commit/c9f7b4d356a453a01aa77a6bb74ca7ef49732c08.diff")
+        "https://github.com/systemd/systemd/commit/ab883125704b9310dcdfcf7451a27e85609da76c.diff")
 md5sums=('11d3ff48f3361b8bdcfcdc076a31b537'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
@@ -50,8 +49,7 @@ md5sums=('11d3ff48f3361b8bdcfcdc076a31b537'
          'b8d8ebeab17edbe91209e705cfc9e774'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
          '7d5910d12fdfce56228a1aac8c3d618c'
-         '30ac6477920c184f1a537d46fb194ec3'
-         '5bce98bbc4528b64d9bde495fbf4c813')
+         'bf8f599cd5658a3e3614ae6509292eaa')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -59,8 +57,8 @@ build() {
   #rm src/udev/keyboard-keys-from-name.gperf
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
-  # revert cgroup switch https://github.com/systemd/systemd/commit/843d5baf6aad6c53fc00ea8d95d83209a4f92de1
-  #patch -p1 -i ${srcdir}/843d5baf6aad6c53fc00ea8d95d83209a4f92de1.diff
+  # destroy should not be an option....
+  patch -p1 -i ${srcdir}/ab883125704b9310dcdfcf7451a27e85609da76c.diff
   
   NTP_SERVERS="0.north-america.pool.ntp.org 1.north-america.pool.ntp.org 2.north-america.pool.ntp.org 3.north-america.pool.ntp.org"
   
