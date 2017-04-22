@@ -1,6 +1,6 @@
 
 pkgname=logrotate
-pkgver=3.11.0
+pkgver=3.12.1
 pkgrel=1
 pkgdesc="Rotates system logs automatically"
 url='https://github.com/logrotate/logrotate'
@@ -9,33 +9,30 @@ license=('GPL')
 groups=('base')
 depends=('popt' 'gzip' 'acl')
 backup=('etc/logrotate.conf')
-source=("https://github.com/logrotate/logrotate/archive/${pkgver}.tar.gz"
-        'logrotate.conf' 
-        'logrotate.service'
-        'logrotate.timer'
-        'path.patch')
-md5sums=('03cb3fea0a6c2e91affe5b02d6932ae5'
-         '416de14f92ef4361adad8b6e7065245a'
-         '57039a96a716391fad46c7eb1bf47b52'
-         '287c2ad9b074cb5478db7692f385827c'
-         'e76526bcd6fc33c9d921e1cb1eff1ffb')
+source=("https://github.com/logrotate/logrotate/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.xz"
+        'logrotate.conf')
+md5sums=('9c3d4c55220497a5530179c1c5e5b6eb'
+         '416de14f92ef4361adad8b6e7065245a')
 
 build() {
   cd ${pkgname}-${pkgver}
-  patch -p0 -i ${srcdir}/path.patch
   
-  ./autogen.sh
   ./configure --prefix=/usr \
-       --mandir=/usr/share/man \
-       --with-acl
+    --mandir=/usr/share/man \
+    --with-acl \
+    --with-state-file-path=/var/lib/logrotate.status \
+    --with-default-mail-command=/usr/bin/mail \
+    --with-compress-command=/usr/bin/gzip \
+    --with-uncompress-command=/usr/bin/gunzip \
+    --with-compress-extension=.gz
   
   make 
 }
 
 check() {
-	cd ${pkgname}-${pkgver}
-	
-	make test
+  cd ${pkgname}-${pkgver}
+  
+  make test
 }
 
 package() {
@@ -45,8 +42,8 @@ package() {
   install -dm755 $pkgdir/etc/logrotate.d
   install -Dm644 $srcdir/logrotate.conf $pkgdir/etc/logrotate.conf
   
-  install -D -m644 ${srcdir}/logrotate.timer ${pkgdir}/usr/lib/systemd/system/logrotate.timer
-  install -D -m644 ${srcdir}/logrotate.service ${pkgdir}/usr/lib/systemd/system/logrotate.service
+  install -D -m644 examples/logrotate.timer ${pkgdir}/usr/lib/systemd/system/logrotate.timer
+  install -D -m644 examples/logrotate.service ${pkgdir}/usr/lib/systemd/system/logrotate.service
   install -d -m755 ${pkgdir}/usr/lib/systemd/system/multi-user.target.wants
   ln -s ../logrotate.timer ${pkgdir}//usr/lib/systemd/system/multi-user.target.wants/logrotate.timer
 }

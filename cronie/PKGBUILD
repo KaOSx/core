@@ -5,7 +5,7 @@ pkgrel=2
 pkgdesc='Daemon that runs specified programs at scheduled times and related tools'
 url='https://fedorahosted.org/cronie/'
 # should move soon to:
-# https://pagure.io/cronie
+# https://pagure.io/cronie, now available at https://github.com/cronie-crond/cronie
 license=('custom:BSD')
 arch=('x86_64')
 depends=('pam' 'bash' 'run-parts')
@@ -17,7 +17,7 @@ backup=('etc/anacrontab'
         'etc/conf.d/crond'
         'etc/pam.d/crond'
         'etc/cron.deny')
-source=("https://fedorahosted.org/releases/c/r/${pkgname}/${pkgname}-${pkgver}.tar.gz"
+source=("https://github.com/cronie-crond/cronie/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.gz"
         'cron.deny'
         'service'
         'pam.d')
