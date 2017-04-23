@@ -1,6 +1,27 @@
---- a/tools/build/src/tools/python.jam	2016-09-21 10:33:28.000000000 -0400
-+++ b/tools/build/src/tools/python.jam	2016-12-09 14:55:47.486839108 -0500
-@@ -906,14 +906,14 @@
+--- boost_1_63_0/tools/build/src/tools/python.jam.orig	2017-02-16 18:51:14.005483084 +0000
++++ boost_1_63_0/tools/build/src/tools/python.jam	2017-02-16 18:51:24.912497496 +0000
+@@ -926,27 +926,27 @@
+     # for a particular target OS as the default. This makes it so that we can
+     # select a python interpreter with only knowledge of the target OS. And hence
+     # can configure different Pythons based on the target OS only.
+-    local toolset-requirements = [ toolset.requirements ] ;
+-    local toolset-target-os-requirements
+-        = [ property.evaluate-conditionals-in-context
+-            [ $(toolset-requirements).raw ] : <target-os>$(target-os) ] ;
+-    if ! <python> in $(toolset-target-os-requirements:G)
+-    {
+-        toolset.add-requirements <target-os>$(target-os):<python>$(version:E=default) ;
+-    }
++    #local toolset-requirements = [ toolset.requirements ] ;
++    #local toolset-target-os-requirements
++    #    = [ property.evaluate-conditionals-in-context
++    #        [ $(toolset-requirements).raw ] : <target-os>$(target-os) ] ;
++    #if ! <python> in $(toolset-target-os-requirements:G)
++    #{
++    #    toolset.add-requirements <target-os>$(target-os):<python>$(version:E=default) ;
++    #}
+ 
+     # We also set a default requirement that assigns the first python configured
      # for a particular target OS as the default. This makes it so that we can
      # select a python interpreter with only knowledge of the target OS. And hence
      # can configure different Pythons based on the target OS only.

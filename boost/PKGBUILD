@@ -3,7 +3,7 @@ pkgbase=boost
 pkgname=('boost-libs' 'boost')
 pkgver=1.63.0
 _pkgver=1_63_0
-pkgrel=1
+pkgrel=2
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="http://www.boost.org/"
@@ -13,7 +13,7 @@ source=("https://downloads.sourceforge.net/boost/${pkgbase}_${_pkgver}.tar.gz"
         "python.diff")
 license=('custom')
 md5sums=('7b493c08bc9557bbde7e29091f28b605'
-         '57a90dd4851b1208062c980d12b985e4')
+         '3333c45d9be4cdf5a952ff77f08a68bf')
 
 build() {
   export _stagedir="${srcdir}/stagedir"
