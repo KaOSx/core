@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.11-rc7
+_basekernel=4.11-rc8
 _srcname=linux-4.11
-pkgver=4.11RC7
+pkgver=4.11RC8
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -12,7 +12,7 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode')
 options=('!strip')
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.11-rc7.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.11-rc8.tar.xz"
         #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -33,8 +33,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.11-rc7.tar
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch'
         'RCU-ath9k.patch')
-md5sums=('4eeb08204584dea7d2581420a1e5808b'
-         '6adb738663298ff24701812832024896'
+md5sums=('6eb1b94743f781f0dab2a6c6f673908c'
+         '24d932ca3e83ae752a141bdd7d13bc2f'
          '786d01b3defa125a1a8210d8f8aa7caf'
          '3dba9271977ec767a5018841fcd1fe2c'
          'b314d8be01a3d88d04ce94497325e70a'
