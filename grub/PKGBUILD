@@ -26,6 +26,7 @@ optdepends=('freetype2: For grub-mkfont usage'
             'libisoburn: Provides xorriso for generating grub rescue iso using grub-mkrescue'
             'os-prober: To detect other OSes when generating grub.cfg in BIOS systems'
             'mtools: For grub-mkrescue FAT FS support')
+# http://git.savannah.gnu.org/cgit/grub.git
 source=("grub::git+git://git.sv.gnu.org/grub.git#branch=master"
         "grub-extras::git+git://git.sv.gnu.org/grub-extras.git#branch=master"
         'grub-10_linux-detect-initramfs.patch'
