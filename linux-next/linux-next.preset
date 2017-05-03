@@ -3,8 +3,7 @@
 ALL_config="/etc/mkinitcpio.conf"
 ALL_kver="/boot/vmlinuz-linux-next"
 
-#PRESETS=('default' 'fallback')
-PRESET=('default')
+PRESETS=('default')
 
 #default_config="/etc/mkinitcpio.conf"
 default_image="/boot/initramfs-linux-next.img"

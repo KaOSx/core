@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 _basekernel=4.11
 _srcname=linux-4.11
 pkgver=4.11.0
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -45,7 +45,7 @@ md5sums=('251a5deee0fa6daf3f356b1bbda9eab8'
          '6d16159a4a4b74a87b107c5f43725bc3'
          'fee007e7290f8dce1cd57ca95748240b'
          '035cfb8aa33366e0ed4bde9cccbea10c'
-         '6b9bbb66b883318af625f7dfb62f84df'
+         'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47'
