@@ -1,7 +1,7 @@
 
 pkgbase=lvm2
 pkgname=('lvm2' 'device-mapper')
-pkgver=2.02.170
+pkgver=2.02.171
 pkgrel=1
 arch=('x86_64')
 url="https://sourceware.org/lvm2/"
@@ -13,7 +13,7 @@ source=("https://mirrors.kernel.org/sources.redhat.com/lvm2/LVM2.${pkgver}.tgz"
         'lvm2_hook'
         '11-dm-initramfs.rules'
         'sd-lvm2')
-md5sums=('135c2c86e0c63c8c32bdc4cd0335b54f'
+md5sums=('153b7bb643eb26073274968e9026fa8f'
          '8cfc93d5fe9be1cd0a37dd4fbe3cc2ec'
          'b25cfb248e66e0f76e7aafa6715d620a'
          '69e40679cd8b3658bfc619e48baae125'

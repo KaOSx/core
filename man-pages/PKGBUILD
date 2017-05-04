@@ -1,17 +1,17 @@
 
 pkgname=man-pages
-pkgver=4.10
+pkgver=4.11
 _posixver=2013-a
 pkgrel=2
 pkgdesc="Linux man pages"
 arch=('x86_64')
 license=('GPL')
-url="http://www.kernel.org/doc/man-pages/"
+url="https://www.kernel.org/doc/man-pages/"
 groups=('base')
 depends=()
-source=("http://www.kernel.org/pub/linux/docs/man-pages/$pkgname-$pkgver.tar.xz"
-        "http://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/$pkgname-posix-${_posixver}.tar.xz")
-md5sums=('c76a2844ea70e374fdff9c2e61bbe85b'
+source=("https://www.kernel.org/pub/linux/docs/man-pages/$pkgname-$pkgver.tar.xz"
+        "https://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/$pkgname-posix-${_posixver}.tar.xz")
+md5sums=('c2f25e2367fc12267bb85abe7b39f173'
          '825fde78e6fddd02426ecdd50e2cbe0d')
 
 build() {
