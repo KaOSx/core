@@ -3,6 +3,7 @@
 #
 
 # Default mirror, USA
+Server = https://kqtos.tk/repo/$repo
 Server = https://mirror.math.princeton.edu/pub/kaoslinux/$repo
 
 # Germany
