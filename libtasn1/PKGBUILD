@@ -1,6 +1,6 @@
 
 pkgname=libtasn1
-pkgver=4.10
+pkgver=4.11
 pkgrel=1
 pkgdesc="The ASN.1 library used in GNUTLS"
 arch=('x86_64')
@@ -9,8 +9,8 @@ url="https://www.gnu.org/software/libtasn1/"
 depends=('glibc' 'texinfo')
 checkdepends=('valgrind')
 options=('!libtool')
-source=("http://ftp.gnu.org/gnu/libtasn1/${pkgname}-${pkgver}.tar.gz")
-md5sums=('f4faffdf63969d0e4e6df43b9679e8e5')
+source=("https://ftp.gnu.org/gnu/libtasn1/${pkgname}-${pkgver}.tar.gz")
+md5sums=('1603a941df4902dd5d33ba8c471bb815')
 
 build() {
   cd ${pkgname}-${pkgver}
