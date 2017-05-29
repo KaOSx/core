@@ -2,7 +2,7 @@
 pkgname=gnutls
 pkgver=3.5.12
 _pkgver=3.5.12
-pkgrel=2
+pkgrel=3
 pkgdesc="Secure communications library implementing the SSL, TLS and DTLS protocols and technologies around them"
 arch=('x86_64')
 license=('GPL3' 'LGPL')
