@@ -1,7 +1,7 @@
 
 pkgname=util-linux
-pkgver=2.29.2
-_pkgver=2.29
+pkgver=2.30
+_pkgver=2.30
 pkgrel=2
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
@@ -29,7 +29,7 @@ backup=(etc/pam.d/chfn
         etc/pam.d/su
         etc/pam.d/su-l)
 install=util-linux.install
-md5sums=('63c40c2068fcbb7e1d5c1d281115d973'
+md5sums=('eaa3429150268027908a1b8ae6ee9a62'
          'a39554bfd65cccfd8254bb46922f4a67'
          '4368b3f98abd8a32662e094c54e7f9b1'
          'a31374fef2cba0ca34dfc7078e2969e4'

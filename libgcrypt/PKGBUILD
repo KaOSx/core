@@ -1,6 +1,6 @@
 
 pkgname=libgcrypt
-pkgver=1.7.6
+pkgver=1.7.7
 pkgrel=1
 pkgdesc="GNU's basic cryptographic library"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('LGPL')
 depends=('libgpg-error')
 options=('!libtool' 'emptydirs')
 source=("https://www.gnupg.org/ftp/gcrypt/libgcrypt/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('54e180679a7ae4d090f8689ca32b654c')
+md5sums=('d1769481b1b506a632fd66c5e5f62e41')
 
 build() {
   cd ${pkgname}-${pkgver}

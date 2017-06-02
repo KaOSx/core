@@ -1,8 +1,8 @@
 
 pkgbase=openldap
 pkgname=('libldap' 'openldap')
-pkgver=2.4.44
-pkgrel=4
+pkgver=2.4.45
+pkgrel=1
 arch=('x86_64')
 url="http://www.openldap.org/"
 license=('custom')
@@ -10,16 +10,13 @@ makedepends=('libtool' 'libsasl' 'e2fsprogs' 'util-linux' 'groff')
 options=('!makeflags')
 source=("ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/${pkgbase}-${pkgver}.tgz"
         'slapd.service'
-        'slapd.tmpfiles'
-        'ntlm.patch')
-md5sums=('693ac26de86231f8dcae2b4e9d768e51'
+        'slapd.tmpfiles')
+md5sums=('00ff8301277cdfd0af728a6927042a13'
          'cbe2bd85be8d98851f640d20930ca9ea'
-         'df81b171ef4a99d6002f9f96774f64c7'
-         '4258ddbef923d1f29f2843bc050f8c56')
+         'df81b171ef4a99d6002f9f96774f64c7')
 
 build() {
   cd ${pkgbase}-${pkgver}
-  patch -p1 -i ${srcdir}/ntlm.patch
 
   sed -i 's|-m 644 $(LIBRARY)|-m 755 $(LIBRARY)|' libraries/{liblber,libldap,libldap_r}/Makefile.in
   sed -i 's|#define LDAPI_SOCK LDAP_RUNDIR LDAP_DIRSEP "run" LDAP_DIRSEP "ldapi"|#define LDAPI_SOCK LDAP_DIRSEP "run" LDAP_DIRSEP "openldap" LDAP_DIRSEP "ldapi"|' include/ldap_defaults.h
