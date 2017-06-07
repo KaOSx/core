@@ -5,7 +5,7 @@ pkgver=2.27
 pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
-url="http://www.gnu.org/software/binutils/"
+url="https://www.gnu.org/software/binutils/"
 license=('GPL')
 groups=('base-devel')
 depends=('glibc>=2.25' 'zlib')
@@ -15,18 +15,18 @@ source=("https://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.gz")
 md5sums=('41b053ed4fb2c6a8173ef421460fbb28')
 
 prepare() {
-  cd ${srcdir}/binutils-${pkgver}
+  cd binutils-${pkgver}
   
   # libiberty configure tests 
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
 
-  mkdir ${srcdir}/binutils-build
+  mkdir -p binutils-build
 }
 
 build() {
-  cd ${srcdir}/binutils-build
+  cd binutils-build
 
-  ${srcdir}/binutils-${pkgver}/configure --prefix=/usr \
+  ../binutils-${pkgver}/configure --prefix=/usr \
     --with-lib-path=/usr/lib:/usr/local/lib \
     --with-bugurl=https://github.com/KaOSx/core/issues \
     --enable-ld=default --enable-gold --with-pic \
@@ -41,18 +41,14 @@ build() {
 check() {
   cd ${srcdir}/binutils-build
 
-  # do not abort on errors - manually check log files
+  # check log files
   make LDFLAGS="" -k check || true
 }
 
 package() {
-  cd ${srcdir}/binutils-build
+  cd binutils-build
   make prefix=${pkgdir}/usr tooldir=${pkgdir}/usr install
 
-  # Remove Windows/Novell specific man pages
   rm ${pkgdir}/usr/share/man/man1/{dlltool,nlmconv,windres,windmc}*
-
-  # Remove these symlinks, they are not ABI stable.
-  # Programs should compile static to the .a file.
   rm ${pkgdir}/usr/lib/lib{bfd,opcodes}.so
 }
