@@ -1,7 +1,7 @@
 
 pkgname=mpfr
 _pkgver=3.1.5
-_patchlevel=p2
+_patchlevel=p5
 pkgver=${_pkgver}.${_patchlevel}
 #pkgver=${_pkgver}
 pkgrel=1
@@ -15,7 +15,7 @@ source=("http://www.mpfr.org/mpfr-current/mpfr-${_pkgver}.tar.xz"
         # http://www.mpfr.org/mpfr-3.1.5/allpatches  http://www.mpfr.org/mpfr-3.1.5/#bugs
         "mpfr-${_pkgver}-${_patchlevel}.patch")
 md5sums=('c4ac246cf9795a4491e7766002cd528f'
-         'f388b7983bf69e2bfd3216426c89954c')
+         'ddc463e02c11e2d03443c09dea7978b5')
 
 build() {
   cd ${pkgname}-${_pkgver}

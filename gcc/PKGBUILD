@@ -5,22 +5,22 @@
 
 pkgname=('gcc' 'gcc-libs') 
 pkgver=6.3.1
-_pkgver=1
+_pkgver=6
 _snapshot=6-20170607
-_islver=0.16
+_islver=0.16.1
 pkgrel=1
 pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
-url="http://gcc.gnu.org"
+url="https://gcc.gnu.org"
 makedepends=('binutils>=2.28' 'libmpc' 'doxygen' 'autogen')
 checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
 #source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2"
-source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.bz2"
+source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
         "ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2")
-md5sums=('f70fd7c7835d37a0519608f4a3c3d3a2'
-         '8428efbbc6f6e2810ce5c1ba73ecf98c')
+md5sums=('42f3067e2e0f90e1e21681169a66039e'
+         'ac1f25a0677912952718a51f5bc20f32')
 
   #_basedir="gcc-${pkgver}"
   _basedir="gcc-${_snapshot}"
@@ -65,7 +65,6 @@ build() {
       --enable-checking=release 
   make
 
-  # make documentation
   cd $CHOST/libstdc++-v3
   make doc-man-doxygen
 }
@@ -174,7 +173,7 @@ package_gcc()
   rm $pkgdir/usr/lib/libgcc*
   rm $pkgdir/usr/lib/libgfortran.so*
   rm $pkgdir/usr/lib/libgomp.so*
-  rm $pkgdir/usr/lib/libgomp-plugin*
+  #rm $pkgdir/usr/lib/libgomp-plugin*
   rm $pkgdir/usr/lib/libitm.so*
   rm $pkgdir/usr/lib/liblsan*
   rm $pkgdir/usr/lib/libmpx*
@@ -183,7 +182,7 @@ package_gcc()
   rm $pkgdir/usr/lib/libstdc++.so*
   rm $pkgdir/usr/lib/libtsan.so*
   rm $pkgdir/usr/lib/libubsan*
-  rm $pkgdir/usr/lib/libvtv*
+  #rm $pkgdir/usr/lib/libvtv*
   rm $pkgdir/usr/share/info/libgomp*
   rm $pkgdir/usr/share/info/libitm*
   rm $pkgdir/usr/share/info/libquadmath*
