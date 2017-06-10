@@ -1,27 +1,29 @@
 
 pkgname=libevent
-pkgver=2.0.22
-_pkgver=2.0
-pkgrel=3
+pkgver=2.1.8
+_pkgver=2.1
+pkgrel=1
 pkgdesc="An event notification library"
 arch=('x86_64')
 url="http://libevent.org/"
 license=('GPL2')
 depends=('openssl')
 source=("https://github.com/libevent/libevent/releases/download/release-${pkgver}-stable/${pkgname}-${pkgver}-stable.tar.gz")
-md5sums=('c4c56f986aa985677ca1db89630a2e11')
+md5sums=('f3eeaed018542963b7d2416ef1135ecc')
          
 build() {
   cd ${pkgname}-${pkgver}-stable
   
-  ./configure --prefix=/usr --sysconfdir=/etc
+  ./configure --prefix=/usr \
+    --sysconfdir=/etc \
+    --disable-libevent-regress
   make 
 }
 
 check() {
   cd ${pkgname}-${pkgver}-stable
   
-  make check
+  make -j1 check
 }
 
 package() {
