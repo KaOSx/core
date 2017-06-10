@@ -10,7 +10,7 @@ backup=(etc/{exports,nfs.conf,nfsmount.conf})
 depends=('glibc' 'e2fsprogs' 'rpcbind' 'libtirpc' 'librpcsecgss' 'nfsidmap' 'libevent'
          'device-mapper' 'sqlite')
 makedepends=('pkgconfig' 'autoconf' 'automake')
-install=nfs-utils.install
+#install=nfs-utils.install
 source=("https://downloads.sourceforge.net/project/nfs/nfs-utils/${pkgver}/${pkgname}-${pkgver}.tar.bz2"
         'exports'
         'id_resolver.conf')
