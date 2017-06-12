@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 _basekernel=4.11
 _srcname=linux-4.11
 pkgver=4.11.4
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -36,15 +36,15 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 md5sums=('251a5deee0fa6daf3f356b1bbda9eab8'
          '6a339a5b60e6a65676e6c16fb23827f5'
          '24d932ca3e83ae752a141bdd7d13bc2f'
-         '786d01b3defa125a1a8210d8f8aa7caf'
-         '3dba9271977ec767a5018841fcd1fe2c'
-         'b314d8be01a3d88d04ce94497325e70a'
-         'ced3d46a65b4534ee48881844f8f6775'
-         '26505a8e9685ced85dec5a5cc8b5ddcd'
-         '4f43ae41cd111730bf7755372d068c5b'
+         'bee85cb32ae1aaf1bd74de48620490f2'
+         'e6db16e3120f90a82c59aa0a6120117d'
+         'fde067340c1013c14e748de3a7befb21'
+         '842435c868e2f7cbd9ce755d890ff603'
+         'bd4880454b331a7484da92d79c175e65'
+         '7b020276221c2a2f58c5921f2adf04ff'
          '260b2e47579140f61546f37d90e0b527'
-         '6d16159a4a4b74a87b107c5f43725bc3'
-         'fee007e7290f8dce1cd57ca95748240b'
+         'e54b62bbde16342e0449aa64fc74d871'
+         'b5cab83c6c285c1a47b9de23c49a26b3'
          '035cfb8aa33366e0ed4bde9cccbea10c'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'
