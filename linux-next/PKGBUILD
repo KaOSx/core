@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 _basekernel=4.11
 _srcname=linux-4.11
 pkgver=4.11.5
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -39,7 +39,7 @@ md5sums=('251a5deee0fa6daf3f356b1bbda9eab8'
          'bee85cb32ae1aaf1bd74de48620490f2'
          'e6db16e3120f90a82c59aa0a6120117d'
          'fde067340c1013c14e748de3a7befb21'
-         '842435c868e2f7cbd9ce755d890ff603'
+         '18ad248bcaa107c19dd6038a3d3a3af5'
          'bd4880454b331a7484da92d79c175e65'
          '7b020276221c2a2f58c5921f2adf04ff'
          '260b2e47579140f61546f37d90e0b527'
@@ -72,19 +72,19 @@ build() {
   #patch -p1 -i "${srcdir}/RCU-ath9k.patch"
 
   #aufs patches for Live:
-  #patch -p1 -i "${srcdir}/aufs4.patch"
-  #patch -p1 -i "${srcdir}/aufs4-base.patch"
-  #patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
-  #patch -p1 -i "${srcdir}/aufs4-loopback.patch"
-  #patch -p1 -i "${srcdir}/aufs4-mmap.patch"
-  #patch -p1 -i "${srcdir}/aufs4-standalone.patch"
-  #patch -p1 -i "${srcdir}/lockdep-debug.patch"
-  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  #patch -p1 -i "${srcdir}/vfs-ino.patch"
+  patch -p1 -i "${srcdir}/aufs4.patch"
+  patch -p1 -i "${srcdir}/aufs4-base.patch"
+  patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs4-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs4-mmap.patch"
+  patch -p1 -i "${srcdir}/aufs4-standalone.patch"
+  patch -p1 -i "${srcdir}/lockdep-debug.patch"
+  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  patch -p1 -i "${srcdir}/vfs-ino.patch"
   
   cat "${srcdir}/config" > ./.config
 
-  #cat "${srcdir}/config.aufs" >> ./.config
+  cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -261,7 +261,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs4-util need
-  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
