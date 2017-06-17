@@ -1,18 +1,18 @@
 
 pkgname=apr
-pkgver=1.5.2
-pkgrel=2
+pkgver=1.6.2
+pkgrel=1
 pkgdesc="The Apache Portable Runtime"
 arch=('x86_64')
-url="http://apr.apache.org/"
+url="https://apr.apache.org/"
 depends=('util-linux')
 options=('!libtool')
 license=('APACHE')
-source=("http://www.apache.org/dist/apr/apr-${pkgver}.tar.bz2")
-md5sums=('4e9769f3349fe11fc0a5e1b224c236aa')
+source=("https://www.apache.org/dist/apr/apr-${pkgver}.tar.bz2")
+md5sums=('e81a851967c79b5ce9bfbc909e4bf735')
 
 build() {
-  cd "${srcdir}/apr-${pkgver}"
+  cd apr-${pkgver}
 
   ./configure --prefix=/usr \
     --includedir=/usr/include/apr-1 \
@@ -24,13 +24,13 @@ build() {
 }
 
 check() {
-  cd "${srcdir}/apr-${pkgver}"
+  cd apr-${pkgver}
   
   make -j1 check
 }
 
 package() {
-  cd "${srcdir}/apr-${pkgver}"
+  cd apr-${pkgver}
   
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR=${pkgdir} install
 }
