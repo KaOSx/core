@@ -1,25 +1,25 @@
 
 pkgname=psmisc
-pkgver=22.21
-pkgrel=3
+pkgver=23.1
+pkgrel=1
 pkgdesc="Miscellaneous procfs tools"
 arch=('x86_64')
 url="https://gitlab.com/psmisc/psmisc"
 license=('GPL')
 groups=('base')
 depends=('glibc' 'ncurses')
-source=("http://downloads.sourceforge.net/psmisc/${pkgname}-${pkgver}.tar.gz")
-md5sums=('935c0fd6eb208288262b385fa656f1bf')
+source=("https://downloads.sourceforge.net/psmisc/${pkgname}-${pkgver}.tar.xz")
+md5sums=('bbba1f701c02fb50d59540d1ff90d8d1')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
  
   ./configure --prefix=/usr
   make 
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   
-  make DESTDIR="${pkgdir}" install 
+  make DESTDIR=${pkgdir} install 
 }
