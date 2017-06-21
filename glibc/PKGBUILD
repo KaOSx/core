@@ -3,7 +3,8 @@
 
 pkgname=glibc
 pkgver=2.25
-pkgrel=2
+_commit=adc7e06fb412a2a1ee52f8cb788caf436335b9f3
+pkgrel=3
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="http://www.gnu.org/software/libc"
@@ -16,19 +17,20 @@ backup=(etc/gai.conf
         etc/nscd.conf)
 options=('!strip')
 install=glibc.install
-source=("http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
+#source=("http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
+source=("https://github.com/bminor/glibc/archive/${_commit}.zip"
         #"http://www.linuxfromscratch.org/patches/lfs/development/glibc-2.22-largefile-1.patch"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('1496c3bf41adf9db0ebd0af01f202eed'
+md5sums=('4dd864076bbefb086fe30cbd77ee054c'
          #'203fe9133e82f2b59969c116b70fd84e'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
          '8b3298de2392a10905a64ceccf56d2c1')
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${srcdir}/${pkgname}-${_commit}
   #patch -p1 -i $srcdir/glibc-2.22-largefile-1.patch
   
   cd ${srcdir}
@@ -41,7 +43,7 @@ build() {
   CFLAGS=${CFLAGS/-fstack-protector/}
   CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
 
-  ${srcdir}/glibc-${pkgver}/configure --prefix=/usr \
+  ${srcdir}/glibc-${_commit}/configure --prefix=/usr \
       --libdir=/usr/lib --libexecdir=/usr/lib \
       --with-headers=/usr/include \
       --with-bugurl=https://github.com/KaOSx/core/issues \
@@ -90,17 +92,17 @@ package() {
 
   install -dm755 ${pkgdir}/{,usr/{sbin,lib/{,locale,systemd/system,tmpfiles.d}}}
 
-  install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.conf ${pkgdir}/etc/nscd.conf
-  install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.service ${pkgdir}/usr/lib/systemd/system
-  install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/nscd.conf
+  install -m644 ${srcdir}/glibc-${_commit}/nscd/nscd.conf ${pkgdir}/etc/nscd.conf
+  install -m644 ${srcdir}/glibc-${_commit}/nscd/nscd.service ${pkgdir}/usr/lib/systemd/system
+  install -m644 ${srcdir}/glibc-${_commit}/nscd/nscd.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/nscd.conf
 
   install -m755 ${srcdir}/locale-gen ${pkgdir}/usr/sbin
-  install -m644 ${srcdir}/glibc-${pkgver}/posix/gai.conf ${pkgdir}/etc/gai.conf
+  install -m644 ${srcdir}/glibc-${_commit}/posix/gai.conf ${pkgdir}/etc/gai.conf
 
   # create /etc/locale.gen
   install -m644 ${srcdir}/locale.gen.txt ${pkgdir}/etc/locale.gen
   sed -e '1,3d' -e 's|/| |g' -e 's|\\| |g' -e 's|^|#|g' \
-    ${srcdir}/glibc-${pkgver}/localedata/SUPPORTED >> ${pkgdir}/etc/locale.gen
+    ${srcdir}/glibc-${_commit}/localedata/SUPPORTED >> ${pkgdir}/etc/locale.gen
 
   # fix for the linker
   sed -i '/RTLDLIST/s%lib64%lib%' ${pkgdir}/usr/bin/ldd
@@ -126,5 +128,5 @@ package() {
                       lib/libmvec-*.so
 
   # Still needed?  Add /usr/lib32 to the default library search path
-  install -Dm644 "$srcdir/glibc.conf" "$pkgdir/etc/ld.so.conf.d/glibc.conf"
+  install -Dm644 ${srcdir}/glibc.conf ${pkgdir}/etc/ld.so.conf.d/glibc.conf
 }
