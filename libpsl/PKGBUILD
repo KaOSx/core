@@ -1,8 +1,8 @@
 
 pkgname=libpsl
 pkgver=0.17.0
-pkgrel=2
-pkgdesc="Provides functions to work with the Mozilla Public Suffix List."
+pkgrel=3
+pkgdesc="Libraru that provides functions to work with the Mozilla Public Suffix List."
 arch=('x86_64')
 url="https://rockdaboot.github.io/libpsl/"
 license=('MIT')
