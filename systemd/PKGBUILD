@@ -1,7 +1,7 @@
 
 pkgname=systemd
 pkgver=233
-pkgrel=2
+pkgrel=3
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -39,7 +39,8 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'KaOS_fallback.conf'
         'splash.bmp'
         'systemd-tmpfiles.hook'
-        "https://github.com/systemd/systemd/commit/ab883125704b9310dcdfcf7451a27e85609da76c.diff")
+        "https://github.com/systemd/systemd/commit/ab883125704b9310dcdfcf7451a27e85609da76c.diff"
+        'resolved.diff')
 md5sums=('11d3ff48f3361b8bdcfcdc076a31b537'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
@@ -49,7 +50,8 @@ md5sums=('11d3ff48f3361b8bdcfcdc076a31b537'
          'b8d8ebeab17edbe91209e705cfc9e774'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
          '7d5910d12fdfce56228a1aac8c3d618c'
-         'bf8f599cd5658a3e3614ae6509292eaa')
+         'bf8f599cd5658a3e3614ae6509292eaa'
+         '79e9511833d15082464cdadb802767a8')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -59,6 +61,9 @@ build() {
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
   # destroy should not be an option....
   patch -p1 -i ${srcdir}/ab883125704b9310dcdfcf7451a27e85609da76c.diff
+  # CVE 2017-9445 http://www.openwall.com/lists/oss-security/2017/06/27/8
+  # https://github.com/systemd/systemd/commit/980cb558dc0293cc387597581a130542754195a0
+  patch -p1 -i ${srcdir}/resolved.diff
   
   NTP_SERVERS="0.north-america.pool.ntp.org 1.north-america.pool.ntp.org 2.north-america.pool.ntp.org 3.north-america.pool.ntp.org"
   

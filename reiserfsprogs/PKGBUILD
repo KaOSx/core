@@ -1,19 +1,20 @@
 
 pkgname=reiserfsprogs
-pkgver=3.6.25
-pkgrel=2
+pkgver=3.6.26
+pkgrel=1
 pkgdesc="Reiserfs utilities"
 arch=('x86_64')
-url="http://www.kernel.org/pub/linux/utils/fs/reiserfs/README"
+url="https://www.kernel.org/pub/linux/utils/fs/reiserfs/README"
 license=('GPL')
 groups=('base')
 depends=('util-linux')
-source=("http://ftp.kernel.org/pub/linux/kernel/people/jeffm/reiserfsprogs/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('027a598b055dccb8da3aea1378a19f3c')
+source=("https://www.kernel.org/pub/linux/kernel/people/jeffm/reiserfsprogs/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
+md5sums=('1579221fcb0246be60abac056f783661')
 
 build() {
   cd ${pkgname}-${pkgver}
   
+  autoreconf -vi
   ./configure --prefix=/usr --sbindir=/sbin
   make
 }
