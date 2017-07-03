@@ -19,13 +19,12 @@ md5sums=('ed43ea92b7586baf0dc681f68d2ff0f4')
 build() {
   cd ${pkgname}-${pkgver}
 
-  make PREFIX=/usr \
-       SYSCONFDIR=/etc \
-       MAILSPOOL=/var/spool/mail \
-       MANDIR=/usr/share/man \
-       SID= NAIL=mail \
-       WANT_AUTOCC=0 \
-       LIBEXECDIR=/usr/lib \
+  make VAL_PREFIX=/usr \
+       VAL_SYSCONFDIR=/etc \
+       VAL_MAIL=/var/spool/mail \
+       VAL_LIBEXECDIR=/usr/lib \
+       VAL_SID= VAL_MAILX=mail \
+       OPT_AUTOCC=0 \
        config
 
   make build
