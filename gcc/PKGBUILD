@@ -4,7 +4,7 @@
 # http://www.linuxfromscratch.org/lfs/view/7.6/chapter06/gcc.html
 
 pkgname=('gcc' 'gcc-libs') 
-pkgver=6.3.1
+pkgver=6.4.0
 _pkgver=6
 _snapshot=6-20170607
 _islver=0.16.1
@@ -16,14 +16,14 @@ url="https://gcc.gnu.org"
 makedepends=('binutils>=2.28' 'libmpc' 'doxygen' 'autogen')
 checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
-#source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2"
-source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
+source=("https://mirrors.concertpass.com/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
+#source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
         "ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2")
-md5sums=('42f3067e2e0f90e1e21681169a66039e'
+md5sums=('11ba51a0cfb8471927f387c8895fe232'
          'ac1f25a0677912952718a51f5bc20f32')
 
-  #_basedir="gcc-${pkgver}"
-  _basedir="gcc-${_snapshot}"
+  _basedir="gcc-${pkgver}"
+  #_basedir="gcc-${_snapshot}"
 
 
 build() {
