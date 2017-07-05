@@ -1,4 +1,4 @@
-aufs4.11 loopback patch
+aufs4.11.7+ loopback patch
 
 diff --git a/drivers/block/loop.c b/drivers/block/loop.c
 index cf39138..29b33b2 100644
@@ -258,7 +258,7 @@ index 5455fb1..8b9df60 100644
  
  /* ---------------------------------------------------------------------- */
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 3668627..2cbc8fe 100644
+index 433e314..b008398 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
 @@ -1810,6 +1810,10 @@ struct super_operations {

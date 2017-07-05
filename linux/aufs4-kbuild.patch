@@ -1,4 +1,4 @@
-aufs4.11 kbuild patch
+aufs4.11.7+ kbuild patch
 
 diff --git a/fs/Kconfig b/fs/Kconfig
 index 83eab52..31f16c4 100644

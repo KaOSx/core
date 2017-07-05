@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=4.11
-pkgver=4.11.7
+pkgver=4.11.9
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -31,16 +31,16 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.11.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('251a5deee0fa6daf3f356b1bbda9eab8'
-         '4bd6a6c9fe5e0e9c7335617eb356d649'
+         'fedcbe9c4486a2932caac632e9a47622'
          'b0054fa3a7912718f9d03f4e61e39f90'
-         'bee85cb32ae1aaf1bd74de48620490f2'
-         'e6db16e3120f90a82c59aa0a6120117d'
-         'fde067340c1013c14e748de3a7befb21'
-         '18ad248bcaa107c19dd6038a3d3a3af5'
-         'bd4880454b331a7484da92d79c175e65'
-         '7b020276221c2a2f58c5921f2adf04ff'
+         '3e35024b7087433e190eea0fdc0ef2b2'
+         '2023dae844ee07a58a27e6615cd99180'
+         '3a33dfa62ca30237e9cb40267434e2d6'
+         '0df75c26c38129fceb8dbf456b98acc7'
+         '6f5f4173d0171756c5939c0da68bfea5'
+         'eabebda84216aa69ac73b0389f7bedd2'
          '260b2e47579140f61546f37d90e0b527'
-         'e54b62bbde16342e0449aa64fc74d871'
+         '5dd245474d074c2387bd6302a356071a'
          'b5cab83c6c285c1a47b9de23c49a26b3'
          '035cfb8aa33366e0ed4bde9cccbea10c'
          'eb14dcfd80c00852ef81ded6e826826a'
