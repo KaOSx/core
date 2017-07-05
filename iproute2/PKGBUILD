@@ -1,6 +1,6 @@
 
 pkgname=iproute2
-pkgver=4.11.0
+pkgver=4.12.0
 pkgrel=1
 pkgdesc="IP Routing Utilities"
 arch=('x86_64')
@@ -11,9 +11,9 @@ makedepends=('iptables')
 options=('!makeflags')
 backup=('etc/iproute2/ematch_map' 'etc/iproute2/rt_dsfield' 'etc/iproute2/rt_protos' \
         'etc/iproute2/rt_realms' 'etc/iproute2/rt_scopes' 'etc/iproute2/rt_tables')
-source=("https://www.kernel.org/pub/linux/utils/net/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+source=("https://www.kernel.org/pub/linux/utils/net/iproute2/${pkgname}-${pkgver}.tar.xz"
         'iproute2-fhs.patch')
-md5sums=('7a9498de88bcca95c305df6108ae197e'
+md5sums=('e6fecdf46a1542a26044e756fbbabe3b'
          '80f2f7a2c7dd2a01d6c8234145d94561')
 
 prepare() {
