@@ -3,7 +3,6 @@
 #
 
 # Default mirror, USA
-Server = https://kqtos.tk/repo/$repo
 Server = https://mirror.math.princeton.edu/pub/kaoslinux/$repo
 
 # Germany
@@ -28,6 +27,7 @@ Server = http://ftp.wa.co.za/pub/kaos/$repo
 Server = http://mirror.dacentec.com/kaosx/$repo
 Server = http://kaosx.tk/repo/$repo
 Server = https://repo.kaosx.us/$repo
+Server = https://kqtos.tk/repo/$repo
 
 # Vietnam
 Server = http://mirror.freedif.org/KaOS/$repo

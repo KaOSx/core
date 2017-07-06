@@ -1,6 +1,6 @@
 
 pkgname=pciutils
-pkgver=3.5.4
+pkgver=3.5.5
 pkgrel=1
 pkgdesc="PCI bus configuration space access library and tools"
 arch=('x86_64')
@@ -10,8 +10,8 @@ url="http://mj.ucw.cz/pciutils.html"
 optdepends=('sh: required by update-pciids') 
 depends=('glibc' 'hwids' 'kmod')
 makedepends=('wget')
-source=("ftp://ftp.kernel.org/pub/software/utils/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('e82537cd2194111c45fa7e684b52252e')
+source=("ftp://atrey.karlin.mff.cuni.cz/pub/linux/pci/${pkgname}-${pkgver}.tar.gz")
+md5sums=('f99f9ea87d063e98ab19943e91716eca')
 
 build() {
   cd ${pkgname}-${pkgver}
