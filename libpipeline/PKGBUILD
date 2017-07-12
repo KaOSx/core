@@ -1,32 +1,32 @@
 
 pkgname=libpipeline
-pkgver=1.4.1
-pkgrel=2
-pkgdesc="a C library for manipulating pipelines of subprocesses in a flexible and convenient way"
+pkgver=1.4.2
+pkgrel=1
+pkgdesc="C library for manipulating pipelines of subprocesses in a flexible and convenient way"
 arch=('x86_64')
 url="http://libpipeline.nongnu.org/"
 license=('GPL')
 groups=('base')
 depends=('glibc')
 options=('!libtool')
-source=("http://download.savannah.gnu.org/releases/libpipeline/$pkgname-$pkgver.tar.gz")
-md5sums=('e54590ec68d6c1239f67b5b44e92022c')
+source=("https://download.savannah.gnu.org/releases/libpipeline/${pkgname}-${pkgver}.tar.gz")
+md5sums=('d5c80387eb9c9e5d089da2a06e8a6b12')
 
 build() {
-  cd "$srcdir/$pkgname-$pkgver"
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr
   make
 }
 
 check() {
-  cd "$srcdir/$pkgname-$pkgver"
+  cd ${pkgname}-${pkgver}
   
   make -k check
 }
 
 package() {
-  cd "$srcdir/$pkgname-$pkgver"
+  cd ${pkgname}-${pkgver}
   
-  make DESTDIR="$pkgdir/" install
+  make DESTDIR=${pkgdir}/ install
 }
