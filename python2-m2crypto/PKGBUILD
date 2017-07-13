@@ -1,6 +1,6 @@
 
 pkgname=python2-m2crypto
-pkgver=0.25.1
+pkgver=0.26.0
 pkgrel=1
 pkgdesc="A crypto and SSL toolkit for Python"
 arch=('x86_64')
@@ -8,9 +8,9 @@ url="https://gitlab.com/m2crypto/m2crypto"
 license=('BSD')
 depends=('python2' 'openssl')
 makedepends=('swig' 'python2-distribute')
-source=("https://pypi.python.org/packages/9c/58/7e8d8c04995a422c3744929721941c400af0a2a8b8633f129d92f313cfb8/M2Crypto-${pkgver}.tar.gz"
+source=("https://pypi.python.org/packages/11/29/0b075f51c38df4649a24ecff9ead1ffc57b164710821048e3d997f1363b9/M2Crypto-${pkgver}.tar.gz"
         "https://gitlab.com/m2crypto/m2crypto/raw/master/LICENCE")
-md5sums=('040234289fbef5bed4029f0f7d1dae35'
+md5sums=('9f02f0b88fbe225cc6ea8680945cafa0'
          'b0e1f0b7d0ce8a62c18b1287b991800e')
 
 build() {
