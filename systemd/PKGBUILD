@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=233
-pkgrel=4
+pkgver=234
+pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -10,7 +10,7 @@ license=('GPL2' 'LGPL2.1')
 depends=('acl' 'bash' 'glibc' 'kmod' 'hwids' 'util-linux' 'kbd' 'libcap' 'libxslt' 'iptables'
          'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn' 'lz4' 'python2-systemd'
          'quota' 'libseccomp' 'cryptsetup') # 'audit') 
-makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs')
+makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs' 'meson' 'ninja')
 optdepends=('libmicrohttpd: systemd-journal-gatewayd')
 backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/dbus-1/system.d/org.freedesktop.hostname1.conf
@@ -38,10 +38,8 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'KaOS.conf'
         'KaOS_fallback.conf'
         'splash.bmp'
-        'systemd-tmpfiles.hook'
-        "https://github.com/systemd/systemd/commit/ab883125704b9310dcdfcf7451a27e85609da76c.diff"
-        'resolved.diff')
-md5sums=('11d3ff48f3361b8bdcfcdc076a31b537'
+        'systemd-tmpfiles.hook')
+md5sums=('2d8f6ebded3462ac0d1a6275e54db561'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -49,55 +47,58 @@ md5sums=('11d3ff48f3361b8bdcfcdc076a31b537'
          'eb444ae327472b98a65631ede777720a'
          'b8d8ebeab17edbe91209e705cfc9e774'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
-         '7d5910d12fdfce56228a1aac8c3d618c'
-         'bf8f599cd5658a3e3614ae6509292eaa'
-         '79e9511833d15082464cdadb802767a8')
+         '7d5910d12fdfce56228a1aac8c3d618c')
 
-build() {
+prepare() {
   cd ${pkgname}-${pkgver}
   #rm src/journal/audit_type-to-name.h
   #rm src/udev/keyboard-keys-from-name.gperf
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
   # destroy should not be an option....
-  patch -p1 -i ${srcdir}/ab883125704b9310dcdfcf7451a27e85609da76c.diff
-  # CVE 2017-9445 http://www.openwall.com/lists/oss-security/2017/06/27/8
-  # https://github.com/systemd/systemd/commit/980cb558dc0293cc387597581a130542754195a0
-  patch -p1 -i ${srcdir}/resolved.diff
+  #patch -p1 -i ${srcdir}/ab883125704b9310dcdfcf7451a27e85609da76c.diff
+}
+
+build() {
+  mkdir -p build
+  cd build
   
   NTP_SERVERS="0.north-america.pool.ntp.org 1.north-america.pool.ntp.org 2.north-america.pool.ntp.org 3.north-america.pool.ntp.org"
+  # cp locale-archive from /usr/lib/locale
+  export LANG=en_US.UTF-8
   
-  ./autogen.sh
-  ./configure \
-      --libexecdir=/usr/lib \
-      --localstatedir=/var \
-      --sysconfdir=/etc \
-      --enable-split-usr \
-      --enable-lz4 \
-      --enable-efi \
-      --enable-gnuefi \
-      --disable-audit \
-      --disable-ima \
-      --disable-networkd \
-      --without-python \
-      --with-default-dnssec=no \
-      --without-kill-user-processes \
-      --with-ntp-servers="${NTP_SERVERS}" \
-      --with-default-hierarchy=hybrid \
-      --with-fallback-hostname=KaOS \
-      --with-dbuspolicydir=/etc/dbus-1/system.d 
-      #--with-firmware-path=/usr/lib/firmware/updates:/lib/firmware/updates:/usr/lib/firmware:/lib/firmware
-
-  make
+  meson ../${pkgname}-${pkgver} \
+    --prefix=/usr \
+    --buildtype=release \
+    --libexecdir=/usr/lib \
+    -Dsplit-usr=true \
+    -Drootprefix=/usr \
+    -Dlz4=true \
+    -Defi=true \
+    -Dgnu-efi=true \
+    -Daudit=false \
+    -Dima=false \
+    -Dnetworkd=false \
+    -Ddefault-dnssec=no \
+    -Ddefault-kill-user-processes=false \
+    -Dntp-servers="${NTP_SERVERS}" \
+    -Ddefault-hierarchy=hybrid \
+    -Dfallback-hostname=KaOS \
+    -Ddbuspolicydir=/etc/dbus-1/system.d 
+    ninja
 }
 
 check() {
-  make -C ${pkgname}-${pkgver} check || true
+  cd build
+  ninja test || true
 }
 
 package() {
-  make -C ${pkgname}-${pkgver} DESTDIR=${pkgdir} install
-
+  cd build
+  DESTDIR=${pkgdir} ninja install
+  
+  cd ..
+  
   install -dm755 ${pkgdir}/bin
   ln -s ../usr/lib/systemd/systemd ${pkgdir}/bin/systemd
 
