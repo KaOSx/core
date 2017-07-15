@@ -5,7 +5,8 @@ _kernelname=${pkgname#linux}
 _basekernel=4.12
 _srcname=linux-4.12
 pkgver=4.12.1
-pkgrel=1
+_pkgver=4.12.1.a
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -14,6 +15,7 @@ options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.11-rc8.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
         'config'
         #aufs patches
@@ -35,7 +37,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'RCU-ath9k.patch')
 md5sums=('fc454157e2d024d401a60905d6481c6b'
          'fab3dcd3b5a99d959bde7cde2e5cedb8'
-         'f1013b4d38d6e13215cc77e0ae326fba'
+         '6a6a1ebf6295cff69edae1eab2e42e84'
+         '1465aeee0bb6ce842e0691fac2009fc6'
          'bee85cb32ae1aaf1bd74de48620490f2'
          'e6db16e3120f90a82c59aa0a6120117d'
          'fde067340c1013c14e748de3a7befb21'
@@ -57,6 +60,8 @@ build() {
 
   # add upstream patch
   patch -p1 -i "${srcdir}/patch-${pkgver}"
+  # linux-hardened patch
+  patch -p1 -i "${srcdir}/linux-hardened-${_pkgver}.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
