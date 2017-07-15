@@ -4,9 +4,9 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.12
 _srcname=linux-4.12
-pkgver=4.12.1
-_pkgver=4.12.1.a
-pkgrel=2
+pkgver=4.12.2
+_pkgver=4.12.1.b
+pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -36,9 +36,9 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'i8042-fix-aliases.patch'
         'RCU-ath9k.patch')
 md5sums=('fc454157e2d024d401a60905d6481c6b'
-         'fab3dcd3b5a99d959bde7cde2e5cedb8'
-         '6a6a1ebf6295cff69edae1eab2e42e84'
-         '1465aeee0bb6ce842e0691fac2009fc6'
+         'df72b6950492a79610d443d8992b3293'
+         '17c19e661800e37790dd6739f209a206'
+         'da4b4d2184d9881f6ba6725873cb3719'
          'bee85cb32ae1aaf1bd74de48620490f2'
          'e6db16e3120f90a82c59aa0a6120117d'
          'fde067340c1013c14e748de3a7befb21'
