@@ -1,0 +1,13 @@
+diff --git a/rules/50-udev-default.rules.in b/rules/50-udev-default.rules.in
+index 898148c..aefa158 100644
+--- a/rules/50-udev-default.rules.in
++++ b/rules/50-udev-default.rules.in
+@@ -75,8 +75,6 @@ KERNEL=="tun", MODE="0666", OPTIONS+="static_node=net/tun"
+ 
+ KERNEL=="fuse", MODE="0666", OPTIONS+="static_node=fuse"
+ 
+-KERNEL=="kvm", GROUP="kvm", MODE="@DEV_KVM_MODE@"
+-
+ SUBSYSTEM=="ptp", ATTR{clock_name}=="KVM virtual PTP", SYMLINK += "ptp_kvm"
+ 
+ LABEL="default_end"
