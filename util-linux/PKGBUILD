@@ -1,8 +1,8 @@
 
 pkgname=util-linux
-pkgver=2.30
+pkgver=2.30.1
 _pkgver=2.30
-pkgrel=2
+pkgrel=1
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -29,7 +29,7 @@ backup=(etc/pam.d/chfn
         etc/pam.d/su
         etc/pam.d/su-l)
 install=util-linux.install
-md5sums=('eaa3429150268027908a1b8ae6ee9a62'
+md5sums=('5e5ec141e775efe36f640e62f3f8cd0d'
          'a39554bfd65cccfd8254bb46922f4a67'
          '4368b3f98abd8a32662e094c54e7f9b1'
          'a31374fef2cba0ca34dfc7078e2969e4'
@@ -60,7 +60,7 @@ build() {
   make
 }
 
-# only 1 libmount: tab files-py subtest fails, leaving dep to test the rest
+# 2 fail libmount: tab files-py subtest & misc/setarch-options fails, leaving dep to test the rest
 check() {
   make -C ${pkgname}-${pkgver} check
 }
