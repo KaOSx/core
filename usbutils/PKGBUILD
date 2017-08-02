@@ -4,31 +4,28 @@ pkgver=008
 pkgrel=3
 pkgdesc="USB Device Utilities"
 arch=('x86_64')
+url="http://linux-usb.sourceforge.net/"
 license=('GPL')
 groups=('base')
 depends=('libusb' 'hwids')
-optdepends=('python2: for lsusb.py usage'
-            'coreutils: for lsusb.py usage'
-            'wget: for update-usbids.sh usage')
-url="http://linux-usb.sourceforge.net/"
 source=("https://www.kernel.org/pub/linux/utils/usb/usbutils/${pkgname}-${pkgver}.tar.xz"
         'fix-python2.patch')
 md5sums=('2780b6ae21264c888f8f30fb2aab1259'
          '45766196895b4cc50b53cd56e1bbf3d1')
 
 build() {
-  cd $pkgname-$pkgver
-  patch -p1 -i $srcdir/fix-python2.patch
+  cd ${pkgname}-${pkgver}
+  patch -p1 -i ${srcdir}/fix-python2.patch
   
   ./configure --prefix=/usr --datadir=/usr/share/hwdata --disable-zlib
   make
 }
 
 package() {
-  cd $pkgname-$pkgver
-  make DESTDIR=$pkgdir install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
   
   # part of hwids 
-  rm -rf $pkgdir/usr/{share/hwdata,sbin}
+  rm -rf ${pkgdir}/usr/{share/hwdata,sbin}
 }
 
