@@ -1,6 +1,6 @@
 
 pkgname=e2fsprogs
-pkgver=1.43.4
+pkgver=1.43.5
 pkgrel=1
 pkgdesc="Ext2/3/4 filesystem utilities"
 arch=('x86_64')
@@ -9,11 +9,11 @@ url="http://e2fsprogs.sourceforge.net"
 groups=('base')
 depends=('sh' 'util-linux')
 makedepends=('bc')
-source=("https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v${pkgver}/${pkgname}-${pkgver}.tar.gz"
+source=("https://www.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${pkgver}/${pkgname}-${pkgver}.tar.xz"
         'MIT-LICENSE')
 backup=('etc/mke2fs.conf')
-md5sums=('0bd1c74f357f6e9ae2ab6fa6229b9aea'
-         '035b7c69b7a2cecf996a4708c262245e')
+sha256sums=('261f3d9ade383fbf032a19140c9c25e998cc0f71a1ae686614fb3ae0eb955a17'
+            'cc45386c1d71f438ad648fd7971e49e3074ad9dbacf9dd3a5b4cb61fd294ecbb')
 
 build() {
   cd ${pkgname}-${pkgver}
