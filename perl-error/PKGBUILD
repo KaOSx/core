@@ -1,8 +1,8 @@
 
 pkgname=perl-error
 _pkgname=Error
-pkgver=0.17024
-pkgrel=3
+pkgver=0.17025
+pkgrel=1
 pkgdesc="Perl/CPAN Error module - Error/exception handling in an OO-ish way"
 url="http://search.cpan.org/dist/${_realname}/"
 arch=('x86_64')
@@ -10,7 +10,7 @@ license=('PerlArtistic' 'GPL')
 depends=('perl')
 options=('!emptydirs')
 source=("http://search.cpan.org/CPAN/authors/id/S/SH/SHLOMIF/${_pkgname}-${pkgver}.tar.gz")
-md5sums=('7e3676a7fb14f65f568f12d4b40a2a72')
+md5sums=('1a2ee7f0dc44f9ee76661a16bbbc0c48')
 
 build() {
   cd ${_pkgname}-${pkgver}
