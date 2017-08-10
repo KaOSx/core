@@ -1,6 +1,6 @@
 
 pkgname=curl
-pkgver=7.54.1
+pkgver=7.55.0
 pkgrel=1
 pkgdesc="An URL retrival utility and library"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('zlib' 'openssl' 'bash' 'ca-certificates' 'libssh2' 'libpsl') # 'libidn
 options=('!libtool')
 source=("https://curl.haxx.se/download/${pkgname}-${pkgver}.tar.bz2"
         'curlbuild.h')
-md5sums=('6b6eb722f512e7a24855ff084f54fe55'
+md5sums=('90cd4d6b20fa7655d2b75efe09fd7bfe'
          '751bd433ede935c8fae727377625a8ae')
 
 build() {
@@ -38,6 +38,6 @@ package() {
     install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/COPYING
     install -Dm644 docs/libcurl/libcurl.m4 ${pkgdir}/usr/share/aclocal/libcurl.m4
     
-    mv ${pkgdir}/usr/include/curl/curlbuild.h ${pkgdir}/usr/include/curl/curlbuild-64.h
-    install -m 644 ${srcdir}/curlbuild.h ${pkgdir}/usr/include/curl/curlbuild.h
+    #mv ${pkgdir}/usr/include/curl/curlbuild.h ${pkgdir}/usr/include/curl/curlbuild-64.h
+    #install -m 644 ${srcdir}/curlbuild.h ${pkgdir}/usr/include/curl/curlbuild.h
 }
