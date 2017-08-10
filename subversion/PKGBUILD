@@ -1,30 +1,28 @@
 
 pkgname=subversion
-pkgver=1.9.6
+pkgver=1.9.7
 pkgrel=1
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
+url="http://subversion.apache.org/"
 license=('APACHE')
 depends=('db' 'serf' 'apr-util' 'sqlite3' 'file' 'systemd')
-#optdepends=('kwallet' 'bash-completion: for svn bash completion')
 makedepends=('krb5' 'apache' 'python2' 'perl' 'swig' 'ruby' 'java-runtime' 
              'autoconf' 'e2fsprogs') # 'kwallet')
-#backup=('etc/xinetd.d/svn' 'etc/conf.d/svnserve')
-url="http://subversion.apache.org/"
 provides=('svn')
 options=('!makeflags' '!libtool')
-source=("http://apache.mirror.rafal.ca/subversion/${pkgname}-${pkgver}.tar.bz2"
+source=("https://www.apache.org/dist/subversion/${pkgname}-${pkgver}.tar.bz2"
         'svn'
         'svnserve.conf' 
         'svnserve.tmpfiles'
         'svnserve.service'
         'subversion.rpath.fix.patch')
-md5sums=('f27e00338d4a9f7f9aec9d4a3f8b418b'
-         'a0db6dd43af33952739b6ec089852630'
-         'c459e299192552f61578f3438abf0664'
-         'bb2857eceafcfac35dde39dcffad2314'
-         'e8020c7a1d1a0c47091b5fdd034f81c5'
-         '6b4340ba9d8845cd8497e013ae01be3f')
+sha1sums=('874b81749cdc3e88152d103243c3623ac6338388'
+          '73b36c046c09cec2093354911c89e3ba8056af6c'
+          'ad117bf3b2a838a9a678a93fd8db1a066ad46c41'
+          '00cc36e69077a8c45674ead6dd62a7647b3a3b6d'
+          '9f6790d842cf3e0228b007483a43e39a42724068'
+          '3d1e28408a9abb42af2e531adc0d01ce21acfad6')
 
 build() {
    cd ${pkgname}-${pkgver}
