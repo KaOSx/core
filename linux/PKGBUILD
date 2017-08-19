@@ -2,16 +2,18 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.11
-pkgver=4.11.9
+_basekernel=4.12
+pkgver=4.12.8
+_pkgver=4.12.8.a
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.11.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.12.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
         'config'
         #aufs patches
@@ -30,19 +32,20 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.11.tar.xz"
         '99-linux.hook'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('251a5deee0fa6daf3f356b1bbda9eab8'
-         'fedcbe9c4486a2932caac632e9a47622'
-         'b0054fa3a7912718f9d03f4e61e39f90'
-         '3e35024b7087433e190eea0fdc0ef2b2'
-         '2023dae844ee07a58a27e6615cd99180'
-         '3a33dfa62ca30237e9cb40267434e2d6'
-         '0df75c26c38129fceb8dbf456b98acc7'
-         '6f5f4173d0171756c5939c0da68bfea5'
-         'eabebda84216aa69ac73b0389f7bedd2'
+md5sums=('fc454157e2d024d401a60905d6481c6b'
+         '31f6507a485b2ba66a96624df4c22a85'
+         '38208922a4e5890e38030c11b2321bb0'
+         'e8fb8ad3a7ed9110b1cfd91dbd6c4bb2'
+         '14235fa067846c18c9ee37b8b18dd60c'
+         '01aa6f3eaaf0713444cf9975ab0b34f9'
+         '7f9ef2343db8972708557245ed8c4d62'
+         'e367286bab8a254b1f0d3d7069ba7d8b'
+         '2843404606a5a785a6f2bde6fb084dbb'
+         '50fefa943a5929548d88d100d3144709'
          '260b2e47579140f61546f37d90e0b527'
-         '5dd245474d074c2387bd6302a356071a'
+         'd89ceedc922e88707a2b4c347fab0988'
          'b5cab83c6c285c1a47b9de23c49a26b3'
-         '035cfb8aa33366e0ed4bde9cccbea10c'
+         '00f9f64893058c0b252c0fe6ceced17d'
          'eb14dcfd80c00852ef81ded6e826826a'
          '0b73d293ca1ab91748ae2d2c39921532'
          'a262bedf26f26b7698143fc23de98457'
@@ -53,6 +56,8 @@ prepare() {
 
   # add upstream patch
   patch -p1 -i "${srcdir}/patch-${pkgver}"
+  # linux-hardened patch
+  patch -p1 -i "${srcdir}/linux-hardened-${_pkgver}.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -71,9 +76,11 @@ prepare() {
   patch -p1 -i "${srcdir}/aufs4-loopback.patch"
   patch -p1 -i "${srcdir}/aufs4-mmap.patch"
   patch -p1 -i "${srcdir}/aufs4-standalone.patch"
-  patch -p1 -i "${srcdir}/lockdep-debug.patch"
+  #patch -p1 -i "${srcdir}/lockdep-debug.patch"
   patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   patch -p1 -i "${srcdir}/vfs-ino.patch"
+  #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
+  sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
   cat "${srcdir}/config" > ./.config
 
@@ -177,7 +184,7 @@ package_linux-headers() {
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/include"
 
   for i in acpi asm-generic config crypto drm generated linux math-emu \
-    media net pcmcia scsi sound trace uapi video xen; do
+    media net pcmcia scsi rdma soc sound trace uapi video xen; do
     cp -a include/${i} "${pkgdir}/usr/src/linux-${_kernver}/include/"
   done
 
