@@ -2,18 +2,22 @@
 pkgname=bzr
 pkgver=2.7.0
 _pkgver=2.7
-pkgrel=2
+pkgrel=3
 pkgdesc="Bazaar is a version control system that helps you track project history over time and to collaborate easily with others."
 arch=('x86_64')
 url="http://bazaar.canonical.com/en/"
 license=('GPL')
 depends=('python2')
-source=("http://launchpad.net/bzr/${_pkgver}/${pkgver}/+download/${pkgname}-${pkgver}.tar.gz")
-md5sums=('8e5020502efd54f5925a14a456b88b89')
+source=("http://launchpad.net/bzr/${_pkgver}/${pkgver}/+download/${pkgname}-${pkgver}.tar.gz"
+        'lazy_regex.diff')
+md5sums=('8e5020502efd54f5925a14a456b88b89'
+         '84665c55ed92fc7a14d226fa13746209')
 
 build() {
   cd ${pkgname}-${pkgver}
   sed -i 's|man/man1|share/man/man1|' setup.py
+  # https://bugs.launchpad.net/bzr/+bug/1657238
+  patch -p1 -i ${srcdir}/lazy_regex.diff
 
   python2 setup.py build
 }
