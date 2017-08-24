@@ -8,7 +8,7 @@ arch=('x86_64')
 url="http://www.icu-project.org/"
 license=('custom:"icu"')
 depends=('gcc-libs' 'sh')
-source=("http://download.icu-project.org/files/icu4c/${pkgver}/${pkgname}4c-${_pkgver}-src.tgz"
+source=("https://ssl.icu-project.org/files/icu4c/${pkgver}/${pkgname}4c-${_pkgver}-src.tgz"
         'icu.8198.revert.icu5431.patch'
         'keyword-list.diff')
 md5sums=('54923fa9fab5b2b83f235fb72523de37'
@@ -16,7 +16,7 @@ md5sums=('54923fa9fab5b2b83f235fb72523de37'
          '451c5b7becb908374518a292c5300b5b')
 
 build() {
-  cd ${srcdir}/icu/source
+  cd icu/source
   # fix Malayalam encoding https://bugzilla.redhat.com/show_bug.cgi?id=654200
   #patch -Rp3 -i ${srcdir}/icu.8198.revert.icu5431.patch
   # http://bugs.icu-project.org/trac/changeset/39484
@@ -27,14 +27,14 @@ build() {
 }
 
 check() {
-  cd ${srcdir}/icu/source
+  cd icu/source
   
   make -k check 
 }
 
 package() {
-  cd ${srcdir}/icu/source
+  cd icu/source
   make -j1 DESTDIR=${pkgdir} install 
 
-  install -Dm644 ../icu/license.html ${pkgdir}/usr/share/licenses/icu/license.html
+  install -Dm644 ../LICENSE ${pkgdir}/usr/share/licenses/icu/LICENSE
 }
