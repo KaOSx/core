@@ -3,8 +3,8 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=4.12
-pkgver=4.12.8
-_pkgver=4.12.8.a
+pkgver=4.12.9
+_pkgver=4.12.9.a
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -33,9 +33,9 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.12.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('fc454157e2d024d401a60905d6481c6b'
-         '31f6507a485b2ba66a96624df4c22a85'
-         '38208922a4e5890e38030c11b2321bb0'
-         'e8fb8ad3a7ed9110b1cfd91dbd6c4bb2'
+         '60f3420d9c92d780986e9b1f49927fe5'
+         '8f9bd22e75878b0661c4e603defc46c1'
+         '839b9a5cdc1fa40a7096ccf730df1744'
          '14235fa067846c18c9ee37b8b18dd60c'
          '01aa6f3eaaf0713444cf9975ab0b34f9'
          '7f9ef2343db8972708557245ed8c4d62'
