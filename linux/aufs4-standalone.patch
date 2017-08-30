@@ -1,4 +1,4 @@
-aufs4.x-rcN standalone patch
+aufs4.12 standalone patch
 
 diff --git a/fs/dcache.c b/fs/dcache.c
 index 3458af5..5fd25bb 100644
@@ -67,7 +67,7 @@ index 954d510..4fb5b10 100644
 @@ -301,6 +303,7 @@ void __fput_sync(struct file *file)
  }
  
- EXPORT_SYMBOL(fput);
+ EXPORT_SYMBOL_GPL(fput);
 +EXPORT_SYMBOL_GPL(__fput_sync);
  
  void put_filp(struct file *file)

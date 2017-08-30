@@ -1,4 +1,4 @@
-aufs4.x-rcN mmap patch
+aufs4.12 mmap patch
 
 diff --git a/fs/proc/base.c b/fs/proc/base.c
 index f1e1927..7b5af0c 100644

@@ -1,4 +1,4 @@
-aufs4.x-rcN standalone patch
+aufs4.12 standalone patch
 
 diff --git a/fs/dcache.c b/fs/dcache.c
 index 3458af5..5fd25bb 100644
