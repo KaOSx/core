@@ -1,6 +1,6 @@
 
 pkgname=coreutils
-pkgver=8.27
+pkgver=8.28
 pkgrel=1
 pkgdesc="The basic file, shell and text manipulation utilities of the GNU operating system"
 arch=('x86_64')
@@ -9,7 +9,7 @@ url="https://www.gnu.org/software/coreutils"
 groups=('base')
 depends=('glibc' 'pam' 'acl' 'gmp' 'libcap')
 source=("https://ftp.gnu.org/gnu/$pkgname/$pkgname-$pkgver.tar.xz")
-md5sums=('502795792c212932365e077946d353ae')
+md5sums=('e7cb20d0572cc40d9f47ede6454406d1')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -21,7 +21,7 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-  # two fails: FAIL tests/df/df-symlink.sh (exit status: 1) & FAIL: tests/misc/date-debug.sh
+  # one fail: FAIL tests/df/df-symlink.sh (exit status: 1) 
   make RUN_EXPENSIVE_TESTS=no check
 }
 
