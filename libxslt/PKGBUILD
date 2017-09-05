@@ -1,7 +1,7 @@
 
 pkgname=libxslt
-pkgver=1.1.29
-pkgrel=3
+pkgver=1.1.30
+pkgrel=1
 pkgdesc="XML stylesheet transformation library"
 arch=('x86_64')
 url="http://xmlsoft.org/XSLT/"
@@ -11,13 +11,13 @@ makedepends=('python2')
 options=('!libtool')
 source=("ftp://xmlsoft.org/libxslt/${pkgname}-${pkgver}.tar.gz"
         'CVE-2017-5029.patch')
-md5sums=('a129d3c44c022de3b9dcf6d6f288d72e'
+md5sums=('70becbbcb1dad55f14de0b84171b91d5'
          '286ef6a57bed1c4cc8dc62663f2a0744')
 
 build() {
   cd ${pkgname}-${pkgver}
   # https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2017-5029
-  patch -p1 -i ${srcdir}/CVE-2017-5029.patch
+  #patch -p1 -i ${srcdir}/CVE-2017-5029.patch
   
   ./configure --prefix=/usr 
   make 

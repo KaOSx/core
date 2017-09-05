@@ -1,7 +1,7 @@
 
 pkgname=libxml2
-pkgver=2.9.4
-pkgrel=4
+pkgver=2.9.5
+pkgrel=1
 pkgdesc="XML parsing library, version 2"
 arch=('x86_64')
 license=('MIT')
@@ -12,14 +12,14 @@ url="http://www.xmlsoft.org/"
 source=("ftp://ftp.xmlsoft.org/${pkgname}/${pkgname}-${pkgver}.tar.gz"
         "http://www.w3.org/XML/Test/xmlts20080827.tar.gz"
         "https://github.com/GNOME/libxml2/commit/3f0627a1ee854dc965bf61dd6466a798b80cf088.diff")
-md5sums=('ae249165c173b1ff386ee8ad676815f5'
+md5sums=('5ce0da9bdaa267b40c4ca36d35363b8b'
          'ae3d1ebe000a3972afa104ca7f0e1b4a'
          '98fd3c2502dce1a1fd45ca3efbb87ca7')
 
 build() {
   cd ${pkgname}-${pkgver}
   # bug for qtwebkit issues, example https://github.com/Sigil-Ebook/Sigil/issues/232
-  patch -p1 -i ${srcdir}/3f0627a1ee854dc965bf61dd6466a798b80cf088.diff
+  #patch -p1 -i ${srcdir}/3f0627a1ee854dc965bf61dd6466a798b80cf088.diff
   
   ./configure --prefix=/usr \
      --with-threads \
