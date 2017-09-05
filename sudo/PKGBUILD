@@ -2,7 +2,7 @@
 pkgname=sudo
 pkgver=1.8.21.1
 _pkgver=1.8.21p1
-pkgrel=1
+pkgrel=2
 pkgdesc="Give certain users the ability to run some commands as root."
 arch=('x86_64')
 url="https://www.sudo.ws/sudo/"
@@ -11,12 +11,15 @@ depends=('glibc' 'pam' 'libldap')
 backup=('etc/sudoers' 'etc/pam.d/sudo')
 options=('!libtool')
 source=("https://www.sudo.ws/dist/${pkgname}-${_pkgver}.tar.gz"
-        'sudo.pam')
+        'sudo.pam'
+        'pam_oath.patch')
 sha256sums=('ee50d3a249a96b1c5c8d3d21380eb96c63c6e61a888b13e3c2b941b23ab7c808'
-            'd1738818070684a5d2c9b26224906aad69a4fea77aabd960fc2675aee2df1fa2')
+            'd1738818070684a5d2c9b26224906aad69a4fea77aabd960fc2675aee2df1fa2'
+            '324eaaa0fcec0093020781ed7cc93e01b08f2d8e643eb5a101d0a7687cb9317f')
 
 build() {
   cd ${pkgname}-${_pkgver}
+  patch -p1 -i $srcdir/pam_oath.patch
 
   ./configure --prefix=/usr \
               --with-pam \
