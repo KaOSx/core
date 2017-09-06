@@ -1,26 +1,23 @@
 
 pkgname=mkinitcpio-busybox
-pkgver=1.25.1
+pkgver=1.27.2
 pkgrel=1
-pkgdesc="base initramfs tools"
+pkgdesc="Base initramfs tools"
 arch=('x86_64')
-url="http://www.busybox.net/"
+url="https://www.busybox.net/"
 license=('GPL')
 depends=('glibc')
 options=('!buildflags')
-source=("http://busybox.net/downloads/busybox-${pkgver}.tar.bz2"
-        'config'
-        'glibc.patch')
-md5sums=('4f4c5de50b479b11ff636d7d8eb902a2'
-         '203eb6984b2b1b1ff01d721f16f7d779'
-         'bcaf2fa775b8c598a83a4765fc5d4bb3')
+source=("https://busybox.net/downloads/busybox-${pkgver}.tar.bz2"
+        'config')
+md5sums=('476186f4bab81781dab2369bfd42734e'
+         '203eb6984b2b1b1ff01d721f16f7d779')
 
 build() {
   cd busybox-${pkgver}
 
   local safeflags="${CARCH/_/-} -mtune=generic -Os -pipe -fno-strict-aliasing"
   sed 's|^\(CONFIG_EXTRA_CFLAGS\)=.*|\1="-march='"$safeflags"'"|' ${srcdir}/config > .config
-  patch -p1 -i ${srcdir}/glibc.patch
 
   make
 }

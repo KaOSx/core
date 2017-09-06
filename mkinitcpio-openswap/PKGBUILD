@@ -1,7 +1,7 @@
 
 # all credit for this PKGBUILD goes to Jenya Sovetkin <e.sovetkin@gmail.com>
 pkgname=mkinitcpio-openswap
-pkgver=0.0.1
+pkgver=0.1.0
 pkgrel=1
 pkgdesc="mkinitcpio hook to open swap at boot time"
 arch=('x86_64')
@@ -12,9 +12,9 @@ backup=('etc/openswap.conf')
 source=('openswap.hook'
         'openswap.install'
         'openswap.conf')
-md5sums=('a5b52e3c3b5dc592f41567b21ec2e9cf'
-         'ae743e0fd95cc1c07705cf7c472416b1'
-         '101861982a5e2ad64a32a158894bbbea')
+sha256sums=('3af2662e33b236257c2e324f4f41091da5ea293b641a0f18e6ed7ec57cc05bca'
+            '94dd98a953bab2244215a2b20767cdc9500fc438bed9ec27cae72a73766c6b86'
+            '3308f2679bb7c962d98adf2684d25390025d025e3d30bc1e773e3522311ad325')
 
 package() {  
   install -Dm 644 openswap.hook \
