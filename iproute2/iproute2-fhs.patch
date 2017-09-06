@@ -9,16 +9,6 @@
  CONFDIR?=/etc/iproute2
  DATADIR?=$(PREFIX)/share
  DOCDIR?=$(DATADIR)/doc/iproute2
-@@ -41,7 +42,7 @@
- CFLAGS := $(WFLAGS) $(CCOPTS) -I../include $(DEFINES) $(CFLAGS)
- YACCFLAGS = -d -t -v
- 
--SUBDIRS=lib ip tc bridge misc netem genl tipc devlink man
-+SUBDIRS=lib ip tc bridge misc netem genl devlink man
- 
- LIBNETLINK=../lib/libnetlink.a ../lib/libutil.a
- LDLIBS += $(LIBNETLINK)
-
 diff -Naur iproute2-3.4.0/netem/Makefile iproute2-3.4.0.new/netem/Makefile
 --- iproute2-3.4.0/netem/Makefile	2012-05-21 23:12:19.000000000 +0200
 +++ iproute2-3.4.0.new/netem/Makefile	2012-06-18 10:23:53.896760158 +0200
