@@ -6,7 +6,8 @@
 pkgname=grub
 pkgdesc="GNU GRand Unified Bootloader"
 pkgver=2.02
-pkgrel=1
+pkgrel=2
+_commit=f826330683675f0deb55b58fd229afd7d65fb053
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
 license=('GPL3')
@@ -27,12 +28,12 @@ optdepends=('freetype2: For grub-mkfont usage'
             'os-prober: To detect other OSes when generating grub.cfg in BIOS systems'
             'mtools: For grub-mkrescue FAT FS support')
 # http://git.savannah.gnu.org/cgit/grub.git
-source=("grub::git+git://git.sv.gnu.org/grub.git#branch=master"
+source=("https://git.savannah.nongnu.org/cgit/grub.git/snapshot/grub-${_commit}.tar.gz"
         "grub-extras::git+git://git.sv.gnu.org/grub-extras.git#branch=master"
         'grub-10_linux-detect-initramfs.patch'
         'grub.default'
         'grub.cfg')
-md5sums=('SKIP'
+md5sums=('7af5792d4684d0c104763bed8b6f83c8'
          'SKIP'
          '945527e0de8d384166a4cf23439ae9ee'
          '2f372ff858b5ad59b8b7d34dee56cd67'
@@ -40,31 +41,31 @@ md5sums=('SKIP'
 
 prepare() {
 	
-	cd "${srcdir}/grub/"
+	cd "${srcdir}/grub-${_commit}/"
 	
 	## Apply fix for mkinitcpio 0.15 rw changes
 	patch -p1 -i "${srcdir}/grub-10_linux-detect-initramfs.patch"
 	
 	## Fix DejaVuSans.ttf location so that grub-mkfont can create *.pf2 files for starfield theme
-	sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i "${srcdir}/grub/configure.ac"
+	sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i "${srcdir}/grub-${_commit}/configure.ac"
 	
 	## Fix mkinitcpio 'rw' 
-	sed 's| ro | rw |g' -i "${srcdir}/grub/util/grub.d/10_linux.in"
+	sed 's| ro | rw |g' -i "${srcdir}/grub-${_commit}/util/grub.d/10_linux.in"
 	
 	## Fix OS naming
-	sed 's|GNU/Linux|Linux|' -i "${srcdir}/grub/util/grub.d/10_linux.in"
+	sed 's|GNU/Linux|Linux|' -i "${srcdir}/grub-${_commit}/util/grub.d/10_linux.in"
 	
 	## Pull in latest language files
 	./linguas.sh
 	
 	## Remove not working langs which need LC_ALL=C.UTF-8
-	sed -e 's#en@cyrillic en@greek##g' -i "${srcdir}/grub/po/LINGUAS"
+	sed -e 's#en@cyrillic en@greek##g' -i "${srcdir}/grub-${_commit}/po/LINGUAS"
 }
 
 _build_grub-common_and_bios() {
 	
 	## Copy the source for building the bios part
-	cp -r "${srcdir}/grub" "${srcdir}/grub-bios"
+	cp -r "${srcdir}/grub-${_commit}" "${srcdir}/grub-bios"
 	cd "${srcdir}/grub-bios/"
 	
 	## Add the grub-extra sources for bios build
@@ -115,7 +116,7 @@ _build_grub-common_and_bios() {
 _build_grub-efi() {
 	
 	## Copy the source for building the efi part"
-	cp -r "${srcdir}/grub" "${srcdir}/grub-efi-x86_64"
+	cp -r "${srcdir}/grub-${_commit}" "${srcdir}/grub-efi-x86_64"
 	cd "${srcdir}/grub-efi-x86_64/"
 	
 	## Unset all compiler FLAGS for x86_64 efi build
@@ -162,7 +163,7 @@ _build_grub-efi() {
 
 build() {
 	
-	cd "${srcdir}/grub/"
+	cd "${srcdir}/grub-${_commit}/"
 	
 	## Build grub bios
 	_build_grub-common_and_bios
@@ -208,7 +209,7 @@ _package_grub-efi() {
 
 package() {
 	
-	cd "${srcdir}/grub/"
+	cd "${srcdir}/grub-${_commit}/"
 	
 	## Package grub x86_64 efi 
 	_package_grub-efi
