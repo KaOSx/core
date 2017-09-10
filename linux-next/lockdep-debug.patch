@@ -1,4 +1,4 @@
-aufs4.x-rcN lockdep patch
+aufs4.13 lockdep patch
 
 diff --git a/include/linux/lockdep.h b/include/linux/lockdep.h
 index fffe49f..ba75d06 100644

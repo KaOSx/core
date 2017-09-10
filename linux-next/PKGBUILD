@@ -4,8 +4,8 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.13
 _srcname=linux-4.13
-pkgver=4.13.0
-_pkgver=4.13.a
+pkgver=4.13.1
+_pkgver=4.13.1.a
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -14,7 +14,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.11-rc8.tar.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
         'config'
@@ -36,8 +36,9 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'i8042-fix-aliases.patch'
         'RCU-ath9k.patch')
 md5sums=('ab1a2abc6f37b752dd2595338bec4e78'
+         'e2824a53597a9af0bfb2c533386842f0'
          '9f1b045d4ae01aa09e31e0ca3c8b2019'
-         'a200e935153f955dced9338f7d4c9c1b'
+         '319e1e68945d0faa6bee895c56745efd'
          '14235fa067846c18c9ee37b8b18dd60c'
          '01aa6f3eaaf0713444cf9975ab0b34f9'
          '7f9ef2343db8972708557245ed8c4d62'
@@ -58,7 +59,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
   # linux-hardened patch
   patch -p1 -i "${srcdir}/linux-hardened-${_pkgver}.patch"
 
