@@ -6,7 +6,7 @@ _basekernel=4.13
 _srcname=linux-4.13
 pkgver=4.13.1
 _pkgver=4.13.1.a
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -34,26 +34,28 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch'
-        'RCU-ath9k.patch')
+        'RCU-ath9k.patch'
+        'sleep_hang.patch')
 md5sums=('ab1a2abc6f37b752dd2595338bec4e78'
          'e2824a53597a9af0bfb2c533386842f0'
          '9f1b045d4ae01aa09e31e0ca3c8b2019'
          '319e1e68945d0faa6bee895c56745efd'
-         '14235fa067846c18c9ee37b8b18dd60c'
-         '01aa6f3eaaf0713444cf9975ab0b34f9'
-         '7f9ef2343db8972708557245ed8c4d62'
-         'e367286bab8a254b1f0d3d7069ba7d8b'
-         '2843404606a5a785a6f2bde6fb084dbb'
-         '50fefa943a5929548d88d100d3144709'
+         '300b892bf9e9c267a7a198eb860f5bb6'
+         '4b7721f641bbbb4a843035a66c53c76b'
+         '2d58dda8064175c1071073e5f7115e0b'
+         '8b24657e7749ab83512919e58ea9db57'
+         'edca161af86cceee16cd8a72cfe718ef'
+         'dc547fa31090bdf0f1f49a3c4ecb6a69'
          '260b2e47579140f61546f37d90e0b527'
-         'd89ceedc922e88707a2b4c347fab0988'
-         'b5cab83c6c285c1a47b9de23c49a26b3'
-         '00f9f64893058c0b252c0fe6ceced17d'
+         'a87fbad0d3d3a8e3554caa39cd5bd4f0'
+         '9ab9518ec7c6ec4c261b915455e72507'
+         'f22b370ef7d5ec411bfb6fe5555b2516'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'
          'a262bedf26f26b7698143fc23de98457'
          '93dbf73af819b77f03453a9c6de2bb47'
-         '351e3a6a77fab8d6a0d6af3851731782')
+         '351e3a6a77fab8d6a0d6af3851731782'
+         '7c991c44fa5ba7aafeb0cb246d1c35b8')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -77,21 +79,23 @@ build() {
   #patch -p1 -i "${srcdir}/RCU-ath9k.patch"
 
   #aufs patches for Live:
-  #patch -p1 -i "${srcdir}/aufs4.patch"
-  #patch -p1 -i "${srcdir}/aufs4-base.patch"
-  #patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
-  #patch -p1 -i "${srcdir}/aufs4-loopback.patch"
-  #patch -p1 -i "${srcdir}/aufs4-mmap.patch"
-  #patch -p1 -i "${srcdir}/aufs4-standalone.patch"
+  patch -p1 -i "${srcdir}/aufs4.patch"
+  patch -p1 -i "${srcdir}/aufs4-base.patch"
+  patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs4-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs4-mmap.patch"
+  patch -p1 -i "${srcdir}/aufs4-standalone.patch"
   ###patch -p1 -i "${srcdir}/lockdep-debug.patch"
-  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  #patch -p1 -i "${srcdir}/vfs-ino.patch"
+  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
+  patch -p1 -i "${srcdir}/sleep_hang.patch"
+  
   cat "${srcdir}/config" > ./.config
 
-  #cat "${srcdir}/config.aufs" >> ./.config
+  cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -268,7 +272,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs4-util need
-  #sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
