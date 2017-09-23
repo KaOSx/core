@@ -1,23 +1,20 @@
 
 pkgname=perl-locale-gettext
-_pkgname=gettext
-pkgver=1.05
-pkgrel=7
+_pkgname=Locale-gettext
+pkgver=1.07
+pkgrel=1
 pkgdesc="Permits access from Perl to the gettext() family of functions"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
 url="http://search.cpan.org/dist/${_pkgname}/"
 depends=('gettext' 'perl')
 options=('!emptydirs')
-source=("http://search.cpan.org/CPAN/authors/id/P/PV/PVANDRY/${_pkgname}-${pkgver}.tar.gz"
-        'compatibility-with-POSIX-module.patch')
-md5sums=('f3d3f474a1458f37174c410dfef61a46'
-         '854302f34d01a2f8ae739187788973dd')
+source=("http://search.cpan.org/CPAN/authors/id/P/PV/PVANDRY/${_pkgname}-${pkgver}.tar.gz")
+sha256sums=('909d47954697e7c04218f972915b787bd1244d75e3bd01620bc167d5bbc49c15')
 
 build() {
   cd ${_pkgname}-${pkgver}
 
-  patch -p1 -i ${srcdir}/compatibility-with-POSIX-module.patch
   # install module in vendor directories.
   PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
   make

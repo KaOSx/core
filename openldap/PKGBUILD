@@ -2,18 +2,18 @@
 pkgbase=openldap
 pkgname=('libldap' 'openldap')
 pkgver=2.4.45
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
-url="http://www.openldap.org/"
+url="https://www.openldap.org/"
 license=('custom')
 makedepends=('libtool' 'libsasl' 'e2fsprogs' 'util-linux' 'groff')
 options=('!makeflags')
-source=("ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/${pkgbase}-${pkgver}.tgz"
+source=("https://www.openldap.org/software/download/OpenLDAP/openldap-release/${pkgbase}-${pkgver}.tgz"
         'slapd.service'
         'slapd.tmpfiles')
-md5sums=('00ff8301277cdfd0af728a6927042a13'
-         'cbe2bd85be8d98851f640d20930ca9ea'
-         'df81b171ef4a99d6002f9f96774f64c7')
+sha1sums=('c98437385d3eaee80c9e2c09f3f0d4b7c140233d'
+          '9c7f3441e6a6ee13cdcfe8d965081c7a574c3393'
+          '59241a813d7508294e4ef1cec3bfe1f5495e109d')
 
 build() {
   cd ${pkgbase}-${pkgver}

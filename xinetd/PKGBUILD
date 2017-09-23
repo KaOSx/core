@@ -1,7 +1,7 @@
 
 pkgname=xinetd
 pkgver=2.3.15
-pkgrel=6
+pkgrel=7
 pkgdesc="xinetd is a secure replacement for inetd"
 arch=('x86_64')
 url="http://www.xinetd.org/"
@@ -23,7 +23,7 @@ md5sums=('77358478fd58efa6366accae99b8b04c'
 
 build() {
   cd ${pkgname}-${pkgver}
-  sed -i "s#${prefix}/man#${prefix}/share/man#" configure
+  sed -i "s|${prefix}/man|${prefix}/share/man|" configure
   # https://bugzilla.redhat.com/show_bug.cgi?id=1006100#c
   patch -p1 -i ${srcdir}/CVE-2013-4342.patch
   

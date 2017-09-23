@@ -1,8 +1,9 @@
 
 pkgname=perl-xml-parser
 _pkgname=XML-Parser
-pkgver=2.44
-pkgrel=4
+pkgver=2.44.01
+_pkgver=2.44_01
+pkgrel=1
 pkgdesc="Expat-based XML parser module for perl"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
@@ -12,24 +13,24 @@ replaces=('perlxml')
 provides=("perlxml=${pkgver}")
 conflicts=('perlxml')
 options=('!emptydirs')
-source=("http://search.cpan.org/CPAN/authors/id/T/TO/TODDR/${_pkgname}-${pkgver}.tar.gz")
-md5sums=('af4813fe3952362451201ced6fbce379')
+source=("http://search.cpan.org/CPAN/authors/id/T/TO/TODDR/${_pkgname}-${_pkgver}.tar.gz")
+md5sums=('223f524d4ab3896e5149ec656f8561cd')
 
 build() {
-  cd ${_pkgname}-${pkgver}
+  cd ${_pkgname}-${_pkgver}
 
   perl Makefile.PL INSTALLDIRS=vendor
   make
 }
 
 check() {
-  cd ${_pkgname}-${pkgver}
+  cd ${_pkgname}-${_pkgver}
   
   make test
 }
 
 package() {
-  cd ${_pkgname}-${pkgver}
+  cd ${_pkgname}-${_pkgver}
   
   make install DESTDIR=${pkgdir}
 }
