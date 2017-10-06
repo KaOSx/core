@@ -1,25 +1,28 @@
 
 pkgname=intltool
 pkgver=0.51.0
-pkgrel=2
+pkgrel=3
 pkgdesc="The internationalization tool collection"
 arch=('x86_64')
 url="https://edge.launchpad.net/intltool"
 license=('GPL')
 depends=('perl-xml-parser')
-source=("http://edge.launchpad.net/intltool/trunk/${pkgver}/+download/${pkgname}-${pkgver}.tar.gz")
-md5sums=('12e517cac2b57a0121cda351570f1e63')
+source=("http://edge.launchpad.net/intltool/trunk/${pkgver}/+download/${pkgname}-${pkgver}.tar.gz"
+        'perl5.26.patch')
+md5sums=('12e517cac2b57a0121cda351570f1e63'
+         '2cbee3631fcaa2f9c9334121d0bcb6f8')
 
 build() {
-	cd ${srcdir}/${pkgname}-${pkgver}
+	cd ${pkgname}-${pkgver}
+	patch -p1 -i ${srcdir}/perl5.26.patch
 
 	./configure --prefix=/usr 
 	make 
 }
 
 package() {
-	cd ${srcdir}/${pkgname}-${pkgver}
+	cd ${pkgname}-${pkgver}
 	
 	make DESTDIR=${pkgdir} install 
-        install -Dm644 doc/I18N-HOWTO ${pkgdir}/usr/share/doc/${pkgname}/I18N-HOWTO 
+    install -Dm644 doc/I18N-HOWTO ${pkgdir}/usr/share/doc/${pkgname}/I18N-HOWTO 
 }
