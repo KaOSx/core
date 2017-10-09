@@ -155,8 +155,8 @@ package() {
   install -Dm644 ../systemd-tmpfiles.hook ${pkgdir}/usr/share/libalpm/hooks/systemd-tmpfiles.hook
   
   # meson build has started adding these files, though not compiled
-  rm ${pkgdir}/usr/lib/systemd/system/systemd-networkd.socket
-  rm ${pkgdir}/etc/systemd/system/sockets.target.wants/systemd-networkd.socket
+  #rm ${pkgdir}/usr/lib/systemd/system/systemd-networkd.socket
+  #rm ${pkgdir}/etc/systemd/system/sockets.target.wants/systemd-networkd.socket
 }
 
 
