@@ -1,7 +1,7 @@
 
 pkgname=libnl
-pkgver=3.3.0
-_pkgver=3_3_0
+pkgver=3.4.0
+_pkgver=3_4_0
 pkgrel=1
 pkgdesc="Library for applications dealing with netlink sockets"
 arch=('x86_64')
@@ -12,7 +12,7 @@ conflicts=('libnl3')
 backup=('etc/libnl/classid' 'etc/libnl/pktloc')
 options=('!libtool')
 source=("https://github.com/thom311/libnl/releases/download/libnl${_pkgver}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('ab3ef137cad95bdda5ff0ffa5175dfa5')
+sha256sums=('b7287637ae71c6db6f89e1422c995f0407ff2fe50cecd61a312b6a9b0921f5bf')
 
 build() {
   cd ${pkgname}-${pkgver}
