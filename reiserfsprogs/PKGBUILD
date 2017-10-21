@@ -1,6 +1,6 @@
 
 pkgname=reiserfsprogs
-pkgver=3.6.26
+pkgver=3.6.27
 pkgrel=1
 pkgdesc="Reiserfs utilities"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL')
 groups=('base')
 depends=('util-linux')
 source=("https://www.kernel.org/pub/linux/kernel/people/jeffm/reiserfsprogs/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('1579221fcb0246be60abac056f783661')
+sha256sums=('0e95b67fa7746a3c2d59145e9b9c2feb4a6be52853e83b497b182eae508e62e3')
 
 build() {
   cd ${pkgname}-${pkgver}
