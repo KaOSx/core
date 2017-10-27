@@ -2,15 +2,15 @@
 pkgname=util-linux
 pkgver=2.31
 _pkgver=2.31
-pkgrel=1
+pkgrel=2
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
 groups=('base')
 depends=('pam' 'shadow' 'coreutils' 'glibc')
 makedepends=('bc' 'systemd' 'python3')
-conflicts=('util-linux-ng' 'eject')
-provides=("util-linux-ng=${pkgver}" 'eject')
+conflicts=('util-linux-ng' 'eject' 'rfkill')
+provides=("util-linux-ng=${pkgver}" 'eject' 'rfkill')
 license=('GPL2')
 options=('!libtool')
 source=("https://www.kernel.org/pub/linux/utils/util-linux/v${_pkgver}/${pkgname}-${pkgver}.tar.xz"
