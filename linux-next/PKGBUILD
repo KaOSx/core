@@ -4,8 +4,8 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.13
 _srcname=linux-4.13
-pkgver=4.13.10
-_pkgver=4.13.9.a
+pkgver=4.13.11
+_pkgver=4.13.10.a
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -37,17 +37,17 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'RCU-ath9k.patch'
         'sleep_hang.patch')
 md5sums=('ab1a2abc6f37b752dd2595338bec4e78'
-         'b33aef7e0d3ba997fd439a6158fc6210'
-         'c87b22abf0a440554c3f5a9f78f087bb'
-         'eae13e47eb0ea82b8d6a310aca08a5b5'
-         '300b892bf9e9c267a7a198eb860f5bb6'
-         '4b7721f641bbbb4a843035a66c53c76b'
+         'f03030893fae6a5620ba1056a9e3b931'
+         '072b67af16dd4feddff9fd491c1fd0a4'
+         'a8eea606492a0ecd239d17cf95b83b96'
+         '24d4ae6c97c97d602b9fa204b5148557'
+         'c16d8330a222e7abbc9dba8d6e5371f2'
          '2d58dda8064175c1071073e5f7115e0b'
-         '8b24657e7749ab83512919e58ea9db57'
+         'b9fbf84be0f464695ea5142e1a2f123e'
          'edca161af86cceee16cd8a72cfe718ef'
-         'dc547fa31090bdf0f1f49a3c4ecb6a69'
+         '07897340d4c57eda24c96abf4fd68012'
          '260b2e47579140f61546f37d90e0b527'
-         'a87fbad0d3d3a8e3554caa39cd5bd4f0'
+         'c0181285da8f197aadcc141c61049eda'
          '9ab9518ec7c6ec4c261b915455e72507'
          'f22b370ef7d5ec411bfb6fe5555b2516'
          'e19be83ca72175a29b36d8ab08105050'
