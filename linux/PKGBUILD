@@ -2,16 +2,16 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.12
-pkgver=4.12.10
-_pkgver=4.12.10.a
+_basekernel=4.13
+pkgver=4.13.11
+_pkgver=4.13.11.a
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.12.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.13.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
@@ -32,20 +32,20 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.12.tar.xz"
         '99-linux.hook'
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
-md5sums=('fc454157e2d024d401a60905d6481c6b'
-         '372499380d29bbbc176d7672bd21f812'
-         'c71bb56c8738728b4c9b3296089da33a'
-         '839b9a5cdc1fa40a7096ccf730df1744'
-         '8ac7ce84af6e7e7136f9f204b0a20807'
-         '61f33f07d2fb362a5bc510c7833f7d2d'
-         '0783a96483f90f249918438ab9bca128'
-         '9d27888f759c54ee11f43109b1cf8248'
-         'fc26b45389bffd61e966d360e9cde9c1'
-         'f609bb7d59c898104d481dbd883f3c29'
+md5sums=('ab1a2abc6f37b752dd2595338bec4e78'
+         'f03030893fae6a5620ba1056a9e3b931'
+         '072b67af16dd4feddff9fd491c1fd0a4'
+         'e67a5b74cdc8b3c00eea08cf4e828dbc'
+         '24d4ae6c97c97d602b9fa204b5148557'
+         'c16d8330a222e7abbc9dba8d6e5371f2'
+         '2d58dda8064175c1071073e5f7115e0b'
+         'b9fbf84be0f464695ea5142e1a2f123e'
+         'edca161af86cceee16cd8a72cfe718ef'
+         '07897340d4c57eda24c96abf4fd68012'
          '260b2e47579140f61546f37d90e0b527'
-         '04c89b3d9d4c18da64c69e1a3297442c'
-         'b5cab83c6c285c1a47b9de23c49a26b3'
-         '00f9f64893058c0b252c0fe6ceced17d'
+         'c0181285da8f197aadcc141c61049eda'
+         '9ab9518ec7c6ec4c261b915455e72507'
+         'f22b370ef7d5ec411bfb6fe5555b2516'
          'eb14dcfd80c00852ef81ded6e826826a'
          '0b73d293ca1ab91748ae2d2c39921532'
          'a262bedf26f26b7698143fc23de98457'
@@ -226,8 +226,8 @@ package_linux-headers() {
   done
 
   # add docbook makefile
-  install -D -m644 Documentation/DocBook/Makefile \
-    "${pkgdir}/usr/src/linux-${_kernver}/Documentation/DocBook/Makefile"
+  #install -D -m644 Documentation/DocBook/Makefile \
+  #  "${pkgdir}/usr/src/linux-${_kernver}/Documentation/DocBook/Makefile"
 
   # add dm headers
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/drivers/md"
