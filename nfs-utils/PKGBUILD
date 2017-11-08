@@ -1,20 +1,22 @@
 
 pkgname=nfs-utils
-pkgver=2.1.1
-pkgrel=2
+pkgver=2.2.1
+pkgrel=1
 pkgdesc="Support programs for Network File Systems"
 arch=('x86_64')
 url='http://nfs.sourceforge.net'
 license=('GPL')
 backup=(etc/{exports,nfs.conf,nfsmount.conf})
-depends=('glibc' 'e2fsprogs' 'rpcbind' 'libtirpc' 'librpcsecgss' 'nfsidmap' 'libevent'
+depends=('glibc' 'e2fsprogs' 'rpcbind' 'libtirpc' 'librpcsecgss' 'libevent'
          'device-mapper' 'sqlite')
-makedepends=('pkgconfig' 'autoconf' 'automake')
-#install=nfs-utils.install
+makedepends=('pkgconfig' 'autoconf' 'automake' 'nfsidmap')
+conflicts=('nfsidmap')
+provides=('nfsidmap')
+replaces=('nfsidmap')
 source=("https://downloads.sourceforge.net/project/nfs/nfs-utils/${pkgver}/${pkgname}-${pkgver}.tar.bz2"
         'exports'
         'id_resolver.conf')
-md5sums=('1157abcfaa8670f990f408cf280426b4'
+md5sums=('6e7e0dc10664ac40bd84df1a881bad85'
          'e6ad3c7a59c7e4c24965a0e7da35026c'
          '391aaafdf01a665629c708d1386b5896')
 
