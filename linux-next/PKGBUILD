@@ -4,8 +4,8 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.13
 _srcname=linux-4.13
-pkgver=4.13.11
-_pkgver=4.13.10.a
+pkgver=4.13.12
+_pkgver=4.13.12.a
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -37,8 +37,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'RCU-ath9k.patch'
         'sleep_hang.patch')
 md5sums=('ab1a2abc6f37b752dd2595338bec4e78'
-         'f03030893fae6a5620ba1056a9e3b931'
-         '072b67af16dd4feddff9fd491c1fd0a4'
+         '665b55e1f24ec56de55f7d0302d7c4f5'
+         'cc0b1646b4815f25437d60bd400c1ee2'
          'a8eea606492a0ecd239d17cf95b83b96'
          '24d4ae6c97c97d602b9fa204b5148557'
          'c16d8330a222e7abbc9dba8d6e5371f2'

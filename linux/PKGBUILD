@@ -3,8 +3,8 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=4.13
-pkgver=4.13.11
-_pkgver=4.13.11.a
+pkgver=4.13.12
+_pkgver=4.13.12.a
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -33,8 +33,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.13.tar.xz"
         'change-default-console-loglevel.patch'
         'i8042-fix-aliases.patch')
 md5sums=('ab1a2abc6f37b752dd2595338bec4e78'
-         'f03030893fae6a5620ba1056a9e3b931'
-         '072b67af16dd4feddff9fd491c1fd0a4'
+         '665b55e1f24ec56de55f7d0302d7c4f5'
+         'cc0b1646b4815f25437d60bd400c1ee2'
          'e67a5b74cdc8b3c00eea08cf4e828dbc'
          '24d4ae6c97c97d602b9fa204b5148557'
          'c16d8330a222e7abbc9dba8d6e5371f2'
@@ -42,7 +42,7 @@ md5sums=('ab1a2abc6f37b752dd2595338bec4e78'
          'b9fbf84be0f464695ea5142e1a2f123e'
          'edca161af86cceee16cd8a72cfe718ef'
          '07897340d4c57eda24c96abf4fd68012'
-         '260b2e47579140f61546f37d90e0b527'
+         '58077c1703977e6b5fafdda552f542d5'
          'c0181285da8f197aadcc141c61049eda'
          '9ab9518ec7c6ec4c261b915455e72507'
          'f22b370ef7d5ec411bfb6fe5555b2516'
