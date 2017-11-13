@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.13
-_srcname=linux-4.13
-pkgver=4.13.12
+_basekernel=4.14
+_srcname=linux-4.14
+pkgver=4.14.0
 _pkgver=4.13.12.a
 pkgrel=1
 arch=('x86_64')
@@ -14,7 +14,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.11-rc8.tar.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        ##"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
         'config'
@@ -36,8 +36,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'i8042-fix-aliases.patch'
         'RCU-ath9k.patch'
         'sleep_hang.patch')
-md5sums=('ab1a2abc6f37b752dd2595338bec4e78'
-         '665b55e1f24ec56de55f7d0302d7c4f5'
+md5sums=('bacdb9ffdcd922aa069a5e1520160e24'
          'cc0b1646b4815f25437d60bd400c1ee2'
          'a8eea606492a0ecd239d17cf95b83b96'
          '24d4ae6c97c97d602b9fa204b5148557'
@@ -61,7 +60,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
   # linux-hardened patch
   patch -p1 -i "${srcdir}/linux-hardened-${_pkgver}.patch"
 
@@ -79,15 +78,15 @@ build() {
   #patch -p1 -i "${srcdir}/RCU-ath9k.patch"
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs4.patch"
-  patch -p1 -i "${srcdir}/aufs4-base.patch"
-  patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs4-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs4-mmap.patch"
-  patch -p1 -i "${srcdir}/aufs4-standalone.patch"
+  #patch -p1 -i "${srcdir}/aufs4.patch"
+  #patch -p1 -i "${srcdir}/aufs4-base.patch"
+  #patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
+  #patch -p1 -i "${srcdir}/aufs4-loopback.patch"
+  #patch -p1 -i "${srcdir}/aufs4-mmap.patch"
+  #patch -p1 -i "${srcdir}/aufs4-standalone.patch"
   ###patch -p1 -i "${srcdir}/lockdep-debug.patch"
-  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  patch -p1 -i "${srcdir}/vfs-ino.patch"
+  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  #patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
@@ -95,7 +94,7 @@ build() {
   
   cat "${srcdir}/config" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -272,7 +271,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs4-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
