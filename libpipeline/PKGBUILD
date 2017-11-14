@@ -1,6 +1,6 @@
 
 pkgname=libpipeline
-pkgver=1.4.2
+pkgver=1.5.0
 pkgrel=1
 pkgdesc="C library for manipulating pipelines of subprocesses in a flexible and convenient way"
 arch=('x86_64')
@@ -9,8 +9,8 @@ license=('GPL')
 groups=('base')
 depends=('glibc')
 options=('!libtool')
-source=("https://download.savannah.gnu.org/releases/libpipeline/${pkgname}-${pkgver}.tar.gz")
-md5sums=('d5c80387eb9c9e5d089da2a06e8a6b12')
+source=("https://download-mirror.savannah.gnu.org/releases/libpipeline/${pkgname}-${pkgver}.tar.gz")
+md5sums=('b7437a5020190cfa84f09c412db38902')
 
 build() {
   cd ${pkgname}-${pkgver}
