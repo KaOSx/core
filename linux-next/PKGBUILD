@@ -62,7 +62,7 @@ build() {
   # add upstream patch
   ##patch -p1 -i "${srcdir}/patch-${pkgver}"
   # linux-hardened patch
-  patch -p1 -i "${srcdir}/linux-hardened-${_pkgver}.patch"
+  #patch -p1 -i "${srcdir}/linux-hardened-${_pkgver}.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -72,7 +72,7 @@ build() {
   # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
   ##patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
   
-  patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
+  #patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
   
   # https://patchwork.ozlabs.org/patch/706835/
   #patch -p1 -i "${srcdir}/RCU-ath9k.patch"
