@@ -1,6 +1,6 @@
 
 pkgname=iasl
-pkgver=20170929
+pkgver=20171110
 pkgrel=1
 pkgdesc="Intel ACPI Source Language compiler"
 arch=('x86_64')
@@ -11,7 +11,7 @@ makedepends=('flex' 'bison')
 options=('!makeflags')
 source=("https://acpica.org/sites/acpica/files/acpica-unix-${pkgver}.tar.gz"
         'LICENSE')
-md5sums=('81d17ceeae57af280b565e155576e729'
+md5sums=('8f14e37598183b3613d370ff56ff244e'
          '8615526144f69ea4e870d9bc37df9b29')
 
 build() {

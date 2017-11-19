@@ -2,10 +2,10 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.14
-_srcname=linux-4.14
-pkgver=4.14.0
-_pkgver=4.13.12.a
+_basekernel=4.13
+_srcname=linux-4.13
+pkgver=4.13.14
+_pkgver=4.13.13.a
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -14,7 +14,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.11-rc8.tar.xz"
-        ##"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
         'config'
@@ -26,18 +26,14 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'aufs4-kbuild.patch'
         'aufs4.patch'
         'config.aufs'
-        'lockdep-debug.patch'
         'tmpfs-idr.patch'
         'vfs-ino.patch'
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
-        '99-linux-next.hook'
-        'change-default-console-loglevel.patch'
-        'i8042-fix-aliases.patch'
-        'RCU-ath9k.patch'
-        'sleep_hang.patch')
-md5sums=('bacdb9ffdcd922aa069a5e1520160e24'
-         'cc0b1646b4815f25437d60bd400c1ee2'
+        '99-linux-next.hook')
+md5sums=('ab1a2abc6f37b752dd2595338bec4e78'
+         'bc39fd2dea0954786206aa4e91c1d4da'
+         '296b576fd21565f4fbd262036549d996'
          'a8eea606492a0ecd239d17cf95b83b96'
          '24d4ae6c97c97d602b9fa204b5148557'
          'c16d8330a222e7abbc9dba8d6e5371f2'
@@ -46,55 +42,37 @@ md5sums=('bacdb9ffdcd922aa069a5e1520160e24'
          'edca161af86cceee16cd8a72cfe718ef'
          '07897340d4c57eda24c96abf4fd68012'
          '260b2e47579140f61546f37d90e0b527'
-         'c0181285da8f197aadcc141c61049eda'
          '9ab9518ec7c6ec4c261b915455e72507'
          'f22b370ef7d5ec411bfb6fe5555b2516'
          'e19be83ca72175a29b36d8ab08105050'
-         'ae97691ba50d387f3ab98585514e3b22'
-         'a262bedf26f26b7698143fc23de98457'
-         '93dbf73af819b77f03453a9c6de2bb47'
-         '351e3a6a77fab8d6a0d6af3851731782'
-         '35fcfad4703b86de5eee24b3886275f6')
+         'ae97691ba50d387f3ab98585514e3b22')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
   # linux-hardened patch
-  #patch -p1 -i "${srcdir}/linux-hardened-${_pkgver}.patch"
+  patch -p1 -i "${srcdir}/linux-hardened-${_pkgver}.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
-  # set DEFAULT_CONSOLE_LOGLEVEL to 4 (same value as the 'quiet' kernel param)
-  # remove this when a Kconfig knob is made available by upstream
-  # (relevant patch sent upstream: https://lkml.org/lkml/2011/7/26/227)
-  ##patch -p1 -i "${srcdir}/change-default-console-loglevel.patch"
-  
-  #patch -p1 -i "${srcdir}/i8042-fix-aliases.patch"
-  
-  # https://patchwork.ozlabs.org/patch/706835/
-  #patch -p1 -i "${srcdir}/RCU-ath9k.patch"
-
   #aufs patches for Live:
-  #patch -p1 -i "${srcdir}/aufs4.patch"
-  #patch -p1 -i "${srcdir}/aufs4-base.patch"
-  #patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
-  #patch -p1 -i "${srcdir}/aufs4-loopback.patch"
-  #patch -p1 -i "${srcdir}/aufs4-mmap.patch"
-  #patch -p1 -i "${srcdir}/aufs4-standalone.patch"
-  ###patch -p1 -i "${srcdir}/lockdep-debug.patch"
-  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  #patch -p1 -i "${srcdir}/vfs-ino.patch"
+  patch -p1 -i "${srcdir}/aufs4.patch"
+  patch -p1 -i "${srcdir}/aufs4-base.patch"
+  patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs4-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs4-mmap.patch"
+  patch -p1 -i "${srcdir}/aufs4-standalone.patch"
+  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
-  #patch -p1 -i "${srcdir}/sleep_hang.patch"
-  
   cat "${srcdir}/config" > ./.config
 
-  #cat "${srcdir}/config.aufs" >> ./.config
+  cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -126,14 +104,12 @@ package_linux-next() {
 
   cd "${srcdir}/linux-${_basekernel}"
 
-  KARCH=x86
-
   # get kernel version
   _kernver="$(make kernelrelease)"
 
   mkdir -p "${pkgdir}"/{lib/modules,lib/firmware,boot}
   make INSTALL_MOD_PATH="${pkgdir}" modules_install
-  cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgname}"
+  cp arch/x86/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgname}"
 
   # add vmlinux
   install -D -m644 vmlinux "${pkgdir}/usr/src/linux-${_kernver}/vmlinux"
@@ -204,11 +180,11 @@ package_linux-next-headers() {
   chmod og-w -R "${pkgdir}/usr/src/linux-${_kernver}/scripts"
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/.tmp_versions"
 
-  mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/arch/${KARCH}/kernel"
+  mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/arch/x86/kernel"
 
-  cp arch/${KARCH}/Makefile "${pkgdir}/usr/src/linux-${_kernver}/arch/${KARCH}/"
+  cp arch/x86/Makefile "${pkgdir}/usr/src/linux-${_kernver}/arch/x86/"
 
-  cp arch/${KARCH}/kernel/asm-offsets.s "${pkgdir}/usr/src/linux-${_kernver}/arch/${KARCH}/kernel/"
+  cp arch/x86/kernel/asm-offsets.s "${pkgdir}/usr/src/linux-${_kernver}/arch/x86/kernel/"
 
   # add headers for lirc package
   # pci
@@ -271,7 +247,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs4-util need
-  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
