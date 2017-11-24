@@ -1,21 +1,18 @@
 
 pkgname=usbutils
-pkgver=008
-pkgrel=3
+pkgver=009
+pkgrel=1
 pkgdesc="USB Device Utilities"
 arch=('x86_64')
 url="http://linux-usb.sourceforge.net/"
 license=('GPL')
 groups=('base')
 depends=('libusb' 'hwids')
-source=("https://www.kernel.org/pub/linux/utils/usb/usbutils/${pkgname}-${pkgver}.tar.xz"
-        'fix-python2.patch')
-md5sums=('2780b6ae21264c888f8f30fb2aab1259'
-         '45766196895b4cc50b53cd56e1bbf3d1')
+source=("https://www.kernel.org/pub/linux/utils/usb/usbutils/${pkgname}-${pkgver}.tar.xz")
+sha256sums=('8bbff0e54cb5f65a52be4feb9162fc0b022a97eb841b44784f7a89a9ea567160')
 
 build() {
   cd ${pkgname}-${pkgver}
-  patch -p1 -i ${srcdir}/fix-python2.patch
   
   ./configure --prefix=/usr --datadir=/usr/share/hwdata --disable-zlib
   make
