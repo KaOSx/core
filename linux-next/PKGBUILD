@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.14
 _srcname=linux-4.14
-pkgver=4.14.2
+pkgver=4.14.3
 _pkgver=4.13.13.a
 pkgrel=1
 arch=('x86_64')
@@ -32,7 +32,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'linux-next.preset'
         '99-linux-next.hook')
 md5sums=('bacdb9ffdcd922aa069a5e1520160e24'
-         '92f71f8a1c5c28b7c8b4a95f6c9dd048'
+         '0732df415000b9def639a69996df6497'
          '296b576fd21565f4fbd262036549d996'
          'd527fd350b8a15f44eeea64c174b0cdc'
          '24d4ae6c97c97d602b9fa204b5148557'
