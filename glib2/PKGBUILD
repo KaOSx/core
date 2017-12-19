@@ -1,26 +1,24 @@
 
 pkgbase=glib2
 pkgname=('glib2' 'glib2-docs')
-pkgver=2.52.3
-_pkgver=2.52
+pkgver=2.54.2
+_pkgver=2.54
 pkgrel=1
 pkgdesc="Common C routines used by GTK+ and other libs"
 url="https://www.gtk.org/overview.php"
 arch=('x86_64')
 makedepends=('pkg-config' 'python3' 'libxslt' 'docbook-xml' 'pcre' 'libffi' 'elfutils')
 source=("https://ftp.gnome.org/pub/GNOME/sources/glib/${_pkgver}/glib-${pkgver}.tar.xz"
-        'revert-warn-glib-compile-schemas.patch'
         'gio-querymodules.hook'
         'glib-compile-schemes.hook')
-md5sums=('89265d0289a436e99cad54491eb21ef4'
-         '3265d1afbcf1f5f308e26c3f9f6ca899'
-         'a52ea506b5cf162a4f72d09cc33fae50'
-         '9e25d7de10bc4dc105f171e9ae46ef69')
+sha256sums=('bb89e5c5aad33169a8c7f28b45671c7899c12f74caf707737f784d7102758e6c'
+            '5ba204a2686304b1454d401a39a9d27d09dd25e4529664e3fd565be3d439f8b6'
+            'e1123a5d85d2445faac33f6dae1085fdd620d83279a4e130a83fe38db52b62b3')
 
 prepare() {
   cd glib-${pkgver}
   
-  patch -Rp1 -i ../revert-warn-glib-compile-schemas.patch
+  #patch -Rp1 -i ../revert-warn-glib-compile-schemas.patch
 }
   
 build() {
