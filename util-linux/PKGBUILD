@@ -1,8 +1,8 @@
 
 pkgname=util-linux
-pkgver=2.31
+pkgver=2.31.1
 _pkgver=2.31
-pkgrel=2
+pkgrel=1
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -29,7 +29,7 @@ backup=(etc/pam.d/chfn
         etc/pam.d/su
         etc/pam.d/su-l)
 install=util-linux.install
-sha256sums=('f9be7cdcf4fc5c5064a226599acdda6bdf3d86c640152ba01ea642d91108dc8a'
+sha256sums=('1a51b16fa9cd51d26ef9ab52d2f1de12403b810fc8252bf7d478df91b3cddf11'
             '5de0aadbbeb1ebb0776f3c550111fe045dfdf3571c574f415c62ca1966c49616'
             '993a3096c2b113e6800f2abbd5d4233ebf1a97eef423990d3187d665d3490b92'
             'fc6807842f92e9d3f792d6b64a0d5aad87995a279153ab228b1b2a64d9f32f20'
@@ -60,8 +60,8 @@ build() {
   make
 }
 
-# 2 fail libmount: tab files-py subtest & misc/setarch-options fails, leaving dep to test the rest
 check() {
+  # 1 fail libmount: tab files-py, leaving dep to test the rest
   make -C ${pkgname}-${pkgver} check
 }
 
