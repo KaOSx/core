@@ -1,6 +1,6 @@
 
 pkgname=nfs-utils
-pkgver=2.2.1
+pkgver=2.3.1
 pkgrel=1
 pkgdesc="Support programs for Network File Systems"
 arch=('x86_64')
@@ -16,7 +16,7 @@ replaces=('nfsidmap')
 source=("https://downloads.sourceforge.net/project/nfs/nfs-utils/${pkgver}/${pkgname}-${pkgver}.tar.bz2"
         'exports'
         'id_resolver.conf')
-md5sums=('6e7e0dc10664ac40bd84df1a881bad85'
+md5sums=('913141ab49421ceb8dc98336b1ec7fda'
          'e6ad3c7a59c7e4c24965a0e7da35026c'
          '391aaafdf01a665629c708d1386b5896')
 

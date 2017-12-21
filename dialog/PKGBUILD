@@ -1,17 +1,17 @@
 
 pkgname=dialog
-pkgver=1.3_20170509
-_pkgver=1.3-20170509
+pkgver=1.3_20171209
+_pkgver=1.3-20171209
 pkgrel=1
 epoch=1
 pkgdesc="A tool to display dialog boxes from shell scripts"
 arch=('x86_64')
-url="http://invisible-island.net/dialog/"
+url="https://invisible-island.net/dialog/"
 license=('LGPL2.1')
 depends=('ncurses' 'sh')
 # version at http://invisible-island.net/dialog/CHANGES.html
-source=("ftp://invisible-island.net/dialog/${pkgname}-${_pkgver}.tgz")
-md5sums=('b2740641d911402f0debd2e84f05b1ee')
+source=("https://invisible-mirror.net/archives/dialog/${pkgname}-${_pkgver}.tgz")
+md5sums=('f66f28beca900b54f5fc90fdcce93508')
 
 build() {
   cd ${pkgname}-${_pkgver}
