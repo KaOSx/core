@@ -22,7 +22,7 @@ build() {
 check() {
   cd ${pkgname}-${pkgver}
   # one fail: FAIL tests/df/df-symlink.sh (exit status: 1) 
-  #make RUN_EXPENSIVE_TESTS=no check
+  make RUN_EXPENSIVE_TESTS=no check
 }
 
 package() {
