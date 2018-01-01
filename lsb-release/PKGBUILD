@@ -1,13 +1,15 @@
 
+# code at https://github.com/LinuxStandardBase/lsb
 pkgname=lsb-release
 pkgver=1.4
 pkgrel=12
 pkgdesc="LSB version query program."
 arch=('x86_64')
-url="http://www.linuxbase.org/"
+url="https://wiki.linuxfoundation.org/lsb/start"
 makedepends=('perl') # to generate the man page
 license=('GPL2')
-source=("http://downloads.sourceforge.net/lsb/${pkgname}-${pkgver}.tar.gz")
+# newer versions at https://www.linuxbase.org/download
+source=("https://downloads.sourceforge.net/lsb/${pkgname}-${pkgver}.tar.gz")
 md5sums=('30537ef5a01e0ca94b7b8eb6a36bb1e4')
 
 build() {

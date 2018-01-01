@@ -1,8 +1,8 @@
 
 pkgname=filesystem
-pkgver=2017.01
+pkgver=2018.01
 pkgrel=1
-_codename=2017
+_codename=2018
 pkgdesc='Base filesystem'
 arch=('x86_64')
 license=('GPL')
@@ -37,7 +37,7 @@ md5sums=('1109716df48ad1bfbf08520ea12fe347'
          '09bce9236c3729d31aaa528bcf5d198e'
          'f3b6ae7db8adffaaa4bffc6099dcbd50'
          '13d8d253ae8613ba2474683f585e73db'
-         'd8fbe3db0dfc9b3da18e72d245ea0d66'
+         '8e7c9671e42364f6c5492573919ff57f'
          '201bbb8b4734d2f46afe1e24d7cc6173'
          '08565c934ec0d6b90da1165ee9cf82dc')
 
