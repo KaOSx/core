@@ -1,6 +1,6 @@
 
 pkgname=dhcpcd
-pkgver=6.11.5
+pkgver=7.0.0
 pkgrel=1
 pkgdesc="RFC2131 compliant DHCP client daemon"
 url="http://roy.marples.name/projects/dhcpcd/"
@@ -14,13 +14,13 @@ options=('emptydirs')
 source=("http://roy.marples.name/downloads/dhcpcd/$pkgname-$pkgver.tar.xz" 
         'dhcpcd@.service'
         'dhcpcd.service')
-md5sums=('2465624b62c1154f0e89dc69c42c849b'
+md5sums=('3b476f61490a8890ac90523400110328'
          '3b47ff473ee7f7b03062818b94fd3ed5'
          'c10ec3816b13fd5d59f696f7154f445a')
 
 build() {
   cd ${pkgname}-${pkgver}
-  sed -i -e 's|#include "queue.h"|#include "compat/queue.h"|' eloop.c
+  #sed -i -e 's|#include "queue.h"|#include "compat/queue.h"|' eloop.c
 
   ./configure --libexecdir=/usr/lib/dhcpcd \
        --dbdir=/var/lib/dhcpcd \
@@ -37,10 +37,7 @@ package() {
   install -d ${pkgdir}/usr/sbin
   ln -sf /sbin/dhcpcd ${pkgdir}/usr/sbin/dhcpcd
 
-  # Install License
-  install -d ${pkgdir}/usr/share/licenses/$pkgname
-  sed 26q ${srcdir}/$pkgname-$pkgver/control.h \
-        >> ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+ install -Dm644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 
   # Set Options in /etc/dhcpcd.conf
   echo noipv4ll >> ${pkgdir}/etc/dhcpcd.conf # Disable ip4vall
