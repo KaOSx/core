@@ -1,6 +1,6 @@
 
 pkgname=hdparm
-pkgver=9.52
+pkgver=9.53
 pkgrel=1
 pkgdesc="A shell utility for manipulating Linux IDE drive/driver parameters"
 arch=('x86_64')
@@ -11,7 +11,7 @@ optdepends=('sh: required by idectl and ultrabayd')
 source=("https://downloads.sourceforge.net/sourceforge/hdparm/${pkgname}-${pkgver}.tar.gz"
         'wiper.sh.2_6.max-ranges.patch')
 options=('emptydirs')
-md5sums=('410539d0bf3cc247181594581edbfb53'
+md5sums=('1e54b52e0c8cb79389d4d47eacba411d'
          'd91213801094931a02e54283cb1b7375')
 
 build() {
