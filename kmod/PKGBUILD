@@ -1,17 +1,17 @@
 
 pkgname=kmod
-pkgver=24
+pkgver=25
 pkgrel=1
 #_kver=4.0.5-1
 pkgdesc="Linux kernel module handling"
 arch=('x86_64')
-url='http://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary'
+url='https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/tree/README'
 license=('GPL2')
 depends=('glibc' 'zlib')
 options=('!libtool')
-source=("ftp://ftp.kernel.org/pub/linux/utils/kernel/kmod/${pkgname}-${pkgver}.tar.xz"
-        "depmod-search.conf")
-md5sums=('08297dfb6f2b3f625f928ca3278528af'
+source=("https://www.kernel.org/pub/linux/utils/kernel/kmod/${pkgname}-${pkgver}.tar.xz"
+        'depmod-search.conf')
+md5sums=('34f325cab568f842fdde4f8b2182f220'
          '9ae9acc68ca27134f55a0959073b8e53')
 
 build() {
