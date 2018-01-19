@@ -1,6 +1,6 @@
 
 pkgname=pptpclient 
-pkgver=1.9.0
+pkgver=1.10.0
 pkgrel=1
 pkgdesc="Client for the proprietary Microsoft Point-to-Point Tunneling Protocol, PPTP."
 url="http://pptpclient.sourceforge.net/"
@@ -9,7 +9,7 @@ license=('GPL')
 depends=('glibc' 'ppp' 'iproute2')
 backup=('etc/ppp/options.pptp')
 source=("https://sourceforge.net/projects/pptpclient/files/pptp/pptp-${pkgver}/pptp-${pkgver}.tar.gz")
-md5sums=('b2117b377f65294a9786f80f0235d308')
+md5sums=('8d25341352fdae5ad5b36b9f18254908')
 
  
 build() { 
