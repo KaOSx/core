@@ -1,6 +1,6 @@
 
 pkgname=wget
-pkgver=1.19.2
+pkgver=1.19.3
 pkgrel=1
 pkgdesc="A network utility to retrieve files from the Web"
 arch=('x86_64')
@@ -10,9 +10,9 @@ groups=('base')
 depends=('glibc' 'openssl' 'libidn' 'util-linux' 'pcre' 'libpsl')
 optdepends=('ca-certificates: HTTPS downloads')
 backup=('etc/wgetrc')
-source=("https://ftp.gnu.org/gnu/wget/${pkgname}-${pkgver}.tar.lz"
+source=("https://ftpmirror.gnu.org/wget/${pkgname}-${pkgver}.tar.lz"
         '0001-main.c-Need-to-explicitly-disallow-show_progress-in-.patch')
-md5sums=('11663ce60f71c72773c30ae08a279011'
+md5sums=('c7166447c504222d4bfc614244c179f7'
          '87ebe95f2c403e041fab209610e695ae')
 
 build() {
