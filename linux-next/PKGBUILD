@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.15-rc8
+_basekernel=4.15-rc9
 _srcname=linux-4.15
-pkgver=4.15RC8
+pkgver=4.15RC9
 _pkgver=4.13.13.a
 pkgrel=1
 arch=('x86_64')
@@ -13,7 +13,7 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode')
 options=('!strip')
 #source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-source=("https://git.kernel.org/torvalds/t/linux-4.15-rc8.tar.gz"
+source=("https://git.kernel.org/torvalds/t/linux-4.15-rc9.tar.gz"
         #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
@@ -31,9 +31,9 @@ source=("https://git.kernel.org/torvalds/t/linux-4.15-rc8.tar.gz"
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         '99-linux-next.hook')
-md5sums=('ad8277e87079747f0e352f1fba151d38'
+md5sums=('e2fab4831e54e1a188a68d431e63f540'
          '296b576fd21565f4fbd262036549d996'
-         'c92f2ed8a02e05c07342a53c410ab6bd'
+         'c77e0f947956e2bd9b583ad793a59120'
          '8c780cf57abcd5966f01f3b81d8c5d0c'
          'c77c67caa666b160010b7e54f541fc2f'
          'adf636e5829a740c2e50dcba91727d86'

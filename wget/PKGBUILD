@@ -1,6 +1,6 @@
 
 pkgname=wget
-pkgver=1.19.3
+pkgver=1.19.4
 pkgrel=1
 pkgdesc="A network utility to retrieve files from the Web"
 arch=('x86_64')
@@ -12,7 +12,7 @@ optdepends=('ca-certificates: HTTPS downloads')
 backup=('etc/wgetrc')
 source=("https://ftpmirror.gnu.org/wget/${pkgname}-${pkgver}.tar.lz"
         '0001-main.c-Need-to-explicitly-disallow-show_progress-in-.patch')
-md5sums=('c7166447c504222d4bfc614244c179f7'
+md5sums=('50d3c7b607ef4addccc21eae7ba35430'
          '87ebe95f2c403e041fab209610e695ae')
 
 build() {
