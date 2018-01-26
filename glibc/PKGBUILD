@@ -49,6 +49,7 @@ build() {
       --with-bugurl=https://github.com/KaOSx/core/issues \
       --enable-add-ons \
       --enable-obsolete-rpc \
+      --enable-obsolete-nsl \
       --enable-kernel=3.2.0 \
       --enable-bind-now --disable-profile \
       --enable-stackguard-randomization \
