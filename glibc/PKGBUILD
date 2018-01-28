@@ -2,9 +2,9 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.25
-_commit=adc7e06fb412a2a1ee52f8cb788caf436335b9f3
-pkgrel=3
+pkgver=2.26
+_commit=a5db85df69dce7fcf793fefc60c764c684e0c272
+pkgrel=1
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="http://www.gnu.org/software/libc"
@@ -23,7 +23,7 @@ source=("https://github.com/bminor/glibc/archive/${_commit}.zip"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('4dd864076bbefb086fe30cbd77ee054c'
+md5sums=('7ea8253786d870ed4a71413700efbf62'
          #'203fe9133e82f2b59969c116b70fd84e'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
@@ -66,9 +66,6 @@ build() {
   echo "CC += -fstack-protector -D_FORTIFY_SOURCE=2" >> configparms
   echo "CXX += -fstack-protector -D_FORTIFY_SOURCE=2" >> configparms
   make
-
-  # no stack protector for running tests
-  #sed -i '5,7d' configparms
 }
 
 check() {

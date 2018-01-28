@@ -4,23 +4,23 @@
 # http://www.linuxfromscratch.org/lfs/view/7.6/chapter06/gcc.html
 
 pkgname=('gcc' 'gcc-libs') 
-pkgver=6.4.0
-_pkgver=6
+pkgver=7.3.0
+_pkgver=7
 _snapshot=6-20170607
-_islver=0.16.1
+_islver=0.18
 pkgrel=1
 pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
 url="https://gcc.gnu.org"
-makedepends=('binutils>=2.28' 'libmpc' 'doxygen' 'autogen')
+makedepends=('binutils>=2.30' 'libmpc' 'doxygen' 'autogen')
 checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
 source=("https://mirrors.concertpass.com/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
 #source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
         "ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2")
-md5sums=('11ba51a0cfb8471927f387c8895fe232'
-         'ac1f25a0677912952718a51f5bc20f32')
+md5sums=('be2da21680f27624f3a87055c4ba5af2'
+         '11436d6b205e516635b666090b94ab32')
 
   _basedir="gcc-${pkgver}"
   #_basedir="gcc-${_snapshot}"
@@ -46,22 +46,35 @@ build() {
   CXXFLAGS=${CXXFLAGS/-pipe/}
 
   cd ${srcdir}
-  mkdir gcc-build  
+  mkdir -p gcc-build  
   cd gcc-build
 
   ${srcdir}/${_basedir}/configure --prefix=/usr \
-      --libdir=/usr/lib --libexecdir=/usr/lib \
-      --mandir=/usr/share/man --infodir=/usr/share/info \
+      --libdir=/usr/lib \
+      --libexecdir=/usr/lib \
+      --mandir=/usr/share/man \
+      --infodir=/usr/share/info \
       --with-bugurl=https://github.com/KaOSx/core/issues \
       --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++ \
-      --enable-shared --enable-threads=posix --enable-libmpx \
-      --with-system-zlib --with-isl --enable-__cxa_atexit \
-      --disable-libunwind-exceptions --enable-clocale=gnu \
-      --disable-libstdcxx-pch --disable-libssp \
-      --enable-gnu-unique-object --enable-linker-build-id \
-      --enable-lto --enable-plugin --enable-install-libiberty \
-      --with-linker-hash-style=gnu --enable-gnu-indirect-function \
-      --disable-multilib --disable-werror \
+      --enable-shared \
+      --enable-threads=posix \
+      --enable-libmpx \
+      --with-system-zlib \
+      --with-isl \
+      --enable-__cxa_atexit \
+      --disable-libunwind-exceptions \
+      --enable-clocale=gnu \
+      --disable-libstdcxx-pch \
+      --disable-libssp \
+      --enable-gnu-unique-object \
+      --enable-linker-build-id \
+      --enable-lto \
+      --enable-plugin \
+      --enable-install-libiberty \
+      --with-linker-hash-style=gnu \
+      --enable-gnu-indirect-function \
+      --disable-multilib \
+      --disable-werror \
       --enable-checking=release 
   make
 
@@ -83,7 +96,7 @@ package_gcc-libs()
 {
   pkgdesc="Runtime libraries shipped by GCC"
   groups=('base')
-  depends=('glibc>=2.23')
+  depends=('glibc>=2.26')
   options=('!emptydirs' '!strip')
   
   cd ${srcdir}/gcc-build
@@ -126,7 +139,7 @@ package_gcc-libs()
 package_gcc()
 {
   pkgdesc="The GNU Compiler Collection"
-  depends=("gcc-libs=$pkgver-$pkgrel" 'binutils>=2.26.1' 'libmpc')
+  depends=("gcc-libs=$pkgver-$pkgrel" 'binutils>=2.30' 'libmpc')
   groups=('base-devel')
   conflicts=('gcc-fortran'
              'gcc-objc'

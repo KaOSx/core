@@ -1,6 +1,6 @@
 
 pkgname=mpfr
-_pkgver=3.1.6
+_pkgver=4.0.0
 #_patchlevel=p5
 #pkgver=${_pkgver}.${_patchlevel}
 pkgver=${_pkgver}
@@ -9,12 +9,12 @@ pkgdesc="Multiple-precision floating-point library"
 arch=('x86_64')
 url="http://www.mpfr.org/"
 license=('LGPL')
-depends=('gmp>=6.0')
+depends=('gmp')
 options=('!libtool')
 source=("http://www.mpfr.org/mpfr-current/mpfr-${_pkgver}.tar.xz")
         # http://www.mpfr.org/mpfr-3.1.5/allpatches  http://www.mpfr.org/mpfr-3.1.5/#bugs
         #"mpfr-${_pkgver}-${_patchlevel}.patch")
-md5sums=('51bfdbf81553966c8d43808122cc81b3')
+md5sums=('94c67b3cfbee10605a5e59d0ed9161db')
          #'ddc463e02c11e2d03443c09dea7978b5')
 
 build() {

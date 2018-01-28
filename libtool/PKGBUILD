@@ -2,19 +2,19 @@
 
 pkgname=libtool
 pkgver=2.4.6
-pkgrel=11
+pkgrel=12
 pkgdesc="A generic library support script"
 arch=('x86_64')
 url="https://www.gnu.org/software/libtool"
 license=('GPL')
 options=('!libtool')
-depends=('sed' 'grep' 'sh' 'tar' 'gcc=6.4.0') # Needed by libtoolize
+depends=('sed' 'grep' 'sh' 'tar' 'gcc=7.3.0') # Needed by libtoolize
 makedepends=('help2man')
 groups=('base-devel')
 provides=('libltdl')
 conflicts=('libltdl')
 replaces=('libltdl')
-source=("ftp://ftp.gnu.org/pub/gnu/libtool/${pkgname}-${pkgver}.tar.xz"
+source=("https://nl.mirror.babylon.network/gnu/libtool/${pkgname}-${pkgver}.tar.xz"
         'no-clean-gnulib.patch')
 md5sums=('1bfb9b923f2c1339b4d2ce1807064aa5'
          '23c8ef65f19705239f1aa362f429e3ad')
