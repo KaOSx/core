@@ -1,6 +1,6 @@
 
 pkgname=rsync
-pkgver=3.1.3pre1
+pkgver=3.1.3
 pkgrel=1
 pkgdesc="A file transfer program to keep remote files in sync"
 arch=('x86_64')
@@ -8,13 +8,13 @@ url="https://samba.anu.edu.au/rsync/"
 license=('GPL3')
 depends=('perl')
 backup=('etc/rsyncd.conf' 'etc/xinetd.d/rsync')
-source=("https://www.samba.org/ftp/rsync/src-previews/${pkgname}-${pkgver}.tar.gz"
+source=("https://www.samba.org/ftp/rsync/${pkgname}-${pkgver}.tar.gz"
         'rsyncd.conf'
         'rsync.xinetd'
         'rsyncd.service'
         'rsyncd.socket'
         'rsyncd@.service')
-md5sums=('e116473719712d312d4db7e877e7b0df'
+md5sums=('1581a588fde9d89f6bc6201e8129afaf'
          'bce64d122a8e0f86872a4a21a03bc7f3'
          'ea3e9277dc908bc51f9eddc0f6b935c1'
          'ec96f9089d71109557cdcaa3f0633ed6'
