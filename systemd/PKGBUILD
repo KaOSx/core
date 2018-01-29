@@ -1,6 +1,6 @@
 
 pkgname=systemd
-pkgver=236
+pkgver=237
 pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
@@ -40,7 +40,7 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'splash.bmp'
         'systemd-tmpfiles.hook'
         'kvm.patch')
-md5sums=('8609cb9043ac8f374371cbac5546acf4'
+md5sums=('5a835ddc2a2ae9ef523a5a11674a6713'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -58,7 +58,7 @@ prepare() {
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
   # qemu is not in KaOS https://github.com/systemd/systemd/issues/6360
-  patch -p1 -i ${srcdir}/kvm.patch
+  #patch -p1 -i ${srcdir}/kvm.patch
 }
 
 build() {
