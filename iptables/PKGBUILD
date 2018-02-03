@@ -1,15 +1,15 @@
 
 pkgname=iptables
-pkgver=1.6.1
+pkgver=1.6.2
 pkgrel=1
 pkgdesc="A Linux kernel packet control tool"
 arch=('x86_64')
 license=('GPL2')
-url='http://www.netfilter.org/projects/iptables/index.html'
+url='https://www.netfilter.org/projects/iptables/index.html'
 depends=('glibc' 'bash')
 makedepends=('linux-api-headers' 'chrpath')
 options=('!libtool')
-source=("http://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.tar.bz2"
+source=("https://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.tar.bz2"
         'empty.rules'
         'simple_firewall.rules'
         'empty-filter.rules'
@@ -20,17 +20,17 @@ source=("http://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.t
         'iptables.service'
         'ip6tables.service'
         'iptables-flush')
-md5sums=('ab38a33806b6182c6f53d6afb4619add'
-         '14186bbafe21bb0638c0cb8e0903c829'
-         '88fe330e810bb89b3aa08747bae3e3f9'
-         '3ae6e25f397195611bab943945ff31ee'
-         '60a90471364984ef43fa750d02b19e6e'
-         '07f769473723984ecd1d13ef841c0222'
-         '0e202e7eaab6692d2dcf9ea04766db5c'
-         '07423e206c5c7a61689eebf12a1dbe52'
-         '0b63db98a863cb2050e3b4596605a8ca'
-         'af1ec8be985119b2a3e1b16f1a7f5968'
-         'a19e0630d200f066522f0baef815dd75')
+sha1sums=('6279effbf8f2c7ff53d19ae13308f8a6e6a60dd9'
+          '83b3363878e3660ce23b2ad325b53cbd6c796ecf'
+          'f085a71f467e4d7cb2cf094d9369b0bcc4bab6ec'
+          'd9f9f06b46b4187648e860afa0552335aafe3ce4'
+          'c45b738b5ec4cfb11611b984c21a83b91a2d58f3'
+          '1694d79b3e6e9d9d543f6a6e75fed06066c9a6c6'
+          '7db53bb882f62f6c677cc8559cff83d8bae2ef73'
+          'ebbd1424a1564fd45f455a81c61ce348f0a14c2e'
+          '5f2e76985a751f635a45612565a6e1bc9547398a'
+          'fe6bbe214b3a13bd084f62a8ee9631fd8326c464'
+          'e7abda09c61142121b6695928d3b71ccd8fdf73a')
 
 build() {
   cd ${pkgname}-${pkgver}
