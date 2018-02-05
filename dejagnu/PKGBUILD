@@ -1,32 +1,32 @@
 
 pkgname=dejagnu
-pkgver=1.6
-pkgrel=4
+pkgver=1.6.1
+pkgrel=1
 pkgdesc="Framework for testing other programs"
 arch=('x86_64')
-url="http://www.gnu.org/software/dejagnu/"
+url="https://www.gnu.org/software/dejagnu/"
 license=('GPL')
 depends=('sh' 'expect')
 makedepends=('dejagnu')
 options=('!libtool')
-source=("http://ftp.gnu.org/gnu/dejagnu/${pkgname}-${pkgver}.tar.gz")
-md5sums=('1fdc2eb0d592c4f89d82d24dfdf02f0b')
+source=("https://ftp.gnu.org/gnu/dejagnu/${pkgname}-${pkgver}.tar.gz")
+md5sums=('2ac8405a4c7ca8611d004fe852966c6f')
 
 
 build() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr
   make
 }
 
 check() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   make check
 }
 
 package() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
 
-  make DESTDIR=$pkgdir/ install
+  make DESTDIR=${pkgdir}/ install
 }

@@ -1,14 +1,14 @@
 
 pkgname=expect
-pkgver=5.45
-pkgrel=7
+pkgver=5.45.4
+pkgrel=1
 pkgdesc="A tool for automating interactive applications"
 arch=('x86_64')
-url="http://www.nist.gov/el/msid/expect.cfm"
+url="https://www.nist.gov/el/msid/expect.cfm"
 license=('custom')
 depends=('tcl')
-source=("http://downloads.sourceforge.net/project/expect/Expect/${pkgver}/expect${pkgver}.tar.gz")
-md5sums=('44e1a4f4c877e9ddc5a542dfa7ecc92b')
+source=("https://downloads.sourceforge.net/project/expect/Expect/${pkgver}/expect${pkgver}.tar.gz")
+sha256sums=('49a7da83b0bdd9f46d04a04deec19c7767bb9a323e40c4781f89caf760b92c34')
 
 build() {
   cd expect${pkgver}

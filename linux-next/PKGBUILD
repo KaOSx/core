@@ -6,7 +6,7 @@ _basekernel=4.15
 _srcname=linux-4.15
 pkgver=4.15.1
 _pkgver=4.13.13.a
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -14,7 +14,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-4.15-rc9.tar.gz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
         'config'
@@ -32,8 +32,9 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'linux-next.preset'
         '99-linux-next.hook')
 md5sums=('0d701ac1e2a67d47ce7127432df2c32b'
+         '839159e4710e11dcc836023b3d7b1bf7'
          '296b576fd21565f4fbd262036549d996'
-         '74c7126548fbe0c16ef19af21b5cb2d2'
+         'fe16f571a2bf3c7b5369fb7775fe5fa8'
          '8c780cf57abcd5966f01f3b81d8c5d0c'
          'c77c67caa666b160010b7e54f541fc2f'
          'adf636e5829a740c2e50dcba91727d86'
@@ -50,7 +51,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
   # linux-hardened patch
   #patch -p1 -i "${srcdir}/linux-hardened-${_pkgver}.patch"
 
