@@ -12,8 +12,8 @@ md5sums=('3ba3afb1d1b261383d247f46cb135ee8'
          'ec296a5e5704736eb07d8b7d016213f8')
 
 build() {
-  cd $pkgname-$pkgver
-  patch -p1 -i $srcdir/newer.patch
+  cd ${pkgname}-${pkgver}
+  patch -p1 -i ${srcdir}/newer.patch
   
   make get
   make
@@ -26,10 +26,10 @@ check() {
 }
 
 package() {
-  cd $pkgname-$pkgver
-  make DESTDIR=$pkgdir/ install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir}/ install
   
-  install -D -m644 COPYING $pkgdir/usr/share/licenses/iana-etc/LICENSE
+  install -D -m644 COPYING ${pkgdir}/usr/share/licenses/iana-etc/LICENSE
   install -Dm644 port-numbers.iana ${pkgdir}/usr/share/iana-etc/port-numbers.iana
   install -Dm644 protocol-numbers.iana ${pkgdir}/usr/share/iana-etc/protocol-numbers.iana
 }
