@@ -1,14 +1,14 @@
 
 pkgname=run-parts
-pkgver=4.8.3
+pkgver=4.8.4
 pkgrel=1
 pkgdesc='Run scripts or programs in a directory'
 arch=('x86_64')
-url='http://packages.qa.debian.org/d/debianutils.html'
+url='https://packages.qa.debian.org/d/debianutils.html'
 license=('GPL')
 depends=('glibc')
-source=("http://ftp.de.debian.org/debian/pool/main/d/debianutils/debianutils_${pkgver}.tar.xz") 
-md5sums=('f09fb52093f799c72de04a7ede1b7411')
+source=("https://cdn-aws.deb.debian.org/debian/pool/main/d/debianutils/debianutils_${pkgver}.tar.xz") 
+md5sums=('a6dcd496b4f79b3c452c3a74c2d3f89c')
 
 build() {
 	cd debianutils
