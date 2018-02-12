@@ -1,9 +1,9 @@
 
 pkgname=dhcpcd
-pkgver=7.0.0
+pkgver=7.0.1
 pkgrel=1
 pkgdesc="RFC2131 compliant DHCP client daemon"
-url="http://roy.marples.name/projects/dhcpcd/"
+url="https://roy.marples.name/projects/dhcpcd/"
 arch=('x86_64')
 license=('BSD')
 groups=('base')
@@ -11,12 +11,12 @@ depends=('glibc' 'sh')
 makedepends=('ntp')
 backup=('etc/dhcpcd.conf')
 options=('emptydirs')  
-source=("http://roy.marples.name/downloads/dhcpcd/$pkgname-$pkgver.tar.xz" 
+source=("https://roy.marples.name/downloads/dhcpcd/$pkgname-$pkgver.tar.xz" 
         'dhcpcd@.service'
         'dhcpcd.service')
-md5sums=('3b476f61490a8890ac90523400110328'
-         '3b47ff473ee7f7b03062818b94fd3ed5'
-         'c10ec3816b13fd5d59f696f7154f445a')
+sha256sums=('8b36537fbcc00771b9a6c9ccd71b5011df27b3f892e926b199a195fad2f3f3c8'
+            '1c039df7fcf5a002336bc14f289a05606abbdbf6266d95e8e3d2dd3f02812446'
+            '3e1900bead9ddcc7ec734f6d5c7e797f82dad60854c2cdc174dfc169dc5170dd')
 
 build() {
   cd ${pkgname}-${pkgver}

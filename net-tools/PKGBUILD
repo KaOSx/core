@@ -1,7 +1,7 @@
 
 pkgname=net-tools
-pkgver=1.60.5
-_commit=115f1af2494ded1fcd21c8419d5e289bc4df380f
+pkgver=1.60.6
+_commit=479bb4a7e11a4084e2935c0a576388f92469225b
 pkgrel=1
 pkgdesc="Configuration tools for Linux networking"
 arch=('x86_64')
@@ -9,9 +9,9 @@ license=('GPL')
 url="https://sourceforge.net/projects/net-tools/"
 groups=('base')
 depends=('glibc')
-source=("http://sourceforge.net/code-snapshots/git/n/ne/net-tools/code.git/net-tools-code-${_commit}.zip")
+source=("https://sourceforge.net/code-snapshots/git/n/ne/net-tools/code.git/net-tools-code-${_commit}.zip")
 options=('!makeflags')
-md5sums=('243819dfa4505832f74bd436d3389148')
+md5sums=('11eb2e7c010b779ba4688575d4bfa83c')
 
 build() {
   cd ${pkgname}-code-${_commit}
@@ -23,11 +23,9 @@ package() {
   cd ${pkgname}-code-${_commit}
   make DESTDIR=${pkgdir} update
 
-  # the following is provided by yp-tools
-  rm ${pkgdir}/bin/{nis,yp}domainname
-  rm ${pkgdir}/usr/share/man/man1/{nis,yp}domainname.1
-
   # hostname is provided by inetutils
   rm ${pkgdir}/bin/{hostname,dnsdomainname,domainname}
   rm -rf ${pkgdir}/usr/share/man/man1
+  # empty symlinks to hostname
+  rm ${pkgdir}/bin/{nis,yp}domainname
 }
