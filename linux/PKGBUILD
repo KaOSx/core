@@ -2,8 +2,8 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.14
-pkgver=4.14.14
+_basekernel=4.15
+pkgver=4.15.4
 _pkgver=4.13.12.a
 pkgrel=1
 arch=('x86_64')
@@ -11,7 +11,7 @@ url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.14.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.15.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         #"https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
@@ -29,18 +29,18 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.14.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '99-linux.hook')
-md5sums=('bacdb9ffdcd922aa069a5e1520160e24'
-         'b688cbee616f4b35ab08b953519eda55'
-         'fca7fc08773eb52edbaca886b4d0f307'
-         '8c780cf57abcd5966f01f3b81d8c5d0c'
-         'c77c67caa666b160010b7e54f541fc2f'
-         'adf636e5829a740c2e50dcba91727d86'
-         'd5bdf8d16faeacc08f88e30663ace4df'
-         '060353ea98b4f8b4557c3d081f1a3ce9'
-         'cd3941afa4f3fce5a768a4e65f9af6c3'
+md5sums=('0d701ac1e2a67d47ce7127432df2c32b'
+         'c902f0ab08a481b1718db24ed36dee50'
+         'c51911c408dbd96239500afce3f91333'
+         'f9b90e4e3221239216ae3433762f1906'
+         'fb970d1547aff2b839dc220f7b8e9edf'
+         '300af94146a60895e220dd2cdc434b2a'
+         'c6f939532b7ec0ff1d460cba0884ae0f'
+         'baa50163af1ad61769dcaa0a37b5bb6c'
+         '2ea4a20b353ce2536a498466fe5ca552'
          '58077c1703977e6b5fafdda552f542d5'
-         '37aa39db40d21f4fd5f9dce923887306'
-         'ee43a630b3b82f649a54b3a81fb7b15b'
+         'ad98d31956601cd4e9493d8fbc357ec5'
+         'b6daa88c9f6e28abf1c1a09ce000003f'
          'eb14dcfd80c00852ef81ded6e826826a'
          '0b73d293ca1ab91748ae2d2c39921532')
 
