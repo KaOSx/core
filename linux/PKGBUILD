@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=4.15
-pkgver=4.15.4
+pkgver=4.15.6
 _pkgver=4.13.12.a
 pkgrel=1
 arch=('x86_64')
@@ -30,14 +30,14 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.15.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('0d701ac1e2a67d47ce7127432df2c32b'
-         'c902f0ab08a481b1718db24ed36dee50'
+         'd8fcd87cd22155a7aa73126429446253'
          'c51911c408dbd96239500afce3f91333'
-         'f9b90e4e3221239216ae3433762f1906'
-         'fb970d1547aff2b839dc220f7b8e9edf'
-         '300af94146a60895e220dd2cdc434b2a'
-         'c6f939532b7ec0ff1d460cba0884ae0f'
-         'baa50163af1ad61769dcaa0a37b5bb6c'
-         '2ea4a20b353ce2536a498466fe5ca552'
+         '84ec58470cbfdb0cccb9ca7e415d6716'
+         '5d3ddcdfdb07ab35396951121e32b65b'
+         'd617e967ff4f0f1382328aef87e36d66'
+         '7a72ece33b198bd64a4392eac2b3e849'
+         '5fad201b29d79a683c1453549e88a8fa'
+         '9917765540cab458b1511c3e8c4df5f7'
          '58077c1703977e6b5fafdda552f542d5'
          'ad98d31956601cd4e9493d8fbc357ec5'
          'b6daa88c9f6e28abf1c1a09ce000003f'
