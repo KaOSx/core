@@ -1,5 +1,5 @@
 SPDX-License-Identifier: GPL-2.0
-aufs4.x-rcN standalone patch
+aufs4.15 standalone patch
 
 diff --git a/fs/dcache.c b/fs/dcache.c
 index 019f14b..10c1a6d 100644
@@ -22,7 +22,7 @@ index 019f14b..10c1a6d 100644
  /**
   * d_ancestor - search for an ancestor
 diff --git a/fs/exec.c b/fs/exec.c
-index 5688b5e..1041a4c 100644
+index 7eb8d21..56d7985 100644
 --- a/fs/exec.c
 +++ b/fs/exec.c
 @@ -109,6 +109,7 @@ bool path_noexec(const struct path *path)
@@ -294,10 +294,10 @@ index 61cd28b..35570cd 100644
  ssize_t
  __vfs_getxattr(struct dentry *dentry, struct inode *inode, const char *name,
 diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index 43c6dbf..3474f0e 100644
+index 8b5f44d..979db63 100644
 --- a/kernel/locking/lockdep.c
 +++ b/kernel/locking/lockdep.c
-@@ -150,6 +150,7 @@ inline struct lock_class *lockdep_hlock_class(struct held_lock *hlock)
+@@ -151,6 +151,7 @@ inline struct lock_class *lockdep_hlock_class(struct held_lock *hlock)
  	}
  	return lock_classes + hlock->class_idx - 1;
  }
@@ -315,10 +315,10 @@ index 0fef395..83fb1ec 100644
  }
 +EXPORT_SYMBOL_GPL(task_work_run);
 diff --git a/security/commoncap.c b/security/commoncap.c
-index 4f8e093..f1e0544 100644
+index 48620c9..4981104 100644
 --- a/security/commoncap.c
 +++ b/security/commoncap.c
-@@ -1333,12 +1333,14 @@ int cap_mmap_addr(unsigned long addr)
+@@ -1330,12 +1330,14 @@ int cap_mmap_addr(unsigned long addr)
  	}
  	return ret;
  }

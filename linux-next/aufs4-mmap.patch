@@ -1,5 +1,5 @@
 SPDX-License-Identifier: GPL-2.0
-aufs4.x-rcN mmap patch
+aufs4.15 mmap patch
 
 diff --git a/fs/proc/base.c b/fs/proc/base.c
 index 60316b5..ce5314e 100644
