@@ -1,7 +1,7 @@
 
 pkgname=automake
-pkgver=1.15.1
-pkgrel=2
+pkgver=1.16
+pkgrel=1
 pkgdesc="A GNU tool for automatically creating Makefiles"
 arch=('x86_64')
 license=('GPL')
@@ -11,7 +11,7 @@ depends=('perl' 'bash')
 makedepends=('autoconf')
 checkdepends=('dejagnu' 'python2' 'java-environment' 'vala' 'emacs-nox' 'gcc-fortran')
 source=("https://ftp.gnu.org/gnu/automake/${pkgname}-${pkgver}.tar.xz")
-md5sums=('24cd3501b6ad8cd4d7e2546f07e8b4d4')
+md5sums=('bfdf69ac36c327b3a59b83ab01057e30')
 
 build() {
   cd ${pkgname}-${pkgver}
