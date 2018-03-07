@@ -1,6 +1,6 @@
 
 pkgname=systemd
-pkgver=237
+pkgver=238
 pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
@@ -40,7 +40,7 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'splash.bmp'
         'systemd-tmpfiles.hook'
         'kvm.patch')
-md5sums=('5a835ddc2a2ae9ef523a5a11674a6713'
+md5sums=('76db8004647283b779234364cd637d3c'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -74,6 +74,7 @@ build() {
     --buildtype=release \
     --libexecdir=/usr/lib \
     -Dsplit-usr=true \
+    -Dsplit-bin=true \
     -Drootprefix=/usr \
     -Dlz4=true \
     -Defi=true \

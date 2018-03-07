@@ -1,13 +1,13 @@
 
 pkgname=cryptsetup
 pkgver=2.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Utility used to conveniently setup disk encryption based on DMCrypt kernel module."
 arch=('x86_64')
 license=('GPL')
 url="https://gitlab.com/cryptsetup/cryptsetup/blob/master/README.md"
 groups=('base')
-depends=('device-mapper' 'libgcrypt' 'popt' 'util-linux' 'json-c')
+depends=('device-mapper' 'libgcrypt' 'popt' 'util-linux' 'json-c' 'argon2')
 options=('!libtool' '!emptydirs')
 source=("https://www.kernel.org/pub/linux/utils/cryptsetup/v2.0/${pkgname}-${pkgver}.tar.xz"
         'encrypt_hook'
@@ -22,7 +22,8 @@ build() {
   
   ./configure --prefix=/usr \
         --disable-static \
-        --enable-cryptsetup-reencrypt
+        --enable-cryptsetup-reencrypt \
+        --enable-libargon2
   make
 }
 
