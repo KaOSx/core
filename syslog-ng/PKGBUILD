@@ -1,12 +1,12 @@
 
 # update syslog-ng.conf on 3.xx updates
 pkgname=syslog-ng
-pkgver=3.13.2
-pkgrel=2
+pkgver=3.14.1
+pkgrel=1
 pkgdesc="Next-generation syslogd with advanced networking and filtering capabilities"
 arch=('x86_64')
 license=('GPL2')
-url="http://www.balabit.com/network-security/syslog-ng/"
+url="https://syslog-ng.com/"
 depends=('glib2' 'eventlog' 'openssl' 'libcap' 'awk' 'systemd' 'json-c')
 makedepends=('flex' 'pkg-config' 'python2' 'libxslt')
 optdepends=('logrotate: for rotating log files')
@@ -18,8 +18,8 @@ backup=('etc/syslog-ng/scl.conf'
 source=("https://github.com/balabit/syslog-ng/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.gz"
         'syslog-ng.conf'
         'syslog-ng.logrotate')
-md5sums=('56286e1bd641f4d4d1ff9c6099ee9e3e'
-         'b7afe73b7faef3d80e76943f1f5989d3'
+md5sums=('0b124971ac285620d922ace4eb650339'
+         'ad063f51948dbc3b32bf98d219660165'
          '0c0d5149bd3e8d666c506351edecbe71')
 
 build() {
