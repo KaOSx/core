@@ -10,7 +10,7 @@ pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils')
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-4.15-rc9.tar.gz"
@@ -34,7 +34,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 md5sums=('0d701ac1e2a67d47ce7127432df2c32b'
          'f855c658a5e075c2cd80bcebd2b27956'
          '296b576fd21565f4fbd262036549d996'
-         '4650b3dd410cc0af95ee67756ecd1779'
+         '54c62f15421e9e74f85574cfb735b298'
          '84ec58470cbfdb0cccb9ca7e415d6716'
          '5d3ddcdfdb07ab35396951121e32b65b'
          'd617e967ff4f0f1382328aef87e36d66'
@@ -269,6 +269,9 @@ package_linux-next-headers() {
         /usr/bin/strip ${STRIP_BINARIES} "${binary}";;
     esac
   done
+  
+  # add objtool, nvidia needed
+  install -Dt "${pkgdir}/usr/src/linux-${_kernver}/tools/objtool" tools/objtool/objtool
 
   # remove unneeded architectures
   rm -rf "${pkgdir}"/usr/src/linux-${_kernver}/arch/{alpha,arm,arm26,arm64,avr32,blackfin,c6x,cris,frv,h8300,hexagon,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,openrisc,parisc,powerpc,ppc,s390,score,sh,sh64,sparc,sparc64,tile,unicore32,um,v850,xtensa}
