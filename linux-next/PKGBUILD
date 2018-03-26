@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.15
-_srcname=linux-4.15
-pkgver=4.15.12
+_basekernel=4.16-rc7
+_srcname=linux-4.16
+pkgver=4.16RC7
 _pkgver=4.13.13.a
 pkgrel=1
 arch=('x86_64')
@@ -12,9 +12,9 @@ url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-#source=("https://git.kernel.org/torvalds/t/linux-4.15-rc9.tar.gz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+#source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
+source=("https://git.kernel.org/torvalds/t/linux-4.16-rc7.tar.gz"
+        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
         'config'
@@ -31,8 +31,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         '99-linux-next.hook')
-md5sums=('0d701ac1e2a67d47ce7127432df2c32b'
-         '265ad39709985710a508a4e7c41de0ff'
+md5sums=('e23d5ce36687afa5dbf7469ad8dbaa1c'
          '296b576fd21565f4fbd262036549d996'
          'e444774072f0aed7115b42a73000dce8'
          '84ec58470cbfdb0cccb9ca7e415d6716'
@@ -51,7 +50,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
   # linux-hardened patch
   #patch -p1 -i "${srcdir}/linux-hardened-${_pkgver}.patch"
 
@@ -59,20 +58,20 @@ build() {
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs4.patch"
-  patch -p1 -i "${srcdir}/aufs4-base.patch"
-  patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs4-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs4-mmap.patch"
-  patch -p1 -i "${srcdir}/aufs4-standalone.patch"
-  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  patch -p1 -i "${srcdir}/vfs-ino.patch"
+  #patch -p1 -i "${srcdir}/aufs4.patch"
+  #patch -p1 -i "${srcdir}/aufs4-base.patch"
+  #patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
+  #patch -p1 -i "${srcdir}/aufs4-loopback.patch"
+  #patch -p1 -i "${srcdir}/aufs4-mmap.patch"
+  #patch -p1 -i "${srcdir}/aufs4-standalone.patch"
+  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  #patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
   cat "${srcdir}/config" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -222,8 +221,8 @@ package_linux-next-headers() {
   cp net/mac80211/*.h "${pkgdir}/usr/src/linux-${_kernver}/net/mac80211/"
 
   # add dvb headers for external modules
-  mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb-core"
-  cp drivers/media/dvb-core/*.h "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb-core/"
+  #mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb-core"
+  #cp drivers/media/dvb-core/*.h "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb-core/"
   # and...
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/"
   cp include/config/dvb/*.h "${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/"
@@ -247,7 +246,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs4-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
