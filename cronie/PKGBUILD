@@ -3,7 +3,7 @@ pkgname=cronie
 pkgver=1.5.1
 pkgrel=2
 pkgdesc='Daemon that runs specified programs at scheduled times and related tools'
-url='https://fedorahosted.org/cronie/'
+url='https://github.com/cronie-crond/cronie'
 # should move soon to:
 # https://pagure.io/cronie, now available at https://github.com/cronie-crond/cronie
 license=('custom:BSD')

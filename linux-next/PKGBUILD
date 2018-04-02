@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.16-rc7
+_basekernel=4.16
 _srcname=linux-4.16
-pkgver=4.16RC7
+pkgver=4.16.0
 _pkgver=4.13.13.a
 pkgrel=1
 arch=('x86_64')
@@ -12,8 +12,8 @@ url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils')
 options=('!strip')
-#source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-source=("https://git.kernel.org/torvalds/t/linux-4.16-rc7.tar.gz"
+source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
+#source=("https://git.kernel.org/torvalds/t/linux-4.16-rc7.tar.gz"
         #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
@@ -31,9 +31,9 @@ source=("https://git.kernel.org/torvalds/t/linux-4.16-rc7.tar.gz"
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         '99-linux-next.hook')
-md5sums=('e23d5ce36687afa5dbf7469ad8dbaa1c'
+md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
          '296b576fd21565f4fbd262036549d996'
-         'e444774072f0aed7115b42a73000dce8'
+         'cce77df1c730c49989e14c16f44eda6a'
          '84ec58470cbfdb0cccb9ca7e415d6716'
          '5d3ddcdfdb07ab35396951121e32b65b'
          'd617e967ff4f0f1382328aef87e36d66'
