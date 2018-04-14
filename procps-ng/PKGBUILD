@@ -1,6 +1,6 @@
 
 pkgname=procps-ng
-pkgver=3.3.13
+pkgver=3.3.14
 pkgrel=1
 pkgdesc='Utilities for monitoring your system and its processes'
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('ncurses')
 provides=('procps')
 options=('!libtool')
 source=("https://downloads.sourceforge.net/project/procps-ng/Production/${pkgname}-${pkgver}.tar.xz")
-md5sums=('ad20fe97b3f45797dd43e2d3e046ff32')
+md5sums=('fce371ccc1c15a67af9d85e4057e559d')
 
 build() {
   cd ${pkgname}-${pkgver}
