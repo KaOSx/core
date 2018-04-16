@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.16
 _srcname=linux-4.16
-pkgver=4.16.0
+pkgver=4.16.2
 _pkgver=4.13.13.a
 pkgrel=1
 arch=('x86_64')
@@ -14,7 +14,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfuti
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-4.16-rc7.tar.gz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
         'config'
@@ -32,17 +32,18 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'linux-next.preset'
         '99-linux-next.hook')
 md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
+         '9c685cac0230e7689891749f457d651b'
          '296b576fd21565f4fbd262036549d996'
          'cce77df1c730c49989e14c16f44eda6a'
-         '84ec58470cbfdb0cccb9ca7e415d6716'
-         '5d3ddcdfdb07ab35396951121e32b65b'
-         'd617e967ff4f0f1382328aef87e36d66'
-         '7a72ece33b198bd64a4392eac2b3e849'
-         '5fad201b29d79a683c1453549e88a8fa'
-         '9917765540cab458b1511c3e8c4df5f7'
+         'f9290cc7a8e343ca1887e1629bd17183'
+         'e568374aaf87825d336c6b06874e7b54'
+         'ef79697db7344ab871e8c43e7983bd01'
+         '71137db4a3d85eaa062d9a6627752f40'
+         '88199957bfb1f6d6564481b6ca343016'
+         '219dcf5ceddad84866c7affb5bd78548'
          '58077c1703977e6b5fafdda552f542d5'
-         'ad98d31956601cd4e9493d8fbc357ec5'
-         'b6daa88c9f6e28abf1c1a09ce000003f'
+         '98498454e588a5013bb200e93566aab4'
+         'd1cb06b14f94ec74c39a3efc81adf5cc'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22')
 
@@ -50,7 +51,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
   # linux-hardened patch
   #patch -p1 -i "${srcdir}/linux-hardened-${_pkgver}.patch"
 
@@ -58,20 +59,20 @@ build() {
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
   #aufs patches for Live:
-  #patch -p1 -i "${srcdir}/aufs4.patch"
-  #patch -p1 -i "${srcdir}/aufs4-base.patch"
-  #patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
-  #patch -p1 -i "${srcdir}/aufs4-loopback.patch"
-  #patch -p1 -i "${srcdir}/aufs4-mmap.patch"
-  #patch -p1 -i "${srcdir}/aufs4-standalone.patch"
-  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  #patch -p1 -i "${srcdir}/vfs-ino.patch"
+  patch -p1 -i "${srcdir}/aufs4.patch"
+  patch -p1 -i "${srcdir}/aufs4-base.patch"
+  patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs4-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs4-mmap.patch"
+  patch -p1 -i "${srcdir}/aufs4-standalone.patch"
+  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
   cat "${srcdir}/config" > ./.config
 
-  #cat "${srcdir}/config.aufs" >> ./.config
+  cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -246,7 +247,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs4-util need
-  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
