@@ -1,7 +1,7 @@
 
 pkgname=perl
-pkgver=5.26.1
-pkgrel=3
+pkgver=5.26.2
+pkgrel=1
 pkgdesc="A highly capable, feature-rich programming language"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
@@ -72,7 +72,7 @@ provides=('perl-archive-tar=2.24'
           'perl-math-complex=1.5901'
           'perl-memoize=1.03_01'
           'perl-mime-base64=3.15'
-          'perl-module-corelist=5.20170922_26'
+          'perl-module-corelist=5.20180414_26'
           'perl-module-load-conditional=0.68'
           'perl-module-load=0.32'
           'perl-module-loaded=0.08'
@@ -101,7 +101,7 @@ provides=('perl-archive-tar=2.24'
           'perl-term-ansicolor=4.06'
           'perl-term-cap=1.17'
           'perl-term-complete=1.403'
-          'perl-term-readline=1.16'
+          'perl-term-readline=1.17'
           'perl-test-harness=3.38'
           'perl-test-simple=1.302073'
           'perl-test=1.30'
@@ -126,7 +126,7 @@ source=("http://www.cpan.org/src/5.0/perl-${pkgver}.tar.xz"
         'perlbin.sh'
         'perlbin.csh')
 options=('makeflags' '!purge' 'emptydirs')
-sha256sums=('fe8208133e73e47afc3251c08d2c21c5a60160165a8ab8b669c43a420e4ec680'
+sha256sums=('0f8c0fb1b0db4681adb75c3ba0dd77a0472b1b359b9e80efd79fc27b4352132c'
             '6681639f18f3a6f3f3d7f978b8d72ad088b27899a6fcc386b86ac104199d857b'
             '69c03f11e98c5c4af3cfd4900840189d19b74fe4fd4534523781312d0a1be810')
 
