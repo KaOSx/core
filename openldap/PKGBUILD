@@ -1,20 +1,14 @@
 
-pkgname=openldap
+pkgbase=openldap
+pkgname=('libldap' 'openldap')
 pkgver=2.4.46
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://www.openldap.org/"
-pkgdesc="Lightweight Directory Access Protocol (LDAP) client libraries"
 license=('custom')
-depends=('libsasl' 'e2fsprogs' 'libtool' 'util-linux')
-makedepends=('util-linux' 'groff')
-backup=('etc/openldap/ldap.conf' 'etc/openldap/slapd.conf' 'etc/conf.d/slapd')
-options=('!makeflags' '!libtool' 'emptydirs')
-install=openldap.install
-conflicts=('libldap')
-provides=('libldap')
-replaces=('libldap')
-source=("https://www.openldap.org/software/download/OpenLDAP/openldap-release/${pkgname}-${pkgver}.tgz"
+makedepends=('libtool' 'libsasl' 'e2fsprogs' 'util-linux' 'groff')
+options=('!makeflags')
+source=("https://www.openldap.org/software/download/OpenLDAP/openldap-release/${pkgbase}-${pkgver}.tgz"
         'slapd.service'
         'slapd.tmpfiles')
 sha1sums=('a9ae2273eb9bdd70090dafe0d018a3132606bef6'
@@ -53,34 +47,60 @@ build() {
 }
 
 check() {
-  cd ${pkgname}-${pkgver}
-  
+  cd ${pkgbase}-${pkgver}
+  # test022-ppolicy for bdb  fails
   make test
 }
 
-package() {
-  cd ${pkgname}-${pkgver}
-  make DESTDIR=${pkgdir} install
-    
-  #install -Dm644 doc/man/man5/ldap.conf.5.tmp ${pkgdir}/usr/share/man/man5/ldap.conf.5
+package_libldap() {
+  pkgdesc="Lightweight Directory Access Protocol (LDAP) client libraries"
+  depends=('libsasl' 'e2fsprogs')
+  backup=('etc/openldap/ldap.conf')
+  options=('!libtool')
+
+  cd ${pkgbase}-${pkgver}
+  for dir in include libraries doc/man/man3 ; do
+    pushd ${dir}
+    make DESTDIR=${pkgdir} install
+    popd
+  done
+  install -Dm644 doc/man/man5/ldap.conf.5.tmp ${pkgdir}/usr/share/man/man5/ldap.conf.5
   
   rm ${pkgdir}/etc/openldap/*.default
 
   ln -sf liblber.so ${pkgdir}/usr/lib/liblber.so.2
   ln -sf libldap.so ${pkgdir}/usr/lib/libldap.so.2
-  
+
+  install -Dm644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+}
+
+package_openldap() {
+  pkgdesc="Lightweight Directory Access Protocol (LDAP) client and server"
+  depends=("libldap>=${pkgver}" 'libtool' 'util-linux')
+  backup=('etc/openldap/slapd.conf' 'etc/conf.d/slapd')
+  options=('!libtool' 'emptydirs')
+  install=openldap.install
+
+  cd ${pkgbase}-${pkgver}
+  for dir in clients servers doc/man/man{1,5,8} ; do
+    pushd ${dir}
+    make DESTDIR=${pkgdir} install
+    popd
+  done
+  rm ${pkgdir}/usr/share/man/man5/ldap.conf.5
+  rm -r ${pkgdir}/run
+
+  rm ${pkgdir}/etc/openldap/*.default
+
   ln -s ../lib/slapd ${pkgdir}/usr/sbin/slapd
 
   chown root:439 ${pkgdir}/etc/openldap/{slapd.conf,DB_CONFIG.example}
   chmod 640 ${pkgdir}/etc/openldap/{slapd.conf,DB_CONFIG.example}
-  
-  rm -r ${pkgdir}/run
-  
+
   install -dm700 -o 439 -g 439 ${pkgdir}/var/lib/openldap
   install -dm700 -o 439 -g 439 ${pkgdir}/etc/openldap/slapd.d
   install -Dm644 ${srcdir}/slapd.service ${pkgdir}/usr/lib/systemd/system/slapd.service
   install -Dm644 ${srcdir}/slapd.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/slapd.conf
-
   install -Dm644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }
 
