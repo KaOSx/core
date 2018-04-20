@@ -2,7 +2,7 @@
 pkgname=util-linux
 pkgver=2.32
 _pkgver=2.32
-pkgrel=2
+pkgrel=3
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -45,7 +45,7 @@ build() {
 
   ./configure --prefix=/usr \
               --libdir=/usr/lib \
-              --localstatedir=/var \
+              --localstatedir=/run \
               --enable-fs-paths-extra=/usr/bin:/usr/sbin \
               --enable-write \
               --enable-raw \
