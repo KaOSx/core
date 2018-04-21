@@ -1,7 +1,7 @@
 
 pkgname=pacman
 pkgver=5.0.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -15,13 +15,16 @@ options=('!libtool')
 #install=pacman.install
 source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
         'pacman.conf'
-        'makepkg.conf')
+        'makepkg.conf'
+        'file5.33.patch')
 md5sums=('f36f5e7e95a89436febe1bcca874fc33'
          '5600ceea45ce0de5262a0c37f42ea28b'
-         '6e3061b47b39ba529fee7f0848e26d3e')
+         '6e3061b47b39ba529fee7f0848e26d3e'
+         '9eb04bd318524d87f22c8ce7fa47693f')
 
 build() {
   cd ${pkgname}-${pkgver}
+  patch -p1 -i ${srcdir}/file5.33.patch
   
   ./configure --prefix=/usr --sysconfdir=/etc \
     --localstatedir=/var --enable-doc \
