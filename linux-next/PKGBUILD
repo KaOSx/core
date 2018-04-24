@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.16
 _srcname=linux-4.16
-pkgver=4.16.3
+pkgver=4.16.4
 _pkgver=4.13.13.a
 pkgrel=1
 arch=('x86_64')
@@ -30,12 +30,11 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'vfs-ino.patch'
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
-        '99-linux-next.hook'
-        'amd_drm.patch')
+        '99-linux-next.hook')
 md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
-         'c52a532ca7b18a3058ac85c98d67f1e4'
+         '4bfb537d5b4f17c5b546c2d8090b3153'
          '296b576fd21565f4fbd262036549d996'
-         'cce77df1c730c49989e14c16f44eda6a'
+         '902087dd031ae46116bf8d207a8e029a'
          'f9290cc7a8e343ca1887e1629bd17183'
          'e568374aaf87825d336c6b06874e7b54'
          'ef79697db7344ab871e8c43e7983bd01'
@@ -46,8 +45,7 @@ md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
          '98498454e588a5013bb200e93566aab4'
          'd1cb06b14f94ec74c39a3efc81adf5cc'
          'e19be83ca72175a29b36d8ab08105050'
-         'ae97691ba50d387f3ab98585514e3b22'
-         '33271f6d3f250fdbf288b1b67bb8cf04')
+         'ae97691ba50d387f3ab98585514e3b22')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -71,9 +69,6 @@ build() {
   patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
-  
-  # flickering on amdgpu
-  patch -p1 -i "${srcdir}/amd_drm.patch"
   
   cat "${srcdir}/config" > ./.config
 
