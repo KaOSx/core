@@ -2,16 +2,16 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.15
-pkgver=4.15.7
+_basekernel=4.16
+pkgver=4.16.5
 _pkgver=4.13.12.a
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode' 'elfutils')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.15.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.16.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         #"https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
@@ -29,18 +29,18 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.15.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '99-linux.hook')
-md5sums=('0d701ac1e2a67d47ce7127432df2c32b'
-         'be343335405432d9cd83bf98b281436d'
-         'c51911c408dbd96239500afce3f91333'
-         '84ec58470cbfdb0cccb9ca7e415d6716'
-         '5d3ddcdfdb07ab35396951121e32b65b'
-         'd617e967ff4f0f1382328aef87e36d66'
-         '7a72ece33b198bd64a4392eac2b3e849'
-         '5fad201b29d79a683c1453549e88a8fa'
-         '9917765540cab458b1511c3e8c4df5f7'
+md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
+         '61f01b8d8eef2d0a46764c2e6e62ed0c'
+         'e50180d5ab5ab162c6b3449ed88645ec'
+         'f9290cc7a8e343ca1887e1629bd17183'
+         'e568374aaf87825d336c6b06874e7b54'
+         'ef79697db7344ab871e8c43e7983bd01'
+         '71137db4a3d85eaa062d9a6627752f40'
+         '88199957bfb1f6d6564481b6ca343016'
+         '219dcf5ceddad84866c7affb5bd78548'
          '58077c1703977e6b5fafdda552f542d5'
-         'ad98d31956601cd4e9493d8fbc357ec5'
-         'b6daa88c9f6e28abf1c1a09ce000003f'
+         '98498454e588a5013bb200e93566aab4'
+         'd1cb06b14f94ec74c39a3efc81adf5cc'
          'eb14dcfd80c00852ef81ded6e826826a'
          '0b73d293ca1ab91748ae2d2c39921532')
 
@@ -227,8 +227,8 @@ package_linux-headers() {
   cp net/mac80211/*.h "${pkgdir}/usr/src/linux-${_kernver}/net/mac80211/"
 
   # add dvb headers for external modules
-  mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb-core"
-  cp drivers/media/dvb-core/*.h "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb-core/"
+  #mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb-core"
+  #cp drivers/media/dvb-core/*.h "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb-core/"
   # and...
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/"
   cp include/config/dvb/*.h "${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/"
@@ -274,6 +274,9 @@ package_linux-headers() {
         /usr/bin/strip ${STRIP_BINARIES} "${binary}";;
     esac
   done
+  
+  # add objtool, nvidia needed
+  install -Dt "${pkgdir}/usr/src/linux-${_kernver}/tools/objtool" tools/objtool/objtool
 
   # remove unneeded architectures
   rm -rf "${pkgdir}"/usr/src/linux-${_kernver}/arch/{alpha,arm,arm26,arm64,avr32,blackfin,c6x,cris,frv,h8300,hexagon,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,openrisc,parisc,powerpc,ppc,s390,score,sh,sh64,sparc,sparc64,tile,unicore32,um,v850,xtensa}
