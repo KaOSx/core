@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=4.16
-pkgver=4.16.5
+pkgver=4.16.8
 _pkgver=4.13.12.a
 pkgrel=1
 arch=('x86_64')
@@ -30,8 +30,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.16.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
-         '61f01b8d8eef2d0a46764c2e6e62ed0c'
-         'e50180d5ab5ab162c6b3449ed88645ec'
+         'd9fa8a5d6450d6c2700f31243928dd93'
+         '76cc23087a91d931a5823ac8502a5e39'
          'f9290cc7a8e343ca1887e1629bd17183'
          'e568374aaf87825d336c6b06874e7b54'
          'ef79697db7344ab871e8c43e7983bd01'
