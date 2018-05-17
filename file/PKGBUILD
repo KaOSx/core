@@ -1,7 +1,7 @@
 
 pkgname=file
 pkgver=5.33
-pkgrel=1
+pkgrel=2
 pkgdesc="File type identification utility"
 arch=('x86_64')
 license=('custom')
@@ -15,7 +15,9 @@ md5sums=('bbe6db96e3a9ca9554dce647390540ef')
 build() {
   cd ${pkgname}-${pkgver}
 
-  ./configure --prefix=/usr --datadir=/usr/share/file
+  ./configure --prefix=/usr \
+    --datadir=/usr/share/file \
+    --disable-libseccomp
   make 
 }
 
