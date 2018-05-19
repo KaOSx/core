@@ -1,6 +1,6 @@
 
 pkgname=linux-firmware
-pkgver=20180507
+pkgver=20180518
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
@@ -40,12 +40,10 @@ replaces=('ar9170-fw'
 options=(!strip emptydirs)
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git#branch=master"
         "http://mirror2.openwrt.org/sources/broadcom-wl-${_b43}.tar.bz2"
-        "http://downloads.openwrt.org/sources/wl_apsta-${_legacy}.o"
-        "microcode_amd_fam17h.bin")
+        "http://downloads.openwrt.org/sources/wl_apsta-${_legacy}.o")
 md5sums=('SKIP'
          'f4e357b09eaf5d8b1f1920cf3493a555'
-         'e08665c5c5b66beb9c3b2dd54aa80cb3'
-         '4610fdded46938a4b094c5897e5c92b2')
+         'e08665c5c5b66beb9c3b2dd54aa80cb3')
 
 package() {
   cd ${pkgname}
@@ -66,8 +64,4 @@ package() {
 
   # install b43-legacy-firmware
   b43-fwcutter -w ${pkgdir}/lib/firmware/ ${srcdir}/wl_apsta-${_legacy}.o
-  
-  # temporary manually add latest amd firmware
-  cd ..
-  install -Dm644 microcode_amd_fam17h.bin ${pkgdir}/lib/firmware/amd-ucode/
 }
