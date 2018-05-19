@@ -1,13 +1,13 @@
 
 pkgname=iputils
 pkgver=20161105
-pkgrel=1
+pkgrel=2
 pkgdesc="IP Configuration Utilities (and Ping)."
 arch=('x86_64')
 license=('GPL')
 url="http://www.linuxfoundation.org/en/Net:Iputils"
 groups=('base')
-depends=('glibc' 'openssl' 'sysfsutils' 'libcap')
+depends=('glibc' 'openssl' 'sysfsutils' 'libcap' 'libidn')
 makedepends=('libxslt' 'opensp')
 backup=(etc/xinetd.d/tftp)
 install=${pkgname}.install
