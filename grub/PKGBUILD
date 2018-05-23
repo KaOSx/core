@@ -6,7 +6,7 @@
 pkgname=grub
 pkgdesc="GNU GRand Unified Bootloader"
 pkgver=2.02
-pkgrel=2
+pkgrel=3
 _commit=f826330683675f0deb55b58fd229afd7d65fb053
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
@@ -32,12 +32,14 @@ source=("https://git.savannah.nongnu.org/cgit/grub.git/snapshot/grub-${_commit}.
         "grub-extras::git+git://git.sv.gnu.org/grub-extras.git#branch=master"
         'grub-10_linux-detect-initramfs.patch'
         'grub.default'
-        'grub.cfg')
+        'grub.cfg'
+        'sparse-inodes.patch')
 md5sums=('7af5792d4684d0c104763bed8b6f83c8'
          'SKIP'
          '945527e0de8d384166a4cf23439ae9ee'
          '2f372ff858b5ad59b8b7d34dee56cd67'
-         '1c03f9a8196beee4321e89d87862c69b')
+         '1c03f9a8196beee4321e89d87862c69b'
+         'b1583f07348e009e2d76956b8aca1121')
 
 prepare() {
 	
@@ -60,6 +62,9 @@ prepare() {
 	
 	## Remove not working langs which need LC_ALL=C.UTF-8
 	sed -e 's#en@cyrillic en@greek##g' -i "${srcdir}/grub-${_commit}/po/LINGUAS"
+	
+	## Make grub accept XFS filesystem with sparse inodes
+	patch -p1 -i "${srcdir}/sparse-inodes.patch"
 }
 
 _build_grub-common_and_bios() {

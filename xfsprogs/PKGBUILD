@@ -2,7 +2,7 @@
 pkgname=xfsprogs
 pkgver=4.16.1
 _pkgver=4.16.1
-pkgrel=2
+pkgrel=3
 pkgdesc="XFS filesystem utilities"
 arch=('x86_64')
 license=('LGPL')
@@ -17,7 +17,7 @@ sha256sums=('3d5c2da46112b86cbd967fee43cea731d38a1b2aaf601b57674ed34e808652df'
 
 build() {
   cd ${pkgname}-${_pkgver}
-  patch -R -p1 -i ${srcdir}/sparse_inode.patch
+  #patch -R -p1 -i ${srcdir}/sparse_inode.patch
   
   export OPTIMIZER="-march=${CARCH/_/-} -O1"
   export DEBUG=-DNDEBUG
