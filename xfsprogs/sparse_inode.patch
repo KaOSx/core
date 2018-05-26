@@ -1,0 +1,39 @@
+From 9cf846b514ff335470f130d635eff525386bab21 Mon Sep 17 00:00:00 2001
+From: "Darrick J. Wong" <darrick.wong@oracle.com>
+Date: Mon, 26 Mar 2018 21:27:31 -0500
+Subject: mkfs: enable sparse inodes by default
+
+Enable the sparse inode feature by default.
+
+Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+Reviewed-by: Eric Sandeen <sandeen@redhat.com>
+Signed-off-by: Eric Sandeen <sandeen@sandeen.net>
+---
+ mkfs/xfs_mkfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/mkfs/xfs_mkfs.c b/mkfs/xfs_mkfs.c
+index 1ca6a2d..78d0ce5 100644
+--- a/mkfs/xfs_mkfs.c
++++ b/mkfs/xfs_mkfs.c
+@@ -1996,7 +1996,7 @@ _("finobt not supported without CRC support\n"));
+ 		}
+ 		cli->sb_feat.finobt = false;
+ 
+-		if (cli->sb_feat.spinodes) {
++		if (cli->sb_feat.spinodes && cli_opt_set(&iopts, I_SPINODES)) {
+ 			fprintf(stderr,
+ _("sparse inodes not supported without CRC support\n"));
+ 			usage();
+@@ -3811,7 +3811,7 @@ main(
+ 			.crcs_enabled = true,
+ 			.dirftype = true,
+ 			.finobt = true,
+-			.spinodes = false,
++			.spinodes = true,
+ 			.rmapbt = false,
+ 			.reflink = false,
+ 			.parent_pointers = false,
+-- 
+cgit v1.1
+
