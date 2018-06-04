@@ -2,10 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.16
-_srcname=linux-4.16
-pkgver=4.16.13
-_pkgver=4.13.13.a
+_basekernel=4.17
+_srcname=linux-4.17
+pkgver=4.17.0
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -14,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfuti
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-4.16-rc7.tar.gz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -30,8 +29,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         '99-linux-next.hook')
-md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
-         'ace51349b2f09e3731709b95b8053289'
+md5sums=('5bb13a03274b66b56c85b26682e407d7'
          'd31ea77a9fd469c1a6588d88551ed917'
          'f9290cc7a8e343ca1887e1629bd17183'
          'e568374aaf87825d336c6b06874e7b54'
@@ -49,26 +47,26 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs4.patch"
-  patch -p1 -i "${srcdir}/aufs4-base.patch"
-  patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs4-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs4-mmap.patch"
-  patch -p1 -i "${srcdir}/aufs4-standalone.patch"
-  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  patch -p1 -i "${srcdir}/vfs-ino.patch"
+  #patch -p1 -i "${srcdir}/aufs4.patch"
+  #patch -p1 -i "${srcdir}/aufs4-base.patch"
+  #patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
+  #patch -p1 -i "${srcdir}/aufs4-loopback.patch"
+  #patch -p1 -i "${srcdir}/aufs4-mmap.patch"
+  #patch -p1 -i "${srcdir}/aufs4-standalone.patch"
+  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  #patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
   cat "${srcdir}/config" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -243,7 +241,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs4-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
