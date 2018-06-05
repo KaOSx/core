@@ -1,13 +1,13 @@
 
 pkgname=bash
 _basever=4.4
-_patchlevel=019
+_patchlevel=023
 pkgver=${_basever}.${_patchlevel}
 pkgrel=1
 pkgdesc="The GNU Bourne Again shell"
 arch=('x86_64')
 license=('GPL')
-url="http://www.gnu.org/software/bash/bash.html"
+url="https://www.gnu.org/software/bash/bash.html"
 groups=('base')
 backup=(etc/bash.bash{rc,_logout} etc/skel/.bash{rc,_profile,_logout})
 depends=('readline>=7.0' 'glibc')
@@ -20,7 +20,7 @@ source=("https://ftp.gnu.org/gnu/bash/bash-${_basever}.tar.gz"
         'system.bash_logout')
 if [ ${_patchlevel} -gt 000 ]; then
     for (( p=1; p<=$((10#${_patchlevel})); p++ )); do
-        source=(${source[@]} http://ftp.gnu.org/gnu/bash/bash-${_basever}-patches/bash${_basever//./}-$(printf "%03d" $p))
+        source=(${source[@]} https://ftp.gnu.org/gnu/bash/bash-${_basever}-patches/bash${_basever//./}-$(printf "%03d" $p))
     done
 fi
 md5sums=('148888a7c95ac23705559b6f477dfe25'
@@ -47,7 +47,11 @@ md5sums=('148888a7c95ac23705559b6f477dfe25'
          '4b31183db086daf8be8943d7f7ea7526'
          'c15c8844f1eb87bdbcde71417c9bd342'
          'b25e3373fc8de00523116dfe151ac4e0'
-         '8f43e1d277b02f3319a34c1cd4a4ff3e')
+         '8f43e1d277b02f3319a34c1cd4a4ff3e'
+         '5217ff08c444446ec306dce60437c288'
+         '282c7d9b38da8005d25b4f816328a2f4'
+         '0b709c9d7f8e6cf267a8b863efb899f7'
+         'fe2e0ca4cf9409ff0e9428e1236f983e')
 
 build() {
   cd ${pkgname}-${_basever}
