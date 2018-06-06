@@ -1,0 +1,35 @@
+
+pkgname=pacman-contrib
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Contributed scripts and tools for pacman systems, including paccache and rank-mirrors"
+arch=('x86_64')
+url="https://git.archlinux.org/pacman-contrib.git/about/"
+license=('GPL')
+depends=('pacman' 'mlocate')
+makedepends=('asciidoc')
+source=("https://sources.archlinux.org/other/community/pacman-contrib/${pkgname}-${pkgver}.tar.gz")
+md5sums=('7025470b7389a448cc1f803487a32488')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  
+  #./autogen.sh
+  ./configure --prefix=/usr \
+    --sysconfdir=/etc 
+  make 
+}
+
+check() {
+  make -C ${pkgname}-${pkgver} check
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  
+  make DESTDIR=${pkgdir} install
+  
+  # stop rankmirrors fail
+  sed -e 's|/core}"|/core}" echo|' -i ${pkgdir}/usr/bin/rankmirrors
+}
+
