@@ -28,7 +28,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'vfs-ino.patch'
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
-        '99-linux-next.hook')
+        '99-linux-next.hook'
+        "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('5bb13a03274b66b56c85b26682e407d7'
          '8f430fc5bf2fd5a6ec5da8b4a08473d8'
          '91a08288b9edf8f4d970faf01f51287e'
@@ -64,6 +65,9 @@ build() {
   patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
+  
+  # again revert an amdgpu commit that causes severe flickering
+  patch -p1 -i "${srcdir}/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
   
   cat "${srcdir}/config" > ./.config
 
