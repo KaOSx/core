@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.17
 _srcname=linux-4.17
-pkgver=4.17.1
+pkgver=4.17.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -31,7 +31,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('5bb13a03274b66b56c85b26682e407d7'
-         '8f430fc5bf2fd5a6ec5da8b4a08473d8'
+         'dfd97ddacecaaec8ca7b697428274b2a'
          '91a08288b9edf8f4d970faf01f51287e'
          '650d61e79c47baf62c738092d5495969'
          '041cad95654fd8f920104685d970d35f'
@@ -43,7 +43,8 @@ md5sums=('5bb13a03274b66b56c85b26682e407d7'
          '48f3ef095b2ae24d147022d0a0569ccb'
          'e816f7e1764361621edf83a71a05edf8'
          'e19be83ca72175a29b36d8ab08105050'
-         'ae97691ba50d387f3ab98585514e3b22')
+         'ae97691ba50d387f3ab98585514e3b22'
+         'a71035252857af0cf5d84c591b919996')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
