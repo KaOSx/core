@@ -1,10 +1,10 @@
 
 pkgname=subversion
 pkgver=1.10.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
-url="http://subversion.apache.org/"
+url="https://subversion.apache.org/"
 license=('APACHE')
 depends=('db' 'serf' 'apr-util' 'sqlite3' 'file' 'systemd')
 makedepends=('krb5' 'apache' 'python2' 'perl' 'swig' 'ruby' 'java-runtime' 
