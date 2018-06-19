@@ -1,35 +1,31 @@
 
 pkgname=attr
-pkgver=2.4.47
-pkgrel=4
+pkgver=2.4.48
+pkgrel=1
 pkgdesc="Extended attribute support library for ACL support"
 arch=('x86_64')
-url="http://oss.sgi.com/projects/xfs/"
+url="https://savannah.nongnu.org/projects/attr"
 license=('LGPL')
 groups=('base')
 depends=('glibc') 
 makedepends=('gettext')
 options=('!libtool')
-source=("http://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.src.tar.gz")
-md5sums=('84f58dec00b60f2dc8fd1c9709291cc7')
+source=("https://download.savannah.gnu.org/releases/attr/${pkgname}-${pkgver}.tar.gz")
+md5sums=('bc1e5cb5c96d99b24886f1f527d3bb3d')
 
 build() {
-  cd "${srcdir}"/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   
-  export INSTALL_USER=root INSTALL_GROUP=root
-  ./configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib
+  ./configure --prefix=/usr \
+    --libdir=/usr/lib \
+    --libexecdir=/usr/lib
   make
 }
 
 package() {
-  cd "${srcdir}"/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
 
-  make DIST_ROOT="${pkgdir}" install install-lib install-dev
-
-  # tidy up
-  rm -f "${pkgdir}"/usr/lib/libattr.a
-  chmod 0755 "${pkgdir}"/usr/lib/libattr.so.*.*.*
-  # remove conflicting manpages
-  rm -rf "${pkgdir}"/usr/share/man/man2
-  rm -rf "${pkgdir}"/usr/share/man/man5
+  make DESTDIR=${pkgdir} install
+  
+  rm -f ${pkgdir}/usr/lib/libattr.a
 }
