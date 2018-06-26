@@ -67,7 +67,6 @@ package_lvm2() {
   conflicts=('lvm' 'mkinitcpio<0.7')
   backup=('etc/lvm/lvm.conf')
   options=('!makeflags')
-  install=lvm2.install
 
   cd LVM2.${pkgver}
   make DESTDIR=${pkgdir} install_lvm2
