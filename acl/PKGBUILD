@@ -1,26 +1,27 @@
 
 pkgname=acl
-pkgver=2.2.52
-pkgrel=4
+pkgver=2.2.53
+pkgrel=1
 pkgdesc="Library for filesystem ACL support"
 arch=('x86_64')
-url="http://savannah.nongnu.org/projects/acl"
+url="https://savannah.nongnu.org/projects/acl"
 license=('LGPL')
 depends=('attr')
 options=('!libtool')
-source=("http://download.savannah.gnu.org/releases/acl/${pkgname}-${pkgver}.src.tar.gz")
-md5sums=('a61415312426e9c2212bd7dc7929abda')
+source=("https://download.savannah.gnu.org/releases/acl/${pkgname}-${pkgver}.tar.gz")
+md5sums=('007aabf1dbb550bcddde52a244cd1070')
 
 build() {
   cd ${pkgname}-${pkgver}
 
-  export INSTALL_USER=root INSTALL_GROUP=root 
-  ./configure --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib
+  ./configure --prefix=/usr \
+    --libdir=/usr/lib \
+    --libexecdir=/usr/lib
   make 
 }
 
 package() {
   cd ${pkgname}-${pkgver}
 
-  make DIST_ROOT=${pkgdir} install install-lib install-dev
+  make DESTDIR=${pkgdir} install
 }

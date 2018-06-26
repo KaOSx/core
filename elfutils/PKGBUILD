@@ -1,6 +1,6 @@
 
 pkgname=elfutils
-pkgver=0.170
+pkgver=0.171
 pkgrel=1
 pkgdesc="Collection of libraries and utilities for working with ELF object files and DWARF debugging information."
 arch=('x86_64')
@@ -8,7 +8,7 @@ url="https://sourceware.org/elfutils/"
 license=('LGPL3' 'GPL' 'GPL3')
 depends=('gcc-libs' 'zlib' 'bzip2' 'xz')
 source=("https://sourceware.org/elfutils/ftp/${pkgver}/elfutils-${pkgver}.tar.bz2")
-sha512sums=('aca0b5e271138eaf86e36505ffb101181207b151e833e6cd7c18986ac50678542a5ecd2250f8dd6923ca497142f197c8b08fd225e4130b16b6203c24013d6d28')
+sha512sums=('777be2d63ca9b11440bf358a33428d9ca974e2612a880934156c9f7194af596ed627c1ed2d48dbd47a3761c94913b8f39565f9dcb6b62c92bf229f04c96d5ee3')
 
 build() {
   cd ${pkgname}-${pkgver}

@@ -1,33 +1,33 @@
 
 pkgname=xinetd
-pkgver=2.3.15
-pkgrel=7
+pkgver=2.3.15.3
+pkgrel=1
 pkgdesc="xinetd is a secure replacement for inetd"
 arch=('x86_64')
-url="http://www.xinetd.org/"
+url="https://github.com/openSUSE/xinetd"
 license=('custom')
 optdepends=('perl: for xconv.pl script')
 backup=('etc/xinetd.conf' 'etc/xinetd.d/servers' 'etc/xinetd.d/services')
-source=("ftp://anduin.linuxfromscratch.org/BLFS/xinetd/xinetd-${pkgver}.tar.gz"
+source=("https://github.com/openSUSE/xinetd/releases/download/${pkgver}/xinetd-${pkgver}.tar.xz"
         'xinetd.conf'
         'servers'
         'services'
-        'xinetd.service'
-        'CVE-2013-4342.patch')
-md5sums=('77358478fd58efa6366accae99b8b04c'
+        'xinetd.service')
+md5sums=('775103d079c0d72255fe5ae325d5e7dd'
          'f109f699a07bc8cfb5791060f5e87f9e'
          '21f47b4aa20921cfaddddd9f9a407f81'
          '9fa2061dc7dd738c8424251deb86f81e'
-         '08466ed714ea8ba42ad81f6fb3aa62e7'
-         'b14615c73753ceffbcc96d5e08f3c18d')
+         '08466ed714ea8ba42ad81f6fb3aa62e7')
 
 build() {
   cd ${pkgname}-${pkgver}
-  sed -i "s|${prefix}/man|${prefix}/share/man|" configure
+  #sed -i "s|${prefix}/man|${prefix}/share/man|" configure
   # https://bugzilla.redhat.com/show_bug.cgi?id=1006100#c
-  patch -p1 -i ${srcdir}/CVE-2013-4342.patch
+  #patch -p1 -i ${srcdir}/CVE-2013-4342.patch
   
-  ./configure --prefix=/usr --without-libwrap
+  ./configure --prefix=/usr \
+    --without-libwrap \
+    --without-labeled-networking
   make
 }
 

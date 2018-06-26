@@ -1,8 +1,7 @@
 
 pkgname=pacman
 pkgver=5.1.0
-_pkgver=contrib-1.0.0-rc1
-pkgrel=1
+pkgrel=2
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -15,12 +14,10 @@ backup=(etc/pacman.conf etc/makepkg.conf)
 options=('!libtool')
 #install=pacman.install
 source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
-        "https://git.archlinux.org/pacman-contrib.git/snapshot/${pkgname}-${_pkgver}.tar.xz"
         'pacman.conf'
         'makepkg.conf'
         'file5.33.patch')
 md5sums=('7b0460d449323eb3097ab39913d2668b'
-         '555347fbf7e7efdb5a9d40b3cc158535'
          '5600ceea45ce0de5262a0c37f42ea28b'
          'cf7f1e8b63baeab69a20264820bed9cc'
          '9eb04bd318524d87f22c8ce7fa47693f')
@@ -36,13 +33,6 @@ build() {
     --with-scriptlet-shell=/bin/bash \
     --with-ldconfig=/bin/ldconfig
   make V=1
-  
-  cd ../${pkgname}-${_pkgver}
-  
-  ./autogen.sh
-  ./configure --prefix=/usr \
-    --sysconfdir=/etc 
-  make 
 }
 
 check() {
@@ -64,11 +54,5 @@ package() {
   for f in makepkg pacman-key; do
     ln -s pacman "${pkgdir}/usr/share/bash-completion/completions/$f"
   done
-  
-  cd ../${pkgname}-${_pkgver}
-  make DESTDIR=${pkgdir} install
-  
-  # stop rankmirrors fail
-  sed -e 's|/core}"|/core}" echo|' -i ${pkgdir}/usr/bin/rankmirrors
 }
 

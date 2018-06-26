@@ -3,8 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=4.16
-pkgver=4.16.9
-_pkgver=4.13.12.a
+pkgver=4.16.14
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +12,6 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode' 'elfut
 options=('!strip')
 source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.16.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
-        #"https://github.com/copperhead/linux-hardened/releases/download/${_pkgver}/linux-hardened-${_pkgver}.patch"
         # the main kernel config files
         'config'
         #aufs patches
@@ -30,7 +28,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.16.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
-         'd9fa8a5d6450d6c2700f31243928dd93'
+         'dfb39ec93177852e09bb76438e2812dc'
          '76cc23087a91d931a5823ac8502a5e39'
          'f9290cc7a8e343ca1887e1629bd17183'
          'e568374aaf87825d336c6b06874e7b54'
@@ -49,8 +47,6 @@ prepare() {
 
   # add upstream patch
   patch -p1 -i "${srcdir}/patch-${pkgver}"
-  # linux-hardened patch
-  #patch -p1 -i "${srcdir}/linux-hardened-${_pkgver}.patch"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -108,14 +104,12 @@ package_linux() {
 
   cd "${srcdir}/linux-${_basekernel}"
 
-  KARCH=x86
-
   # get kernel version
   _kernver="$(make kernelrelease)"
 
   mkdir -p "${pkgdir}"/{lib/modules,lib/firmware,boot}
   make INSTALL_MOD_PATH="${pkgdir}" modules_install
-  cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgname}"
+  cp arch/x86/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgname}"
 
   # add vmlinux
   install -D -m644 vmlinux "${pkgdir}/usr/src/linux-${_kernver}/vmlinux"
@@ -185,11 +179,11 @@ package_linux-headers() {
   chmod og-w -R "${pkgdir}/usr/src/linux-${_kernver}/scripts"
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/.tmp_versions"
 
-  mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/arch/${KARCH}/kernel"
+  mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/arch/x86/kernel"
 
-  cp arch/${KARCH}/Makefile "${pkgdir}/usr/src/linux-${_kernver}/arch/${KARCH}/"
+  cp arch/x86/Makefile "${pkgdir}/usr/src/linux-${_kernver}/arch/x86/"
 
-  cp arch/${KARCH}/kernel/asm-offsets.s "${pkgdir}/usr/src/linux-${_kernver}/arch/${KARCH}/kernel/"
+  cp arch/x86/kernel/asm-offsets.s "${pkgdir}/usr/src/linux-${_kernver}/arch/x86/kernel/"
 
   # add headers for lirc package
   # pci

@@ -2,10 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.16
-_srcname=linux-4.16
-pkgver=4.16.12
-_pkgver=4.13.13.a
+_basekernel=4.17
+_srcname=linux-4.17
+pkgver=4.17.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -29,21 +28,23 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'vfs-ino.patch'
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
-        '99-linux-next.hook')
-md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
-         'aa9f7b463846578e0509644e187eca33'
-         'd31ea77a9fd469c1a6588d88551ed917'
-         'f9290cc7a8e343ca1887e1629bd17183'
-         'e568374aaf87825d336c6b06874e7b54'
-         'ef79697db7344ab871e8c43e7983bd01'
-         '71137db4a3d85eaa062d9a6627752f40'
-         '88199957bfb1f6d6564481b6ca343016'
-         '219dcf5ceddad84866c7affb5bd78548'
+        '99-linux-next.hook'
+        "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
+md5sums=('5bb13a03274b66b56c85b26682e407d7'
+         'dfd97ddacecaaec8ca7b697428274b2a'
+         '91a08288b9edf8f4d970faf01f51287e'
+         '650d61e79c47baf62c738092d5495969'
+         '041cad95654fd8f920104685d970d35f'
+         'e9b4d267f75e3892366c95b178cd3170'
+         'd1763288b589b056b6fcafc6580d4ca7'
+         'a5854941d22d5cc12f92f5c9fc289be3'
+         'b6c167f9cae7464e3fcc197116538726'
          '58077c1703977e6b5fafdda552f542d5'
-         '98498454e588a5013bb200e93566aab4'
-         'd1cb06b14f94ec74c39a3efc81adf5cc'
+         '48f3ef095b2ae24d147022d0a0569ccb'
+         'e816f7e1764361621edf83a71a05edf8'
          'e19be83ca72175a29b36d8ab08105050'
-         'ae97691ba50d387f3ab98585514e3b22')
+         'ae97691ba50d387f3ab98585514e3b22'
+         'a71035252857af0cf5d84c591b919996')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -65,6 +66,9 @@ build() {
   patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
+  
+  # again revert an amdgpu commit that causes severe flickering
+  patch -p1 -i "${srcdir}/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
   
   cat "${srcdir}/config" > ./.config
 
