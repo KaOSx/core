@@ -6,6 +6,7 @@
 Server = https://mirror.math.princeton.edu/pub/kaoslinux/$repo
 
 # Germany
+Server = http://mirrors.redcorelinux.org/kaosx/$repo
 Server = http://mirror6.layerjet.com/kaos/$repo
 Server = https://mirror.alpix.eu/kaos/$repo
 Server = https://kaos-frankfurt.tk/repo/$repo
