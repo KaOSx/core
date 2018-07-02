@@ -1,6 +1,6 @@
 
 pkgname=coreutils
-pkgver=8.29
+pkgver=8.30
 pkgrel=1
 pkgdesc="The basic file, shell and text manipulation utilities of the GNU operating system"
 arch=('x86_64')
@@ -9,7 +9,7 @@ url="https://www.gnu.org/software/coreutils"
 groups=('base')
 depends=('glibc' 'pam' 'acl' 'gmp' 'libcap')
 source=("https://ftp.gnu.org/gnu/coreutils/${pkgname}-${pkgver}.tar.xz")
-md5sums=('960cfe75a42c9907c71439f8eb436303')
+md5sums=('ab06d68949758971fe744db66b572816')
 
 build() {
   cd ${pkgname}-${pkgver}
