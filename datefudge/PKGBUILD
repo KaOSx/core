@@ -1,14 +1,14 @@
 
 pkgname=datefudge
-pkgver=1.21
-pkgrel=2
+pkgver=1.22
+pkgrel=1
 pkgdesc="A program (and preload library) to fake system date"
 arch=('x86_64')
-url="http://packages.qa.debian.org/d/datefudge.html"
+url="https://packages.qa.debian.org/d/datefudge.html"
 license=('GPL2')
 depends=('sh')
-source=("http://ftp.de.debian.org/debian/pool/main/d/datefudge/${pkgname}_${pkgver}.tar.xz")
-md5sums=('00198cdf241d629b5293cea4e06a4eaf')
+source=("https://ftp.de.debian.org/debian/pool/main/d/datefudge/${pkgname}_${pkgver}.tar.xz")
+md5sums=('c434f7286bfe30ade3d78db42b7b220b')
 
 build() {
   cd $pkgname-$pkgver
