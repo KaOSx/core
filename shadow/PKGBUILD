@@ -1,6 +1,6 @@
 
 pkgname=shadow
-pkgver=4.5
+pkgver=4.6
 pkgrel=1
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
@@ -29,7 +29,7 @@ source=("https://github.com/shadow-maint/shadow/archive/${pkgver}.tar.gz"
         'useradd.defaults'
         'xstrdup.patch'
         'shadow-strncpy-usage.patch')
-md5sums=('05712082d585048240c4a0251d3a5062'
+md5sums=('5b2f60464fce79a918e4da70b7356261'
          'bdf93c7bc4b751277159c5de8fc34df2'
          '65e9ebce249a5b9ed021e2790452b9e1'
          'f6760e9701d7ed2cd91371d427faed2a'
@@ -58,10 +58,11 @@ build() {
   # supress etc/pam.d/*
   sed -i '/^SUBDIRS/s/pam.d//' etc/Makefile.am
   
-  sed -i 's|--without-libpam|--with-libpam|' autogen.sh
-  sed -i 's|--with-selinux|--without-selinux|' autogen.sh
+  #sed -i 's|--without-libpam|--with-libpam|' autogen.sh
+  #sed -i 's|--with-selinux|--without-selinux|' autogen.sh
 
-  ./autogen.sh
+  #./autogen.sh
+  autoreconf -v -f --install
   ./configure \
     --prefix=/usr \
     --libdir=/lib \
@@ -112,8 +113,9 @@ package() {
   rm \
       ${pkgdir}/usr/bin/{chsh,chfn,sg} \
       ${pkgdir}/bin/{login,su} \
-      ${pkgdir}/usr/sbin/{vipw,vigr} \
-      ${pkgdir}/sbin/nologin
+      ${pkgdir}/usr/sbin/{vipw,vigr}
+  # don't leave empty dir with removing ${pkgdir}/sbin/nologin
+  rm -r ${pkgdir}/sbin
 
   # but we keep newgrp, as sg is really an alias to it
   mv ${pkgdir}/usr/bin/{newgrp,sg}
