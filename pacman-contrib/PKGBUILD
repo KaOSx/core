@@ -1,6 +1,6 @@
 
 pkgname=pacman-contrib
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=1
 pkgdesc="Contributed scripts and tools for pacman systems, including paccache and rank-mirrors"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL')
 depends=('pacman' 'mlocate')
 makedepends=('asciidoc')
 source=("https://sources.archlinux.org/other/community/pacman-contrib/${pkgname}-${pkgver}.tar.gz")
-md5sums=('7025470b7389a448cc1f803487a32488')
+md5sums=('dde4c6c2d30bcb7273b495be1b5df4d0')
 
 build() {
   cd ${pkgname}-${pkgver}
