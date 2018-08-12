@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.16
-pkgver=4.16.14
+_basekernel=4.17
+pkgver=4.17.14
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode' 'elfutils')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.16.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.17.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -27,18 +27,18 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.16.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '99-linux.hook')
-md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
-         'dfb39ec93177852e09bb76438e2812dc'
-         '76cc23087a91d931a5823ac8502a5e39'
-         'f9290cc7a8e343ca1887e1629bd17183'
-         'e568374aaf87825d336c6b06874e7b54'
-         'ef79697db7344ab871e8c43e7983bd01'
-         '71137db4a3d85eaa062d9a6627752f40'
-         '88199957bfb1f6d6564481b6ca343016'
-         '219dcf5ceddad84866c7affb5bd78548'
+md5sums=('5bb13a03274b66b56c85b26682e407d7'
+         'ad9acd78874e9ad9a5a0cd3c28d9d941'
+         'cd4e810a29d2b749a8a116ca36caf8cf'
+         '33e33de6d265e13f001dd18d497ac201'
+         '041cad95654fd8f920104685d970d35f'
+         '3b1344bec5dbb1eefdba9e8681271a80'
+         'd1763288b589b056b6fcafc6580d4ca7'
+         'a5854941d22d5cc12f92f5c9fc289be3'
+         '034055abda5ce572da82ff12ff2ce70b'
          '58077c1703977e6b5fafdda552f542d5'
-         '98498454e588a5013bb200e93566aab4'
-         'd1cb06b14f94ec74c39a3efc81adf5cc'
+         '48f3ef095b2ae24d147022d0a0569ccb'
+         'e816f7e1764361621edf83a71a05edf8'
          'eb14dcfd80c00852ef81ded6e826826a'
          '0b73d293ca1ab91748ae2d2c39921532')
 
