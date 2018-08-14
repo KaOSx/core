@@ -1,8 +1,8 @@
 
 pkgname=openssl
-pkgver=1.0.2.15
-_pkgver=1.0.2o
-pkgrel=2
+pkgver=1.0.2.16
+_pkgver=1.0.2p
+pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
 url='https://www.openssl.org'
@@ -15,14 +15,12 @@ source=("https://www.openssl.org/source/${pkgname}-${_pkgver}.tar.gz"
         'no-rpath.patch'
         'ca-dir.patch'
         'bctest'
-        'pod2mantest'
-        "https://github.com/openssl/openssl/commit/349a41da1ad88ad87825414752a8ff5fdd6a6c3f.patch")
-sha256sums=('ec3f5c9714ba0fd45cb4e087301eb1336c317e0d20b575a125050470e8089e4d'
+        'pod2mantest')
+sha256sums=('50a98e07b1a89eb8f6a99477f262df71c6fa7bef77df4dc83025a2845c827d00'
             '754d6107a306311e15a1db6a1cc031b81691c8b9865e8809ac60ca6f184c957c'
             '9e8126f3a748f4c1d6fe34d4436de72b16a40e97a6d18234d2e88caa179d50c4'
             'fe30a5b9ca799beee04dcded04ba0c7eae32ee51ad9dd07d4cff8b6b0c949381'
-            'cb429606a5b1df33c4133324f329948ccd4565bac497afc03e95fdf62ede1dca'
-            '7c9cde92a3d72dbfdf741cdc0d1b6e0f866fce38357da943c79beee4d33967f7')
+            'cb429606a5b1df33c4133324f329948ccd4565bac497afc03e95fdf62ede1dca')
 
 build() {
 	cd ${pkgname}-${_pkgver}
@@ -36,9 +34,6 @@ build() {
 	patch -p0 -i ${srcdir}/no-rpath.patch
 	# set ca dir to /etc/ssl by default
 	patch -p0 -i ${srcdir}/ca-dir.patch
-	# https://www.openssl.org/news/secadv/20180416.txt, will be included in openssl 1.0.2p
-	patch -p1 -i ${srcdir}/349a41da1ad88ad87825414752a8ff5fdd6a6c3f.patch
-	
 	
 	./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib \
 		shared zlib ${optflags} \
