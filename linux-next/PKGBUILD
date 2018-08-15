@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.18
 _srcname=linux-4.18
-pkgver=4.18.0
+pkgver=4.18.1
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfuti
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-4.16-rc7.tar.gz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -31,7 +31,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('bee5fe53ee1c3142b8f0c12c0d3348f9'
-         '076a3302e18b6f7e94efdadaea41f909'
+         'bc8d68c9508576e62008c186a4c13668'
+         '87d8f1f84bba4516a787ad4aaf30e405'
          '33e33de6d265e13f001dd18d497ac201'
          '041cad95654fd8f920104685d970d35f'
          '3b1344bec5dbb1eefdba9e8681271a80'
@@ -49,7 +50,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
