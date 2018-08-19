@@ -1,6 +1,6 @@
 
 pkgname=e2fsprogs
-pkgver=1.44.3
+pkgver=1.44.4
 pkgrel=1
 pkgdesc="Ext2/3/4 filesystem utilities"
 arch=('x86_64')
@@ -12,7 +12,7 @@ makedepends=('bc')
 source=("https://www.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${pkgver}/${pkgname}-${pkgver}.tar.xz"
         'MIT-LICENSE')
 backup=('etc/mke2fs.conf')
-sha256sums=('5d899f7d30f481cc0c6a049ebe26ebe145f1b524182ea1ecde4086162d4e4bb6'
+sha256sums=('ee03b2f2180614c5ae5f6dd2666f8808de61c3d8b37d22ba86cc6daea25be55a'
             'cc45386c1d71f438ad648fd7971e49e3074ad9dbacf9dd3a5b4cb61fd294ecbb')
 
 build() {
