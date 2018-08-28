@@ -1,7 +1,7 @@
 
 # install polkit in chroot on any update to check for pam issues
 pkgname=libtirpc
-pkgver=1.0.3
+pkgver=1.1.4
 pkgrel=1
 pkgdesc="Transport Independent RPC library (SunRPC replacement)"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('libgssglue')
 backup=('etc/netconfig')
 options=('!libtool')
 source=("https://downloads.sourceforge.net/sourceforge/libtirpc/${pkgname}-${pkgver}.tar.bz2")
-sha1sums=('48adb32dc7c3b73c66f001c239da76b8398abf11')
+sha1sums=('d85717035cb9bd6c45557a1eb1351d3af9a69ff7')
 
 build() {
   cd ${pkgname}-${pkgver}
