@@ -1,6 +1,6 @@
 
 pkgname=p11-kit
-pkgver=0.23.13
+pkgver=0.23.14
 pkgrel=1
 pkgdesc="Library to work with PKCS#11 modules"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('BSD')
 depends=('glibc' 'libtasn1' 'libffi')
 options=('!libtool')
 source=("https://github.com/p11-glue/p11-kit/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('9fb1daab59c6b9d90261f6bddf00d0f1')
+md5sums=('85e1cdb5fce0087711ba2521975f0420')
 
 build() {
   cd ${pkgname}-${pkgver}
