@@ -31,7 +31,6 @@ build() {
   install -d -m 755 "${_stagedir}"/bin
   install tools/build/src/engine/bin.linuxx86_64/b2 "${_stagedir}"/bin/b2
 
-  # Also build with python3 support, leaving 2 as default
    #echo "using python : 3.6 : /usr/bin/python3 : /usr/include/python3.6m : /usr/lib ;" >> project-config.jam
    sed -i "s|using python : 3.6 : /usr ;|using python : 3.6 : /usr/bin/python3 : /usr/include/python3.6m : /usr/lib ;|g" project-config.jam 
    # Support for OpenMPI
@@ -86,6 +85,9 @@ package_boost-libs() {
     cp -a "${_stagedir}"/lib "${pkgdir}"/usr
     # included in boost:
     rm "${pkgdir}"/usr/lib/*.a
+    
+    # issue with finding new python lib versioning, vigra exposed, add link for old scheme
+    ln -s /usr/lib/libboost_python36.so.${pkgver} ${pkgdir}/usr/lib/libboost_python3.so
 
     # license
     install -D -m644 "${srcdir}/${pkgbase}_${_pkgver}/LICENSE_1_0.txt" \
