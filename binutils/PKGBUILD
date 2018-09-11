@@ -1,18 +1,18 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=binutils
-pkgver=2.30
+pkgver=2.31.1
 pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
 url="https://www.gnu.org/software/binutils/"
 license=('GPL')
 groups=('base-devel')
-depends=('glibc>=2.26' 'zlib')
+depends=('glibc>=2.28' 'zlib')
 checkdepends=('dejagnu' 'bc')
 options=('!libtool' '!distcc' '!ccache')
 source=("https://sourceware.org/pub/binutils/releases/binutils-${pkgver}.tar.xz")
-sha512sums=('e747ea20d8d79fcd21b9d9f6695059caa7189d60f19256da398e34b789fea9a133c32b192e9693b5828d27683739b0198431bf8b3e39fb3b04884cf89d9aa839')
+sha512sums=('0fca326feb1d5f5fe505a827b20237fe3ec9c13eaf7ec7e35847fd71184f605ba1cefe1314b1b8f8a29c0aa9d88162849ee1c1a3e70c2f7407d88339b17edb30')
 
 prepare() {
   cd binutils-${pkgver}
@@ -55,6 +55,6 @@ package() {
   cd binutils-build
   make prefix=${pkgdir}/usr tooldir=${pkgdir}/usr install
 
-  rm ${pkgdir}/usr/share/man/man1/{dlltool,nlmconv,windres,windmc}*
+  rm ${pkgdir}/usr/share/man/man1/{dlltool,windres,windmc}*
   rm ${pkgdir}/usr/lib/lib{bfd,opcodes}.so
 }
