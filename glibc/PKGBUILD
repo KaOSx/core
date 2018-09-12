@@ -2,8 +2,8 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.28
-_commit=0b79004569e5ce1669136b8c41564c3809730f15
+pkgver=2.27
+_commit=9533f19aa5cd265db813db6923f8eb2fc9c3bcc3
 pkgrel=1
 pkgdesc="GNU C Library"
 arch=('x86_64')
@@ -11,7 +11,7 @@ url="http://www.gnu.org/software/libc"
 license=('GPL' 'LGPL')
 groups=('base')
 depends=('linux-api-headers>=4.11' 'tzdata')
-makedepends=('gcc>=6.3')
+makedepends=('gcc')
 backup=(etc/gai.conf
         etc/locale.gen
         etc/nscd.conf)
@@ -23,7 +23,7 @@ source=("https://github.com/bminor/glibc/archive/${_commit}.zip"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('47301834c4c623aab3ea3c192cf3bbc8'
+md5sums=('d862982d792a0d7c0c7e387824251e8c'
          #'203fe9133e82f2b59969c116b70fd84e'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
@@ -118,7 +118,7 @@ package() {
 
   #strip $STRIP_STATIC usr/lib/*.a 
 
-  strip $STRIP_SHARED lib/{libanl,libBrokenLocale,libcrypt}-*.so \
+  strip $STRIP_SHARED lib/{libanl,libBrokenLocale,libcidn,libcrypt}-*.so \
                       lib/libnss_{compat,dns,files,hesiod,nis,nisplus}-*.so \
                       lib/{libdl,libm,libnsl,libresolv,librt,libutil}-*.so \
                       lib/{libmemusage,libpcprofile,libSegFault}.so \

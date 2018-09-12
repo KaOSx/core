@@ -8,7 +8,7 @@ pkgver=7.3.1
 _pkgver=7
 _snapshot=7-20180906
 _islver=0.18
-pkgrel=1
+pkgrel=2
 pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
@@ -96,7 +96,7 @@ package_gcc-libs()
 {
   pkgdesc="Runtime libraries shipped by GCC"
   groups=('base')
-  depends=('glibc>=2.28')
+  depends=('glibc>=2.27')
   options=('!emptydirs' '!strip')
   
   cd ${srcdir}/gcc-build

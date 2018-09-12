@@ -1,0 +1,93 @@
+From 7a815dd566f3dd32435ac73aa0a0cc948d525e06 Mon Sep 17 00:00:00 2001
+From: "H.J. Lu" <hjl.tools@gmail.com>
+Date: Sat, 25 Aug 2018 06:17:52 -0700
+Subject: [PATCH] elf: Check for corrupt symbol version info
+
+The BFD linker with PR ld/23499 may generate shared libraries with
+corrupt symbol version info which leads to linker error when the
+corrupt shared library is used:
+
+/usr/bin/ld: bin/libKF5Service.so.5.49.0: _edata: invalid version 21 (max 0)
+/usr/bin/ld: bin/libKF5Service.so.5.49.0: error adding symbols: bad value
+
+Add check for corrupt symbol version info to objdump:
+
+00000000000af005 g    D  .data	0000000000000000  <corrupt>   _edata
+
+and readelf:
+
+   728: 00000000000af005     0 NOTYPE  GLOBAL DEFAULT   25 _edata@<corrupt> (5)
+
+bfd/
+
+	PR ld/23499
+	* elf.c (_bfd_elf_get_symbol_version_string): Return
+	_("<corrupt>") for corrupt symbol version info.
+
+binutils/
+
+	PR ld/23499
+	* readelf.c (get_symbol_version_string): Return _("<corrupt>")
+	for corrupt symbol version info.
+---
+ bfd/elf.c          | 2 +-
+ binutils/readelf.c | 9 +++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/bfd/elf.c b/bfd/elf.c
+index efdaf2e..b8860c4 100644
+--- a/bfd/elf.c
++++ b/bfd/elf.c
+@@ -1877,7 +1877,7 @@ _bfd_elf_get_symbol_version_string (bfd *abfd, asymbol *symbol,
+ 	{
+ 	  Elf_Internal_Verneed *t;
+ 
+-	  version_string = "";
++	  version_string = _("<corrupt>");
+ 	  for (t = elf_tdata (abfd)->verref;
+ 	       t != NULL;
+ 	       t = t->vn_nextref)
+diff --git a/binutils/ChangeLog b/binutils/ChangeLog
+index 3e26571..ef9a5fd 100644
+--- a/binutils/readelf.c
++++ b/binutils/readelf.c
+@@ -11300,6 +11300,7 @@ get_symbol_version_string (Filedata *                   filedata,
+   unsigned char data[2];
+   unsigned short vers_data;
+   unsigned long offset;
++  unsigned short max_vd_ndx;
+ 
+   if (!is_dynsym
+       || version_info[DT_VERSIONTAGIDX (DT_VERSYM)] == 0)
+@@ -11317,6 +11318,8 @@ get_symbol_version_string (Filedata *                   filedata,
+   if ((vers_data & VERSYM_HIDDEN) == 0 && vers_data == 0)
+     return NULL;
+ 
++  max_vd_ndx = 0;
++
+   /* Usually we'd only see verdef for defined symbols, and verneed for
+      undefined symbols.  However, symbols defined by the linker in
+      .dynbss for variables copied from a shared library in order to
+@@ -11359,6 +11362,9 @@ get_symbol_version_string (Filedata *                   filedata,
+ 	      ivd.vd_flags = BYTE_GET (evd.vd_flags);
+ 	    }
+ 
++	  if ((ivd.vd_ndx & VERSYM_VERSION) > max_vd_ndx)
++	    max_vd_ndx = ivd.vd_ndx & VERSYM_VERSION;
++
+ 	  off += ivd.vd_next;
+ 	}
+       while (ivd.vd_ndx != (vers_data & VERSYM_VERSION) && ivd.vd_next != 0);
+@@ -11450,6 +11456,9 @@ get_symbol_version_string (Filedata *                   filedata,
+ 	  return (ivna.vna_name < strtab_size
+ 		  ? strtab + ivna.vna_name : _("<corrupt>"));
+ 	}
++      else if ((max_vd_ndx || (vers_data & VERSYM_VERSION) != 1)
++	       && (vers_data & VERSYM_VERSION) > max_vd_ndx)
++	return _("<corrupt>");
+     }
+   return NULL;
+ }
+-- 
+2.9.3
+
