@@ -9,7 +9,7 @@ license=('GPL')
 backup=(etc/{exports,nfs.conf,nfsmount.conf})
 depends=('glibc' 'e2fsprogs' 'rpcbind' 'libtirpc' 'librpcsecgss' 'libevent'
          'device-mapper' 'sqlite')
-makedepends=('pkgconfig' 'autoconf' 'automake' 'nfsidmap')
+makedepends=('pkgconfig' 'autoconf' 'automake')
 conflicts=('nfsidmap')
 provides=('nfsidmap')
 replaces=('nfsidmap')
