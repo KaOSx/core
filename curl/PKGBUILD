@@ -27,7 +27,8 @@ build() {
         --enable-versioned-symbols \
         --enable-threaded-resolver \
         --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt \
-        --without-libidn 
+        --without-libidn \
+        --with-libssh2
     make
 }
 
