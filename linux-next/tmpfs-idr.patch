@@ -67,9 +67,9 @@ index 41b9bbf..3b4b410 100644
  		inode->i_blocks = 0;
  		inode->i_atime = inode->i_mtime = inode->i_ctime = current_time(inode);
 @@ -2226,6 +2235,25 @@ static struct inode *shmem_get_inode(struct super_block *sb, const struct inode
- 			mpol_shared_policy_init(&info->policy, NULL);
- 			break;
  		}
+
+ 		lockdep_annotate_inode_mutex_key(inode);
 +
 +		if (!sbinfo->idr_nouse) {
 +			/* inum 0 and 1 are unused */

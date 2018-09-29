@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.18
 _srcname=linux-4.18
-pkgver=4.18.10
+pkgver=4.18.11
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -31,7 +31,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('bee5fe53ee1c3142b8f0c12c0d3348f9'
-         'c994cee7ab297d5da88f5a1381e3f364'
+         '35f0d753cd3e1fb905299d8b4af5e7d7'
          '47185e0e203a930033870cec0ab94b17'
          'a4e8662ef9d259469e7b6ff3dde55a1c'
          'ecd1a1c6f1368ac8a8a8da3e5c658a68'
@@ -40,7 +40,7 @@ md5sums=('bee5fe53ee1c3142b8f0c12c0d3348f9'
          '542acab3dc2013975ed0031ac33ba3ad'
          '35f85f06107d33bd568b455ab6b5d977'
          '58077c1703977e6b5fafdda552f542d5'
-         '1dcc4c614555a0a3d86423952053103c'
+         'dee298d3b2aade9517d403581698a091'
          '2ffb7b54b4e4038b523044c7fa7d2588'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'

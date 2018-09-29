@@ -2,13 +2,13 @@
 pkgname=gnutls
 pkgver=3.5.19
 _pkgver=3.5.19
-pkgrel=1
+pkgrel=2
 pkgdesc="Secure communications library implementing the SSL, TLS and DTLS protocols and technologies around them"
 arch=('x86_64')
 license=('GPL3' 'LGPL')
 url="https://www.gnutls.org/"
 options=('libtool')
-depends=('gcc-libs' 'libtasn1' 'readline' 'zlib' 'texinfo' 'nettle' 'p11-kit' 'libidn')
+depends=('gcc-libs' 'libtasn1' 'readline' 'zlib' 'texinfo' 'nettle' 'p11-kit' 'libidn2')
 makepends=('datefudge' 'valgrind' 'strace')
 source=("https://www.gnupg.org/ftp/gcrypt/gnutls/v3.5/${pkgname}-${pkgver}.tar.xz")
 md5sums=('1002f4099ce11d785e9811099aaa59a6')
