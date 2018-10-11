@@ -19,7 +19,8 @@ source=("https://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.
         'empty-security.rules'
         'iptables.service'
         'ip6tables.service'
-        'iptables-flush')
+        'iptables-flush'
+        'nft.patch')
 sha1sums=('04924fd00dbaf8189f0777af90f7bdb73ac7e47c'
           '83b3363878e3660ce23b2ad325b53cbd6c796ecf'
           'f085a71f467e4d7cb2cf094d9369b0bcc4bab6ec'
@@ -30,10 +31,12 @@ sha1sums=('04924fd00dbaf8189f0777af90f7bdb73ac7e47c'
           'ebbd1424a1564fd45f455a81c61ce348f0a14c2e'
           '5f2e76985a751f635a45612565a6e1bc9547398a'
           'fe6bbe214b3a13bd084f62a8ee9631fd8326c464'
-          'e7abda09c61142121b6695928d3b71ccd8fdf73a')
+          'e7abda09c61142121b6695928d3b71ccd8fdf73a'
+          '1f90109098c71d6e6222ee233c506e8081b17f26')
 
 build() {
   cd ${pkgname}-${pkgver}
+  patch -p1 -i ${srcdir}/nft.patch
 
   rm include/linux/types.h
 
@@ -43,8 +46,7 @@ build() {
      --with-xtlibdir=/usr/lib/iptables \
      --enable-devel \
      --enable-shared \
-     --disable-nftables \
-     --disable-connlabel
+     --disable-nftables
   make
 }
 
