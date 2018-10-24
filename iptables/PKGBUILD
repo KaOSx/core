@@ -1,6 +1,6 @@
 
 pkgname=iptables
-pkgver=1.8.0
+pkgver=1.8.1
 pkgrel=1
 pkgdesc="A Linux kernel packet control tool"
 arch=('x86_64')
@@ -21,22 +21,22 @@ source=("https://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.
         'ip6tables.service'
         'iptables-flush'
         'nft.patch')
-sha1sums=('04924fd00dbaf8189f0777af90f7bdb73ac7e47c'
-          '83b3363878e3660ce23b2ad325b53cbd6c796ecf'
-          'f085a71f467e4d7cb2cf094d9369b0bcc4bab6ec'
-          'd9f9f06b46b4187648e860afa0552335aafe3ce4'
-          'c45b738b5ec4cfb11611b984c21a83b91a2d58f3'
-          '1694d79b3e6e9d9d543f6a6e75fed06066c9a6c6'
-          '7db53bb882f62f6c677cc8559cff83d8bae2ef73'
-          'ebbd1424a1564fd45f455a81c61ce348f0a14c2e'
-          '5f2e76985a751f635a45612565a6e1bc9547398a'
-          'fe6bbe214b3a13bd084f62a8ee9631fd8326c464'
-          'e7abda09c61142121b6695928d3b71ccd8fdf73a'
-          '1f90109098c71d6e6222ee233c506e8081b17f26')
+sha256sums=('8fe4f297cf9c9bbab4972f95527f3e484f60c17c61800c9bff562f06c45461d8'
+            '630d774f089703c2c7370db6d7c188dae25d00c26feaa3d3de8eb52519033948'
+            '9e83d7ae39d31881790f814930d44acbaeab1520adb2fb4fcb80f0bbfab174b9'
+            '09b90da35c2c8cb0fbda63b300f06d2387a102ca53a40980ef0b49829e249528'
+            '92755648f456e235d17a8faeb5f46d27af66eb4db10ea4bac0abd3e35e2dae07'
+            '52bd70dff3e1e1a64127ad7ed86840834b79756c3bdb6947b7c6279ffe95dd48'
+            '5768a471c0559848635c39d270e456bfa5c43eda65f5f6f666fea2d277183a37'
+            '91161a73f323016a9efc5eabd16243d20f8ca2467995cf0eabfb95f845090121'
+            '8c0dfd864e2d4bc31fa4ea29d6b2f11c72e51374ee4106d98d600a24660e13f7'
+            'f92b6fa2d90f04d9e8c2b0fff2ceb26a26042606d9fe95348d7f6ba26c837464'
+            '5975b581632a6c90cf33273870bf8422b462aa380454bf8ed6a8327dbd868d03'
+            '7fa338bb6f555267f4ac7226bd2bab559bc9cfcc4b03ea7cf39b89cbb2b28dcf')
 
 build() {
   cd ${pkgname}-${pkgver}
-  patch -p1 -i ${srcdir}/nft.patch
+  #patch -p1 -i ${srcdir}/nft.patch
 
   rm include/linux/types.h
 

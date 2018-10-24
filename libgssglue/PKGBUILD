@@ -1,7 +1,7 @@
 
 pkgname=libgssglue
 pkgver=0.4
-pkgrel=5
+pkgrel=6
 pkgdesc="Exports a gssapi interface which calls other random gssapi libraries"
 arch=('x86_64')
 url="http://www.citi.umich.edu/projects/nfsv4/linux/"
@@ -10,22 +10,22 @@ depends=('glibc')
 makedepends=('pkgconfig' 'autoconf')
 backup=(etc/gssapi_mech.conf)
 options=('!libtool')
-source=("http://www.citi.umich.edu/projects/nfsv4/linux/libgssglue/$pkgname-$pkgver.tar.gz"
+source=("http://www.citi.umich.edu/projects/nfsv4/linux/libgssglue/${pkgname}-${pkgver}.tar.gz"
         'gssapi_mech.conf')
 md5sums=('088797f3180702fa54e786496b32e750'
          '080be866717e4e06fa6f7d6f43cb395a')
 
 build() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr 
   make
 }
 
 package() {
-  cd $pkgname-$pkgver
-  make DESTDIR=$pkgdir/ install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir}/ install
 
-  install -Dm644 $srcdir/gssapi_mech.conf $pkgdir/etc/gssapi_mech.conf
-  install -Dm644 COPYING $pkgdir/usr/share/licenses/libgssglue/COPYING
+  install -Dm644 ../gssapi_mech.conf ${pkgdir}/etc/gssapi_mech.conf
+  install -Dm644 COPYING ${pkgdir}/usr/share/licenses/libgssglue/COPYING
 }
