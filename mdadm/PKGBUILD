@@ -1,13 +1,12 @@
 
 pkgname=mdadm
-pkgver=4.0
+pkgver=4.1
 pkgrel=1
 pkgdesc="A tool for managing/monitoring Linux md device arrays, also known as Software RAID"
 arch=('x86_64')
 license=('GPL')
-url="http://git.kernel.org/cgit/utils/mdadm/mdadm.git/"
+url="https://git.kernel.org/cgit/utils/mdadm/mdadm.git/"
 groups=('base')
-conflicts=('mkinitcpio<0.7')
 depends=('glibc')
 backup=('etc/mdadm.conf')
 source=("https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-${pkgver}.tar.xz"
@@ -16,19 +15,19 @@ source=("https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-${pkgver}.tar.x
         'mdadm_hook'
         'mdadm_udev_install'
         'disable-werror.patch')
-md5sums=('2cb4feffea9167ba71b5f346a0c0a40d'
-         '5a37c112aa07dccdde62f9fa5b888607'
-         '6e1a3377e2ac33e9fb222ab38050c654'
-         '8e02ee595dfa4e5178ed8886e822cf3a'
-         '7b052d051565d8128b09ca6f673d1b08'
-         '599745ed2bec4489e83991cff89c46ee')
+sha256sums=('ab7688842908d3583a704d491956f31324c3a5fc9f6a04653cb75d19f1934f4a'
+            '4ce1e90690282f98e4828e11576fbd61be65e97a2cdae6c7eac7035ea5ee53e5'
+            'c016fc330d6c8d95ebd8f1c19cf55eae1455fc95398fe30d6c1e256b888729c3'
+            '6c68e429616a4677d5f1342fc1d1632683ce51d5b2ec68e6520b0462c1ee3b14'
+            '4bb5d0cb0255f1de8f49bbcb4c53b23e2aaccdd105c91bce930a1f8d1136c02e'
+            'a5e096e635d5442a2f917d6af4fc1e799b434de903dc6f4f795ac6f3da03b32d')
 
 build() {
   cd ${pkgname}-${pkgver}
-  patch -p0 -i ${srcdir}/disable-werror.patch
+  #patch -p0 -i ${srcdir}/disable-werror.patch
   
-  make CXFLAGS="$CFLAGS"
-  make MDASSEMBLE_AUTO=1 mdassemble
+  make
+  #make MDASSEMBLE_AUTO=1 mdassemble
 
 }
 
@@ -37,7 +36,7 @@ package() {
   make INSTALL=/usr/bin/install DESTDIR=${pkgdir} install
   make SYSTEMD_DIR=${pkgdir}/usr/lib/systemd/system install-systemd
   
-  install -D -m755 mdassemble ${pkgdir}/sbin/mdassemble
+  #install -D -m755 mdassemble ${pkgdir}/sbin/mdassemble
   install -D -m644 ../mdadm.conf ${pkgdir}/etc/mdadm.conf
   install -D -m644 ../mdadm_install ${pkgdir}/usr/lib/initcpio/install/mdadm
   install -D -m644 ../mdadm_hook ${pkgdir}/usr/lib/initcpio/hooks/mdadm
