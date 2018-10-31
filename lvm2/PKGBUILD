@@ -1,7 +1,7 @@
 
 pkgbase=lvm2
 pkgname=('lvm2' 'device-mapper')
-pkgver=2.02.181
+pkgver=2.02.182
 pkgrel=1
 arch=('x86_64')
 url="https://sourceware.org/lvm2/"
@@ -13,7 +13,7 @@ source=("ftp://sources.redhat.com/pub/lvm2/LVM2.${pkgver}.tgz"
         'lvm2_hook'
         '11-dm-initramfs.rules'
         'sd-lvm2')
-sha512sums=('2191ae6dd9d6071ec829d504e23f85d4aa3f8b8e20f82bce984c0273443fd91c94b714d868267888def49c36c72c9856218e0a833db10014a817e370961f64b9'
+sha512sums=('e241b151985ea66bda683fccc43542acb2bafeafae033b13c168c63a36e9a7a19f373031ff6654508fce2eb83e21e1d4171664504d4bbb2d00ce6c1dbdfe41a0'
             '5f8846849b3d2460720f21712afc81d15216ce3d13a26521c3d3af5c474352b823c507b3f8b524ab83160a0199b5802c6368df375e4a0dc0a0b4980886e8e731'
             '883e7fa74e285f8d0d27cbed9e0f8e064ae4f72a3ddb221ec74e8db2393f272bbdc1181e8dbaae5ef8aec72620deb567fa85204604b3225fabea6aa55288235a'
             'd022aeb42f62445a7f7c4ff103a780527408a78b9d3a737ce76e39fd389c8fdfec5f18d4c5c0b0353b2ec332d80ec3ba5b5f5c43a0c18a3aa74bd8713d611684'
