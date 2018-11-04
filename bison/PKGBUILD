@@ -21,7 +21,7 @@ build() {
 check() {
   cd ${pkgname}-${pkgver}
   
-  make check
+  make -j1 check
 }
 
 package() {
