@@ -32,11 +32,11 @@ sha256sums=('8fe4f297cf9c9bbab4972f95527f3e484f60c17c61800c9bff562f06c45461d8'
             '8c0dfd864e2d4bc31fa4ea29d6b2f11c72e51374ee4106d98d600a24660e13f7'
             'f92b6fa2d90f04d9e8c2b0fff2ceb26a26042606d9fe95348d7f6ba26c837464'
             '5975b581632a6c90cf33273870bf8422b462aa380454bf8ed6a8327dbd868d03'
-            '7fa338bb6f555267f4ac7226bd2bab559bc9cfcc4b03ea7cf39b89cbb2b28dcf')
+            '6335009b134bda21012fadd60e396b9bb649bdebae9b524474d6ac620f78544f')
 
 build() {
   cd ${pkgname}-${pkgver}
-  #patch -p1 -i ${srcdir}/nft.patch
+  patch -p1 -i ${srcdir}/nft.patch
 
   rm include/linux/types.h
 
