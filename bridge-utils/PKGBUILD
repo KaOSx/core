@@ -1,7 +1,7 @@
 
 pkgname=bridge-utils
 pkgver=1.6
-pkgrel=1
+pkgrel=2
 pkgdesc="EEE 802.1d ethernet bridging (plus Spanning Tree protocol) for the linux kernel."
 arch=('x86_64')
 url="http://www.linuxfoundation.org/collaborate/workgroups/networking/bridge"

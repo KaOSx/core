@@ -4,11 +4,11 @@ pkgver=5.3.28
 pkgrel=4
 pkgdesc="The Berkeley DB embedded database system"
 arch=('x86_64')
-url="http://www.oracle.com/technology/software/products/berkeley-db/index.html"
+url="https://www.oracle.com/technology/software/products/berkeley-db/index.html"
 license=('custom')
 depends=('gcc-libs' 'sh')
 options=('!libtool')
-source=("http://download.oracle.com/berkeley-db/db-${pkgver}.tar.gz")
+source=("https://download.oracle.com/berkeley-db/db-${pkgver}.tar.gz")
 md5sums=('b99454564d5b4479750567031d66fe24')
 
 build() {

@@ -2,16 +2,18 @@
 # update syslog-ng.conf on 3.xx updates
 pkgname=syslog-ng
 pkgver=3.18.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Next-generation syslogd with advanced networking and filtering capabilities"
 arch=('x86_64')
 license=('GPL2')
 url="https://syslog-ng.com/"
-depends=('glib2' 'eventlog' 'openssl' 'libcap' 'awk' 'systemd' 'json-c')
+depends=('glib2' 'openssl' 'libcap' 'awk' 'systemd' 'json-c')
 makedepends=('flex' 'pkg-config' 'python2' 'libxslt')
 optdepends=('logrotate: for rotating log files')
 provides=('logger')
 options=('!libtool')
+conflicts=('eventlog')
+replaces=('eventlog')
 backup=('etc/syslog-ng/scl.conf'
         'etc/syslog-ng/syslog-ng.conf'
         'etc/logrotate.d/syslog-ng')

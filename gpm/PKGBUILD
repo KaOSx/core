@@ -1,20 +1,28 @@
 
 pkgname=gpm
 pkgver=1.20.7
-pkgrel=5
+pkgrel=6
 pkgdesc="A mouse server for the console and xterm"
 arch=('x86_64')
-url="http://unix.schottelius.org/gpm/"
+url="https://www.nico.schottelius.org/software/gpm/"
 license=('GPL')
 depends=('ncurses' 'bash')
 options=('!makeflags')
-source=("http://www.nico.schottelius.org/software/gpm/archives/${pkgname}-${pkgver}.tar.lzma"
+source=("https://www.nico.schottelius.org/software/gpm/archives/${pkgname}-${pkgver}.tar.lzma"
         'gpm.sh'
-        'gpm.service')
+        'gpm.service'
+        'glibc2.26.diff')
 md5sums=('fa8a6fe09826896625ca557ac5e42ed7'
-         'e391fe4599ce102615f9cd449c380d41'
-         '5e5547fb272befeeb8bcb07fa2426c5e')
+         'd73dd7e579192a58e5af72be206ce3c8'
+         '5e5547fb272befeeb8bcb07fa2426c5e'
+         '862d0abd517aee679ddf9ffeed77d9dd')
 
+prepare() {
+  cd ${pkgname}-${pkgver}
+  # https://github.com/telmich/gpm/pull/20
+  patch -p1 -i ${srcdir}/glibc2.26.diff
+}         
+         
 build() {
   cd ${pkgname}-${pkgver}
   
