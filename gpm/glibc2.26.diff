@@ -1,0 +1,14 @@
+--- a/src/prog/gpm-root.y.orig	2018-11-08 12:12:29.261304819 +0100
++++ b/src/prog/gpm-root.y	2018-11-08 12:17:18.449507124 +0100
+@@ -1196,11 +1196,7 @@
+                                                         LOG_DAEMON : LOG_USER);
+    /* reap your zombies */
+    childaction.sa_handler=reap_children;
+-#if defined(__GLIBC__)
+-   __sigemptyset(&childaction.sa_mask);
+-#else /* __GLIBC__ */
+    childaction.sa_mask=0;
+-#endif /* __GLIBC__ */
+    childaction.sa_flags=SA_INTERRUPT; /* need to break the select() call */
+    sigaction(SIGCHLD,&childaction,NULL);
+ 
