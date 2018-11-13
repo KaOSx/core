@@ -1,6 +1,6 @@
 
 pkgname=iptables
-pkgver=1.8.1
+pkgver=1.8.2
 pkgrel=1
 pkgdesc="A Linux kernel packet control tool"
 arch=('x86_64')
@@ -21,7 +21,7 @@ source=("https://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.
         'ip6tables.service'
         'iptables-flush'
         'nft.patch')
-sha256sums=('8fe4f297cf9c9bbab4972f95527f3e484f60c17c61800c9bff562f06c45461d8'
+sha256sums=('a3778b50ed1a3256f9ca975de82c2204e508001fc2471238c8c97f3d1c4c12af'
             '630d774f089703c2c7370db6d7c188dae25d00c26feaa3d3de8eb52519033948'
             '9e83d7ae39d31881790f814930d44acbaeab1520adb2fb4fcb80f0bbfab174b9'
             '09b90da35c2c8cb0fbda63b300f06d2387a102ca53a40980ef0b49829e249528'
@@ -36,7 +36,7 @@ sha256sums=('8fe4f297cf9c9bbab4972f95527f3e484f60c17c61800c9bff562f06c45461d8'
 
 build() {
   cd ${pkgname}-${pkgver}
-  patch -p1 -i ${srcdir}/nft.patch
+  #patch -p1 -i ${srcdir}/nft.patch
 
   rm include/linux/types.h
 
