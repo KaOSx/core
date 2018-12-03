@@ -1,7 +1,7 @@
 
 pkgname=wpa_supplicant
-pkgver=2.6
-pkgrel=3
+pkgver=2.7
+pkgrel=1
 pkgdesc="A utility providing key negotiation for WPA wireless networks"
 arch=('x86_64')
 url="https://w1.fi/"
@@ -11,35 +11,14 @@ groups=('base')
 backup=('etc/wpa_supplicant.conf')
 source=("https://w1.fi/releases/wpa_supplicant-${pkgver}.tar.gz"
         'config'
-        "https://w1.fi/security/2017-1/rebased-v2.6-0001-hostapd-Avoid-key-reinstallation-in-FT-handshake.patch"
-        "https://w1.fi/security/2017-1/rebased-v2.6-0002-Prevent-reinstallation-of-an-already-in-use-group-ke.patch"
-        "https://w1.fi/security/2017-1/rebased-v2.6-0003-Extend-protection-of-GTK-IGTK-reinstallation-of-WNM-.patch"
-        "https://w1.fi/security/2017-1/rebased-v2.6-0004-Prevent-installation-of-an-all-zero-TK.patch"
-        "https://w1.fi/security/2017-1/rebased-v2.6-0005-Fix-PTK-rekeying-to-generate-a-new-ANonce.patch"
-        "https://w1.fi/security/2017-1/rebased-v2.6-0006-TDLS-Reject-TPK-TK-reconfiguration.patch"
-        "https://w1.fi/security/2017-1/rebased-v2.6-0007-WNM-Ignore-WNM-Sleep-Mode-Response-without-pending-r.patch"
-        "https://w1.fi/security/2017-1/rebased-v2.6-0008-FT-Do-not-allow-multiple-Reassociation-Response-fram.patch")
-md5sums=('091569eb4440b7d7f2b4276dbfc03c3c'
+        "https://w1.fi/security/2017-1/rebased-v2.6-0001-hostapd-Avoid-key-reinstallation-in-FT-handshake.patch")
+md5sums=('a68538fb62766f40f890125026c42c10'
          '78bc0d6b6db02d4d58982d870e0a0c26'
-         'a209fe1510a138c0da3855854c38bf6f'
-         'a19510a630e870a100ccb56627df38b9'
-         '1f9054638b4b142049aec620307e5bd2'
-         '95e59981ffadbb832670a06db22c717f'
-         '2f13f68055c40a1034b0028d0c301988'
-         '0065da3dce2284fa0c59a1359ad752bd'
-         'f993c4887d62de35b6492b0feffe2e49'
-         '2dda6fa8a71fcd25d1f658eb44d7c3f0')
+         'a209fe1510a138c0da3855854c38bf6f')
 
 build() {
   cd ${pkgname}-${pkgver}/
-  patch -p1 -i ${srcdir}/rebased-v2.6-0001-hostapd-Avoid-key-reinstallation-in-FT-handshake.patch
-  patch -p1 -i ${srcdir}/rebased-v2.6-0002-Prevent-reinstallation-of-an-already-in-use-group-ke.patch
-  patch -p1 -i ${srcdir}/rebased-v2.6-0003-Extend-protection-of-GTK-IGTK-reinstallation-of-WNM-.patch
-  patch -p1 -i ${srcdir}/rebased-v2.6-0004-Prevent-installation-of-an-all-zero-TK.patch
-  patch -p1 -i ${srcdir}/rebased-v2.6-0005-Fix-PTK-rekeying-to-generate-a-new-ANonce.patch
-  patch -p1 -i ${srcdir}/rebased-v2.6-0006-TDLS-Reject-TPK-TK-reconfiguration.patch
-  patch -p1 -i ${srcdir}/rebased-v2.6-0007-WNM-Ignore-WNM-Sleep-Mode-Response-without-pending-r.patch
-  patch -p1 -i ${srcdir}/rebased-v2.6-0008-FT-Do-not-allow-multiple-Reassociation-Response-fram.patch
+  #patch -p1 -i ${srcdir}/rebased-v2.6-0001-hostapd-Avoid-key-reinstallation-in-FT-handshake.patch
   
   cd ${pkgname}/
   cp ${srcdir}/config ./.config
