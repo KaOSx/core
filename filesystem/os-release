@@ -1,8 +1,10 @@
 NAME="KaOS"
-VERSION="2018"
+VERSION="2019"
 ID=kaos
-PRETTY_NAME="KaOS (2018)"
+PRETTY_NAME="KaOS (2019)"
+BUILD_ID=rolling
 ANSI_COLOR="0;36"
 HOME_URL="https://kaosx.us/"
+BUG_REPORT_URL="https://kaosx.us/docs/bugs/"
 
 
