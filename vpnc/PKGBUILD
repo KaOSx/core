@@ -2,9 +2,9 @@
 pkgname=vpnc
 pkgver=0.5.3.3
 #_pkgver=0.5.3.svn550
-pkgrel=3
+pkgrel=4
 pkgdesc="VPN client for cisco3000 VPN Concentrators"
-url="http://www.unix-ag.uni-kl.de/~massar/vpnc/"
+url="https://www.unix-ag.uni-kl.de/~massar/vpnc/"
 license=('GPL')
 depends=('libgcrypt' 'openssl' 'iproute2')
 makedepends=('subversion')
@@ -17,7 +17,7 @@ md5sums=('SKIP'
          'a3f4e0cc682f437e310a1c86ae198e45')
 
 build() {
-  cd $pkgname
+  cd ${pkgname}
 
   # Build hybrid support
   sed -i 's|^#OPENSSL|OPENSSL|g' Makefile
