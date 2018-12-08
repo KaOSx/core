@@ -2,7 +2,7 @@
 pkgname=libssh
 pkgver=0.8.5
 _pkgver=0.8
-pkgrel=1
+pkgrel=2
 pkgdesc="Library for accessing ssh client services through C libraries"
 url="https://www.libssh.org/"
 license=('LGPL')

@@ -2,7 +2,7 @@
 pkgname=libevent
 pkgver=2.1.8
 _pkgver=2.1
-pkgrel=1
+pkgrel=2
 pkgdesc="An event notification library"
 arch=('x86_64')
 url="http://libevent.org/"
