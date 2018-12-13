@@ -1,13 +1,13 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 4.19.0-1 Kernel Configuration
+# Linux/x86 4.19.9-1 Kernel Configuration
 #
 
 #
-# Compiler: gcc (GCC) 7.3.1 20180906
+# Compiler: gcc (GCC) 7.4.0
 #
 CONFIG_CC_IS_GCC=y
-CONFIG_GCC_VERSION=70301
+CONFIG_GCC_VERSION=70400
 CONFIG_CLANG_VERSION=0
 CONFIG_IRQ_WORK=y
 CONFIG_BUILDTIME_EXTABLE_SORT=y

@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.18
-pkgver=4.18.12
+_basekernel=4.19
+pkgver=4.19.9
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode' 'elfutils')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.18.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.19.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -27,18 +27,18 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.18.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '99-linux.hook')
-md5sums=('bee5fe53ee1c3142b8f0c12c0d3348f9'
-         '8186fbd0e436c775e2dc70148ff2f446'
-         'a1971f755a16166d7be53c93e384a8c4'
-         'a4e8662ef9d259469e7b6ff3dde55a1c'
-         'ecd1a1c6f1368ac8a8a8da3e5c658a68'
-         'cd806384ce9494ef43c152491101d066'
-         '2d4bf0194ca6f237ceb5660cc114f3a6'
-         '542acab3dc2013975ed0031ac33ba3ad'
-         '35f85f06107d33bd568b455ab6b5d977'
+md5sums=('740a90cf810c2105df8ee12e5d0bb900'
+         'ea743dd69c16c1ba237c0c04437bd766'
+         'b515b310ef93323009581264e68ed460'
+         '34d8d01672a168de24ae0af194db57b8'
+         '0f65975e3b0775fdd777625c5611d0cc'
+         'd5f05e48d9684ea8b68ec1c04137ecec'
+         '34c5e240885e262268826318574590b7'
+         '095eca3092ae97a97701a6d083b759a1'
+         '4de3404142d991f96315eddb7ae70d10'
          '58077c1703977e6b5fafdda552f542d5'
-         'dee298d3b2aade9517d403581698a091'
-         '2ffb7b54b4e4038b523044c7fa7d2588'
+         'e3bf316b370753c021e3e017daf5540c'
+         'f81b0712f3f959c11666ed5f88940c63'
          'eb14dcfd80c00852ef81ded6e826826a'
          '0b73d293ca1ab91748ae2d2c39921532')
 
