@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=4.19
 _srcname=linux-4.19
-pkgver=4.19.8
+pkgver=4.19.9
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -31,7 +31,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('740a90cf810c2105df8ee12e5d0bb900'
-         '027dde2bb8488e5d55779d7fa63dfcf1'
+         'ea743dd69c16c1ba237c0c04437bd766'
          '539182257d679c5313b6cd73440c50ed'
          '34d8d01672a168de24ae0af194db57b8'
          '0f65975e3b0775fdd777625c5611d0cc'
