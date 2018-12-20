@@ -1,6 +1,6 @@
 
 pkgname=grep
-pkgver=3.1
+pkgver=3.2
 pkgrel=1
 pkgdesc="A string search utility"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('glibc' 'pcre' 'sh')
 makedepends=('texinfo')
 source=("https://ftp.gnu.org/gnu/grep/${pkgname}-${pkgver}.tar.xz"
         "http://git.savannah.gnu.org/cgit/grep.git/patch/?id=6e4c8728f0e75af57f839625d0bd51b0a02d091e")
-md5sums=('feca7b3e7c7f4aab2b42ecbfc513b070'
+md5sums=('fea706effd9161d1b41e4b536a8ec88e'
          '6a8980630d720e727b4e41efb83d7be4')
 
 build() {
