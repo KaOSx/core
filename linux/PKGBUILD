@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=4.19
-pkgver=4.19.10
+pkgver=4.19.11
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -28,7 +28,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.19.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('740a90cf810c2105df8ee12e5d0bb900'
-         '0b50abe3e723da99eb18f74380877bd2'
+         'f23ecb9644dbb61466c3edf1eed1ef59'
          'b515b310ef93323009581264e68ed460'
          '34d8d01672a168de24ae0af194db57b8'
          '0f65975e3b0775fdd777625c5611d0cc'

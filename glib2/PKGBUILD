@@ -1,7 +1,7 @@
 
 pkgbase=glib2
 pkgname=('glib2' 'glib2-docs')
-pkgver=2.56.2
+pkgver=2.56.4
 _pkgver=2.56
 pkgrel=1
 pkgdesc="Common C routines used by GTK+ and other libs"
@@ -12,7 +12,7 @@ source=("https://ftp.gnome.org/pub/GNOME/sources/glib/${_pkgver}/glib-${pkgver}.
         'gio-querymodules.hook'
         'glib-compile-schemes.hook'
         'revert_wakeups.patch')
-sha256sums=('d64abd16813501c956c4e123ae79f47f1b58de573df9fdd3b0795f1e2c1aa789'
+sha256sums=('27f703d125efb07f8a743666b580df0b4095c59fc8750e8890132c91d437504c'
             '5ba204a2686304b1454d401a39a9d27d09dd25e4529664e3fd565be3d439f8b6'
             'e1123a5d85d2445faac33f6dae1085fdd620d83279a4e130a83fe38db52b62b3'
             '05635ffbeb5875fc5cb4adb4c8c85450693c36fc15e4c85f2f04fdbaf7e9d1e8')
