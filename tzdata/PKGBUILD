@@ -1,6 +1,6 @@
 
 pkgname=tzdata
-pkgver=2018g
+pkgver=2018h
 pkgrel=1
 pkgdesc="Sources for time zone and daylight saving time data"
 arch=('x86_64')
@@ -8,7 +8,7 @@ url="http://www.iana.org/time-zones"
 license=('GPL')
 options=('!emptydirs')
 source=("http://www.iana.org/time-zones/repository/releases/${pkgname}${pkgver}.tar.gz")
-md5sums=('e71cb1f9d8d53c43904d79d7aeeedc1b')
+md5sums=('7ad1b70c53f0629728ae90565360c2fd')
 
 timezones=('africa' 'antarctica' 'asia' 'australasia'
            'europe' 'northamerica' 'southamerica'
