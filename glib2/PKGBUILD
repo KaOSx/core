@@ -1,18 +1,22 @@
 
-pkgbase=glib2
-pkgname=('glib2' 'glib2-docs')
-pkgver=2.56.4
-_pkgver=2.56
+pkgname=glib2
+pkgver=2.58.2
+_pkgver=2.58
 pkgrel=1
 pkgdesc="Common C routines used by GTK+ and other libs"
 url="https://www.gtk.org/overview.php"
 arch=('x86_64')
-makedepends=('pkg-config' 'python3' 'libxslt' 'docbook-xml' 'pcre' 'libffi' 'elfutils')
+license=('LGPL')
+depends=('pcre' 'libffi')
+makedepends=('pkg-config' 'python3' 'libxslt' 'docbook-xml' 'elfutils' 'meson' 'ninja')
+options=('!docs' '!libtool' '!emptydirs')
+conflicts=('glib2-docs')
+provides=('glib2-docs')
 source=("https://ftp.gnome.org/pub/GNOME/sources/glib/${_pkgver}/glib-${pkgver}.tar.xz"
         'gio-querymodules.hook'
         'glib-compile-schemes.hook'
         'revert_wakeups.patch')
-sha256sums=('27f703d125efb07f8a743666b580df0b4095c59fc8750e8890132c91d437504c'
+sha256sums=('c7b24ed6536f1a10fc9bce7994e55c427b727602e78342821f1f07fb48753d4b'
             '5ba204a2686304b1454d401a39a9d27d09dd25e4529664e3fd565be3d439f8b6'
             'e1123a5d85d2445faac33f6dae1085fdd620d83279a4e130a83fe38db52b62b3'
             '05635ffbeb5875fc5cb4adb4c8c85450693c36fc15e4c85f2f04fdbaf7e9d1e8')
@@ -24,37 +28,23 @@ prepare() {
 }
   
 build() {
-  cd glib-${pkgver}
+  mkdir -p build
+  cd build
   
-  PYTHON=/usr/bin/python3 ./configure --prefix=/usr --libdir=/usr/lib \
-      --sysconfdir=/etc \
-      --with-pcre=system \
-      --disable-fam
-  make
+  meson ../glib-${pkgver} \
+    --prefix=/usr \
+    --buildtype=release \
+    -D man=true \
+    -D selinux=false
+  ninja
 }
 
-package_glib2() {
-  depends=('pcre' 'libffi')
-  options=('!docs' '!libtool' '!emptydirs')
-  license=('LGPL')
-
-  cd glib-${pkgver}
-  make DESTDIR=${pkgdir} install
+package() {
+  cd build
+  DESTDIR=${pkgdir} ninja install
   
   install -dm755 ${pkgdir}/usr/share/libalpm/hooks/
   install -m644 ../glib-compile-schemes.hook ${pkgdir}/usr/share/libalpm/hooks/
   install -m644 ../gio-querymodules.hook ${pkgdir}/usr/share/libalpm/hooks/
 }
 
-package_glib2-docs() {
-  pkgdesc="Documentation for glib2"
-  license=('custom')
-  options=('docs' '!emptydirs')
-  
-  cd glib-${pkgver}/docs
-  make DESTDIR=${pkgdir} install
-  install -m755 -d ${pkgdir}/usr/share/licenses/glib2-docs
-  install -m644 reference/COPYING ${pkgdir}/usr/share/licenses/glib2-docs/
-
-  rm -rf ${pkgdir}/usr/share/man
-}
