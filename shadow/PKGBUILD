@@ -1,7 +1,7 @@
 
 pkgname=shadow
 pkgver=4.6
-pkgrel=1
+pkgrel=2
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
 url='https://github.com/shadow-maint/shadow'
@@ -45,23 +45,10 @@ md5sums=('5b2f60464fce79a918e4da70b7356261'
 
 build() {
   cd ${pkgname}-${pkgver}
+  #patch -p1 -i ${srcdir}/xstrdup.patch
 
-  # avoid transitive linking issues with binutils 2.22
-  sed -i '/^user\(mod\|add\)_LDADD/s|$| -lattr|' src/Makefile.am
-
-  # link to glibc's crypt(3)
-  LDFLAGS+=" -lcrypt"
-
-  patch -p1 -i ${srcdir}/xstrdup.patch
-  patch -p1 -i ${srcdir}/shadow-strncpy-usage.patch
-
-  # supress etc/pam.d/*
   sed -i '/^SUBDIRS/s/pam.d//' etc/Makefile.am
-  
-  #sed -i 's|--without-libpam|--with-libpam|' autogen.sh
-  #sed -i 's|--with-selinux|--without-selinux|' autogen.sh
 
-  #./autogen.sh
   autoreconf -v -f --install
   ./configure \
     --prefix=/usr \
@@ -80,36 +67,29 @@ package() {
   cd ${pkgname}-${pkgver}
 
   make DESTDIR=${pkgdir} install
-
-  # license
   install -Dm644 ${srcdir}/LICENSE ${pkgdir}/usr/share/licenses/shadow/LICENSE
 
-  # useradd defaults
   install -Dm644 ${srcdir}/useradd.defaults ${pkgdir}/etc/default/useradd
 
-  # systemd timer
   install -D -m644 ${srcdir}/shadow.timer ${pkgdir}/usr/lib/systemd/system/shadow.timer
   install -D -m644 ${srcdir}/shadow.service ${pkgdir}/usr/lib/systemd/system/shadow.service
   install -d -m755 ${pkgdir}/usr/lib/systemd/system/multi-user.target.wants
   ln -s ../shadow.timer ${pkgdir}//usr/lib/systemd/system/multi-user.target.wants/shadow.timer
 
-  # login.defs
   install -Dm644 ${srcdir}/login.defs ${pkgdir}/etc/login.defs
 
-  # PAM config - custom
+  # PAM config upstream provided & KaOS specific
   install -dm755 ${pkgdir}/etc/pam.d
   install -t ${pkgdir}/etc/pam.d -m644 ${srcdir}/{passwd,chgpasswd,chpasswd,newusers}
 
-  # PAM config - from tarball
   install -Dm644 etc/pam.d/groupmems ${pkgdir}/etc/pam.d/groupmems
 
-  # we use the 'useradd' PAM file for other similar utilities
   for file in chage groupadd groupdel groupmod shadow \
       useradd usermod userdel; do
     install -Dm644 ${srcdir}/defaults.pam ${pkgdir}/etc/pam.d/$file
   done
 
-  # Remove utilities provided by util-linux
+  # Part of util-linux
   rm \
       ${pkgdir}/usr/bin/{chsh,chfn,sg} \
       ${pkgdir}/bin/{login,su} \
@@ -117,10 +97,9 @@ package() {
   # don't leave empty dir with removing ${pkgdir}/sbin/nologin
   rm -r ${pkgdir}/sbin
 
-  # but we keep newgrp, as sg is really an alias to it
+  # keep newgrp & man pages
   mv ${pkgdir}/usr/bin/{newgrp,sg}
 
-  # ...and their many man pages
   find ${pkgdir}/usr/share/man \
       '(' -name 'chsh.1'  -o \
           -name 'chfn.1'  -o \
