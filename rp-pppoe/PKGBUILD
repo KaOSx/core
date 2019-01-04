@@ -1,32 +1,26 @@
 
 pkgname=rp-pppoe
-pkgver=3.12
-pkgrel=3
+pkgver=3.13
+pkgrel=1
 pkgdesc="Roaring Penguin's Point-to-Point Protocol over Ethernet client"
 arch=('x86_64')
-url="http://www.roaringpenguin.com/pppoe/"
+url="https://dianne.skoll.ca/projects/rp-pppoe/"
 license=('GPL')
 groups=('base')
-depends=('ppp>=2.4.7' 'sh')
+depends=('ppp' 'sh')
 options=('!makeflags')
 backup=(etc/ppp/{pppoe.conf,firewall-standalone,firewall-masq,pppoe-server-options})
-source=("http://www.roaringpenguin.com/files/download/rp-pppoe-${pkgver}.tar.gz"
-        'adsl.service'
-        'kmode.patch'
-        'fix-linux-vs-glibc-headers-compile-error-mess.patch')
-md5sums=('216eb52b69062b92a64ee37fd71f4b66'
-         'ae14bb45cdd6aad31395a301f96ddd82'
-         '7f1bea3193b381bfaeb6cab1e0478300'
-         '2941e74b4e8dc98d252906f8bff2d18e')
+source=("https://dianne.skoll.ca/projects/rp-pppoe/download/rp-pppoe-${pkgver}.tar.gz"
+        'adsl.service')
+md5sums=('ec9dccd9a367a1f71f2dc81069796dd8'
+         'ae14bb45cdd6aad31395a301f96ddd82')
 
 build() {
   cd ${pkgname}-${pkgver}/src
-  patch -p2 -i ${srcdir}/kmode.patch
-  #fix from FW for glibc 2.25
-  patch -p2 -i ${srcdir}/fix-linux-vs-glibc-headers-compile-error-mess.patch
+  #patch -p2 -i ${srcdir}/kmode.patch
   
   ./configure --prefix=/usr \
-              --enable-plugin
+    --enable-plugin
   make
 }
 
@@ -34,5 +28,5 @@ package() {
   cd ${pkgname}-${pkgver}/src
   make PLUGIN_DIR="/usr/lib/rp-pppoe" DESTDIR=${pkgdir} install
   
-  install -Dm644 ${srcdir}/adsl.service ${pkgdir}/usr/lib/systemd/system/adsl.service
+  install -Dm644 ../../adsl.service ${pkgdir}/usr/lib/systemd/system/adsl.service
 }

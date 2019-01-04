@@ -1,6 +1,6 @@
 
 pkgname=libxslt
-pkgver=1.1.32
+pkgver=1.1.33
 pkgrel=1
 pkgdesc="XML stylesheet transformation library"
 arch=('x86_64')
@@ -11,7 +11,7 @@ makedepends=('python2')
 options=('!libtool')
 source=("ftp://xmlsoft.org/libxslt/${pkgname}-${pkgver}.tar.gz"
         'xml_config.patch')
-md5sums=('1fc72f98e98bf4443f1651165f3aa146'
+md5sums=('b3bd254a03e46d58f8ad1e4559cd2c2f'
          '3bc1d8a43f577e7da84f7e3415331f70')
 
 build() {

@@ -1,6 +1,6 @@
 
 pkgname=libxml2
-pkgver=2.9.8
+pkgver=2.9.9
 pkgrel=1
 pkgdesc="XML parsing library, version 2"
 arch=('x86_64')
@@ -12,7 +12,7 @@ url="http://www.xmlsoft.org/"
 source=("ftp://ftp.xmlsoft.org/${pkgname}/${pkgname}-${pkgver}.tar.gz"
         "http://www.w3.org/XML/Test/xmlts20080827.tar.gz"
         "https://github.com/GNOME/libxml2/commit/3f0627a1ee854dc965bf61dd6466a798b80cf088.diff")
-md5sums=('b786e353e2aa1b872d70d5d1ca0c740d'
+md5sums=('c04a5a0a042eaa157e8e8c9eabe76bd6'
          'ae3d1ebe000a3972afa104ca7f0e1b4a'
          '98fd3c2502dce1a1fd45ca3efbb87ca7')
 
