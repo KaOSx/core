@@ -1,7 +1,7 @@
 
 pkgname=ipw2200-fw
 pkgver=3.1
-pkgrel=8
+pkgrel=9
 pkgdesc="Firmware for the Intel PRO/Wireless 2200BG"
 arch=('x86_64')
 url='http://ipw2200.sourceforge.net/'
@@ -10,11 +10,11 @@ source=("http://mirrors.slackware.com/slackware/slackware-current/source/n/$pkgn
 md5sums=('7066e4cf1d94c319c53dfb2603edb757')
 
 package() {
-  cd "${srcdir}/ipw2200-fw-${pkgver}"
-  # Install firmware
+  cd ipw2200-fw-${pkgver}
+
   for i in ipw*.fw; do
-    install -D -m 644 $i "${pkgdir}/usr/lib/firmware/$i"
+    install -D -m 644 $i ${pkgdir}/usr/lib/firmware/$i
   done
-  # Install license
-  install -D -m 644 LICENSE.ipw2200-fw "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+
+  install -D -m 644 LICENSE.ipw2200-fw ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }
