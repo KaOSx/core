@@ -12,6 +12,16 @@ _parse=""
 _count=0
 _errors=""
 _mode=$(echo ${1})
+_fast=0
+
+if [[ "$_mode" == "--fast" ]]; then
+  _fast=1
+  shift
+  _mode=$(echo ${1})
+elif (( $# > 1 )); then
+  shift
+  [[ "${1}" == "--fast" ]] && _fast=1
+fi
 
 function select_dialog() {
   local repo=""
@@ -98,6 +108,7 @@ function cli_mode() {
         echo -e "\e[01;37m[$repo]\e[00m \e[00;31mis not synced\e[00m."
         echo -e "\e[01;37mDo not update, wait for your mirror to sync\e[00m."
         ret_code=10
+        (( $_fast == 1 )) && return ${ret_code}
     fi
   done
   echo " "
@@ -126,6 +137,7 @@ elif [ "${_mode}" == "--help" ]; then
   echo " "
   echo "--cli   Command Line Interface mode (default)"
   echo "--gui   KDialog GUI"
+  echo "--fast  Check until error"
   echo "--help  This message"
   echo " "
   
