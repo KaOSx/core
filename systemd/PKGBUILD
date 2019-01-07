@@ -1,14 +1,14 @@
 
 pkgname=systemd
 pkgver=239
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1')
 depends=('acl' 'bash' 'glibc' 'kmod' 'hwids' 'util-linux' 'kbd' 'libcap' 'libxslt' 'iptables'
-         'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn' 'lz4' 'python2-systemd'
+         'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn2' 'lz4' 'python2-systemd'
          'quota' 'libseccomp' 'cryptsetup') # 'audit') 
 makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs' 'meson' 'ninja')
 optdepends=('libmicrohttpd: systemd-journal-gatewayd')
@@ -39,7 +39,7 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'KaOS_fallback.conf'
         'splash.bmp'
         'systemd-tmpfiles.hook'
-        "https://github.com/systemd/systemd/pull/8580/commits/4af61b251099b1fed4c816a464f8068972a7145c.diff")
+        "https://github.com/systemd/systemd/commit/8f6b442a78d0b485f044742ad90b2e8271b4e68e.diff")
 md5sums=('6137e3f50390391cf34521d071a1a078'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
@@ -49,7 +49,7 @@ md5sums=('6137e3f50390391cf34521d071a1a078'
          'b8d8ebeab17edbe91209e705cfc9e774'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
          '7d5910d12fdfce56228a1aac8c3d618c'
-         'b56e36075c5f1ad2de6bf4f6d5c06e0d')
+         '704acafa13d503b6a63701e2765d7e31')
 
 prepare() {
   cd ${pkgname}-${pkgver}
@@ -57,8 +57,9 @@ prepare() {
   #rm src/udev/keyboard-keys-from-name.gperf
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
-  # fix for util-linux 2.32
-  #patch -p1 -i ${srcdir}/4af61b251099b1fed4c816a464f8068972a7145c.diff
+  
+  # newer meson has debug, clashes with systemd 239 debug
+  patch -p1 -i ${srcdir}/8f6b442a78d0b485f044742ad90b2e8271b4e68e.diff
 }
 
 build() {
@@ -81,6 +82,7 @@ build() {
     -Dgnu-efi=true \
     -Daudit=false \
     -Dima=false \
+    -Dlibidn2=true \
     -Dnetworkd=false \
     -Ddefault-dnssec=no \
     -Ddefault-kill-user-processes=false \

@@ -1,13 +1,13 @@
 
 pkgname=wget
 pkgver=1.20.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A network utility to retrieve files from the Web"
 arch=('x86_64')
 url="https://www.gnu.org/software/wget/wget.html"
 license=('GPL3')
 groups=('base')
-depends=('glibc' 'openssl' 'libidn' 'util-linux' 'pcre' 'libpsl')
+depends=('glibc' 'openssl' 'libidn2' 'util-linux' 'pcre' 'libpsl')
 optdepends=('ca-certificates: HTTPS downloads')
 backup=('etc/wgetrc')
 source=("https://ftpmirror.gnu.org/wget/${pkgname}-${pkgver}.tar.lz"
