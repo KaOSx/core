@@ -1,6 +1,6 @@
 
 pkgname=mirror-check
-pkgver=2.4
+pkgver=2.5
 pkgrel=1
 pkgdesc="Checks whether the locally used mirror is synced with the main mirror"
 arch=('x86_64')
@@ -10,7 +10,7 @@ makedepends=('asciidoc')
 source=('mirror-check'
         'mirror-check.desktop')
         #'mirror-check.svg')
-md5sums=('4dd1cf2df57dfcdb78b8279db0546c19'
+md5sums=('95dd150ff55049690ff03ca2844c769f'
          'aff18a3883a298752fac09d3ce096429')
 
 package() {
