@@ -30,6 +30,6 @@ Server = https://repo.kaosx.us/$repo
 Server = http://kqtos.tk/repo/$repo
 
 # Vietnam
-Server = http://mirror.freedif.org/KaOS/$repo
+Server = https://mirror.freedif.org/KaOS/$repo
 
 
