@@ -68,7 +68,7 @@ build() {
   
   NTP_SERVERS="0.north-america.pool.ntp.org 1.north-america.pool.ntp.org 2.north-america.pool.ntp.org 3.north-america.pool.ntp.org"
   # cp locale-archive from /usr/lib/locale
-  export LANG=en_US.UTF-8
+  #export LANG=en_US.UTF-8
   
   meson ../${pkgname}-${pkgver} \
     --prefix=/usr \
