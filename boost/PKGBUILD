@@ -3,7 +3,7 @@ pkgbase=boost
 pkgname=('boost-libs' 'boost')
 pkgver=1.68.0
 _pkgver=1_68_0
-pkgrel=1
+pkgrel=2
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="http://www.boost.org/"
@@ -16,10 +16,10 @@ sha256sums=('7f6130bc3cf65f56a618888ce9d5ea704fa10b462be126ad053e80e553d6d8b7'
             '3984cfb1922a909d65794f173068da59fb2a7c4efdaf42911c3add329a2b9789')
 
 build() {
-  export _stagedir="${srcdir}/stagedir"
+  export _stagedir=${srcdir}/stagedir
   local JOBS="$(sed -e 's/.*\(-j *[0-9]\+\).*/\1/' <<< ${MAKEFLAGS})"
 
-  cd "${srcdir}"/${pkgbase}_${_pkgver}
+  cd ${pkgbase}_${_pkgver}
   
   # keep option to build for python3, this reverts change in 1.62
   # https://github.com/boostorg/build/commit/78ffbe094400d277627b2c19ceb182d637b8baca
@@ -28,29 +28,29 @@ build() {
   ./bootstrap.sh --with-toolset=gcc --with-icu --with-python=/usr/bin/python3
 
   # tools
-  install -d -m 755 "${_stagedir}"/bin
-  install tools/build/src/engine/bin.linuxx86_64/b2 "${_stagedir}"/bin/b2
+  install -d -m 755 ${_stagedir}/bin
+  install tools/build/src/engine/bin.linuxx86_64/b2 ${_stagedir}/bin/b2
 
    #echo "using python : 3.6 : /usr/bin/python3 : /usr/include/python3.6m : /usr/lib ;" >> project-config.jam
-   sed -i "s|using python : 3.6 : /usr ;|using python : 3.6 : /usr/bin/python3 : /usr/include/python3.6m : /usr/lib ;|g" project-config.jam 
+   sed -i "s|using python : 3.7 : /usr ;|using python : 3.7 : /usr/bin/python3 : /usr/include/python3.7m : /usr/lib ;|g" project-config.jam 
    # Support for OpenMPI
    echo "using mpi ;" >> project-config.jam
   
   #quickbook support
-  install -d -m 755 "${_stagedir}"/share/boostbook
-  cp -a tools/boostbook/{xsl,dtd} "${_stagedir}"/share/boostbook/
+  install -d -m 755 ${_stagedir}/share/boostbook
+  cp -a tools/boostbook/{xsl,dtd} ${_stagedir}/share/boostbook/
 
   # ${_stagedir} for split package
-  "${_stagedir}"/bin/b2 \
+  ${_stagedir}/bin/b2 \
       variant=release \
       debug-symbols=off \
       threading=multi \
       runtime-link=shared \
       link=shared,static \
       toolset=gcc \
-      python=3.6 \
+      python=3.7 \
       cflags="${CPPFLAGS} ${CFLAGS} -O3" linkflags="${LDFLAGS}" \
-      --prefix="${_stagedir}" \
+      --prefix=${_stagedir} \
       --layout=system \
       ${JOBS} \
       install
@@ -60,19 +60,17 @@ package_boost() {
     pkgdesc="Free peer-reviewed portable C++ source libraries - Development"
     depends=("boost-libs=${pkgver}")
     optdepends=('python3: for python3 bindings')
-                #'python2: for python2 bindings')
 
-    install -d -m 755 "${pkgdir}"/usr
-    cp -a "${_stagedir}"/{bin,include,share} "${pkgdir}"/usr
+    install -d -m 755 ${pkgdir}/usr
+    cp -a ${_stagedir}/{bin,include,share} ${pkgdir}/usr
     
-    install -d "${pkgdir}"/usr/lib
-    cp -a "${_stagedir}"/lib/*.a "${pkgdir}"/usr/lib/
+    install -d ${pkgdir}/usr/lib
+    cp -a ${_stagedir}/lib/*.a ${pkgdir}/usr/lib/
 
     # license
-    install -D -m644 "${srcdir}/${pkgbase}_${_pkgver}/LICENSE_1_0.txt" \
-        "${pkgdir}"/usr/share/licenses/boost/LICENSE_1_0.txt
+    install -D -m644 ${pkgbase}_${_pkgver}/LICENSE_1_0.txt ${pkgdir}/usr/share/licenses/boost/LICENSE_1_0.txt
         
-    ln -s /usr/bin/b2 "$pkgdir"/usr/bin/bjam
+    ln -s /usr/bin/b2 ${pkgdir}/usr/bin/bjam
 }
 
 package_boost-libs() {
@@ -81,16 +79,15 @@ package_boost-libs() {
     optdepends=('openmpi: for mpi support')
     options=('!staticlibs')
 
-    install -d -m 755 "${pkgdir}"/usr
-    cp -a "${_stagedir}"/lib "${pkgdir}"/usr
+    install -d -m 755 ${pkgdir}/usr
+    cp -a ${_stagedir}/lib ${pkgdir}/usr
     # included in boost:
-    rm "${pkgdir}"/usr/lib/*.a
+    rm ${pkgdir}/usr/lib/*.a
     
     # issue with finding new python lib versioning, vigra exposed, add link for old scheme
-    ln -s /usr/lib/libboost_python36.so.${pkgver} ${pkgdir}/usr/lib/libboost_python3.so
+    ln -s /usr/lib/libboost_python37.so.${pkgver} ${pkgdir}/usr/lib/libboost_python3.so
 
     # license
-    install -D -m644 "${srcdir}/${pkgbase}_${_pkgver}/LICENSE_1_0.txt" \
-        "${pkgdir}"/usr/share/licenses/boost-libs/LICENSE_1_0.txt
+    install -D -m644 ${pkgbase}_${_pkgver}/LICENSE_1_0.txt ${pkgdir}/usr/share/licenses/boost-libs/LICENSE_1_0.txt
 }
 
