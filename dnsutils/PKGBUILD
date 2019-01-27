@@ -3,7 +3,7 @@ pkgname=dnsutils
 # _pkver when P version used. After 9.13, only use even number, odd are for unstable, development.
 pkgver=9.13.5
 _pkgver=9.13.5
-pkgrel=2
+pkgrel=3
 pkgdesc="DNS utilities, tools, name resolver and domain name authority server"
 arch=('x86_64')
 url="https://www.isc.org/software/bind"
