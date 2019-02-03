@@ -1,8 +1,8 @@
 
 pkgname=gnutls
 pkgver=3.6.6
-_pkgver=3.6.6
-pkgrel=1
+_pkgver=3.6
+pkgrel=2
 pkgdesc="Secure communications library implementing the SSL, TLS and DTLS protocols and technologies around them"
 arch=('x86_64')
 license=('GPL3' 'LGPL')
@@ -10,11 +10,11 @@ url="https://www.gnutls.org/"
 options=('libtool')
 depends=('gcc-libs' 'libtasn1' 'readline' 'zlib' 'texinfo' 'nettle' 'p11-kit' 'libidn2')
 makepends=('datefudge' 'valgrind' 'strace')
-source=("https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/${pkgname}-${pkgver}.tar.xz")
+source=("https://www.gnupg.org/ftp/gcrypt/gnutls/v${_pkgver}/${pkgname}-${pkgver}.tar.xz")
 md5sums=('30c5b63686edcd260d87d8fb8a06977f')
 
 build() {
-  cd ${pkgname}-${_pkgver}
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr \
        --disable-guile \
@@ -23,13 +23,13 @@ build() {
 }
 
 check() {
-  cd ${pkgname}-${_pkgver}
+  cd ${pkgname}-${pkgver}
   
   make check
 }
 
 package() {
-  cd ${pkgname}-${_pkgver}
+  cd ${pkgname}-${pkgver}
   
   make DESTDIR=${pkgdir} install 
 }

@@ -1,0 +1,60 @@
+
+pkgname=python3
+pkgver=3.7.2
+pkgrel=2
+_pybasever=3.7
+pkgdesc="Next generation of the python high-level scripting language"
+arch=('x86_64')
+license=('custom')
+url="https://www.python.org"
+depends=('expat' 'bzip2' 'gdbm' 'openssl' 'libffi' 'zlib' 'tk')
+makedepends=('sqlite' 'valgrind' 'bluez' 'libgl' 'llvm') # libgl for tests
+options=('!makeflags')
+source=("https://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz")
+md5sums=('df6ec36011808205beda239c72f947cb')  
+
+build() {
+  cd Python-${pkgver}
+
+  sed -i -e "s|^#.* /usr/local/bin/python|#!/usr/bin/python|" Lib/cgi.py
+
+  # Use the system copy   
+  rm -r Modules/expat
+  rm -r Modules/_ctypes/{darwin,libffi}*
+
+  ./configure --prefix=/usr \
+              --enable-shared \
+              --with-computed-gotos \
+              --enable-optimizations \
+              --enable-ipv6 \
+              --with-valgrind \
+              --with-system-expat \
+              --with-dbmliborder=gdbm:ndbm \
+              --with-system-ffi \
+              --without-ensurepip
+
+  make
+}
+
+check() {
+  cd Python-${pkgver}
+  # test_ssl fails
+  LD_LIBRARY_PATH=${srcdir}/Python-${pkgver}:${LD_LIBRARY_PATH} \
+     ${srcdir}/Python-${pkgver}/python -m test.regrtest -x test_posixpath test_logging test_site test_urllib2_localnet test_pyexpat
+}
+
+package() {
+  cd Python-${pkgver}
+  make DESTDIR=${pkgdir} install maninstall
+
+  # Conflicts with python2 
+  rm ${pkgdir}/usr/bin/2to3
+
+  ln -sf ../../libpython${_pybasever}mu.so \
+    ${pkgdir}/usr/lib/python${_pybasever}/config-${_pybasever}m-x86_64-linux-gnu/libpython${_pybasever}m.so
+
+  # Clean-up reference to build directory
+  sed -i "s|${srcdir}/Python-${pkgver}:||" ${pkgdir}/usr/lib/python${_pybasever}/config-${_pybasever}m-x86_64-linux-gnu/Makefile
+
+  install -Dm644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+}
