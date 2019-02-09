@@ -1,7 +1,7 @@
 
 pkgname=iputils
 pkgver=20180629
-pkgrel=3
+pkgrel=4
 pkgdesc="IP Configuration Utilities (and Ping)."
 arch=('x86_64')
 license=('GPL')

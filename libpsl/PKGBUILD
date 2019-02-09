@@ -1,7 +1,7 @@
 
 pkgname=libpsl
 pkgver=0.20.1
-pkgrel=4
+pkgrel=5
 pkgdesc="Library that provides functions to work with the Mozilla Public Suffix List."
 arch=('x86_64')
 url="https://rockdaboot.github.io/libpsl/"
