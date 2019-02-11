@@ -31,7 +31,7 @@ package() {
 
   make DESTDIR=${pkgdir} UDEV_RULE_DIR=/usr/lib/udev/rules.d/ SBINDIR=/usr/bin/ install
  
-  echo 'ACTION=="add" SUBSYSTEM=="module", DEVPATH=="/module/cfg80211", RUN+="/usr/bin/set-wireless-regdom"' >> ${pkgdir}/usr/lib/udev/rules.d/85-regulatory.rules
+  echo 'ACTION=="add", SUBSYSTEM=="module", DEVPATH=="/module/cfg80211", RUN+="/usr/bin/set-wireless-regdom"' >> ${pkgdir}/usr/lib/udev/rules.d/85-regulatory.rules
 
   install -D -m644 LICENSE ${pkgdir}/usr/share/licenses/crda/LICENSE
   install -D -m755 ../set-wireless-regdom ${pkgdir}/usr/bin/set-wireless-regdom
