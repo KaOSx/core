@@ -39,7 +39,7 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         'KaOS_fallback.conf'
         'splash.bmp'
         'systemd-tmpfiles.hook'
-        "https://github.com/systemd/systemd/commit/8f6b442a78d0b485f044742ad90b2e8271b4e68e.diff")
+        'service.diff')
 md5sums=('c5953c24c850b44fcf714326e567dc37'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
@@ -49,7 +49,7 @@ md5sums=('c5953c24c850b44fcf714326e567dc37'
          'b8d8ebeab17edbe91209e705cfc9e774'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
          '7d5910d12fdfce56228a1aac8c3d618c'
-         '704acafa13d503b6a63701e2765d7e31')
+         'b20711c6e42585d2a85ff01f8adb5c68')
 
 prepare() {
   cd ${pkgname}-${pkgver}
@@ -58,8 +58,8 @@ prepare() {
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
   
-  # newer meson has debug, clashes with systemd 239 debug
-  #patch -p1 -i ${srcdir}/8f6b442a78d0b485f044742ad90b2e8271b4e68e.diff
+  # revert SuccessAction= until figured why it is set to invalid on KaOS with 241 & up
+  patch -p1 -i ${srcdir}/service.diff
 }
 
 build() {
