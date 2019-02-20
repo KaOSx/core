@@ -1,7 +1,7 @@
 
 pkgname=openvpn
-pkgver=2.4.6
-pkgrel=2
+pkgver=2.4.7
+pkgrel=1
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
 url="https://openvpn.net/index.php/open-source.html"
@@ -10,19 +10,18 @@ license=('custom')
 install=openvpn.install
 backup=(usr/share/openvpn/easy-rsa/vars
         usr/share/openvpn/easy-rsa/openssl.cnf)
-source=("https://swupdate.openvpn.net/community/releases/openvpn-${pkgver}.tar.xz"
-        "https://github.com/OpenVPN/easy-rsa/archive/3.0.1.tar.gz"
+source=("https://github.com/OpenVPN/openvpn/archive/v${pkgver}.tar.gz"
+        "https://github.com/OpenVPN/easy-rsa/archive/v3.0.6.tar.gz"
         'openvpn@.service')
-md5sums=('3a1f3f63bdaede443b4df49957df9405'
-         'aa58cbecda1d5ed6df6bb65e990e42a1'
+md5sums=('08a05ca35e7a18dfa08a30937ed8a3c1'
+         'ef7fb0ff627a4240703c8c9a27b96cfb'
          'c0275a1192a7e3c0a167a0dc4809dbaa')
 
 build() {
   cd ${pkgname}-${pkgver}
   
-  # Build openvpn
-  CFLAGS="$CFLAGS -DPLUGIN_LIBDIR=\\\"/usr/lib/openvpn\\\""
-     ./configure --prefix=/usr \
+    autoreconf -i -v -f
+    ./configure --prefix=/usr \
         --mandir=/usr/share/man \
         --enable-iproute2 \
         --enable-systemd
@@ -55,12 +54,12 @@ package() {
   install -Dm644 distro/systemd/openvpn-server@.service ${pkgdir}/usr/lib/systemd/system/openvpn-server@.service
   
   # Install easy-rsa
-  cd ${srcdir}/easy-rsa-3.0.1
+  cd ${srcdir}/easy-rsa-3.0.6
   install -d ${pkgdir}/usr/share/doc/easy-rsa/
   mv doc/* ${pkgdir}/usr/share/doc/easy-rsa/
   rmdir doc
   install -d ${pkgdir}/usr/share/licenses/easy-rsa/
-  mv COPYING ${pkgdir}/usr/share/licenses/easy-rsa/
+  mv COPYING.md ${pkgdir}/usr/share/licenses/easy-rsa/
 
   install -d ${pkgdir}/usr/share/easy-rsa/
   mv easyrsa3/* ${pkgdir}/usr/share/easy-rsa/

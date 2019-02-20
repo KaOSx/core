@@ -25,6 +25,7 @@ Server = http://ftp.wa.co.za/pub/kaos/$repo
 
 # United States
 Server = http://mirror.dacentec.com/kaosx/$repo
+Server = https://kiwidev.xyz/kaos/$repo
 Server = http://kaosx.tk/repo/$repo
 Server = https://repo.kaosx.us/$repo
 Server = http://kqtos.tk/repo/$repo
