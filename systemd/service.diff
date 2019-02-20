@@ -1,0 +1,24 @@
+--- a/units/systemd-poweroff.service	2019-02-14 11:11:58.000000000 +0100
++++ b/units/systemd-poweroff.service	2019-02-16 11:07:23.868250118 +0100
+@@ -13,4 +13,8 @@
+ DefaultDependencies=no
+ Requires=shutdown.target umount.target final.target
+ After=shutdown.target umount.target final.target
+-SuccessAction=poweroff-force
++#SuccessAction=poweroff-force
++
++[Service]
++Type=oneshot
++ExecStart=/usr/bin/systemcl --force poweroff
+--- a/units/systemd-reboot.service	2019-02-14 11:11:58.000000000 +0100
++++ b/units/systemd-reboot.service	2019-02-16 11:06:22.628736830 +0100
+@@ -13,4 +13,8 @@
+ DefaultDependencies=no
+ Requires=shutdown.target umount.target final.target
+ After=shutdown.target umount.target final.target
+-SuccessAction=reboot-force
++#SuccessAction=reboot-force
++
++[Service]
++Type=oneshot
++ExecStart=/usr/bin/systemcl --force reboot
