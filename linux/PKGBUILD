@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=4.20
-pkgver=4.20.11
+pkgver=4.20.12
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -28,7 +28,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.20.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('d39dd4ba2d5861c54b90d49be19eaf31'
-         'a54c60bf1a5f5682da13c86985c40336'
+         '18fa4ebb3fe20e06eaa3cb5a2f4cdbf7'
          '79d1f399a07f94283fd250a482fba222'
          'f9671abc73848888411275f97e47ca1c'
          '4e39c3a85c944c774b4d12eef88d7539'
