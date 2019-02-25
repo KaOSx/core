@@ -1,7 +1,7 @@
 
 pkgname=cryptsetup
 pkgver=2.1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Utility used to conveniently setup disk encryption based on DMCrypt kernel module."
 arch=('x86_64')
 license=('GPL')
@@ -23,7 +23,8 @@ build() {
   ./configure --prefix=/usr \
         --disable-static \
         --enable-cryptsetup-reencrypt \
-        --enable-libargon2
+        --enable-libargon2 \
+        --with-default-luks-format=LUKS1
   make
 }
 
