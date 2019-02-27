@@ -1,7 +1,7 @@
 
 pkgname=openssl
-pkgver=1.1.1.1
-_pkgver=1.1.1a
+pkgver=1.1.1.2
+_pkgver=1.1.1b
 pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
@@ -14,7 +14,7 @@ backup=('etc/ssl/openssl.cnf')
 source=("https://www.openssl.org/source/${pkgname}-${_pkgver}.tar.gz"
         'no-rpath_openssl1.1.patch'
         'ca-dir_openssl1.1.patch')
-sha256sums=('fc20130f8b7cbd2fb918b2f14e2f429e109c31ddd0fb38fc5d71d9ffed3f9f41'
+sha256sums=('5c557b023230413dfb0756f3137a13e6d726838ccd1430888ad15bfb2b43ea4b'
             '8218a810ec36a41d0a452fc9a1a6d9a9bef3e5cacd59aa46b6612ac9bf12740e'
             'd6dd76398e67f07640e49e7a6b0f0585801dcd6a031b72bf4d19938562512c4d')
 
