@@ -2,7 +2,7 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.27
+pkgver=2.29
 _commit=9533f19aa5cd265db813db6923f8eb2fc9c3bcc3
 pkgrel=1
 pkgdesc="GNU C Library"
@@ -10,31 +10,27 @@ arch=('x86_64')
 url="http://www.gnu.org/software/libc"
 license=('GPL' 'LGPL')
 groups=('base')
-depends=('linux-api-headers>=4.11' 'tzdata')
-makedepends=('gcc')
+depends=('linux-api-headers' 'tzdata')
+makedepends=('gcc' 'python3')
 backup=(etc/gai.conf
         etc/locale.gen
         etc/nscd.conf)
 options=('!strip')
 install=glibc.install
-#source=("http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
-source=("https://github.com/bminor/glibc/archive/${_commit}.zip"
+source=("http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
+#source=("https://github.com/bminor/glibc/archive/${_commit}.zip"
         #"http://www.linuxfromscratch.org/patches/lfs/development/glibc-2.22-largefile-1.patch"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('d862982d792a0d7c0c7e387824251e8c'
+md5sums=('e6c279d5b2f0736f740216f152acf974'
          #'203fe9133e82f2b59969c116b70fd84e'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
          '8b3298de2392a10905a64ceccf56d2c1')
 
 build() {
-  cd ${srcdir}/${pkgname}-${_commit}
-  #patch -p1 -i $srcdir/glibc-2.22-largefile-1.patch
-  
-  cd ${srcdir}
-  mkdir glibc-build
+  mkdir -p glibc-build
   cd glibc-build
 
   echo "slibdir=/lib" >> configparms
@@ -43,7 +39,7 @@ build() {
   CFLAGS=${CFLAGS/-fstack-protector/}
   CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
 
-  ${srcdir}/glibc-${_commit}/configure --prefix=/usr \
+  ${srcdir}/glibc-${pkgver}/configure --prefix=/usr \
       --libdir=/usr/lib --libexecdir=/usr/lib \
       --with-headers=/usr/include \
       --with-bugurl=https://github.com/KaOSx/core/issues \
@@ -69,7 +65,7 @@ build() {
 }
 
 check() {
-  cd ${srcdir}/glibc-build
+  cd glibc-build
   
   # no stack protector for running tests
   sed -i '5,7d' configparms
@@ -79,7 +75,7 @@ check() {
 }
 
 package() {
-  cd ${srcdir}/glibc-build
+  cd glibc-build
 
   install -dm755 ${pkgdir}/etc
   touch ${pkgdir}/etc/ld.so.conf
@@ -90,17 +86,17 @@ package() {
 
   install -dm755 ${pkgdir}/{,usr/{sbin,lib/{,locale,systemd/system,tmpfiles.d}}}
 
-  install -m644 ${srcdir}/glibc-${_commit}/nscd/nscd.conf ${pkgdir}/etc/nscd.conf
-  install -m644 ${srcdir}/glibc-${_commit}/nscd/nscd.service ${pkgdir}/usr/lib/systemd/system
-  install -m644 ${srcdir}/glibc-${_commit}/nscd/nscd.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/nscd.conf
+  install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.conf ${pkgdir}/etc/nscd.conf
+  install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.service ${pkgdir}/usr/lib/systemd/system
+  install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/nscd.conf
 
   install -m755 ${srcdir}/locale-gen ${pkgdir}/usr/sbin
-  install -m644 ${srcdir}/glibc-${_commit}/posix/gai.conf ${pkgdir}/etc/gai.conf
+  install -m644 ${srcdir}/glibc-${pkgver}/posix/gai.conf ${pkgdir}/etc/gai.conf
 
   # create /etc/locale.gen
   install -m644 ${srcdir}/locale.gen.txt ${pkgdir}/etc/locale.gen
   sed -e '1,3d' -e 's|/| |g' -e 's|\\| |g' -e 's|^|#|g' \
-    ${srcdir}/glibc-${_commit}/localedata/SUPPORTED >> ${pkgdir}/etc/locale.gen
+    ${srcdir}/glibc-${pkgver}/localedata/SUPPORTED >> ${pkgdir}/etc/locale.gen
 
   # fix for the linker
   sed -i '/RTLDLIST/s%lib64%lib%' ${pkgdir}/usr/bin/ldd
@@ -118,7 +114,7 @@ package() {
 
   #strip $STRIP_STATIC usr/lib/*.a 
 
-  strip $STRIP_SHARED lib/{libanl,libBrokenLocale,libcidn,libcrypt}-*.so \
+  strip $STRIP_SHARED lib/{libanl,libBrokenLocale,libcrypt}-*.so \
                       lib/libnss_{compat,dns,files,hesiod,nis,nisplus}-*.so \
                       lib/{libdl,libm,libnsl,libresolv,librt,libutil}-*.so \
                       lib/{libmemusage,libpcprofile,libSegFault}.so \
