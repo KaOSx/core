@@ -9,11 +9,7 @@ arch=('x86_64')
 depends=('coreutils' 'iproute2' 'openresolv')
 makedepends=('pkg-config') 
 optdepends=('dialog: for the menu based wifi assistant'
-            'dhclient: for DHCP support (or dhcpcd)'
-            'dhcpcd: for DHCP support (or dhclient)'
-            'wpa_supplicant: for wireless networking support'
-            'wpa_actiond: for automatic wireless connections through netctl-auto'
-            'ppp: for pppoe connections')
+            'dhclient: for DHCP support (or dhcpcd)')
 source=("https://sources.archlinux.org/other/packages/netctl/netctl-${pkgver}.tar.xz")
 md5sums=('f9080693f493c20974db9fe12f103121')
 
