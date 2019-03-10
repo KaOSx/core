@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.0
 _srcname=linux-5.0
-pkgver=5.0
+pkgver=5.0.1
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfuti
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-4.16-rc7.tar.gz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -31,7 +31,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('7381ce8aac80a01448e065ce795c19c0'
-         'b6ddfe842893637f1233376df1ef509e'
+         '488f0f1b00a0861b4c3ddf578f1bd548'
+         'd61e2a3503a433ceae588d70ed0d819d'
          'f9671abc73848888411275f97e47ca1c'
          '4e39c3a85c944c774b4d12eef88d7539'
          '6ed8d4b168393d982d084a5b32633c7d'
@@ -49,7 +50,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
