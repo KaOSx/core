@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.0
 _srcname=linux-5.0
-pkgver=5.0.1
+pkgver=5.0.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -17,12 +17,12 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         # the main kernel config files
         'config'
         #aufs patches
-        'aufs4-loopback.patch'
-        'aufs4-base.patch'
-        'aufs4-mmap.patch'
-        'aufs4-standalone.patch'
-        'aufs4-kbuild.patch'
-        'aufs4.patch'
+        'aufs5-loopback.patch'
+        'aufs5-base.patch'
+        'aufs5-mmap.patch'
+        'aufs5-standalone.patch'
+        'aufs5-kbuild.patch'
+        'aufs5.patch'
         'config.aufs'
         'tmpfs-idr.patch'
         'vfs-ino.patch'
@@ -31,7 +31,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('7381ce8aac80a01448e065ce795c19c0'
-         '488f0f1b00a0861b4c3ddf578f1bd548'
+         '31220991722b9f40ef9d7370557754a0'
          'd61e2a3503a433ceae588d70ed0d819d'
          'f9671abc73848888411275f97e47ca1c'
          '4e39c3a85c944c774b4d12eef88d7539'
@@ -56,12 +56,12 @@ build() {
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
   #aufs patches for Live:
-  #patch -p1 -i "${srcdir}/aufs4.patch"
-  #patch -p1 -i "${srcdir}/aufs4-base.patch"
-  #patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
-  #patch -p1 -i "${srcdir}/aufs4-loopback.patch"
-  #patch -p1 -i "${srcdir}/aufs4-mmap.patch"
-  #patch -p1 -i "${srcdir}/aufs4-standalone.patch"
+  #patch -p1 -i "${srcdir}/aufs5.patch"
+  #patch -p1 -i "${srcdir}/aufs5-base.patch"
+  #patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
+  #patch -p1 -i "${srcdir}/aufs5-loopback.patch"
+  #patch -p1 -i "${srcdir}/aufs5-mmap.patch"
+  #patch -p1 -i "${srcdir}/aufs5-standalone.patch"
   #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   #patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
