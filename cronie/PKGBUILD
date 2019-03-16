@@ -1,6 +1,6 @@
 
 pkgname=cronie
-pkgver=1.5.2
+pkgver=1.5.3
 pkgrel=1
 pkgdesc='Daemon that runs specified programs at scheduled times and related tools'
 url='https://github.com/cronie-crond/cronie'
@@ -21,7 +21,7 @@ source=("https://github.com/cronie-crond/cronie/releases/download/${pkgname}-${p
         'cron.deny'
         'service'
         'pam.d')
-md5sums=('703314f58a49ea136e9966d3937d9bf4'
+md5sums=('fec30143a246092fb3cbaf3c547f39f7'
          '2962d9812fbbbdee1bd7f1c1ccb5e372'
          'b4e1316eaa8f3806f20bad21a5101caa'
          'ace2584e5467371e35acf5f5af8f3c29')
