@@ -1,6 +1,6 @@
 
 pkgname=gnupg
-pkgver=2.2.13
+pkgver=2.2.14
 pkgrel=1
 pkgdesc="GNU Privacy Guard 2 - a PGP replacement tool"
 arch=('x86_64')
@@ -13,7 +13,7 @@ conflicts=('gnupg2' 'dirmngr')
 provides=("gnupg2=${pkgver}" 'dirmngr')
 replaces=('gnupg2' 'dirmngr')
 source=("https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-${pkgver}.tar.bz2")
-sha1sums=('66ebc053e2d22f743673d3fbe54453774e4fac58')
+sha1sums=('f349c20e7498af88299b0d42a961e0364e5c37e7')
 
 build() {
 	cd gnupg-$pkgver
