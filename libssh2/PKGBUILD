@@ -1,7 +1,7 @@
 
 pkgname=libssh2
-pkgver=1.8.0
-pkgrel=3
+pkgver=1.8.1
+pkgrel=1
 pkgdesc="A library implementing the SSH2 protocol as defined by Internet Drafts"
 url="https://www.libssh2.org/"
 arch=('x86_64')
@@ -10,17 +10,17 @@ depends=('openssl')
 makedepends=('zlib')
 options=('!libtool')
 source=("https://www.libssh2.org/download/$pkgname-$pkgver.tar.gz")
-md5sums=('3d1147cae66e2959ea5441b183de1b1c')
+md5sums=('338f36a8bb7f5ef55715ac1864cc788c')
 
 build() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   
   ./configure --prefix=/usr 
   make 
 }
 
 package() {
-  cd ${srcdir}/${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install 
   
   install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE 
