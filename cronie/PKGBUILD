@@ -1,6 +1,6 @@
 
 pkgname=cronie
-pkgver=1.5.3
+pkgver=1.5.4
 pkgrel=1
 pkgdesc='Daemon that runs specified programs at scheduled times and related tools'
 url='https://github.com/cronie-crond/cronie'
@@ -17,11 +17,11 @@ backup=('etc/anacrontab'
         'etc/conf.d/crond'
         'etc/pam.d/crond'
         'etc/cron.deny')
-source=("https://github.com/cronie-crond/cronie/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.gz"
+source=("https://github.com/cronie-crond/cronie/releases/download/${pkgname}-${pkgver}-final/${pkgname}-${pkgver}.tar.gz"
         'cron.deny'
         'service'
         'pam.d')
-md5sums=('fec30143a246092fb3cbaf3c547f39f7'
+md5sums=('20233b96997e17a142e1fbe0d7ce8223'
          '2962d9812fbbbdee1bd7f1c1ccb5e372'
          'b4e1316eaa8f3806f20bad21a5101caa'
          'ace2584e5467371e35acf5f5af8f3c29')

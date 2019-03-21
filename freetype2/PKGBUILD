@@ -1,7 +1,7 @@
 
 pkgname=freetype2
 pkgver=2.10.0
-pkgrel=1
+pkgrel=2
 pkgdesc="TrueType font rendering library"
 arch=('x86_64')
 license=('GPL')
@@ -12,12 +12,12 @@ source=("https://sourceforge.net/projects/freetype/files/freetype2/${pkgver}/fre
         'freetype-2.3.0-enable-spr.patch'
         'freetype-config')
 md5sums=('a717e6925b61b9dda946322ecd278a42'
-         '0e968faa7c82747b0d4816749b5baad1'
+         'd525b1bb00ee453f6234e3e1c2cfad43'
          '651688627a0ff9c2ceaecfd2fd354098')
 
 build() {
   cd freetype-${pkgver}
-  #patch -p1 -i ${srcdir}/freetype-2.3.0-enable-spr.patch
+  patch -p1 -i ${srcdir}/freetype-2.3.0-enable-spr.patch
 
   ./configure --prefix=/usr --disable-static --without-png
   make
