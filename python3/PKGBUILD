@@ -47,9 +47,6 @@ package() {
   cd Python-${pkgver}
   make DESTDIR=${pkgdir} install maninstall
 
-  # Conflicts with python2 
-  #rm ${pkgdir}/usr/bin/2to3
-
   ln -sf ../../libpython${_pybasever}mu.so \
     ${pkgdir}/usr/lib/python${_pybasever}/config-${_pybasever}m-x86_64-linux-gnu/libpython${_pybasever}m.so
 
