@@ -1,0 +1,32 @@
+ 
+pkgname=zstd
+pkgver=1.3.8
+pkgrel=1
+pkgdesc='Zstandard is a real-time compression algorithm, providing high compression ratios.'
+arch=('x86_64')
+url='http://www.zstd.net/'
+license=('BSD' 'GPL2')
+depends=('lz4' 'xz' 'zlib')
+makedepends=('googletest' 'cmake')
+source=("https://github.com/facebook/zstd/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
+sha256sums=('293fa004dfacfbe90b42660c474920ff27093e3fb6c99f7b76e6083b21d6d48e')
+
+build() {
+  mkdir -p build
+  cd build
+  
+  cmake ../${pkgname}-${pkgver}/build/cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DZSTD_BUILD_CONTRIB=ON \
+    -DZSTD_BUILD_TESTS=ON
+  make
+}
+
+package() {
+  cd build
+  make DESTDIR=${pkgdir} install
+  
+  install -Dm644 ../${pkgname}-${pkgver}/LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+}
