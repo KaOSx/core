@@ -1,16 +1,16 @@
 
 pkgname=systemd
 pkgver=239
-pkgrel=4
+pkgrel=5
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1')
 depends=('acl' 'bash' 'glibc' 'kmod' 'hwids' 'util-linux' 'kbd' 'libcap' 'libxslt' 'iptables'
-         'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn2' 'lz4' 'python2-systemd'
+         'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn2' 'lz4'
          'quota' 'libseccomp' 'cryptsetup') # 'audit') 
-makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs' 'meson' 'ninja')
+makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs' 'meson' 'ninja' 'python3-lxml')
 optdepends=('libmicrohttpd: systemd-journal-gatewayd')
 backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/dbus-1/system.d/org.freedesktop.hostname1.conf
@@ -45,7 +45,8 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         "https://github.com/systemd/systemd-stable/commit/e8ffb554dce466823f8e95ca5d7f700ebe8ec13f.diff"
         "https://github.com/systemd/systemd-stable/commit/f9d88e891eb2d39528840e67d38b3a9be032c582.diff"
         "https://github.com/systemd/systemd-stable/commit/2760b0dc5aecbb5549801942b12f1d75cbafae09.diff"
-        "https://github.com/systemd/systemd-stable/commit/8bca4621fc003a148c70248c55aa877dfe61fd3f.diff")
+        "https://github.com/systemd/systemd-stable/commit/8bca4621fc003a148c70248c55aa877dfe61fd3f.diff"
+        "https://github.com/systemd/systemd/commit/75720bff62a84896e9a0654afc7cf9408cf89a38.diff")
 md5sums=('6137e3f50390391cf34521d071a1a078'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
@@ -61,7 +62,8 @@ md5sums=('6137e3f50390391cf34521d071a1a078'
          '1f3040e7304d9008bd47770ee36daed3'
          '563eab1aa72e8ce2e0423813a5afa85d'
          'cae3c87c9b14be9cc4caa19eac4bb4fd'
-         'ef78e0cd467ec1192f34c34a29f0c000')
+         'ef78e0cd467ec1192f34c34a29f0c000'
+         '48700f2d4767c623dd75ee4198cb88bc')
 
 prepare() {
   cd ${pkgname}-${pkgver}
@@ -78,6 +80,8 @@ prepare() {
   patch -p1 -i ${srcdir}/f9d88e891eb2d39528840e67d38b3a9be032c582.diff
   patch -p1 -i ${srcdir}/2760b0dc5aecbb5549801942b12f1d75cbafae09.diff
   patch -p1 -i ${srcdir}/8bca4621fc003a148c70248c55aa877dfe61fd3f.diff
+  # stat.h changes with glibc 2.29
+  patch -p1 -i ${srcdir}/75720bff62a84896e9a0654afc7cf9408cf89a38.diff
 }
 
 build() {

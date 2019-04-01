@@ -1,21 +1,21 @@
 
-pkgname=python2-systemd
+pkgname=python3-systemd
 _pkgname=python-systemd
 pkgver=234
-pkgrel=1
+pkgrel=2
 pkgdesc="Python module for native access to the systemd facilities."
 arch=('x86_64')
 license=('LGPLv2+')
 url="https://github.com/systemd/python-systemd"
-depends=('python2')
-makedepends=('python2-sphinx' 'python2-lxml' 'systemd')
+depends=('python3')
+makedepends=('python3-sphinx' 'python3-lxml' 'systemd')
 source=("https://github.com/systemd/python-systemd/archive/v${pkgver}.tar.gz")
 md5sums=('752929b651d1c6b2a42d454f58b94974')
 
 build() {
   cd ${_pkgname}-${pkgver}
 
-  python2 setup.py build
+  python3 setup.py build
   make
   #make sphinx-html
 }
@@ -23,5 +23,5 @@ build() {
 package() {
   cd ${_pkgname}-${pkgver}
 
-  python2 setup.py install --root=${pkgdir}/
+  python3 setup.py install --root=${pkgdir}/
 }
