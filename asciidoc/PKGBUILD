@@ -1,21 +1,19 @@
  
 pkgname=asciidoc
-pkgver=8.6.9
-pkgrel=5
+pkgver=8.6.10
+pkgrel=1
 pkgdesc='Text document format for short documents, articles, books and UNIX man pages.'
 arch=('x86_64')
 url='http://www.methods.co.nz/asciidoc/'
 license=('GPL')
 depends=('python2' 'libxslt' 'docbook-xsl')
-optdepends=('lilypond: music-filter'
-            'imagemagick: music-filter (used in conjunction with lilypond)'
-            'w3m: text generation')
-source=("https://sourceforge.net/projects/asciidoc/files/asciidoc/${pkgver}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('c59018f105be8d022714b826b0be130a')
+source=("https://github.com/asciidoc/asciidoc/archive/${pkgver}.tar.gz")
+md5sums=('4e69960f4d431780e9828f53417d8d7a')
 
 build() {
   cd ${pkgname}-${pkgver}
 
+  autoconf -v
   ./configure \
     --prefix=/usr \
     --sysconfdir=/etc
