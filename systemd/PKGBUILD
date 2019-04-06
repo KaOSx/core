@@ -1,7 +1,8 @@
 
 pkgname=systemd
-pkgver=239
-pkgrel=5
+pkgver=242rc
+_pkgver=242-rc2
+pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -30,7 +31,7 @@ provides=("udev=${pkgver}" 'gummiboot')
 groups=('base')
 install="systemd.install"
 options=('!libtool')
-source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
+source=("https://github.com/systemd/systemd/archive/v${_pkgver}.tar.gz"
         'initcpio-hook-udev'
         'initcpio-install-systemd'
         'initcpio-install-udev'
@@ -47,7 +48,7 @@ source=("https://github.com/systemd/systemd/archive/v${pkgver}.tar.gz"
         "https://github.com/systemd/systemd-stable/commit/2760b0dc5aecbb5549801942b12f1d75cbafae09.diff"
         "https://github.com/systemd/systemd-stable/commit/8bca4621fc003a148c70248c55aa877dfe61fd3f.diff"
         "https://github.com/systemd/systemd/commit/75720bff62a84896e9a0654afc7cf9408cf89a38.diff")
-md5sums=('6137e3f50390391cf34521d071a1a078'
+md5sums=('184fc2edac0ec3ef01d7cc5fe5ecbdbe'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -66,22 +67,22 @@ md5sums=('6137e3f50390391cf34521d071a1a078'
          '48700f2d4767c623dd75ee4198cb88bc')
 
 prepare() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-${_pkgver}
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
   
   # revert SuccessAction= until figured why it is set to invalid on KaOS with 241 & up
   #patch -p1 -i ${srcdir}/service.diff
   # newer meson has debug, clashes with systemd 239 debug
-  patch -p1 -i ${srcdir}/8f6b442a78d0b485f044742ad90b2e8271b4e68e.diff
+  #patch -p1 -i ${srcdir}/8f6b442a78d0b485f044742ad90b2e8271b4e68e.diff
   # CVE's https://www.openwall.com/lists/oss-security/2019/02/18/3
-  patch -p1 -i ${srcdir}/69df16671b5ac43bf19bdeb370963b61dc33e2e2.diff
-  patch -p1 -i ${srcdir}/e8ffb554dce466823f8e95ca5d7f700ebe8ec13f.diff
-  patch -p1 -i ${srcdir}/f9d88e891eb2d39528840e67d38b3a9be032c582.diff
-  patch -p1 -i ${srcdir}/2760b0dc5aecbb5549801942b12f1d75cbafae09.diff
-  patch -p1 -i ${srcdir}/8bca4621fc003a148c70248c55aa877dfe61fd3f.diff
+  #patch -p1 -i ${srcdir}/69df16671b5ac43bf19bdeb370963b61dc33e2e2.diff
+  #patch -p1 -i ${srcdir}/e8ffb554dce466823f8e95ca5d7f700ebe8ec13f.diff
+  #patch -p1 -i ${srcdir}/f9d88e891eb2d39528840e67d38b3a9be032c582.diff
+  #patch -p1 -i ${srcdir}/2760b0dc5aecbb5549801942b12f1d75cbafae09.diff
+  #patch -p1 -i ${srcdir}/8bca4621fc003a148c70248c55aa877dfe61fd3f.diff
   # stat.h changes with glibc 2.29
-  patch -p1 -i ${srcdir}/75720bff62a84896e9a0654afc7cf9408cf89a38.diff
+  #patch -p1 -i ${srcdir}/75720bff62a84896e9a0654afc7cf9408cf89a38.diff
 }
 
 build() {
@@ -92,7 +93,7 @@ build() {
   # cp locale-archive from /usr/lib/locale
   #export LANG=en_US.UTF-8
   
-  meson ../${pkgname}-${pkgver} \
+  meson ../${pkgname}-${_pkgver} \
     --prefix=/usr \
     --buildtype=release \
     --libexecdir=/usr/lib \
@@ -142,7 +143,7 @@ package() {
 
   ln -s ../lib/systemd/systemd-udevd ${pkgdir}/usr/bin/udevd
 
-  install -m644 systemd-${pkgver}/tmpfiles.d/legacy.conf ${pkgdir}/usr/lib/tmpfiles.d
+  install -m644 systemd-${_pkgver}/tmpfiles.d/legacy.conf ${pkgdir}/usr/lib/tmpfiles.d
 
   # Replace in optical 
   sed -i 's#GROUP="dialout"#GROUP="uucp"#g;
