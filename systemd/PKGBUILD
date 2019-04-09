@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=242rc
-_pkgver=242-rc2
+pkgver=242rc4
+_pkgver=242-rc4
 pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
@@ -48,7 +48,7 @@ source=("https://github.com/systemd/systemd/archive/v${_pkgver}.tar.gz"
         "https://github.com/systemd/systemd-stable/commit/2760b0dc5aecbb5549801942b12f1d75cbafae09.diff"
         "https://github.com/systemd/systemd-stable/commit/8bca4621fc003a148c70248c55aa877dfe61fd3f.diff"
         "https://github.com/systemd/systemd/commit/75720bff62a84896e9a0654afc7cf9408cf89a38.diff")
-md5sums=('184fc2edac0ec3ef01d7cc5fe5ecbdbe'
+md5sums=('9471ce640b9293245d63679cdedbb401'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
