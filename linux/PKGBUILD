@@ -2,8 +2,8 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=4.20
-pkgver=4.20.13
+_basekernel=5.0
+pkgver=5.0.8
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -15,12 +15,12 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.20.tar.xz"
         # the main kernel config files
         'config'
         #aufs patches
-        'aufs4-loopback.patch'
-        'aufs4-base.patch'
-        'aufs4-mmap.patch'
-        'aufs4-standalone.patch'
-        'aufs4-kbuild.patch'
-        'aufs4.patch'
+        'aufs5-loopback.patch'
+        'aufs5-base.patch'
+        'aufs5-mmap.patch'
+        'aufs5-standalone.patch'
+        'aufs5-kbuild.patch'
+        'aufs5.patch'
         'config.aufs'
         'tmpfs-idr.patch'
         'vfs-ino.patch'
@@ -52,12 +52,12 @@ prepare() {
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
   
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs4.patch"
-  patch -p1 -i "${srcdir}/aufs4-base.patch"
-  patch -p1 -i "${srcdir}/aufs4-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs4-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs4-mmap.patch"
-  patch -p1 -i "${srcdir}/aufs4-standalone.patch"
+  patch -p1 -i "${srcdir}/aufs5.patch"
+  patch -p1 -i "${srcdir}/aufs5-base.patch"
+  patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs5-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs5-mmap.patch"
+  patch -p1 -i "${srcdir}/aufs5-standalone.patch"
   patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
@@ -245,7 +245,7 @@ package_linux-headers() {
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/mm"
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
-  #aufs4-util need
+  #aufs5-util need
   sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
