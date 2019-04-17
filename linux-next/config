@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.0.0-1 Kernel Configuration
+# Linux/x86 5.0.8-1 Kernel Configuration
 #
 
 #
@@ -3859,6 +3859,7 @@ CONFIG_N_HDLC=m
 CONFIG_N_GSM=m
 CONFIG_TRACE_ROUTER=m
 CONFIG_TRACE_SINK=m
+CONFIG_LDISC_AUTOLOAD=y
 CONFIG_DEVMEM=y
 # CONFIG_DEVKMEM is not set
 

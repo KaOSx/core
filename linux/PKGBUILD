@@ -10,7 +10,7 @@ url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode' 'elfutils')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.20.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-5.0.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -27,18 +27,18 @@ source=("http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.20.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '99-linux.hook')
-md5sums=('d39dd4ba2d5861c54b90d49be19eaf31'
-         '78dfc42ffc09125aac594827977953ab'
-         '79d1f399a07f94283fd250a482fba222'
-         'f9671abc73848888411275f97e47ca1c'
-         '4e39c3a85c944c774b4d12eef88d7539'
-         '6ed8d4b168393d982d084a5b32633c7d'
-         'a9752aaa754c0a67a90d7f03ac31a6c5'
-         'da6b0fe5640c5ce4d309c7e55863deb7'
-         '86e75fc9cd238f637088b4c2a32fda7d'
+md5sums=('7381ce8aac80a01448e065ce795c19c0'
+         '3e584968a52b797563dc06ece0886c23'
+         '8d165c4d8c49d6284d321cd87d8c455d'
+         'bd8f02321baa68ea2b62e40586de3f3b'
+         'ed82bce7b34ba68df2d0aded451cfc90'
+         'a53736ca280d9392d9d082f550bcc555'
+         '9dcb4885c5e293a834bdce79a907555d'
+         '55e0a38693adce52f858c1cb1681e1e9'
+         '932b03bcb83cc998a55bb9cbcdc6672d'
          '58077c1703977e6b5fafdda552f542d5'
-         '87a5cc91d7fb49a8238e6b70bd6b40c8'
-         '8492e2174a1db3f25a90338efb2e47b9'
+         '0e31229ba81c3b6f7768339899055f85'
+         '6fe0091fe742971980e7b18bbc37afa6'
          'eb14dcfd80c00852ef81ded6e826826a'
          '0b73d293ca1ab91748ae2d2c39921532')
 
