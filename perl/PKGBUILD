@@ -1,6 +1,6 @@
 
 pkgname=perl
-pkgver=5.28.1
+pkgver=5.28.2
 pkgrel=1
 pkgdesc="A highly capable, feature-rich programming language"
 arch=('x86_64')
@@ -126,7 +126,7 @@ source=("http://www.cpan.org/src/5.0/perl-${pkgver}.tar.xz"
         'perlbin.sh'
         'perlbin.csh')
 options=('makeflags' '!purge' 'emptydirs')
-sha256sums=('fea7162d4cca940a387f0587b93f6737d884bf74d8a9d7cfd978bc12cd0b202d'
+sha256sums=('0b0189bfa4b2da20e899b4bdd746ac402e8f746a58e4fcf5516484157f2aab07'
             '6681639f18f3a6f3f3d7f978b8d72ad088b27899a6fcc386b86ac104199d857b'
             '69c03f11e98c5c4af3cfd4900840189d19b74fe4fd4534523781312d0a1be810')
 
