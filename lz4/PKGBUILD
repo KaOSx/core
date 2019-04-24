@@ -1,6 +1,6 @@
 
 pkgname=lz4
-pkgver=1.9.0
+pkgver=1.9.1
 epoch=1
 pkgrel=1
 pkgdesc='Lossless compression algorithm, providing compression speed at 400 MB/s per core, scalable with multi-cores CPU.'
@@ -9,7 +9,7 @@ url='http://lz4.github.io/lz4/'
 license=('GPL2')
 depends=('glibc')
 source=("https://github.com/lz4/lz4/archive/v${pkgver}.tar.gz")
-md5sums=('732b4d05d8825b1e3ca72e9ce88a39ad')
+md5sums=('a80f28f2a2e5fe59ebfe8407f793da22')
 
 build() {
   cd ${pkgname}-${pkgver}

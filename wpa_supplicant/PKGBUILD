@@ -1,7 +1,7 @@
 
 pkgname=wpa_supplicant
-pkgver=2.7
-pkgrel=3
+pkgver=2.8
+pkgrel=1
 pkgdesc="A utility providing key negotiation for WPA wireless networks"
 arch=('x86_64')
 url="https://w1.fi/"
@@ -12,7 +12,7 @@ backup=('etc/wpa_supplicant.conf')
 source=("https://w1.fi/releases/wpa_supplicant-${pkgver}.tar.gz"
         'config'
         "https://w1.fi/security/2017-1/rebased-v2.6-0001-hostapd-Avoid-key-reinstallation-in-FT-handshake.patch")
-md5sums=('a68538fb62766f40f890125026c42c10'
+md5sums=('0af5998c5d924e985cab16b9a1c77904'
          '78bc0d6b6db02d4d58982d870e0a0c26'
          'a209fe1510a138c0da3855854c38bf6f')
 
@@ -39,7 +39,7 @@ package() {
   rm -f ${pkgdir}/usr/share/man/man8/wpa_{priv,gui}.8
 
   install -m755 -d ${pkgdir}/usr/share/dbus-1/system-services
-  install -m644 dbus/{fi.epitest.hostap.WPASupplicant.service,fi.w1.wpa_supplicant1.service} ${pkgdir}/usr/share/dbus-1/system-services/
+  install -m644 dbus/fi.w1.wpa_supplicant1.service ${pkgdir}/usr/share/dbus-1/system-services/
 
   install -m755 -d ${pkgdir}/etc/dbus-1/system.d
   install -m644 dbus/dbus-wpa_supplicant.conf ${pkgdir}/etc/dbus-1/system.d/wpa_supplicant.conf
