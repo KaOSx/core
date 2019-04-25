@@ -1,12 +1,12 @@
 
 pkgname=btrfs-progs
 pkgver=4.20.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Btrfs filesystem utilities."
 arch=('x86_64')
 url="https://btrfs.wiki.kernel.org/"
 license=('GPL2')
-depends=('glibc' 'e2fsprogs' 'lzo2' 'asciidoc' 'python3')
+depends=('glibc' 'e2fsprogs' 'lzo2' 'asciidoc' 'python3' 'zstd')
 makedepends=('git' 'xmlto' 'python3-setuptools')
 options=('!staticlibs')
 source=("https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/${pkgname}-v${pkgver}.tar.xz"
@@ -19,8 +19,7 @@ sha256sums=('890f8b7e162f2bbfaa5c7b23e8b6f791fd3f325239a0510871fa4b45e4a80e7c'
 build() {
    cd ${pkgname}-v${pkgver}
    
-   ./configure --prefix=/usr \
-      --disable-zstd
+   ./configure --prefix=/usr
    make  
 }
 
