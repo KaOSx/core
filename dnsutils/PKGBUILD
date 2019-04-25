@@ -1,18 +1,18 @@
 
 pkgname=dnsutils
 # _pkver when P version used. After 9.13, only use even number, odd are for unstable, development.
-pkgver=9.14.0
-_pkgver=9.14.0
+pkgver=9.14.1
+_pkgver=9.14.1
 pkgrel=1
 pkgdesc="DNS utilities, tools, name resolver and domain name authority server"
 arch=('x86_64')
-url="https://www.isc.org/software/bind"
+url="https://www.isc.org/downloads/bind/"
 license=('custom:ISC')
 depends=('openssl' 'libidn2')
 makedepends=('python3-ply')
 options=('makeflags')
 source=("https://ftp.isc.org/isc/bind9/${_pkgver}/bind-${_pkgver}.tar.gz")
-md5sums=('11d14ca17919bbdd558663dcc69ca1fb')
+md5sums=('59ea48bfeb50d5f4df315c5bf7df029e')
 
 build() {
 	cd bind-${_pkgver}
