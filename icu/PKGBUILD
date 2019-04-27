@@ -1,15 +1,16 @@
 
 pkgname=icu
-pkgver=62.1
-_pkgver=62_1
+pkgver=64.2
+_pkgver=64_2
 pkgrel=1
 pkgdesc="International Components for Unicode library"
 arch=('x86_64')
 url="http://www.icu-project.org/"
 license=('custom:"icu"')
 depends=('gcc-libs' 'sh')
+makedepends=('python3')
 source=("https://ssl.icu-project.org/files/icu4c/${pkgver}/${pkgname}4c-${_pkgver}-src.tgz")
-sha512sums=('8295f2754fb6907e2cc8f515dccca05530963b544e89a2b8e323cd0ddfdbbe0c9eba8b367c1dbc04d7bb906b66b1003fd545ca05298939747c832c9d4431cf2a')
+sha512sums=('5ecb4c230ba45918747a1cf9aef86f555aa07d5b29b1d07ab674e8013f46dfb907a0e9d6945db41155f9dc3012fd94e1152ffc19f61a68b6dfcbabdcb8ae9d78')
 
 build() {
   cd icu/source
