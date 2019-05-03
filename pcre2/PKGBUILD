@@ -1,0 +1,39 @@
+
+pkgname=pcre2
+pkgver=10.33
+pkgrel=1
+pkgdesc="A library that implements Perl 5-style regular expressions, next generation."
+arch=('x86_64')
+url="https://www.pcre.org/"
+license=('BSD')
+depends=('gcc-libs' 'readline' 'zlib' 'bzip2' 'libedit')
+options=('!libtool')
+source=("https://ftp.pcre.org/pub/pcre/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('80b355f2dce909a2e2424f5c79eddb44')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  
+  ./configure --prefix=/usr \
+        --enable-unicode \
+        --enable-jit \
+        --enable-pcre2-16 \
+        --enable-pcre2-32 \
+        --enable-pcre2grep-libz \
+        --enable-pcre2grep-libbz2 \
+        --enable-pcre2test-libreadline
+  make
+}
+
+check() {
+  cd ${pkgname}-${pkgver} 
+  
+  make -j1 check
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
+
+  install -Dm644 LICENCE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+}

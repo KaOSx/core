@@ -2,7 +2,7 @@
 pkgname=systemd
 pkgver=242
 _pkgver=242
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -10,7 +10,7 @@ url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1')
 depends=('acl' 'bash' 'glibc' 'kmod' 'hwids' 'util-linux' 'kbd' 'libcap' 'libxslt' 'iptables'
          'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn2' 'lz4'
-         'quota' 'libseccomp' 'cryptsetup') # 'audit') 
+         'quota' 'libseccomp' 'cryptsetup' 'pcre2') # 'audit') 
 makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs' 'meson' 'ninja' 'python3-lxml')
 optdepends=('libmicrohttpd: systemd-journal-gatewayd')
 backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
@@ -101,6 +101,7 @@ build() {
     -Dsplit-bin=true \
     -Drootprefix=/usr \
     -Dlz4=true \
+    -Dpcre2=true \
     -Defi=true \
     -Dgnu-efi=true \
     -Daudit=false \

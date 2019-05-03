@@ -1,12 +1,12 @@
 
 pkgname=git
 pkgver=2.21.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency."
 arch=('x86_64')
 url="http://git-scm.com/"
 license=('GPL2')
-depends=('curl' 'expat>=2.0' 'perl-error' 'perl' 'pcre')
+depends=('curl' 'expat>=2.0' 'perl-error' 'perl' 'pcre2')
 makedepends=('python2')
 optdepends=('tk: gitk and git gui'
             'python2: various helper scripts'
@@ -26,7 +26,7 @@ build() {
   
   make prefix=/usr \
        gitexecdir=/usr/lib/git-core \
-       USE_LIBPCRE1=1 \
+       USE_LIBPCRE2=1 \
        NO_CROSS_DIRECTORY_HARDLINKS=1 \
        all
 }
