@@ -1,8 +1,8 @@
 
 pkgname=vpnc
-pkgver=0.5.3.3
-#_pkgver=0.5.3.svn550
-pkgrel=4
+pkgver=0.5.3.4
+_commit=9c38223cc83fd785d5f1b948b354aa7838a84d0e
+pkgrel=1
 pkgdesc="VPN client for cisco3000 VPN Concentrators"
 url="https://www.unix-ag.uni-kl.de/~massar/vpnc/"
 license=('GPL')
@@ -10,14 +10,14 @@ depends=('libgcrypt' 'openssl' 'iproute2')
 makedepends=('subversion')
 arch=('x86_64')
 # get revision by cd to vpnc > svn info | awk '/^Revision:/ { print $2 }'
-source=("vpnc::svn+http://svn.unix-ag.uni-kl.de/vpnc/trunk#revision=550"
+source=("https://github.com/streambinder/vpnc/archive/${_commit}.zip"
         'vpnc.conf')
 backup=(etc/vpnc/default.conf)
-md5sums=('SKIP'
+md5sums=('e180693baebaf0db3ba1226686e2bc6d'
          'a3f4e0cc682f437e310a1c86ae198e45')
 
 build() {
-  cd ${pkgname}
+  cd ${pkgname}-${_commit}
 
   # Build hybrid support
   sed -i 's|^#OPENSSL|OPENSSL|g' Makefile
@@ -26,7 +26,7 @@ build() {
 }
 
 package() {
-  cd $pkgname
+  cd ${pkgname}-${_commit}
   
   make DESTDIR=$pkgdir PREFIX=/usr install
 
