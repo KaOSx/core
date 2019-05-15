@@ -1,19 +1,18 @@
 
 pkgname=vpnc
-pkgver=0.5.3.4
-_commit=9c38223cc83fd785d5f1b948b354aa7838a84d0e
+pkgver=0.5.3.5
+_commit=99634a76eb0d0712799bbc25126d8241b2bb80e7
 pkgrel=1
 pkgdesc="VPN client for cisco3000 VPN Concentrators"
 url="https://www.unix-ag.uni-kl.de/~massar/vpnc/"
 license=('GPL')
 depends=('libgcrypt' 'openssl' 'iproute2')
-makedepends=('subversion')
 arch=('x86_64')
 # get revision by cd to vpnc > svn info | awk '/^Revision:/ { print $2 }'
 source=("https://github.com/streambinder/vpnc/archive/${_commit}.zip"
         'vpnc.conf')
 backup=(etc/vpnc/default.conf)
-md5sums=('e180693baebaf0db3ba1226686e2bc6d'
+md5sums=('8a7401edc47304b7f99cb839ce2a2892'
          'a3f4e0cc682f437e310a1c86ae198e45')
 
 build() {
@@ -28,9 +27,9 @@ build() {
 package() {
   cd ${pkgname}-${_commit}
   
-  make DESTDIR=$pkgdir PREFIX=/usr install
+  make DESTDIR=${pkgdir} PREFIX=/usr install
 
-  install -D -m644 $srcdir/vpnc.conf $pkgdir/etc/vpnc/default.conf
+  install -D -m644 ../vpnc.conf ${pkgdir}/etc/vpnc/default.conf
 }
 
 
