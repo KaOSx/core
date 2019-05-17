@@ -14,7 +14,7 @@ install=${pkgname}.install
 source=("https://github.com/iputils/iputils/archive/s${pkgver}.tar.gz"
         'tftp.xinetd')
 md5sums=('ede93781ea46e1d59dc0bf7d71b4bdf4'
-         'b5f1b81ea53983c402a46e85501858b3')
+         '84d8d9379eda61ed646a106a15bd46c5')
 
 build() {
   mkdir -p build

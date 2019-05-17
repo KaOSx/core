@@ -4,7 +4,7 @@ service tftp
 	protocol	= udp
 	wait		= yes
 	user		= nobody
-	server		= /usr/sbin/tftpd
+	server		= /usr/bin/tftpd
 	server_args	= /var/tftpboot
 	disable		= yes
 }
