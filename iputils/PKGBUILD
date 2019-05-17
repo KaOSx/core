@@ -1,37 +1,46 @@
 
 pkgname=iputils
-pkgver=20180629
-pkgrel=4
+pkgver=20190515
+pkgrel=1
 pkgdesc="IP Configuration Utilities (and Ping)."
 arch=('x86_64')
 license=('GPL')
 url="http://www.linuxfoundation.org/en/Net:Iputils"
 groups=('base')
 depends=('glibc' 'openssl' 'sysfsutils' 'libcap' 'libidn2')
-makedepends=('libxslt' 'opensp')
+makedepends=('libxslt' 'opensp' 'meson' 'ninja')
 backup=(etc/xinetd.d/tftp)
 install=${pkgname}.install
 source=("https://github.com/iputils/iputils/archive/s${pkgver}.tar.gz"
         'tftp.xinetd')
-md5sums=('866547f2ffb17b67049472c770703c83'
+md5sums=('ede93781ea46e1d59dc0bf7d71b4bdf4'
          'b5f1b81ea53983c402a46e85501858b3')
 
 build() {
-  cd ${pkgname}-s${pkgver}
-
-  make USE_GNUTLS=no CCOPTOPT="$CFLAGS"
+  mkdir -p build
+  cd build
+  
+  meson ../${pkgname}-s${pkgver} \
+    --prefix=/usr \
+    --buildtype=release \
+    --libexecdir=/usr/lib \
+    -DBUILD_MANS=false \
+    -DUSE_CRYPTO=openssl 
+  ninja
 }
 
 package() {
-  cd ${pkgname}-s${pkgver}
+  cd build
 
-  install -dm755 ${pkgdir}/usr/{bin,sbin} ${pkgdir}/bin
+  DESTDIR=${pkgdir} ninja install
+  
+  #install -dm755 ${pkgdir}/usr/{bin,sbin} ${pkgdir}/bin
 
-  install -m755 arping clockdiff rarpd rdisc tftpd tracepath traceroute6 \
-    ${pkgdir}/usr/sbin/
+  #install -m755 arping clockdiff rarpd rdisc tftpd tracepath traceroute6 \
+  #  ${pkgdir}/usr/sbin/
 
-  install -m755 ping ${pkgdir}/usr/bin/
-   ln -sf /usr/bin/ping  ${pkgdir}/bin/
+  #install -m755 ping ${pkgdir}/usr/bin/
+  # ln -sf /usr/bin/ping  ${pkgdir}/bin/
 
   install -dm755 ${pkgdir}/etc/xinetd.d/
   install -m644 ${srcdir}/tftp.xinetd ${pkgdir}/etc/xinetd.d/tftp
