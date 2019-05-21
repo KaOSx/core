@@ -1,7 +1,7 @@
 
 pkgname=libgudev
 pkgver=232
-pkgrel=4
+pkgrel=5
 pkgdesc="UDev GObject bindings"
 arch=('x86_64')
 license=('LGPL')
