@@ -1,7 +1,7 @@
 
 pkgname=vi
 pkgver=050325
-pkgrel=9
+pkgrel=10
 pkgdesc='The original ex/vi text editor.'
 arch=('x86_64')
 url='http://ex-vi.sourceforge.net/'
@@ -9,7 +9,7 @@ license=('custom:ex')
 depends=('ncurses')
 groups=('base')
 options=('strip' '!libtool' 'emptydirs')
-source=("http://downloads.sourceforge.net/sourceforge/ex-vi/ex-${pkgver}.tar.bz2"
+source=("https://downloads.sourceforge.net/sourceforge/ex-vi/ex-${pkgver}.tar.bz2"
         'navkeys.patch'
         'increase-tube.patch'
         'exrc.sample' 
@@ -21,7 +21,7 @@ md5sums=('e668595254233e4d96811083a3e4e2f3'
          '419a8755e0dd16e95542bc107e6d2b24')
 
 build() {
-  cd "${srcdir}/ex-${pkgver}"
+  cd ex-${pkgver}
 
   patch -p1 -i ${srcdir}/navkeys.patch
   patch -p0 -i ${srcdir}/increase-tube.patch
@@ -32,10 +32,10 @@ build() {
 }
 
 package() {
-  cd "${srcdir}/ex-${pkgver}"
+  cd ex-${pkgver}
 
   make PREFIX=/usr LIBEXECDIR=/usr/lib/ex PRESERVEDIR=/var/lib/ex INSTALL=/usr/bin/install \
-      DESTDIR="$pkgdir" install
+      DESTDIR=${pkgdir} install
 
-  install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -D -m644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }

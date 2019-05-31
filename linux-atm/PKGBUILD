@@ -1,18 +1,26 @@
 
 pkgname=linux-atm
 pkgver=2.5.2
-pkgrel=4
+pkgrel=5
 pkgdesc="Drivers and tools to support ATM networking under Linux."
 arch=('x86_64')
 url="http://linux-atm.sourceforge.net/"
 license=('GPL')
 depends=('glibc')
 options=('!libtool' '!makeflags')
-source=("http://downloads.sourceforge.net/sourceforge/linux-atm/$pkgname-$pkgver.tar.gz")
-md5sums=('d49499368c3cf15f73a05d9bce8824a8')
+source=("https://downloads.sourceforge.net/sourceforge/linux-atm/${pkgname}-${pkgver}.tar.gz"
+        'linux5x.patch')
+md5sums=('d49499368c3cf15f73a05d9bce8824a8'
+         '283bdeeba283ec16fbff0fb072dcffb2')
+
+prepare() {
+  cd ${pkgname}-${pkgver}
+
+  patch -p1 -i ${srcdir}/linux5x.patch
+}         
 
 build() {
-  cd $pkgname-$pkgver 
+  cd ${pkgname}-${pkgver} 
   sed -i "s|/lib/firmware|/usr/lib/firmware|" src/extra/Makefile.in
   
   ./configure --prefix=/usr --sysconfdir=/etc 
@@ -20,8 +28,8 @@ build() {
 }
 
 package() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   
-  make DESTDIR=$pkgdir install
+  make DESTDIR=${pkgdir} install
 }
 

@@ -1,24 +1,24 @@
 
 pkgname=mlocate
 pkgver=0.26
-pkgrel=5
+pkgrel=6
 pkgdesc="Faster merging drop-in for slocate"
 arch=('x86_64')
 url="https://pagure.io/mlocate"
 license=('GPL')
 depends=('glibc' 'coreutils' 'sh')
 backup=('etc/updatedb.conf')
-source=("https://releases.pagure.org/mlocate/mlocate-$pkgver.tar.xz"
-	'updatedb.conf'
-	'updatedb.timer'
-	'updatedb.service')
+source=("https://releases.pagure.org/mlocate/${pkgname}-${pkgver}.tar.xz"
+        'updatedb.conf'
+        'updatedb.timer'
+        'updatedb.service')
 md5sums=('539e6f86bf387358aa2b14d5f880e49a'
          'b56d81de17fe29b01b4b28861acb8fd4'
          '1b4a1d2a16de577070b4e9b5aad3eea9'
          '8d7bfb770a97b30ae430999359628cc0')
 
 build() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
 
   sed -i '/^groupname /s/mlocate/locate/' Makefile.in
   ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var/lib
@@ -27,22 +27,22 @@ build() {
 }
 
 check() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   make check
 }
 
 package() {
-  cd $pkgname-$pkgver
-  make DESTDIR=$pkgdir install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
 
-  ln -sv locate $pkgdir/usr/bin/slocate
-  chgrp -v 21 $pkgdir/usr/bin/locate
-  chmod -v 2755 $pkgdir/usr/bin/locate
+  ln -sv locate ${pkgdir}/usr/bin/slocate
+  chgrp -v 21 ${pkgdir}/usr/bin/locate
+  chmod -v 2755 ${pkgdir}/usr/bin/locate
   
-  install -Dm644 ${srcdir}/updatedb.conf $pkgdir/etc/updatedb.conf
+  install -Dm644 ${srcdir}/updatedb.conf ${pkgdir}/etc/updatedb.conf
 
-  install -dm755 $pkgdir/var/lib
-  install -d -m750 -g21 $pkgdir/var/lib/locate
+  install -dm755 ${pkgdir}/var/lib
+  install -d -m750 -g21 ${pkgdir}/var/lib/locate
   
   install -D -m644 ${srcdir}/updatedb.timer ${pkgdir}/usr/lib/systemd/system/updatedb.timer
   install -D -m644 ${srcdir}/updatedb.service ${pkgdir}/usr/lib/systemd/system/updatedb.service

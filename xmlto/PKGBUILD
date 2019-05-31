@@ -1,20 +1,18 @@
 
 pkgname=xmlto
 pkgver=0.0.28
-pkgrel=2
+pkgrel=3
 pkgdesc="Convert xml to many other formats"
 arch=('x86_64')
-url="http://cyberelk.net/tim/software/xmlto/"
-# should move soon to:
-# https://pagure.io/xmlto
+url="https://pagure.io/xmlto"
 license=('GPL')
 depends=('libxslt' 'perl-yaml-syck' 'perl-test-pod')
 makedepends=('docbook-xsl')
-source=("https://fedorahosted.org/releases/x/m/${pkgname}/${pkgname}-${pkgver}.tar.bz2")
+source=("https://releases.pagure.org/xmlto/${pkgname}-${pkgver}.tar.bz2")
 md5sums=('93bab48d446c826399d130d959fe676f')
 
 build() {
-  cd "$srcdir/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
   ./configure BASH=/bin/bash \
        --prefix=/usr \
@@ -23,8 +21,8 @@ build() {
 }
 
 package() {
-  cd "$srcdir/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
 
-  make DESTDIR="${pkgdir}" install
+  make DESTDIR=${pkgdir} install
 }
 

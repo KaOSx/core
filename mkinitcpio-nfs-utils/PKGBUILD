@@ -1,26 +1,26 @@
 
 pkgname=mkinitcpio-nfs-utils
 pkgver=0.3
-pkgrel=5
+pkgrel=6
 pkgdesc="ipconfig and nfsmount tools for NFS root support in mkinitcpio"
 arch=('x86_64')
-url="http://www.archlinux.org/"
+url="https://www.archlinux.org/"
 license=('GPL2')
 depends=('glibc')
-source=("https://sources.archlinux.org/other/mkinitcpio/$pkgname-$pkgver.tar.xz"
+source=("https://sources.archlinux.org/other/mkinitcpio/${pkgname}-${pkgver}.tar.xz"
         'nfsmount.patch')
 md5sums=('a7e586b0adb1a746dc7ae71d104bac0d'
          '23740117f1e6468b4baa57d7c6d11418')
 
 build() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   patch -p1 -i $srcdir/nfsmount.patch
   
   make
 }
 
 package() {
-  cd $pkgname-$pkgver
+  cd ${pkgname}-${pkgver}
   
-  make DESTDIR=$pkgdir install
+  make DESTDIR=${pkgdir} install
 }

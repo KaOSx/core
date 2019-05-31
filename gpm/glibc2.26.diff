@@ -1,14 +1,16 @@
---- a/src/prog/gpm-root.y.orig	2018-11-08 12:12:29.261304819 +0100
-+++ b/src/prog/gpm-root.y	2018-11-08 12:17:18.449507124 +0100
-@@ -1196,11 +1196,7 @@
+diff --git a/src/prog/gpm-root.y b/src/prog/gpm-root.y
+index 5126c65..76c896c 100644
+--- a/src/prog/gpm-root.y
++++ b/src/prog/gpm-root.y
+@@ -1196,11 +1196,7 @@ int main(int argc, char **argv)
                                                          LOG_DAEMON : LOG_USER);
     /* reap your zombies */
     childaction.sa_handler=reap_children;
 -#if defined(__GLIBC__)
 -   __sigemptyset(&childaction.sa_mask);
 -#else /* __GLIBC__ */
-    childaction.sa_mask=0;
+    sigemptyset(&childaction.sa_mask);
 -#endif /* __GLIBC__ */
-    childaction.sa_flags=SA_INTERRUPT; /* need to break the select() call */
+    childaction.sa_flags=0;
     sigaction(SIGCHLD,&childaction,NULL);
  

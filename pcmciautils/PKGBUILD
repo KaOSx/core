@@ -1,7 +1,7 @@
 
 pkgname=pcmciautils
 pkgver=018
-pkgrel=8
+pkgrel=9
 pkgdesc="Utilities for inserting and removing PCMCIA cards"
 arch=('x86_64')
 url="http://kernel.org/pub/linux/utils/kernel/pcmcia/pcmcia.html"
@@ -16,15 +16,15 @@ md5sums=('3c388cb559975b37a75cb5965e9800a9'
          '0dd0544b346d478f2bed35c1a91aa1dc')
 
 build() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd ${pkgname}-${pkgver}
   sed -i -e 's|/usr/bin/install|install|g;
              s|/lib/udev|/usr/lib/udev|g' Makefile
   make
 }
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
-  make DESTDIR="${pkgdir}" install
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
 
   install -D -m644 ../initcpio-install-pcmcia ${pkgdir}/usr/lib/initcpio/install/pcmcia
 }

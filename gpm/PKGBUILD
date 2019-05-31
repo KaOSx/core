@@ -1,6 +1,7 @@
 
 pkgname=gpm
 pkgver=1.20.7
+_commit=1fd19417b8a4dd9945347e98dfa97e4cfd798d77
 pkgrel=6
 pkgdesc="A mouse server for the console and xterm"
 arch=('x86_64')
@@ -8,23 +9,24 @@ url="https://www.nico.schottelius.org/software/gpm/"
 license=('GPL')
 depends=('ncurses' 'bash')
 options=('!makeflags')
-source=("https://www.nico.schottelius.org/software/gpm/archives/${pkgname}-${pkgver}.tar.lzma"
+#source=("https://www.nico.schottelius.org/software/gpm/archives/${pkgname}-${pkgver}.tar.lzma"
+source=("https://github.com/telmich/gpm/archive/${_commit}.zip"
         'gpm.sh'
         'gpm.service'
         'glibc2.26.diff')
-md5sums=('fa8a6fe09826896625ca557ac5e42ed7'
+md5sums=('84a01a81a91627a5be6ed6728405a675'
          'd73dd7e579192a58e5af72be206ce3c8'
          '5e5547fb272befeeb8bcb07fa2426c5e'
-         '862d0abd517aee679ddf9ffeed77d9dd')
+         'eceac4553ead07ffc37f25593781c79e')
 
 prepare() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-${_commit}
   # https://github.com/telmich/gpm/pull/20
   patch -p1 -i ${srcdir}/glibc2.26.diff
 }         
          
 build() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-${_commit}
   
   ./autogen.sh
   ./configure --prefix=/usr --sysconfdir=/etc
@@ -32,7 +34,7 @@ build() {
 }
 
 package() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-${_commit}
   make DESTDIR=${pkgdir} install
   
   install -D -m755 ../gpm.sh ${pkgdir}/etc/profile.d/gpm.sh
