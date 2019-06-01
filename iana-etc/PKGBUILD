@@ -1,6 +1,6 @@
 
 pkgname=iana-etc
-pkgver=20190504
+pkgver=20190531
 pkgrel=1
 pkgdesc="/etc/protocols and /etc/services provided by IANA"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('custom')
 # version at https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
 source=("https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml"
         "https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml")
-md5sums=('c76fb7423ab10b80f302256ea19bc2b2'
+md5sums=('7ce269039aa5714bc786e1e3e71deb3b'
          '68f0967a28f950a9e9aeaf7665c01080')
 
 package() {
