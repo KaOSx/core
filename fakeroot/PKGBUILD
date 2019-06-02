@@ -1,23 +1,23 @@
 
 pkgname=fakeroot
-pkgver=1.20.2
-pkgrel=4
+pkgver=1.23
+pkgrel=1
 pkgdesc="Gives a fake root environment, useful for building packages as a non-privileged user."
 arch=('x86_64')
 license=('GPL')
-url="http://packages.debian.org/fakeroot"
+url="https://packages.debian.org/fakeroot"
 groups=('base-devel')
 install="fakeroot.install"
 depends=('glibc' 'filesystem' 'util-linux' 'sed' 'sh')
 options=('!libtool')
-source=("http://ftp.debian.org/debian/pool/main/f/fakeroot/${pkgname}_${pkgver}.orig.tar.bz2"
+source=("https://deb.debian.org/debian/pool/main/f/fakeroot/${pkgname}_${pkgver}.orig.tar.xz"
         "dlsym.patch")
-md5sums=('a4b4564a75024aa96c86e4d1017ac786'
+md5sums=('b82c5e99b6365a838e73d05718083f6a'
          '62f6a56ee03486d2d8d178b922c612cd')
 
 build() {
   cd ${pkgname}-${pkgver}
-  patch -p1 -i $srcdir/dlsym.patch
+  patch -p1 -i ${srcdir}/dlsym.patch
 
   #./bootstrap
   ./configure --prefix=/usr \
