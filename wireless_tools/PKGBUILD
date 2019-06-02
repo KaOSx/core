@@ -2,7 +2,7 @@
 pkgname=wireless_tools
 pkgver=29.9
 _pkgver=30
-pkgrel=3
+pkgrel=4
 pkgdesc="Wireless Tools"
 arch=('x86_64')
 url="https://hewlettpackard.github.io/wireless-tools/Tools.html"
