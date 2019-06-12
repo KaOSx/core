@@ -16,7 +16,7 @@ replaces=('nfsidmap')
 source=("https://downloads.sourceforge.net/project/nfs/nfs-utils/${pkgver}/${pkgname}-${pkgver}.tar.bz2"
         'exports'
         'id_resolver.conf')
-md5sums=('0db26ccff321a1e8db89f1d9d2537850'
+md5sums=('cb9a25a751dd44fa66d34a14cdb17e11'
          'e6ad3c7a59c7e4c24965a0e7da35026c'
          '391aaafdf01a665629c708d1386b5896')
 
