@@ -1,9 +1,9 @@
 
 # with cmake build, always check for .so up
 pkgname=libarchive
-pkgver=3.3.3
-_pkgver=3.3.3
-pkgrel=4
+pkgver=3.4.0
+_pkgver=3.4.0
+pkgrel=1
 pkgdesc="library that can create and read several streaming archive formats"
 arch=('x86_64')
 url="http://libarchive.org/"
@@ -11,7 +11,7 @@ license=('BSD')
 depends=('zlib' 'bzip2' 'xz' 'acl' 'openssl' 'expat' 'lzo2' 'attr' 'zstd')
 makedepends=('cmake' 'clang')
 source=("https://github.com/libarchive/libarchive/archive/v${_pkgver}.tar.gz")
-md5sums=('c591a2781609e7d0c47049a0f061ce99')
+md5sums=('bdfe6fb43e4c6018c9c859b6aa6d384d')
 
 build() {
   mkdir -p build

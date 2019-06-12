@@ -1,6 +1,6 @@
 
 pkgname=nfs-utils
-pkgver=2.3.4
+pkgver=2.4.1
 pkgrel=1
 pkgdesc="Support programs for Network File Systems"
 arch=('x86_64')
