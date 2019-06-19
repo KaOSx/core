@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.1
 _srcname=linux-5.1
-pkgver=5.1.11
+pkgver=5.1.12
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -31,7 +31,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('15fbdff95ff98483069ac6e215b9f4f9'
-         'fe1c09bf58c52f56bab16a7c6429eb8e'
+         'e72efeff316e384ab47ebcc804a83f02'
          'abc3a7ba698c28242f0b64de4e44d9a4'
          'acf9d2a0f1c198552dc2901501f20c23'
          '5a0cbe1f02e1cc634f6b555c6577d3ac'
