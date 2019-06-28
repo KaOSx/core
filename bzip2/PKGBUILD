@@ -1,15 +1,15 @@
 
 pkgname=bzip2
-pkgver=1.0.6
-pkgrel=9
+pkgver=1.0.7
+pkgrel=1
 pkgdesc="A high-quality data compression program"
 arch=('x86_64')
 license=('custom')
 url="https://sourceware.org/bzip2/"
 groups=('base')
 depends=('glibc')
-source=("http://mirror.netcologne.de/gentoo/distfiles/bzip2-${pkgver}.tar.gz")
-md5sums=('00b516f4704d4a7cb50a1d97e6e8e15b')
+source=("https://sourceware.org/pub/bzip2/bzip2-${pkgver}.tar.gz")
+md5sums=('1a6a61cc867be4f3d6549037a09bf13e')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -41,10 +41,10 @@ package() {
   ln -sf bzip2 ${pkgdir}/usr/bin/bunzip2
   ln -sf bzip2 ${pkgdir}/usr/bin/bzcat
 
-  install -m755 libbz2.so.1.0.6 ${pkgdir}/usr/lib
-  ln -s libbz2.so.1.0.6 ${pkgdir}/usr/lib/libbz2.so
-  ln -s libbz2.so.1.0.6 ${pkgdir}/usr/lib/libbz2.so.1
-  ln -s libbz2.so.1.0.6 ${pkgdir}/usr/lib/libbz2.so.1.0
+  install -m755 libbz2.so.1.0.7 ${pkgdir}/usr/lib
+  ln -s libbz2.so.1.0.7 ${pkgdir}/usr/lib/libbz2.so
+  ln -s libbz2.so.1.0.7 ${pkgdir}/usr/lib/libbz2.so.1
+  ln -s libbz2.so.1.0.7 ${pkgdir}/usr/lib/libbz2.so.1.0
   install -m644 libbz2.a ${pkgdir}/usr/lib/libbz2.a
 
   install -m644 bzlib.h ${pkgdir}/usr/include/
