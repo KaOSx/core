@@ -2,18 +2,18 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=5.1
-_srcname=linux-5.1
-pkgver=5.1.14
+_basekernel=5.2-rc7
+_srcname=linux-5.2
+pkgver=5.2RC7
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
-#source=("https://git.kernel.org/torvalds/t/linux-4.16-rc7.tar.gz"
-        "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
+#source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
+source=("https://git.kernel.org/torvalds/t/linux-5.2-rc7.tar.gz"
+        ##"https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -30,9 +30,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'linux-next.preset'
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
-md5sums=('15fbdff95ff98483069ac6e215b9f4f9'
-         'fc223f51be0b644f57b766d660c5fa25'
-         'abc3a7ba698c28242f0b64de4e44d9a4'
+md5sums=('e33ede8cee6946a4741545f263204847'
+         '1a944417fd13a1f34be21903c8059321'
          'acf9d2a0f1c198552dc2901501f20c23'
          '5a0cbe1f02e1cc634f6b555c6577d3ac'
          '62fc31c5b5be8d45728344a10a139442'
@@ -50,20 +49,20 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs5.patch"
-  patch -p1 -i "${srcdir}/aufs5-base.patch"
-  patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs5-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs5-mmap.patch"
-  patch -p1 -i "${srcdir}/aufs5-standalone.patch"
-  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  patch -p1 -i "${srcdir}/vfs-ino.patch"
+  #patch -p1 -i "${srcdir}/aufs5.patch"
+  #patch -p1 -i "${srcdir}/aufs5-base.patch"
+  #patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
+  #patch -p1 -i "${srcdir}/aufs5-loopback.patch"
+  #patch -p1 -i "${srcdir}/aufs5-mmap.patch"
+  #patch -p1 -i "${srcdir}/aufs5-standalone.patch"
+  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  #patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
@@ -72,7 +71,7 @@ build() {
   
   cat "${srcdir}/config" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -247,7 +246,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs4-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
