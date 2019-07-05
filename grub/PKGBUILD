@@ -5,9 +5,10 @@
 
 pkgname=grub
 pkgdesc="GNU GRand Unified Bootloader"
-pkgver=2.02
-pkgrel=3
-_commit=f826330683675f0deb55b58fd229afd7d65fb053
+pkgver=2.04
+pkgrel=1
+_commit=2a2e10c1b39672de3d5da037a50d5c371f49b40d
+_gnulib=9ce9be2ef0cb1180e35dfe9dfbbe90d774b374bd
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
 license=('GPL3')
@@ -18,7 +19,7 @@ conflicts=('grub-common' 'grub-bios' 'grub-efi')
 provides=('grub-common' 'grub-bios' 'grub-efi')
 replaces=('grub-common' 'grub-bios' 'grub-efi')
 depends=('sh' 'xz' 'gettext' 'device-mapper')
-makedepends=('git' 'rsync' 'xz' 'freetype2' 'ttf-dejavu' 'python3' 'autogen'
+makedepends=('git' 'rsync' 'xz' 'freetype2' 'ttf-dejavu' 'python2' 'python3' 'autogen'
              'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse' 'bdf-unifont')
 optdepends=('freetype2: For grub-mkfont usage'
             'fuse: For grub-mount usage'
@@ -30,12 +31,14 @@ optdepends=('freetype2: For grub-mkfont usage'
 # http://git.savannah.gnu.org/cgit/grub.git
 source=("https://git.savannah.nongnu.org/cgit/grub.git/snapshot/grub-${_commit}.tar.gz"
         "grub-extras::git+git://git.sv.gnu.org/grub-extras.git#branch=master"
+        "https://git.savannah.nongnu.org/cgit/gnulib.git/snapshot/gnulib-${_gnulib}.tar.gz"
         'grub-10_linux-detect-initramfs.patch'
         'grub.default'
         'grub.cfg'
         'sparse-inodes.patch')
-md5sums=('7af5792d4684d0c104763bed8b6f83c8'
+md5sums=('2678bdb7b4eecb76dbee7aab25be2904'
          'SKIP'
+         '12d4f247b895bf2e7d65285b92f45886'
          '945527e0de8d384166a4cf23439ae9ee'
          '2f372ff858b5ad59b8b7d34dee56cd67'
          '1c03f9a8196beee4321e89d87862c69b'
@@ -63,8 +66,10 @@ prepare() {
 	## Remove not working langs which need LC_ALL=C.UTF-8
 	sed -e 's#en@cyrillic en@greek##g' -i "${srcdir}/grub-${_commit}/po/LINGUAS"
 	
-	## Make grub accept XFS filesystem with sparse inodes
-	patch -p1 -i "${srcdir}/sparse-inodes.patch"
+	## bootstrap gnulib
+	./bootstrap \
+		--gnulib-srcdir="${srcdir}/gnulib-${_gnulib}/" \
+		--no-git
 }
 
 _build_grub-common_and_bios() {
