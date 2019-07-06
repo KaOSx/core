@@ -34,15 +34,13 @@ source=("https://git.savannah.nongnu.org/cgit/grub.git/snapshot/grub-${_commit}.
         "https://git.savannah.nongnu.org/cgit/gnulib.git/snapshot/gnulib-${_gnulib}.tar.gz"
         'grub-10_linux-detect-initramfs.patch'
         'grub.default'
-        'grub.cfg'
-        'sparse-inodes.patch')
+        'grub.cfg')
 md5sums=('2678bdb7b4eecb76dbee7aab25be2904'
          'SKIP'
          '12d4f247b895bf2e7d65285b92f45886'
          '945527e0de8d384166a4cf23439ae9ee'
          '2f372ff858b5ad59b8b7d34dee56cd67'
-         '1c03f9a8196beee4321e89d87862c69b'
-         'b1583f07348e009e2d76956b8aca1121')
+         '1c03f9a8196beee4321e89d87862c69b')
 
 prepare() {
 	
