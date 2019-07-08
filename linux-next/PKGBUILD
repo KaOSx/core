@@ -2,17 +2,17 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=5.2-rc7
+_basekernel=5.2
 _srcname=linux-5.2
-pkgver=5.2RC7
+pkgver=5.2.0
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-#source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
-source=("https://git.kernel.org/torvalds/t/linux-5.2-rc7.tar.gz"
+source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
+#source=("https://git.kernel.org/torvalds/t/linux-5.2-rc7.tar.gz"
         ##"https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -30,7 +30,7 @@ source=("https://git.kernel.org/torvalds/t/linux-5.2-rc7.tar.gz"
         'linux-next.preset'
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
-md5sums=('e33ede8cee6946a4741545f263204847'
+md5sums=('ddf994de00d7b18395886dd9b30b9262'
          '1a944417fd13a1f34be21903c8059321'
          'acf9d2a0f1c198552dc2901501f20c23'
          '5a0cbe1f02e1cc634f6b555c6577d3ac'
