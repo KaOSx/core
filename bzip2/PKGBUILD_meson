@@ -1,0 +1,70 @@
+
+pkgname=bzip2
+pkgver=1.0.8
+pkgrel=2
+pkgdesc="A high-quality data compression program"
+arch=('x86_64')
+license=('custom')
+url="https://sourceware.org/bzip2/"
+groups=('base')
+depends=('glibc')
+makedepends=('meson' 'ninja')
+source=("https://sourceware.org/pub/bzip2/bzip2-${pkgver}.tar.gz")
+md5sums=('67e051268d0c475ea773822f7500d0e5')
+
+build() {
+  mkdir -p build
+  cd build
+  
+  meson ../${pkgname}-${pkgver} \
+    --prefix=/usr \
+    -Dbuildtype==release \
+    -Ddefault_library=both
+  ninja
+
+  # add large-file support
+  #sed -e 's/^CFLAGS=\(.*\)$/CFLAGS=\1 \$(BIGFILES)/' -i ./Makefile-libbz2_so
+
+  # use optimization
+  #sed -i "s|-O2|${CFLAGS}|g" Makefile
+  #sed -i "s|-O2|${CFLAGS}|g" Makefile-libbz2_so
+
+  #make -f Makefile-libbz2_so
+  #make bzip2recover libbz2.a
+}
+
+check() {
+  cd build
+  
+  ninja test
+}
+
+package() {
+  cd build
+  
+  DESTDIR=${pkgdir} ninja install
+  #cd ${pkgname}-${pkgver}
+
+  #install -dm755 ${pkgdir}/usr/{bin,lib,include,share/man/man1}
+
+  #install -m755 bzip2-shared ${pkgdir}/usr/bin/bzip2
+  #install -m755 bzip2recover bzdiff bzgrep bzmore ${pkgdir}/usr/bin
+  #ln -sf bzip2 ${pkgdir}/usr/bin/bunzip2
+  #ln -sf bzip2 ${pkgdir}/usr/bin/bzcat
+
+  #install -m755 libbz2.so.1.0.8 ${pkgdir}/usr/lib
+  #ln -s libbz2.so.1.0.8 ${pkgdir}/usr/lib/libbz2.so
+  #ln -s libbz2.so.1.0.8 ${pkgdir}/usr/lib/libbz2.so.1
+  #ln -s libbz2.so.1.0.8 ${pkgdir}/usr/lib/libbz2.so.1.0
+  #install -m644 libbz2.a ${pkgdir}/usr/lib/libbz2.a
+
+  #install -m644 bzlib.h ${pkgdir}/usr/include/
+
+  #install -m644 bzip2.1 ${pkgdir}/usr/share/man/man1/
+  #ln -sf bzip2.1 ${pkgdir}/usr/share/man/man1/bunzip2.1
+  #ln -sf bzip2.1 ${pkgdir}/usr/share/man/man1/bzcat.1
+  #ln -sf bzip2.1 ${pkgdir}/usr/share/man/man1/bzip2recover.1
+
+  #install -Dm644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+}
+
