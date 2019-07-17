@@ -1,7 +1,7 @@
 
 pkgname=kbd
-pkgver=2.0.4
-pkgrel=2
+pkgver=2.1.0
+pkgrel=1
 pkgdesc="Keytable files and keyboard utilities"
 arch=('x86_64')
 url="http://www.kbd-project.org"
@@ -9,7 +9,7 @@ license=('GPL')
 depends=('glibc' 'pam')
 makedepends=('check')
 source=("https://mirrors.edge.kernel.org/pub/linux/utils/kbd/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('5fd90af6beb225a9bb9b9fb414c090fba53c9a55793e172f508cd43652e59a88')
+sha256sums=('6740e896b9fe62b7234ff64e4b41cf5f3e1c3a4032cbd963eefebe04f2457cc1')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -18,7 +18,7 @@ build() {
   mv data/keymaps/i386/qwertz/cz{,-qwertz}.map
   mv data/keymaps/i386/olpc/es{,-olpc}.map
   mv data/keymaps/i386/olpc/pt{,-olpc}.map
-  mv data/keymaps/i386/dvorak/no{,-dvorak}.map
+  #mv data/keymaps/i386/dvorak/no{,-dvorak}.map
   mv data/keymaps/i386/fgGIod/trf{,-fgGIod}.map
   mv data/keymaps/i386/colemak/{en-latin9,colemak}.map
 
