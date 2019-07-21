@@ -68,7 +68,7 @@ index b07b53f24ff5..34b9bbf4c556 100644
 @@ -374,6 +376,7 @@ void __fput_sync(struct file *file)
  }
  
- EXPORT_SYMBOL_GPL(fput);
+ EXPORT_SYMBOL(fput);
 +EXPORT_SYMBOL_GPL(__fput_sync);
  
  void __init files_init(void)
