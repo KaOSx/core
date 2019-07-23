@@ -2,10 +2,10 @@
 pkgname=libnl
 pkgver=3.4.0
 _pkgver=3_4_0
-pkgrel=1
+pkgrel=2
 pkgdesc="Library for applications dealing with netlink sockets"
 arch=('x86_64')
-url="http://www.infradead.org/~tgr/libnl/"
+url="https://www.infradead.org/~tgr/libnl/"
 license=('GPL')
 depends=('glibc')
 conflicts=('libnl3')
