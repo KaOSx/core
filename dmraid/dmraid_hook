@@ -1,0 +1,12 @@
+#!/bin/bash
+
+run_hook() {
+    modprobe -a -q dm-mod dm-mirror >/dev/null 2>&1
+    msg ":: Activating dmraid arrays..."
+    # prevent any event monitoring calls with -I
+    if [ "$quiet" = "y" ]; then
+        dmraid -ay -I -Z >/dev/null
+    else
+        dmraid -ay -I -Z
+    fi
+}

@@ -1,0 +1,41 @@
+
+pkgname=dmraid
+pkgver=1.0.0.rc16.3
+_pkgver=1.0.0.rc16-3
+pkgrel=2
+pkgdesc="Supports RAID device discovery, set activation, creation, removal, rebuild and display of properties for ATARAID/DDF1 metadata."
+arch=('x86_64')
+license=('GPL')
+url="https://people.redhat.com/~heinzm/sw/dmraid/"
+depends=('device-mapper')
+makedepend=('gobject-introspection')
+source=("http://people.redhat.com/~heinzm/sw/dmraid/src/${pkgname}-${_pkgver}.tar.bz2"
+        'dmraid_install'
+        'dmraid_hook'
+        'dmraid.service')
+md5sums=('819338fcef98e8e25819f0516722beeb'
+         '7c2b38f215b43e9bc1d86dda4443929d'
+         '6bd93c2e827f18f589f46629d2fe093d'
+         '470d575de82ab9a983b09638115dd3b9')
+
+build() {
+  cd ${pkgname}/${_pkgver}/${pkgname}
+  
+  ./configure --enable-led --enable-intel_led
+  make
+}
+
+package() {
+  cd ${pkgname}/${_pkgver}/${pkgname}
+  
+  make DESTDIR=${pkgdir} prefix=/usr libdir=/usr/lib mandir=/usr/share/man includedir=/usr/include install
+  
+  install -D -m644 ../../../dmraid_install ${pkgdir}/usr/lib/initcpio/install/dmraid
+  install -D -m644 ../../../dmraid_hook ${pkgdir}/usr/lib/initcpio/hooks/dmraid
+  install -D -m644 ../../../dmraid.service ${pkgdir}/usr/lib/systemd/system/dmraid.service
+
+  chmod 644 ${pkgdir}/usr/lib/libdmraid.a
+  chmod 644 ${pkgdir}/usr/include/dmraid/*
+  
+  
+}
