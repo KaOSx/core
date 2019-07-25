@@ -1,6 +1,6 @@
 
 pkgname=subversion
-pkgver=1.12.0
+pkgver=1.12.2
 pkgrel=1
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
@@ -17,7 +17,7 @@ source=("https://www.apache.org/dist/subversion/${pkgname}-${pkgver}.tar.bz2"
         'svnserve.tmpfiles'
         'svnserve.service'
         'subversion.rpath.fix.patch')
-sha1sums=('2dfecac56f18951182dbee4a4f14d27f27ebcdb7'
+sha1sums=('3225af29570cb9e0b79dd38d9242f7d848aad51d'
           '73b36c046c09cec2093354911c89e3ba8056af6c'
           'ad117bf3b2a838a9a678a93fd8db1a066ad46c41'
           '00cc36e69077a8c45674ead6dd62a7647b3a3b6d'
