@@ -1,13 +1,13 @@
 
 pkgname=openssh
 pkgver=8.0p1
-pkgrel=1
+pkgrel=2
 pkgdesc='Free version of the SSH connectivity tools'
 arch=('x86_64')
 license=('custom:BSD')
 url='https://www.openssh.org/portable.html'
 backup=('etc/ssh/ssh_config' 'etc/ssh/sshd_config' 'etc/pam.d/sshd')
-depends=('krb5' 'openssl' 'libedit')
+depends=('krb5' 'openssl' 'libedit' 'ldns')
 makedepends=('linux-headers')
 source=("https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgver}.tar.gz"
         'sshd.confd'
@@ -39,7 +39,7 @@ build() {
 		--with-xauth=/usr/bin/xauth \
 		--with-kerberos5=/usr \
 		--with-ssl-engine \
-		--with-libedit \
+		--with-ldns \
 		--with-pid-dir=/run \
 
 	make
