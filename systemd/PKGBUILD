@@ -113,7 +113,8 @@ build() {
     -Dntp-servers="${NTP_SERVERS}" \
     -Ddefault-hierarchy=hybrid \
     -Dfallback-hostname=KaOS \
-    -Ddbuspolicydir=/etc/dbus-1/system.d 
+    -Ddbuspolicydir=/etc/dbus-1/system.d \
+    -Dman=true
     # -Ddefault-locale=C
     ninja
 }
