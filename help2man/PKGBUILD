@@ -1,6 +1,6 @@
 
 pkgname=help2man
-pkgver=1.47.10
+pkgver=1.47.11
 pkgrel=1
 pkgdesc="Conversion tool to create man files"
 arch=('x86_64')
@@ -8,7 +8,7 @@ url="https://www.gnu.org/software/help2man/"
 license=('GPL')
 depends=('perl-locale-gettext')
 source=("https://ftp.gnu.org/gnu/help2man/${pkgname}-${pkgver}.tar.xz")
-md5sums=('0d70833650a552e0af742882ba84f2ee')
+md5sums=('dd322adcaede5bd5eaed075ff8971bc1')
 
 build() {
   cd ${pkgname}-${pkgver}
