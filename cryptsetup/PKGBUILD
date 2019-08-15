@@ -1,7 +1,7 @@
 
 pkgname=cryptsetup
-pkgver=2.1.0
-pkgrel=3
+pkgver=2.2.0
+pkgrel=1
 pkgdesc="Utility used to conveniently setup disk encryption based on DMCrypt kernel module."
 arch=('x86_64')
 license=('GPL')
@@ -9,11 +9,11 @@ url="https://gitlab.com/cryptsetup/cryptsetup/blob/master/README.md"
 groups=('base')
 depends=('device-mapper' 'libgcrypt' 'popt' 'util-linux' 'json-c' 'argon2' 'openssl')
 options=('!libtool' '!emptydirs')
-source=("https://www.kernel.org/pub/linux/utils/cryptsetup/v2.1/${pkgname}-${pkgver}.tar.xz"
+source=("https://www.kernel.org/pub/linux/utils/cryptsetup/v2.2/${pkgname}-${pkgver}.tar.xz"
         'encrypt_hook'
         'encrypt_install'
         'sd-encrypt')
-sha256sums=('a3eeb2741f8f3376d16585191f3c60e067dd987e096c3c4b073fab7748b1c897'
+sha256sums=('9d8f8cac2836a1623c075b5cba96032271dc81a28b2aa27fbd8331e831416bb1'
             '5cbc819a1c867fabcbc0721b078be96c1f22116bbdf11ae7da1e50a8f6590acb'
             '9f78cab3caf45dcd6534973472a9f6051ac0a6859369afb143f24a9c34a3073f'
             '01956fc738ee1d42ba9d962615fcd2c13ad2e8119b1ba38a002e15c631ee8daf')
