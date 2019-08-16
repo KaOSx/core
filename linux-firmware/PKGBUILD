@@ -1,6 +1,6 @@
 
 pkgname=linux-firmware
-pkgver=20190726
+pkgver=20190815
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
@@ -49,7 +49,7 @@ package() {
   cd ${pkgname}
   
   make DESTDIR=${pkgdir} install
-  rm ${pkgdir}/lib/firmware/{Makefile,README,configure,GPL-3}
+  #rm ${pkgdir}/lib/firmware/{Makefile,README,configure,GPL-3}
 
   install -d ${pkgdir}/usr/share/licenses/${pkgname}
   install -Dm644 LICEN* WHENCE ${pkgdir}/usr/share/licenses/linux-firmware/
