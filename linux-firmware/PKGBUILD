@@ -49,15 +49,9 @@ package() {
   cd ${pkgname}
   
   make DESTDIR=${pkgdir} install
-  #rm ${pkgdir}/lib/firmware/{Makefile,README,configure,GPL-3}
 
   install -d ${pkgdir}/usr/share/licenses/${pkgname}
   install -Dm644 LICEN* WHENCE ${pkgdir}/usr/share/licenses/linux-firmware/
-
-  # microcode reload for older systems not using early
-  #install -d ${pkgdir}/usr/lib/tmpfiles.d
-  #echo 'w /sys/devices/system/cpu/microcode/reload - - - - 1' \
-  #  >${pkgdir}/usr/lib/tmpfiles.d/${pkgname}.conf
 
   # install b43-firmware
   b43-fwcutter -w ${pkgdir}/lib/firmware/ ${srcdir}/broadcom-wl-${_b43}/linux/wl_apsta.o

@@ -1,6 +1,6 @@
 
 pkgname=kbd
-pkgver=2.1.0
+pkgver=2.2.0
 pkgrel=1
 pkgdesc="Keytable files and keyboard utilities"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL')
 depends=('glibc' 'pam')
 makedepends=('check')
 source=("https://mirrors.edge.kernel.org/pub/linux/utils/kbd/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('6740e896b9fe62b7234ff64e4b41cf5f3e1c3a4032cbd963eefebe04f2457cc1')
+sha256sums=('21a1bc5f6fb3b18ce9fdd717e4533368060a3182a39c7155eaf7ec0f5f83e9f7')
 
 build() {
   cd ${pkgname}-${pkgver}
