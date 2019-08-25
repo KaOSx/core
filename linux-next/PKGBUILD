@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.2
 _srcname=linux-5.2
-pkgver=5.2.9
+pkgver=5.2.10
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -24,6 +24,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'aufs5-kbuild.patch'
         'aufs5.patch'
         'config.aufs'
+        'proc_mounts.patch'
         'tmpfs-idr.patch'
         'vfs-ino.patch'
         # standard config files for mkinitcpio ramdisk
@@ -31,7 +32,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('ddf994de00d7b18395886dd9b30b9262'
-         '8e44c6541cfd15b87906eaf2ce91a3b9'
+         '7c9a170cf18a9ab1d2e005b2d206d9bc'
          '731ae4584304dc11f1842a9d9bd0fdfe'
          '9a61dd024bf298555f2a409a997f32bf'
          '08f52a6165a274cfbeebdb6772ae2cfe'
@@ -40,6 +41,7 @@ md5sums=('ddf994de00d7b18395886dd9b30b9262'
          '20cb6e0066d08d01201d3354cf84ee61'
          '62b400882eb56c0ac07314be674d9402'
          '58077c1703977e6b5fafdda552f542d5'
+         'bbec959c7a92422a70bb385b56341726'
          '542442b705b2810b6cb111b4c6b04b09'
          '0477f42f9656ec8f037e92ce4cd67017'
          'e19be83ca72175a29b36d8ab08105050'
@@ -62,6 +64,7 @@ build() {
   patch -p1 -i "${srcdir}/aufs5-loopback.patch"
   patch -p1 -i "${srcdir}/aufs5-mmap.patch"
   patch -p1 -i "${srcdir}/aufs5-standalone.patch"
+  patch -p1 -i "${srcdir}/proc_mounts.patch"
   patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches

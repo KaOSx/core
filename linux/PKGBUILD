@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=5.1
-pkgver=5.1.15
+_basekernel=5.2
+pkgver=5.2.10
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode' 'elfutils')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.1.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.2.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -22,6 +22,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.1.tar.xz"
         'aufs5-kbuild.patch'
         'aufs5.patch'
         'config.aufs'
+        'proc_mounts.patch'
         'tmpfs-idr.patch'
         'vfs-ino.patch'
         # standard config files for mkinitcpio ramdisk
@@ -58,6 +59,7 @@ prepare() {
   patch -p1 -i "${srcdir}/aufs5-loopback.patch"
   patch -p1 -i "${srcdir}/aufs5-mmap.patch"
   patch -p1 -i "${srcdir}/aufs5-standalone.patch"
+  patch -p1 -i "${srcdir}/proc_mounts.patch"
   patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
