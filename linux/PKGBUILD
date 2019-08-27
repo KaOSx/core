@@ -4,7 +4,7 @@ pkgname=('linux' 'linux-headers' 'linux-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.2
 pkgver=5.2.10
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -60,7 +60,7 @@ prepare() {
   patch -p1 -i "${srcdir}/aufs5-loopback.patch"
   patch -p1 -i "${srcdir}/aufs5-mmap.patch"
   patch -p1 -i "${srcdir}/aufs5-standalone.patch"
-  patch -p1 -i "${srcdir}/proc_mounts.patch"
+  #patch -p1 -i "${srcdir}/proc_mounts.patch"
   patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
