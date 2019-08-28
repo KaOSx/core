@@ -24,7 +24,6 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'aufs5-kbuild.patch'
         'aufs5.patch'
         'config.aufs'
-        'proc_mounts.patch'
         'tmpfs-idr.patch'
         'vfs-ino.patch'
         # standard config files for mkinitcpio ramdisk
@@ -64,7 +63,6 @@ build() {
   patch -p1 -i "${srcdir}/aufs5-loopback.patch"
   patch -p1 -i "${srcdir}/aufs5-mmap.patch"
   patch -p1 -i "${srcdir}/aufs5-standalone.patch"
-  patch -p1 -i "${srcdir}/proc_mounts.patch"
   patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
