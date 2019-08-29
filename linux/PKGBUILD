@@ -3,8 +3,8 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=5.2
-pkgver=5.2.10
-pkgrel=2
+pkgver=5.2.11
+pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
@@ -22,14 +22,13 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.2.tar.xz"
         'aufs5-kbuild.patch'
         'aufs5.patch'
         'config.aufs'
-        'proc_mounts.patch'
         'tmpfs-idr.patch'
         'vfs-ino.patch'
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '99-linux.hook')
 md5sums=('ddf994de00d7b18395886dd9b30b9262'
-         '7c9a170cf18a9ab1d2e005b2d206d9bc'
+         '44dfa2755410b72ee660fa29bfb15af1'
          '4eee76680c4b00922004089ff9f4f13e'
          '9a61dd024bf298555f2a409a997f32bf'
          '08f52a6165a274cfbeebdb6772ae2cfe'
@@ -38,7 +37,6 @@ md5sums=('ddf994de00d7b18395886dd9b30b9262'
          '20cb6e0066d08d01201d3354cf84ee61'
          '62b400882eb56c0ac07314be674d9402'
          '58077c1703977e6b5fafdda552f542d5'
-         'bbec959c7a92422a70bb385b56341726'
          '542442b705b2810b6cb111b4c6b04b09'
          '0477f42f9656ec8f037e92ce4cd67017'
          'eb14dcfd80c00852ef81ded6e826826a'
@@ -60,7 +58,6 @@ prepare() {
   patch -p1 -i "${srcdir}/aufs5-loopback.patch"
   patch -p1 -i "${srcdir}/aufs5-mmap.patch"
   patch -p1 -i "${srcdir}/aufs5-standalone.patch"
-  #patch -p1 -i "${srcdir}/proc_mounts.patch"
   patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
