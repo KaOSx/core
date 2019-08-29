@@ -1,6 +1,6 @@
 
 pkgname=libgcrypt
-pkgver=1.8.4
+pkgver=1.8.5
 pkgrel=1
 pkgdesc="GNU's basic cryptographic library"
 arch=('x86_64')
@@ -8,16 +8,11 @@ url="https://www.gnupg.org/software/libgcrypt/index.html"
 license=('LGPL')
 depends=('libgpg-error')
 options=('!libtool' 'emptydirs')
-source=("https://www.gnupg.org/ftp/gcrypt/libgcrypt/${pkgname}-${pkgver}.tar.bz2"
-        "https://src.fedoraproject.org/rpms/libgcrypt/raw/master/f/libgcrypt-1.8.3-getrandom.patch")
-sha1sums=('4a8ef9db6922f3a31992aca5640b4198a69b58fc'
-          'a7a1cba01bc0686fe15ce67b03cb5aca9dae972b')
+source=("https://www.gnupg.org/ftp/gcrypt/libgcrypt/${pkgname}-${pkgver}.tar.bz2")
+sha1sums=('2d8781e92f88706707a1e76fb628b499ad538a30')
 
 build() {
   cd ${pkgname}-${pkgver}
-  # issues with slow boot on some systems since linux 4.16, use patch from Fedora to adjust getrandom
-  # https://forum.kaosx.us/d/2169-slow-boot-hangs-a-long-time-before-gui-login/
-  #patch -p1 -i ${srcdir}/libgcrypt-1.8.3-getrandom.patch
 
   ./configure --prefix=/usr \
     --disable-padlock-support \
