@@ -1,15 +1,15 @@
 
 pkgname=findutils
-pkgver=4.6.0
-pkgrel=4
+pkgver=4.7.0
+pkgrel=1
 pkgdesc="GNU utilities to locate files"
+url="https://www.gnu.org/software/findutils"
 arch=('x86_64')
 license=('GPL3')
 groups=('base')
 depends=('glibc' 'sh')
-url="https://www.gnu.org/software/findutils"
-source=("https://ftp.gnu.org/pub/gnu/findutils/findutils-${pkgver}.tar.gz")
-md5sums=('9936aa8009438ce185bea2694a997fc1')
+source=("https://ftp.gnu.org/pub/gnu/findutils/findutils-${pkgver}.tar.xz")
+md5sums=('731356dec4b1109b812fecfddfead6b2')
 
 build() {
   cd ${pkgname}-${pkgver}
