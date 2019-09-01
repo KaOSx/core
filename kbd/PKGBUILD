@@ -1,18 +1,22 @@
 
 pkgname=kbd
 pkgver=2.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Keytable files and keyboard utilities"
 arch=('x86_64')
 url="http://www.kbd-project.org"
 license=('GPL')
 depends=('glibc' 'pam')
 makedepends=('check')
-source=("https://mirrors.edge.kernel.org/pub/linux/utils/kbd/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('21a1bc5f6fb3b18ce9fdd717e4533368060a3182a39c7155eaf7ec0f5f83e9f7')
+source=("https://mirrors.edge.kernel.org/pub/linux/utils/kbd/${pkgname}-${pkgver}.tar.xz"
+        'kbd2.2.0.patch')
+sha256sums=('21a1bc5f6fb3b18ce9fdd717e4533368060a3182a39c7155eaf7ec0f5f83e9f7'
+            'b5bf6a9d7a1374f65f8373a3f4b89d0e19b809e889123fb58d33eee17eeb376c')
 
 build() {
   cd ${pkgname}-${pkgver}
+  # kbd 2.2.0 not compatible with encryption/loadkmap
+  patch -p1 -i ${srcdir}/kbd2.2.0.patch
 
   # Rename conflicting keymaps to have unique names
   mv data/keymaps/i386/qwertz/cz{,-qwertz}.map
