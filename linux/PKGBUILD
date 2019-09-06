@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=5.2
-pkgver=5.2.11
+pkgver=5.2.13
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -28,7 +28,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.2.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('ddf994de00d7b18395886dd9b30b9262'
-         '44dfa2755410b72ee660fa29bfb15af1'
+         '3310549071f185161b8b605ac43d3dd0'
          '4eee76680c4b00922004089ff9f4f13e'
          '9a61dd024bf298555f2a409a997f32bf'
          '08f52a6165a274cfbeebdb6772ae2cfe'
