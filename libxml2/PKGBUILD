@@ -1,12 +1,12 @@
 
 pkgname=libxml2
 pkgver=2.9.9
-pkgrel=2
+pkgrel=3
 pkgdesc="XML parsing library, version 2"
 arch=('x86_64')
 license=('MIT')
 depends=('zlib' 'readline' 'ncurses' 'xz')
-makedepends=('python2')
+makedepends=('python3')
 options=('!libtool')
 url="http://www.xmlsoft.org/"
 source=("ftp://ftp.xmlsoft.org/${pkgname}/${pkgname}-${pkgver}.tar.gz"
@@ -23,7 +23,8 @@ build() {
   
   ./configure --prefix=/usr \
      --with-threads \
-     --with-history 
+     --with-history \
+     --with-python=/usr/bin/python3
   make
 }
 

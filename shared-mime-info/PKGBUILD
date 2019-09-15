@@ -1,7 +1,7 @@
 
 pkgname=shared-mime-info
 pkgver=1.13.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Freedesktop.org Shared MIME Info"
 arch=('x86_64')
 url="https://freedesktop.org/Software/shared-mime-info"
