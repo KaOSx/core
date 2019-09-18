@@ -8,7 +8,6 @@ url='https://github.com/shadow-maint/shadow'
 license=('BSD')
 groups=('base')
 depends=('bash' 'pam' 'acl')
-#makedepends=('gnome-doc-utils')
 backup=(etc/login.defs
         etc/pam.d/{chage,passwd,shadow,useradd,usermod,userdel}
         etc/pam.d/{chpasswd,newusers,groupadd,groupdel,groupmod}
@@ -43,7 +42,7 @@ md5sums=('eb66cc4e5166fba8854eb805ec0bab63'
          '0eebe9d13065bec4b5d7ccf3bf46c509'
          '8a9152e7448a0f9d1d07ed0016776e16')
 
-build() {
+build() {{chsh,chfn,sg}
   cd ${pkgname}-${pkgver}
   #patch -p1 -i ${srcdir}/xstrdup.patch
 

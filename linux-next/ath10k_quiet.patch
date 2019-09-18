@@ -1,0 +1,46 @@
+diff -Naur linux-5.2.14/drivers/net/wireless/ath/ath10k/core.c linux-5.2.14-ath/drivers/net/wireless/ath/ath10k/core.c
+--- linux-5.2.14/drivers/net/wireless/ath/ath10k/core.c	2019-09-10 11:35:27.000000000 +0200
++++ linux-5.2.14-ath/drivers/net/wireless/ath/ath10k/core.c	2019-09-11 21:02:39.494630998 +0200
+@@ -2087,7 +2087,8 @@
+ 		return ret;
+ 	}
+ 
+-	ath10k_info(ar, "UART prints enabled\n");
++	/* Please, _dbg() , no need to flood the dmesg with these */
++	ath10k_dbg(ar, ATH10K_DBG_BOOT, "UART prints enabled\n");
+ 	return 0;
+ }
+ 
+diff -Naur linux-5.2.14/drivers/net/wireless/ath/ath10k/htc.c linux-5.2.14-ath/drivers/net/wireless/ath/ath10k/htc.c
+--- linux-5.2.14/drivers/net/wireless/ath/ath10k/htc.c	2019-09-10 11:35:27.000000000 +0200
++++ linux-5.2.14-ath/drivers/net/wireless/ath/ath10k/htc.c	2019-09-11 21:02:39.494630998 +0200
+@@ -799,7 +799,7 @@
+ 						&ep->ul_pipe_id,
+ 						&ep->dl_pipe_id);
+ 	if (status) {
+-		ath10k_warn(ar, "unsupported HTC service id: %d\n",
++		ath10k_dbg(ar, ATH10K_DBG_BOOT, "unsupported HTC service id: %d\n",
+ 			    ep->service_id);
+ 		return status;
+ 	}
+@@ -877,7 +877,7 @@
+ 						&ul_pipe_id,
+ 						&dl_pipe_id);
+ 	if (status) {
+-		ath10k_warn(ar, "unsupported HTC service id: %d\n",
++		ath10k_dbg(ar, ATH10K_DBG_BOOT, "unsupported HTC service id: %d\n",
+ 			    ATH10K_HTC_SVC_ID_HTT_LOG_MSG);
+ 
+ 		return false;
+diff -Naur linux-5.2.14/drivers/net/wireless/ath/ath10k/sdio.c linux-5.2.14-ath/drivers/net/wireless/ath/ath10k/sdio.c
+--- linux-5.2.14/drivers/net/wireless/ath/ath10k/sdio.c	2019-09-10 11:35:27.000000000 +0200
++++ linux-5.2.14-ath/drivers/net/wireless/ath/ath10k/sdio.c	2019-09-11 21:02:39.494630998 +0200
+@@ -1875,7 +1875,7 @@
+ 			   ar_sdio->mbox_addr[eid], ar_sdio->mbox_size[eid]);
+ 		break;
+ 	default:
+-		ath10k_warn(ar, "unsupported HTC service id: %d\n",
++		ath10k_dbg(ar, ATH10K_DBG_SDIO, "unsupported HTC service id: %d\n",
+ 			    service_id);
+ 		return -EINVAL;
+ 	}

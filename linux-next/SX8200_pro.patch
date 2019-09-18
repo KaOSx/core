@@ -1,0 +1,13 @@
+diff -Naur linux-5.2.14/drivers/nvme/host/pci.c linux-5.2.14-xpg/drivers/nvme/host/pci.c
+--- linux-5.2.14/drivers/nvme/host/pci.c	2019-09-10 11:35:27.000000000 +0200
++++ linux-5.2.14-xpg/drivers/nvme/host/pci.c	2019-09-11 20:56:39.507089541 +0200
+@@ -2962,6 +2962,9 @@
+ 		.driver_data = NVME_QUIRK_LIGHTNVM, },
+ 	{ PCI_DEVICE(0x10ec, 0x5762),   /* ADATA SX6000LNP */
+ 		.driver_data = NVME_QUIRK_IGNORE_DEV_SUBNQN, },
++        { PCI_DEVICE(0x1cc1, 0x8201),   /* ADATA SX8200PNP 512GB */
++                .driver_data = NVME_QUIRK_NO_DEEPEST_PS |
++                                NVME_QUIRK_IGNORE_DEV_SUBNQN, },
+ 	{ PCI_DEVICE_CLASS(PCI_CLASS_STORAGE_EXPRESS, 0xffffff) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2001) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2003) },

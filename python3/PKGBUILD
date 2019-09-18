@@ -1,7 +1,7 @@
 
 pkgname=python3
 pkgver=3.7.4
-pkgrel=1
+pkgrel=2
 _pybasever=3.7
 pkgdesc="Next generation of the python high-level scripting language"
 arch=('x86_64')
@@ -49,6 +49,9 @@ package() {
 
   ln -sf ../../libpython${_pybasever}mu.so \
     ${pkgdir}/usr/lib/python${_pybasever}/config-${_pybasever}m-x86_64-linux-gnu/libpython${_pybasever}m.so
+    
+  # python3 is default python binary
+  ln -sf python${_pybasever} ${pkgdir}/usr/bin/python
 
   # Clean-up reference to build directory
   sed -i "s|${srcdir}/Python-${pkgver}:||" ${pkgdir}/usr/lib/python${_pybasever}/config-${_pybasever}m-x86_64-linux-gnu/Makefile
