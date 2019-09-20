@@ -42,7 +42,7 @@ md5sums=('eb66cc4e5166fba8854eb805ec0bab63'
          '0eebe9d13065bec4b5d7ccf3bf46c509'
          '8a9152e7448a0f9d1d07ed0016776e16')
 
-build() {{chsh,chfn,sg}
+build() {
   cd ${pkgname}-${pkgver}
   #patch -p1 -i ${srcdir}/xstrdup.patch
 
