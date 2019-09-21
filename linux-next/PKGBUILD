@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.3
 _srcname=linux-5.3
-pkgver=5.3.0
+pkgver=5.3.1
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfuti
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-5.3-rc8.tar.gz"
-        ##"https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -31,9 +31,10 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
         'SX8200_pro.patch'
-        'at10k_quiet.patch'
+        'ath10k_quiet.patch'
         'amdgpu_vegaX.patch')
 md5sums=('c99feaade8047339528fb066ec5f8a49'
+         '476673d3ab1470fd9bac0da60774f3fd'
          '730cb03103f536e931a83aced560fd61'
          '9a61dd024bf298555f2a409a997f32bf'
          '08f52a6165a274cfbeebdb6772ae2cfe'
@@ -46,13 +47,16 @@ md5sums=('c99feaade8047339528fb066ec5f8a49'
          '0477f42f9656ec8f037e92ce4cd67017'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'
-         '3795b145c6ce71234e5a9208566f023b')
+         '3795b145c6ce71234e5a9208566f023b'
+         '2c8b53dbd4532ce952d40840e1780897'
+         'a4318400ca8bb376e560df0247b77c5f'
+         '8993c60a503d97ee20c7d45c81591fb8')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
@@ -72,7 +76,7 @@ build() {
   # Fix nvme booting XPG SX8200 Pro
   patch -p1 -i "${srcdir}/SX8200_pro.patch"
   # Quiet ath10 warnings
-  patch -p1 -i "${srcdir}/at10k_quiet.patch"
+  patch -p1 -i "${srcdir}/ath10k_quiet.patch"
   # Fix black screen on resume for amdgpu vegaX users
   patch -p1 -i "${srcdir}/amdgpu_vegaX.patch"
   
