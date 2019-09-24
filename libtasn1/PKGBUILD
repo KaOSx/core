@@ -15,10 +15,8 @@ md5sums=('e9918200ed4a778e2b3cbe34c1be4205')
 build() {
   cd ${pkgname}-${pkgver}
   
-  ./configure --prefix=/usr \
-      --with-packager=KaOS \
-      --with-packager-bug-reports="https://github.com/KaOSx/core/issues" \
-      --with-packager-version=${pkgver}-${pkgrel}
+  ./configure --prefix=/usr 
+      
   make
 }
 

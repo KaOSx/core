@@ -1,18 +1,18 @@
  
 pkgbase=boost
 pkgname=('boost-libs' 'boost')
-pkgver=1.69.0
-_pkgver=1_69_0
+pkgver=1.71.0
+_pkgver=1_71_0
 pkgrel=1
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="http://www.boost.org/"
 license=('custom')
-makedepends=('icu' 'python2' 'python3' 'bzip2' 'zlib' 'openmpi') 
-source=("https://downloads.sourceforge.net/boost/${pkgbase}_${_pkgver}.tar.bz2"
+makedepends=('icu' 'python3' 'bzip2' 'zlib' 'openmpi' 'zstd') 
+source=("https://dl.bintray.com/boostorg/release/${pkgver}/source/${pkgbase}_${_pkgver}.tar.bz2"
         "python.diff")
 license=('custom')
-sha256sums=('8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406'
+sha256sums=('d73a8da01e8bf8c7eda40b4c84915071a8c8a0df4a6734537ddde4a8580524ee'
             '3984cfb1922a909d65794f173068da59fb2a7c4efdaf42911c3add329a2b9789')
 
 build() {
@@ -21,18 +21,13 @@ build() {
 
   cd ${pkgbase}_${_pkgver}
   
-  # keep option to build for python3, this reverts change in 1.62
-  # https://github.com/boostorg/build/commit/78ffbe094400d277627b2c19ceb182d637b8baca
-  #patch -p1 -i ${srcdir}/python.diff
-  
   ./bootstrap.sh --with-toolset=gcc --with-icu --with-python=/usr/bin/python3
 
   # tools
   install -d -m 755 ${_stagedir}/bin
-  install tools/build/src/engine/bin.linuxx86_64/b2 ${_stagedir}/bin/b2
+  install tools/build/src/engine/b2 ${_stagedir}/bin/b2
 
-   #echo "using python : 3.6 : /usr/bin/python3 : /usr/include/python3.6m : /usr/lib ;" >> project-config.jam
-   sed -i "s|using python : 3.7 : /usr ;|using python : 3.7 : /usr/bin/python3 : /usr/include/python3.7m : /usr/lib ;|g" project-config.jam 
+   sed -i 's|using python : 3.7 : "/usr" ;|using python : 3.7 : /usr/bin/python3 : /usr/include/python3.7m : /usr/lib ;|g' project-config.jam 
    # Support for OpenMPI
    echo "using mpi ;" >> project-config.jam
   
@@ -58,14 +53,14 @@ build() {
 
 package_boost() {
     pkgdesc="Free peer-reviewed portable C++ source libraries - Development"
-    depends=("boost-libs=${pkgver}")
-    optdepends=('python3: for python3 bindings')
+    depends=("boost-libs=${pkgver}" 'python3')
 
     install -d -m 755 ${pkgdir}/usr
     cp -a ${_stagedir}/{bin,include,share} ${pkgdir}/usr
     
     install -d ${pkgdir}/usr/lib
     cp -a ${_stagedir}/lib/*.a ${pkgdir}/usr/lib/
+    cp -a ${_stagedir}/lib/cmake ${pkgdir}/usr/lib/
 
     # license
     install -D -m644 ${pkgbase}_${_pkgver}/LICENSE_1_0.txt ${pkgdir}/usr/share/licenses/boost/LICENSE_1_0.txt
@@ -83,6 +78,7 @@ package_boost-libs() {
     cp -a ${_stagedir}/lib ${pkgdir}/usr
     # included in boost:
     rm ${pkgdir}/usr/lib/*.a
+    rm -r ${pkgdir}/usr/lib/cmake
     
     # issue with finding new python lib versioning, vigra exposed, add link for old scheme
     ln -s /usr/lib/libboost_python37.so.${pkgver} ${pkgdir}/usr/lib/libboost_python3.so
