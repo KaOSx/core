@@ -3,7 +3,7 @@ pkgbase=boost
 pkgname=('boost-libs' 'boost')
 pkgver=1.71.0
 _pkgver=1_71_0
-pkgrel=1
+pkgrel=2
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="http://www.boost.org/"
@@ -54,6 +54,8 @@ build() {
 package_boost() {
     pkgdesc="Free peer-reviewed portable C++ source libraries - Development"
     depends=("boost-libs=${pkgver}" 'python3')
+    
+     export _stagedir=${srcdir}/stagedir
 
     install -d -m 755 ${pkgdir}/usr
     cp -a ${_stagedir}/{bin,include,share} ${pkgdir}/usr
@@ -61,6 +63,8 @@ package_boost() {
     install -d ${pkgdir}/usr/lib
     cp -a ${_stagedir}/lib/*.a ${pkgdir}/usr/lib/
     cp -a ${_stagedir}/lib/cmake ${pkgdir}/usr/lib/
+    # Don't set to cmake files to python37, does not exists
+    sed -i 's|${CMAKE_MATCH_2}.${CMAKE_MATCH_3}|${CMAKE_MATCH_2}|' ${pkgdir}/usr/lib/cmake/Boost-${pkgver}/BoostConfig.cmake
 
     # license
     install -D -m644 ${pkgbase}_${_pkgver}/LICENSE_1_0.txt ${pkgdir}/usr/share/licenses/boost/LICENSE_1_0.txt
@@ -73,6 +77,8 @@ package_boost-libs() {
     depends=('gcc-libs' 'bzip2' 'zlib' 'icu')
     optdepends=('openmpi: for mpi support')
     options=('!staticlibs')
+    
+     export _stagedir=${srcdir}/stagedir
 
     install -d -m 755 ${pkgdir}/usr
     cp -a ${_stagedir}/lib ${pkgdir}/usr
