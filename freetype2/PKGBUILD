@@ -1,14 +1,12 @@
 
 pkgname=freetype2
 pkgver=2.10.1
-pkgrel=2
+pkgrel=3
 pkgdesc="TrueType font rendering library"
 arch=('x86_64')
 license=('GPL')
 url="https://www.freetype.org/"
 depends=('zlib' 'sh' 'bzip2' 'libpng')
-# to avoid circular depends
-makedepends=('harfbuzz')
 options=('!libtool')
 source=("https://sourceforge.net/projects/freetype/files/freetype2/${pkgver}/freetype-${pkgver}.tar.xz"
         'freetype-2.3.0-enable-spr.patch'
