@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.3
 _srcname=linux-5.3
-pkgver=5.3.1
+pkgver=5.3.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -31,10 +31,9 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
         'SX8200_pro.patch'
-        'ath10k_quiet.patch'
-        'amdgpu_vegaX.patch')
+        'ath10k_quiet.patch')
 md5sums=('c99feaade8047339528fb066ec5f8a49'
-         '476673d3ab1470fd9bac0da60774f3fd'
+         'c385fc0b2e9ee92bb5b5ac841b5c16dc'
          '730cb03103f536e931a83aced560fd61'
          '9a61dd024bf298555f2a409a997f32bf'
          '08f52a6165a274cfbeebdb6772ae2cfe'
@@ -49,8 +48,7 @@ md5sums=('c99feaade8047339528fb066ec5f8a49'
          'ae97691ba50d387f3ab98585514e3b22'
          '3795b145c6ce71234e5a9208566f023b'
          '2c8b53dbd4532ce952d40840e1780897'
-         'a4318400ca8bb376e560df0247b77c5f'
-         '8993c60a503d97ee20c7d45c81591fb8')
+         'a4318400ca8bb376e560df0247b77c5f')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -77,8 +75,6 @@ build() {
   patch -p1 -i "${srcdir}/SX8200_pro.patch"
   # Quiet ath10 warnings
   patch -p1 -i "${srcdir}/ath10k_quiet.patch"
-  # Fix black screen on resume for amdgpu vegaX users
-  patch -p1 -i "${srcdir}/amdgpu_vegaX.patch"
   
   cat "${srcdir}/config" > ./.config
 
