@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.3
 _srcname=linux-5.3
-pkgver=5.3.2
+pkgver=5.3.3
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -33,17 +33,17 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'SX8200_pro.patch'
         'ath10k_quiet.patch')
 md5sums=('c99feaade8047339528fb066ec5f8a49'
-         'c385fc0b2e9ee92bb5b5ac841b5c16dc'
+         '6278467bca653ac793e9ea751983ea29'
          '730cb03103f536e931a83aced560fd61'
-         '9a61dd024bf298555f2a409a997f32bf'
-         '08f52a6165a274cfbeebdb6772ae2cfe'
-         'f0247384f9923934dec939286e56200f'
-         'f751a20d1714ea20cc96a93ad2fd4074'
-         '20cb6e0066d08d01201d3354cf84ee61'
-         '62b400882eb56c0ac07314be674d9402'
+         '235895d330230811f871d835e08fa27e'
+         '250537d3145faa71968e75b9c03db319'
+         '79f443fa8c421b410af3d73ea86a14e1'
+         '4c81863bf5ff4090a3e852f1b803678d'
+         'f8d11ec8ab46518bd0faa6644c90f036'
+         '30e73dd054dafc8ecc87bc0f15d02a10'
          '58077c1703977e6b5fafdda552f542d5'
-         '542442b705b2810b6cb111b4c6b04b09'
-         '0477f42f9656ec8f037e92ce4cd67017'
+         '07349ec04a85f512a00772fa730a6a9f'
+         '91b628bf4d4beb80fa53a8eb7332023c'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'
          '3795b145c6ce71234e5a9208566f023b'
