@@ -3,13 +3,13 @@
 pkgname=binutils
 pkgver=2.32
 _commit=e521dc888158a6cdbdccef0397e663c437450a80
-pkgrel=1
+pkgrel=2
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
 url="https://www.gnu.org/software/binutils/"
 license=('GPL')
 groups=('base-devel')
-depends=('glibc>=2.29' 'zlib')
+depends=('glibc>=2.30' 'zlib')
 checkdepends=('dejagnu' 'bc')
 options=('!libtool' '!distcc' '!ccache')
 source=("https://github.com/bminor/binutils-gdb/archive/${_commit}.zip"

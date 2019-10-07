@@ -2,7 +2,7 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.29
+pkgver=2.30
 _commit=9533f19aa5cd265db813db6923f8eb2fc9c3bcc3
 pkgrel=1
 pkgdesc="GNU C Library"
@@ -23,15 +23,15 @@ source=("http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('e6c279d5b2f0736f740216f152acf974'
+md5sums=('2b1dbdf27b28620752956c061d62f60c'
          #'203fe9133e82f2b59969c116b70fd84e'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
          '8b3298de2392a10905a64ceccf56d2c1')
 
 build() {
-  mkdir -p glibc-build
-  cd glibc-build
+  mkdir -p build
+  cd build
 
   echo "slibdir=/lib" >> configparms
   
@@ -39,18 +39,18 @@ build() {
   CFLAGS=${CFLAGS/-fstack-protector/}
   CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
 
-  ${srcdir}/glibc-${pkgver}/configure --prefix=/usr \
-      --libdir=/usr/lib --libexecdir=/usr/lib \
+  ../glibc-${pkgver}/configure --prefix=/usr \
+      --libdir=/usr/lib \
+      --libexecdir=/usr/lib \
       --with-headers=/usr/include \
       --with-bugurl=https://github.com/KaOSx/core/issues \
       --enable-add-ons \
       --enable-obsolete-rpc \
       --enable-obsolete-nsl \
-      --enable-kernel=3.2.0 \
-      --enable-bind-now --disable-profile \
+      --enable-bind-now \
+      --disable-profile \
       --enable-stackguard-randomization \
       --enable-lock-elision \
-      --enable-multi-arch \
       --disable-werror
 
   # build libs without stack protector
@@ -65,7 +65,7 @@ build() {
 }
 
 check() {
-  cd glibc-build
+  cd build
   
   # no stack protector for running tests
   sed -i '5,7d' configparms
@@ -75,7 +75,7 @@ check() {
 }
 
 package() {
-  cd glibc-build
+  cd build
 
   install -dm755 ${pkgdir}/etc
   touch ${pkgdir}/etc/ld.so.conf

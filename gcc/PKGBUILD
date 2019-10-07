@@ -4,9 +4,9 @@
 # http://www.linuxfromscratch.org/lfs/view/7.6/chapter06/gcc.html
 
 pkgname=('gcc' 'gcc-libs') 
-pkgver=8.3.0
-_pkgver=8
-_snapshot=7-20180906
+pkgver=9.2.0
+_pkgver=9
+_snapshot=8-20191004
 _islver=0.18
 pkgrel=1
 pkgdesc="The GNU Compiler Collection"
@@ -19,7 +19,7 @@ options=('!libtool' '!emptydirs')
 source=("https://mirrors.concertpass.com/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
 #source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
         "ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2")
-sha512sums=('1811337ae3add9680cec64968a2509d085b6dc5b6783fc1e8c295e3e47416196fd1a3ad8dfe7e10be2276b4f62c357659ce2902f239f60a8648548231b4b5802'
+sha512sums=('a12dff52af876aee0fd89a8d09cdc455f35ec46845e154023202392adc164848faf8ee881b59b681b696e27c69fd143a214014db4214db62f9891a1c8365c040'
             '85d0b40f4dbf14cb99d17aa07048cdcab2dc3eb527d2fbb1e84c41b2de5f351025370e57448b63b2b8a8cf8a0843a089c3263f9baee1542d5c2e1cb37ed39d94')
 
   _basedir="gcc-${pkgver}"
@@ -27,7 +27,7 @@ sha512sums=('1811337ae3add9680cec64968a2509d085b6dc5b6783fc1e8c295e3e47416196fd1
 
 
 build() {
-  cd ${srcdir}/${_basedir}
+  cd ${_basedir}
   
   ln -s ../isl-${_islver} isl
 
@@ -46,8 +46,8 @@ build() {
   CXXFLAGS=${CXXFLAGS/-pipe/}
 
   cd ${srcdir}
-  mkdir -p gcc-build  
-  cd gcc-build
+  mkdir -p build  
+  cd build
 
   ${srcdir}/${_basedir}/configure --prefix=/usr \
       --libdir=/usr/lib \
@@ -58,7 +58,6 @@ build() {
       --enable-languages=c,c++,ada,fortran,go,lto,objc,obj-c++ \
       --enable-shared \
       --enable-threads=posix \
-      --enable-libmpx \
       --with-system-zlib \
       --with-isl \
       --enable-__cxa_atexit \
@@ -83,7 +82,7 @@ build() {
 }
 
 check() {
-  cd ${srcdir}/gcc-build
+  cd build
 
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=31827
   ulimit -s 32768
@@ -95,10 +94,10 @@ check() {
 package_gcc-libs() {
   pkgdesc="Runtime libraries shipped by GCC"
   groups=('base')
-  depends=('glibc>=2.29')
+  depends=('glibc>=2.30')
   options=('!emptydirs' '!strip')
   
-  cd ${srcdir}/gcc-build
+  cd build
 
   make -C $CHOST/libgcc DESTDIR=${pkgdir} install-shared
   rm ${pkgdir}/usr/lib/gcc/$CHOST/$pkgver/libgcc_eh.a
@@ -120,7 +119,7 @@ package_gcc-libs() {
   
   make -C $CHOST/libstdc++-v3/po DESTDIR=${pkgdir} install
   
-  make -C $CHOST/libmpx DESTDIR=${pkgdir} install
+  #make -C $CHOST/libmpx DESTDIR=${pkgdir} install
 
   for lib in libgomp \
              libitm \
@@ -151,10 +150,10 @@ package_gcc() {
             'gcc-ada'
             'gcc-go')
 
-  cd ${srcdir}/gcc-build
+  cd build
   make DESTDIR=${pkgdir} install 
   
-  cd ${srcdir}/gcc-build/gcc
+  cd gcc
   make DESTDIR=$pkgdir ada.install-{common,info}
 
   ln -s gcc ${pkgdir}/usr/bin/cc
@@ -186,7 +185,7 @@ package_gcc() {
   #rm $pkgdir/usr/lib/libgomp-plugin*
   rm $pkgdir/usr/lib/libitm.so*
   rm $pkgdir/usr/lib/liblsan*
-  rm $pkgdir/usr/lib/libmpx*
+  #rm $pkgdir/usr/lib/libmpx*
   rm $pkgdir/usr/lib/libobjc*
   rm $pkgdir/usr/lib/libquadmath*
   rm $pkgdir/usr/lib/libstdc++.so*
