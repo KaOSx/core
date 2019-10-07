@@ -1,20 +1,20 @@
 
 pkgname=pacman-contrib
-pkgver=1.1.0
-pkgrel=2
+pkgver=1.2.0
+pkgrel=1
 pkgdesc="Contributed scripts and tools for pacman systems, including paccache and rank-mirrors"
 arch=('x86_64')
 url="https://git.archlinux.org/pacman-contrib.git/about/"
 license=('GPL')
-depends=('pacman' 'mlocate' 'fakeroot')
+depends=('pacman' 'mlocate' 'fakeroot' 'perl')
 makedepends=('asciidoc')
-source=("https://sources.archlinux.org/other/community/pacman-contrib/${pkgname}-${pkgver}.tar.gz")
-md5sums=('dde4c6c2d30bcb7273b495be1b5df4d0')
+source=("https://git.archlinux.org/pacman-contrib.git/snapshot/${pkgname}-${pkgver}.tar.gz")
+md5sums=('be09cf5500715a479d9290a01e37813c')
 
 build() {
   cd ${pkgname}-${pkgver}
   
-  #./autogen.sh
+  ./autogen.sh
   ./configure --prefix=/usr \
     --sysconfdir=/etc 
   make 
