@@ -1,14 +1,14 @@
 
 # update syslog-ng.conf on 3.xx updates
 pkgname=syslog-ng
-pkgver=3.23.1
+pkgver=3.24.1
 pkgrel=1
 pkgdesc="Next-generation syslogd with advanced networking and filtering capabilities"
 arch=('x86_64')
 license=('GPL2')
 url="https://syslog-ng.com/"
 depends=('glib2' 'openssl' 'libcap' 'awk' 'systemd' 'json-c')
-makedepends=('flex' 'pkg-config' 'python2' 'libxslt')
+makedepends=('flex' 'pkg-config' 'python3' 'libxslt')
 optdepends=('logrotate: for rotating log files')
 provides=('logger')
 options=('!libtool')
@@ -18,8 +18,8 @@ backup=('etc/syslog-ng/scl.conf'
 source=("https://github.com/balabit/syslog-ng/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.gz"
         'syslog-ng.conf'
         'syslog-ng.logrotate')
-md5sums=('5c5d3b8b0003edc84944284f34fdc853'
-         '913fd75633accc81ece4f5986784af5c'
+md5sums=('ef9de066793f7358af7312b964ac0450'
+         '0d2f7ce73e58da39543b929974ad29e6'
          '0c0d5149bd3e8d666c506351edecbe71')
 
 build() {
@@ -36,7 +36,6 @@ build() {
     --enable-systemd \
     --enable-ipv6 \
     --with-systemdsystemunitdir=/usr/lib/systemd/system \
-    --with-python=2.7 \
     --with-jsonc=system
 
   make -j1
