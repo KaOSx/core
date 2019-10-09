@@ -1,7 +1,7 @@
 
 pkgname=net-tools
-pkgver=1.60.6
-_commit=479bb4a7e11a4084e2935c0a576388f92469225b
+pkgver=1.60.7
+_commit=0eebece8c964e3cfa8a018f42b2e7e751a7009a0
 pkgrel=1
 pkgdesc="Configuration tools for Linux networking"
 arch=('x86_64')
@@ -11,7 +11,7 @@ groups=('base')
 depends=('glibc')
 source=("https://sourceforge.net/code-snapshots/git/n/ne/net-tools/code.git/net-tools-code-${_commit}.zip")
 options=('!makeflags')
-md5sums=('11eb2e7c010b779ba4688575d4bfa83c')
+md5sums=('91301780a363690dffa6ee07084e80b0')
 
 build() {
   cd ${pkgname}-code-${_commit}

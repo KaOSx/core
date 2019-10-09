@@ -1,22 +1,23 @@
 
 pkgname=make
-pkgver=4.2.1
-pkgrel=4
+pkgver=4.2.92
+pkgrel=1
 pkgdesc="GNU make utility to maintain groups of programs"
 arch=('x86_64')
 url="https://www.gnu.org/software/make"
 license=('GPL3')
 groups=('base-devel')
 depends=('glibc' 'sh' 'guile')
-source=("https://ftp.gnu.org/gnu/make/${pkgname}-${pkgver}.tar.bz2"
+#source=("https://ftp.gnu.org/gnu/make/${pkgname}-${pkgver}.tar.bz2"
+source=("https://alpha.gnu.org/gnu/make/${pkgname}-${pkgver}.tar.bz2"
         'perl26.patch')
-md5sums=('15b012617e7c44c0ed482721629577ac'
+md5sums=('075899c074bab8dac6944a17c8ef25fe'
          '3676f37c6561900bcb1ff9a72746732d')
 
 build() {
   cd ${pkgname}-${pkgver}
   #sed -i -e 's|guile-2.0|guile-2.2|' configure
-  patch -p1 -i ${srcdir}/perl26.patch
+  #patch -p1 -i ${srcdir}/perl26.patch
 
   ./configure --prefix=/usr
   make

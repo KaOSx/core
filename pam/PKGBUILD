@@ -1,40 +1,28 @@
 
 pkgname=pam
 pkgver=1.3.1
-pkgrel=1
+pkgrel=2
 pkgdesc="PAM (Pluggable Authentication Modules) library"
 arch=('x86_64')
 license=('GPL2')
-url="http://www.kernel.org/pub/linux/libs/pam/"
+url="https://www.kernel.org/pub/linux/libs/pam/"
 depends=('glibc' 'db' 'cracklib' 'libtirpc')
 makedepends=('flex' 'w3m' 'docbook-xml>=4.4' 'docbook-xsl')
 backup=(etc/security/{access.conf,group.conf,limits.conf,namespace.conf,namespace.init,pam_env.conf,time.conf} etc/pam.d/other etc/default/passwd etc/environment)
 source=("https://github.com/linux-pam/linux-pam/releases/download/v${pkgver}/Linux-PAM-${pkgver}.tar.xz"
         #http://www.kernel.org/pub/linux/libs/pam/library/Linux-PAM-${pkgver}.tar.bz2
         "https://sourceforge.net/projects/kaosx/files/sources/pam/pam_unix2-2.9.1.tar.bz2"
-        'other'
-        'glibc216.patch')
+        'other')
 options=('!libtool' '!emptydirs')
 md5sums=('558ff53b0fc0563ca97f79e911822165'
          'da6a46e5f8cd3eaa7cbc4fc3a7e2b555'
-         '6e6c8719e5989d976a14610f340bd33a'
-         '0b5f56559484af741005db19ecfdd709')
+         '6e6c8719e5989d976a14610f340bd33a')
 
 build() {
   cd Linux-PAM-${pkgver}
   
   ./configure \
-        CFLAGS="$CFLAGS -I${srcdir}/Linux-PAM-${pkgver}/libpam/include/" \
-        LDFLAGS="$LDFLAGS -L${srcdir}/Linux-PAM-${pkgver}/libpam/.libs/" \
         --libdir=/usr/lib
-  make
-
-  # check to remove soon, Suse maintenance of pam_unix2 stopped years ago
-  # source ftp://ftp.suse.com/pub/people/kukuk/pam/pam_unix2 no longer available
-  cd ${srcdir}/pam_unix2-2.9.1
-  patch -p1 -i ../glibc216.patch
-  
-  ./configure --libdir=/usr/lib
   make
 }
 
@@ -42,24 +30,6 @@ package() {
   cd Linux-PAM-${pkgver}
   make DESTDIR=${pkgdir} install
   install -D -m644 ../other ${pkgdir}/etc/pam.d/other
-
-  cd ../pam_unix2-2.9.1
-  make DESTDIR=${pkgdir} install
-
-  sed -i 's|# End of file||' ${pkgdir}/etc/security/limits.conf
-  cat >>${pkgdir}/etc/security/limits.conf <<_EOT
-*               -       rtprio          0
-*               -       nice            0
-@audio          -       rtprio          65
-@audio          -       nice           -10
-@audio          -       memlock         40000
-_EOT
-
-  cd ${pkgdir}/usr/lib/security
-  ln -s pam_unix.so pam_unix_acct.so
-  ln -s pam_unix.so pam_unix_auth.so
-  ln -s pam_unix.so pam_unix_passwd.so
-  ln -s pam_unix.so pam_unix_session.so
 
   chmod +s ${pkgdir}/sbin/unix_chkpwd
 }
