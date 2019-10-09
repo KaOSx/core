@@ -1,31 +1,33 @@
 
 pkgname=gobject-introspection
-pkgver=1.60.2
-_pkgver=1.60
+pkgver=1.62.0
+_pkgver=1.62
 pkgrel=1
 pkgdesc="Introspection system for GObject-based libraries"
 url="https://wiki.gnome.org/Projects/GObjectIntrospection"
 arch=('x86_64')
 license=('LGPL' 'GPL')
 depends=('libffi' 'glib2' 'python3')
-makedepends=('cairo')
+makedepends=('cairo' 'meson' 'ninja')
 options=('!libtool')
 source=("https://ftp.gnome.org/pub/gnome/sources/${pkgname}/${_pkgver}/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('ffdfe2368fb2e34a547898b01aac0520d52d8627fdeb1c306559bcb503ab5e9c')
+sha256sums=('b1ee7ed257fdbc008702bdff0ff3e78a660e7e602efa8f211dc89b9d1e7d90a2')
 
 
 build() {
-  cd ${pkgname}-${pkgver}
+  mkdir -p build
+  cd build
   
-  PYTHON=/usr/bin/python3 ./configure --prefix=/usr --disable-static
-  make
+  meson ../${pkgname}-${pkgver} \
+    --prefix=/usr \
+    --buildtype=release \
+    -D python=python3
+  ninja
 }
 
 package() {
-  cd ${pkgname}-${pkgver}
+  cd build
   
-  make DESTDIR=${pkgdir} install
-  
-    sed -i '1s|#!/usr/bin/env python$|&3|' ${pkgdir}/usr/lib/gobject-introspection/giscanner/*.py
+  DESTDIR=${pkgdir} ninja install
 }
 
