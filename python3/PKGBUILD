@@ -1,7 +1,7 @@
 
 pkgname=python3
-pkgver=3.7.4
-pkgrel=2
+pkgver=3.7.5
+pkgrel=1
 _pybasever=3.7
 pkgdesc="Next generation of the python high-level scripting language"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('expat' 'bzip2' 'gdbm' 'openssl' 'libffi' 'zlib')
 makedepends=('sqlite' 'valgrind' 'bluez' 'libgl' 'llvm') # libgl for tests
 options=('!makeflags')
 source=("https://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz")
-md5sums=('d33e4aae66097051c2eca45ee3604803')  
+md5sums=('08ed8030b1183107c48f2092e79a87e2')  
 
 build() {
   cd Python-${pkgver}
