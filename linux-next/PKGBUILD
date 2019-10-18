@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.3
 _srcname=linux-5.3
-pkgver=5.3.6
+pkgver=5.3.7
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -33,14 +33,14 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'SX8200_pro.patch'
         'ath10k_quiet.patch')
 md5sums=('c99feaade8047339528fb066ec5f8a49'
-         '2c2db421d422d0d7306fe230c65c862c'
+         '380185019ba22d3d2eac85b5678729bd'
          '730cb03103f536e931a83aced560fd61'
          '235895d330230811f871d835e08fa27e'
          '250537d3145faa71968e75b9c03db319'
          '79f443fa8c421b410af3d73ea86a14e1'
          '4c81863bf5ff4090a3e852f1b803678d'
          'f8d11ec8ab46518bd0faa6644c90f036'
-         '30e73dd054dafc8ecc87bc0f15d02a10'
+         'b227f5ecdb4888bd7996dfe573c8867f'
          '58077c1703977e6b5fafdda552f542d5'
          '07349ec04a85f512a00772fa730a6a9f'
          '91b628bf4d4beb80fa53a8eb7332023c'
