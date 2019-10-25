@@ -14,6 +14,8 @@ sha256sums=('8a211589ea21374e49b25fc1fc170e2d5c7462b795f1b29c84dd0e984301ed7a')
 
 build() {
   cd ${pkgname}-${pkgver}
+  # set default libdir to lib with cmake > 3.16
+  sed -i 's|/etc/arch-release|/etc/KaOS-release|' Modules/GNUInstallDirs.cmake
 
   ./bootstrap --prefix=/usr \
     --mandir=/share/man \
