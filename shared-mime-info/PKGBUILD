@@ -1,6 +1,6 @@
 
 pkgname=shared-mime-info
-pkgver=1.14
+pkgver=1.15
 pkgrel=1
 pkgdesc="Freedesktop.org Shared MIME Info"
 arch=('x86_64')
@@ -10,9 +10,9 @@ depends=('libxml2' 'glib2')
 makedepends=('intltool' 'pkgconfig' 'itstool')
 options=('!makeflags')
 #source=("https://freedesktop.org/~hadess/${pkgname}-${pkgver}.tar.xz"
-source=("https://gitlab.freedesktop.org/xdg/shared-mime-info/uploads/aee9ae9646cbef724bbb1bd2ba146556/${pkgname}-${pkgver}.tar.xz"
+source=("https://gitlab.freedesktop.org/xdg/shared-mime-info/uploads/b27eb88e4155d8fccb8bb3cd12025d5b/${pkgname}-${pkgver}.tar.xz"
         'update-mime-database.hook')
-md5sums=('debdc8dbbb411558db20b6f5cc5d089d'
+md5sums=('5215f3d679a817de97eb8b0b911e9393'
          'fc48155d8fb2147b8fc72597e79936b4')
 
 build() {
