@@ -1,7 +1,7 @@
 
 pkgname=pacman
-pkgver=5.1.3
-pkgrel=2
+pkgver=5.2.1
+pkgrel=1
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="http://www.archlinux.org/pacman/"
@@ -9,7 +9,7 @@ license=('GPL')
 groups=('base')
 depends=('bash' 'glibc' 'libarchive' 'curl' 'gpgme' 'pacman-mirrorlist')
 makedepends=('asciidoc')
-checkdepends=('python2' 'fakechroot')
+checkdepends=('python3' 'fakechroot')
 backup=(etc/pacman.conf etc/makepkg.conf)
 options=('!libtool')
 #install=pacman.install
@@ -17,9 +17,9 @@ source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
         'pacman.conf'
         'makepkg.conf'
         'file5.33.patch')
-md5sums=('cafd8e5b8b16863ee7a7579ec8402582'
-         'b34ec5171ff0d353096bb1c57f746850'
-         'cf7f1e8b63baeab69a20264820bed9cc'
+md5sums=('730f7f3699bd1778ca8d8126e3da68f4'
+         '4a51211c3d54e419a6b13e6ef3e08b00'
+         'c831bf92bd060a4a36776d8b9a1fd15a'
          '9eb04bd318524d87f22c8ce7fa47693f')
 
 build() {
@@ -46,13 +46,5 @@ package() {
   mkdir -p ${pkgdir}/etc
   install -m644 $srcdir/pacman.conf ${pkgdir}/etc/pacman.conf
   install -m644 $srcdir/makepkg.conf ${pkgdir}/etc/
-
-  # completion files
-  install -Dm644 scripts/completion/bash_completion ${pkgdir}/usr/share/bash-completion/completions/pacman
-  install -Dm644 scripts/completion/zsh_completion ${pkgdir}/usr/share/zsh/site-functions/_pacman
-  
-  for f in makepkg pacman-key; do
-    ln -s pacman "${pkgdir}/usr/share/bash-completion/completions/$f"
-  done
 }
 
