@@ -1,0 +1,40 @@
+ 
+pkgname=iwd
+pkgver=1.0
+pkgrel=1
+pkgdesc='Wireless daemon for Linux'
+arch=('x86_64')
+url='https://git.kernel.org/pub/scm/network/wireless/iwd.git/tree/README'
+license=('GPL-2.1')
+depends=('glibc' 'readline')
+backup=(etc/iwd/main.conf)
+source=("https://www.kernel.org/pub/linux/network/wireless/${pkgname}-${pkgver}.tar.xz")
+sha256sums=('7296812b3012b0689a8af879c6028fa9efa5b43b27ecf037355b38f7af1aa167')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  
+  ./configure --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --libexecdir=/usr/lib/iwd \
+    --enable-manual-pages \
+    --enable-hwsim \
+    --enable-ofono \
+    --enable-sim-hardcoded \
+    --enable-wired 
+  make
+}
+
+check() {
+  cd ${pkgname}-${pkgver}
+
+  make -k check
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  make install DESTDIR=${pkgdir}
+  
+  install -D -m644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/COPYING
+}
