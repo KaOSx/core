@@ -1,6 +1,6 @@
 
 pkgname=libxslt
-pkgver=1.1.33
+pkgver=1.1.34
 pkgrel=1
 pkgdesc="XML stylesheet transformation library"
 arch=('x86_64')

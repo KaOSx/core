@@ -1,23 +1,22 @@
 
 pkgname=git
-pkgver=2.23.0
+pkgver=2.24.0
 pkgrel=1
 pkgdesc="Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency."
 arch=('x86_64')
 url="http://git-scm.com/"
 license=('GPL2')
 depends=('curl' 'expat>=2.0' 'perl-error' 'perl' 'pcre2')
-makedepends=('python2')
+makedepends=('python3')
 optdepends=('tk: gitk and git gui'
-            'python2: various helper scripts'
             'subversion: git svn')
 #install="git.install"
 source=("https://www.kernel.org/pub/software/scm/git/git-${pkgver}.tar.xz"
         "https://www.kernel.org/pub/software/scm/git/git-manpages-${pkgver}.tar.xz"
         'git-daemon@.service'
         'git-daemon.socket')
-sha256sums=('234fa05b6839e92dc300b2dd78c92ec9c0c8d439f65e1d430a7034f60af16067'
-            '9558433f68ff4229bd55e84c4d26b74e5d3518ab0ec30186253b090ea887946a'
+sha256sums=('9f71d61973626d8b28c4cdf8e2484b4bf13870ed643fed982d68b2cfd754371b'
+            'b0c872c16f22942c1cb6c90ec07f395a931f7c2f9fb920d2ec926674265c04a6'
             '3bc3250d9e04b05c41975c01f85f512d3386d60b41475cbc7292bc88148852f6'
             'ac4c90d62c44926e6d30d18d97767efc901076d4e0283ed812a349aece72f203')
 
