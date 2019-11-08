@@ -1,7 +1,7 @@
 
 pkgname=dhcpcd
 pkgver=8.1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="RFC2131 compliant DHCP client daemon"
 url="https://roy.marples.name/projects/dhcpcd/"
 arch=('x86_64')
@@ -13,14 +13,17 @@ backup=('etc/dhcpcd.conf')
 options=('emptydirs')  
 source=("https://roy.marples.name/downloads/dhcpcd/${pkgname}-${pkgver}.tar.xz" 
         'dhcpcd@.service'
-        'dhcpcd.service')
+        'dhcpcd.service'
+        "https://github.com/rsmarples/dhcpcd/commit/73ac184333f77b38a8b4c4202c2928278e2237ca.diff")
 sha256sums=('485d308fe10febd36b6f936e4260e4ab34a146e4f00a9f7a5509c4377ad5ea82'
             '1c039df7fcf5a002336bc14f289a05606abbdbf6266d95e8e3d2dd3f02812446'
-            '3e1900bead9ddcc7ec734f6d5c7e797f82dad60854c2cdc174dfc169dc5170dd')
+            '3e1900bead9ddcc7ec734f6d5c7e797f82dad60854c2cdc174dfc169dc5170dd'
+            '7ad97ed7cbc6faec81a3028cf1a51006aa592cc700bbb31da664cd05a4498b66')
 
 build() {
   cd ${pkgname}-${pkgver}
   #sed -i -e 's|#include "queue.h"|#include "compat/queue.h"|' eloop.c
+  patch -p1 -i ${srcdir}/73ac184333f77b38a8b4c4202c2928278e2237ca.diff
 
   ./configure --libexecdir=/usr/lib/dhcpcd \
        --dbdir=/var/lib/dhcpcd \

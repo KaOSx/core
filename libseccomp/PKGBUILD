@@ -1,6 +1,6 @@
 
 pkgname=libseccomp
-pkgver=2.4.1
+pkgver=2.4.2
 pkgrel=1
 pkgdesc='Library that provides an easy to use, platform independent, interface to the Linux Kernel syscall filtering mechanism.'
 arch=('x86_64')
@@ -9,7 +9,7 @@ url="https://github.com/seccomp/libseccomp"
 depends=('glibc')
 options=("!staticlibs")
 source=("https://github.com/seccomp/libseccomp/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('1ca3735249af66a1b2f762fe6e710fcc294ad7185f1cc961e5bd83f9988006e8')
+sha256sums=('b54f27b53884caacc932e75e6b44304ac83586e2abe7a83eca6daecc5440585b')
 
 build() {
   cd ${pkgname}-${pkgver}
