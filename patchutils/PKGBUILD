@@ -1,7 +1,7 @@
 
 pkgname=patchutils
 pkgver=0.3.4
-pkgrel=6
+pkgrel=7
 pkgdesc="A small collection of programs that operate on patch files"
 license=('GPL')
 url="http://cyberelk.net/tim/patchutils/"

@@ -1,12 +1,12 @@
 
 pkgname=git
 pkgver=2.24.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency."
 arch=('x86_64')
 url="http://git-scm.com/"
 license=('GPL2')
-depends=('curl' 'expat>=2.0' 'perl-error' 'perl' 'pcre2')
+depends=('curl' 'expat' 'perl-error' 'perl' 'pcre2')
 makedepends=('python3')
 optdepends=('tk: gitk and git gui'
             'subversion: git svn')
