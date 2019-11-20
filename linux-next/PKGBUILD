@@ -253,6 +253,8 @@ package_linux-next-headers() {
     mkdir -p "${pkgdir}"/usr/src/linux-${_kernver}/`echo ${i} | sed 's|/Kconfig.*||'`
     cp ${i} "${pkgdir}/usr/src/linux-${_kernver}/${i}"
   done
+  # Removing documentation, part of docs package
+  rm -r "${pkgdir}"/usr/src/linux-${_kernver}/Documentation
 
   chown -R root.root "${pkgdir}/usr/src/linux-${_kernver}"
   find "${pkgdir}/usr/src/linux-${_kernver}" -type d -exec chmod 755 {} \;
@@ -287,11 +289,9 @@ package_linux-next-docs() {
   find "${pkgdir}" -type f -exec chmod 444 {} \;
   find "${pkgdir}" -type d -exec chmod 755 {} \;
 
-  # remove a file already in linux package
-  rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/DocBook/Makefile"
-  # remove a files already in linux-headers
-  rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/kbuild/Kconfig.recursion-issue-01"
-  rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/kbuild/Kconfig.recursion-issue-02"
-  rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/kbuild/Kconfig.select-break"
+  # remove files already in linux-headers
+  #rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/kbuild/Kconfig.recursion-issue-01"
+  #rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/kbuild/Kconfig.recursion-issue-02"
+  #rm -f "${pkgdir}/usr/src/linux-${_kernver}/Documentation/kbuild/Kconfig.select-break"
   
 }
