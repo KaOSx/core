@@ -8707,12 +8707,12 @@ CONFIG_LSM="yama,loadpin,safesetid,integrity"
 #
 # Memory initialization
 #
-CONFIG_INIT_STACK_NONE=y
+# CONFIG_INIT_STACK_NONE is not set
 # CONFIG_GCC_PLUGIN_STRUCTLEAK_USER is not set
-# CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF is not set
+CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF=yes
 # CONFIG_GCC_PLUGIN_STRUCTLEAK_BYREF_ALL is not set
 # CONFIG_GCC_PLUGIN_STACKLEAK is not set
-# CONFIG_INIT_ON_ALLOC_DEFAULT_ON is not set
+CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y
 # CONFIG_INIT_ON_FREE_DEFAULT_ON is not set
 # end of Memory initialization
 # end of Kernel hardening options
