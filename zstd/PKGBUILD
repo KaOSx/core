@@ -1,4 +1,4 @@
- 
+# rebuild tor on any update 
 pkgname=zstd
 pkgver=1.4.4
 pkgrel=1
