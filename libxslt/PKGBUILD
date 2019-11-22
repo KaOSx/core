@@ -7,11 +7,11 @@ arch=('x86_64')
 url="http://xmlsoft.org/XSLT/"
 license=('custom')
 depends=('libxml2' 'libgcrypt')
-makedepends=('python2')
+#makedepends=('python3')
 options=('!libtool')
 source=("ftp://xmlsoft.org/libxslt/${pkgname}-${pkgver}.tar.gz"
         'xml_config.patch')
-md5sums=('b3bd254a03e46d58f8ad1e4559cd2c2f'
+md5sums=('db8765c8d076f1b6caafd9f2542a304a'
          '3bc1d8a43f577e7da84f7e3415331f70')
 
 build() {
@@ -19,7 +19,7 @@ build() {
   # unbreak builds which require libxml2, examples python lxml packages
   #patch -p1 -i ${srcdir}/xml_config.patch
   
-  ./configure --prefix=/usr 
+  ./configure --prefix=/usr
   make 
 }
 

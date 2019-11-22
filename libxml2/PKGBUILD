@@ -10,16 +10,12 @@ makedepends=('python3')
 options=('!libtool')
 url="http://www.xmlsoft.org/"
 source=("ftp://ftp.xmlsoft.org/${pkgname}/${pkgname}-${pkgver}.tar.gz"
-        "http://www.w3.org/XML/Test/xmlts20080827.tar.gz"
-        "https://github.com/GNOME/libxml2/commit/3f0627a1ee854dc965bf61dd6466a798b80cf088.diff")
+        "http://www.w3.org/XML/Test/xmlts20080827.tar.gz")
 md5sums=('10942a1dc23137a8aa07f0639cbfece5'
-         'ae3d1ebe000a3972afa104ca7f0e1b4a'
-         '98fd3c2502dce1a1fd45ca3efbb87ca7')
+         'ae3d1ebe000a3972afa104ca7f0e1b4a')
 
 build() {
   cd ${pkgname}-${pkgver}
-  # bug for qtwebkit issues, example https://github.com/Sigil-Ebook/Sigil/issues/232
-  #patch -p1 -i ${srcdir}/3f0627a1ee854dc965bf61dd6466a798b80cf088.diff
   
   ./configure --prefix=/usr \
      --with-threads \
