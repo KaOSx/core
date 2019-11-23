@@ -2,7 +2,7 @@
 pkgname=glib2
 pkgver=2.62.3
 _pkgver=2.62
-pkgrel=1
+pkgrel=2
 pkgdesc="Common C routines used by GTK+ and other libs"
 url="https://www.gtk.org/overview.php"
 arch=('x86_64')
