@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=5.3
-_srcname=linux-5.3
-pkgver=5.3.12
+_basekernel=5.4
+_srcname=linux-5.4
+pkgver=5.4.0
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfuti
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-5.3-rc8.tar.gz"
-        "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
+        ##"https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -32,9 +32,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
         'SX8200_pro.patch'
         'ath10k_quiet.patch')
-md5sums=('c99feaade8047339528fb066ec5f8a49'
-         'ad2aad6f5f47ce3cddc87d0beb11d37c'
-         '13912b527a73f9e17ef703d844869932'
+md5sums=('ce9b2d974d27408a61c53a30d3f98fb9'
+         '52dbf5b052db8916207acf9542157365'
          '235895d330230811f871d835e08fa27e'
          '250537d3145faa71968e75b9c03db319'
          '79f443fa8c421b410af3d73ea86a14e1'
@@ -54,20 +53,20 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs5.patch"
-  patch -p1 -i "${srcdir}/aufs5-base.patch"
-  patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs5-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs5-mmap.patch"
-  patch -p1 -i "${srcdir}/aufs5-standalone.patch"
-  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  patch -p1 -i "${srcdir}/vfs-ino.patch"
+  #patch -p1 -i "${srcdir}/aufs5.patch"
+  #patch -p1 -i "${srcdir}/aufs5-base.patch"
+  #patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
+  #patch -p1 -i "${srcdir}/aufs5-loopback.patch"
+  #patch -p1 -i "${srcdir}/aufs5-mmap.patch"
+  #patch -p1 -i "${srcdir}/aufs5-standalone.patch"
+  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  #patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
@@ -78,7 +77,7 @@ build() {
   
   cat "${srcdir}/config" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -246,7 +245,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs4-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
