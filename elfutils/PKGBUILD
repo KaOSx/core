@@ -1,6 +1,6 @@
 
 pkgname=elfutils
-pkgver=0.177
+pkgver=0.178
 pkgrel=1
 pkgdesc="Collection of libraries and utilities for working with ELF object files and DWARF debugging information."
 arch=('x86_64')
@@ -8,20 +8,22 @@ url="https://sourceware.org/elfutils/"
 license=('LGPL3' 'GPL' 'GPL3')
 depends=('gcc-libs' 'zlib' 'bzip2' 'xz')
 source=("https://sourceware.org/elfutils/ftp/${pkgver}/elfutils-${pkgver}.tar.bz2")
-sha512sums=('2779987463a22ed220759e25a09c9a1eb84c0f36db37675136e59aa55c7f8f90b7a7d34ffc4e6a4291d7fa73692a1bd1a303a74270b11d1623b4f9868d19498f')
+sha512sums=('356656ad0db8f6877b461de1a11280de16a9cc5d8dde4381a938a212e828e32755135e5e3171d311c4c9297b728fbd98123048e2e8fbf7fe7de68976a2daabe5')
 
 build() {
   cd ${pkgname}-${pkgver}
 
   CFLAGS+=" -g"
   
-  ./configure --prefix=/usr --program-prefix="eu-"
+  ./configure --prefix=/usr \
+    --program-prefix="eu-" \
+    --disable-debuginfod
   make
 }
 
 check() {
   cd ${pkgname}-${pkgver}
-  # 2 tests FAIL: run-reverse-sections-self.sh & FAIL: run-elfclassify.sh
+  # 1 test FAIL: run-reverse-sections-self.sh 
   make check
 }
 

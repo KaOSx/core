@@ -272,6 +272,10 @@ package_linux-next-headers() {
   
   # add objtool, nvidia needed
   install -Dt "${pkgdir}/usr/src/linux-${_kernver}/tools/objtool" tools/objtool/objtool
+  
+  # add signing files, needed for modules signing
+  cp certs/signing_key.pem "${pkgdir}/usr/src/linux-${_kernver}/certs/signing_key.pem"
+  cp certs/signing_key.x509 "${pkgdir}/usr/src/linux-${_kernver}/certs/signing_key.x509"
 
   # remove unneeded architectures
   rm -rf "${pkgdir}"/usr/src/linux-${_kernver}/arch/{alpha,arm,arm26,arm64,avr32,blackfin,c6x,cris,frv,h8300,hexagon,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,openrisc,parisc,powerpc,ppc,s390,score,sh,sh64,sparc,sparc64,tile,unicore32,um,v850,xtensa}
