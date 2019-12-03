@@ -25,7 +25,6 @@ build() {
 		--localstatedir=/var \
 		--disable-static \
 		--disable-linux-caps \
-		--enable-filter-aaaa \
 		--with-openssl \
 		--with-libidn2 \
 		--with-python=/usr/bin/python3
