@@ -257,8 +257,8 @@ package_linux-next-headers() {
   rm -r "${pkgdir}"/usr/src/linux-${_kernver}/Documentation
   
   # add signing files, needed for modules signing
-  cp certs/signing_key.pem "${pkgdir}/usr/src/linux-${_kernver}/certs/signing_key.pem"
-  cp certs/signing_key.x509 "${pkgdir}/usr/src/linux-${_kernver}/certs/signing_key.x509"
+  install -dm644 certs/signing_key.pem "${pkgdir}/usr/src/linux-${_kernver}/certs/signing_key.pem"
+  install -dm644 certs/signing_key.x509 "${pkgdir}/usr/src/linux-${_kernver}/certs/signing_key.x509"
 
   chown -R root.root "${pkgdir}/usr/src/linux-${_kernver}"
   find "${pkgdir}/usr/src/linux-${_kernver}" -type d -exec chmod 755 {} \;

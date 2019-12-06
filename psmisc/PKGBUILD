@@ -1,7 +1,7 @@
 
 pkgname=psmisc
 pkgver=23.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Miscellaneous procfs tools"
 arch=('x86_64')
 url="https://gitlab.com/psmisc/psmisc"
@@ -9,7 +9,7 @@ license=('GPL')
 groups=('base')
 depends=('glibc' 'ncurses')
 source=("https://downloads.sourceforge.net/psmisc/${pkgname}-${pkgver}.tar.xz")
-md5sums=('58a21288716cd726a11053bc245aec1f')
+md5sums=('573bf80e6b0de86e7f307e310098cf86')
 
 build() {
   cd ${pkgname}-${pkgver}
