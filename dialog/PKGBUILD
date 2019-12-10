@@ -1,7 +1,7 @@
 
 pkgname=dialog
-pkgver=1.3_20191110
-_pkgver=1.3-20191110
+pkgver=1.3_20191209
+_pkgver=1.3-20191209
 pkgrel=1
 epoch=1
 pkgdesc="A tool to display dialog boxes from shell scripts"
@@ -11,7 +11,7 @@ license=('LGPL2.1')
 depends=('ncurses' 'sh')
 # version at http://invisible-island.net/dialog/CHANGES.html
 source=("https://invisible-mirror.net/archives/dialog/${pkgname}-${_pkgver}.tgz")
-md5sums=('076f767254dd6c137db5b17f01c6e8e1')
+md5sums=('deea6a362f5987cf4a587e2214a8d1cb')
 
 build() {
   cd ${pkgname}-${_pkgver}
