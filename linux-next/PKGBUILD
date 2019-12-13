@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.4
 _srcname=linux-5.4
-pkgver=5.4.2
+pkgver=5.4.3
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -33,15 +33,15 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'SX8200_pro.patch'
         'ath10k_quiet.patch')
 md5sums=('ce9b2d974d27408a61c53a30d3f98fb9'
-         'debad4bcc336d83f6bff88aed8384038'
-         '81e29542281d07b7c9c21586355b7d74'
-         '235895d330230811f871d835e08fa27e'
-         '250537d3145faa71968e75b9c03db319'
-         '79f443fa8c421b410af3d73ea86a14e1'
-         '4c81863bf5ff4090a3e852f1b803678d'
-         'f8d11ec8ab46518bd0faa6644c90f036'
-         'b227f5ecdb4888bd7996dfe573c8867f'
-         '58077c1703977e6b5fafdda552f542d5'
+         '168c9c91c2758476cedcb469b7a0bd39'
+         'f6ae80d13370f87756c93123b85a52ce'
+         'fbe3163a248d4b74aec62c43a2cca0ed'
+         '73de212dd114f99794bbae4d69f4e476'
+         'a66fbee7ac61669c56c9b5590cddd4a3'
+         '34b760d75901ece99d7428ae53193730'
+         'ced35311ce8812ed1ffd7a0431fd7879'
+         '68a7fb479ed34d0d6fa71c15030953a4'
+         '180e55a128db2641e04374ce07d131a7'
          '07349ec04a85f512a00772fa730a6a9f'
          '91b628bf4d4beb80fa53a8eb7332023c'
          'e19be83ca72175a29b36d8ab08105050'
@@ -60,11 +60,11 @@ build() {
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
   #aufs patches for Live:
-  #patch -p1 -i "${srcdir}/aufs5.patch"
-  #patch -p1 -i "${srcdir}/aufs5-base.patch"
-  #patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
-  #patch -p1 -i "${srcdir}/aufs5-loopback.patch"
-  #patch -p1 -i "${srcdir}/aufs5-mmap.patch"
+  patch -p1 -i "${srcdir}/aufs5.patch"
+  patch -p1 -i "${srcdir}/aufs5-base.patch"
+  patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs5-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs5-mmap.patch"
   #patch -p1 -i "${srcdir}/aufs5-standalone.patch"
   #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   #patch -p1 -i "${srcdir}/vfs-ino.patch"
@@ -78,7 +78,7 @@ build() {
   
   cat "${srcdir}/config" > ./.config
 
-  #cat "${srcdir}/config.aufs" >> ./.config
+  cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -246,7 +246,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs4-util need
-  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
@@ -257,8 +257,8 @@ package_linux-next-headers() {
   rm -r "${pkgdir}"/usr/src/linux-${_kernver}/Documentation
   
   # add signing files, needed for modules signing
-  install -dm644 certs/signing_key.pem "${pkgdir}/usr/src/linux-${_kernver}/certs/signing_key.pem"
-  install -dm644 certs/signing_key.x509 "${pkgdir}/usr/src/linux-${_kernver}/certs/signing_key.x509"
+  install -Dm644 certs/signing_key.pem "${pkgdir}/usr/src/linux-${_kernver}/certs/signing_key.pem"
+  install -Dm644 certs/signing_key.x509 "${pkgdir}/usr/src/linux-${_kernver}/certs/signing_key.x509"
 
   chown -R root.root "${pkgdir}/usr/src/linux-${_kernver}"
   find "${pkgdir}/usr/src/linux-${_kernver}" -type d -exec chmod 755 {} \;
