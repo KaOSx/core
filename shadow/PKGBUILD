@@ -44,15 +44,17 @@ md5sums=('017ac773ba370bc28e157cee30dad71a'
 
 build() {
   cd ${pkgname}-${pkgver}
-  patch -p1 -i ${srcdir}/eaaac67d4face5ffdee443db51c642b20ae2357d.diff
+  #patch -p1 -i ${srcdir}/eaaac67d4face5ffdee443db51c642b20ae2357d.diff
 
   sed -i '/^SUBDIRS/s/pam.d//' etc/Makefile.am
 
   #autoreconf -v -f --install
   ./configure \
     --prefix=/usr \
-    --exec_prefix=/usr \
-    --libdir=/lib \
+    --bindir=/usr/bin \
+    --sbindir=/usr/sbin \
+    --libdir=/usr/lib \
+    --libdir=/usr/lib \
     --mandir=/usr/share/man \
     --sysconfdir=/etc \
     --with-libpam \
@@ -91,12 +93,11 @@ package() {
 
   # Part of util-linux
   rm \
-      ${pkgdir}/usr/bin/{chsh,chfn,sg} \
-      ${pkgdir}/bin/{login,su} \
+      ${pkgdir}/usr/bin/{chsh,chfn,sg,login,su} \
       ${pkgdir}/usr/sbin/{vipw,vigr} \
       ${pkgdir}/etc/pam.d/{chsh,chfn,login,su} \
   # don't leave empty dir with removing ${pkgdir}/sbin/nologin
-  rm -r ${pkgdir}/sbin
+  #rm -r ${pkgdir}/sbin
 
   # keep newgrp & man pages
   mv ${pkgdir}/usr/bin/{newgrp,sg}
