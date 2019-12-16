@@ -60,7 +60,8 @@ build() {
     --with-libpam \
     --with-group-name-max-length=32 \
     --with-selinux=no \
-    --disable-man
+    --disable-man \
+    --disable-account-tools-setuid
 
   make
 }
