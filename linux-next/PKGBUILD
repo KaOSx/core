@@ -1,10 +1,10 @@
 
 pkgbase=linux-next
-pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
+pkgname=('linux-next-headers') # 'linux-next-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=5.4
 _srcname=linux-5.4
-pkgver=5.4.3
+pkgver=5.4.4
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -29,11 +29,9 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         '99-linux-next.hook'
-        "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
-        'SX8200_pro.patch'
-        'ath10k_quiet.patch')
+        "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('ce9b2d974d27408a61c53a30d3f98fb9'
-         '168c9c91c2758476cedcb469b7a0bd39'
+         '53540f1e73665f503cd437aca3e4cc35'
          'f6ae80d13370f87756c93123b85a52ce'
          'fbe3163a248d4b74aec62c43a2cca0ed'
          '73de212dd114f99794bbae4d69f4e476'
@@ -46,9 +44,7 @@ md5sums=('ce9b2d974d27408a61c53a30d3f98fb9'
          '91b628bf4d4beb80fa53a8eb7332023c'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'
-         'a71035252857af0cf5d84c591b919996'
-         '2c8b53dbd4532ce952d40840e1780897'
-         'a4318400ca8bb376e560df0247b77c5f')
+         'a71035252857af0cf5d84c591b919996')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -73,8 +69,6 @@ build() {
   
   # Fix nvme booting XPG SX8200 Pro
   #patch -p1 -i "${srcdir}/SX8200_pro.patch"
-  # Quiet ath10 warnings
-  #patch -p1 -i "${srcdir}/ath10k_quiet.patch"
   
   cat "${srcdir}/config" > ./.config
 
@@ -256,9 +250,9 @@ package_linux-next-headers() {
   # Removing documentation, part of docs package
   rm -r "${pkgdir}"/usr/src/linux-${_kernver}/Documentation
   
-  # add signing files, needed for modules signing
-  install -Dm644 certs/signing_key.pem "${pkgdir}/usr/src/linux-${_kernver}/certs/signing_key.pem"
-  install -Dm644 certs/signing_key.x509 "${pkgdir}/usr/src/linux-${_kernver}/certs/signing_key.x509"
+  # save signing files, needed for modules signing
+  cp certs/signing_key.pem "/$HOME/signing_key.pem"
+  cp certs/signing_key.x509 "/$HOME/signing_key.x509"
 
   chown -R root.root "${pkgdir}/usr/src/linux-${_kernver}"
   find "${pkgdir}/usr/src/linux-${_kernver}" -type d -exec chmod 755 {} \;
