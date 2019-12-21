@@ -1,7 +1,7 @@
 
 pkgname=libedit
-pkgver=20191025_3.1
-_pkgver=20191025-3.1
+pkgver=20191211_3.1
+_pkgver=20191211-3.1
 pkgrel=1
 pkgdesc='Command line editor library providing generic line editing, history, and tokenization functions'
 arch=('x86_64')
@@ -10,7 +10,7 @@ license=('BSD')
 depends=('ncurses')
 options=('!libtool')
 source=("https://thrysoee.dk/editline/libedit-${_pkgver}.tar.gz")
-md5sums=('2d6568467080cfd75e715d045102b544')
+md5sums=('b58bb589551692cc0a151df431f2943d')
 
 build() {
 	cd ${pkgname}-${_pkgver}
