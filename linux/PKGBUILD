@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=5.3
-pkgver=5.3.8
+_basekernel=5.4
+pkgver=5.4.6
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.3.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.4.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -27,16 +27,16 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.3.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '99-linux.hook')
-md5sums=('c99feaade8047339528fb066ec5f8a49'
-         'bc4fb6eff8cc62dafc097cb561a51729'
-         '745d0a0a9fa75084b6920ad0b087609c'
-         '235895d330230811f871d835e08fa27e'
-         '250537d3145faa71968e75b9c03db319'
-         '79f443fa8c421b410af3d73ea86a14e1'
-         '4c81863bf5ff4090a3e852f1b803678d'
-         'f8d11ec8ab46518bd0faa6644c90f036'
-         'b227f5ecdb4888bd7996dfe573c8867f'
-         '58077c1703977e6b5fafdda552f542d5'
+md5sums=('ce9b2d974d27408a61c53a30d3f98fb9'
+         '9f348b83af2fd13db31b7595aded4846'
+         '2dd441e37272c9b3741647dc5b6ef4c3'
+         'fbe3163a248d4b74aec62c43a2cca0ed'
+         '73de212dd114f99794bbae4d69f4e476'
+         'a66fbee7ac61669c56c9b5590cddd4a3'
+         '34b760d75901ece99d7428ae53193730'
+         'ced35311ce8812ed1ffd7a0431fd7879'
+         '68a7fb479ed34d0d6fa71c15030953a4'
+         '180e55a128db2641e04374ce07d131a7'
          '07349ec04a85f512a00772fa730a6a9f'
          '91b628bf4d4beb80fa53a8eb7332023c'
          'eb14dcfd80c00852ef81ded6e826826a'
@@ -57,9 +57,9 @@ prepare() {
   patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
   patch -p1 -i "${srcdir}/aufs5-loopback.patch"
   patch -p1 -i "${srcdir}/aufs5-mmap.patch"
-  patch -p1 -i "${srcdir}/aufs5-standalone.patch"
-  patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  patch -p1 -i "${srcdir}/vfs-ino.patch"
+  #patch -p1 -i "${srcdir}/aufs5-standalone.patch"
+  #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  #patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
@@ -217,9 +217,6 @@ package_linux-headers() {
   cp net/mac80211/*.h "${pkgdir}/usr/src/linux-${_kernver}/net/mac80211/"
 
   # add dvb headers for external modules
-  #mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb-core"
-  #cp drivers/media/dvb-core/*.h "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb-core/"
-  # and...
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/"
   cp include/config/dvb/*.h "${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/"
 
@@ -251,6 +248,10 @@ package_linux-headers() {
   done
   # Removing documentation, part of docs package
   rm -r "${pkgdir}"/usr/src/linux-${_kernver}/Documentation
+  
+  # save signing files, needed for modules signing
+  cp certs/signing_key.pem "/$HOME/signing_key.pem"
+  cp certs/signing_key.x509 "/$HOME/signing_key.x509"
 
   chown -R root.root "${pkgdir}/usr/src/linux-${_kernver}"
   find "${pkgdir}/usr/src/linux-${_kernver}" -type d -exec chmod 755 {} \;

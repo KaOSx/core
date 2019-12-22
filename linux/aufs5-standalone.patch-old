@@ -1,5 +1,5 @@
 SPDX-License-Identifier: GPL-2.0
-aufs5.3 standalone patch
+aufs5.x-rcN standalone patch
 
 diff --git a/fs/dcache.c b/fs/dcache.c
 index 7ce4ccf5a51c..00d7e6a08026 100644

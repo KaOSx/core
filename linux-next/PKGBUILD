@@ -239,7 +239,7 @@ package_linux-next-headers() {
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/mm"
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
-  #aufs4-util need
+  #aufs5-util need
   sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
