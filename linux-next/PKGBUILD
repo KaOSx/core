@@ -97,7 +97,6 @@ build() {
 package_linux-next() {
   pkgdesc="The Linux Kernel and modules"
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
-  optdepends=('crda: to set the correct wireless channels of your country')
   provides=("linux=$pkgver")
   backup=("etc/mkinitcpio.d/${pkgname}.preset")
   install=linux-next.install

@@ -95,7 +95,6 @@ package_linux() {
   pkgdesc="The Linux Kernel and modules"
   groups=('base')
   depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
-  optdepends=('crda: to set the correct wireless channels of your country')
   provides=('acerhk=0.5.35' 'aufs3')
   conflicts=('acerhk')
   replaces=('aufs3')
