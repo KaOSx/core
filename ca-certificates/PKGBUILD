@@ -1,17 +1,17 @@
 
 pkgname=ca-certificates
 pkgver=20170717
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc='Common CA certificates'
 arch=('x86_64')
 url='https://packages.qa.debian.org/c/ca-certificates.html'
 license=('MPL' 'GPL')
 depends=('bash' 'run-parts' 'openssl' 'findutils' 'coreutils' 'sed')
-makedepends=('ruby' 'python2')
+makedepends=('ruby' 'python3')
 install=ca-certificates.install
 backup=('etc/ca-certificates.conf')
-source=("http://ftp.debian.org/debian/pool/main/c/${pkgname}/${pkgname}_${pkgver}.tar.xz")
+source=("http://sourcearchive.raspbian.org/main/c/${pkgname}/${pkgname}_${pkgver}.tar.xz")
 md5sums=('55a6bb6b98afb16b3cde8e3ad1e262eb')
 
 build() {

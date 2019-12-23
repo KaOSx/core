@@ -6,7 +6,7 @@
 pkgname=grub
 pkgdesc="GNU GRand Unified Bootloader"
 pkgver=2.04
-pkgrel=1
+pkgrel=2
 _commit=2a2e10c1b39672de3d5da037a50d5c371f49b40d
 _gnulib=9ce9be2ef0cb1180e35dfe9dfbbe90d774b374bd
 url="https://www.gnu.org/software/grub/"
@@ -19,7 +19,7 @@ conflicts=('grub-common' 'grub-bios' 'grub-efi')
 provides=('grub-common' 'grub-bios' 'grub-efi')
 replaces=('grub-common' 'grub-bios' 'grub-efi')
 depends=('sh' 'xz' 'gettext' 'device-mapper')
-makedepends=('git' 'rsync' 'xz' 'freetype2' 'ttf-dejavu' 'python2' 'python3' 'autogen'
+makedepends=('git' 'rsync' 'xz' 'freetype2' 'ttf-dejavu' 'python3' 'autogen'
              'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse' 'bdf-unifont')
 optdepends=('freetype2: For grub-mkfont usage'
             'fuse: For grub-mount usage'
