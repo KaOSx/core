@@ -24,7 +24,6 @@ Server = http://kaos.youm.org/$repo
 Server = http://mirror.dacentec.com/kaosx/$repo
 Server = http://kaosx.tk/repo/$repo
 Server = https://repo.kaosx.us/$repo
-Server = http://kqtos.tk/repo/$repo
 
 # Vietnam
 Server = https://mirror.freedif.org/KaOS/$repo
