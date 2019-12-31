@@ -1,8 +1,8 @@
 
 pkgname=filesystem
-pkgver=2019.01
+pkgver=2020.01
 pkgrel=1
-_codename=2019
+_codename=2020
 pkgdesc='Base filesystem'
 arch=('x86_64')
 license=('GPL')
@@ -37,7 +37,7 @@ md5sums=('1109716df48ad1bfbf08520ea12fe347'
          '09bce9236c3729d31aaa528bcf5d198e'
          'f3b6ae7db8adffaaa4bffc6099dcbd50'
          '13d8d253ae8613ba2474683f585e73db'
-         '892d15a38e2944495fb4102aa7fc4d63'
+         '17340204d9f64ab74b04d464829f07f7'
          '201bbb8b4734d2f46afe1e24d7cc6173'
          '08565c934ec0d6b90da1165ee9cf82dc')
 
