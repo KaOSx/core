@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=5.4
-pkgver=5.4.6
+pkgver=5.4.7
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -28,7 +28,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.4.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('ce9b2d974d27408a61c53a30d3f98fb9'
-         '9f348b83af2fd13db31b7595aded4846'
+         '3e3c4485438f1f3340d5175746e37226'
          '2dd441e37272c9b3741647dc5b6ef4c3'
          'fbe3163a248d4b74aec62c43a2cca0ed'
          '73de212dd114f99794bbae4d69f4e476'
