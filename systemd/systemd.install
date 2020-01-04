@@ -66,7 +66,7 @@ post_upgrade() {
   post_common
   
   #if [[ $(vercmp 242-1 "$2") -eq 1 ]]; then
-    _242_changes
+  #  _242_changes
   #fi
   
   if [ -d sys/firmware/efi/efivars ]; then
