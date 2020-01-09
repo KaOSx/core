@@ -1,0 +1,17 @@
+
+pkgname=cleanrepo
+pkgver=2
+pkgrel=1
+pkgdesc="Script to clean packages that do not belong to the current repository database"
+url="https://kaosx.us"
+license=('GPL2')
+arch=('x86_64')
+depends=('python3')
+source=('cleanrepo')
+md5sums=('46abb531446191a30c0d9b2cb8048a38')
+
+package() {
+
+  install -D -m755 cleanrepo ${pkgdir}/usr/bin/${pkgname}
+}
+

@@ -1,0 +1,141 @@
+#!/usr/bin/python3
+
+# Script to clean packages that do not belong to the current repository database.
+# It parses both the packages in the pacman database and in the current repository.
+# Those not matching the database will be removed.
+
+ ###########################################################################
+ #   Copyright (C) 2020 Anke Boersma <demm@kaosx.us>                       #
+ #                                                                         #
+ #   This program is free software; you can redistribute it and/or modify  #
+ #   it under the terms of the GNU General Public License as published by  #
+ #   the Free Software Foundation; either version 2 of the License, or     #
+ #   (at your option) any later version.                                   #
+ #                                                                         #
+ #   This program is distributed in the hope that it will be useful,       #
+ #   but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+ #   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+ #   GNU General Public License for more details.                          #
+ #                                                                         #
+ #   You should have received a copy of the GNU General Public License     #
+ #   along with this program; if not, write to the                         #
+ #   Free Software Foundation, Inc.,                                       #
+ #   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          #
+ ###########################################################################
+
+import sys
+import os
+from contextlib import closing
+import tarfile
+import gzip
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+
+    def disable(self):
+        self.HEADER = ''
+        self.OKBLUE = ''
+        self.OKGREEN = ''
+        self.WARNING = ''
+        self.FAIL = ''
+        self.ENDC = ''
+
+
+def removeExtensions(pkg):
+  return pkg[:pkg.rindex("-")]
+
+def duplicates(dirname,repository,pkglist):
+  duplicateDictionary = {}
+
+  with closing(gzip.GzipFile(os.path.join(dirname, repository + ".db.tar.gz"))) as xz:
+    with tarfile.open(fileobj=xz) as f:
+      try:
+        list_tar_pkg = f.getnames()
+        #print(list_tar_pkg)
+        for pkg in pkglist:
+          pkgWithoutExtension = removeExtensions(pkg) 
+          #print(pkgWithoutExtension)
+          if pkgWithoutExtension not in list_tar_pkg:
+            duplicateDictionary[pkgWithoutExtension] = [pkg]
+
+      except Exception as e:
+        print(e)
+
+    return duplicateDictionary
+
+def printDups(dups):
+        if not dups:
+          print (bcolors.OKBLUE + ":: No duplicate package files found. " + bcolors.ENDC)
+          return
+        else:
+          print (bcolors.OKGREEN + ":: The package files which would be removed are: " + bcolors.ENDC)
+
+        for name in dups:
+                print(name)
+
+
+def removeDups(dups, path):
+        if not dups:
+          print (bcolors.OKBLUE + ":: No duplicate package files found" + bcolors.ENDC)
+          return
+
+        for name in dups:
+                pkg = dups[name][0]
+                completePath = path + "/" + pkg
+                os.remove(completePath)
+                print(completePath)
+
+        print(bcolors.OKGREEN + ":: Files removed successfully" + bcolors.ENDC)
+
+
+def help():
+        print("-d <dir>    Perform check on <dir>. If no argument is supplied, defaults to the current working directory.")
+        print("-r <repo>   The repository name that you want to look <repo>. No extension is needed.")
+        print("-f          Prints the file that would be removed, without touching them.")
+        print("-h          This message")
+        exit(0)
+
+if __name__ == "__main__":
+        dirname = ""
+        repository = ""
+        fake = False
+
+        for arg in sys.argv:
+                if (arg == "-d"):
+                        i = sys.argv.index("-d")
+                        if (i < len(sys.argv) - 1):
+                                dirname = sys.argv[i+1]
+                        else:
+                                print(bcolors.WARNING + ":: Error: directory name is missing after -d" + bcolors.ENDC)
+                                exit(-1)
+                if (arg == "-r"):
+                        i = sys.argv.index("-r")
+                        if (i < len(sys.argv) - 1):
+                                repository = sys.argv[i+1]
+                        else:
+                                print(bcolors.WARNING + ":: Error: repository name is missing after -r" + bcolors.ENDC)
+                                exit(-1)
+                elif (arg == "-f"):
+                        fake = True
+                elif (arg == "-h") or (arg == "--help"):
+                        help()
+
+        # No argument supplied
+        if len(dirname) == 0:
+                dirname = os.getcwd()
+        if len(repository) == 0:
+                print(bcolors.WARNING + ":: Error: repository name is missing, use option -r <repo>" + bcolors.ENDC)
+                exit(-1)
+
+        pkglist = [file for file in os.listdir(dirname) if file.endswith(".pkg.tar.xz") or file.endswith(".pkg.tar.zst")]
+
+        dup = duplicates(dirname,repository,pkglist)
+        if fake:
+                printDups(dup)
+        else:
+                removeDups(dup, dirname)
