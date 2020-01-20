@@ -1,0 +1,87 @@
+--- a/src/boot/efi/boot.c	2019-11-29 17:32:36.000000000 +0100
++++ b/src/boot/efi/boot.c	2020-01-20 15:32:09.659486661 +0100
+@@ -361,7 +361,7 @@
+         _cleanup_freepool_ CHAR16 *partstr = NULL, *defaultstr = NULL;
+         UINTN x, y, size;
+ 
+-        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_LIGHTGRAY|EFI_BACKGROUND_BLACK);
++        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_BLACK|EFI_BACKGROUND_LIGHTGRAY);
+         uefi_call_wrapper(ST->ConOut->ClearScreen, 1, ST->ConOut);
+ 
+         Print(L"systemd-boot version:   " GIT_VERSION "\n");
+@@ -519,7 +519,7 @@
+         graphics_mode(FALSE);
+         uefi_call_wrapper(ST->ConIn->Reset, 2, ST->ConIn, FALSE);
+         uefi_call_wrapper(ST->ConOut->EnableCursor, 2, ST->ConOut, FALSE);
+-        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_LIGHTGRAY|EFI_BACKGROUND_BLACK);
++        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_BLACK|EFI_BACKGROUND_LIGHTGRAY);
+ 
+         /* draw a single character to make ClearScreen work on some firmware */
+         uefi_call_wrapper(ST->ConOut->OutputString, 2, ST->ConOut, L" ");
+@@ -612,10 +612,10 @@
+                                 uefi_call_wrapper(ST->ConOut->SetCursorPosition, 3, ST->ConOut, 0, y_start + i - idx_first);
+                                 if (i == idx_highlight)
+                                         uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut,
+-                                                          EFI_BLACK|EFI_BACKGROUND_LIGHTGRAY);
++                                                          EFI_WHITE|EFI_BACKGROUND_CYAN);
+                                 else
+                                         uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut,
+-                                                          EFI_LIGHTGRAY|EFI_BACKGROUND_BLACK);
++                                                          EFI_BLACK|EFI_BACKGROUND_LIGHTGRAY);
+                                 uefi_call_wrapper(ST->ConOut->OutputString, 2, ST->ConOut, lines[i]);
+                                 if ((INTN)i == config->idx_default_efivar) {
+                                         uefi_call_wrapper(ST->ConOut->SetCursorPosition, 3, ST->ConOut, x_start-3, y_start + i - idx_first);
+@@ -625,7 +625,7 @@
+                         refresh = FALSE;
+                 } else if (highlight) {
+                         uefi_call_wrapper(ST->ConOut->SetCursorPosition, 3, ST->ConOut, 0, y_start + idx_highlight_prev - idx_first);
+-                        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_LIGHTGRAY|EFI_BACKGROUND_BLACK);
++                        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_BLACK|EFI_BACKGROUND_LIGHTGRAY);
+                         uefi_call_wrapper(ST->ConOut->OutputString, 2, ST->ConOut, lines[idx_highlight_prev]);
+                         if ((INTN)idx_highlight_prev == config->idx_default_efivar) {
+                                 uefi_call_wrapper(ST->ConOut->SetCursorPosition, 3, ST->ConOut, x_start-3, y_start + idx_highlight_prev - idx_first);
+@@ -633,7 +633,7 @@
+                         }
+ 
+                         uefi_call_wrapper(ST->ConOut->SetCursorPosition, 3, ST->ConOut, 0, y_start + idx_highlight - idx_first);
+-                        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_BLACK|EFI_BACKGROUND_LIGHTGRAY);
++                        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_WHITE|EFI_BACKGROUND_CYAN);
+                         uefi_call_wrapper(ST->ConOut->OutputString, 2, ST->ConOut, lines[idx_highlight]);
+                         if ((INTN)idx_highlight == config->idx_default_efivar) {
+                                 uefi_call_wrapper(ST->ConOut->SetCursorPosition, 3, ST->ConOut, x_start-3, y_start + idx_highlight - idx_first);
+@@ -658,7 +658,7 @@
+                                 x = (x_max - len) / 2;
+                         else
+                                 x = 0;
+-                        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_LIGHTGRAY|EFI_BACKGROUND_BLACK);
++                        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_BLACK|EFI_BACKGROUND_LIGHTGRAY);
+                         uefi_call_wrapper(ST->ConOut->SetCursorPosition, 3, ST->ConOut, 0, y_max-1);
+                         uefi_call_wrapper(ST->ConOut->OutputString, 2, ST->ConOut, clearline + (x_max - x));
+                         uefi_call_wrapper(ST->ConOut->OutputString, 2, ST->ConOut, status);
+@@ -691,7 +691,7 @@
+                 if (status) {
+                         FreePool(status);
+                         status = NULL;
+-                        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_LIGHTGRAY|EFI_BACKGROUND_BLACK);
++                        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_BLACK|EFI_BACKGROUND_LIGHTGRAY);
+                         uefi_call_wrapper(ST->ConOut->SetCursorPosition, 3, ST->ConOut, 0, y_max-1);
+                         uefi_call_wrapper(ST->ConOut->OutputString, 2, ST->ConOut, clearline+1);
+                 }
+@@ -808,7 +808,7 @@
+                         /* only the options of configured entries can be edited */
+                         if (!config->editor || config->entries[idx_highlight]->type == LOADER_UNDEFINED)
+                                 break;
+-                        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_LIGHTGRAY|EFI_BACKGROUND_BLACK);
++                        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_BLACK|EFI_BACKGROUND_LIGHTGRAY);
+                         uefi_call_wrapper(ST->ConOut->SetCursorPosition, 3, ST->ConOut, 0, y_max-1);
+                         uefi_call_wrapper(ST->ConOut->OutputString, 2, ST->ConOut, clearline+1);
+                         if (line_edit(config->entries[idx_highlight]->options, &config->options_edit, x_max-1, y_max-1))
+@@ -863,7 +863,7 @@
+         FreePool(lines);
+         FreePool(clearline);
+ 
+-        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_WHITE|EFI_BACKGROUND_BLACK);
++        uefi_call_wrapper(ST->ConOut->SetAttribute, 2, ST->ConOut, EFI_WHITE|EFI_BACKGROUND_LIGHTGRAY);
+         uefi_call_wrapper(ST->ConOut->ClearScreen, 1, ST->ConOut);
+         return run;
+ }

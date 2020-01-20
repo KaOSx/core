@@ -2,7 +2,7 @@
 pkgname=systemd
 pkgver=244
 _pkgver=244
-pkgrel=2
+pkgrel=3
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -40,7 +40,7 @@ source=("https://github.com/systemd/systemd/archive/v${_pkgver}.tar.gz"
         'KaOS_fallback.conf'
         'splash.bmp'
         'systemd-tmpfiles.hook'
-        'service.diff')
+        'boot_color.diff')
 md5sums=('413121fe918b252ae62310f6fc7c4b32'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
@@ -50,15 +50,14 @@ md5sums=('413121fe918b252ae62310f6fc7c4b32'
          'b8d8ebeab17edbe91209e705cfc9e774'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
          '7d5910d12fdfce56228a1aac8c3d618c'
-         'b20711c6e42585d2a85ff01f8adb5c68')
+         'a59ceb44b57272d6cebaf86acda7d393')
 
 prepare() {
   cd ${pkgname}-${_pkgver}
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
-  
-  # revert SuccessAction= until figured why it is set to invalid on KaOS with 241 & up
-  #patch -p1 -i ${srcdir}/service.diff
+  # set systemd-boot colors
+  patch -p1 -i ${srcdir}/boot_color.diff
 }
 
 build() {
