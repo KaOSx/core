@@ -1,6 +1,6 @@
 
 pkgname=make
-pkgver=4.2.93
+pkgver=4.3
 pkgrel=1
 pkgdesc="GNU make utility to maintain groups of programs"
 arch=('x86_64')
@@ -9,9 +9,9 @@ license=('GPL3')
 groups=('base-devel')
 depends=('glibc' 'sh' 'guile')
 #source=("https://ftp.gnu.org/gnu/make/${pkgname}-${pkgver}.tar.bz2"
-source=("https://alpha.gnu.org/gnu/make/${pkgname}-${pkgver}.tar.lz"
+source=("https://ftp.gnu.org/gnu/make/${pkgname}-${pkgver}.tar.lz"
         'perl26.patch')
-md5sums=('6b252188079b36d13e96d5527f8ca033'
+md5sums=('d5c40e7bd1e97a7404f5d3be982f479a'
          '3676f37c6561900bcb1ff9a72746732d')
 
 build() {
