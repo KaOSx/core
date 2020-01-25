@@ -28,7 +28,7 @@ source=("https://github.com/shadow-maint/shadow/releases/download/${pkgver}/shad
         'useradd.defaults'
         'xstrdup.patch'
         "https://github.com/shadow-maint/shadow/commit/eaaac67d4face5ffdee443db51c642b20ae2357d.diff")
-md5sums=('017ac773ba370bc28e157cee30dad71a'
+md5sums=('3d97f11e66bfb0b14702b115fa8be480'
          'bdf93c7bc4b751277159c5de8fc34df2'
          '65e9ebce249a5b9ed021e2790452b9e1'
          'f6760e9701d7ed2cd91371d427faed2a'
