@@ -1,6 +1,6 @@
 
 pkgname=openresolv
-pkgver=3.9.2
+pkgver=3.10.0
 pkgrel=1
 pkgdesc="resolv.conf management framework (resolvconf)"
 arch=('x86_64')
@@ -12,8 +12,8 @@ backup=('etc/resolvconf.conf')
 provides=('resolvconf')
 source=("https://roy.marples.name/downloads/openresolv/${pkgname}-${pkgver}.tar.xz"
         'fs33801.patch')
-md5sums=('f61cee805a145bf2809362013249f29d'
-         '1e58ffbd83c55a7c51afb8a5d8b74742')
+sha256sums=('4078bc52dee022f4a1c7594045e724af9da5ef16d670e0c08444d1830033ba06'
+            '934a65dff1b080f8fd6367781a4b3357d29d10516fbaeb282a68c32f44782dac')
 
 build() {
   cd ${pkgname}-${pkgver}
