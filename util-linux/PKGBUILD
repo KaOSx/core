@@ -1,6 +1,6 @@
 
 pkgname=util-linux
-pkgver=2.35
+pkgver=2.35.1
 _pkgver=2.35
 pkgrel=1
 pkgdesc="Miscellaneous system utilities for Linux"
@@ -29,7 +29,7 @@ backup=(etc/pam.d/chfn
         etc/pam.d/su
         etc/pam.d/su-l)
 install=util-linux.install
-sha256sums=('b3081b560268c1ec3367e035234e91616fa7923a0afc2b1c80a2a6d8b9dfe2c9'
+sha256sums=('d9de3edd287366cd908e77677514b9387b22bc7b88f45b83e1922c3597f1d7f9'
             '5de0aadbbeb1ebb0776f3c550111fe045dfdf3571c574f415c62ca1966c49616'
             '993a3096c2b113e6800f2abbd5d4233ebf1a97eef423990d3187d665d3490b92'
             'fc6807842f92e9d3f792d6b64a0d5aad87995a279153ab228b1b2a64d9f32f20'
