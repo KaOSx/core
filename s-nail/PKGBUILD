@@ -1,6 +1,6 @@
 
 pkgname=s-nail
-pkgver=14.9.16
+pkgver=14.9.17
 pkgrel=1
 pkgdesc="Mail processing system and commandline utility for sending email"
 arch=('x86_64')
@@ -14,7 +14,7 @@ conflicts=('mailx')
 replaces=('mailx')
 provides=('mailx')
 source=("https://www.sdaoden.eu/downloads/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('d37edaa348d61b786f4c44362ad9e08c27dba81cf16289098331ab96aa93c44f')
+sha256sums=('94e2476b8f2b7f091f45e9a21804205f71e02336bc7d2d38b369871c8f69e2df')
 
 build() {
   cd ${pkgname}-${pkgver}
