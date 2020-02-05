@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.5
 _srcname=linux-5.5
-pkgver=5.5.1
+pkgver=5.5.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -31,16 +31,16 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('0a78b1dc48dc032fe505b170c1b92339'
-         '172bd3ec67e7c59604a7bf684ec29232'
+         '2c987564f306f949f34c97a87db0d264'
          '9e3f70585507d3e59ebefcf548156788'
-         'fbe3163a248d4b74aec62c43a2cca0ed'
-         '73de212dd114f99794bbae4d69f4e476'
-         'a66fbee7ac61669c56c9b5590cddd4a3'
-         '34b760d75901ece99d7428ae53193730'
-         'ced35311ce8812ed1ffd7a0431fd7879'
-         '68a7fb479ed34d0d6fa71c15030953a4'
+         '31cd97f6bc52de17999ecaed60fd90ad'
+         'a8a0c0923217837f151ef007f47a4e80'
+         'aae8c706fcf69d62559106e11e251699'
+         '7594929a2842d5ff0dcf022cd766100a'
+         'f2ef50d205218a05a75c4f8383160016'
+         '6d099aad60d0d620171f6a431a850b12'
          '180e55a128db2641e04374ce07d131a7'
-         '07349ec04a85f512a00772fa730a6a9f'
+         'c9dca7bab329ae7c927301b8de8723be'
          '91b628bf4d4beb80fa53a8eb7332023c'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'
@@ -56,11 +56,11 @@ build() {
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
   #aufs patches for Live:
-  #patch -p1 -i "${srcdir}/aufs5.patch"
-  #patch -p1 -i "${srcdir}/aufs5-base.patch"
-  #patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
-  #patch -p1 -i "${srcdir}/aufs5-loopback.patch"
-  #patch -p1 -i "${srcdir}/aufs5-mmap.patch"
+  patch -p1 -i "${srcdir}/aufs5.patch"
+  patch -p1 -i "${srcdir}/aufs5-base.patch"
+  patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs5-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs5-mmap.patch"
   ##patch -p1 -i "${srcdir}/aufs5-standalone.patch"
   ##patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   ##patch -p1 -i "${srcdir}/vfs-ino.patch"
@@ -72,7 +72,7 @@ build() {
   
   cat "${srcdir}/config" > ./.config
 
-  #cat "${srcdir}/config.aufs" >> ./.config
+  cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -239,7 +239,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs5-util need
-  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
