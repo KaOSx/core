@@ -6,7 +6,7 @@
 pkgname=grub
 pkgdesc="GNU GRand Unified Bootloader"
 pkgver=2.04
-pkgrel=2
+pkgrel=3
 _commit=2a2e10c1b39672de3d5da037a50d5c371f49b40d
 _gnulib=9ce9be2ef0cb1180e35dfe9dfbbe90d774b374bd
 url="https://www.gnu.org/software/grub/"

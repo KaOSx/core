@@ -1,7 +1,7 @@
 
 pkgname=readline
 _basever=8.0
-_patchlevel=001 #prepare for some patches
+_patchlevel=004 #prepare for some patches
 pkgver=$_basever.$_patchlevel
 pkgrel=1
 pkgdesc="GNU readline library"
@@ -20,7 +20,10 @@ if [ $_patchlevel -gt 00 ]; then
 fi
 md5sums=('7e6c1f16aee3244a69aba6e438295ca3'
          '58d54966c1191db45973cb3191ac621a'
-         'c3e27b8a0d8e37a4172654e5f3ef2eec')
+         'c3e27b8a0d8e37a4172654e5f3ef2eec'
+         '2e631f1973dfe4b0ef042c40b8fdb47e'
+         '9d2344b399237fa7abdbcf966b364c97'
+         '0c0406762a9afcd34c6a77268fea0ccb')
 
 build() {
   cd ${pkgname}-${_basever}
