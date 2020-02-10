@@ -1,6 +1,6 @@
 
 pkgname=nfs-utils
-pkgver=2.4.2
+pkgver=2.4.3
 pkgrel=1
 pkgdesc="Support programs for Network File Systems"
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=('glibc' 'e2fsprogs' 'rpcbind' 'libtirpc' 'librpcsecgss' 'libevent'
 makedepends=('pkgconfig' 'autoconf' 'automake')
 source=("https://downloads.sourceforge.net/project/nfs/nfs-utils/${pkgver}/${pkgname}-${pkgver}.tar.bz2"
         'exports')
-md5sums=('acb98a48d430a087994429d2a7530f7d'
+md5sums=('ea4bb8a7f98447c303cec6d26b05541b'
          'e6ad3c7a59c7e4c24965a0e7da35026c')
 
 build() {
