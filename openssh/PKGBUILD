@@ -1,6 +1,6 @@
 
 pkgname=openssh
-pkgver=8.1p1
+pkgver=8.2p1
 pkgrel=1
 pkgdesc='Free version of the SSH connectivity tools'
 arch=('x86_64')
@@ -16,7 +16,7 @@ source=("https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgve
         'sshd.service'
         'sshd@.service'
         'sshd.socket')
-md5sums=('513694343631a99841e815306806edf0'
+sha1sums=('d1ab35a93507321c5db885e02d41ce1414f0507c'
          'e2cea70ac13af7e63d40eb04415eacd5'
          '9d71ea52cd15e9d7c172b7b71cb03bc0'
          '234ac4883cc28c56a4c236867124c3e4'
