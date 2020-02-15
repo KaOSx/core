@@ -17,12 +17,12 @@ source=("https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgve
         'sshd@.service'
         'sshd.socket')
 sha1sums=('d1ab35a93507321c5db885e02d41ce1414f0507c'
-         'e2cea70ac13af7e63d40eb04415eacd5'
-         '9d71ea52cd15e9d7c172b7b71cb03bc0'
-         '234ac4883cc28c56a4c236867124c3e4'
-         '4bbc5818d93a2ad336d7191ed35c69f7'
-         'fdc4a47b4b8d0f0e2c395c9edcee8c14'
-         '76f52c66fb3193f301fe0a666e047ab1')
+          'ec102deb69cad7d14f406289d2fc11fee6eddbdd'
+          'd93dca5ebda4610ff7647187f8928a3de28703f3'
+          'cc1ceec606c98c7407e7ac21ade23aed81e31405'
+          'f9af4a442b804ab661cec0edb25dd76dee16d8d2'
+          'bd6eae36c7ef9efb7147778baad7858b81f2d660'
+          'e12fa910b26a5634e5a6ac39ce1399a132cf6796')
 
 build() {
 	cd ${pkgname}-${pkgver}
@@ -48,6 +48,7 @@ build() {
 check() {
 	cd ${pkgname}-${pkgver}
 
+	# ssh-keygen for ssh-rsa failed, chroot issue
 	make tests ||
 	grep $USER /etc/passwd | grep -q /bin/false
 }
