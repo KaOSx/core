@@ -1,0 +1,11 @@
+
+
+post_upgrade() {
+  if [[ $(vercmp ${2} 8.2p1) -eq -1 ]]; then
+  
+    echo "Restarting sshd service"
+        systemctl daemon-reload
+        systemctl restart sshd.service
+  fi
+}
+
