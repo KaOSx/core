@@ -50,8 +50,8 @@ check() {
 	cd ${pkgname}-${pkgver}
 
 	# ssh-keygen for ssh-rsa failed, chroot issue
-	#make tests ||
-	#grep $USER /etc/passwd | grep -q /bin/false
+	make tests ||
+	grep $USER /etc/passwd | grep -q /bin/false
 }
 
 package() {
