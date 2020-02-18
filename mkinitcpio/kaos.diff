@@ -1,0 +1,162 @@
+diff -iruN mkinitcpio-26.old/install/distro mkinitcpio-26.new/install/distro
+--- mkinitcpio-26.old/install/distro	1970-01-01 01:00:00.000000000 +0100
++++ mkinitcpio-26.new/install/distro	2019-10-14 09:42:22.000000000 +0100
+@@ -0,0 +1,7 @@
++#!/bin/bash
++
++file="${BASH_SOURCE%/*}/distros/$(lsb_release -i | sed 's/.*ID:\s*//' | tr '[:upper:]' '[:lower:]')"
++
++[ -f "$file" ] && source "$file" # not -f, files don;t seem to have execute bit set
++
++
+diff -iruN mkinitcpio-26.old/install/distros/add_pacman_binaries.sh mkinitcpio-26.new/install/distros/add_pacman_binaries.sh
+--- mkinitcpio-26.old/install/distros/add_pacman_binaries.sh	1970-01-01 01:00:00.000000000 +0100
++++ mkinitcpio-26.new/install/distros/add_pacman_binaries.sh	2019-10-14 06:43:34.000000000 +0100
+@@ -0,0 +1,53 @@
++#!/bin/bash
++
++# Source me, do not run directly
++# This is not a hook itself, it is a utility script intended ot be run from other hooks
++# add_binary and friends need to be provided from mkinitcpio
++
++packageBinaries(){
++
++# Add all executable binaries from the given pacman package(s) to the init ramdisk
++
++    packageBinariesMatch true "$@"
++    
++}
++
++packageBinariesMatch(){
++# As above, but match the binary files against a 'test' before adding
++# Test is a callback that is executed with the filepath as the first argumnt (quoted)
++# i.e.
++#   packageBinariesMatch function package1 package2 ...
++#
++# calls `function pack1bin1` `function pack1bin2`, etc.
++# If function does not return false, the executable is added to the ramdisk
++# This allows use of egrep to match the binaries against a pattern:
++#
++#   inSbin() { echo "$1" | egrep #^/sbin/# } 
++#   packageBinariesMatch inSbin mypackage
++#
++# or file to exclude symlinks, for example.
++
++    test_function="$1" ; shift
++
++    isBinary(){
++        file -iL "$@" | grep 'x-executable; charset=binary' -q && echo -n "$@ "
++    }
++    
++    export -f isBinary
++    binaries_to_test="$(pacman -Ql "$@" | xargs -n1 -P0 bash -c 'isBinary $@' _)"
++    export -n isBinary
++    
++    for i in $binaries_to_test ; do #At this point, if for some reason we have spaces in the path, this will break
++        "$test_function" $i && add_binary $i
++    done
++}
++
++#TODO: add ability to query packages recursively, for dependencies: this requires expac or pacgraph
++#packageBinariesDependencies(){
++#
++#}
++
++
++#TODO: what about shell scripts rather than executables? We have ash, not bash (busybox)
++
++
+diff -iruN mkinitcpio-26.old/install/distros/kaos mkinitcpio-26.new/install/distros/kaos
+--- mkinitcpio-26.old/install/distros/kaos	1970-01-01 01:00:00.000000000 +0100
++++ mkinitcpio-26.new/install/distros/kaos	2019-10-14 08:27:14.000000000 +0100
+@@ -0,0 +1,78 @@
++#!/bin/bash
++
++IMPORTANT_FILESYSTEM_ONLY=1
++
++build() {
++
++    source "${BASH_SOURCE%/*}/add_pacman_binaries.sh"
++    
++    add_filesystem_tools(){
++        local -A packages
++        
++        packages[xfs]="xfsprogs"
++        packages[ext4]= #None needed by default
++        packages[ext3]=
++        packages[ext2]=
++        #The below are untested:
++        
++        packages[zfs]= #TODO: add packages for zfs rootfs, if it will be supported in linux
++        packages[reiserfs]="reiserfsprogs" #FIXME: Don't have a partition to test this label output from the below.
++        
++        [ -z ${packages[$1]} ] && return || package=${packages[$1]}
++    
++        # Add 'important' binaries from the package:
++        if (( $IMPORTANT_FILESYSTEM_ONLY )); then
++            isImportant (){
++                [[ "$1" =~ ^/s?bin.*$ ]]
++            }
++            echo "Adding 'important' binaries from $package package to support $1 filesystem repair"
++            packageBinariesMatch isImportant $package
++        else
++        # or add all?
++            echo "Adding all binaries from $package package to support $1 filesystem repair"
++            packageBinaries $package
++        fi
++            
++        
++    }
++    
++    
++    ### Add tools needed to repair the filesystem in case of a no-boot
++    
++    if (( ! fs_autodetect_failed )) && [[ $rootfstype$usrfstype ]]; then
++        if [[ $rootfstype ]]; then
++            add_filesystem_tools $rootfstype
++        fi
++        if [[ $usrfstype && $usrfstype != $rootfstype ]]; then
++            add_filesystem_tools $usrfstype
++        fi
++    else
++        #KaOS defaults
++        echo Using KaOS default filesystems of support for xfs and ext4
++        add_filesystem_tools ext4
++        add_filesystem_tools xfs
++    fi
++    
++    
++    ### Others
++# Example:
++#
++#    packageBinaries \
++#        vim         `#Example` \
++#        nano        `#Example`
++
++}
++
++help() {
++    cat <<HELPEOF
++This hook adds entries to the init ramdisk special to KaOS
++It uses a tool that adds binaries from given packages, using pacman to
++query these for executable binary files (or symlinks) and add them
++
++We add support to repair the filesystem(s) needed for boot, because
++in using XFS rather than ext4, the tools are not included by default 
++upstream.
++HELPEOF
++}
++
++# vim: set ft=sh ts=4 sw=4 et:
+diff -iruN mkinitcpio-26.old/mkinitcpio.conf mkinitcpio-26.new/mkinitcpio.conf
+--- mkinitcpio-26.old/mkinitcpio.conf	2019-10-14 09:42:38.699604941 +0100
++++ mkinitcpio-26.new/mkinitcpio.conf	2019-10-14 08:31:55.000000000 +0100
+@@ -49,7 +49,7 @@
+ #
+ ##   NOTE: If you have /usr on a separate partition, you MUST include the
+ #    usr, fsck and shutdown hooks.
+-HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)
++HOOKS=(base udev autodetect modconf block filesystems keyboard fsck distro)
+ 
+ # COMPRESSION
+ # Use this to compress the initramfs image. By default, gzip compression
