@@ -1,8 +1,7 @@
 
 pkgname=ppp
-pkgver=2.4.7
-_commit=8e77984ac5d7acbe68b2b2f590abd17564c9730d
-pkgrel=5
+pkgver=2.4.8
+pkgrel=1
 pkgdesc="Daemon which implements the Point-to-Point Protocol for dial-up networking"
 arch=('x86_64') 
 url="https://www.samba.org/ppp/"
@@ -11,7 +10,7 @@ groups=('base')
 depends=('glibc' 'libpcap' 'openssl')
 backup=(etc/ppp/{chap-secrets,pap-secrets,options,ip-up,ip-down})
 #source=("https://ftp.samba.org/pub/ppp/ppp-${pkgver}.tar.gz"
-source=("https://github.com/paulusmack/ppp/archive/${_commit}.zip"
+source=("https://github.com/paulusmack/ppp/archive/${pkgname}-${pkgver}.tar.gz"
         'options'
         'pon'
         'poff'
@@ -26,7 +25,7 @@ source=("https://github.com/paulusmack/ppp/archive/${_commit}.zip"
         'ipv6-up.d.iface-config.sh'
         'ppp.service'
         'fix-linux-vs-glibc-headers-compile-error-mess.patch')
-md5sums=('3cc087455064fef3ab53ce9e05fa2d2f'
+md5sums=('fa325e90e43975a1bd7e1012c8676123'
          '7a9259a8f038073eeea7e4552ff1849f'
          '48c024f73a80c8b69c4def22f86902cc'
          '2d811f8470ccdea3b8c4505a438483e9'
@@ -43,7 +42,7 @@ md5sums=('3cc087455064fef3ab53ce9e05fa2d2f'
          '1400025c09e0084d3fd75eed8574494b')
 
 build() {
-  cd ${pkgname}-${_commit}
+  cd ppp-${pkgname}-${pkgver}
 
   # -D_GNU_SOURCE is needed for IPv6 
   export CFLAGS="$CFLAGS -D_GNU_SOURCE"
@@ -68,7 +67,7 @@ build() {
 }
 
 package() {
-  cd ${pkgname}-${_commit}
+  cd ppp-${pkgname}-${pkgver}
   make DESTDIR=${pkgdir}/usr install 
   install -D -m644 ${srcdir}/options ${pkgdir}/etc/ppp/options
   install -D -m755 ${srcdir}/ip-up   ${pkgdir}/etc/ppp/ip-up
