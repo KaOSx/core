@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.5
 _srcname=linux-5.5
-pkgver=5.5.6
+pkgver=5.5.7
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -29,9 +29,10 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         '99-linux-next.hook'
-        "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
+        "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
+        'iwlwifi.patch')
 md5sums=('0a78b1dc48dc032fe505b170c1b92339'
-         'fbd5824383f5f33d1f84d49dc38b0f7c'
+         '427fbc3cab9adf8e8f033973fa15e36c'
          '9e3f70585507d3e59ebefcf548156788'
          '31cd97f6bc52de17999ecaed60fd90ad'
          'a8a0c0923217837f151ef007f47a4e80'
@@ -44,7 +45,8 @@ md5sums=('0a78b1dc48dc032fe505b170c1b92339'
          '91b628bf4d4beb80fa53a8eb7332023c'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'
-         'a71035252857af0cf5d84c591b919996')
+         'a71035252857af0cf5d84c591b919996'
+         '761daea5298b51596551963efc1a19fd')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
@@ -67,8 +69,8 @@ build() {
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
-  # Fix nvme booting XPG SX8200 Pro
-  #patch -p1 -i "${srcdir}/SX8200_pro.patch"
+  # https://forum.kaosx.us/d/2577-broken-wifi-on-kernel-5-5-6-1-iwlwifi-can-t-parse-phy-sku-in-b0
+  patch -p1 -i "${srcdir}/iwlwifi.patch"
   
   cat "${srcdir}/config" > ./.config
 
