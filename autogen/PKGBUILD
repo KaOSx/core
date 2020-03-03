@@ -1,19 +1,20 @@
 
 pkgname=autogen
-pkgver=5.18.12
-pkgrel=2
+pkgver=5.18.14
+pkgrel=1
 pkgdesc="A tool designed to simplify the creation and maintenance of programs that contain large amounts of repetitious text"
 arch=('x86_64')
 url="https://www.gnu.org/software/autogen/"
 license=('GPL3')
-depends=('guile' 'libxml2')
+depends=('guile2.0' 'libxml2')
 options=('!libtool')
 source=("https://ftp.gnu.org/gnu/autogen/rel${pkgver}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('62e8d5fcc6dde13631bd54fbd2dde07a')
+md5sums=('c4d9a1641cb1bad4a3cc4108de6d867a')
 
 build() {
   cd ${pkgname}-${pkgver}
   #sed -i -e 's|_guile_versions_to_search="2.0 1.8"|_guile_versions_to_search="2.2"|' configure
+  sed -i 's| -Werror | |' configure
   
   ./configure --prefix=/usr 
   make 

@@ -2,7 +2,7 @@
 pkgname=util-linux
 pkgver=2.35.1
 _pkgver=2.35
-pkgrel=1
+pkgrel=2
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -22,7 +22,9 @@ source=("https://www.kernel.org/pub/linux/utils/util-linux/v${_pkgver}/${pkgname
         'system-local-login'
         'system-login'
         'system-remote-login'
-        'system-services')
+        'system-services'
+        "https://github.com/karelzak/util-linux/commit/fa3fface0f83dbf186f046210700473da7a4800b.diff"
+        "https://github.com/karelzak/util-linux/commit/ac762ed71f982468f4c83291158e97cf86281beb.diff")
 backup=(etc/pam.d/chfn
         etc/pam.d/chsh
         etc/pam.d/login
@@ -38,10 +40,15 @@ sha256sums=('d9de3edd287366cd908e77677514b9387b22bc7b88f45b83e1922c3597f1d7f9'
             '005736b9bd650ff5e5d82a7e288853776d5bb8c90185d5774c07231c1e1c64a9'
             '0924a1620e33d8321c3de5f9aa9efc328c0206465a643b0b10556be7cf0228b8'
             '005736b9bd650ff5e5d82a7e288853776d5bb8c90185d5774c07231c1e1c64a9'
-            '6eb1acdd3fa9f71a7f93fbd529be57ea65bcafc6e3a98a06af4d88013fc6a567')
+            '6eb1acdd3fa9f71a7f93fbd529be57ea65bcafc6e3a98a06af4d88013fc6a567'
+            'e4a2cb349ccf338fe33136cc0c66017b3fa7317e53c1dfd26d3393018f5d0df5'
+            '6f874f00306b4047f70dc114d883f73df5b00777b312df2da85689bff33cb1b7')
 
 build() {
   cd ${pkgname}-${pkgver}
+  #fix sfdisk failures with extended partitions
+  patch -p1 -i ${srcdir}/fa3fface0f83dbf186f046210700473da7a4800b.diff
+  patch -p1 -i ${srcdir}/ac762ed71f982468f4c83291158e97cf86281beb.diff
 
   ./configure --prefix=/usr \
               --libdir=/usr/lib \
