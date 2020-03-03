@@ -1,13 +1,13 @@
 
 pkgname=subversion
 pkgver=1.13.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
 url="https://subversion.apache.org/"
 license=('APACHE')
 depends=('db' 'serf' 'apr-util' 'sqlite3' 'file' 'systemd')
-makedepends=('krb5' 'apache' 'python2' 'perl' 'swig' 'ruby' 'java-runtime' 
+makedepends=('krb5' 'apache' 'python3' 'perl' 'swig' 'ruby' 'java-runtime' 
              'autoconf' 'e2fsprogs') # 'kwallet')
 provides=('svn')
 options=('!makeflags' '!libtool')
@@ -47,8 +47,8 @@ build() {
 
    make 
    make LT_LDFLAGS="-L$Fdestdir/usr/lib" local-all
-   make swig_pydir=/usr/lib/python2.7/site-packages/libsvn \
-     swig_pydir_extra=/usr/lib/python2.7/site-packages/svn swig-py swig-pl javahl # swig-rb
+   make swig_pydir=/usr/lib/python3.7/site-packages/libsvn \
+     swig_pydir_extra=/usr/lib/python3.7/site-packages/svn swig-py swig-pl javahl # swig-rb
 }
 
 package() {
@@ -56,8 +56,8 @@ package() {
 
    export LD_LIBRARY_PATH=${pkgdir}/usr/lib:${LD_LIBRARY_PATH}
    make DESTDIR=${pkgdir} INSTALLDIRS=vendor \
-     swig_pydir=/usr/lib/python2.7/site-packages/libsvn \
-     swig_pydir_extra=/usr/lib/python2.7/site-packages/svn \
+     swig_pydir=/usr/lib/python3.7/site-packages/libsvn \
+     swig_pydir_extra=/usr/lib/python3.7/site-packages/svn \
      install install-swig-py install-swig-pl install-javahl # install-swig-rb
 
    install -d ${pkgdir}/usr/share/subversion
