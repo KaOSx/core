@@ -1,15 +1,15 @@
 
 pkgname=guile
-pkgver=2.2.6
+pkgver=2.2.7
 pkgrel=1
 pkgdesc="GNU Ubiquitous Intelligent Language for Extensions, the official extension language for the GNU operating system"
 url="https://www.gnu.org/software/guile/"
 arch=('x86_64')
 license=('GPL')
 depends=('gmp' 'libltdl' 'ncurses' 'texinfo' 'gc' 'libffi' 'libunistring')
-source=("https://ftp.gnu.org/gnu/guile/${pkgname}-${pkgver}.tar.gz")
+source=("https://ftp.gnu.org/gnu/guile/${pkgname}-${pkgver}.tar.xz")
 options=('!libtool')
-md5sums=('ba57739a9916787f0cad726ac3e52dd1')
+sha256sums=('cdf776ea5f29430b1258209630555beea6d2be5481f9da4d64986b077ff37504')
 
 build() {
   cd ${pkgname}-${pkgver}

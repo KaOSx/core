@@ -1,6 +1,6 @@
 
 pkgname=bison
-pkgver=3.5.2
+pkgver=3.5.3
 pkgrel=1
 pkgdesc="The GNU general-purpose parser generator"
 arch=('x86_64')
@@ -9,7 +9,7 @@ url="https://www.gnu.org/software/bison/bison.html"
 depends=('glibc' 'm4' 'sh')
 groups=('base-devel')
 source=("https://ftp.gnu.org/gnu/bison/${pkgname}-${pkgver}.tar.xz")
-md5sums=('49fc2cf23e31e697d5072835e1662a97')
+md5sums=('f556fdd6df5ebf0c61720928811d2986')
 
 build() {
   cd ${pkgname}-${pkgver}
