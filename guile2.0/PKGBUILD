@@ -1,7 +1,7 @@
 
 pkgname=guile2.0
 pkgver=2.0.14
-pkgrel=1
+pkgrel=2
 pkgdesc='Portable, embeddable Scheme implementation written in C. Legacy branch.'
 url="https://www.gnu.org/software/guile/"
 arch=('x86_64')
@@ -27,4 +27,6 @@ package() {
   rm -rf ${pkgdir}/usr/share/info
   sed -i '1s/guile/guile2.0/' -i ${pkgdir}/usr/bin/guile-config2.0
   mv ${pkgdir}/usr/share/aclocal/guile.m4 ${pkgdir}/usr/share/aclocal/guile20.m4
+  # stop elfutils warnings
+  rm ${pkgdir}/usr/lib/libguile-2.0.so.*-gdb.scm
 }
