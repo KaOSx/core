@@ -1,8 +1,8 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=linux-api-headers
-pkgver=5.3.4
-_basever=5.3
+pkgver=5.5.9
+_basever=5.5
 pkgrel=1
 pkgdesc="Kernel headers sanitized for use in userspace"
 arch=('x86_64')
@@ -13,8 +13,8 @@ conflicts=('kernel-headers')
 replaces=('kernel-headers')
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-${_basever}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz")
-md5sums=('d39dd4ba2d5861c54b90d49be19eaf31'
-         '78dfc42ffc09125aac594827977953ab')
+md5sums=('0a78b1dc48dc032fe505b170c1b92339'
+         '2270d981592960013a79d1dd876a8885')
 
 build() {
   cd ${srcdir}/linux-${_basever}

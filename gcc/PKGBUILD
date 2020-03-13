@@ -4,22 +4,22 @@
 # http://www.linuxfromscratch.org/lfs/view/7.6/chapter06/gcc.html
 
 pkgname=('gcc' 'gcc-libs') 
-pkgver=9.2.0
+pkgver=9.3.0
 _pkgver=9
-_snapshot=8-20191004
+_snapshot=9.3.0-RC-20200305
 _islver=0.18
 pkgrel=1
 pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
 url="https://gcc.gnu.org"
-makedepends=('binutils>=2.32' 'libmpc' 'doxygen' 'autogen')
+makedepends=('binutils>=2.34' 'libmpc' 'doxygen' 'autogen')
 checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
-source=("https://mirrors.concertpass.com/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
+source=("https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
 #source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
         "ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2")
-sha512sums=('a12dff52af876aee0fd89a8d09cdc455f35ec46845e154023202392adc164848faf8ee881b59b681b696e27c69fd143a214014db4214db62f9891a1c8365c040'
+sha512sums=('4b9e3639eef6e623747a22c37a904b4750c93b6da77cf3958d5047e9b5ebddb7eebe091cc16ca0a227c0ecbd2bf3b984b221130f269a97ee4cc18f9cf6c444de'
             '85d0b40f4dbf14cb99d17aa07048cdcab2dc3eb527d2fbb1e84c41b2de5f351025370e57448b63b2b8a8cf8a0843a089c3263f9baee1542d5c2e1cb37ed39d94')
 
   _basedir="gcc-${pkgver}"
@@ -85,10 +85,10 @@ check() {
   cd build
 
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=31827
-  ulimit -s 32768
+  #ulimit -s 32768
 
-  make -k check || true
-  ${srcdir}/${_basedir}/contrib/test_summary
+  #make -k check || true
+  #${srcdir}/${_basedir}/contrib/test_summary
 }
 
 package_gcc-libs() {
@@ -100,7 +100,7 @@ package_gcc-libs() {
   cd build
 
   make -C $CHOST/libgcc DESTDIR=${pkgdir} install-shared
-  rm ${pkgdir}/usr/lib/gcc/$CHOST/$pkgver/libgcc_eh.a
+  rm ${pkgdir}/usr/lib/gcc/$CHOST/${pkgver}/libgcc_eh.a
   
   for lib in libatomic \
              libgfortran \
@@ -160,10 +160,10 @@ package_gcc() {
   ln -s gfortran ${pkgdir}/usr/bin/f95
   ln -s gcc ${pkgdir}/usr/bin/gnatgcc
   
-  mv ${pkgdir}/usr/lib/gcc/$CHOST/$pkgver/adalib/libgna{rl,t}-${_pkgver}.so ${pkgdir}/usr/lib
+  mv ${pkgdir}/usr/lib/gcc/$CHOST/${pkgver}/adalib/libgna{rl,t}-${_pkgver}.so ${pkgdir}/usr/lib
   ln -s libgnarl-${_pkgver}.so ${pkgdir}/usr/lib/libgnarl.so
   ln -s libgnat-${_pkgver}.so ${pkgdir}/usr/lib/libgnat.so
-  rm ${pkgdir}/usr/lib/gcc/$CHOST/$pkgver/adalib/libgna{rl,t}.so
+  rm ${pkgdir}/usr/lib/gcc/$CHOST/${pkgver}/adalib/libgna{rl,t}.so
   
   # remove unneeded static libs
   rm $pkgdir/usr/lib/libasan.a

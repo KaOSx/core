@@ -2,7 +2,7 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.30
+pkgver=2.31
 _commit=9533f19aa5cd265db813db6923f8eb2fc9c3bcc3
 pkgrel=1
 pkgdesc="GNU C Library"
@@ -23,7 +23,7 @@ source=("http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('2b1dbdf27b28620752956c061d62f60c'
+md5sums=('78a720f17412f3c3282be5a6f3363ec6'
          #'203fe9133e82f2b59969c116b70fd84e'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'

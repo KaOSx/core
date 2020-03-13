@@ -1,7 +1,7 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=binutils
-pkgver=2.32
+pkgver=2.34
 _commit=e521dc888158a6cdbdccef0397e663c437450a80
 pkgrel=2
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
