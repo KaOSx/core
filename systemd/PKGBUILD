@@ -89,7 +89,8 @@ build() {
     -Ddefault-hierarchy=hybrid \
     -Dfallback-hostname=KaOS \
     -Ddbuspolicydir=/etc/dbus-1/system.d \
-    -Dman=true
+    -Dman=true \
+    -Dhomed=false
     # -Ddefault-locale=C
     ninja
 }
