@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.5
 _srcname=linux-5.5
-pkgver=5.5.9
+pkgver=5.5.10
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -32,7 +32,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
         'iwlwifi.patch')
 md5sums=('0a78b1dc48dc032fe505b170c1b92339'
-         '2270d981592960013a79d1dd876a8885'
+         'bdf6922c874b05c6a9750ed1ebf6cf06'
          '9595c7a5fdee2286746a6da076639669'
          '31cd97f6bc52de17999ecaed60fd90ad'
          'a8a0c0923217837f151ef007f47a4e80'
@@ -70,7 +70,7 @@ build() {
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
   # https://forum.kaosx.us/d/2577-broken-wifi-on-kernel-5-5-6-1-iwlwifi-can-t-parse-phy-sku-in-b0
-  patch -p1 -i "${srcdir}/iwlwifi.patch"
+  #patch -p1 -i "${srcdir}/iwlwifi.patch"
   
   cat "${srcdir}/config" > ./.config
 
