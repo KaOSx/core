@@ -1,9 +1,9 @@
  
 pkgbase=boost
 pkgname=('boost-libs' 'boost')
-pkgver=1.71.0
-_pkgver=1_71_0
-pkgrel=2
+pkgver=1.72.0
+_pkgver=1_72_0
+pkgrel=1
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="http://www.boost.org/"
@@ -12,7 +12,7 @@ makedepends=('icu' 'python3' 'bzip2' 'zlib' 'openmpi' 'zstd')
 source=("https://dl.bintray.com/boostorg/release/${pkgver}/source/${pkgbase}_${_pkgver}.tar.bz2"
         "python.diff")
 license=('custom')
-sha256sums=('d73a8da01e8bf8c7eda40b4c84915071a8c8a0df4a6734537ddde4a8580524ee'
+sha256sums=('59c9b274bc451cf91a9ba1dd2c7fdcaf5d60b1b3aa83f2c9fa143417cc660722'
             '3984cfb1922a909d65794f173068da59fb2a7c4efdaf42911c3add329a2b9789')
 
 build() {
