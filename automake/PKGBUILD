@@ -1,7 +1,7 @@
 
 pkgname=automake
-pkgver=1.16.1
-pkgrel=3
+pkgver=1.16.2
+pkgrel=1
 pkgdesc="A GNU tool for automatically creating Makefiles"
 arch=('x86_64')
 license=('GPL')
@@ -9,14 +9,12 @@ url="https://www.gnu.org/software/automake"
 groups=('base-devel')
 depends=('perl' 'bash')
 makedepends=('autoconf')
-checkdepends=('dejagnu' 'python2' 'java-environment' 'vala' 'emacs-nox' 'gcc-fortran')
+checkdepends=('dejagnu' 'python3' 'java-environment' 'vala' 'emacs-nox' 'gcc-fortran')
 source=("https://ftp.gnu.org/gnu/automake/${pkgname}-${pkgver}.tar.xz")
-md5sums=('53f38e7591fa57c3d2cee682be668e5b')
+md5sums=('6cb234c86f3f984df29ce758e6d0d1d7')
 
 build() {
   cd ${pkgname}-${pkgver}
-  # Fix a warning that is caused by perl-5.22 and later
-  sed -i 's:/\\\${:/\\\$\\{:' bin/automake.in
   
   ./configure --prefix=/usr
   make
@@ -25,9 +23,9 @@ build() {
 check(){
   cd ${pkgname}-${pkgver}
   # see http://www.linuxfromscratch.org/lfs/view/development/chapter06/automake.html
-  sed -i "s:./configure:LEXLIB=/usr/lib/libfl.a &:" t/lex-{clean,depend}-cxx.sh
+  #sed -i "s:./configure:LEXLIB=/usr/lib/libfl.a &:" t/lex-{clean,depend}-cxx.sh
  
-  make check PYTHON=/usr/bin/python2
+  make check PYTHON=/usr/bin/python3
 }
 
 package() {
