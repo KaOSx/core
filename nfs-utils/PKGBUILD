@@ -1,7 +1,7 @@
 
 pkgname=nfs-utils
 pkgver=2.4.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Support programs for Network File Systems"
 arch=('x86_64')
 url='http://nfs.sourceforge.net'
@@ -22,6 +22,7 @@ build() {
     --enable-nfsv4 \
     --enable-nfsv41 \
     --enable-gss \
+    --enable-svcgss \
     --without-tcp-wrappers \
     --with-statedir=/var/lib/nfs \
     --enable-ipv6 \
