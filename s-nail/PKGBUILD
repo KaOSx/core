@@ -1,7 +1,7 @@
 
 pkgname=s-nail
 pkgver=14.9.17
-pkgrel=1
+pkgrel=2
 pkgdesc="Mail processing system and commandline utility for sending email"
 arch=('x86_64')
 url="https://www.sdaoden.eu/code.html#s-naill"
