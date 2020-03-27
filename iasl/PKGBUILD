@@ -1,30 +1,26 @@
 
 pkgname=iasl
-pkgver=20190703
+pkgver=20200326
 pkgrel=1
 pkgdesc="Intel ACPI Source Language compiler"
 arch=('x86_64')
 url="http://acpica.org"
-license=('custom')
+license=('GPLv2')
 depends=('glibc')
 makedepends=('flex' 'bison')
 options=('!makeflags')
-source=("https://acpica.org/sites/acpica/files/acpica-unix-${pkgver}.tar.gz"
-        'LICENSE')
-md5sums=('9af8d7e806a4a6c129d99efe5b9cad80'
-         '8615526144f69ea4e870d9bc37df9b29')
+source=("https://acpica.org/sites/acpica/files/acpica-unix-${pkgver}.tar.gz")
+md5sums=('1a39adccc3b960a126d0409efc3a9445')
 
 build() {
-  cd acpica-unix-${pkgver}/generate/unix
-  sed -i -e 's/_CYGWIN/_LINUX/g' -e 's/-Werror//g' Makefile.config
+  cd acpica-unix-${pkgver}
 
-  make clean
-  make
+  make 
 }
 
 package() {
-  cd acpica-unix-${pkgver}/generate/unix
+  cd acpica-unix-${pkgver}
 
   make DESTDIR=${pkgdir} install
-  install -D -m644 ${srcdir}/LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+  #install -D -m644 ../LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }
