@@ -1,6 +1,6 @@
 
 pkgname=perl
-pkgver=5.30.1
+pkgver=5.30.2
 pkgrel=1
 pkgdesc="A highly capable, feature-rich programming language"
 arch=('x86_64')
@@ -16,7 +16,7 @@ provides=('perl-archive-tar=2.32'
           'perl-base=2.27'
           'perl-bignum=0.51'
           'perl-carp=1.50'
-          'perl-compress-raw-bzip2=2.084'
+          'perl-compress-raw-bzip2=2.089'
           'perl-compress-raw-zlib=2.084'
           'perl-config-perl-v=0.32'
           'perl-constant=1.33'
@@ -70,7 +70,7 @@ provides=('perl-archive-tar=2.32'
           'perl-math-complex=1.5901'
           'perl-memoize=1.03_01'
           'perl-mime-base64=3.15'
-          'perl-module-corelist=5.20191110'
+          'perl-module-corelist=5.20200314'
           'perl-module-load-conditional=0.68'
           'perl-module-load=0.34'
           'perl-module-loaded=0.08'
@@ -124,9 +124,9 @@ source=("http://www.cpan.org/src/5.0/perl-${pkgver}.tar.xz"
         'perlbin.sh'
         'perlbin.csh')
 options=('makeflags' '!purge' 'emptydirs')
-sha256sums=('7336cd3ed0535eb61b76a71350effcfa7c88b44faf37d64d70952ced5d38cd35'
-            '6681639f18f3a6f3f3d7f978b8d72ad088b27899a6fcc386b86ac104199d857b'
-            '69c03f11e98c5c4af3cfd4900840189d19b74fe4fd4534523781312d0a1be810')
+sha256sums=('a1aa88bd6fbbdc2e82938afbb76c408b0ea847317737b712dc196cc7907a5259'
+            '984f140969a38bf9015b773b20d352905d5f00f7f0c8417229293c11d74e64b0'
+            'fd5d38ce3d624dcac5736d34af4b71edab447dceb4123dd1a2ad821f487151c2')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -152,7 +152,6 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-  TEST_JOBS=$(echo $MAKEFLAGS | sed 's/.*-j\([0-9][0-9]*\).*/\1/') make test_harness || true
  
   make test
 }
