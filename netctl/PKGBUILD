@@ -11,7 +11,7 @@ makedepends=('pkg-config')
 optdepends=('dialog: for the menu based wifi assistant'
             'dhclient: for DHCP support (or dhcpcd)')
 source=("https://sources.archlinux.org/other/packages/netctl/netctl-${pkgver}.tar.xz")
-md5sums=('f9080693f493c20974db9fe12f103121')
+md5sums=('053b27123a240fd65ae2d334c1cde41d')
 
 package() {
   cd netctl-${pkgver}
