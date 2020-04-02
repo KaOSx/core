@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.6
 _srcname=linux-5.6
-pkgver=5.6.1
+pkgver=5.6.2
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -32,8 +32,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
         'iwlwifi.patch')
 md5sums=('7b9199ec5fa563ece9ed585ffb17798f'
-         'e59edecce5fb2839c9951ab8dad50e48'
-         '678580428fc44f885f22c7bd255095ff'
+         '07be77524655091203e24eed91b951c7'
+         '5e14207be06eb51908c0da0063fb1e7a'
          '31cd97f6bc52de17999ecaed60fd90ad'
          'a8a0c0923217837f151ef007f47a4e80'
          'aae8c706fcf69d62559106e11e251699'
@@ -70,7 +70,7 @@ build() {
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
   # 5.6 issue
-  patch -p1 -i "${srcdir}/iwlwifi.patch"
+  #patch -p1 -i "${srcdir}/iwlwifi.patch"
   
   cat "${srcdir}/config" > ./.config
 
