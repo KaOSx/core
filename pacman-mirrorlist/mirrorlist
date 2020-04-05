@@ -17,14 +17,12 @@ Server = http://193.86.184.157/kaos/$repo
 # France
 Server = http://kaos.youm.org/$repo
 
-# Central African Republic
-Server = http://kiiwii.cf/kaos/$repo
-
 # South-Africa
 #Server = http://ftp.wa.co.za/pub/kaos/$repo
 
 # United States
 Server = http://mirror.dacentec.com/kaosx/$repo
+Server = http://kiiwii.cf/kaos/$repo
 Server = http://kaosx.tk/repo/$repo
 Server = https://repo.kaosx.us/$repo
 
