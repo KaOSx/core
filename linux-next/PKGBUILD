@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.6
 _srcname=linux-5.6
-pkgver=5.6.2
+pkgver=5.6.3
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -32,17 +32,17 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
         'iwlwifi.patch')
 md5sums=('7b9199ec5fa563ece9ed585ffb17798f'
-         '07be77524655091203e24eed91b951c7'
-         '5e14207be06eb51908c0da0063fb1e7a'
-         '31cd97f6bc52de17999ecaed60fd90ad'
-         'a8a0c0923217837f151ef007f47a4e80'
-         'aae8c706fcf69d62559106e11e251699'
-         '7594929a2842d5ff0dcf022cd766100a'
-         'f2ef50d205218a05a75c4f8383160016'
-         '6d099aad60d0d620171f6a431a850b12'
+         '459f68f775973944b06dcf8894799eea'
+         'c0ee6b68cae5bbdbbb82f4364cb0d07c'
+         'ecf86c41e1d31053c7210774e32b4474'
+         '3829d9444ffd5a3393c885891fbcece2'
+         '8ae1787d011d97348cb5c35dbe2f3bb0'
+         'dfdc3c9599defdc27b0b48f718139f17'
+         '6235d78aca8829c7405189bba70a103b'
+         'b4e9015cc4663e3a61ea8d94afc4151f'
          '180e55a128db2641e04374ce07d131a7'
-         'c9dca7bab329ae7c927301b8de8723be'
-         '91b628bf4d4beb80fa53a8eb7332023c'
+         '4e30e186c6e8e95788b898575485bd24'
+         'b9bb0b76c53dde6c5479d08a3e39004a'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'
          'a71035252857af0cf5d84c591b919996'
@@ -58,14 +58,14 @@ build() {
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
   #aufs patches for Live:
-  #patch -p1 -i "${srcdir}/aufs5.patch"
-  #patch -p1 -i "${srcdir}/aufs5-base.patch"
-  #patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
-  #patch -p1 -i "${srcdir}/aufs5-loopback.patch"
-  #patch -p1 -i "${srcdir}/aufs5-mmap.patch"
-  ##patch -p1 -i "${srcdir}/aufs5-standalone.patch"
-  ##patch -p1 -i "${srcdir}/tmpfs-idr.patch"
-  ##patch -p1 -i "${srcdir}/vfs-ino.patch"
+  patch -p1 -i "${srcdir}/aufs5.patch"
+  patch -p1 -i "${srcdir}/aufs5-base.patch"
+  patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs5-loopback.patch"
+  patch -p1 -i "${srcdir}/aufs5-mmap.patch"
+  ###patch -p1 -i "${srcdir}/aufs5-standalone.patch"
+  ###patch -p1 -i "${srcdir}/tmpfs-idr.patch"
+  ###patch -p1 -i "${srcdir}/vfs-ino.patch"
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
@@ -74,7 +74,7 @@ build() {
   
   cat "${srcdir}/config" > ./.config
 
-  #cat "${srcdir}/config.aufs" >> ./.config
+  cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -241,7 +241,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs5-util need
-  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
