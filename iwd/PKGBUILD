@@ -1,6 +1,6 @@
  
 pkgname=iwd
-pkgver=1.6
+pkgver=1.7
 pkgrel=1
 pkgdesc='Wireless daemon for Linux'
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL-2.1')
 depends=('glibc' 'readline')
 backup=(etc/iwd/main.conf)
 source=("https://www.kernel.org/pub/linux/network/wireless/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('07945e3166b7289bc8f103ba0f433cf735dd9f9ba78ddc9e475a6a478db344e7')
+sha256sums=('73439dbce54d9388992f32af1ca718f1edfc95387a989f34f4a3c63255c59779')
 
 build() {
   cd ${pkgname}-${pkgver}
