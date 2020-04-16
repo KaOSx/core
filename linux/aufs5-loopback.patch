@@ -1,5 +1,5 @@
 SPDX-License-Identifier: GPL-2.0
-aufs5.5 loopback patch
+aufs5.6 loopback patch
 
 diff --git a/drivers/block/loop.c b/drivers/block/loop.c
 index 872e3b3a7693..768100025129 100644
@@ -228,7 +228,7 @@ index 589dd0122020..801e0a7faec5 100644
  
  /* ---------------------------------------------------------------------- */
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 5fc7807f7c2e..07e24e72706e 100644
+index 944485ac54b4..eccc62765e95 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
 @@ -1980,6 +1980,10 @@ struct super_operations {
