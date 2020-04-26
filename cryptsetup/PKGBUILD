@@ -13,13 +13,17 @@ options=('!libtool' '!emptydirs')
 source=("https://www.kernel.org/pub/linux/utils/cryptsetup/v${_pkgver}/${pkgname}-${pkgver}.tar.xz"
         'encrypt_hook'
         'encrypt_install'
-        'sd-encrypt')
+        'sd-encrypt'
+        "https://gitlab.com/cryptsetup/cryptsetup/-/commit/604abec333a0efb44fd8bc610aa0b1151dd0f612.diff")
 sha256sums=('92aba4d559a2cf7043faed92e0f22c5addea36bd63f8c039ba5a8f3a159fe7d2'
             '5cbc819a1c867fabcbc0721b078be96c1f22116bbdf11ae7da1e50a8f6590acb'
             '9f78cab3caf45dcd6534973472a9f6051ac0a6859369afb143f24a9c34a3073f'
-            '01956fc738ee1d42ba9d962615fcd2c13ad2e8119b1ba38a002e15c631ee8daf')
+            '01956fc738ee1d42ba9d962615fcd2c13ad2e8119b1ba38a002e15c631ee8daf'
+            'e580344e98ade2c9c9523b27159e2c0a49363471b49ea79fd1f0fdbb7f7e2c71')
 build() {
   cd ${pkgname}-${pkgver}
+  # needed for json-c 0.14
+  patch -p1 -i ${srcdir}/604abec333a0efb44fd8bc610aa0b1151dd0f612.diff
   
   ./configure --prefix=/usr \
         --disable-static \
