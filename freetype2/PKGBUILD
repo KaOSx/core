@@ -1,7 +1,7 @@
 
 pkgname=freetype2
-pkgver=2.10.1
-pkgrel=3
+pkgver=2.10.2
+pkgrel=1
 pkgdesc="TrueType font rendering library"
 arch=('x86_64')
 license=('GPL')
@@ -11,7 +11,7 @@ options=('!libtool')
 source=("https://sourceforge.net/projects/freetype/files/freetype2/${pkgver}/freetype-${pkgver}.tar.xz"
         'freetype-2.3.0-enable-spr.patch'
         'freetype-config')
-md5sums=('bd42e75127f8431923679480efb5ba8f'
+md5sums=('7c0d5a39f232d7eb9f9d7da76bf08074'
          'd525b1bb00ee453f6234e3e1c2cfad43'
          '651688627a0ff9c2ceaecfd2fd354098')
 
