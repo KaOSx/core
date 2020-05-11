@@ -1,7 +1,7 @@
 
 pkgname=jfsutils
 pkgver=1.1.15
-pkgrel=6
+pkgrel=7
 pkgdesc="JFS filesystem utilities"
 arch=('x86_64')
 url="http://jfs.sourceforge.net"
@@ -11,7 +11,7 @@ depends=('e2fsprogs' 'util-linux')
 source=("http://jfs.sourceforge.net/project/pub/${pkgname}-${pkgver}.tar.gz"
         'inttypes.patch')
 md5sums=('8809465cd48a202895bc2a12e1923b5d'
-         '444078802d798606be9e32fda7cf7376')
+         'bd4a07f017b617b7af18701d6dfa0164')
 
 build() {
   cd ${pkgname}-${pkgver}
