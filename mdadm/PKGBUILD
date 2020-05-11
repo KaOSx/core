@@ -1,7 +1,7 @@
 
 pkgname=mdadm
 pkgver=4.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A tool for managing/monitoring Linux md device arrays, also known as Software RAID"
 arch=('x86_64')
 license=('GPL')
@@ -26,7 +26,7 @@ build() {
   cd ${pkgname}-${pkgver}
   #patch -p0 -i ${srcdir}/disable-werror.patch
   
-  make
+  make CWFLAGS="-Wall"
   #make MDASSEMBLE_AUTO=1 mdassemble
 
 }

@@ -1,7 +1,7 @@
 
 pkgname=autoconf
 pkgver=2.69
-pkgrel=6
+pkgrel=7
 pkgdesc="Package of M4 macros that produce shell scripts to automatically configure software source code packages."
 arch=('x86_64')
 license=('GPL2' 'GPL3' 'custom')

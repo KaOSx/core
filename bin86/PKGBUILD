@@ -1,14 +1,15 @@
 
 pkgname=bin86
 pkgver=0.16.21
-pkgrel=4
+pkgrel=5
 pkgdesc="A complete 8086 assembler and loader"
 arch=('x86_64')
 license=('GPL')
-url="http://www.debath.co.uk/"
+url="https://www.debath.co.uk/"
 groups=('base-devel')
 depends=('glibc')
-source=("http://v3.sk/~lkundrak/dev86/${pkgname}-${pkgver}.tar.gz"
+#source=("http://v3.sk/~lkundrak/dev86/${pkgname}-${pkgver}.tar.gz"
+source=("http://fabric-mirror.vps.hosteurope.de/gentoo/distfiles/c5/${pkgname}-${pkgver}.tar.gz"
         'bin86-0.16.17-x86_64-1.patch')
 md5sums=('a94f57453500700cebfea86d7d217481'
          '92bdce7b0655cd2e9f83c83fc56d128e')
