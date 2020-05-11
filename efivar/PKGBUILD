@@ -3,7 +3,7 @@ pkgname=efivar
 _pkgname=vathpela-efivar
 _commit=70e63d4
 pkgver=37
-pkgrel=1
+pkgrel=2
 pkgdesc="Library to manipulate EFI variables"
 arch=('x86_64')
 url="https://github.com/rhinstaller/efivar"
@@ -25,8 +25,9 @@ build() {
 	unset LDFLAGS
 	unset MAKEFLAGS
 	
-	sed 's|-rpath=$(TOPDIR)/src/|-rpath=$(libdir)|g' -i ${srcdir}/${pkgname}-${pkgver}/src/test/Makefile || true
-	sed 's|-O0|-Os|g' -i "${srcdir}/efivar/Make.defaults" || true
+	sed 's|-rpath=$(TOPDIR)/src/|-rpath=$(libdir)|g' -i src/test/Makefile || true
+	sed 's|-O0|-Os|g' -i Make.defaults || true
+	sed -i -e 's|-Werror ||' gcc.specs
 	
 	make libdir="/usr/lib/" bindir="/usr/bin/" mandir="/usr/share/man/" includedir="/usr/include/" V=1 -j1
 	echo

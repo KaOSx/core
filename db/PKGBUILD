@@ -1,19 +1,27 @@
 
 pkgname=db
 pkgver=5.3.28
-pkgrel=5
+pkgrel=6
 pkgdesc="The Berkeley DB embedded database system"
 arch=('x86_64')
 url="https://www.oracle.com/technology/software/products/berkeley-db/index.html"
 license=('custom')
 depends=('gcc-libs' 'sh')
 options=('!libtool')
-source=("https://download.oracle.com/berkeley-db/db-${pkgver}.tar.gz")
-md5sums=('b99454564d5b4479750567031d66fe24')
+source=("https://download.oracle.com/berkeley-db/db-${pkgver}.tar.gz"
+        "https://gitweb.gentoo.org/repo/gentoo.git/plain/sys-libs/db/files/db-5.1.29-rename-atomic-compare-exchange.patch")
+md5sums=('b99454564d5b4479750567031d66fe24'
+         '1b3d100f1c1a23ab78cf898aaf0e021f')
+
+prepare() {
+  cd ${pkgname}-${pkgver}
+
+  patch -p1 -i ${srcdir}/db-5.1.29-rename-atomic-compare-exchange.patch
+}
 
 build() {
-  cd $pkgname-${pkgver}/build_unix
-  
+  cd ${pkgname}-${pkgver}/build_unix
+
   ../dist/configure --prefix=/usr \
      --enable-compat185 \
      --enable-shared \

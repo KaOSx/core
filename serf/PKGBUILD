@@ -1,7 +1,7 @@
 
 pkgname=serf
 pkgver=1.3.9
-pkgrel=5
+pkgrel=6
 pkgdesc="High-performance asynchronous HTTP client library"
 url="https://serf.apache.org/"
 arch=('x86_64')
@@ -10,17 +10,17 @@ depends=('apr' 'apr-util' 'openssl' 'zlib' 'gdbm')
 makedepends=('scons')
 options=('!libtool')
 source=("https://www.apache.org/dist/serf/serf-${pkgver}.tar.bz2"
-        'serf-1.3.8-openssl.patch'
-        'serf-1.3.8-tests.patch')
-md5sums=('370a6340ff20366ab088012cd13f2b57'
-         '30af0b6bf39839f3d21327a7a63fac40'
-         'cd86cb4302f44f5ef61ec5d3d98a8aca')
+        "https://gitweb.gentoo.org/repo/gentoo.git/plain/net-libs/serf/files/serf-1.3.9-python3.patch"
+        "https://gitweb.gentoo.org/repo/gentoo.git/plain/net-libs/serf/files/serf-1.3.9-python3_byte.patch")
+sha1sums=('26015c63e3bbb108c1689bf2090e4c26351db674'
+          'b58976cdcc404ef7132ccd550894e68dfcbb7835'
+          '3b11f5951f3fd06c8e7b0bc64b24ead22250d119')
 
 build() {
   cd ${pkgname}-${pkgver}
   # adding Gentoo patches
-  #patch -p1 -i ${srcdir}/serf-1.3.8-openssl.patch
-  #patch -p1 -i ${srcdir}/serf-1.3.8-tests.patch
+  patch -p1 -i ${srcdir}/serf-1.3.9-python3.patch
+  patch -p1 -i ${srcdir}/serf-1.3.9-python3_byte.patch
 
   scons PREFIX=/usr GSSAPI=/usr/bin/krb5-config
 }
