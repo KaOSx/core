@@ -1,6 +1,6 @@
-# rebuild tor on any update 
+ 
 pkgname=zstd
-pkgver=1.4.4
+pkgver=1.4.5
 pkgrel=1
 pkgdesc='Zstandard is a real-time compression algorithm, providing high compression ratios.'
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('BSD' 'GPL2')
 depends=('lz4' 'xz' 'zlib')
 makedepends=('googletest' 'cmake')
 source=("https://github.com/facebook/zstd/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('59ef70ebb757ffe74a7b3fe9c305e2ba3350021a918d168a046c6300aeea9315')
+sha256sums=('98e91c7c6bf162bf90e4e70fdbc41a8188b9fa8de5ad840c401198014406ce9e')
 
 build() {
   mkdir -p build
