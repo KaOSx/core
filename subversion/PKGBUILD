@@ -8,7 +8,7 @@ url="https://subversion.apache.org/"
 license=('APACHE')
 depends=('db' 'serf' 'apr-util' 'sqlite3' 'file' 'systemd')
 makedepends=('krb5' 'apache' 'python3' 'perl' 'swig' 'ruby' 'java-runtime' 
-             'autoconf' 'e2fsprogs') # 'kwallet')
+             'autoconf' 'e2fsprogs' 'py3c') # 'kwallet')
 provides=('svn')
 options=('!makeflags' '!libtool')
 source=("https://www.apache.org/dist/subversion/${pkgname}-${pkgver}.tar.bz2"
