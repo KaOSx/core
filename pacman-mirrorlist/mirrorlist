@@ -11,6 +11,9 @@ Server = http://mirror6.layerjet.com/kaos/$repo
 Server = https://mirror.alpix.eu/kaos/$repo
 Server = https://kaos-frankfurt.tk/repo/$repo
 
+# China
+Server = https://mirrors.tuna.tsinghua.edu.cn/KaOS/$repo
+
 # Czech Republic
 Server = http://193.86.184.157/kaos/$repo
 
