@@ -2,9 +2,9 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=5.6
-_srcname=linux-5.6
-pkgver=5.6.15
+_basekernel=5.7
+_srcname=linux-5.7
+pkgver=5.7.0
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfuti
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-5.3-rc8.tar.gz"
-        "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
+        #"https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -31,9 +31,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
         'iwlwifi.patch')
-md5sums=('7b9199ec5fa563ece9ed585ffb17798f'
-         'e4e1faef579a6aa16d2c7a92a7a7b0d1'
-         'c0ee6b68cae5bbdbbb82f4364cb0d07c'
+md5sums=('f63ed18935914e1ee3e04c2a0ce1ba3b'
+         '63687b12dc541fc6985c89e38667438c'
          '92a2fdcdfff85c33ad3e336efef0cc31'
          '02c4fa159f7984447e28759dcfecd9d8'
          '41c31d91da22b88fcb1b53db12079d05'
@@ -52,17 +51,17 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs5.patch"
-  patch -p1 -i "${srcdir}/aufs5-base.patch"
-  patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs5-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs5-mmap.patch"
+  #patch -p1 -i "${srcdir}/aufs5.patch"
+  #patch -p1 -i "${srcdir}/aufs5-base.patch"
+  #patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
+  #patch -p1 -i "${srcdir}/aufs5-loopback.patch"
+  #patch -p1 -i "${srcdir}/aufs5-mmap.patch"
   ###patch -p1 -i "${srcdir}/aufs5-standalone.patch"
   ###patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   ###patch -p1 -i "${srcdir}/vfs-ino.patch"
@@ -74,7 +73,7 @@ build() {
   
   cat "${srcdir}/config" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -164,8 +163,8 @@ package_linux-next-headers() {
 
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/include"
 
-  for i in acpi asm-generic config crypto drm generated linux math-emu \
-    media net pcmcia scsi rdma soc sound trace uapi video xen; do
+  for i in acpi asm-generic config crypto drm generated keys linux math-emu \
+    media net pcmcia scsi rdma soc sound target trace uapi vdso video xen; do
     cp -a include/${i} "${pkgdir}/usr/src/linux-${_kernver}/include/"
   done
 
@@ -241,7 +240,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs5-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
