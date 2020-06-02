@@ -1,25 +1,25 @@
 
 pkgname=libyaml
-pkgver=0.2.2
+pkgver=0.2.5
 pkgrel=1
 pkgdesc="YAML 1.1 library"
 arch=('x86_64')
 url="https://pyyaml.org/wiki/LibYAML"
 license=('MIT')
 source=("https://pyyaml.org/download/libyaml/yaml-${pkgver}.tar.gz")
-md5sums=('2ad4119a57f94739cc39a1b482c81264')
+md5sums=('bb15429d8fb787e7d3f1c83ae129a999')
 
 build() {
-  cd libyaml-${pkgver}
+  cd yaml-${pkgver}
 
-  ./bootstrap
+  #./bootstrap
   ./configure --prefix=/usr
   make
 }
 
 package() {
-  cd libyaml-$pkgver
+  cd yaml-$pkgver
 
   make DESTDIR=${pkgdir} install
-  install -m644 -D LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+  install -m644 -D License ${pkgdir}/usr/share/licenses/${pkgname}/License
 }
