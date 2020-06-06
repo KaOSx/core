@@ -1,6 +1,6 @@
 
 pkgname=perl
-pkgver=5.30.2
+pkgver=5.30.3
 pkgrel=1
 pkgdesc="A highly capable, feature-rich programming language"
 arch=('x86_64')
@@ -70,7 +70,7 @@ provides=('perl-archive-tar=2.32'
           'perl-math-complex=1.5901'
           'perl-memoize=1.03_01'
           'perl-mime-base64=3.15'
-          'perl-module-corelist=5.20200314'
+          'perl-module-corelist=5.20200601_30'
           'perl-module-load-conditional=0.68'
           'perl-module-load=0.34'
           'perl-module-loaded=0.08'
@@ -124,7 +124,7 @@ source=("http://www.cpan.org/src/5.0/perl-${pkgver}.tar.xz"
         'perlbin.sh'
         'perlbin.csh')
 options=('makeflags' '!purge' 'emptydirs')
-sha256sums=('a1aa88bd6fbbdc2e82938afbb76c408b0ea847317737b712dc196cc7907a5259'
+sha256sums=('6967595f2e3f3a94544c35152f9a25e0cb8ea24ae45f4bf1882f2e33f4a400f4'
             '984f140969a38bf9015b773b20d352905d5f00f7f0c8417229293c11d74e64b0'
             'fd5d38ce3d624dcac5736d34af4b71edab447dceb4123dd1a2ad821f487151c2')
 
