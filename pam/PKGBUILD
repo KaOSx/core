@@ -1,7 +1,7 @@
 
 pkgname=pam
-pkgver=1.3.1
-pkgrel=2
+pkgver=1.4.0
+pkgrel=1
 pkgdesc="PAM (Pluggable Authentication Modules) library"
 arch=('x86_64')
 license=('GPL2')
@@ -14,7 +14,7 @@ source=("https://github.com/linux-pam/linux-pam/releases/download/v${pkgver}/Lin
         "https://sourceforge.net/projects/kaosx/files/sources/pam/pam_unix2-2.9.1.tar.bz2"
         'other')
 options=('!libtool' '!emptydirs')
-md5sums=('558ff53b0fc0563ca97f79e911822165'
+md5sums=('39fca0523bccec6af4b63b5322276c84'
          'da6a46e5f8cd3eaa7cbc4fc3a7e2b555'
          '6e6c8719e5989d976a14610f340bd33a')
 
@@ -22,7 +22,9 @@ build() {
   cd Linux-PAM-${pkgver}
   
   ./configure \
-        --libdir=/usr/lib
+    --libdir=/usr/lib \
+    --enable-tally \
+    --enable-tally2
   make
 }
 
