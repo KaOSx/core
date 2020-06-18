@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.7
 _srcname=linux-5.7
-pkgver=5.7.3
+pkgver=5.7.4
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -32,7 +32,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
         'iwlwifi.patch')
 md5sums=('f63ed18935914e1ee3e04c2a0ce1ba3b'
-         '9104be9e2065896fd2825632782815bb'
+         '5e4024cce46e2b4e7fba475232da2a4d'
          '6b41f750d9716be5c750edf6ed67c586'
          '92a2fdcdfff85c33ad3e336efef0cc31'
          '02c4fa159f7984447e28759dcfecd9d8'
