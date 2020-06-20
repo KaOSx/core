@@ -1,0 +1,26 @@
+ 
+pkgname=xxhash
+pkgver=0.7.3
+pkgrel=1
+pkgdesc="Extremely fast non-cryptographic hash algorithm, working at speeds close to RAM limits."
+arch=('x86_64')
+url="https://cyan4973.github.io/xxHash/"
+license=('GPL2' 'BSD')
+makedepends=('cmake')
+source=("https://github.com/Cyan4973/xxHash/archive/v${pkgver}.tar.gz")
+md5sums=('9ec918b4f8fd4532b1687a211aecc014')
+
+build() {
+  cmake -B build -S xxHash-${pkgver}/cmake_unofficial \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib
+  cmake --build build
+}
+
+package() {
+
+  DESTDIR=${pkgdir} cmake --install build
+  
+  install -Dm644 xxHash-${pkgver}/LICENSE ${pkgdir}/usr/share/licenses/xxhash/LICENSE
+}

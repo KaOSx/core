@@ -1,30 +1,23 @@
 
 pkgname=rsync
-pkgver=3.1.3
-pkgrel=3
-pkgdesc="A file transfer program to keep remote files in sync"
+pkgver=3.2.0
+pkgrel=1
+pkgdesc="Open source utility that provides fast incremental file transfer. "
 arch=('x86_64')
-url="https://samba.anu.edu.au/rsync/"
+url="https://rsync.samba.org/"
 license=('GPL3')
-depends=('perl')
+depends=('perl' 'lz4' 'openssl' 'xxhash' 'zstd')
 backup=('etc/rsyncd.conf' 'etc/xinetd.d/rsync')
-source=("https://www.samba.org/ftp/rsync/${pkgname}-${pkgver}.tar.gz"
-        'rsyncd.conf'
-        'rsync.xinetd'
-        'rsyncd.service'
-        'rsyncd.socket'
-        'rsyncd@.service')
-md5sums=('1581a588fde9d89f6bc6201e8129afaf'
-         'bce64d122a8e0f86872a4a21a03bc7f3'
-         'ea3e9277dc908bc51f9eddc0f6b935c1'
-         'ec96f9089d71109557cdcaa3f0633ed6'
-         'ae4c381e0c02d6132c7f6ded3f473041'
-         '25b520927a788504c094cbc549aff67b')
+source=("https://download.samba.org/pub/rsync/src/${pkgname}-${pkgver}.tar.gz"
+        'rsyncd.conf')
+md5sums=('768700bc8a555f5fdbc97dac8ebfbdd3'
+         'bce64d122a8e0f86872a4a21a03bc7f3')
 
 build() {
 	cd ${pkgname}-${pkgver}
  
-	./configure --prefix=/usr --with-included-popt 
+	./configure --prefix=/usr \
+        --disable-debug
 	make 
 }
 
@@ -39,10 +32,10 @@ package() {
 	make DESTDIR=${pkgdir} install 
 	
 	install -Dm644 ../rsyncd.conf ${pkgdir}/etc/rsyncd.conf
-	install -Dm644 ../rsync.xinetd ${pkgdir}/etc/xinetd.d/rsync
-	install -Dm644 ../rsyncd.service ${pkgdir}/usr/lib/systemd/system/rsyncd.service
-	install -m644 ../rsyncd.socket ${pkgdir}/usr/lib/systemd/system/rsyncd.socket
-	install -m644 ../rsyncd@.service ${pkgdir}/usr/lib/systemd/system/rsyncd@.service
+	install -Dm644 packaging/lsb/rsync.xinetd ${pkgdir}/etc/xinetd.d/rsync
+	install -Dm644 packaging/systemd/rsync.service ${pkgdir}/usr/lib/systemd/system/rsyncd.service
+	install -Dm644 packaging/systemd/rsync.socket ${pkgdir}/usr/lib/systemd/system/rsyncd.socket
+	install -Dm644 packaging/systemd/rsync@.service ${pkgdir}/usr/lib/systemd/system/rsyncd@.service
 	install -Dm755 support/rrsync ${pkgdir}/usr/lib/rsync/rrsync
 }
 
