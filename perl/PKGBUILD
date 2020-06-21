@@ -120,7 +120,7 @@ provides=('perl-archive-tar=2.32'
           'perl-unicode-normalize=1.26'
           'perl-version=0.9924'
           'perl-xsloader=0.30')
-source=("http://www.cpan.org/src/5.0/perl-${pkgver}.tar.xz"
+source=("https://www.cpan.org/src/5.0/perl-${pkgver}.tar.xz"
         'perlbin.sh'
         'perlbin.csh')
 options=('makeflags' '!purge' 'emptydirs')
