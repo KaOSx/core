@@ -1,6 +1,6 @@
 
 pkgname=rsync
-pkgver=3.2.0
+pkgver=3.2.1
 pkgrel=1
 pkgdesc="Open source utility that provides fast incremental file transfer. "
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('perl' 'lz4' 'openssl' 'xxhash' 'zstd')
 backup=('etc/rsyncd.conf' 'etc/xinetd.d/rsync')
 source=("https://download.samba.org/pub/rsync/src/${pkgname}-${pkgver}.tar.gz"
         'rsyncd.conf')
-md5sums=('768700bc8a555f5fdbc97dac8ebfbdd3'
+md5sums=('d2d7f1c6b07a1434203a2a2406e0bddd'
          'bce64d122a8e0f86872a4a21a03bc7f3')
 
 build() {
