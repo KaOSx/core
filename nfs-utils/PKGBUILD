@@ -1,7 +1,7 @@
 
 pkgname=nfs-utils
-pkgver=2.4.3
-pkgrel=2
+pkgver=2.5.1
+pkgrel=1
 pkgdesc="Support programs for Network File Systems"
 arch=('x86_64')
 url='http://nfs.sourceforge.net'
@@ -10,10 +10,10 @@ backup=(etc/{exports,nfs.conf,nfsmount.conf})
 depends=('glibc' 'e2fsprogs' 'rpcbind' 'libtirpc' 'librpcsecgss' 'libevent'
          'device-mapper' 'sqlite')
 makedepends=('pkgconfig' 'autoconf' 'automake')
-source=("https://downloads.sourceforge.net/project/nfs/nfs-utils/${pkgver}/${pkgname}-${pkgver}.tar.bz2"
+source=("https://mirrors.edge.kernel.org/pub/linux/utils/nfs-utils/${pkgver}/${pkgname}-${pkgver}.tar.xz"
         'exports')
-md5sums=('ea4bb8a7f98447c303cec6d26b05541b'
-         'e6ad3c7a59c7e4c24965a0e7da35026c')
+sha256sums=('0f1c8170e16a07d9836bbf0836d48d0c842b6f0e0e8b18748f099751851d30c4'
+            '610715ed3daedc43b2536f541c7c57e138fb31eab5d837d9a6187a7403e30154')
 
 build() {
   cd ${pkgname}-${pkgver}
