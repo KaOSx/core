@@ -1,16 +1,16 @@
 
 pkgname=popt
-pkgver=1.16
-pkgrel=10
+pkgver=1.18
+pkgrel=11
 pkgdesc="A commandline option parser"
 arch=('x86_64') 
-url="http://rpm5.org"
+url="https://github.com/rpm-software-management/popt"
 license=('custom')
 depends=('glibc')
 options=('!libtool')
-source=("https://ftp.openbsd.org/pub/OpenBSD/distfiles/popt-$pkgver.tar.gz")
-#source=("http://rpm5.org/files/popt/${pkgname}-${pkgver}.tar.gz")
-md5sums=('3743beefa3dd6247a73f8f7a32c14c33')
+#source=("https://ftp.openbsd.org/pub/OpenBSD/distfiles/popt-$pkgver.tar.gz")
+source=("http://ftp.rpm.org/popt/releases/popt-1.x/${pkgname}-${pkgver}.tar.gz")
+sha256sums=('5159bc03a20b28ce363aa96765f37df99ea4d8850b1ece17d1e6ad5c24fdc5d1')
 
 build() {
   cd ${pkgname}-${pkgver}
