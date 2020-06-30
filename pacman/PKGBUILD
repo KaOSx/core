@@ -1,6 +1,6 @@
 
 pkgname=pacman
-pkgver=5.2.1
+pkgver=5.2.2
 pkgrel=1
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
@@ -12,12 +12,11 @@ makedepends=('asciidoc')
 checkdepends=('python3' 'fakechroot')
 backup=(etc/pacman.conf etc/makepkg.conf)
 options=('!libtool')
-#install=pacman.install
 source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
         'pacman.conf'
         'makepkg.conf'
         'file5.33.patch')
-md5sums=('730f7f3699bd1778ca8d8126e3da68f4'
+md5sums=('3a9b078a83996a3272844807b91959c6'
          '4a51211c3d54e419a6b13e6ef3e08b00'
          'c831bf92bd060a4a36776d8b9a1fd15a'
          '9eb04bd318524d87f22c8ce7fa47693f')
