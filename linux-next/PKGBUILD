@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.7
 _srcname=linux-5.7
-pkgver=5.7.6
+pkgver=5.7.7
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -32,16 +32,16 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
         'iwlwifi.patch')
 md5sums=('f63ed18935914e1ee3e04c2a0ce1ba3b'
-         '19d1ba16b138925dac175e1986cf1302'
+         '6103451d140cfb4862b45cde2217543c'
          '6b41f750d9716be5c750edf6ed67c586'
-         '92a2fdcdfff85c33ad3e336efef0cc31'
-         '02c4fa159f7984447e28759dcfecd9d8'
-         '41c31d91da22b88fcb1b53db12079d05'
-         '8315a9e33652fbf2073ed4ffe98b29f1'
-         '48215c58e1461b99be70dac4b1e3944d'
-         '46a80aa34e84651c5376ffde172d8351'
+         'bf7d8e44e691120f69d0a435787f0686'
+         '51665f359736d6a5588c82721f71ed92'
+         '9be6cc97bdd8452aa52b96640a61f922'
+         '0bbbfcd79faab78b1d1eec40a5ce0d50'
+         '9bee61d6f85e780bc0afa5ca71ae8558'
+         'e2974837dfb89ea0bc646e202bdcbc9c'
          '180e55a128db2641e04374ce07d131a7'
-         '70b89a849a8e0c888facaadb117eade0'
+         'a86f3a1f52b0e7cf469bd86df4e2e71c'
          '1ee5e72dabfc05954fd13eb1873ff2cb'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'
