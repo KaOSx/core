@@ -1,14 +1,14 @@
 
 pkgname=bridge-utils
-pkgver=1.6
-pkgrel=3
+pkgver=1.7
+pkgrel=1
 pkgdesc="EEE 802.1d ethernet bridging (plus Spanning Tree protocol) for the linux kernel."
 arch=('x86_64')
 url="https://wiki.linuxfoundation.org/networking/bridge"
 license=('GPL')
 depends=('glibc' 'iptables')
-source=("https://www.kernel.org/pub/linux/utils/net/bridge-utils/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('cc67efb5d5fb8928a6569b3fade2b4042ec17da04678dab127d96b46489e26c8')
+source=("https://mirrors.edge.kernel.org/pub/linux/kernel/people/shemminger/bridge-utils/${pkgname}-${pkgver}.tar.xz")
+sha256sums=('939987e659b1a4c36ae46f44b6687f373bc5c916a9eab91f775630f5e38b997e')
 
 build() {
   cd ${pkgname}-${pkgver}

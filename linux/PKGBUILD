@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=5.6
-pkgver=5.6.8
+_basekernel=5.7
+pkgver=5.7.7
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.6.tar.xz"
+source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.7.tar.xz"
         "http://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -27,18 +27,18 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.6.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '99-linux.hook')
-md5sums=('7b9199ec5fa563ece9ed585ffb17798f'
-         '47129f47f8e487ef2968a34496ea98b7'
-         '5616d49c1b0f99c76b34004f1a1f83db'
-         '92a2fdcdfff85c33ad3e336efef0cc31'
-         '02c4fa159f7984447e28759dcfecd9d8'
-         '41c31d91da22b88fcb1b53db12079d05'
-         '8315a9e33652fbf2073ed4ffe98b29f1'
-         '48215c58e1461b99be70dac4b1e3944d'
-         '46a80aa34e84651c5376ffde172d8351'
+md5sums=('f63ed18935914e1ee3e04c2a0ce1ba3b'
+         '6103451d140cfb4862b45cde2217543c'
+         '67638b0b3ce1ecff36d70980d515f175'
+         'bf7d8e44e691120f69d0a435787f0686'
+         '51665f359736d6a5588c82721f71ed92'
+         '9be6cc97bdd8452aa52b96640a61f922'
+         '0bbbfcd79faab78b1d1eec40a5ce0d50'
+         '9bee61d6f85e780bc0afa5ca71ae8558'
+         'e2974837dfb89ea0bc646e202bdcbc9c'
          '180e55a128db2641e04374ce07d131a7'
-         '70b89a849a8e0c888facaadb117eade0'
-         '91b628bf4d4beb80fa53a8eb7332023c'
+         'a86f3a1f52b0e7cf469bd86df4e2e71c'
+         '1ee5e72dabfc05954fd13eb1873ff2cb'
          'eb14dcfd80c00852ef81ded6e826826a'
          '0b73d293ca1ab91748ae2d2c39921532')
 
@@ -161,8 +161,8 @@ package_linux-headers() {
 
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/include"
 
-  for i in acpi asm-generic config crypto drm generated linux math-emu \
-    media net pcmcia scsi rdma soc sound trace uapi video xen; do
+  for i in acpi asm-generic config crypto drm generated keys linux math-emu \
+    media net pcmcia scsi rdma soc sound target trace uapi vdso video xen; do
     cp -a include/${i} "${pkgdir}/usr/src/linux-${_kernver}/include/"
   done
 
