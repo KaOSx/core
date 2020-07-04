@@ -1,6 +1,6 @@
 
 pkgname=python3
-pkgver=3.7.7
+pkgver=3.7.8
 pkgrel=1
 _pybasever=3.7
 pkgdesc="Next generation of the python high-level scripting language"
@@ -11,7 +11,7 @@ depends=('expat' 'bzip2' 'gdbm' 'openssl' 'libffi' 'zlib')
 makedepends=('sqlite' 'valgrind' 'bluez' 'llvm' 'xorg-server')
 options=('!makeflags')
 source=("https://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz")
-md5sums=('172c650156f7bea68ce31b2fd01fa766')  
+md5sums=('a224ef2249a18824f48fba9812f4006f')  
 
 build() {
   cd Python-${pkgver}
@@ -39,6 +39,7 @@ build() {
 check() {
   cd Python-${pkgver}
 
+  # failed test, known upstream https://bugs.python.org/issue34022#msg346814
   LD_LIBRARY_PATH=${srcdir}/Python-${pkgver}:${LD_LIBRARY_PATH} \
      ${srcdir}/Python-${pkgver}/python -m test.regrtest -x test_posixpath test_logging test_site test_urllib2_localnet test_pyexpat
 }
