@@ -1,15 +1,15 @@
 
 pkgname=libevent
-pkgver=2.1.11
+pkgver=2.1.12
 _pkgver=2.1
 pkgrel=1
 pkgdesc="An event notification library"
 arch=('x86_64')
-url="http://libevent.org/"
+url="https://libevent.org/"
 license=('GPL2')
 depends=('openssl')
 source=("https://github.com/libevent/libevent/releases/download/release-${pkgver}-stable/${pkgname}-${pkgver}-stable.tar.gz")
-md5sums=('7f35cfe69b82d879111ec0d7b7b1c531')
+md5sums=('b5333f021f880fe76490d8a799cd79f4')
          
 build() {
   cd ${pkgname}-${pkgver}-stable
