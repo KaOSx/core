@@ -1,6 +1,6 @@
 
 pkgname=keyutils
-pkgver=1.6.2
+pkgver=1.6.3
 pkgrel=1
 pkgdesc="Linux Key Management Utilities"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL2' 'LGPL2.1')
 depends=('glibc' 'sh')
 backup=('etc/request-key.conf')
 source=("https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/${pkgname}-${pkgver}.tar.gz")
-md5sums=('816806a669607d9f46a9a9d1a3f71d2b')
+md5sums=('6b70b2b381c1b6d9adfaf66d5d3e7c00')
 
 build() {
   cd ${pkgname}-${pkgver}
