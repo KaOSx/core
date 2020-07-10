@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=5.7
-pkgver=5.7.7
+pkgver=5.7.8
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -28,8 +28,8 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.7.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('f63ed18935914e1ee3e04c2a0ce1ba3b'
-         '6103451d140cfb4862b45cde2217543c'
-         '67638b0b3ce1ecff36d70980d515f175'
+         '28fd3a3891a4863a70d4f579fb69e478'
+         'b41d5b6be4da03c19955912165246e4e'
          'bf7d8e44e691120f69d0a435787f0686'
          '51665f359736d6a5588c82721f71ed92'
          '9be6cc97bdd8452aa52b96640a61f922'
