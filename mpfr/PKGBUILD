@@ -1,6 +1,6 @@
 
 pkgname=mpfr
-_pkgver=4.0.2
+_pkgver=4.1.0
 #_patchlevel=p5
 #pkgver=${_pkgver}.${_patchlevel}
 pkgver=${_pkgver}
@@ -14,7 +14,7 @@ options=('!libtool')
 source=("https://www.mpfr.org/mpfr-current/mpfr-${_pkgver}.tar.xz")
         # http://www.mpfr.org/mpfr-3.1.5/allpatches  http://www.mpfr.org/mpfr-3.1.5/#bugs
         #"mpfr-${_pkgver}-${_patchlevel}.patch")
-md5sums=('320fbc4463d4c8cb1e566929d8adc4f8')
+sha256sums=('0c98a3f1732ff6ca4ea690552079da9c597872d30e96ec28414ee23c95558a7f')
          #'ddc463e02c11e2d03443c09dea7978b5')
 
 build() {
