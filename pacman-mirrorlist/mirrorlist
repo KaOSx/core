@@ -15,6 +15,8 @@ Server = https://kaos-frankfurt.tk/repo/$repo
 Server = https://mirrors.tuna.tsinghua.edu.cn/KaOS/$repo
 Server = https://mirrors.nju.edu.cn/kaos/$repo
 Server = http://mirrors.nju.edu.cn/kaos/$repo
+Server = https://mirrors.aliyun.com/KaOS/$repo
+Server = http://mirrors.aliyun.com/KaOS/$repo
 
 # Czech Republic
 Server = http://193.86.184.157/kaos/$repo
