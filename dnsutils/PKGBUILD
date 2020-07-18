@@ -33,6 +33,6 @@ build() {
 package() {
 	cd bind-${_pkgver}
 	
-	make DESTDIR=${pkgdir} install
 	install -Dm644 COPYRIGHT ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+	cd bin; make DESTDIR=${pkgdir} install
 }
