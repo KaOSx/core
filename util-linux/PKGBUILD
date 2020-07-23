@@ -1,7 +1,7 @@
 
 pkgname=util-linux
-pkgver=2.35.2
-_pkgver=2.35
+pkgver=2.36
+_pkgver=2.36
 pkgrel=1
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
@@ -31,7 +31,7 @@ backup=(etc/pam.d/chfn
         etc/pam.d/su
         etc/pam.d/su-l)
 install=util-linux.install
-sha256sums=('21b7431e82f6bcd9441a01beeec3d57ed33ee948f8a5b41da577073c372eb58a'
+sha256sums=('9e4b1c67eb13b9b67feb32ae1dc0d50e08ce9e5d82e1cccd0ee771ad2fa9e0b1'
             '5de0aadbbeb1ebb0776f3c550111fe045dfdf3571c574f415c62ca1966c49616'
             '993a3096c2b113e6800f2abbd5d4233ebf1a97eef423990d3187d665d3490b92'
             'fc6807842f92e9d3f792d6b64a0d5aad87995a279153ab228b1b2a64d9f32f20'
@@ -47,8 +47,8 @@ sha256sums=('21b7431e82f6bcd9441a01beeec3d57ed33ee948f8a5b41da577073c372eb58a'
 build() {
   cd ${pkgname}-${pkgver}
   #fix sfdisk failures with extended partitions
-  patch -p1 -i ${srcdir}/fa3fface0f83dbf186f046210700473da7a4800b.diff
-  patch -p1 -i ${srcdir}/ac762ed71f982468f4c83291158e97cf86281beb.diff
+  #patch -p1 -i ${srcdir}/fa3fface0f83dbf186f046210700473da7a4800b.diff
+  #patch -p1 -i ${srcdir}/ac762ed71f982468f4c83291158e97cf86281beb.diff
 
   ./configure --prefix=/usr \
               --libdir=/usr/lib \
