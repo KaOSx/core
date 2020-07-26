@@ -1,8 +1,8 @@
  
 pkgbase=boost
 pkgname=('boost-libs' 'boost')
-pkgver=1.72.0
-_pkgver=1_72_0
+pkgver=1.73.0
+_pkgver=1_73_0
 pkgrel=1
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
@@ -12,7 +12,7 @@ makedepends=('icu' 'python3' 'bzip2' 'zlib' 'openmpi' 'zstd')
 source=("https://dl.bintray.com/boostorg/release/${pkgver}/source/${pkgbase}_${_pkgver}.tar.bz2"
         "python.diff")
 license=('custom')
-sha256sums=('59c9b274bc451cf91a9ba1dd2c7fdcaf5d60b1b3aa83f2c9fa143417cc660722'
+sha256sums=('4eb3b8d442b426dc35346235c8733b5ae35ba431690e38c6a8263dce9fcbb402'
             '3984cfb1922a909d65794f173068da59fb2a7c4efdaf42911c3add329a2b9789')
 
 build() {
@@ -27,7 +27,7 @@ build() {
   install -d -m 755 ${_stagedir}/bin
   install tools/build/src/engine/b2 ${_stagedir}/bin/b2
 
-   sed -i 's|using python : 3.7 : "/usr" ;|using python : 3.7 : /usr/bin/python3 : /usr/include/python3.7m : /usr/lib ;|g' project-config.jam 
+   sed -i 's|using python : 3.8 : "/usr" ;|using python : 3.8 : /usr/bin/python3 : /usr/include/python3.8 : /usr/lib ;|g' project-config.jam 
    # Support for OpenMPI
    echo "using mpi ;" >> project-config.jam
   
@@ -43,7 +43,7 @@ build() {
       runtime-link=shared \
       link=shared,static \
       toolset=gcc \
-      python=3.7 \
+      python=3.8 \
       cflags="${CPPFLAGS} ${CFLAGS} -O3" linkflags="${LDFLAGS}" \
       --prefix=${_stagedir} \
       --layout=system \
@@ -87,7 +87,7 @@ package_boost-libs() {
     rm -r ${pkgdir}/usr/lib/cmake
     
     # issue with finding new python lib versioning, vigra exposed, add link for old scheme
-    ln -s /usr/lib/libboost_python37.so.${pkgver} ${pkgdir}/usr/lib/libboost_python3.so
+    ln -s /usr/lib/libboost_python38.so.${pkgver} ${pkgdir}/usr/lib/libboost_python3.so
 
     # license
     install -D -m644 ${pkgbase}_${_pkgver}/LICENSE_1_0.txt ${pkgdir}/usr/share/licenses/boost-libs/LICENSE_1_0.txt
