@@ -1,7 +1,7 @@
 
 pkgname=btrfs-progs
 pkgver=5.7
-pkgrel=1
+pkgrel=2
 pkgdesc="Btrfs filesystem utilities."
 arch=('x86_64')
 url="https://btrfs.wiki.kernel.org/"
