@@ -1,18 +1,18 @@
  
 pkgname=asciidoc
-pkgver=8.6.10
-pkgrel=3
+pkgver=9.0.2
+pkgrel=1
 _commit=544574e66ca89c898151c1c6d34b88a76e44343f
 pkgdesc='Text document format for short documents, articles, books and UNIX man pages.'
 arch=('x86_64')
-url='http://www.methods.co.nz/asciidoc/'
+url='https://asciidoc.org/'
 license=('GPL')
 depends=('python3' 'libxslt' 'docbook-xsl')
-source=("https://github.com/asciidoc/asciidoc-py3/archive/${_commit}.zip")
-md5sums=('e6651dcde3c1b468c7ab08a09e70ba73')
+source=("https://github.com/asciidoc/asciidoc-py3/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('c93a0cad453540eb94407909e3c673de')
 
 build() {
-  cd ${pkgname}-py3-${_commit}
+  cd ${pkgname}-${pkgver}
 
   autoconf -v
   ./configure \
@@ -21,10 +21,10 @@ build() {
 }
 
 package() {
-  cd ${pkgname}-py3-${_commit}
+  cd ${pkgname}-${pkgver}
 
   make install DESTDIR=${pkgdir}
 
   install -Dm644 asciidocapi.py ${pkgdir}/usr/lib/python3.8/site-packages/asciidocapi.py
-  install -Dm644 vim/syntax/asciidoc.vim ${pkgdir}/usr/share/vim/vimfiles/syntax/asciidoc.vim
+  #install -Dm644 vim/syntax/asciidoc.vim ${pkgdir}/usr/share/vim/vimfiles/syntax/asciidoc.vim
 }
