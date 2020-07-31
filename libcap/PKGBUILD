@@ -1,6 +1,6 @@
 
 pkgname=libcap
-pkgver=2.39
+pkgver=2.41
 pkgrel=1
 pkgdesc="POSIX 1003.1e capabilities"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL')
 depends=('glibc' 'attr')
 options=('!staticlibs')
 source=("https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('a4ad0f53563852e3fa13c9847793dd58f3547a08512d9d504d251e6128516f0d')
+sha256sums=('880dac4f97795bf5bd0d77ae6476d8c6a854601eb0c461d5a5b91f07d8e60834')
 
 build() {
   cd ${pkgname}-${pkgver}

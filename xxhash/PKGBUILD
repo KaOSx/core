@@ -1,5 +1,5 @@
  
-# rebuild rsync on any update
+# rebuild rsync & gdb on any update
 pkgname=xxhash
 pkgver=0.8.0
 pkgrel=1
