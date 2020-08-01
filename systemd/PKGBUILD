@@ -1,8 +1,8 @@
 
 pkgname=systemd
-pkgver=244
-_pkgver=244
-pkgrel=3
+pkgver=246
+_pkgver=246
+pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -41,15 +41,15 @@ source=("https://github.com/systemd/systemd/archive/v${_pkgver}.tar.gz"
         'splash.bmp'
         'systemd-tmpfiles.hook'
         'boot_color.diff')
-md5sums=('413121fe918b252ae62310f6fc7c4b32'
+md5sums=('a3e9efa72d0309dd26513a221cdff31b'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
          '30b74b38eaf1178bbc540bda9a24bfe2'
-         'eb444ae327472b98a65631ede777720a'
+         '8fe91c1336757a7e7564e23b4c2469ce'
          'b8d8ebeab17edbe91209e705cfc9e774'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
-         '7d5910d12fdfce56228a1aac8c3d618c'
+         '27f5023827fc6fc9361f524436855a1e'
          'a59ceb44b57272d6cebaf86acda7d393')
 
 prepare() {
@@ -89,7 +89,7 @@ build() {
     -Ddefault-hierarchy=hybrid \
     -Dfallback-hostname=KaOS \
     -Ddbuspolicydir=/etc/dbus-1/system.d \
-    -Dman=true \
+    -Dman=false \
     -Dhomed=false
     # -Ddefault-locale=C
     ninja
