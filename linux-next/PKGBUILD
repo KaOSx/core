@@ -2,17 +2,17 @@
 pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=5.8-rc7
+_basekernel=5.8
 _srcname=linux-5.8
-pkgver=5.8RC7
+pkgver=5.8.0
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-#source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
-source=("https://git.kernel.org/torvalds/t/linux-5.8-rc7.tar.gz"
+source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
+#source=("https://git.kernel.org/torvalds/t/linux-5.8-rc7.tar.gz"
         ##"https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -31,8 +31,8 @@ source=("https://git.kernel.org/torvalds/t/linux-5.8-rc7.tar.gz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
         'iwlwifi.patch')
-md5sums=('149c602000757706f4c703bcd49b2301'
-         '9dc83acf3ee29073e1a2749f77a78adb'
+md5sums=('0e5c4c15266218ef26c50fac0016095b'
+         '052e60e28ba38a96572c4bf2f7dab8ed'
          'bf7d8e44e691120f69d0a435787f0686'
          '51665f359736d6a5588c82721f71ed92'
          '9be6cc97bdd8452aa52b96640a61f922'
