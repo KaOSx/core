@@ -1,7 +1,7 @@
 
 pkgname=docbook-xsl
 pkgver=1.79.2
-pkgrel=3
+pkgrel=4
 pkgdesc="XML stylesheets for Docbook-xml transformations."
 arch=('x86_64')
 license=('custom')
@@ -9,11 +9,14 @@ url="https://github.com/docbook"
 depends=('libxml2' 'libxslt' 'docbook-xml')
 install=docbook-xsl.install
 groups=('base-devel')
-source=("https://github.com/docbook/xslt10-stylesheets/releases/download/release%2F${pkgver}/docbook-xsl-${pkgver}.tar.bz2")
-md5sums=('4a400f0264a19329c7f95f69e098744a')
+source=("https://github.com/docbook/xslt10-stylesheets/releases/download/release%2F${pkgver}/docbook-xsl-${pkgver}.tar.bz2"
+        'non-recursive-string.patch')
+md5sums=('4a400f0264a19329c7f95f69e098744a'
+         '4cb5c9bc0e39516921f56f57301341b0')
 
 package() {
     cd ${pkgname}-${pkgver}
+    patch -p2 -i ${srcdir}/non-recursive-string.patch
 
     _pkgroot=${pkgdir}/usr/share/xml/docbook/xsl-stylesheets-${pkgver}
 
