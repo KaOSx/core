@@ -2,7 +2,7 @@
 pkgname=systemd
 pkgver=246
 _pkgver=246
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -89,7 +89,7 @@ build() {
     -Ddefault-hierarchy=hybrid \
     -Dfallback-hostname=KaOS \
     -Ddbuspolicydir=/etc/dbus-1/system.d \
-    -Dman=false \
+    -Dman=true \
     -Dhomed=false
     # -Ddefault-locale=C
     ninja
