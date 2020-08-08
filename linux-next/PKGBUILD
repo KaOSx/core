@@ -30,7 +30,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'linux-next.preset'
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
-        'iwlwifi.patch')
+        'vbox-58.patch')
 md5sums=('0e5c4c15266218ef26c50fac0016095b'
          '052e60e28ba38a96572c4bf2f7dab8ed'
          'bf7d8e44e691120f69d0a435787f0686'
@@ -68,8 +68,8 @@ build() {
   #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
   #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
   
-  # 5.6 issue
-  #patch -p1 -i "${srcdir}/iwlwifi.patch"
+  # vbox modules needed workaround with 5.8, https://www.virtualbox.org/ticket/19644
+  patch -p1 -i ${srcdir}/vbox-58.patch
   
   cat "${srcdir}/config" > ./.config
 
