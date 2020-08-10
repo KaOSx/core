@@ -1,6 +1,6 @@
 
 pkgname=filesystem
-pkgver=2020.01
+pkgver=2020.08
 pkgrel=1
 _codename=2020
 pkgdesc='Base filesystem'
@@ -21,7 +21,7 @@ source=('group' 'issue' 'nsswitch.conf' 'securetty' 'host.conf' 'ld.so.conf'
         'vconsole.conf' 'locale.sh')
 md5sums=('1109716df48ad1bfbf08520ea12fe347'
          'db5338e17b20e85deaf85a16d30f5d65'
-         'd6fa1fc63af992a24c899bae197dd6d3'
+         'cab9c178544859f690284b85e9e474a2'
          '4c4540eeb748bf1f71d631b8c1dcf0b3'
          'f28150d4c0b22a017be51b9f7f9977ed'
          '6e488ffecc8ba142c0cf7e2d7aeb832e'
