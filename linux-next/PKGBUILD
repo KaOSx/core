@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.8
 _srcname=linux-5.8
-pkgver=5.8.0
+pkgver=5.8.1
 pkgrel=1
 arch=('x86_64')
 url="http://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfuti
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-5.8-rc7.tar.gz"
-        ##"https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -32,6 +32,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
         'vbox-58.patch')
 md5sums=('0e5c4c15266218ef26c50fac0016095b'
+         '987e4b7b28558b51c769121637cef827'
          '052e60e28ba38a96572c4bf2f7dab8ed'
          'bf7d8e44e691120f69d0a435787f0686'
          '51665f359736d6a5588c82721f71ed92'
@@ -45,13 +46,13 @@ md5sums=('0e5c4c15266218ef26c50fac0016095b'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'
          'a71035252857af0cf5d84c591b919996'
-         '4c253a90d33dfda4be190ad123e12ef8')
+         'f41516a5467708a83eafcb9d7f286375')
 
 build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
