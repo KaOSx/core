@@ -1,17 +1,16 @@
 
 pkgname=hwids
-pkgver=20200306
-_commit=0420211
+pkgver=20200813
 pkgrel=1
 pkgdesc="Hardware identification databases"
 url="https://github.com/gentoo/hwids"
 license=('GPL2')
 arch=('x86_64')
-source=("https://github.com/gentoo/hwids/tarball/${pkgname}-${pkgver}")
-md5sums=('b121d7c1838822a0b75d89b579f77e18')
+source=("https://github.com/gentoo/hwids/archive/hwids-${pkgver}.tar.gz")
+md5sums=('cf132bfaadb6d5105f3b0ab3ff2771fa')
 
 package() {
-  cd gentoo-${pkgname}-${_commit}
+  cd ${pkgname}-${pkgname}-${pkgver}
 
   install -Dm644 usb.ids ${pkgdir}/usr/share/hwdata/usb.ids
   install -Dm644 pci.ids ${pkgdir}/usr/share/hwdata/pci.ids
