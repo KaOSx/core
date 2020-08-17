@@ -66,8 +66,8 @@ build() {
   ###patch -p1 -i "${srcdir}/aufs5-standalone.patch"
   ###patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   ###patch -p1 -i "${srcdir}/vfs-ino.patch"
-  #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
-  #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
+  # Nvidia 390xx & 5.8 needed
+  sed -i "s|EXPORT_PER_CPU_SYMBOL_GPL(radix_tree_preloads)|EXPORT_PER_CPU_SYMBOL(radix_tree_preloads)|g" lib/radix-tree.c
   
   cat "${srcdir}/config" > ./.config
 
