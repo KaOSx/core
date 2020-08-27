@@ -1,15 +1,15 @@
 
 pkgname=iw
-pkgver=5.4
+pkgver=5.8
 pkgrel=1
 pkgdesc="nl80211 based CLI configuration utility for wireless devices"
 arch=('x86_64')
-url="https://wireless.kernel.org/en/users/Documentation/iw"
+url="https://wireless.wiki.kernel.org/en/users/documentation/iw"
 license=('GPL')
 depends=('libnl')
 makedepends=('linux-api-headers' 'pkg-config')
 source=("https://www.kernel.org/pub/software/network/iw/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('a2469f677088d7b1070a7fbb28f3c747041697e8f6ec70783339cb1bc27a395f')
+sha256sums=('b59c4bacb0b6675cc09f2f30ebdceb91174cb65443d0a062fba2c09fad772db4')
 
 build() {
   cd ${pkgname}-${pkgver}
