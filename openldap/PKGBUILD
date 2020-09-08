@@ -1,7 +1,7 @@
 
 pkgbase=openldap
 pkgname=('libldap' 'openldap')
-pkgver=2.4.52
+pkgver=2.4.53
 pkgrel=1
 arch=('x86_64')
 url="https://www.openldap.org/"
@@ -11,7 +11,7 @@ options=('!makeflags')
 source=("https://www.openldap.org/software/download/OpenLDAP/openldap-release/${pkgbase}-${pkgver}.tgz"
         'slapd.service'
         'slapd.tmpfiles')
-sha1sums=('c65ebaf9f3f874295b72f19a5de9b74ff0ade4ec'
+sha1sums=('9a03db5cc02fd8b0afc5bf11fb10f7cd5260bcf0'
           '9c7f3441e6a6ee13cdcfe8d965081c7a574c3393'
           '59241a813d7508294e4ef1cec3bfe1f5495e109d')
 
