@@ -1,0 +1,38 @@
+
+# not installable yet, needs glibc rebuild/2.32, to stop /usr/include/crypt.h
+# and /usr/lib/libcrypt.so conflict
+pkgname=libxcrypt
+pkgver=4.4.17
+pkgrel=1
+pkgdesc='Extended crypt library for descrypt, md5crypt, bcrypt, and others'
+arch=('x86_64')
+url='https://github.com/besser82/libxcrypt/'
+license=('GPL')
+depends=('glibc')
+source=("https://github.com/besser82/libxcrypt/archive/v${pkgver}.tar.gz")
+md5sums=('12118d098ead971f9a8377cacfdd0da7')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  
+  ./autogen.sh
+  ./configure \
+    --prefix=/usr \
+    --disable-static \
+    --enable-hashes=strong,glibc \
+    --disable-obsolete-api \
+    --disable-failure-tokens
+  make
+}
+
+check() {
+  cd ${pkgname}-${pkgver}
+  
+  make check 
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  
+  make DESTDIR=${pkgdir} install
+}
