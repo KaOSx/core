@@ -1,6 +1,6 @@
 
 pkgname=mkinitcpio-busybox
-pkgver=1.31.1
+pkgver=1.32.0
 pkgrel=1
 pkgdesc="Base initramfs tools"
 arch=('x86_64')
@@ -10,8 +10,8 @@ depends=('glibc')
 options=('!buildflags')
 source=("https://busybox.net/downloads/busybox-${pkgver}.tar.bz2"
         'config')
-md5sums=('70913edaf2263a157393af07565c17f0'
-         'e245e621c4a27b4f500eb9410d7d294d')
+md5sums=('9576986f1a960da471d03b72a62f13c7'
+         '7c55eeff969e77cb77e3964a3e557303')
 
 build() {
   cd busybox-${pkgver}
