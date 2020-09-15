@@ -1,7 +1,7 @@
 
 pkgname=libgudev
-pkgver=233
-pkgrel=3
+pkgver=234
+pkgrel=1
 pkgdesc="UDev GObject bindings"
 arch=('x86_64')
 license=('LGPL')
@@ -10,7 +10,7 @@ depends=('systemd' 'glib2')
 makedepends=('gobject-introspection')
 source=("https://ftp.gnome.org/pub/gnome/sources/libgudev/${pkgver}/${pkgname}-${pkgver}.tar.xz")
 #source=("https://github.com/systemd-devs/libgudev/archive/$pkgname-$pkgver.tar.gz")
-sha256sums=('587c4970eb23f4e2deee2cb1fb7838c94a78c578f41ce12cac0a3f4a80dabb03')
+sha256sums=('1baeacacf0db42fa073ad5183d1decce9317857416a2b0f82ce3370d711a2e37')
 
 build() {
   cd ${pkgname}-${pkgver}
