@@ -2,11 +2,10 @@
 # KaOS repository mirrorlist
 #
 
-# Default mirror, USA
-Server = https://mirror.math.princeton.edu/pub/kaoslinux/$repo
+# Default mirror
+Server = http://mirrors.redcorelinux.org/kaosx/$repo
 
 # Germany
-Server = http://mirrors.redcorelinux.org/kaosx/$repo
 Server = http://mirror6.layerjet.com/kaos/$repo
 Server = https://mirror.alpix.eu/kaos/$repo
 Server = https://kaos-frankfurt.tk/repo/$repo
@@ -28,8 +27,8 @@ Server = http://kaos.youm.org/$repo
 #Server = http://ftp.wa.co.za/pub/kaos/$repo
 
 # United States
+Server = https://mirror.math.princeton.edu/pub/kaoslinux/$repo
 Server = http://mirror.dacentec.com/kaosx/$repo
-Server = http://kiiwii.cf/kaos/$repo
 Server = http://kaosx.tk/repo/$repo
 Server = https://repo.kaosx.us/$repo
 
