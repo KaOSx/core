@@ -1,6 +1,6 @@
 
 pkgname=python3
-pkgver=3.8.5
+pkgver=3.8.6
 pkgrel=1
 _pybasever=3.8
 pkgdesc="Next generation of the python high-level scripting language"
@@ -11,7 +11,7 @@ depends=('expat' 'bzip2' 'gdbm' 'openssl' 'libffi' 'zlib')
 makedepends=('sqlite' 'valgrind' 'bluez' 'llvm' 'xorg-server')
 options=('!makeflags')
 source=("https://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz")
-md5sums=('35b5a3d0254c1c59be9736373d429db7')  
+md5sums=('69e73c49eeb1a853cefd26d18c9d069d')  
 
 build() {
   cd Python-${pkgver}
