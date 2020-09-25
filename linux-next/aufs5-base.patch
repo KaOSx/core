@@ -1,5 +1,5 @@
 SPDX-License-Identifier: GPL-2.0
-aufs5.7 base patch
+aufs5.x-rcN base patch
 
 diff --git a/MAINTAINERS b/MAINTAINERS
 index 50659d76976b7..80f67140e4f70 100644
@@ -123,8 +123,8 @@ diff --git a/fs/read_write.c b/fs/read_write.c
 index bbfa9b12b15eb..5d684d7d29207 100644
 --- a/fs/read_write.c
 +++ b/fs/read_write.c
-@@ -499,6 +499,28 @@ static ssize_t __vfs_write(struct file *file, const char __user *p,
- 		return -EINVAL;
+@@ -507,6 +507,28 @@
+ 	return ret;
  }
  
 +vfs_readf_t vfs_readf(struct file *file)
@@ -149,9 +149,9 @@ index bbfa9b12b15eb..5d684d7d29207 100644
 +	return ERR_PTR(-ENOSYS); /* doesn't have ->write(|_iter)() op */
 +}
 +
+ /* caller is responsible for file_start_write/file_end_write */
  ssize_t __kernel_write(struct file *file, const void *buf, size_t count, loff_t *pos)
  {
- 	mm_segment_t old_fs;
 diff --git a/fs/splice.c b/fs/splice.c
 index 4e53efbd621db..9f230ee854e20 100644
 --- a/fs/splice.c
@@ -197,7 +197,7 @@ diff --git a/include/linux/fs.h b/include/linux/fs.h
 index 45cc10cdf6ddd..916efd7e612b3 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
-@@ -1355,6 +1355,7 @@ extern void fasync_free(struct fasync_struct *);
+@@ -1370,6 +1370,7 @@
  /* can be called from interrupts */
  extern void kill_fasync(struct fasync_struct **, int, int);
  
@@ -205,7 +205,7 @@ index 45cc10cdf6ddd..916efd7e612b3 100644
  extern void __f_setown(struct file *filp, struct pid *, enum pid_type, int force);
  extern int f_setown(struct file *filp, unsigned long arg, int force);
  extern void f_delown(struct file *filp);
-@@ -1847,6 +1848,7 @@ struct file_operations {
+@@ -1858,6 +1859,7 @@
  	ssize_t (*sendpage) (struct file *, struct page *, int, size_t, loff_t *, int);
  	unsigned long (*get_unmapped_area)(struct file *, unsigned long, unsigned long, unsigned long, unsigned long);
  	int (*check_flags)(int);
@@ -213,7 +213,7 @@ index 45cc10cdf6ddd..916efd7e612b3 100644
  	int (*flock) (struct file *, int, struct file_lock *);
  	ssize_t (*splice_write)(struct pipe_inode_info *, struct file *, loff_t *, size_t, unsigned int);
  	ssize_t (*splice_read)(struct file *, loff_t *, struct pipe_inode_info *, size_t, unsigned int);
-@@ -1917,6 +1919,12 @@ ssize_t rw_copy_check_uvector(int type, const struct iovec __user * uvector,
+@@ -1928,6 +1930,12 @@
  			      struct iovec *fast_pointer,
  			      struct iovec **ret_pointer);
  
@@ -223,10 +223,10 @@ index 45cc10cdf6ddd..916efd7e612b3 100644
 +vfs_readf_t vfs_readf(struct file *file);
 +vfs_writef_t vfs_writef(struct file *file);
 +
- extern ssize_t __vfs_read(struct file *, char __user *, size_t, loff_t *);
  extern ssize_t vfs_read(struct file *, char __user *, size_t, loff_t *);
  extern ssize_t vfs_write(struct file *, const char __user *, size_t, loff_t *);
-@@ -2349,6 +2357,7 @@ extern int current_umask(void);
+ extern ssize_t vfs_readv(struct file *, const struct iovec __user *,
+@@ -2362,6 +2370,7 @@
  extern void ihold(struct inode * inode);
  extern void iput(struct inode *);
  extern int generic_update_time(struct inode *, struct timespec64 *, int);
@@ -234,7 +234,7 @@ index 45cc10cdf6ddd..916efd7e612b3 100644
  
  /* /sys/fs */
  extern struct kobject *fs_kobj;
-@@ -2633,6 +2642,7 @@ static inline bool sb_is_blkdev_sb(struct super_block *sb)
+@@ -2643,6 +2652,7 @@
  	return false;
  }
  #endif
@@ -267,15 +267,16 @@ diff --git a/include/linux/mnt_namespace.h b/include/linux/mnt_namespace.h
 index 35942084cd40d..24f5fd1a789de 100644
 --- a/include/linux/mnt_namespace.h
 +++ b/include/linux/mnt_namespace.h
-@@ -6,11 +6,14 @@
- struct mnt_namespace;
+@@ -7,12 +7,15 @@
  struct fs_struct;
  struct user_namespace;
+ struct ns_common;
 +struct vfsmount;
  
  extern struct mnt_namespace *copy_mnt_ns(unsigned long, struct mnt_namespace *,
  		struct user_namespace *, struct fs_struct *);
  extern void put_mnt_ns(struct mnt_namespace *ns);
+ extern struct ns_common *from_mnt_ns(struct mnt_namespace *);
  
 +extern int is_current_mnt_ns(struct vfsmount *mnt);
 +
