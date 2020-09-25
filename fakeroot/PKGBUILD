@@ -18,6 +18,7 @@ md5sums=('48b92ef9772b2ec088120c845e1edbd0'
 build() {
   cd ${pkgname}-${pkgver}
   #patch -p1 -i ${srcdir}/dlsym.patch
+  sed -i 's|SUBDIRS = de es fr nl pt sv|#SUBDIRS = de es fr nl pt sv|' doc/Makefile.am
 
   ./bootstrap
   ./configure --prefix=/usr \
