@@ -21,6 +21,7 @@ Server = http://mirrors.aliyun.com/KaOS/$repo
 Server = http://193.86.184.157/kaos/$repo
 
 # France
+Server = https://kaosx.cf/$repo
 Server = http://kaos.youm.org/$repo
 
 # South-Africa
