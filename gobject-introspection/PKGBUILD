@@ -1,7 +1,7 @@
 
 pkgname=gobject-introspection
-pkgver=1.64.1
-_pkgver=1.64
+pkgver=1.66.0
+_pkgver=1.66
 pkgrel=2
 pkgdesc="Introspection system for GObject-based libraries"
 url="https://wiki.gnome.org/Projects/GObjectIntrospection"
@@ -11,7 +11,7 @@ depends=('libffi' 'glib2' 'python3')
 makedepends=('cairo' 'meson' 'ninja')
 options=('!libtool')
 source=("https://ftp.gnome.org/pub/gnome/sources/${pkgname}/${_pkgver}/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('80beae6728c134521926affff9b2e97125749b38d38744dc901f4010ee3e7fa7')
+sha256sums=('3d66ea3aec7c3f8f1f83d89db3e78e18e36adc22b8bba45298119f0b3ea50060')
 
 
 build() {
