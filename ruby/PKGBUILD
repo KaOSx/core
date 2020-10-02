@@ -1,6 +1,6 @@
 
 pkgname=('ruby' 'ruby-docs')
-pkgver=2.7.1
+pkgver=2.7.2
 _pkgver=2.7
 pkgrel=1
 pkgdesc="An object-oriented language for quick and easy programming"
@@ -11,7 +11,7 @@ makedepends=('gdbm' 'db' 'openssl' 'zlib' 'readline' 'tk' 'libffi'
              'doxygen' 'libyaml')
 options=('!emptydirs')
 source=("https://cache.ruby-lang.org/pub/ruby/${_pkgver}/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('b224f9844646cc92765df8288a46838511c1cec5b550d8874bd4686a904fcee7')
+sha256sums=('1b95ab193cc8f5b5e59d2686cb3d5dcf1ddf2a86cb6950e0b4bdaae5040ec0d6')
 
 build() {
   cd ${pkgname}-${pkgver}
