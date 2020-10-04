@@ -1,10 +1,10 @@
 
 pkgname=libusb
 pkgver=1.0.23
-pkgrel=1
+pkgrel=2
 pkgdesc="Library that provides generic access to USB device"
 arch=('x86_64')
-url="http://libusb.info"
+url="https://libusb.info"
 license=('LGPL')
 depends=('glibc' 'systemd')
 options=('!libtool')

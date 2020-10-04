@@ -2,11 +2,11 @@
 pkgname=xfsprogs
 pkgver=5.8.0
 _pkgver=5.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc="XFS filesystem utilities"
 arch=('x86_64')
 license=('LGPL')
-url="http://xfs.org/index.php/Main_Page"
+url="https://xfs.org/index.php/Main_Page"
 groups=('base')
 depends=('util-linux')
 options=('!makeflags' '!libtool')

@@ -1,19 +1,19 @@
 
 pkgname=pcmciautils
 pkgver=018
-pkgrel=9
+pkgrel=10
 pkgdesc="Utilities for inserting and removing PCMCIA cards"
 arch=('x86_64')
-url="http://kernel.org/pub/linux/utils/kernel/pcmcia/pcmcia.html"
+url="https://mirrors.edge.kernel.org/pub/linux/utils/kernel/pcmcia/"
 license=('GPL')
 groups=('base')
 depends=('sysfsutils' 'systemd')
 conflicts=('pcmcia-cs')
 options=('!makeflags')
-source=("http://ftp.de.debian.org/debian/pool/main/p/${pkgname}/${pkgname}_${pkgver}.orig.tar.gz"
+source=("https://mirrors.edge.kernel.org/pub/linux/utils/kernel/pcmcia/${pkgname}-${pkgver}.tar.xz"
         'initcpio-install-pcmcia')
-md5sums=('3c388cb559975b37a75cb5965e9800a9'
-         '0dd0544b346d478f2bed35c1a91aa1dc')
+sha256sums=('57c27be8f04ef4d535bcfa988567316cc57659fe69068327486dab53791e6558'
+            'dc3fd927dccebc4eac3fe920b3b6d8f81c177ec67a1d2996fc88391f12d2d79d')
 
 build() {
   cd ${pkgname}-${pkgver}
