@@ -1,6 +1,6 @@
 
 pkgname=fakeroot
-pkgver=1.25.1
+pkgver=1.25.2
 pkgrel=1
 pkgdesc="Gives a fake root environment, useful for building packages as a non-privileged user."
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=('glibc' 'filesystem' 'util-linux' 'sed' 'sh')
 options=('!libtool')
 source=("https://deb.debian.org/debian/pool/main/f/fakeroot/${pkgname}_${pkgver}.orig.tar.gz"
         "dlsym.patch")
-md5sums=('48b92ef9772b2ec088120c845e1edbd0'
+md5sums=('3d55a0e2f0fbafe14771268ffc34e6a8'
          '62f6a56ee03486d2d8d178b922c612cd')
 
 build() {

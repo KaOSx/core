@@ -1,14 +1,14 @@
 
 pkgname=wireless_tools
-pkgver=29.9
+pkgver=30.pre9
 _pkgver=30
-pkgrel=4
+pkgrel=1
 pkgdesc="Wireless Tools"
 arch=('x86_64')
 url="https://hewlettpackard.github.io/wireless-tools/Tools.html"
 license=('GPL')
 depends=('glibc')
-source=("https://hewlettpackard.github.io/wireless-tools/wireless_tools.30.pre9.tar.gz")
+source=("https://hewlettpackard.github.io/wireless-tools/wireless_tools.${pkgver}.tar.gz")
 md5sums=('ca91ba7c7eff9bfff6926b1a34a4697d')
 
 build() {
