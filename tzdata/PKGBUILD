@@ -1,6 +1,6 @@
 
 pkgname=tzdata
-pkgver=2020a
+pkgver=2020b
 pkgrel=1
 pkgdesc="Sources for time zone and daylight saving time data"
 arch=('x86_64')
@@ -8,18 +8,17 @@ url="http://www.iana.org/time-zones"
 license=('GPL')
 options=('!emptydirs')
 source=("http://www.iana.org/time-zones/repository/releases/${pkgname}${pkgver}.tar.gz")
-md5sums=('96a985bb8eeab535fb8aa2132296763a')
+md5sums=('8902c580f7042c0ce94a6b05b0798ec9')
 
 timezones=('africa' 'antarctica' 'asia' 'australasia'
            'europe' 'northamerica' 'southamerica'
-           'etcetera' 'backward'
-           'systemv' 'factory')
+           'etcetera' 'backward' 'factory')
 
 package() {
   cd ${srcdir}
-  zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo ${timezones[@]}
-  zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo/posix ${timezones[@]}
-  zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo/right -L leapseconds ${timezones[@]}
-  zic -y ./yearistype -d ${pkgdir}/usr/share/zoneinfo -p America/New_York
+  zic -d ${pkgdir}/usr/share/zoneinfo ${timezones[@]}
+  zic -d ${pkgdir}/usr/share/zoneinfo/posix ${timezones[@]}
+  zic -d ${pkgdir}/usr/share/zoneinfo/right -L leapseconds ${timezones[@]}
+  zic -d ${pkgdir}/usr/share/zoneinfo -p America/New_York
   install -m444 -t ${pkgdir}/usr/share/zoneinfo iso3166.tab zone.tab zone1970.tab
 }
