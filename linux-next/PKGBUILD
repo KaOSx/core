@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.8
 _srcname=linux-5.8
-pkgver=5.8.13
+pkgver=5.8.14
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -32,8 +32,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff"
         'vbox-58.patch')
 md5sums=('0e5c4c15266218ef26c50fac0016095b'
-         '1f276bf9d1bc12215179a4681c29a573'
-         '052e60e28ba38a96572c4bf2f7dab8ed'
+         '5ee3a39d4e71c1c00d21044d4c46d1ee'
+         'd6952aedbaffda61ca602519663bcd9d'
          'bf7d8e44e691120f69d0a435787f0686'
          'b3b8a223b820b5a4ec90ee5f4c4cc24a'
          '9be6cc97bdd8452aa52b96640a61f922'
