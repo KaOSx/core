@@ -10,8 +10,8 @@ url="https://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v5.x/linux-5.7.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.7.tar.xz"
+        "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
