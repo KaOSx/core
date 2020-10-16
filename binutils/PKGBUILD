@@ -1,24 +1,25 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=binutils
-pkgver=2.34
+pkgver=2.35.1
 _commit=e521dc888158a6cdbdccef0397e663c437450a80
-pkgrel=2
+pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
 url="https://www.gnu.org/software/binutils/"
 license=('GPL')
 groups=('base-devel')
-depends=('glibc>=2.30' 'zlib')
+depends=('glibc>=2.32' 'zlib')
 checkdepends=('dejagnu' 'bc')
 options=('!libtool' '!distcc' '!ccache')
-source=("https://github.com/bminor/binutils-gdb/archive/${_commit}.zip"
+#source=("https://github.com/bminor/binutils-gdb/archive/${_commit}.zip"
+source=("https://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.xz"
         'ld.patch')
-sha256sums=('9c9830cfc9a888006883c5f8cb9062453779ffd3f99217868b4730495b3bfb6d'
+sha256sums=('3ced91db9bf01182b7e420eab68039f2083aed0a214c0424e257eae3ddee8607'
             'ce4c37dddc1a7945c4e4c5439f6198f53eea001e1a3c82582e9ce2c6b9fd390d')
 
 prepare() {
-  cd binutils-gdb-${_commit}
+  cd binutils-${pkgver}
   
   # libiberty configure tests 
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
@@ -30,7 +31,7 @@ build() {
   mkdir -p binutils-build
   cd binutils-build
 
-  ../binutils-gdb-${_commit}/configure \
+  ../binutils-${pkgver}/configure \
     --prefix=/usr \
     --with-lib-path=/usr/lib:/usr/local/lib \
     --with-bugurl=https://github.com/KaOSx/core/issues \
@@ -50,7 +51,7 @@ build() {
 }
 
 check() {
-  cd ${srcdir}/binutils-build
+  cd binutils-build
 
   # check log files
   make LDFLAGS="" -k check || true
@@ -60,6 +61,6 @@ package() {
   cd binutils-build
   make prefix=${pkgdir}/usr tooldir=${pkgdir}/usr install
 
-  rm ${pkgdir}/usr/share/man/man1/{dlltool,nlmconv,windres,windmc}*
+  rm ${pkgdir}/usr/share/man/man1/{dlltool,windres,windmc}*
   rm ${pkgdir}/usr/lib/lib{bfd,opcodes}.so
 }

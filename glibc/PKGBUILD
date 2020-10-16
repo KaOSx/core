@@ -2,12 +2,12 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.31
+pkgver=2.32
 _commit=9533f19aa5cd265db813db6923f8eb2fc9c3bcc3
 pkgrel=1
 pkgdesc="GNU C Library"
 arch=('x86_64')
-url="http://www.gnu.org/software/libc"
+url="https://www.gnu.org/software/libc"
 license=('GPL' 'LGPL')
 groups=('base')
 depends=('linux-api-headers' 'tzdata')
@@ -17,13 +17,13 @@ backup=(etc/gai.conf
         etc/nscd.conf)
 options=('!strip')
 install=glibc.install
-source=("http://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
+source=("https://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
 #source=("https://github.com/bminor/glibc/archive/${_commit}.zip"
         #"http://www.linuxfromscratch.org/patches/lfs/development/glibc-2.22-largefile-1.patch"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('78a720f17412f3c3282be5a6f3363ec6'
+md5sums=('720c7992861c57cf97d66a2f36d8d1fa'
          #'203fe9133e82f2b59969c116b70fd84e'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
@@ -45,8 +45,6 @@ build() {
       --with-headers=/usr/include \
       --with-bugurl=https://github.com/KaOSx/core/issues \
       --enable-add-ons \
-      --enable-obsolete-rpc \
-      --enable-obsolete-nsl \
       --enable-bind-now \
       --disable-profile \
       --enable-stackguard-randomization \
@@ -108,14 +106,14 @@ package() {
   cd ${pkgdir}
   strip $STRIP_BINARIES sbin/{ldconfig,sln} \
                         usr/bin/{gencat,getconf,getent,iconv,locale} \
-                        usr/bin/{localedef,pcprofiledump,rpcgen,sprof} \
+                        usr/bin/{localedef,pcprofiledump,sprof} \
                         usr/lib/getconf/* \
                         usr/sbin/{iconvconfig,nscd}
 
   #strip $STRIP_STATIC usr/lib/*.a 
 
   strip $STRIP_SHARED lib/{libanl,libBrokenLocale,libcrypt}-*.so \
-                      lib/libnss_{compat,dns,files,hesiod,nis,nisplus}-*.so \
+                      lib/libnss_{compat,dns,files,hesiod}-*.so \
                       lib/{libdl,libm,libnsl,libresolv,librt,libutil}-*.so \
                       lib/{libmemusage,libpcprofile,libSegFault}.so \
                       usr/lib/{audit,gconv}/*.so \
