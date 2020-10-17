@@ -1,5 +1,5 @@
 SPDX-License-Identifier: GPL-2.0
-aufs5.7 mmap patch
+aufs5.x-rcN mmap patch
 
 diff --git a/fs/proc/base.c b/fs/proc/base.c
 index eb2255e95f62b..92f6062423c0c 100644
@@ -230,7 +230,7 @@ index f609e9ec4a253..d554b349c653c 100644
 +	vma_get_file(vma);
 +	file = vma->vm_file;
 +	prfile = vma->vm_prfile;
- 	ret = do_mmap_pgoff(vma->vm_file, start, size,
+ 	ret = do_mmap(vma->vm_file, start, size,
  			prot, flags, pgoff, &populate, NULL);
 +	if (!IS_ERR_VALUE(ret) && file && prfile) {
 +		struct vm_area_struct *new_vma;

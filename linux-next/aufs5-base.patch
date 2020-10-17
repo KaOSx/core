@@ -234,10 +234,10 @@ index 45cc10cdf6ddd..916efd7e612b3 100644
  
  /* /sys/fs */
  extern struct kobject *fs_kobj;
-@@ -2643,6 +2652,7 @@
- 	return false;
+@@ -2549,6 +2558,7 @@
  }
- #endif
+ 
+ void emergency_thaw_all(void);
 +extern int __sync_filesystem(struct super_block *, int);
  extern int sync_filesystem(struct super_block *);
  extern const struct file_operations def_blk_fops;

@@ -4,7 +4,7 @@ pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs')
 _kernelname=${pkgname#linux}
 _basekernel=5.9
 _srcname=linux-5.9
-pkgver=5.9.0
+pkgver=5.9.1
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -13,7 +13,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfuti
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-5.8-rc7.tar.gz"
-        ##"https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -31,10 +31,11 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('0959d759fd19e146367221aff504ad91'
-         'd6952aedbaffda61ca602519663bcd9d'
+         '1740eb78293ff559ccc63556de86d604'
+         '5b3066073837cebac0c179361f1f3380'
          'bf7d8e44e691120f69d0a435787f0686'
-         'b3b8a223b820b5a4ec90ee5f4c4cc24a'
-         '9be6cc97bdd8452aa52b96640a61f922'
+         '40c647ff1d075383d58e06e321c929b5'
+         'c5fb72f6ee84e03a498b17d32aead1d9'
          '0bbbfcd79faab78b1d1eec40a5ce0d50'
          '9bee61d6f85e780bc0afa5ca71ae8558'
          'e2974837dfb89ea0bc646e202bdcbc9c'
@@ -49,7 +50,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
