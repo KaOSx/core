@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=5.7
-pkgver=5.7.19
+_basekernel=5.8
+pkgver=5.8.16
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc'  'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.7.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.8.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -27,11 +27,11 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.7.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '99-linux.hook')
-md5sums=('f63ed18935914e1ee3e04c2a0ce1ba3b'
-         'f2ff95a314a361c37688a07044a349b1'
-         'b41d5b6be4da03c19955912165246e4e'
+md5sums=('0e5c4c15266218ef26c50fac0016095b'
+         '2a35f934becbc0120e86efd37e69ed6f'
+         '055accc65ced19217a74bf9a812b19a9'
          'bf7d8e44e691120f69d0a435787f0686'
-         '51665f359736d6a5588c82721f71ed92'
+         'b3b8a223b820b5a4ec90ee5f4c4cc24a'
          '9be6cc97bdd8452aa52b96640a61f922'
          '0bbbfcd79faab78b1d1eec40a5ce0d50'
          '9bee61d6f85e780bc0afa5ca71ae8558'
@@ -55,13 +55,13 @@ prepare() {
   patch -p1 -i "${srcdir}/aufs5.patch"
   patch -p1 -i "${srcdir}/aufs5-base.patch"
   patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
-  patch -p1 -i "${srcdir}/aufs5-loopback.patch"
+  ###patch -p1 -i "${srcdir}/aufs5-loopback.patch"
   patch -p1 -i "${srcdir}/aufs5-mmap.patch"
   #patch -p1 -i "${srcdir}/aufs5-standalone.patch"
   #patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   #patch -p1 -i "${srcdir}/vfs-ino.patch"
-  #fix error: too few arguments to function 'loop_switch' error with RC aufs patches
-  #sed -i "s|return loop_switch(lo, NULL);|return loop_switch(lo, NULL, NULL);|g" drivers/block/loop.c
+  # Nvidia 390xx & 5.8 needed
+  sed -i "s|EXPORT_PER_CPU_SYMBOL_GPL(radix_tree_preloads)|EXPORT_PER_CPU_SYMBOL(radix_tree_preloads)|g" lib/radix-tree.c
   
   cat "${srcdir}/config" > ./.config
 
