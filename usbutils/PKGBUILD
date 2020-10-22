@@ -1,6 +1,6 @@
 
 pkgname=usbutils
-pkgver=012
+pkgver=013
 pkgrel=1
 pkgdesc="USB Device Utilities"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL')
 groups=('base')
 depends=('libusb' 'hwids')
 source=("https://www.kernel.org/pub/linux/utils/usb/usbutils/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('88634625f91840bc1993d2731cc081ee8d3b13d56069a95bdd6ac6ef0e063e46')
+sha256sums=('9e23494fcc78b7a80ee29a07dd179c95ae2f71509c35728dbbabc2d1cca41338')
 
 build() {
   cd ${pkgname}-${pkgver}
