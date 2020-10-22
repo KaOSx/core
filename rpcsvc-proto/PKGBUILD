@@ -1,0 +1,25 @@
+
+pkgname=rpcsvc-proto
+pkgver=1.4.2
+pkgrel=1
+pkgdesc='Contains rpcsvc proto.x files from glibc, additionally it contains rpcgen deprecated from glibc'
+arch=('x86_64')
+url="https://github.com/thkukuk/rpcsvc-proto"
+license=('BSD')
+depends=('glibc')
+source=("https://github.com/thkukuk/rpcsvc-proto/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
+md5sums=('629c91bbc8281fcdf64442f59a9d1705')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  
+  ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  
+  make DESTDIR=${pkgdir} install
+  install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+}
