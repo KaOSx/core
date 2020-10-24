@@ -1,15 +1,15 @@
 
 pkgname=libassuan
-pkgver=2.5.3
+pkgver=2.5.4
 pkgrel=1
 pkgdesc="A IPC library used by some GnuPG related software"
 arch=('x86_64')
 license=('GPL')
-url="http://www.gnupg.org/related_software/libassuan"
+url="https://www.gnupg.org/related_software/libassuan"
 depends=('libgpg-error')
 options=('!libtool')
-source=("ftp://ftp.gnupg.org/gcrypt/libassuan/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('226c504ea78a232224bf3b6846b3adb9')
+source=("https://www.gnupg.org/ftp/gcrypt/libassuan/${pkgname}-${pkgver}.tar.bz2")
+sha1sums=('55a35918e95566ef94e8843879a7dd3f87de3781')
 
 build() {
   cd ${pkgname}-${pkgver}
