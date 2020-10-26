@@ -1,8 +1,8 @@
 
 pkgname=perl-yaml-syck
 _pkgname=YAML-Syck
-pkgver=1.32
-_pkgver=1.32
+pkgver=1.34
+_pkgver=1.34
 pkgrel=1
 pkgdesc="Fast, lightweight YAML loader and dumper"
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=('perl')
 checkdepends=('perl-test-pod')
 options=('!emptydirs')
 source=("https://cpan.metacpan.org/authors/id/T/TO/TODDR/${_pkgname}-${_pkgver}.tar.gz")
-md5sums=('4d76594ccb19541610f82779071695c6')
+md5sums=('4aae72f5c06dccd6ed6ea9b029104183')
 
 build() {
   cd ${_pkgname}-${_pkgver}
