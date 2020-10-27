@@ -1,7 +1,7 @@
 
 pkgbase=openldap
 pkgname=('libldap' 'openldap')
-pkgver=2.4.54
+pkgver=2.4.55
 pkgrel=1
 arch=('x86_64')
 url="https://www.openldap.org/"
@@ -11,7 +11,7 @@ options=('!makeflags')
 source=("https://www.openldap.org/software/download/OpenLDAP/openldap-release/${pkgbase}-${pkgver}.tgz"
         'slapd.service'
         'slapd.tmpfiles')
-sha1sums=('e82d321ac3df5ffb6790c22322471e2fae3d1546'
+sha1sums=('03f67a56b8760abe0d5fdfa06e93542a3f4b8ef4'
           '9c7f3441e6a6ee13cdcfe8d965081c7a574c3393'
           '59241a813d7508294e4ef1cec3bfe1f5495e109d')
 
@@ -48,7 +48,7 @@ build() {
 
 check() {
   cd ${pkgbase}-${pkgver}
-
+  # 1 fail ./scripts/test063-delta-multiprovider: line 266: 90915 Segmentation fault
   make test
 }
 
