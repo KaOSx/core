@@ -27,7 +27,11 @@ Server = http://kaos.youm.org/$repo
 # South-Africa
 #Server = http://ftp.wa.co.za/pub/kaos/$repo
 
+# United Kingdom
+Server = https://uk.mirrors.fossho.st/kaos/$repo
+
 # United States
+Server = https://us.mirrors.fossho.st/kaos/$repo
 Server = https://mirror.math.princeton.edu/pub/kaoslinux/$repo
 Server = http://mirror.dacentec.com/kaosx/$repo
 Server = http://kaosx.tk/repo/$repo
