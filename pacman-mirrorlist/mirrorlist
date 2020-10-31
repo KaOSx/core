@@ -8,7 +8,6 @@ Server = http://mirrors.redcorelinux.org/kaosx/$repo
 # Germany
 Server = http://mirror6.layerjet.com/kaos/$repo
 Server = https://mirror.alpix.eu/kaos/$repo
-Server = https://kaos-frankfurt.tk/repo/$repo
 
 # China
 Server = https://mirrors.tuna.tsinghua.edu.cn/KaOS/$repo
