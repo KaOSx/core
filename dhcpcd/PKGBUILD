@@ -15,7 +15,7 @@ source=("https://roy.marples.name/downloads/dhcpcd/${pkgname}-${pkgver}.tar.xz"
         'dhcpcd@.service'
         'dhcpcd.service'
         "https://github.com/rsmarples/dhcpcd/commit/73ac184333f77b38a8b4c4202c2928278e2237ca.diff")
-sha256sums=('a0843233fdaecee971c38ceda53ad1450bb7b83aefbf1fa9642213224a9c415e'
+sha256sums=('6d49af5e766a2515e6366e4f669663df04ecdf90a1a60ddb1d7a2feb4b5d2566'
             '1c039df7fcf5a002336bc14f289a05606abbdbf6266d95e8e3d2dd3f02812446'
             '3e1900bead9ddcc7ec734f6d5c7e797f82dad60854c2cdc174dfc169dc5170dd'
             '7ad97ed7cbc6faec81a3028cf1a51006aa592cc700bbb31da664cd05a4498b66')
