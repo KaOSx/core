@@ -1,6 +1,6 @@
 
 pkgname=dhcpcd
-pkgver=9.3.1
+pkgver=9.3.2
 pkgrel=1
 pkgdesc="RFC2131 compliant DHCP client daemon"
 url="https://roy.marples.name/projects/dhcpcd/"
