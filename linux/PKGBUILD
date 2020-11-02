@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=5.8
-pkgver=5.8.16
+pkgver=5.8.18
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -28,8 +28,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.8.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('0e5c4c15266218ef26c50fac0016095b'
-         '2a35f934becbc0120e86efd37e69ed6f'
-         '055accc65ced19217a74bf9a812b19a9'
+         'f1f8b7cbe810e3fa0c79e5f3a348543d'
+         '7ce5df98dc00477fb268670f5d72f348'
          'bf7d8e44e691120f69d0a435787f0686'
          'b3b8a223b820b5a4ec90ee5f4c4cc24a'
          '9be6cc97bdd8452aa52b96640a61f922'
