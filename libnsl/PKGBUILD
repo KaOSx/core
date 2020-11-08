@@ -1,0 +1,25 @@
+
+pkgname=libnsl
+pkgver=1.3.0
+pkgrel=1
+pkgdesc='Public client interface for NIS(YP) and NIS+ in a IPv6 ready version'
+arch=('x86_64')
+url='https://github.com/thkukuk/libnsl'
+license=('LGPL2.1')
+depends=('libtirpc')
+source=("https://github.com/thkukuk/libnsl/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
+md5sums=('9214f674bd0c2bcfdd6c1da0cadb061f')
+
+build() {
+  cd ${pkgname}-${pkgver}
+  
+  ./configure --prefix=/usr \
+    --disable-static
+  make
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  
+  make DESTDIR=${pkgdir} install
+}
