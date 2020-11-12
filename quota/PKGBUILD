@@ -1,6 +1,6 @@
 
 pkgname=quota
-pkgver=4.05
+pkgver=4.06
 pkgrel=1
 pkgdesc="Tools and patches for the Linux Diskquota system as part of the Linux kernel"
 arch=('x86_64')
@@ -8,7 +8,7 @@ url="https://sourceforge.net/projects/linuxquota/"
 license=('GPL-2')
 depends=('e2fsprogs' 'libldap')
 source=("https://downloads.sourceforge.net/sourceforge/linuxquota/${pkgname}-${pkgver}.tar.gz")
-md5sums=('1c1dbd2cd3d680ccac661239b067e147')
+md5sums=('aef94648438832b684978d46fdf75110')
 
 build() {
   cd ${pkgname}-${pkgver}
