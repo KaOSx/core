@@ -1,8 +1,9 @@
 
 pkgname=man-pages
 pkgver=5.09
-_posixver=2013-a
-pkgrel=1
+_posixver=2017-a
+__posixver=2017
+pkgrel=2
 pkgdesc="Linux man pages"
 arch=('x86_64')
 license=('GPL')
@@ -12,7 +13,7 @@ depends=()
 source=("https://www.kernel.org/pub/linux/docs/man-pages/${pkgname}-${pkgver}.tar.xz"
         "https://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/${pkgname}-posix-${_posixver}.tar.xz")
 sha256sums=('df1a3476bf63336f5e0335c4c2a992359b301999e9dfe44fb2cac7466aec0bf2'
-            '19633a5c75ff7deab35b1d2c3d5b7748e7bd4ef4ab598b647bb7e7f60b90a808')
+            'ce67bb25b5048b20dad772e405a83f4bc70faf051afa289361c81f9660318bc3')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -20,8 +21,8 @@ build() {
   # move the posix pages
   mkdir -p ${srcdir}/${pkgname}-${pkgver}/man0
   for sect in 0 1 3; do
-    sed -i "/^\.so /s/man${sect}p/man${sect}/" "${srcdir}/${pkgname}-posix-${_posixver}/man${sect}p"/*
-    mv -iv ${srcdir}/${pkgname}-posix-${_posixver}/man${sect}p/* ${srcdir}/${pkgname}-${pkgver}/man${sect}/
+    sed -i "/^\.so /s/man${sect}p/man${sect}/" "${srcdir}/${pkgname}-posix-${__posixver}/man${sect}p"/*
+    mv -iv ${srcdir}/${pkgname}-posix-${__posixver}/man${sect}p/* ${srcdir}/${pkgname}-${pkgver}/man${sect}/
   done
 }
 
@@ -31,7 +32,7 @@ package() {
   make prefix=${pkgdir}/usr install
   
   install -m755 -d ${pkgdir}/usr/share/licenses/${pkgname}
-  install -m644 ${srcdir}/${pkgname}-posix-${_posixver}/POSIX-COPYRIGHT ${pkgdir}/usr/share/licenses/${pkgname}/POSIX-COPYRIGHT
+  install -m644 ${srcdir}/${pkgname}-posix-${__posixver}/POSIX-COPYRIGHT ${pkgdir}/usr/share/licenses/${pkgname}/POSIX-COPYRIGHT
 
   cd ${pkgdir}/usr/share/man
   # part of coreutils 
