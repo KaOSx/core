@@ -1,8 +1,8 @@
 
 pkgname=util-linux
-pkgver=2.36
+pkgver=2.36.1
 _pkgver=2.36
-pkgrel=2
+pkgrel=1
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -31,7 +31,7 @@ backup=(etc/pam.d/chfn
         etc/pam.d/su
         etc/pam.d/su-l)
 install=util-linux.install
-sha256sums=('9e4b1c67eb13b9b67feb32ae1dc0d50e08ce9e5d82e1cccd0ee771ad2fa9e0b1'
+sha256sums=('09fac242172cd8ec27f0739d8d192402c69417617091d8c6e974841568f37eed'
             '5de0aadbbeb1ebb0776f3c550111fe045dfdf3571c574f415c62ca1966c49616'
             '993a3096c2b113e6800f2abbd5d4233ebf1a97eef423990d3187d665d3490b92'
             'fc6807842f92e9d3f792d6b64a0d5aad87995a279153ab228b1b2a64d9f32f20'
@@ -68,7 +68,7 @@ build() {
 }
 
 check() {
-  # 1 fail libmount: tab files-py, leaving dep to test the rest
+  # 1 fail column: invalid multibyte, leaving dep to test the rest
   make -C ${pkgname}-${pkgver} check
 }
 
