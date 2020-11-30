@@ -1,31 +1,32 @@
 
 pkgname=pam
-pkgver=1.4.0
+pkgver=1.5.1
 pkgrel=1
 pkgdesc="PAM (Pluggable Authentication Modules) library"
 arch=('x86_64')
 license=('GPL2')
-url="https://www.kernel.org/pub/linux/libs/pam/"
+url="https://github.com/linux-pam/linux-pam"
 depends=('glibc' 'db' 'cracklib' 'libtirpc')
-makedepends=('flex' 'w3m' 'docbook-xml>=4.4' 'docbook-xsl')
+makedepends=('w3m' 'docbook-xml' 'docbook-xsl')
 backup=(etc/security/{access.conf,group.conf,limits.conf,namespace.conf,namespace.init,pam_env.conf,time.conf} etc/pam.d/other etc/default/passwd etc/environment)
 source=("https://github.com/linux-pam/linux-pam/releases/download/v${pkgver}/Linux-PAM-${pkgver}.tar.xz"
-        #http://www.kernel.org/pub/linux/libs/pam/library/Linux-PAM-${pkgver}.tar.bz2
-        "https://sourceforge.net/projects/kaosx/files/sources/pam/pam_unix2-2.9.1.tar.bz2"
         'other')
 options=('!libtool' '!emptydirs')
-md5sums=('39fca0523bccec6af4b63b5322276c84'
-         'da6a46e5f8cd3eaa7cbc4fc3a7e2b555'
-         '6e6c8719e5989d976a14610f340bd33a')
+md5sums=('155f2a31d07077b2c63a1f135876c31b'
+         '410f73a96dae946f5779c2f4811edcb3')
 
 build() {
   cd Linux-PAM-${pkgver}
   
   ./configure \
-    --libdir=/usr/lib \
-    --enable-tally \
-    --enable-tally2
+    --libdir=/usr/lib
   make
+}
+
+check() {
+  cd Linux-PAM-${pkgver}
+  
+  make check
 }
 
 package() {

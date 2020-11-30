@@ -2,7 +2,7 @@
 pkgname=util-linux
 pkgver=2.36.1
 _pkgver=2.36
-pkgrel=1
+pkgrel=2
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -36,9 +36,9 @@ sha256sums=('09fac242172cd8ec27f0739d8d192402c69417617091d8c6e974841568f37eed'
             '993a3096c2b113e6800f2abbd5d4233ebf1a97eef423990d3187d665d3490b92'
             'fc6807842f92e9d3f792d6b64a0d5aad87995a279153ab228b1b2a64d9f32f20'
             '51eac9c2a2f51ad3982bba35de9aac5510f1eeff432d2d63c6362e45d620afc0'
-            '3eb67872e436817ec97c4f3795adba2cf1d3829ea4e107ef5747569e4eeb5746'
+            'c335c24c6fb9706d48c430ef18a4fa0fa37c866de3b8608db5bf6cf7b259e830'
             '005736b9bd650ff5e5d82a7e288853776d5bb8c90185d5774c07231c1e1c64a9'
-            '0924a1620e33d8321c3de5f9aa9efc328c0206465a643b0b10556be7cf0228b8'
+            '803ebb0e37763d2653ead76db115d76dcc30b050fce069be195a05b3ca53d304'
             '005736b9bd650ff5e5d82a7e288853776d5bb8c90185d5774c07231c1e1c64a9'
             '6eb1acdd3fa9f71a7f93fbd529be57ea65bcafc6e3a98a06af4d88013fc6a567'
             'e4a2cb349ccf338fe33136cc0c66017b3fa7317e53c1dfd26d3393018f5d0df5'
