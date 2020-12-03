@@ -1,7 +1,7 @@
 
 pkgname=pam
 pkgver=1.5.1
-pkgrel=1
+pkgrel=2
 pkgdesc="PAM (Pluggable Authentication Modules) library"
 arch=('x86_64')
 license=('GPL2')
@@ -13,7 +13,7 @@ source=("https://github.com/linux-pam/linux-pam/releases/download/v${pkgver}/Lin
         'other')
 options=('!libtool' '!emptydirs')
 md5sums=('155f2a31d07077b2c63a1f135876c31b'
-         '410f73a96dae946f5779c2f4811edcb3')
+         '6e6c8719e5989d976a14610f340bd33a')
 
 build() {
   cd Linux-PAM-${pkgver}
