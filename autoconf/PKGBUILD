@@ -1,7 +1,7 @@
 
 pkgname=autoconf
-pkgver=2.69
-pkgrel=7
+pkgver=2.70
+pkgrel=1
 pkgdesc="Package of M4 macros that produce shell scripts to automatically configure software source code packages."
 arch=('x86_64')
 license=('GPL2' 'GPL3' 'custom')
@@ -9,7 +9,7 @@ url="https://www.gnu.org/software/autoconf"
 groups=('base-devel')
 depends=('awk' 'm4' 'diffutils' 'bash')
 source=("https://ftp.gnu.org/gnu/autoconf/${pkgname}-${pkgver}.tar.xz")
-md5sums=('50f97f4159805e374639a73e2636f22e')
+md5sums=('e4453011b18da194b565bf282948f997')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -20,9 +20,8 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-  # 3 tests fail, known upstream
-  # http://gnu-autoconf.7623.n7.nabble.com/GNU-Autoconf-2-69-testsuite-503-failed-td18489.html
-  # https://lists.gnu.org/archive/html/bug-autoconf/2014-11/msg00001.html
+  # 5 failed (4 expected failures)
+  #309: AC_PROG_CPP without warnings                    FAILED (c.at:165)
   make check
 }
 
