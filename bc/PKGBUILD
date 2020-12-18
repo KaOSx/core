@@ -1,14 +1,13 @@
 
 pkgname=bc
 pkgver=1.07.1
-pkgrel=2
+pkgrel=3
 pkgdesc="An arbitrary precision calculator language"
 arch=('x86_64')
 url="https://www.gnu.org/software/bc/"
 license=('GPL')
 depends=('readline')
-#source=("https://ftp.gnu.org/gnu/bc/${pkgname}-${pkgver}.tar.gz"
-source=("https://mirror.clarkson.edu/gnu/bc/${pkgname}-${pkgver}.tar.gz"
+source=("https://ftp.gnu.org/gnu/bc/${pkgname}-${pkgver}.tar.gz"
         'bc-1.06-void.patch')
 md5sums=('cda93857418655ea43590736fc3ca9fc'
          'fe85d42dd4151801e9b8c2d2c4d990bf')
