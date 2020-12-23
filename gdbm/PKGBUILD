@@ -1,24 +1,24 @@
 
 pkgname=gdbm
-pkgver=1.18.1
-pkgrel=2
+pkgver=1.19
+pkgrel=1
 pkgdesc="GNU database library"
 url="https://www.gnu.org/software/gdbm/gdbm.html"
 license=('GPL')
 arch=('x86_64')
 depends=('glibc' 'sh')
-makedepends=('clang')
+#makedepends=('clang')
 source=("ftp://ftp.gnu.org/gnu/gdbm/${pkgname}-${pkgver}.tar.gz"
         'gdbm-1.10-zeroheaders.patch')
 options=('!libtool' '!makeflags')
-md5sums=('988dc82182121c7570e0cb8b4fcd5415'
-         '2a5979910c338dabda6935263b3d8af9')
+sha1sums=('2b6cc7453341904432b457fb8a2450e5f2aaf331'
+          '950bce437298448f71fab8291f00ea27bd6a419a')
 build() {
   cd ${pkgname}-${pkgver}
 
   #patch -p1 -i ${srcdir}/gdbm-1.10-zeroheaders.patch
-  export CC=/usr/bin/clang
-  export CXX=/usr/bin/clang++
+  #export CC=/usr/bin/clang
+  #export CXX=/usr/bin/clang++
 
   ./configure --prefix=/usr \
     --mandir=/usr/share/man \
