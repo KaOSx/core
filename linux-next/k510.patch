@@ -1,0 +1,658 @@
+diff --git a/fs/aufs/branch.h b/fs/aufs/branch.h
+index 0bac9a6c9557f..5632781b7bcc4 100644
+--- a/fs/aufs/branch.h
++++ b/fs/aufs/branch.h
+@@ -228,10 +228,8 @@ int au_xino_read(struct super_block *sb, aufs_bindex_t bindex, ino_t h_ino,
+ 		 ino_t *ino);
+ int au_xino_write(struct super_block *sb, aufs_bindex_t bindex, ino_t h_ino,
+ 		  ino_t ino);
+-ssize_t xino_fread(vfs_readf_t func, struct file *file, void *buf, size_t size,
+-		   loff_t *pos);
+-ssize_t xino_fwrite(vfs_writef_t func, struct file *file, void *buf,
+-		    size_t size, loff_t *pos);
++ssize_t xino_fread(struct file *file, void *buf, size_t size, loff_t *pos);
++ssize_t xino_fwrite(struct file *file, void *buf, size_t size, loff_t *pos);
+ 
+ int au_xib_trunc(struct super_block *sb);
+ int au_xino_trunc(struct super_block *sb, aufs_bindex_t bindex, int idx_begin);
+diff --git a/fs/aufs/cpup.c b/fs/aufs/cpup.c
+index 69a60ddc34746..9e3f5b89471f3 100644
+--- a/fs/aufs/cpup.c
++++ b/fs/aufs/cpup.c
+@@ -556,32 +556,19 @@ static int au_do_cpup_regular(struct au_cp_generic *cpg,
+ static int au_do_cpup_symlink(struct path *h_path, struct dentry *h_src,
+ 			      struct inode *h_dir)
+ {
+-	int err, symlen;
+-	mm_segment_t old_fs;
+-	union {
+-		char *k;
+-		char __user *u;
+-	} sym;
++	int err;
++	DEFINE_DELAYED_CALL(done);
++	const char *sym;
+ 
+-	err = -ENOMEM;
+-	sym.k = (void *)__get_free_page(GFP_NOFS);
+-	if (unlikely(!sym.k))
++	sym = vfs_get_link(h_src, &done);
++	err = PTR_ERR(sym);
++	if (IS_ERR(sym))
+ 		goto out;
+ 
+-	/* unnecessary to support mmap_sem since symlink is not mmap-able */
+-	old_fs = get_fs();
+-	set_fs(KERNEL_DS);
+-	symlen = vfs_readlink(h_src, sym.u, PATH_MAX);
+-	err = symlen;
+-	set_fs(old_fs);
+-
+-	if (symlen > 0) {
+-		sym.k[symlen] = 0;
+-		err = vfsub_symlink(h_dir, h_path, sym.k);
+-	}
+-	free_page((unsigned long)sym.k);
++	err = vfsub_symlink(h_dir, h_path, sym);
+ 
+ out:
++	do_delayed_call(&done);
+ 	return err;
+ }
+ 
+diff --git a/fs/aufs/dynop.c b/fs/aufs/dynop.c
+index 3c3e7812a0214..5dbb7193591b7 100644
+--- a/fs/aufs/dynop.c
++++ b/fs/aufs/dynop.c
+@@ -167,6 +167,7 @@ static void dy_aop(struct au_dykey *key, const void *h_op,
+ 	DySetAop(writepages);
+ 	DySetAop(set_page_dirty);
+ 	DySetAop(readpages);
++	DySetAop(readahead);
+ 	DySetAop(write_begin);
+ 	DySetAop(write_end);
+ 	DySetAop(bmap);
+diff --git a/fs/aufs/export.c b/fs/aufs/export.c
+index 33ae8ac42c5c6..94005688ac0be 100644
+--- a/fs/aufs/export.c
++++ b/fs/aufs/export.c
+@@ -108,8 +108,7 @@ void au_xigen_inc(struct inode *inode)
+ 	pos = inode->i_ino;
+ 	pos *= sizeof(igen);
+ 	igen = inode->i_generation + 1;
+-	sz = xino_fwrite(sbinfo->si_xwrite, sbinfo->si_xigen, &igen,
+-			 sizeof(igen), &pos);
++	sz = xino_fwrite(sbinfo->si_xigen, &igen, sizeof(igen), &pos);
+ 	if (sz == sizeof(igen))
+ 		return; /* success */
+ 
+@@ -151,10 +150,10 @@ int au_xigen_new(struct inode *inode)
+ 	if (vfsub_f_size_read(file)
+ 	    < pos + sizeof(inode->i_generation)) {
+ 		inode->i_generation = atomic_inc_return(&sbinfo->si_xigen_next);
+-		sz = xino_fwrite(sbinfo->si_xwrite, file, &inode->i_generation,
++		sz = xino_fwrite(file, &inode->i_generation,
+ 				 sizeof(inode->i_generation), &pos);
+ 	} else
+-		sz = xino_fread(sbinfo->si_xread, file, &inode->i_generation,
++		sz = xino_fread(file, &inode->i_generation,
+ 				sizeof(inode->i_generation), &pos);
+ 	if (sz == sizeof(inode->i_generation))
+ 		goto out; /* success */
+diff --git a/fs/aufs/f_op.c b/fs/aufs/f_op.c
+index 6fb4a4ed8cc7f..5ef279a59bb14 100644
+--- a/fs/aufs/f_op.c
++++ b/fs/aufs/f_op.c
+@@ -230,34 +230,6 @@ static void au_write_post(struct inode *inode, struct file *h_file,
+ 	fput(h_file);
+ }
+ 
+-static ssize_t aufs_read(struct file *file, char __user *buf, size_t count,
+-			 loff_t *ppos)
+-{
+-	ssize_t err;
+-	struct inode *inode;
+-	struct file *h_file;
+-	struct super_block *sb;
+-
+-	inode = file_inode(file);
+-	sb = inode->i_sb;
+-	si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLMW);
+-
+-	h_file = au_read_pre(file, /*keep_fi*/0, /*lsc*/0);
+-	err = PTR_ERR(h_file);
+-	if (IS_ERR(h_file))
+-		goto out;
+-
+-	/* filedata may be obsoleted by concurrent copyup, but no problem */
+-	err = vfsub_read_u(h_file, buf, count, ppos);
+-	/* todo: necessary? */
+-	/* file->f_ra = h_file->f_ra; */
+-	au_read_post(inode, h_file);
+-
+-out:
+-	si_read_unlock(sb);
+-	return err;
+-}
+-
+ /*
+  * todo: very ugly
+  * it locks both of i_mutex and si_rwsem for read in safe.
+@@ -280,33 +252,6 @@ static void au_mtx_and_read_lock(struct inode *inode)
+ 	}
+ }
+ 
+-static ssize_t aufs_write(struct file *file, const char __user *ubuf,
+-			  size_t count, loff_t *ppos)
+-{
+-	ssize_t err;
+-	struct au_write_pre wpre;
+-	struct inode *inode;
+-	struct file *h_file;
+-	char __user *buf = (char __user *)ubuf;
+-
+-	inode = file_inode(file);
+-	au_mtx_and_read_lock(inode);
+-
+-	wpre.lsc = 0;
+-	h_file = au_write_pre(file, /*do_ready*/1, &wpre);
+-	err = PTR_ERR(h_file);
+-	if (IS_ERR(h_file))
+-		goto out;
+-
+-	err = vfsub_write_u(h_file, buf, count, ppos);
+-	au_write_post(inode, h_file, &wpre, err);
+-
+-out:
+-	si_read_unlock(inode->i_sb);
+-	inode_unlock(inode);
+-	return err;
+-}
+-
+ static ssize_t au_do_iter(struct file *h_file, int rw, struct kiocb *kio,
+ 			  struct iov_iter *iov_iter)
+ {
+@@ -778,8 +723,6 @@ const struct file_operations aufs_file_fop = {
+ 
+ 	.llseek		= default_llseek,
+ 
+-	.read		= aufs_read,
+-	.write		= aufs_write,
+ 	.read_iter	= aufs_read_iter,
+ 	.write_iter	= aufs_write_iter,
+ 
+diff --git a/fs/aufs/file.c b/fs/aufs/file.c
+index ae2c7905634a1..7f67255927c02 100644
+--- a/fs/aufs/file.c
++++ b/fs/aufs/file.c
+@@ -778,6 +778,10 @@ static ssize_t aufs_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
+ 
+ /* they will never be called. */
+ #ifdef CONFIG_AUFS_DEBUG
++/*
++void aufs_readahead(struct readahead_control *)
++{ AuUnsupport(); }
++*/
+ static int aufs_write_begin(struct file *file, struct address_space *mapping,
+ 			    loff_t pos, unsigned len, unsigned flags,
+ 			    struct page **pagep, void **fsdata)
+diff --git a/fs/aufs/hfsnotify.c b/fs/aufs/hfsnotify.c
+index 12243ce81bb9f..3e5e6b974e63a 100644
+--- a/fs/aufs/hfsnotify.c
++++ b/fs/aufs/hfsnotify.c
+@@ -147,8 +147,8 @@ static void au_hfsn_free_group(struct fsnotify_group *group)
+ }
+ 
+ static int au_hfsn_handle_event(struct fsnotify_group *group,
+-				struct inode *inode,
+ 				u32 mask, const void *data, int data_type,
++				struct inode *dir,
+ 				const struct qstr *file_name, u32 cookie,
+ 				struct fsnotify_iter_info *iter_info)
+ {
+@@ -165,7 +165,7 @@ static int au_hfsn_handle_event(struct fsnotify_group *group,
+ 	if (mask & (FS_IN_IGNORED | FS_UNMOUNT))
+ 		goto out;
+ 
+-	h_dir = inode;
++	h_dir = dir;
+ 	h_inode = NULL;
+ #ifdef AuDbgHnotify
+ 	au_debug_on();
+diff --git a/fs/aufs/super.h b/fs/aufs/super.h
+index 37205202c2720..f840eedbd5725 100644
+--- a/fs/aufs/super.h
++++ b/fs/aufs/super.h
+@@ -118,8 +118,6 @@ struct au_sbinfo {
+ 	unsigned int		si_mntflags;
+ 
+ 	/* external inode number (bitmap and translation table) */
+-	vfs_readf_t		si_xread;
+-	vfs_writef_t		si_xwrite;
+ 	loff_t			si_ximaxent;	/* max entries in a xino */
+ 
+ 	struct file		*si_xib;
+diff --git a/fs/aufs/vfsub.c b/fs/aufs/vfsub.c
+index d7b324238117b..e880c14a57157 100644
+--- a/fs/aufs/vfsub.c
++++ b/fs/aufs/vfsub.c
+@@ -505,22 +505,17 @@ ssize_t vfsub_read_u(struct file *file, char __user *ubuf, size_t count,
+ 	return err;
+ }
+ 
+-/* todo: kernel_read()? */
+ ssize_t vfsub_read_k(struct file *file, void *kbuf, size_t count,
+ 		     loff_t *ppos)
+ {
+ 	ssize_t err;
+-	mm_segment_t oldfs;
+-	union {
+-		void *k;
+-		char __user *u;
+-	} buf;
+-
+-	buf.k = kbuf;
+-	oldfs = get_fs();
+-	set_fs(KERNEL_DS);
+-	err = vfsub_read_u(file, buf.u, count, ppos);
+-	set_fs(oldfs);
++
++	lockdep_off();
++	err = kernel_read(file, kbuf, count, ppos);
++	lockdep_on();
++	AuTraceErr(err);
++	if (err >= 0)
++		vfsub_update_h_iattr(&file->f_path, /*did*/NULL); /*ignore*/
+ 	return err;
+ }
+ 
+@@ -540,17 +535,12 @@ ssize_t vfsub_write_u(struct file *file, const char __user *ubuf, size_t count,
+ ssize_t vfsub_write_k(struct file *file, void *kbuf, size_t count, loff_t *ppos)
+ {
+ 	ssize_t err;
+-	mm_segment_t oldfs;
+-	union {
+-		void *k;
+-		const char __user *u;
+-	} buf;
+-
+-	buf.k = kbuf;
+-	oldfs = get_fs();
+-	set_fs(KERNEL_DS);
+-	err = vfsub_write_u(file, buf.u, count, ppos);
+-	set_fs(oldfs);
++
++	lockdep_off();
++	err = kernel_write(file, kbuf, count, ppos);
++	lockdep_on();
++	if (err >= 0)
++		vfsub_update_h_iattr(&file->f_path, /*did*/NULL); /*ignore*/
+ 	return err;
+ }
+ 
+diff --git a/fs/aufs/xino.c b/fs/aufs/xino.c
+index e8f8d185c91e2..45e5d7e7b35cc 100644
+--- a/fs/aufs/xino.c
++++ b/fs/aufs/xino.c
+@@ -647,8 +647,8 @@ struct au_xi_writing {
+ 	ino_t h_ino, ino;
+ };
+ 
+-static int au_xino_do_write(vfs_writef_t write, struct file *file,
+-			    struct au_xi_calc *calc, ino_t ino);
++static int au_xino_do_write(struct file *file, struct au_xi_calc *calc,
++			    ino_t ino);
+ 
+ static void au_xino_call_do_new_async(void *args)
+ {
+@@ -677,7 +677,7 @@ static void au_xino_call_do_new_async(void *args)
+ 
+ 	file = au_xino_file(br->br_xino, a->calc.idx);
+ 	AuDebugOn(!file);
+-	err = au_xino_do_write(sbi->si_xwrite, file, &a->calc, a->ino);
++	err = au_xino_do_write(file, &a->calc, a->ino);
+ 	if (unlikely(err)) {
+ 		AuIOErr("err %d\n", err);
+ 		goto out;
+@@ -778,7 +778,7 @@ int au_xino_read(struct super_block *sb, aufs_bindex_t bindex, ino_t h_ino,
+ 		return 0; /* no xino */
+ 
+ 	sbinfo = au_sbi(sb);
+-	sz = xino_fread(sbinfo->si_xread, file, ino, sizeof(*ino), &calc.pos);
++	sz = xino_fread(file, ino, sizeof(*ino), &calc.pos);
+ 	if (sz == sizeof(*ino))
+ 		return 0; /* success */
+ 
+@@ -790,12 +790,12 @@ int au_xino_read(struct super_block *sb, aufs_bindex_t bindex, ino_t h_ino,
+ 	return err;
+ }
+ 
+-static int au_xino_do_write(vfs_writef_t write, struct file *file,
+-			    struct au_xi_calc *calc, ino_t ino)
++static int au_xino_do_write(struct file *file, struct au_xi_calc *calc,
++			    ino_t ino)
+ {
+ 	ssize_t sz;
+ 
+-	sz = xino_fwrite(write, file, &ino, sizeof(ino), &calc->pos);
++	sz = xino_fwrite(file, &ino, sizeof(ino), &calc->pos);
+ 	if (sz == sizeof(ino))
+ 		return 0; /* success */
+ 
+@@ -845,7 +845,7 @@ int au_xino_write(struct super_block *sb, aufs_bindex_t bindex, ino_t h_ino,
+ 		goto out;
+ 	}
+ 
+-	err = au_xino_do_write(au_sbi(sb)->si_xwrite, file, &calc, ino);
++	err = au_xino_do_write(file, &calc, ino);
+ 	if (!err) {
+ 		br = au_sbr(sb, bindex);
+ 		if (au_opt_test(mnt_flags, TRUNC_XINO)
+@@ -859,40 +859,27 @@ int au_xino_write(struct super_block *sb, aufs_bindex_t bindex, ino_t h_ino,
+ 	return -EIO;
+ }
+ 
+-static ssize_t xino_fread_wkq(vfs_readf_t func, struct file *file, void *buf,
+-			      size_t size, loff_t *pos);
++static ssize_t xino_fread_wkq(struct file *file, void *buf, size_t size,
++			      loff_t *pos);
+ 
+ /* todo: unnecessary to support mmap_sem since kernel-space? */
+-ssize_t xino_fread(vfs_readf_t func, struct file *file, void *kbuf, size_t size,
+-		   loff_t *pos)
++ssize_t xino_fread(struct file *file, void *kbuf, size_t size, loff_t *pos)
+ {
+ 	ssize_t err;
+-	mm_segment_t oldfs;
+-	union {
+-		void *k;
+-		char __user *u;
+-	} buf;
+ 	int i;
+ 	const int prevent_endless = 10;
+ 
+ 	i = 0;
+-	buf.k = kbuf;
+-	oldfs = get_fs();
+-	set_fs(KERNEL_DS);
+ 	do {
+-		err = func(file, buf.u, size, pos);
++		err = vfsub_read_k(file, kbuf, size, pos);
+ 		if (err == -EINTR
+ 		    && !au_wkq_test()
+ 		    && fatal_signal_pending(current)) {
+-			set_fs(oldfs);
+-			err = xino_fread_wkq(func, file, kbuf, size, pos);
++			err = xino_fread_wkq(file, kbuf, size, pos);
+ 			BUG_ON(err == -EINTR);
+-			oldfs = get_fs();
+-			set_fs(KERNEL_DS);
+ 		}
+ 	} while (i++ < prevent_endless
+ 		 && (err == -EAGAIN || err == -EINTR));
+-	set_fs(oldfs);
+ 
+ #if 0 /* reserved for future use */
+ 	if (err > 0)
+@@ -904,7 +891,6 @@ ssize_t xino_fread(vfs_readf_t func, struct file *file, void *kbuf, size_t size,
+ 
+ struct xino_fread_args {
+ 	ssize_t *errp;
+-	vfs_readf_t func;
+ 	struct file *file;
+ 	void *buf;
+ 	size_t size;
+@@ -914,17 +900,16 @@ struct xino_fread_args {
+ static void call_xino_fread(void *args)
+ {
+ 	struct xino_fread_args *a = args;
+-	*a->errp = xino_fread(a->func, a->file, a->buf, a->size, a->pos);
++	*a->errp = xino_fread(a->file, a->buf, a->size, a->pos);
+ }
+ 
+-static ssize_t xino_fread_wkq(vfs_readf_t func, struct file *file, void *buf,
+-			      size_t size, loff_t *pos)
++static ssize_t xino_fread_wkq(struct file *file, void *buf, size_t size,
++			      loff_t *pos)
+ {
+ 	ssize_t err;
+ 	int wkq_err;
+ 	struct xino_fread_args args = {
+ 		.errp	= &err,
+-		.func	= func,
+ 		.file	= file,
+ 		.buf	= buf,
+ 		.size	= size,
+@@ -938,39 +923,27 @@ static ssize_t xino_fread_wkq(vfs_readf_t func, struct file *file, void *buf,
+ 	return err;
+ }
+ 
+-static ssize_t xino_fwrite_wkq(vfs_writef_t func, struct file *file, void *buf,
+-			       size_t size, loff_t *pos);
++static ssize_t xino_fwrite_wkq(struct file *file, void *buf, size_t size,
++			       loff_t *pos);
+ 
+-static ssize_t do_xino_fwrite(vfs_writef_t func, struct file *file, void *kbuf,
+-			      size_t size, loff_t *pos)
++static ssize_t do_xino_fwrite(struct file *file, void *kbuf, size_t size,
++			      loff_t *pos)
+ {
+ 	ssize_t err;
+-	mm_segment_t oldfs;
+-	union {
+-		void *k;
+-		const char __user *u;
+-	} buf;
+ 	int i;
+ 	const int prevent_endless = 10;
+ 
+ 	i = 0;
+-	buf.k = kbuf;
+-	oldfs = get_fs();
+-	set_fs(KERNEL_DS);
+ 	do {
+-		err = func(file, buf.u, size, pos);
++		err = vfsub_write_k(file, kbuf, size, pos);
+ 		if (err == -EINTR
+ 		    && !au_wkq_test()
+ 		    && fatal_signal_pending(current)) {
+-			set_fs(oldfs);
+-			err = xino_fwrite_wkq(func, file, kbuf, size, pos);
++			err = xino_fwrite_wkq(file, kbuf, size, pos);
+ 			BUG_ON(err == -EINTR);
+-			oldfs = get_fs();
+-			set_fs(KERNEL_DS);
+ 		}
+ 	} while (i++ < prevent_endless
+ 		 && (err == -EAGAIN || err == -EINTR));
+-	set_fs(oldfs);
+ 
+ #if 0 /* reserved for future use */
+ 	if (err > 0)
+@@ -982,7 +955,6 @@ static ssize_t do_xino_fwrite(vfs_writef_t func, struct file *file, void *kbuf,
+ 
+ struct do_xino_fwrite_args {
+ 	ssize_t *errp;
+-	vfs_writef_t func;
+ 	struct file *file;
+ 	void *buf;
+ 	size_t size;
+@@ -992,17 +964,16 @@ struct do_xino_fwrite_args {
+ static void call_do_xino_fwrite(void *args)
+ {
+ 	struct do_xino_fwrite_args *a = args;
+-	*a->errp = do_xino_fwrite(a->func, a->file, a->buf, a->size, a->pos);
++	*a->errp = do_xino_fwrite(a->file, a->buf, a->size, a->pos);
+ }
+ 
+-static ssize_t xino_fwrite_wkq(vfs_writef_t func, struct file *file, void *buf,
+-			       size_t size, loff_t *pos)
++static ssize_t xino_fwrite_wkq(struct file *file, void *buf, size_t size,
++			       loff_t *pos)
+ {
+ 	ssize_t err;
+ 	int wkq_err;
+ 	struct do_xino_fwrite_args args = {
+ 		.errp	= &err,
+-		.func	= func,
+ 		.file	= file,
+ 		.buf	= buf,
+ 		.size	= size,
+@@ -1020,18 +991,17 @@ static ssize_t xino_fwrite_wkq(vfs_writef_t func, struct file *file, void *buf,
+ 	return err;
+ }
+ 
+-ssize_t xino_fwrite(vfs_writef_t func, struct file *file, void *buf,
+-		    size_t size, loff_t *pos)
++ssize_t xino_fwrite(struct file *file, void *buf, size_t size, loff_t *pos)
+ {
+ 	ssize_t err;
+ 
+ 	if (rlimit(RLIMIT_FSIZE) == RLIM_INFINITY) {
+ 		lockdep_off();
+-		err = do_xino_fwrite(func, file, buf, size, pos);
++		err = do_xino_fwrite(file, buf, size, pos);
+ 		lockdep_on();
+ 	} else {
+ 		lockdep_off();
+-		err = xino_fwrite_wkq(func, file, buf, size, pos);
++		err = xino_fwrite_wkq(file, buf, size, pos);
+ 		lockdep_on();
+ 	}
+ 
+@@ -1082,17 +1052,17 @@ static int xib_pindex(struct super_block *sb, unsigned long pindex)
+ 	p = sbinfo->si_xib_buf;
+ 	pos = sbinfo->si_xib_last_pindex;
+ 	pos *= PAGE_SIZE;
+-	sz = xino_fwrite(sbinfo->si_xwrite, xib, p, PAGE_SIZE, &pos);
++	sz = xino_fwrite(xib, p, PAGE_SIZE, &pos);
+ 	if (unlikely(sz != PAGE_SIZE))
+ 		goto out;
+ 
+ 	pos = pindex;
+ 	pos *= PAGE_SIZE;
+ 	if (vfsub_f_size_read(xib) >= pos + PAGE_SIZE)
+-		sz = xino_fread(sbinfo->si_xread, xib, p, PAGE_SIZE, &pos);
++		sz = xino_fread(xib, p, PAGE_SIZE, &pos);
+ 	else {
+ 		memset(p, 0, PAGE_SIZE);
+-		sz = xino_fwrite(sbinfo->si_xwrite, xib, p, PAGE_SIZE, &pos);
++		sz = xino_fwrite(xib, p, PAGE_SIZE, &pos);
+ 	}
+ 	if (sz == PAGE_SIZE) {
+ 		sbinfo->si_xib_last_pindex = pindex;
+@@ -1143,7 +1113,6 @@ static int do_xib_restore(struct super_block *sb, struct file *file, void *page)
+ 	unsigned long pindex;
+ 	loff_t pos, pend;
+ 	struct au_sbinfo *sbinfo;
+-	vfs_readf_t func;
+ 	ino_t *ino;
+ 	unsigned long *p;
+ 
+@@ -1151,11 +1120,10 @@ static int do_xib_restore(struct super_block *sb, struct file *file, void *page)
+ 	sbinfo = au_sbi(sb);
+ 	MtxMustLock(&sbinfo->si_xib_mtx);
+ 	p = sbinfo->si_xib_buf;
+-	func = sbinfo->si_xread;
+ 	pend = vfsub_f_size_read(file);
+ 	pos = 0;
+ 	while (pos < pend) {
+-		sz = xino_fread(func, file, page, PAGE_SIZE, &pos);
++		sz = xino_fread(file, page, PAGE_SIZE, &pos);
+ 		err = sz;
+ 		if (unlikely(sz <= 0))
+ 			goto out;
+@@ -1244,7 +1212,7 @@ int au_xib_trunc(struct super_block *sb)
+ 	p = sbinfo->si_xib_buf;
+ 	memset(p, 0, PAGE_SIZE);
+ 	pos = 0;
+-	sz = xino_fwrite(sbinfo->si_xwrite, sbinfo->si_xib, p, PAGE_SIZE, &pos);
++	sz = xino_fwrite(sbinfo->si_xib, p, PAGE_SIZE, &pos);
+ 	if (unlikely(sz != PAGE_SIZE)) {
+ 		err = sz;
+ 		AuIOErr("err %d\n", err);
+@@ -1383,7 +1351,6 @@ static void xino_clear_xib(struct super_block *sb)
+ 	SiMustWriteLock(sb);
+ 
+ 	sbinfo = au_sbi(sb);
+-	/* unnecessary to clear sbinfo->si_xread and ->si_xwrite */
+ 	if (sbinfo->si_xib)
+ 		fput(sbinfo->si_xib);
+ 	sbinfo->si_xib = NULL;
+@@ -1410,8 +1377,6 @@ static int au_xino_set_xib(struct super_block *sb, struct path *path)
+ 	if (sbinfo->si_xib)
+ 		fput(sbinfo->si_xib);
+ 	sbinfo->si_xib = file;
+-	sbinfo->si_xread = vfs_readf(file);
+-	sbinfo->si_xwrite = vfs_writef(file);
+ 	xi_sb = file_inode(file)->i_sb;
+ 	sbinfo->si_ximaxent = xi_sb->s_maxbytes;
+ 	if (unlikely(sbinfo->si_ximaxent < PAGE_SIZE)) {
+@@ -1435,8 +1400,7 @@ static int au_xino_set_xib(struct super_block *sb, struct path *path)
+ 	sbinfo->si_xib_next_bit = 0;
+ 	if (vfsub_f_size_read(file) < PAGE_SIZE) {
+ 		pos = 0;
+-		err = xino_fwrite(sbinfo->si_xwrite, file, sbinfo->si_xib_buf,
+-				  PAGE_SIZE, &pos);
++		err = xino_fwrite(file, sbinfo->si_xib_buf, PAGE_SIZE, &pos);
+ 		if (unlikely(err != PAGE_SIZE))
+ 			goto out_free;
+ 	}
+@@ -1487,7 +1451,6 @@ static void au_xino_set_br_shared(struct super_block *sb, struct au_branch *br,
+ }
+ 
+ struct au_xino_do_set_br {
+-	vfs_writef_t writef;
+ 	struct au_branch *br;
+ 	ino_t h_ino;
+ 	aufs_bindex_t bshared;
+@@ -1529,7 +1492,7 @@ static int au_xino_do_set_br(struct super_block *sb, struct path *path,
+ 		goto out;
+ 	AuDebugOn(!file);
+ 
+-	err = au_xino_do_write(args->writef, file, &calc, AUFS_ROOT_INO);
++	err = au_xino_do_write(file, &calc, AUFS_ROOT_INO);
+ 	if (unlikely(err))
+ 		au_xino_put(br);
+ 
+@@ -1549,7 +1512,6 @@ static int au_xino_set_br(struct super_block *sb, struct path *path)
+ 
+ 	bbot = au_sbbot(sb);
+ 	inode = d_inode(sb->s_root);
+-	args.writef = au_sbi(sb)->si_xwrite;
+ 	for (bindex = 0; bindex <= bbot; bindex++) {
+ 		args.h_ino = au_h_iptr(inode, bindex)->i_ino;
+ 		args.br = au_sbr(sb, bindex);
+@@ -1704,7 +1666,6 @@ int au_xino_init_br(struct super_block *sb, struct au_branch *br, ino_t h_ino,
+ 		.br	= br
+ 	};
+ 
+-	args.writef = au_sbi(sb)->si_xwrite;
+ 	args.bshared = sbr_find_shared(sb, /*btop*/0, au_sbbot(sb),
+ 				       au_br_sb(br));
+ 	err = au_xino_do_set_br(sb, base, &args);
+@@ -1788,7 +1749,6 @@ void au_xino_delete_inode(struct inode *inode, const int unlinked)
+ 	struct au_hinode *hi;
+ 	struct inode *h_inode;
+ 	struct au_branch *br;
+-	vfs_writef_t xwrite;
+ 	struct au_xi_calc calc;
+ 	struct file *file;
+ 
+@@ -1810,7 +1770,6 @@ void au_xino_delete_inode(struct inode *inode, const int unlinked)
+ 	if (bindex < 0)
+ 		return;
+ 
+-	xwrite = au_sbi(sb)->si_xwrite;
+ 	try_trunc = !!au_opt_test(mnt_flags, TRUNC_XINO);
+ 	hi = au_hinode(iinfo, bindex);
+ 	bbot = iinfo->ii_bbot;
+@@ -1831,7 +1790,7 @@ void au_xino_delete_inode(struct inode *inode, const int unlinked)
+ 		if (IS_ERR_OR_NULL(file))
+ 			continue;
+ 
+-		err = au_xino_do_write(xwrite, file, &calc, /*ino*/0);
++		err = au_xino_do_write(file, &calc, /*ino*/0);
+ 		if (!err && try_trunc
+ 		    && au_test_fs_trunc_xino(au_br_sb(br)))
+ 			xino_try_trunc(sb, br);

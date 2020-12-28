@@ -6,7 +6,7 @@ _kernelname=${pkgname#linux}
 _basekernel=5.10
 _srcname=linux-5.10
 pkgver=5.10.3
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
@@ -27,6 +27,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'config.aufs'
         'tmpfs-idr.patch'
         'vfs-ino.patch'
+        'k510.patch'
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         '99-linux-next.hook'
@@ -35,7 +36,7 @@ md5sums=('753adc474bf799d569dec4f165ed92c3'
          '29a8309ee77c6d0abc8fb820252ba0bd'
          '7fa960c7b76b5939a548b8cfa2bd1ab2'
          'bf7d8e44e691120f69d0a435787f0686'
-         '40c647ff1d075383d58e06e321c929b5'
+         '8d38c7f72e85d4eda45073b72c92b776'
          'c5fb72f6ee84e03a498b17d32aead1d9'
          '0bbbfcd79faab78b1d1eec40a5ce0d50'
          '9bee61d6f85e780bc0afa5ca71ae8558'
@@ -43,6 +44,7 @@ md5sums=('753adc474bf799d569dec4f165ed92c3'
          '180e55a128db2641e04374ce07d131a7'
          'a86f3a1f52b0e7cf469bd86df4e2e71c'
          '1ee5e72dabfc05954fd13eb1873ff2cb'
+         '8c52e6d232b461446b7363e86522a720'
          'e19be83ca72175a29b36d8ab08105050'
          'ae97691ba50d387f3ab98585514e3b22'
          'a71035252857af0cf5d84c591b919996')
@@ -57,20 +59,21 @@ build() {
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
   #aufs patches for Live:
-  #patch -p1 -i "${srcdir}/aufs5.patch"
-  #patch -p1 -i "${srcdir}/aufs5-base.patch"
-  #patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
+  patch -p1 -i "${srcdir}/aufs5.patch"
+  patch -p1 -i "${srcdir}/aufs5-base.patch"
+  patch -p1 -i "${srcdir}/aufs5-kbuild.patch"
   ###patch -p1 -i "${srcdir}/aufs5-loopback.patch"
-  #patch -p1 -i "${srcdir}/aufs5-mmap.patch"
+  patch -p1 -i "${srcdir}/aufs5-mmap.patch"
   ###patch -p1 -i "${srcdir}/aufs5-standalone.patch"
   ###patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   ###patch -p1 -i "${srcdir}/vfs-ino.patch"
+  patch -p1 -i "${srcdir}/k510.patch"
   # Nvidia 390xx & 5.8 needed
   sed -i "s|EXPORT_PER_CPU_SYMBOL_GPL(radix_tree_preloads)|EXPORT_PER_CPU_SYMBOL(radix_tree_preloads)|g" lib/radix-tree.c
   
   cat "${srcdir}/config" > ./.config
 
-  #cat "${srcdir}/config.aufs" >> ./.config
+  cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -237,7 +240,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs5-util need
-  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
