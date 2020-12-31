@@ -119,39 +119,6 @@ index a28e4db075ede..12e725e34c6ca 100644
  /*
   * vfsmount lock must be held for write
   */
-diff --git a/fs/read_write.c b/fs/read_write.c
-index bbfa9b12b15eb..5d684d7d29207 100644
---- a/fs/read_write.c
-+++ b/fs/read_write.c
-@@ -507,6 +507,28 @@
- 	return ret;
- }
- 
-+vfs_readf_t vfs_readf(struct file *file)
-+{
-+	const struct file_operations *fop = file->f_op;
-+
-+	if (fop->read)
-+		return fop->read;
-+	if (fop->read_iter)
-+		return new_sync_read;
-+	return ERR_PTR(-ENOSYS); /* doesn't have ->read(|_iter)() op */
-+}
-+
-+vfs_writef_t vfs_writef(struct file *file)
-+{
-+	const struct file_operations *fop = file->f_op;
-+
-+	if (fop->write)
-+		return fop->write;
-+	if (fop->write_iter)
-+		return new_sync_write;
-+	return ERR_PTR(-ENOSYS); /* doesn't have ->write(|_iter)() op */
-+}
-+
- /* caller is responsible for file_start_write/file_end_write */
- ssize_t __kernel_write(struct file *file, const void *buf, size_t count, loff_t *pos)
- {
 diff --git a/fs/splice.c b/fs/splice.c
 index 4e53efbd621db..9f230ee854e20 100644
 --- a/fs/splice.c
@@ -213,19 +180,6 @@ index 45cc10cdf6ddd..916efd7e612b3 100644
  	int (*flock) (struct file *, int, struct file_lock *);
  	ssize_t (*splice_write)(struct pipe_inode_info *, struct file *, loff_t *, size_t, unsigned int);
  	ssize_t (*splice_read)(struct file *, loff_t *, struct pipe_inode_info *, size_t, unsigned int);
-@@ -1928,6 +1930,12 @@
- 			      struct iovec *fast_pointer,
- 			      struct iovec **ret_pointer);
- 
-+typedef ssize_t (*vfs_readf_t)(struct file *, char __user *, size_t, loff_t *);
-+typedef ssize_t (*vfs_writef_t)(struct file *, const char __user *, size_t,
-+				loff_t *);
-+vfs_readf_t vfs_readf(struct file *file);
-+vfs_writef_t vfs_writef(struct file *file);
-+
- extern ssize_t vfs_read(struct file *, char __user *, size_t, loff_t *);
- extern ssize_t vfs_write(struct file *, const char __user *, size_t, loff_t *);
- extern ssize_t vfs_readv(struct file *, const struct iovec __user *,
 @@ -2362,6 +2370,7 @@
  extern void ihold(struct inode * inode);
  extern void iput(struct inode *);
@@ -234,10 +188,10 @@ index 45cc10cdf6ddd..916efd7e612b3 100644
  
  /* /sys/fs */
  extern struct kobject *fs_kobj;
-@@ -2643,6 +2652,7 @@
- 	return false;
+@@ -2549,6 +2558,7 @@
  }
- #endif
+ 
+ void emergency_thaw_all(void);
 +extern int __sync_filesystem(struct super_block *, int);
  extern int sync_filesystem(struct super_block *);
  extern const struct file_operations def_blk_fops;
