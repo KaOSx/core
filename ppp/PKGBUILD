@@ -1,6 +1,6 @@
 
 pkgname=ppp
-pkgver=2.4.8
+pkgver=2.4.9
 pkgrel=1
 pkgdesc="Daemon which implements the Point-to-Point Protocol for dial-up networking"
 arch=('x86_64') 
@@ -25,7 +25,7 @@ source=("https://github.com/paulusmack/ppp/archive/${pkgname}-${pkgver}.tar.gz"
         'ipv6-up.d.iface-config.sh'
         'ppp.service'
         'fix-linux-vs-glibc-headers-compile-error-mess.patch')
-md5sums=('fa325e90e43975a1bd7e1012c8676123'
+md5sums=('040efef7eb4ae6434cd006bc9d795838'
          '7a9259a8f038073eeea7e4552ff1849f'
          '48c024f73a80c8b69c4def22f86902cc'
          '2d811f8470ccdea3b8c4505a438483e9'
@@ -45,19 +45,19 @@ build() {
   cd ppp-${pkgname}-${pkgver}
 
   # -D_GNU_SOURCE is needed for IPv6 
-  export CFLAGS="$CFLAGS -D_GNU_SOURCE"
-  sed -i "s:-O2 -pipe -Wall -g:${CFLAGS}:" pppd/Makefile.linux
-  sed -i "s:-g -O2:${CFLAGS}:" pppd/plugins/Makefile.linux
-  sed -i "s:-O2:${CFLAGS}:" pppstats/Makefile.linux
-  sed -i "s:-O2 -g -pipe:${CFLAGS}:" chat/Makefile.linux
-  sed -i "s:-O:${CFLAGS}:" pppdump/Makefile.linux
+  #export CFLAGS="$CFLAGS -D_GNU_SOURCE"
+  #sed -i "s:-O2 -pipe -Wall -g:${CFLAGS}:" pppd/Makefile.linux
+  #sed -i "s:-g -O2:${CFLAGS}:" pppd/plugins/Makefile.linux
+  #sed -i "s:-O2:${CFLAGS}:" pppstats/Makefile.linux
+  #sed -i "s:-O2 -g -pipe:${CFLAGS}:" chat/Makefile.linux
+  #sed -i "s:-O:${CFLAGS}:" pppdump/Makefile.linux
 
   # active filter
-  sed -i "s:^#FILTER=y:FILTER=y:" pppd/Makefile.linux
+  #sed -i "s:^#FILTER=y:FILTER=y:" pppd/Makefile.linux
   # ipv6 support
-  sed -i "s:^#HAVE_INET6=y:HAVE_INET6=y:" pppd/Makefile.linux
+  #sed -i "s:^#HAVE_INET6=y:HAVE_INET6=y:" pppd/Makefile.linux
   # Microsoft proprietary Callback Control Protocol
-  sed -i "s:^#CBCP=y:CBCP=y:" pppd/Makefile.linux 
+  #sed -i "s:^#CBCP=y:CBCP=y:" pppd/Makefile.linux 
   
   #fix from FW for glibc 2.25
   #patch -p1 -i ${srcdir}/fix-linux-vs-glibc-headers-compile-error-mess.patch
