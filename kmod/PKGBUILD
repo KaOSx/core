@@ -1,17 +1,17 @@
 
 pkgname=kmod
-pkgver=27
+pkgver=28
 pkgrel=1
 #_kver=4.0.5-1
 pkgdesc="Linux kernel module handling"
 arch=('x86_64')
 url='https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/tree/README'
 license=('GPL2')
-depends=('glibc' 'zlib')
+depends=('glibc' 'zlib' 'zstd')
 options=('!libtool')
 source=("https://www.kernel.org/pub/linux/utils/kernel/kmod/${pkgname}-${pkgver}.tar.xz"
         'depmod-search.conf')
-sha256sums=('c1d3fbf16ca24b95f334c1de1b46f17bbe5a10b0e81e72668bdc922ebffbbc0c'
+sha256sums=('3969fc0f13daa98084256337081c442f8749310089e48aa695c9b4dfe1b3a26c'
             '884bf2246f9cd42a4dce9886153d91a7cdfb0dcabcb0f293d31cb33077be76a4')
 
 build() {
@@ -22,6 +22,7 @@ build() {
     --with-openssl \
     --with-xz \
     --with-zlib \
+    --with-zstd \
     --disable-test-modules
   make
 }
