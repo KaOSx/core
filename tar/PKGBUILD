@@ -1,7 +1,7 @@
 
 pkgname=tar
-pkgver=1.32
-pkgrel=2
+pkgver=1.33
+pkgrel=1
 pkgdesc="Utility used to store, backup, and transport files"
 arch=('x86_64')
 url="https://www.gnu.org/software/tar/tar.html"
@@ -10,7 +10,7 @@ groups=('base')
 depends=('glibc' 'sh')
 options=('!emptydirs')
 source=("https://ftp.gnu.org/gnu/tar/${pkgname}-${pkgver}.tar.xz")
-sha1sums=('162e00af4702565119c05465e8b6f21c75092794')
+sha1sums=('3324ae8282ba549fb8d8dd929ddd4f4e866238ad')
 
 build() {
   cd ${pkgname}-${pkgver}
