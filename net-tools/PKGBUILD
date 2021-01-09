@@ -1,6 +1,6 @@
 
 pkgname=net-tools
-pkgver=1.60.7
+pkgver=2.10
 _commit=0eebece8c964e3cfa8a018f42b2e7e751a7009a0
 pkgrel=1
 pkgdesc="Configuration tools for Linux networking"
@@ -9,19 +9,20 @@ license=('GPL')
 url="https://sourceforge.net/projects/net-tools/"
 groups=('base')
 depends=('glibc')
-source=("https://sourceforge.net/code-snapshots/git/n/ne/net-tools/code.git/net-tools-code-${_commit}.zip")
+#source=("https://sourceforge.net/code-snapshots/git/n/ne/net-tools/code.git/net-tools-code-${_commit}.zip")
+source=("https://sourceforge.net/projects/net-tools/files/net-tools-${pkgver}.tar.xz")
 options=('!makeflags')
-md5sums=('91301780a363690dffa6ee07084e80b0')
+md5sums=('78aae762c95e2d731faf88d482e4cde5')
 
 build() {
-  cd ${pkgname}-code-${_commit}
+  cd ${pkgname}-${pkgver}
   
   yes "" | make
 }
 
 package() {
-  cd ${pkgname}-code-${_commit}
-  make DESTDIR=${pkgdir} update
+  cd ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
 
   # hostname is provided by inetutils
   rm ${pkgdir}/bin/{hostname,dnsdomainname,domainname}
