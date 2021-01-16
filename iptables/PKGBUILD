@@ -1,6 +1,6 @@
 
 pkgname=iptables
-pkgver=1.8.6
+pkgver=1.8.7
 pkgrel=1
 pkgdesc="A Linux kernel packet control tool"
 arch=('x86_64')
@@ -21,7 +21,7 @@ source=("https://www.netfilter.org/projects/iptables/files/${pkgname}-${pkgver}.
         'ip6tables.service'
         'iptables-flush'
         'nft.patch')
-sha256sums=('a0f4fe0c3eb8faa5bd9c8376d132f340b9558e750c91deb2d5028aa3d0047767'
+sha256sums=('c109c96bb04998cd44156622d36f8e04b140701ec60531a10668cfdff5e8d8f0'
             '630d774f089703c2c7370db6d7c188dae25d00c26feaa3d3de8eb52519033948'
             '9e83d7ae39d31881790f814930d44acbaeab1520adb2fb4fcb80f0bbfab174b9'
             '09b90da35c2c8cb0fbda63b300f06d2387a102ca53a40980ef0b49829e249528'
