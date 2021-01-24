@@ -2,14 +2,14 @@
 pkgname=perl-locale-gettext
 _pkgname=Locale-gettext
 pkgver=1.07
-pkgrel=3
+pkgrel=4
 pkgdesc="Permits access from Perl to the gettext() family of functions"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
-url="https://search.cpan.org/dist/${_pkgname}/"
+url="https://metacpan.org/release/gettext"
 depends=('gettext' 'perl')
 options=('!emptydirs')
-source=("https://search.cpan.org/CPAN/authors/id/P/PV/PVANDRY/${_pkgname}-${pkgver}.tar.gz")
+source=("https://cpan.metacpan.org/authors/id/P/PV/PVANDRY/${_pkgname}-${pkgver}.tar.gz")
 sha256sums=('909d47954697e7c04218f972915b787bd1244d75e3bd01620bc167d5bbc49c15')
 
 build() {

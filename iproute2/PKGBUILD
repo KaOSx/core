@@ -1,7 +1,7 @@
 
 pkgname=iproute2
 pkgver=5.10.0
-pkgrel=2
+pkgrel=3
 pkgdesc="IP Routing Utilities"
 arch=('x86_64')
 license=('GPL2')
