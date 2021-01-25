@@ -1,6 +1,6 @@
 
 pkgname=tzdata
-pkgver=2020f
+pkgver=2021a
 pkgrel=1
 pkgdesc="Sources for time zone and daylight saving time data"
 arch=('x86_64')
@@ -8,7 +8,7 @@ url="https://www.iana.org/time-zones"
 license=('GPL')
 options=('!emptydirs')
 source=("https://www.iana.org/time-zones/repository/releases/${pkgname}${pkgver}.tar.gz")
-md5sums=('e7d618fe3fd16fdd290abc5e74cb264e')
+md5sums=('20eae7d1da671c6eac56339c8df85bbd')
 
 timezones=('africa' 'antarctica' 'asia' 'australasia'
            'europe' 'northamerica' 'southamerica'
