@@ -1,7 +1,7 @@
 
 pkgname=inetutils
-pkgver=1.9.4
-pkgrel=8
+pkgver=2.0
+pkgrel=1
 pkgdesc="A collection of common network programs."
 arch=('x86_64')
 url="https://www.gnu.org/software/inetutils/"
@@ -13,7 +13,7 @@ options=('!emptydirs')
 source=("https://ftp.gnu.org/gnu/inetutils/${pkgname}-${pkgver}.tar.gz"
         'ftpd.conf' 'telnet.xinetd' 'talk.xinetd' 'rlogin.xinetd'
         'rsh.xinetd' 'ftpd.service')
-md5sums=('04852c26c47cc8c6b825f2b74f191f52'
+md5sums=('7f940af521931ae891102acede358a18'
          'e6e6e5990a2e8159a276fef8fbf54c04'
          '8596208d119045543c5fb644e1d713d5'
          '2c3655985cf122591d71d031af84ff90'
