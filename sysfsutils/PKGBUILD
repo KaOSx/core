@@ -1,7 +1,7 @@
 
 pkgname=sysfsutils
-pkgver=2.1.0
-pkgrel=12
+pkgver=2.1.1
+pkgrel=1
 pkgdesc="System Utilities Based on Sysfs"
 arch=('x86_64')
 license=('GPL' 'LGPL')
@@ -9,13 +9,17 @@ url="http://linux-diag.sourceforge.net/Sysfsutils.html"
 groups=('base')
 depends=('glibc')
 options=('!libtool')
-source=("https://downloads.sourceforge.net/sourceforge/linux-diag/${pkgname}-${pkgver}.tar.gz")
-md5sums=('14e7dcd0436d2f49aa403f67e1ef7ddc')
+#source=("https://downloads.sourceforge.net/sourceforge/linux-diag/${pkgname}-${pkgver}.tar.gz")
+source=("https://github.com/linux-ras/sysfsutils/archive/v${pkgver}.tar.gz")
+md5sums=('537c110be7244905997262854505c30f')
 
 build() {
   cd ${pkgname}-${pkgver}
   
-  ./configure --prefix=/usr --mandir=/usr/share/man
+  ./autogen
+  ./configure --prefix=/usr \
+    --mandir=/usr/share/man \
+    --disable-static
   make
 }
 
@@ -29,6 +33,6 @@ package() {
   cd ${pkgname}-${pkgver}
   
   make DESTDIR=${pkgdir} install
-  rm ${pkgdir}/usr/lib/libsysfs.a
+  #rm ${pkgdir}/usr/lib/libsysfs.a
 }
 
