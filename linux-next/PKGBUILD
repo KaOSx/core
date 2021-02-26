@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 
 _basekernel=5.11
 _srcname=linux-5.11
-pkgver=5.11.1
+pkgver=5.11.2
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -33,7 +33,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('d2985a3f16ef1ea3405c04c406e29dcc'
-         '0e4274c495b4c0cbf41dd3842c87de31'
+         '4f2437097d20455c71d1b1866469d6be'
          'b1d14669770a7196977dd5f32e8efcf7'
          'bf7d8e44e691120f69d0a435787f0686'
          '8d38c7f72e85d4eda45073b72c92b776'
