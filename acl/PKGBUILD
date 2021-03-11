@@ -1,7 +1,7 @@
 
 pkgname=acl
-pkgver=2.2.53
-pkgrel=2
+pkgver=2.3.0
+pkgrel=1
 pkgdesc="Library for filesystem ACL support"
 arch=('x86_64')
 url="https://savannah.nongnu.org/projects/acl"
@@ -9,7 +9,7 @@ license=('LGPL')
 depends=('attr')
 options=('!libtool')
 source=("https://download.savannah.gnu.org/releases/acl/${pkgname}-${pkgver}.tar.gz")
-md5sums=('007aabf1dbb550bcddde52a244cd1070')
+md5sums=('e2d865a59763e5c2afdbf1e2ccfcef1b')
 
 build() {
   cd ${pkgname}-${pkgver}
