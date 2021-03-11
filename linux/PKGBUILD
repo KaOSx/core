@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=5.11
-pkgver=5.11.5
+pkgver=5.11.6
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -29,8 +29,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.11.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('d2985a3f16ef1ea3405c04c406e29dcc'
-         '6f548277e15547c62b33c1b11abecfee'
-         '700e3a7bac07e883d736198691165a31'
+         'c21187555e202f07cb3cd202763a2874'
+         '78c3d5a8e8d62cfdfc113cc6cb3ff205'
          'acf01f1de687fca1c9cdeed943a31920'
          'b0b9370da0f44910655002ec8ca0101b'
          '750db0215390fd24620832c9759be067'
