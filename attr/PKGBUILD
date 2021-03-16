@@ -1,6 +1,6 @@
 
 pkgname=attr
-pkgver=2.5.0
+pkgver=2.5.1
 pkgrel=1
 pkgdesc="Extended attribute support library for ACL support"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('glibc')
 makedepends=('gettext')
 options=('!libtool')
 source=("https://download.savannah.gnu.org/releases/attr/${pkgname}-${pkgver}.tar.gz")
-md5sums=('d7f233f477651bc7b073ee74b8b485e2')
+md5sums=('ac1c5a7a084f0f83b8cace34211f64d8')
 
 build() {
   cd ${pkgname}-${pkgver}
