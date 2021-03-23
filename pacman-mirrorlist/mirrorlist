@@ -11,6 +11,9 @@ Server = http://mirrors.redcorelinux.org/kaosx/$repo
 Server = http://mirror6.layerjet.com/kaos/$repo
 Server = https://mirror.alpix.eu/kaos/$repo
 
+# Canada
+Server = https://ca.kaosx.cf/$repo
+
 # China
 Server = https://mirrors.tuna.tsinghua.edu.cn/KaOS/$repo
 Server = https://mirrors.nju.edu.cn/kaos/$repo
