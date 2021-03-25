@@ -1,7 +1,7 @@
 
 pkgname=openssl
-pkgver=1.1.1.10
-_pkgver=1.1.1j
+pkgver=1.1.1.11
+_pkgver=1.1.1k
 pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
@@ -13,7 +13,7 @@ options=('!makeflags')
 backup=('etc/ssl/openssl.cnf')
 source=("https://www.openssl.org/source/${pkgname}-${_pkgver}.tar.gz"
         'ca-dir_openssl1.1.patch')
-sha256sums=('aaf2fcb575cdf6491b98ab4829abf78a3dec8402b8b81efc8f23c00d443981bf'
+sha256sums=('892a0875b9872acd04a9fde79b1f943075d5ea162415de3047c327df33fbaee5'
             'd6dd76398e67f07640e49e7a6b0f0585801dcd6a031b72bf4d19938562512c4d')
 
 build() {
@@ -38,6 +38,7 @@ check() {
     # the test fails due to missing write permissions in /etc/ssl
     # revert this patch for make test
     patch -p0 -R -i ${srcdir}/ca-dir_openssl1.1.patch
+    # /test/recipes/30-test_afalg.t                  (Wstat: 256 Tests: 1 Failed: 1)
     make test
     patch -p0 -i ${srcdir}/ca-dir_openssl1.1.patch
 }
