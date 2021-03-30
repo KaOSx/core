@@ -21,7 +21,6 @@ build() {
     --enable-manual-pages \
     --enable-hwsim \
     --enable-ofono \
-    --enable-sim-hardcoded \
     --enable-wired 
   make
 }
