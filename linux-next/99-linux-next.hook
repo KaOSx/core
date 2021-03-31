@@ -8,4 +8,5 @@ Target = usr/lib/initcpio/*
 [Action]
 Description = Updating linux-next initcpios
 When = PostTransaction
-Exec = /usr/bin/mkinitcpio -p linux-next
+# Exec = /usr/bin/mkinitcpio -p linux-next
+Exec = /usr/share/libalpm/scripts/dracut-next-install

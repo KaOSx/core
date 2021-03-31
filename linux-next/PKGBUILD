@@ -31,6 +31,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux-next.preset'
         '99-linux-next.hook'
+        'dracut-next-install'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('d2985a3f16ef1ea3405c04c406e29dcc'
          'f6ed67b110711d1814521f6b9f200179'
@@ -114,15 +115,16 @@ package_linux-next() {
   # add vmlinux
   install -D -m644 vmlinux "${pkgdir}/usr/src/linux-${_kernver}/vmlinux"
 
-  # install fallback mkinitcpio preset file and pacman hook for kernel
+  # install mkinitcpio preset file, dracut-install file and pacman hook for kernel
   install -D -m644 "${srcdir}/linux-next.preset" "${pkgdir}/etc/mkinitcpio.d/linux-next.preset"
   install -D -m644 "${srcdir}/99-linux-next.hook" "${pkgdir}/usr/share/libalpm/hooks/99-${pkgbase}.hook"
+  install -D -m644 "${srcdir}/dracut-next-install" "${pkgdir}/usr/share/libalpm/scrpts/dracut-next-install"
 
   # set correct depmod command for install
   sed \
     -e  "s/KERNEL_NAME=.*/KERNEL_NAME=${_kernelname}/" \
     -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/" \
-    -i "${startdir}/linux-next.install"
+    -i "${startdir}/linux-next.install" "${startdir}/dracut-next-install"
   sed \
     -e "1s|'linux.*'|'${pkgname}'|" \
     -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${pkgname}\"|" \

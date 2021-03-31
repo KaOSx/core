@@ -1,0 +1,15 @@
+#!/bin/bash
+
+KERNEL_NAME=-next
+KERNEL_VERSION=5.11.11-1-next
+
+if [ -f /usr/bin/dracut ]; then 
+
+    echo ":: Building initramfs for linux${KERNEL_NAME}-${KERNEL_VERSION}"
+	#dracut -f -H --no-hostonly-cmdline --zstd --no-early-microcode "/boot/initramfs-linux${KERNEL_NAME}.img" --kver ${KERNEL_VERSION}
+
+else
+
+    /usr/bin/mkinitcpio -p linux-next
+
+fi
