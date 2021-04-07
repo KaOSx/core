@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 
 _basekernel=5.11
 _srcname=linux-5.11
-pkgver=5.11.11
+pkgver=5.11.12
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -34,8 +34,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'dracut-next-install'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('d2985a3f16ef1ea3405c04c406e29dcc'
-         'f6ed67b110711d1814521f6b9f200179'
-         '9324bcf5b3052e8ab4b4a6b596f218ea'
+         'f42521191ed31716f10731a2cd7f1bd9'
+         '4e4ba0997b32cda8206824ce7b3e3d7c'
          'acf01f1de687fca1c9cdeed943a31920'
          'b0b9370da0f44910655002ec8ca0101b'
          '750db0215390fd24620832c9759be067'
@@ -47,7 +47,8 @@ md5sums=('d2985a3f16ef1ea3405c04c406e29dcc'
          '2cfb54b4a952a6aee004c4a26fdd2ba8'
          '8c52e6d232b461446b7363e86522a720'
          'e19be83ca72175a29b36d8ab08105050'
-         'ae97691ba50d387f3ab98585514e3b22'
+         'fc871b37f1cd4f12ac7b0bab74f8aa5f'
+         '192e2b682e26d7d13a440f79dd5997e5'
          'a71035252857af0cf5d84c591b919996')
 
 build() {
@@ -118,13 +119,13 @@ package_linux-next() {
   # install mkinitcpio preset file, dracut-install file and pacman hook for kernel
   install -D -m644 "${srcdir}/linux-next.preset" "${pkgdir}/etc/mkinitcpio.d/linux-next.preset"
   install -D -m644 "${srcdir}/99-linux-next.hook" "${pkgdir}/usr/share/libalpm/hooks/99-${pkgbase}.hook"
-  install -D -m644 "${srcdir}/dracut-next-install" "${pkgdir}/usr/share/libalpm/scrpts/dracut-next-install"
+  install -D -m755 "${srcdir}/dracut-next-install" "${pkgdir}/usr/share/libalpm/scripts/dracut-next-install"
 
   # set correct depmod command for install
   sed \
     -e  "s/KERNEL_NAME=.*/KERNEL_NAME=${_kernelname}/" \
     -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/" \
-    -i "${startdir}/linux-next.install" "${startdir}/dracut-next-install"
+    -i "${startdir}/linux-next.install" "${pkgdir}/usr/share/libalpm/scripts/dracut-next-install"
   sed \
     -e "1s|'linux.*'|'${pkgname}'|" \
     -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${pkgname}\"|" \
