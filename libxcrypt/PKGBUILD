@@ -2,7 +2,7 @@
 # not installable yet, needs glibc rebuild/2.32, to stop /usr/include/crypt.h
 # and /usr/lib/libcrypt.so conflict
 pkgname=libxcrypt
-pkgver=4.4.18
+pkgver=4.4.19
 pkgrel=1
 pkgdesc='Extended crypt library for descrypt, md5crypt, bcrypt, and others'
 arch=('x86_64')
@@ -10,7 +10,7 @@ url='https://github.com/besser82/libxcrypt/'
 license=('GPL')
 depends=('glibc')
 source=("https://github.com/besser82/libxcrypt/archive/v${pkgver}.tar.gz")
-md5sums=('b7c35b67b07744493d97b3db04daf499')
+md5sums=('a088bd62745b1e29a9318eb5a44c09f7')
 
 build() {
   cd ${pkgname}-${pkgver}

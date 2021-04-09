@@ -1,7 +1,7 @@
 
 pkgname=rsync
 pkgver=3.2.3
-pkgrel=2
+pkgrel=3
 pkgdesc="Open source utility that provides fast incremental file transfer. "
 arch=('x86_64')
 url="https://rsync.samba.org/"
@@ -9,13 +9,18 @@ license=('GPL3')
 depends=('perl' 'lz4' 'openssl' 'xxhash' 'zstd')
 backup=('etc/rsyncd.conf' 'etc/xinetd.d/rsync')
 source=("https://download.samba.org/pub/rsync/src/${pkgname}-${pkgver}.tar.gz"
-        'rsyncd.conf')
+        'rsyncd.conf'
+        'lchmod.diff')
 md5sums=('209f8326f5137d8817a6276d9577a2f1'
-         'bce64d122a8e0f86872a4a21a03bc7f3')
+         'bce64d122a8e0f86872a4a21a03bc7f3'
+         '61e214c952ad6b7bc1e192717d4e0591')
 
 build() {
 	cd ${pkgname}-${pkgver}
- 
+	# from https://github.com/WayneD/rsync/commit/9dd62525f3b98d692e031f22c02be8f775966503
+	# rsync call in linux-api-headers header_install exposed fail, does not fully fix
+	patch -p1 -i ${srcdir}/lchmod.diff
+
 	./configure --prefix=/usr \
         --disable-debug
 	make 

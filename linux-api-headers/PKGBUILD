@@ -1,8 +1,7 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=linux-api-headers
-pkgver=5.9
-_basever=5.9
+pkgver=5.11.12
 pkgrel=1
 pkgdesc="Kernel headers sanitized for use in userspace"
 arch=('x86_64')
@@ -11,21 +10,18 @@ license=('GPL2')
 provides=("kernel-headers=${pkgver}")
 conflicts=('kernel-headers')
 replaces=('kernel-headers')
-source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-${_basever}.tar.xz"
-        "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz")
-md5sums=('0959d759fd19e146367221aff504ad91'
-         'ae82f426cd3a08e3009a1ae039c08866')
+source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-${pkgver}.tar.xz")
+sha256sums=('c0a26f173448b6d807c5f056e99601d090a6033bfd0c56824ba6e8e7a7be0e7d')
 
 build() {
-  cd ${srcdir}/linux-${_basever}
-  [[ $pkgver != $_basever ]] && patch -p1 -i ${srcdir}/patch-${pkgver} || true
+  cd linux-${pkgver}
 
   make mrproper
   make headers_check
 }
 
 package() {
-  cd ${srcdir}/linux-${_basever}
+  cd linux-${pkgver}
   make INSTALL_HDR_PATH=${pkgdir}/usr headers_install
 
   # mostly duplicate headers from libdrm

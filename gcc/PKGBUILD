@@ -4,7 +4,7 @@
 # http://www.linuxfromscratch.org/lfs/view/7.6/chapter06/gcc.html
 
 pkgname=('gcc' 'gcc-libs') 
-pkgver=10.2.0
+pkgver=10.3.0
 _pkgver=10
 _snapshot=9.3.0-RC-20200305
 _islver=0.18
@@ -13,13 +13,13 @@ pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
 url="https://gcc.gnu.org"
-makedepends=('binutils>=2.35.1' 'libmpc' 'doxygen' 'autogen')
+makedepends=('binutils>=2.36.1' 'libmpc' 'doxygen' 'autogen')
 checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
 source=("https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
 #source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
         "https://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2")
-sha512sums=('42ae38928bd2e8183af445da34220964eb690b675b1892bbeb7cd5bb62be499011ec9a93397dba5e2fb681afadfc6f2767d03b9035b44ba9be807187ae6dc65e'
+sha512sums=('2b2dd7453d48a398c29eaebd1422b70341001b8c90a62aee51e83344e7fdd8a8e45f82a4a9165bd7edc76dada912c932f4b6632c5636760fec4c5d7e402b3f86'
             '85d0b40f4dbf14cb99d17aa07048cdcab2dc3eb527d2fbb1e84c41b2de5f351025370e57448b63b2b8a8cf8a0843a089c3263f9baee1542d5c2e1cb37ed39d94')
 
   _basedir="gcc-${pkgver}"
