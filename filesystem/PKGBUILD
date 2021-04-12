@@ -1,7 +1,7 @@
 
 pkgname=filesystem
 pkgver=2021.01
-pkgrel=1
+pkgrel=2
 _codename=2021
 pkgdesc='Base filesystem'
 arch=('x86_64')
@@ -35,7 +35,7 @@ md5sums=('1109716df48ad1bfbf08520ea12fe347'
          '6f48288b6fcaf0065fcb7b0e525413e0'
          '22518e922891f9359f971f4f5b4e793c'
          '09bce9236c3729d31aaa528bcf5d198e'
-         'f3b6ae7db8adffaaa4bffc6099dcbd50'
+         'e043e5557aefb702a2eae3704aee63b8'
          '13d8d253ae8613ba2474683f585e73db'
          'aa4a22253d42ef93d7b67e3849ecd99f'
          '201bbb8b4734d2f46afe1e24d7cc6173'

@@ -1,7 +1,7 @@
 
 pkgname=jfsutils
 pkgver=1.1.15
-pkgrel=7
+pkgrel=8
 pkgdesc="JFS filesystem utilities"
 arch=('x86_64')
 url="http://jfs.sourceforge.net"
@@ -9,13 +9,16 @@ license=('GPL')
 groups=('base')
 depends=('e2fsprogs' 'util-linux')
 source=("http://jfs.sourceforge.net/project/pub/${pkgname}-${pkgver}.tar.gz"
-        'inttypes.patch')
+        'inttypes.patch'
+        "https://gitweb.gentoo.org/repo/gentoo.git/plain/sys-fs/jfsutils/files/jfsutils-1.1.15-gcc10.patch")
 md5sums=('8809465cd48a202895bc2a12e1923b5d'
-         'bd4a07f017b617b7af18701d6dfa0164')
+         'bd4a07f017b617b7af18701d6dfa0164'
+         'dea420874dd554b1a3d505a04d2ab702')
 
 build() {
   cd ${pkgname}-${pkgver}
   patch -p1 -i ${srcdir}/inttypes.patch
+  patch -p1 -i ${srcdir}/jfsutils-1.1.15-gcc10.patch
   
   ./configure --prefix=/usr --sbindir=/sbin 
   make
