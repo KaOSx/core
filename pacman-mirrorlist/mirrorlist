@@ -31,9 +31,6 @@ Server = http://kaos.youm.org/$repo
 # Netherlands
 Server = https://repo.kaosx.us/$repo
 
-# South-Africa
-#Server = http://ftp.wa.co.za/pub/kaos/$repo
-
 # United States
 Server = https://mirror.math.princeton.edu/pub/kaoslinux/$repo
 Server = http://mirror.dacentec.com/kaosx/$repo

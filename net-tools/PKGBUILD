@@ -2,7 +2,7 @@
 pkgname=net-tools
 pkgver=2.10
 _commit=0eebece8c964e3cfa8a018f42b2e7e751a7009a0
-pkgrel=1
+pkgrel=2
 pkgdesc="Configuration tools for Linux networking"
 arch=('x86_64')
 license=('GPL')
