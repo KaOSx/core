@@ -1,7 +1,7 @@
 
 pkgname=vi
-pkgver=050325
-pkgrel=10
+pkgver=070224
+pkgrel=1
 pkgdesc='The original ex/vi text editor.'
 arch=('x86_64')
 url='http://ex-vi.sourceforge.net/'
@@ -9,12 +9,12 @@ license=('custom:ex')
 depends=('ncurses')
 groups=('base')
 options=('strip' '!libtool' 'emptydirs')
-source=("https://downloads.sourceforge.net/sourceforge/ex-vi/ex-${pkgver}.tar.bz2"
+source=("https://sourceforge.net/projects/kaosx/files/sources/vi/ex-${pkgver}.tar.xz"
         'navkeys.patch'
         'increase-tube.patch'
         'exrc.sample' 
         'preserve_dir.patch')
-md5sums=('e668595254233e4d96811083a3e4e2f3'
+md5sums=('dda686d53f6d3e6e8a0a3701e7a4a56a'
          'aac133930047eafa4f28736cfaf976b3'
          'e596e05a00a24187b576e389fa1de45d'
          'd3b483c994d859232ce369b82a4b5668'
@@ -24,11 +24,11 @@ build() {
   cd ex-${pkgver}
 
   patch -p1 -i ${srcdir}/navkeys.patch
-  patch -p0 -i ${srcdir}/increase-tube.patch
+  #patch -p0 -i ${srcdir}/increase-tube.patch
   patch -p1 -i ${srcdir}/preserve_dir.patch
 
   make PREFIX=/usr LIBEXECDIR=/usr/lib/ex PRESERVEDIR=/var/lib/ex \
-      'FEATURES=-DCHDIR -DFASTTAG -DUCVISUAL -DMB -DBIT8' TERMLIB=ncurses
+      TERMLIB=ncurses FEATURES="-DCHDIR -DFASTTAG -DUCVISUAL -DMB -DBIT8"
 }
 
 package() {
