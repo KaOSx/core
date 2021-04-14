@@ -4,7 +4,7 @@
 pkgname=glibc
 pkgver=2.33
 _commit=9533f19aa5cd265db813db6923f8eb2fc9c3bcc3
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="https://www.gnu.org/software/libc"
@@ -19,15 +19,21 @@ options=('!strip')
 install=glibc.install
 source=("https://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
 #source=("https://github.com/bminor/glibc/archive/${_commit}.zip"
-        #"http://www.linuxfromscratch.org/patches/lfs/development/glibc-2.22-largefile-1.patch"
+        "https://github.com/bminor/glibc/commit/17f0ff097887008b2d3dca270c8ffbb4b43a8749.diff"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
 md5sums=('390bbd889c7e8e8a7041564cb6b27cca'
-         #'203fe9133e82f2b59969c116b70fd84e'
+         '1902b3629a1b43cdf7bfa2c2412ba6b6'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
          '8b3298de2392a10905a64ceccf56d2c1')
+
+prepare() {
+  cd ${pkgname}-${pkgver}
+
+  patch -p1 -i ${srcdir}/17f0ff097887008b2d3dca270c8ffbb4b43a8749.diff
+}
 
 build() {
   mkdir -p build
@@ -46,6 +52,7 @@ build() {
       --with-bugurl=https://github.com/KaOSx/core/issues \
       --enable-add-ons \
       --enable-bind-now \
+      --enable-kernel=4.4 \
       --disable-profile \
       --enable-stackguard-randomization \
       --enable-lock-elision \
