@@ -1,7 +1,7 @@
 
 pkgname=iputils
 pkgver=20210202
-pkgrel=2
+pkgrel=4
 pkgdesc="IP Configuration Utilities (and Ping)."
 arch=('x86_64')
 license=('GPL')

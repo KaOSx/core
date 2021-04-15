@@ -1,7 +1,7 @@
 
 pkgname=filesystem
 pkgver=2021.01
-pkgrel=2
+pkgrel=4
 _codename=2021
 pkgdesc='Base filesystem'
 arch=('x86_64')
