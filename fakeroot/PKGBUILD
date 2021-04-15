@@ -1,7 +1,7 @@
 
 pkgname=fakeroot
 pkgver=1.25.3
-pkgrel=1
+pkgrel=2
 pkgdesc="Gives a fake root environment, useful for building packages as a non-privileged user."
 arch=('x86_64')
 license=('GPL')
@@ -11,13 +11,13 @@ install="fakeroot.install"
 depends=('glibc' 'filesystem' 'util-linux' 'sed' 'sh')
 options=('!libtool')
 source=("https://deb.debian.org/debian/pool/main/f/fakeroot/${pkgname}_${pkgver}.orig.tar.gz"
-        "dlsym.patch")
+        "https://salsa.debian.org/clint/fakeroot/-/commit/63cca4bbd0b360a523629fbee51e5100a01d2d0b.diff")
 md5sums=('f6104ef6960c962377ef062bf222a1d2'
-         '62f6a56ee03486d2d8d178b922c612cd')
+         'b920a77eb39334eb97ce568823ca0b18')
 
 build() {
   cd ${pkgname}-${pkgver}
-  #patch -p1 -i ${srcdir}/dlsym.patch
+  patch -p1 -i ${srcdir}/63cca4bbd0b360a523629fbee51e5100a01d2d0b.diff
   sed -i 's|SUBDIRS = de es fr nl pt sv|#SUBDIRS = de es fr nl pt sv|' doc/Makefile.am
 
   ./bootstrap

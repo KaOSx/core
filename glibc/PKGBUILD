@@ -4,7 +4,7 @@
 pkgname=glibc
 pkgver=2.33
 _commit=9533f19aa5cd265db813db6923f8eb2fc9c3bcc3
-pkgrel=2
+pkgrel=3
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="https://www.gnu.org/software/libc"
