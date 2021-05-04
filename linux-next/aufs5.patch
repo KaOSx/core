@@ -1,6 +1,6 @@
-diff -Naur null/Documentation/ABI/testing/debugfs-aufs linux-5.11/Documentation/ABI/testing/debugfs-aufs
+diff -Naur null/Documentation/ABI/testing/debugfs-aufs linux-5.12/Documentation/ABI/testing/debugfs-aufs
 --- /dev/null
-+++ linux-5.11/Documentation/ABI/testing/debugfs-aufs	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/ABI/testing/debugfs-aufs	2021-05-04 17:45:33.493803314 +0200
 @@ -0,0 +1,55 @@
 +What:		/debug/aufs/si_<id>/
 +Date:		March 2009
@@ -32,7 +32,7 @@ diff -Naur null/Documentation/ABI/testing/debugfs-aufs linux-5.11/Documentation/
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
 +
-+What:		/debug/aufs/si_<id>/xi0, xi1 ... xiN and xiN-N
++What:		/debug/aufs/si_<id>/xi<branch-index>
 +Date:		March 2009
 +Contact:	J. R. Okajima <hooanon05g@gmail.com>
 +Description:
@@ -57,9 +57,9 @@ diff -Naur null/Documentation/ABI/testing/debugfs-aufs linux-5.11/Documentation/
 +		be created.
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
-diff -Naur null/Documentation/ABI/testing/sysfs-aufs linux-5.11/Documentation/ABI/testing/sysfs-aufs
+diff -Naur null/Documentation/ABI/testing/sysfs-aufs linux-5.12/Documentation/ABI/testing/sysfs-aufs
 --- /dev/null
-+++ linux-5.11/Documentation/ABI/testing/sysfs-aufs	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/ABI/testing/sysfs-aufs	2021-05-04 17:45:33.493803314 +0200
 @@ -0,0 +1,31 @@
 +What:		/sys/fs/aufs/si_<id>/
 +Date:		March 2009
@@ -69,14 +69,14 @@ diff -Naur null/Documentation/ABI/testing/sysfs-aufs linux-5.11/Documentation/AB
 +		per aufs mount, where <id> is a unique id generated
 +		internally.
 +
-+What:		/sys/fs/aufs/si_<id>/br0, br1 ... brN
++What:		/sys/fs/aufs/si_<id>/br<idx>
 +Date:		March 2009
 +Contact:	J. R. Okajima <hooanon05g@gmail.com>
 +Description:
 +		It shows the abolute path of a member directory (which
 +		is called branch) in aufs, and its permission.
 +
-+What:		/sys/fs/aufs/si_<id>/brid0, brid1 ... bridN
++What:		/sys/fs/aufs/si_<id>/brid<idx>
 +Date:		July 2013
 +Contact:	J. R. Okajima <hooanon05g@gmail.com>
 +Description:
@@ -92,9 +92,9 @@ diff -Naur null/Documentation/ABI/testing/sysfs-aufs linux-5.11/Documentation/AB
 +		even if it is the default path.
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
-diff -Naur null/Documentation/filesystems/aufs/design/01intro.txt linux-5.11/Documentation/filesystems/aufs/design/01intro.txt
+diff -Naur null/Documentation/filesystems/aufs/design/01intro.txt linux-5.12/Documentation/filesystems/aufs/design/01intro.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/01intro.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/01intro.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,171 @@
 +
 +# Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -267,9 +267,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/01intro.txt linux-5.11/Doc
 +Some people may think it is better to pass such work to user space
 +helper, instead of doing in kernel space. Actually I am still thinking
 +about it. But currently I have implemented it in kernel space.
-diff -Naur null/Documentation/filesystems/aufs/design/02struct.txt linux-5.11/Documentation/filesystems/aufs/design/02struct.txt
+diff -Naur null/Documentation/filesystems/aufs/design/02struct.txt linux-5.12/Documentation/filesystems/aufs/design/02struct.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/02struct.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/02struct.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,258 @@
 +
 +# Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -529,9 +529,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/02struct.txt linux-5.11/Do
 +- etc.
 +
 +For this purpose, use "aumvdown" command in aufs-util.git.
-diff -Naur null/Documentation/filesystems/aufs/design/03atomic_open.txt linux-5.11/Documentation/filesystems/aufs/design/03atomic_open.txt
+diff -Naur null/Documentation/filesystems/aufs/design/03atomic_open.txt linux-5.12/Documentation/filesystems/aufs/design/03atomic_open.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/03atomic_open.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/03atomic_open.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,85 @@
 +
 +# Copyright (C) 2015-2020 Junjiro R. Okajima
@@ -618,9 +618,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/03atomic_open.txt linux-5.
 +       ->atomic_open() are lost. in the ordinary case, the checks are
 +       done by VFS:do_last(), lookup_open() and atomic_open(). some can
 +       be implemented in aufs, but not all I am afraid.
-diff -Naur null/Documentation/filesystems/aufs/design/03lookup.txt linux-5.11/Documentation/filesystems/aufs/design/03lookup.txt
+diff -Naur null/Documentation/filesystems/aufs/design/03lookup.txt linux-5.12/Documentation/filesystems/aufs/design/03lookup.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/03lookup.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/03lookup.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,113 @@
 +
 +# Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -735,9 +735,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/03lookup.txt linux-5.11/Do
 +   test, and skip the revalidation in step 4. It is useful and improves
 +   aufs performance when system surely hide the aufs branches from user,
 +   by over-mounting something (or another method).
-diff -Naur null/Documentation/filesystems/aufs/design/04branch.txt linux-5.11/Documentation/filesystems/aufs/design/04branch.txt
+diff -Naur null/Documentation/filesystems/aufs/design/04branch.txt linux-5.12/Documentation/filesystems/aufs/design/04branch.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/04branch.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/04branch.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,74 @@
 +
 +# Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -813,9 +813,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/04branch.txt linux-5.11/Do
 +  - a file on the branch is mmap-ed.
 +  - a regular file on the branch is opened for write and there is no
 +    same named entry on the upper branch.
-diff -Naur null/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-5.11/Documentation/filesystems/aufs/design/05wbr_policy.txt
+diff -Naur null/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-5.12/Documentation/filesystems/aufs/design/05wbr_policy.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/05wbr_policy.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/05wbr_policy.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,64 @@
 +
 +# Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -881,9 +881,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-5.1
 +  where the source and the target exists and selects the higher
 +  one. If the selected branch is readonly, then aufs follows the
 +  copyup policy.
-diff -Naur null/Documentation/filesystems/aufs/design/06dirren.dot linux-5.11/Documentation/filesystems/aufs/design/06dirren.dot
+diff -Naur null/Documentation/filesystems/aufs/design/06dirren.dot linux-5.12/Documentation/filesystems/aufs/design/06dirren.dot
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/06dirren.dot	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/06dirren.dot	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,31 @@
 +
 +// to view this graph, run dot(1) command in GRAPHVIZ.
@@ -916,9 +916,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06dirren.dot linux-5.11/Do
 +
 +aufs_lookup -> whinfo [label="load/remove"];
 +}
-diff -Naur null/Documentation/filesystems/aufs/design/06dirren.txt linux-5.11/Documentation/filesystems/aufs/design/06dirren.txt
+diff -Naur null/Documentation/filesystems/aufs/design/06dirren.txt linux-5.12/Documentation/filesystems/aufs/design/06dirren.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/06dirren.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/06dirren.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,102 @@
 +
 +# Copyright (C) 2017-2020 Junjiro R. Okajima
@@ -1022,9 +1022,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06dirren.txt linux-5.11/Do
 +contains two names, before- and after-rename, the name comparision in
 +UDBA handler may not work correctly. In this case, the behaviour will be
 +equivalen to udba=reval case.
-diff -Naur null/Documentation/filesystems/aufs/design/06fhsm.txt linux-5.11/Documentation/filesystems/aufs/design/06fhsm.txt
+diff -Naur null/Documentation/filesystems/aufs/design/06fhsm.txt linux-5.12/Documentation/filesystems/aufs/design/06fhsm.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/06fhsm.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/06fhsm.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,120 @@
 +
 +# Copyright (C) 2011-2020 Junjiro R. Okajima
@@ -1146,9 +1146,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06fhsm.txt linux-5.11/Docu
 +
 +And of course, in every step, an error may happen. So the operation
 +should restore the original file state after an error happens.
-diff -Naur null/Documentation/filesystems/aufs/design/06mmap.txt linux-5.11/Documentation/filesystems/aufs/design/06mmap.txt
+diff -Naur null/Documentation/filesystems/aufs/design/06mmap.txt linux-5.12/Documentation/filesystems/aufs/design/06mmap.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/06mmap.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/06mmap.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,72 @@
 +
 +# Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -1222,9 +1222,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06mmap.txt linux-5.11/Docu
 +  equivalent to vm_prfile described above.
 +
 +I have to give up this "looks-smater" approach.
-diff -Naur null/Documentation/filesystems/aufs/design/06xattr.txt linux-5.11/Documentation/filesystems/aufs/design/06xattr.txt
+diff -Naur null/Documentation/filesystems/aufs/design/06xattr.txt linux-5.12/Documentation/filesystems/aufs/design/06xattr.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/06xattr.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/06xattr.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,96 @@
 +
 +# Copyright (C) 2014-2020 Junjiro R. Okajima
@@ -1322,9 +1322,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06xattr.txt linux-5.11/Doc
 +Some contradiction may happen I am afraid.
 +Do we need another attribute to stop copying XATTR? I am unsure. For
 +now, aufs implements the branch attributes to ignore the error.
-diff -Naur null/Documentation/filesystems/aufs/design/07export.txt linux-5.11/Documentation/filesystems/aufs/design/07export.txt
+diff -Naur null/Documentation/filesystems/aufs/design/07export.txt linux-5.12/Documentation/filesystems/aufs/design/07export.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/07export.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/07export.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,58 @@
 +
 +# Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -1384,9 +1384,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/07export.txt linux-5.11/Do
 +  convert it into ESTALE for NFSD.
 +- readdir(): call lockdep_on/off() because filldir in NFSD calls
 +  lookup_one_len(), vfs_getattr(), encode_fh() and others.
-diff -Naur null/Documentation/filesystems/aufs/design/08shwh.txt linux-5.11/Documentation/filesystems/aufs/design/08shwh.txt
+diff -Naur null/Documentation/filesystems/aufs/design/08shwh.txt linux-5.12/Documentation/filesystems/aufs/design/08shwh.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/08shwh.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/08shwh.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,52 @@
 +
 +# Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -1440,9 +1440,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/08shwh.txt linux-5.11/Docu
 +
 +This new squashfs archive can be stored on the boot device and the
 +initramfs will use it to replace the old one at the next boot.
-diff -Naur null/Documentation/filesystems/aufs/design/10dynop.txt linux-5.11/Documentation/filesystems/aufs/design/10dynop.txt
+diff -Naur null/Documentation/filesystems/aufs/design/10dynop.txt linux-5.12/Documentation/filesystems/aufs/design/10dynop.txt
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/design/10dynop.txt	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/design/10dynop.txt	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,47 @@
 +
 +# Copyright (C) 2010-2020 Junjiro R. Okajima
@@ -1491,9 +1491,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/10dynop.txt linux-5.11/Doc
 +XIP (DAX) mainly.
 +Currently this approach is applied to address_space_operations for
 +regular files only.
-diff -Naur null/Documentation/filesystems/aufs/README linux-5.11/Documentation/filesystems/aufs/README
+diff -Naur null/Documentation/filesystems/aufs/README linux-5.12/Documentation/filesystems/aufs/README
 --- /dev/null
-+++ linux-5.11/Documentation/filesystems/aufs/README	2021-03-04 13:26:00.791273765 +0100
++++ linux-5.12/Documentation/filesystems/aufs/README	2021-05-04 17:45:33.494803322 +0200
 @@ -0,0 +1,401 @@
 +
 +Aufs5 -- advanced multi layered unification filesystem version 5.x
@@ -1896,9 +1896,9 @@ diff -Naur null/Documentation/filesystems/aufs/README linux-5.11/Documentation/f
 +# Local variables: ;
 +# mode: text;
 +# End: ;
-diff -Naur null/fs/aufs/aufs.h linux-5.11/fs/aufs/aufs.h
+diff -Naur null/fs/aufs/aufs.h linux-5.12/fs/aufs/aufs.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/aufs.h	2021-03-04 13:26:00.792273771 +0100
++++ linux-5.12/fs/aufs/aufs.h	2021-05-04 17:45:33.495803330 +0200
 @@ -0,0 +1,62 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -1962,9 +1962,9 @@ diff -Naur null/fs/aufs/aufs.h linux-5.11/fs/aufs/aufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_H__ */
-diff -Naur null/fs/aufs/branch.c linux-5.11/fs/aufs/branch.c
+diff -Naur null/fs/aufs/branch.c linux-5.12/fs/aufs/branch.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/branch.c	2021-03-04 13:26:00.792273771 +0100
++++ linux-5.12/fs/aufs/branch.c	2021-05-04 17:45:33.495803330 +0200
 @@ -0,0 +1,1427 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -3393,10 +3393,10 @@ diff -Naur null/fs/aufs/branch.c linux-5.11/fs/aufs/branch.c
 +
 +	return err;
 +}
-diff -Naur null/fs/aufs/branch.h linux-5.11/fs/aufs/branch.h
+diff -Naur null/fs/aufs/branch.h linux-5.12/fs/aufs/branch.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/branch.h	2021-03-04 13:26:00.792273771 +0100
-@@ -0,0 +1,364 @@
++++ linux-5.12/fs/aufs/branch.h	2021-05-04 17:45:33.495803330 +0200
+@@ -0,0 +1,375 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -3543,6 +3543,11 @@ diff -Naur null/fs/aufs/branch.h linux-5.11/fs/aufs/branch.h
 +static inline struct dentry *au_br_dentry(struct au_branch *br)
 +{
 +	return br->br_path.dentry;
++}
++
++static inline struct user_namespace *au_br_userns(struct au_branch *br)
++{
++	return mnt_user_ns(br->br_path.mnt);
 +}
 +
 +static inline struct super_block *au_br_sb(struct au_branch *br)
@@ -3704,6 +3709,12 @@ diff -Naur null/fs/aufs/branch.h linux-5.11/fs/aufs/branch.h
 +}
 +
 +static inline
++struct user_namespace *au_sbr_userns(struct super_block *sb, aufs_bindex_t bindex)
++{
++	return au_br_userns(au_sbr(sb, bindex));
++}
++
++static inline
 +struct super_block *au_sbr_sb(struct super_block *sb, aufs_bindex_t bindex)
 +{
 +	return au_br_sb(au_sbr(sb, bindex));
@@ -3761,9 +3772,9 @@ diff -Naur null/fs/aufs/branch.h linux-5.11/fs/aufs/branch.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_BRANCH_H__ */
-diff -Naur null/fs/aufs/conf.mk linux-5.11/fs/aufs/conf.mk
+diff -Naur null/fs/aufs/conf.mk linux-5.12/fs/aufs/conf.mk
 --- /dev/null
-+++ linux-5.11/fs/aufs/conf.mk	2021-03-04 13:26:00.792273771 +0100
++++ linux-5.12/fs/aufs/conf.mk	2021-05-04 17:45:33.495803330 +0200
 @@ -0,0 +1,40 @@
 +# SPDX-License-Identifier: GPL-2.0
 +
@@ -3805,10 +3816,10 @@ diff -Naur null/fs/aufs/conf.mk linux-5.11/fs/aufs/conf.mk
 +${obj}/sysfs.o: ${AuConfName}
 +
 +-include ${srctree}/${src}/conf_priv.mk
-diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
+diff -Naur null/fs/aufs/cpup.c linux-5.12/fs/aufs/cpup.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/cpup.c	2021-03-04 13:26:00.792273771 +0100
-@@ -0,0 +1,1445 @@
++++ linux-5.12/fs/aufs/cpup.c	2021-05-04 17:45:33.495803330 +0200
+@@ -0,0 +1,1457 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -3975,7 +3986,7 @@ diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
 +};
 +
 +static noinline_for_stack
-+int cpup_iattr(struct dentry *dst, aufs_bindex_t bindex, struct dentry *h_src,
++int cpup_iattr(struct dentry *dst, aufs_bindex_t bindex, struct path *h_src,
 +	       struct au_cpup_reg_attr *h_src_attr)
 +{
 +	int err, sbits, icex;
@@ -3987,11 +3998,11 @@ diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
 +	struct kstat *h_st;
 +	struct au_branch *br;
 +
-+	h_path.dentry = au_h_dptr(dst, bindex);
-+	h_idst = d_inode(h_path.dentry);
 +	br = au_sbr(dst->d_sb, bindex);
 +	h_path.mnt = au_br_mnt(br);
-+	h_isrc = d_inode(h_src);
++	h_path.dentry = au_h_dptr(dst, bindex);
++	h_idst = d_inode(h_path.dentry);
++	h_isrc = d_inode(h_src->dentry);
 +	ia.ia_valid = ATTR_FORCE | ATTR_UID | ATTR_GID
 +		| ATTR_ATIME | ATTR_MTIME
 +		| ATTR_ATIME_SET | ATTR_MTIME_SET;
@@ -4035,7 +4046,7 @@ diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
 +	if (!err) {
 +		mnt_flags = au_mntflags(dst->d_sb);
 +		verbose = !!au_opt_test(mnt_flags, VERBOSE);
-+		err = au_cpup_xattr(h_path.dentry, h_src, icex, verbose);
++		err = au_cpup_xattr(&h_path, h_src, icex, verbose);
 +	}
 +
 +	return err;
@@ -4405,16 +4416,18 @@ diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
 +	int err;
 +	struct dentry *h_dentry;
 +	struct inode *h_inode;
++	struct user_namespace *h_userns;
 +
++	h_userns = mnt_user_ns(h_path->mnt);
 +	h_dentry = h_path->dentry;
 +	h_inode = d_inode(h_dentry);
 +	/* forget_all_cached_acls(h_inode)); */
-+	err = vfsub_removexattr(h_dentry, XATTR_NAME_POSIX_ACL_ACCESS);
++	err = vfsub_removexattr(h_userns, h_dentry, XATTR_NAME_POSIX_ACL_ACCESS);
 +	AuTraceErr(err);
 +	if (err == -EOPNOTSUPP)
 +		err = 0;
 +	if (!err)
-+		err = vfsub_acl_chmod(h_inode, mode);
++		err = vfsub_acl_chmod(h_userns, h_inode, mode);
 +
 +	AuTraceErr(err);
 +	return err;
@@ -4425,8 +4438,11 @@ diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
 +{
 +	int err;
 +	struct inode *dir, *inode;
++	struct user_namespace *h_userns;
 +
-+	err = vfsub_removexattr(h_path->dentry, XATTR_NAME_POSIX_ACL_DEFAULT);
++	h_userns = mnt_user_ns(h_path->mnt);
++	err = vfsub_removexattr(h_userns, h_path->dentry,
++				XATTR_NAME_POSIX_ACL_DEFAULT);
 +	AuTraceErr(err);
 +	if (err == -EOPNOTSUPP)
 +		err = 0;
@@ -4607,6 +4623,7 @@ diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
 +	struct inode *dst_inode, *h_dir, *inode, *delegated, *src_inode;
 +	struct super_block *sb;
 +	struct au_branch *br;
++	struct path h_src_path;
 +	/* to reduce stack size */
 +	struct {
 +		struct au_dtime dt;
@@ -4698,7 +4715,9 @@ diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
 +	/* todo: necessary? */
 +	/* au_pin_hdir_unlock(cpg->pin); */
 +
-+	err = cpup_iattr(cpg->dentry, cpg->bdst, h_src, &a->h_src_attr);
++	h_src_path.dentry = h_src;
++	h_src_path.mnt = au_sbr_mnt(sb, cpg->bsrc);
++	err = cpup_iattr(cpg->dentry, cpg->bdst, &h_src_path, &a->h_src_attr);
 +	if (unlikely(err)) {
 +		/* todo: necessary? */
 +		/* au_pin_hdir_relock(cpg->pin); */ /* ignore an error */
@@ -4900,6 +4919,7 @@ diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
 +	struct dentry *dentry, *parent;
 +	struct file *h_file;
 +	struct inode *h_dir;
++	struct user_namespace *h_userns;
 +
 +	dentry = cpg->dentry;
 +	h_file = NULL;
@@ -4913,7 +4933,8 @@ diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
 +
 +	parent = dget_parent(dentry);
 +	h_dir = au_h_iptr(d_inode(parent), cpg->bdst);
-+	if (!au_test_h_perm_sio(h_dir, MAY_EXEC | MAY_WRITE)
++	h_userns = au_sbr_userns(dentry->d_sb, cpg->bdst);
++	if (!au_test_h_perm_sio(h_userns, h_dir, MAY_EXEC | MAY_WRITE)
 +	    && !au_cpup_sio_test(cpg->pin, d_inode(dentry)->i_mode))
 +		err = au_cpup_simple(cpg);
 +	else {
@@ -5083,6 +5104,7 @@ diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
 +	struct inode *dir, *h_dir, *h_tmpdir;
 +	struct au_wbr *wbr;
 +	struct au_pin wh_pin, *pin_orig;
++	struct user_namespace *h_userns;
 +
 +	dentry = cpg->dentry;
 +	bdst = cpg->bdst;
@@ -5111,7 +5133,8 @@ diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
 +		cpg->pin = &wh_pin;
 +	}
 +
-+	if (!au_test_h_perm_sio(h_tmpdir, MAY_EXEC | MAY_WRITE)
++	h_userns = au_sbr_userns(dentry->d_sb, bdst);
++	if (!au_test_h_perm_sio(h_userns, h_tmpdir, MAY_EXEC | MAY_WRITE)
 +	    && !au_cpup_sio_test(cpg->pin, d_inode(dentry)->i_mode))
 +		err = au_cpup_wh(cpg, file);
 +	else {
@@ -5254,9 +5277,9 @@ diff -Naur null/fs/aufs/cpup.c linux-5.11/fs/aufs/cpup.c
 +	dput(parent);
 +	return err;
 +}
-diff -Naur null/fs/aufs/cpup.h linux-5.11/fs/aufs/cpup.h
+diff -Naur null/fs/aufs/cpup.h linux-5.12/fs/aufs/cpup.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/cpup.h	2021-03-04 13:26:00.792273771 +0100
++++ linux-5.12/fs/aufs/cpup.h	2021-05-04 17:45:33.495803330 +0200
 @@ -0,0 +1,100 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -5358,9 +5381,9 @@ diff -Naur null/fs/aufs/cpup.h linux-5.11/fs/aufs/cpup.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_CPUP_H__ */
-diff -Naur null/fs/aufs/dbgaufs.c linux-5.11/fs/aufs/dbgaufs.c
+diff -Naur null/fs/aufs/dbgaufs.c linux-5.12/fs/aufs/dbgaufs.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/dbgaufs.c	2021-03-04 13:26:00.792273771 +0100
++++ linux-5.12/fs/aufs/dbgaufs.c	2021-05-04 17:45:33.495803330 +0200
 @@ -0,0 +1,526 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -5888,9 +5911,9 @@ diff -Naur null/fs/aufs/dbgaufs.c linux-5.11/fs/aufs/dbgaufs.c
 +		err = 0;
 +	return err;
 +}
-diff -Naur null/fs/aufs/dbgaufs.h linux-5.11/fs/aufs/dbgaufs.h
+diff -Naur null/fs/aufs/dbgaufs.h linux-5.12/fs/aufs/dbgaufs.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/dbgaufs.h	2021-03-04 13:26:00.792273771 +0100
++++ linux-5.12/fs/aufs/dbgaufs.h	2021-05-04 17:45:33.495803330 +0200
 @@ -0,0 +1,53 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -5945,9 +5968,9 @@ diff -Naur null/fs/aufs/dbgaufs.h linux-5.11/fs/aufs/dbgaufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __DBGAUFS_H__ */
-diff -Naur null/fs/aufs/dcsub.c linux-5.11/fs/aufs/dcsub.c
+diff -Naur null/fs/aufs/dcsub.c linux-5.12/fs/aufs/dcsub.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/dcsub.c	2021-03-04 13:26:00.792273771 +0100
++++ linux-5.12/fs/aufs/dcsub.c	2021-05-04 17:45:33.495803330 +0200
 @@ -0,0 +1,225 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -6174,9 +6197,9 @@ diff -Naur null/fs/aufs/dcsub.c linux-5.11/fs/aufs/dcsub.c
 +
 +	return path_is_under(path + 0, path + 1);
 +}
-diff -Naur null/fs/aufs/dcsub.h linux-5.11/fs/aufs/dcsub.h
+diff -Naur null/fs/aufs/dcsub.h linux-5.12/fs/aufs/dcsub.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/dcsub.h	2021-03-04 13:26:00.792273771 +0100
++++ linux-5.12/fs/aufs/dcsub.h	2021-05-04 17:45:33.495803330 +0200
 @@ -0,0 +1,137 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -6315,9 +6338,9 @@ diff -Naur null/fs/aufs/dcsub.h linux-5.11/fs/aufs/dcsub.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DCSUB_H__ */
-diff -Naur null/fs/aufs/debug.c linux-5.11/fs/aufs/debug.c
+diff -Naur null/fs/aufs/debug.c linux-5.12/fs/aufs/debug.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/debug.c	2021-03-04 13:26:00.792273771 +0100
++++ linux-5.12/fs/aufs/debug.c	2021-05-04 17:45:33.496803339 +0200
 @@ -0,0 +1,441 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -6760,9 +6783,9 @@ diff -Naur null/fs/aufs/debug.c linux-5.11/fs/aufs/debug.c
 +
 +	return 0;
 +}
-diff -Naur null/fs/aufs/debug.h linux-5.11/fs/aufs/debug.h
+diff -Naur null/fs/aufs/debug.h linux-5.12/fs/aufs/debug.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/debug.h	2021-03-04 13:26:00.792273771 +0100
++++ linux-5.12/fs/aufs/debug.h	2021-05-04 17:45:33.496803339 +0200
 @@ -0,0 +1,226 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -6990,10 +7013,10 @@ diff -Naur null/fs/aufs/debug.h linux-5.11/fs/aufs/debug.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DEBUG_H__ */
-diff -Naur null/fs/aufs/dentry.c linux-5.11/fs/aufs/dentry.c
+diff -Naur null/fs/aufs/dentry.c linux-5.12/fs/aufs/dentry.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/dentry.c	2021-03-04 13:26:00.792273771 +0100
-@@ -0,0 +1,1154 @@
++++ linux-5.12/fs/aufs/dentry.c	2021-05-04 17:45:33.496803339 +0200
+@@ -0,0 +1,1160 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -7031,6 +7054,7 @@ diff -Naur null/fs/aufs/dentry.c linux-5.11/fs/aufs/dentry.c
 +	struct dentry *h_dentry;
 +	struct inode *h_inode;
 +	struct au_branch *br;
++	struct user_namespace *h_userns;
 +	int wh_found, opq;
 +	unsigned char wh_able;
 +	const unsigned char allow_neg = !!au_ftest_lkup(args->flags, ALLOW_NEG);
@@ -7039,9 +7063,11 @@ diff -Naur null/fs/aufs/dentry.c linux-5.11/fs/aufs/dentry.c
 +
 +	wh_found = 0;
 +	br = au_sbr(dentry->d_sb, bindex);
++	h_userns = au_br_userns(br);
 +	wh_able = !!au_br_whable(br->br_perm);
 +	if (wh_able)
-+		wh_found = au_wh_test(h_parent, &args->whname, ignore_perm);
++		wh_found = au_wh_test(h_userns, h_parent, &args->whname,
++				      ignore_perm);
 +	h_dentry = ERR_PTR(wh_found);
 +	if (!wh_found)
 +		goto real_lookup;
@@ -7058,7 +7084,7 @@ diff -Naur null/fs/aufs/dentry.c linux-5.11/fs/aufs/dentry.c
 +	if (!ignore_perm)
 +		h_dentry = vfsub_lkup_one(args->name, h_parent);
 +	else
-+		h_dentry = au_sio_lkup_one(args->name, h_parent);
++		h_dentry = au_sio_lkup_one(h_userns, args->name, h_parent);
 +	if (IS_ERR(h_dentry)) {
 +		if (PTR_ERR(h_dentry) == -ENAMETOOLONG
 +		    && !allow_neg)
@@ -7093,7 +7119,7 @@ diff -Naur null/fs/aufs/dentry.c linux-5.11/fs/aufs/dentry.c
 +		goto out; /* success */
 +
 +	inode_lock_shared_nested(h_inode, AuLsc_I_CHILD);
-+	opq = au_diropq_test(h_dentry);
++	opq = au_diropq_test(h_userns, h_dentry);
 +	inode_unlock_shared(h_inode);
 +	if (opq > 0)
 +		au_set_dbdiropq(dentry, bindex);
@@ -7238,12 +7264,13 @@ diff -Naur null/fs/aufs/dentry.c linux-5.11/fs/aufs/dentry.c
 +	return err;
 +}
 +
-+struct dentry *au_sio_lkup_one(struct qstr *name, struct dentry *parent)
++struct dentry *au_sio_lkup_one(struct user_namespace *userns, struct qstr *name,
++			       struct dentry *parent)
 +{
 +	struct dentry *dentry;
 +	int wkq_err;
 +
-+	if (!au_test_h_perm_sio(d_inode(parent), MAY_EXEC))
++	if (!au_test_h_perm_sio(userns, d_inode(parent), MAY_EXEC))
 +		dentry = vfsub_lkup_one(name, parent);
 +	else {
 +		struct vfsub_lkup_one_args args = {
@@ -7268,14 +7295,16 @@ diff -Naur null/fs/aufs/dentry.c linux-5.11/fs/aufs/dentry.c
 +	int err;
 +	struct dentry *parent, *h_parent, *h_dentry;
 +	struct au_branch *br;
++	struct user_namespace *h_userns;
 +
 +	parent = dget_parent(dentry);
 +	h_parent = au_h_dptr(parent, bindex);
 +	br = au_sbr(dentry->d_sb, bindex);
++	h_userns = au_br_userns(br);
 +	if (wh)
 +		h_dentry = au_whtmp_lkup(h_parent, br, &dentry->d_name);
 +	else
-+		h_dentry = au_sio_lkup_one(&dentry->d_name, h_parent);
++		h_dentry = au_sio_lkup_one(h_userns, &dentry->d_name, h_parent);
 +	err = PTR_ERR(h_dentry);
 +	if (IS_ERR(h_dentry))
 +		goto out;
@@ -8148,10 +8177,10 @@ diff -Naur null/fs/aufs/dentry.c linux-5.11/fs/aufs/dentry.c
 +const struct dentry_operations aufs_dop_noreval = {
 +	.d_release		= aufs_d_release
 +};
-diff -Naur null/fs/aufs/dentry.h linux-5.11/fs/aufs/dentry.h
+diff -Naur null/fs/aufs/dentry.h linux-5.12/fs/aufs/dentry.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/dentry.h	2021-03-04 13:26:00.793273778 +0100
-@@ -0,0 +1,268 @@
++++ linux-5.12/fs/aufs/dentry.h	2021-05-04 17:45:33.496803339 +0200
+@@ -0,0 +1,269 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -8227,7 +8256,8 @@ diff -Naur null/fs/aufs/dentry.h linux-5.11/fs/aufs/dentry.h
 +/* dentry.c */
 +extern const struct dentry_operations aufs_dop, aufs_dop_noreval;
 +struct au_branch;
-+struct dentry *au_sio_lkup_one(struct qstr *name, struct dentry *parent);
++struct dentry *au_sio_lkup_one(struct user_namespace *userns, struct qstr *name,
++			       struct dentry *parent);
 +int au_h_verify(struct dentry *h_dentry, unsigned int udba, struct inode *h_dir,
 +		struct dentry *h_parent, struct au_branch *br);
 +
@@ -8420,9 +8450,9 @@ diff -Naur null/fs/aufs/dentry.h linux-5.11/fs/aufs/dentry.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DENTRY_H__ */
-diff -Naur null/fs/aufs/dinfo.c linux-5.11/fs/aufs/dinfo.c
+diff -Naur null/fs/aufs/dinfo.c linux-5.12/fs/aufs/dinfo.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/dinfo.c	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/dinfo.c	2021-05-04 17:45:33.496803339 +0200
 @@ -0,0 +1,554 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -8978,10 +9008,10 @@ diff -Naur null/fs/aufs/dinfo.c linux-5.11/fs/aufs/dinfo.c
 +			return bindex;
 +	return -1;
 +}
-diff -Naur null/fs/aufs/dir.c linux-5.11/fs/aufs/dir.c
+diff -Naur null/fs/aufs/dir.c linux-5.12/fs/aufs/dir.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/dir.c	2021-03-04 13:26:00.793273778 +0100
-@@ -0,0 +1,763 @@
++++ linux-5.12/fs/aufs/dir.c	2021-05-04 17:45:33.496803339 +0200
+@@ -0,0 +1,765 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -9621,12 +9651,14 @@ diff -Naur null/fs/aufs/dir.c linux-5.11/fs/aufs/dir.c
 +	int err, wkq_err;
 +	struct dentry *h_dentry;
 +	struct inode *h_inode;
++	struct user_namespace *h_userns;
 +
++	h_userns = au_sbr_userns(dentry->d_sb, arg->bindex);
 +	h_dentry = au_h_dptr(dentry, arg->bindex);
 +	h_inode = d_inode(h_dentry);
 +	/* todo: i_mode changes anytime? */
 +	inode_lock_shared_nested(h_inode, AuLsc_I_CHILD);
-+	err = au_test_h_perm_sio(h_inode, MAY_EXEC | MAY_READ);
++	err = au_test_h_perm_sio(h_userns, h_inode, MAY_EXEC | MAY_READ);
 +	inode_unlock_shared(h_inode);
 +	if (!err)
 +		err = do_test_empty(dentry, arg);
@@ -9745,9 +9777,9 @@ diff -Naur null/fs/aufs/dir.c linux-5.11/fs/aufs/dir.c
 +	.flush		= aufs_flush_dir,
 +	.fsync		= aufs_fsync_dir
 +};
-diff -Naur null/fs/aufs/dir.h linux-5.11/fs/aufs/dir.h
+diff -Naur null/fs/aufs/dir.h linux-5.12/fs/aufs/dir.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/dir.h	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/dir.h	2021-05-04 17:45:33.496803339 +0200
 @@ -0,0 +1,134 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -9883,9 +9915,9 @@ diff -Naur null/fs/aufs/dir.h linux-5.11/fs/aufs/dir.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIR_H__ */
-diff -Naur null/fs/aufs/dirren.c linux-5.11/fs/aufs/dirren.c
+diff -Naur null/fs/aufs/dirren.c linux-5.12/fs/aufs/dirren.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/dirren.c	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/dirren.c	2021-05-04 17:45:33.496803339 +0200
 @@ -0,0 +1,1316 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -10156,6 +10188,7 @@ diff -Naur null/fs/aufs/dirren.c linux-5.11/fs/aufs/dirren.c
 +	err = PTR_ERR(hinopath.dentry);
 +	if (IS_ERR(hinopath.dentry))
 +		goto out_unlock;
++	hinopath.mnt = path->mnt;
 +
 +	err = 0;
 +	flags = O_RDONLY;
@@ -10186,7 +10219,6 @@ diff -Naur null/fs/aufs/dirren.c linux-5.11/fs/aufs/dirren.c
 +		}
 +		flags = O_WRONLY;
 +	}
-+	hinopath.mnt = path->mnt;
 +	hinofile = vfsub_dentry_open(&hinopath, flags);
 +	if (suspend)
 +		au_hn_inode_unlock(hdir);
@@ -11203,9 +11235,9 @@ diff -Naur null/fs/aufs/dirren.c linux-5.11/fs/aufs/dirren.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/dirren.h linux-5.11/fs/aufs/dirren.h
+diff -Naur null/fs/aufs/dirren.h linux-5.12/fs/aufs/dirren.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/dirren.h	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/dirren.h	2021-05-04 17:45:33.496803339 +0200
 @@ -0,0 +1,140 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -11347,9 +11379,9 @@ diff -Naur null/fs/aufs/dirren.h linux-5.11/fs/aufs/dirren.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIRREN_H__ */
-diff -Naur null/fs/aufs/dynop.c linux-5.11/fs/aufs/dynop.c
+diff -Naur null/fs/aufs/dynop.c linux-5.12/fs/aufs/dynop.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/dynop.c	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/dynop.c	2021-05-04 17:45:33.496803339 +0200
 @@ -0,0 +1,368 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -11719,9 +11751,9 @@ diff -Naur null/fs/aufs/dynop.c linux-5.11/fs/aufs/dynop.c
 +	for (i = 0; i < AuDyLast; i++)
 +		WARN_ON(!hlist_bl_empty(dynop + i));
 +}
-diff -Naur null/fs/aufs/dynop.h linux-5.11/fs/aufs/dynop.h
+diff -Naur null/fs/aufs/dynop.h linux-5.12/fs/aufs/dynop.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/dynop.h	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/dynop.h	2021-05-04 17:45:33.496803339 +0200
 @@ -0,0 +1,77 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -11800,9 +11832,9 @@ diff -Naur null/fs/aufs/dynop.h linux-5.11/fs/aufs/dynop.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DYNOP_H__ */
-diff -Naur null/fs/aufs/export.c linux-5.11/fs/aufs/export.c
+diff -Naur null/fs/aufs/export.c linux-5.12/fs/aufs/export.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/export.c	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/export.c	2021-05-04 17:45:33.496803339 +0200
 @@ -0,0 +1,837 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -12641,9 +12673,9 @@ diff -Naur null/fs/aufs/export.c linux-5.11/fs/aufs/export.c
 +	BUILD_BUG_ON(sizeof(u) != sizeof(int));
 +	atomic_set(&sbinfo->si_xigen_next, u);
 +}
-diff -Naur null/fs/aufs/fhsm.c linux-5.11/fs/aufs/fhsm.c
+diff -Naur null/fs/aufs/fhsm.c linux-5.12/fs/aufs/fhsm.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/fhsm.c	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/fhsm.c	2021-05-04 17:45:33.496803339 +0200
 @@ -0,0 +1,427 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -13072,9 +13104,9 @@ diff -Naur null/fs/aufs/fhsm.c linux-5.11/fs/aufs/fhsm.c
 +	if (u != AUFS_FHSM_CACHE_DEF_SEC)
 +		seq_printf(seq, ",fhsm_sec=%u", u);
 +}
-diff -Naur null/fs/aufs/file.c linux-5.11/fs/aufs/file.c
+diff -Naur null/fs/aufs/file.c linux-5.12/fs/aufs/file.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/file.c	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/file.c	2021-05-04 17:45:33.496803339 +0200
 @@ -0,0 +1,863 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -13939,9 +13971,9 @@ diff -Naur null/fs/aufs/file.c linux-5.11/fs/aufs/file.c
 +	.swap_deactivate	= aufs_swap_deactivate
 +#endif /* CONFIG_AUFS_DEBUG */
 +};
-diff -Naur null/fs/aufs/file.h linux-5.11/fs/aufs/file.h
+diff -Naur null/fs/aufs/file.h linux-5.12/fs/aufs/file.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/file.h	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/file.h	2021-05-04 17:45:33.497803346 +0200
 @@ -0,0 +1,342 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -14285,9 +14317,9 @@ diff -Naur null/fs/aufs/file.h linux-5.11/fs/aufs/file.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FILE_H__ */
-diff -Naur null/fs/aufs/finfo.c linux-5.11/fs/aufs/finfo.c
+diff -Naur null/fs/aufs/finfo.c linux-5.12/fs/aufs/finfo.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/finfo.c	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/finfo.c	2021-05-04 17:45:33.497803346 +0200
 @@ -0,0 +1,149 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -14438,10 +14470,10 @@ diff -Naur null/fs/aufs/finfo.c linux-5.11/fs/aufs/finfo.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/f_op.c linux-5.11/fs/aufs/f_op.c
+diff -Naur null/fs/aufs/f_op.c linux-5.12/fs/aufs/f_op.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/f_op.c	2021-03-04 13:26:00.793273778 +0100
-@@ -0,0 +1,762 @@
++++ linux-5.12/fs/aufs/f_op.c	2021-05-04 17:45:33.496803339 +0200
+@@ -0,0 +1,771 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -14803,6 +14835,15 @@ diff -Naur null/fs/aufs/f_op.c linux-5.11/fs/aufs/f_op.c
 +	return err;
 +}
 +
++/*
++ * We may be able to remove aufs_splice_{read,write}() since almost all FSes
++ * don't have their own .splice_{read,write} implimentations, and they use
++ * generic_file_splice_read() and iter_file_splice_write() who can act like the
++ * simple converters to f_op->iter_read() and ->iter_write().
++ * But we keep our own implementations because some non-mainlined FSes may have
++ * their own .splice_{read,write} implimentations and aufs doesn't want to take
++ * away an opportunity to co-work with aufs from them.
++ */
 +static ssize_t aufs_splice_read(struct file *file, loff_t *ppos,
 +				struct pipe_inode_info *pipe, size_t len,
 +				unsigned int flags)
@@ -15204,9 +15245,9 @@ diff -Naur null/fs/aufs/f_op.c linux-5.11/fs/aufs/f_op.c
 +	.fallocate	= aufs_fallocate,
 +	.copy_file_range = aufs_copy_file_range
 +};
-diff -Naur null/fs/aufs/fstype.h linux-5.11/fs/aufs/fstype.h
+diff -Naur null/fs/aufs/fstype.h linux-5.12/fs/aufs/fstype.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/fstype.h	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/fstype.h	2021-05-04 17:45:33.497803346 +0200
 @@ -0,0 +1,401 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -15609,9 +15650,9 @@ diff -Naur null/fs/aufs/fstype.h linux-5.11/fs/aufs/fstype.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FSTYPE_H__ */
-diff -Naur null/fs/aufs/hbl.h linux-5.11/fs/aufs/hbl.h
+diff -Naur null/fs/aufs/hbl.h linux-5.12/fs/aufs/hbl.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/hbl.h	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/hbl.h	2021-05-04 17:45:33.497803346 +0200
 @@ -0,0 +1,65 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -15678,9 +15719,9 @@ diff -Naur null/fs/aufs/hbl.h linux-5.11/fs/aufs/hbl.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_HBL_H__ */
-diff -Naur null/fs/aufs/hfsnotify.c linux-5.11/fs/aufs/hfsnotify.c
+diff -Naur null/fs/aufs/hfsnotify.c linux-5.12/fs/aufs/hfsnotify.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/hfsnotify.c	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/hfsnotify.c	2021-05-04 17:45:33.497803346 +0200
 @@ -0,0 +1,288 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -15970,9 +16011,9 @@ diff -Naur null/fs/aufs/hfsnotify.c linux-5.11/fs/aufs/hfsnotify.c
 +	.fin_br		= au_hfsn_fin_br,
 +	.init_br	= au_hfsn_init_br
 +};
-diff -Naur null/fs/aufs/hfsplus.c linux-5.11/fs/aufs/hfsplus.c
+diff -Naur null/fs/aufs/hfsplus.c linux-5.12/fs/aufs/hfsplus.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/hfsplus.c	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/hfsplus.c	2021-05-04 17:45:33.497803346 +0200
 @@ -0,0 +1,60 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -16034,9 +16075,9 @@ diff -Naur null/fs/aufs/hfsplus.c linux-5.11/fs/aufs/hfsplus.c
 +		au_lcnt_dec(&br->br_nfiles);
 +	}
 +}
-diff -Naur null/fs/aufs/hnotify.c linux-5.11/fs/aufs/hnotify.c
+diff -Naur null/fs/aufs/hnotify.c linux-5.12/fs/aufs/hnotify.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/hnotify.c	2021-03-04 13:26:00.793273778 +0100
++++ linux-5.12/fs/aufs/hnotify.c	2021-05-04 17:45:33.497803346 +0200
 @@ -0,0 +1,715 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -16753,9 +16794,9 @@ diff -Naur null/fs/aufs/hnotify.c linux-5.11/fs/aufs/hnotify.c
 +	if (au_cache[AuCache_HNOTIFY])
 +		au_hn_destroy_cache();
 +}
-diff -Naur null/fs/aufs/iinfo.c linux-5.11/fs/aufs/iinfo.c
+diff -Naur null/fs/aufs/iinfo.c linux-5.12/fs/aufs/iinfo.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/iinfo.c	2021-03-04 13:26:00.794273784 +0100
++++ linux-5.12/fs/aufs/iinfo.c	2021-05-04 17:45:33.497803346 +0200
 @@ -0,0 +1,286 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -17043,10 +17084,10 @@ diff -Naur null/fs/aufs/iinfo.c linux-5.11/fs/aufs/iinfo.c
 +	au_kfree_rcu(iinfo->ii_hinode);
 +	AuRwDestroy(&iinfo->ii_rwsem);
 +}
-diff -Naur null/fs/aufs/inode.c linux-5.11/fs/aufs/inode.c
+diff -Naur null/fs/aufs/inode.c linux-5.12/fs/aufs/inode.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/inode.c	2021-03-04 13:26:00.794273784 +0100
-@@ -0,0 +1,529 @@
++++ linux-5.12/fs/aufs/inode.c	2021-05-04 17:45:33.497803346 +0200
+@@ -0,0 +1,531 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -17561,25 +17602,27 @@ diff -Naur null/fs/aufs/inode.c linux-5.11/fs/aufs/inode.c
 +	return err;
 +}
 +
-+int au_test_h_perm(struct inode *h_inode, int mask)
++int au_test_h_perm(struct user_namespace *h_userns, struct inode *h_inode,
++		   int mask)
 +{
 +	if (uid_eq(current_fsuid(), GLOBAL_ROOT_UID))
 +		return 0;
-+	return inode_permission(h_inode, mask);
++	return inode_permission(h_userns, h_inode, mask);
 +}
 +
-+int au_test_h_perm_sio(struct inode *h_inode, int mask)
++int au_test_h_perm_sio(struct user_namespace *h_userns, struct inode *h_inode,
++		       int mask)
 +{
 +	if (au_test_nfs(h_inode->i_sb)
 +	    && (mask & MAY_WRITE)
 +	    && S_ISDIR(h_inode->i_mode))
 +		mask |= MAY_READ; /* force permission check */
-+	return au_test_h_perm(h_inode, mask);
++	return au_test_h_perm(h_userns, h_inode, mask);
 +}
-diff -Naur null/fs/aufs/inode.h linux-5.11/fs/aufs/inode.h
+diff -Naur null/fs/aufs/inode.h linux-5.12/fs/aufs/inode.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/inode.h	2021-03-04 13:26:00.794273784 +0100
-@@ -0,0 +1,698 @@
++++ linux-5.12/fs/aufs/inode.h	2021-05-04 17:45:33.497803346 +0200
+@@ -0,0 +1,705 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -17719,8 +17762,10 @@ diff -Naur null/fs/aufs/inode.h linux-5.11/fs/aufs/inode.h
 +struct inode *au_new_inode(struct dentry *dentry, int must_new);
 +int au_test_ro(struct super_block *sb, aufs_bindex_t bindex,
 +	       struct inode *inode);
-+int au_test_h_perm(struct inode *h_inode, int mask);
-+int au_test_h_perm_sio(struct inode *h_inode, int mask);
++int au_test_h_perm(struct user_namespace *h_userns, struct inode *h_inode,
++		   int mask);
++int au_test_h_perm_sio(struct user_namespace *h_userns, struct inode *h_inode,
++		       int mask);
 +
 +static inline int au_wh_ino(struct super_block *sb, aufs_bindex_t bindex,
 +			    ino_t h_ino, unsigned int d_type, ino_t *ino)
@@ -17795,18 +17840,21 @@ diff -Naur null/fs/aufs/inode.h linux-5.11/fs/aufs/inode.h
 +/* i_op_add.c */
 +int au_may_add(struct dentry *dentry, aufs_bindex_t bindex,
 +	       struct dentry *h_parent, int isdir);
-+int aufs_mknod(struct inode *dir, struct dentry *dentry, umode_t mode,
-+	       dev_t dev);
-+int aufs_symlink(struct inode *dir, struct dentry *dentry, const char *symname);
-+int aufs_create(struct inode *dir, struct dentry *dentry, umode_t mode,
-+		bool want_excl);
++int aufs_mknod(struct user_namespace *userns, struct inode *dir,
++	       struct dentry *dentry, umode_t mode, dev_t dev);
++int aufs_symlink(struct user_namespace *userns, struct inode *dir,
++		 struct dentry *dentry, const char *symname);
++int aufs_create(struct user_namespace *userns, struct inode *dir,
++		struct dentry *dentry, umode_t mode, bool want_excl);
 +struct vfsub_aopen_args;
 +int au_aopen_or_create(struct inode *dir, struct dentry *dentry,
 +		       struct vfsub_aopen_args *args);
-+int aufs_tmpfile(struct inode *dir, struct dentry *dentry, umode_t mode);
++int aufs_tmpfile(struct user_namespace *userns, struct inode *dir,
++		 struct dentry *dentry, umode_t mode);
 +int aufs_link(struct dentry *src_dentry, struct inode *dir,
 +	      struct dentry *dentry);
-+int aufs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode);
++int aufs_mkdir(struct user_namespace *userns, struct inode *dir,
++	       struct dentry *dentry, umode_t mode);
 +
 +/* i_op_del.c */
 +int au_wr_dir_need_wh(struct dentry *dentry, int isdir, aufs_bindex_t *bcpup);
@@ -17817,9 +17865,10 @@ diff -Naur null/fs/aufs/inode.h linux-5.11/fs/aufs/inode.h
 +
 +/* i_op_ren.c */
 +int au_wbr(struct dentry *dentry, aufs_bindex_t btgt);
-+int aufs_rename(struct inode *src_dir, struct dentry *src_dentry,
-+		struct inode *dir, struct dentry *dentry,
-+		unsigned int flags);
++int aufs_rename(struct user_namespace *userns,
++		struct inode *_src_dir, struct dentry *_src_dentry,
++		struct inode *_dst_dir, struct dentry *_dst_dentry,
++		unsigned int _flags);
 +
 +/* iinfo.c */
 +struct inode *au_h_iptr(struct inode *inode, aufs_bindex_t bindex);
@@ -17889,19 +17938,20 @@ diff -Naur null/fs/aufs/inode.h linux-5.11/fs/aufs/inode.h
 +
 +#ifdef CONFIG_AUFS_XATTR
 +/* xattr.c */
-+int au_cpup_xattr(struct dentry *h_dst, struct dentry *h_src, int ignore_flags,
++int au_cpup_xattr(struct path *h_dst, struct path *h_src, int ignore_flags,
 +		  unsigned int verbose);
 +ssize_t aufs_listxattr(struct dentry *dentry, char *list, size_t size);
 +void au_xattr_init(struct super_block *sb);
 +#else
-+AuStubInt0(au_cpup_xattr, struct dentry *h_dst, struct dentry *h_src,
++AuStubInt0(au_cpup_xattr, struct path *h_dst, struct path *h_src,
 +	   int ignore_flags, unsigned int verbose);
 +AuStubVoid(au_xattr_init, struct super_block *sb);
 +#endif
 +
 +#ifdef CONFIG_FS_POSIX_ACL
 +struct posix_acl *aufs_get_acl(struct inode *inode, int type);
-+int aufs_set_acl(struct inode *inode, struct posix_acl *acl, int type);
++int aufs_set_acl(struct user_namespace *userns, struct inode *inode,
++		 struct posix_acl *acl, int type);
 +#endif
 +
 +#if IS_ENABLED(CONFIG_AUFS_XATTR) || IS_ENABLED(CONFIG_FS_POSIX_ACL)
@@ -18278,9 +18328,9 @@ diff -Naur null/fs/aufs/inode.h linux-5.11/fs/aufs/inode.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_INODE_H__ */
-diff -Naur null/fs/aufs/ioctl.c linux-5.11/fs/aufs/ioctl.c
+diff -Naur null/fs/aufs/ioctl.c linux-5.12/fs/aufs/ioctl.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/ioctl.c	2021-03-04 13:26:00.794273784 +0100
++++ linux-5.12/fs/aufs/ioctl.c	2021-05-04 17:45:33.497803346 +0200
 @@ -0,0 +1,220 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -18502,10 +18552,10 @@ diff -Naur null/fs/aufs/ioctl.c linux-5.11/fs/aufs/ioctl.c
 +	return aufs_ioctl_nondir(file, cmd, (unsigned long)compat_ptr(arg));
 +}
 +#endif
-diff -Naur null/fs/aufs/i_op_add.c linux-5.11/fs/aufs/i_op_add.c
+diff -Naur null/fs/aufs/i_op_add.c linux-5.12/fs/aufs/i_op_add.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/i_op_add.c	2021-03-04 13:26:00.794273784 +0100
-@@ -0,0 +1,936 @@
++++ linux-5.12/fs/aufs/i_op_add.c	2021-05-04 17:45:33.497803346 +0200
+@@ -0,0 +1,941 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -18874,8 +18924,8 @@ diff -Naur null/fs/aufs/i_op_add.c linux-5.11/fs/aufs/i_op_add.c
 +	return err;
 +}
 +
-+int aufs_mknod(struct inode *dir, struct dentry *dentry, umode_t mode,
-+	       dev_t dev)
++int aufs_mknod(struct user_namespace *userns, struct inode *dir,
++	       struct dentry *dentry, umode_t mode, dev_t dev)
 +{
 +	struct simple_arg arg = {
 +		.type = Mknod,
@@ -18887,7 +18937,8 @@ diff -Naur null/fs/aufs/i_op_add.c linux-5.11/fs/aufs/i_op_add.c
 +	return add_simple(dir, dentry, &arg);
 +}
 +
-+int aufs_symlink(struct inode *dir, struct dentry *dentry, const char *symname)
++int aufs_symlink(struct user_namespace *userns, struct inode *dir,
++		 struct dentry *dentry, const char *symname)
 +{
 +	struct simple_arg arg = {
 +		.type = Symlink,
@@ -18896,8 +18947,8 @@ diff -Naur null/fs/aufs/i_op_add.c linux-5.11/fs/aufs/i_op_add.c
 +	return add_simple(dir, dentry, &arg);
 +}
 +
-+int aufs_create(struct inode *dir, struct dentry *dentry, umode_t mode,
-+		bool want_excl)
++int aufs_create(struct user_namespace *userns, struct inode *dir,
++		struct dentry *dentry, umode_t mode, bool want_excl)
 +{
 +	struct simple_arg arg = {
 +		.type = Creat,
@@ -18924,7 +18975,8 @@ diff -Naur null/fs/aufs/i_op_add.c linux-5.11/fs/aufs/i_op_add.c
 +	return add_simple(dir, dentry, &arg);
 +}
 +
-+int aufs_tmpfile(struct inode *dir, struct dentry *dentry, umode_t mode)
++int aufs_tmpfile(struct user_namespace *userns, struct inode *dir,
++		 struct dentry *dentry, umode_t mode)
 +{
 +	int err;
 +	aufs_bindex_t bindex;
@@ -18932,6 +18984,7 @@ diff -Naur null/fs/aufs/i_op_add.c linux-5.11/fs/aufs/i_op_add.c
 +	struct dentry *parent, *h_parent, *h_dentry;
 +	struct inode *h_dir, *inode;
 +	struct vfsmount *h_mnt;
++	struct user_namespace *h_userns;
 +	struct au_wr_dir_args wr_dir_args = {
 +		.force_btgt	= -1,
 +		.flags		= AuWrDir_TMPFILE
@@ -18978,8 +19031,9 @@ diff -Naur null/fs/aufs/i_op_add.c linux-5.11/fs/aufs/i_op_add.c
 +	if (unlikely(err))
 +		goto out_parent;
 +
++	h_userns = mnt_user_ns(h_mnt);
 +	h_parent = au_h_dptr(parent, bindex);
-+	h_dentry = vfs_tmpfile(h_parent, mode, /*open_flag*/0);
++	h_dentry = vfs_tmpfile(h_userns, h_parent, mode, /*open_flag*/0);
 +	if (IS_ERR(h_dentry)) {
 +		err = PTR_ERR(h_dentry);
 +		goto out_mnt;
@@ -19335,7 +19389,8 @@ diff -Naur null/fs/aufs/i_op_add.c linux-5.11/fs/aufs/i_op_add.c
 +	return err;
 +}
 +
-+int aufs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode)
++int aufs_mkdir(struct user_namespace *userns, struct inode *dir,
++	       struct dentry *dentry, umode_t mode)
 +{
 +	int err, rerr;
 +	aufs_bindex_t bindex;
@@ -19442,10 +19497,10 @@ diff -Naur null/fs/aufs/i_op_add.c linux-5.11/fs/aufs/i_op_add.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/i_op.c linux-5.11/fs/aufs/i_op.c
+diff -Naur null/fs/aufs/i_op.c linux-5.12/fs/aufs/i_op.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/i_op.c	2021-03-04 13:26:00.794273784 +0100
-@@ -0,0 +1,1502 @@
++++ linux-5.12/fs/aufs/i_op.c	2021-05-04 17:45:33.497803346 +0200
+@@ -0,0 +1,1513 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -19480,6 +19535,7 @@ diff -Naur null/fs/aufs/i_op.c linux-5.11/fs/aufs/i_op.c
 +{
 +	int err;
 +	const unsigned char write_mask = !!(mask & (MAY_WRITE | MAY_APPEND));
++	struct user_namespace *h_userns;
 +
 +	err = -EPERM;
 +	if (write_mask && IS_IMMUTABLE(h_inode))
@@ -19499,19 +19555,21 @@ diff -Naur null/fs/aufs/i_op.c linux-5.11/fs/aufs/i_op.c
 +	 * - nfs always sets SB_POSIXACL regardless its mount option 'noacl.'
 +	 *   in this case, generic_permission() returns -EOPNOTSUPP.
 +	 */
++	h_userns = mnt_user_ns(h_path->mnt);
 +	if ((write_mask && !au_br_writable(brperm))
 +	    || (au_test_nfs(h_inode->i_sb) && S_ISDIR(h_inode->i_mode)
 +		&& write_mask && !(mask & MAY_READ))
 +	    || !h_inode->i_op->permission) {
 +		/* AuLabel(generic_permission); */
 +		/* AuDbg("get_acl %ps\n", h_inode->i_op->get_acl); */
-+		err = generic_permission(h_inode, mask);
++		err = generic_permission(h_userns, h_inode, mask);
 +		if (err == -EOPNOTSUPP && au_test_nfs_noacl(h_inode))
-+			err = h_inode->i_op->permission(h_inode, mask);
++			err = h_inode->i_op->permission(h_userns, h_inode,
++							mask);
 +		AuTraceErr(err);
 +	} else {
 +		/* AuLabel(h_inode->permission); */
-+		err = h_inode->i_op->permission(h_inode, mask);
++		err = h_inode->i_op->permission(h_userns, h_inode, mask);
 +		AuTraceErr(err);
 +	}
 +
@@ -19524,7 +19582,8 @@ diff -Naur null/fs/aufs/i_op.c linux-5.11/fs/aufs/i_op.c
 +	return err;
 +}
 +
-+static int aufs_permission(struct inode *inode, int mask)
++static int aufs_permission(struct user_namespace *userns, struct inode *inode,
++			   int mask)
 +{
 +	int err;
 +	aufs_bindex_t bindex, bbot;
@@ -20372,18 +20431,20 @@ diff -Naur null/fs/aufs/i_op.c linux-5.11/fs/aufs/i_op.c
 +	return err;
 +}
 +
-+static int aufs_setattr(struct dentry *dentry, struct iattr *ia)
++static int aufs_setattr(struct user_namespace *userns, struct dentry *dentry,
++			struct iattr *ia)
 +{
 +	int err;
 +	struct inode *inode, *delegated;
 +	struct super_block *sb;
 +	struct file *file;
 +	struct au_icpup_args *a;
++	struct user_namespace *h_userns;
 +
 +	inode = d_inode(dentry);
 +	IMustLock(inode);
 +
-+	err = setattr_prepare(dentry, ia);
++	err = setattr_prepare(userns, dentry, ia);
 +	if (unlikely(err))
 +		goto out;
 +
@@ -20476,8 +20537,10 @@ diff -Naur null/fs/aufs/i_op.c linux-5.11/fs/aufs/i_op.c
 +	 * regardless aufs 'acl' option setting.
 +	 * why don't all acl-aware fs call this func from their ->setattr()?
 +	 */
-+	if (!err && (ia->ia_valid & ATTR_MODE))
-+		err = vfsub_acl_chmod(a->h_inode, ia->ia_mode);
++	if (!err && (ia->ia_valid & ATTR_MODE)) {
++		h_userns = mnt_user_ns(a->h_path.mnt);
++		err = vfsub_acl_chmod(h_userns, a->h_inode, ia->ia_mode);
++	}
 +	if (!err)
 +		au_cpup_attr_changeable(inode);
 +
@@ -20539,6 +20602,7 @@ diff -Naur null/fs/aufs/i_op.c linux-5.11/fs/aufs/i_op.c
 +	struct super_block *sb;
 +	struct au_icpup_args *a;
 +	struct inode *h_inode;
++	struct user_namespace *h_userns;
 +
 +	IMustLock(inode);
 +
@@ -20557,23 +20621,25 @@ diff -Naur null/fs/aufs/i_op.c linux-5.11/fs/aufs/i_op.c
 +	err = au_h_path_to_set_attr(dentry, a, &h_path);
 +	if (unlikely(err))
 +		goto out_di;
++	h_userns = mnt_user_ns(h_path.mnt);
 +
 +	inode_unlock(a->h_inode);
 +	switch (arg->type) {
 +	case AU_XATTR_SET:
 +		AuDebugOn(d_is_negative(h_path.dentry));
-+		err = vfsub_setxattr(h_path.dentry,
++		err = vfsub_setxattr(h_userns, h_path.dentry,
 +				     arg->u.set.name, arg->u.set.value,
 +				     arg->u.set.size, arg->u.set.flags);
 +		break;
 +	case AU_ACL_SET:
 +		err = -EOPNOTSUPP;
 +		h_inode = d_inode(h_path.dentry);
-+		if (h_inode->i_op->set_acl)
++		if (h_inode->i_op->set_acl) {
 +			/* this will call posix_acl_update_mode */
-+			err = h_inode->i_op->set_acl(h_inode,
++			err = h_inode->i_op->set_acl(h_userns, h_inode,
 +						     arg->u.acl_set.acl,
 +						     arg->u.acl_set.type);
++		}
 +		break;
 +	}
 +	if (!err)
@@ -20704,8 +20770,8 @@ diff -Naur null/fs/aufs/i_op.c linux-5.11/fs/aufs/i_op.c
 +	return err;
 +}
 +
-+static int aufs_getattr(const struct path *path, struct kstat *st,
-+			u32 request, unsigned int query)
++static int aufs_getattr(struct user_namespace *userns, const struct path *path,
++			struct kstat *st, u32 request, unsigned int query)
 +{
 +	int err;
 +	unsigned char positive;
@@ -20742,7 +20808,7 @@ diff -Naur null/fs/aufs/i_op.c linux-5.11/fs/aufs/i_op.c
 +	goto out_di;
 +
 +out_fill:
-+	generic_fillattr(inode, st);
++	generic_fillattr(userns, inode, st);
 +out_di:
 +	di_read_unlock(dentry, AuLock_IR);
 +out_si:
@@ -20948,10 +21014,10 @@ diff -Naur null/fs/aufs/i_op.c linux-5.11/fs/aufs/i_op.c
 +		.update_time	= aufs_update_time
 +	}
 +};
-diff -Naur null/fs/aufs/i_op_del.c linux-5.11/fs/aufs/i_op_del.c
+diff -Naur null/fs/aufs/i_op_del.c linux-5.12/fs/aufs/i_op_del.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/i_op_del.c	2021-03-04 13:26:00.794273784 +0100
-@@ -0,0 +1,513 @@
++++ linux-5.12/fs/aufs/i_op_del.c	2021-05-04 17:45:33.497803346 +0200
+@@ -0,0 +1,515 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -21048,6 +21114,7 @@ diff -Naur null/fs/aufs/i_op_del.c linux-5.11/fs/aufs/i_op_del.c
 +	umode_t h_mode;
 +	struct dentry *h_dentry, *h_latest;
 +	struct inode *h_inode;
++	struct user_namespace *h_userns;
 +
 +	h_dentry = au_h_dptr(dentry, bindex);
 +	if (d_really_is_positive(dentry)) {
@@ -21085,12 +21152,13 @@ diff -Naur null/fs/aufs/i_op_del.c linux-5.11/fs/aufs/i_op_del.c
 +	 * let's try heavy test.
 +	 */
 +	err = -EACCES;
++	h_userns = au_sbr_userns(dentry->d_sb, bindex);
 +	if (unlikely(!au_opt_test(au_mntflags(dentry->d_sb), DIRPERM1)
-+		     && au_test_h_perm(d_inode(h_parent),
++		     && au_test_h_perm(h_userns, d_inode(h_parent),
 +				       MAY_EXEC | MAY_WRITE)))
 +		goto out;
 +
-+	h_latest = au_sio_lkup_one(&dentry->d_name, h_parent);
++	h_latest = au_sio_lkup_one(h_userns, &dentry->d_name, h_parent);
 +	err = -EIO;
 +	if (IS_ERR(h_latest))
 +		goto out;
@@ -21465,10 +21533,10 @@ diff -Naur null/fs/aufs/i_op_del.c linux-5.11/fs/aufs/i_op_del.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur null/fs/aufs/i_op_ren.c linux-5.11/fs/aufs/i_op_ren.c
+diff -Naur null/fs/aufs/i_op_ren.c linux-5.12/fs/aufs/i_op_ren.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/i_op_ren.c	2021-03-04 13:26:00.794273784 +0100
-@@ -0,0 +1,1250 @@
++++ linux-5.12/fs/aufs/i_op_ren.c	2021-05-04 17:45:33.497803346 +0200
+@@ -0,0 +1,1251 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -22424,7 +22492,8 @@ diff -Naur null/fs/aufs/i_op_ren.c linux-5.11/fs/aufs/i_op_ren.c
 +
 +/* ---------------------------------------------------------------------- */
 +
-+int aufs_rename(struct inode *_src_dir, struct dentry *_src_dentry,
++int aufs_rename(struct user_namespace *userns,
++		struct inode *_src_dir, struct dentry *_src_dentry,
 +		struct inode *_dst_dir, struct dentry *_dst_dentry,
 +		unsigned int _flags)
 +{
@@ -22719,9 +22788,9 @@ diff -Naur null/fs/aufs/i_op_ren.c linux-5.11/fs/aufs/i_op_ren.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur null/fs/aufs/Kconfig linux-5.11/fs/aufs/Kconfig
+diff -Naur null/fs/aufs/Kconfig linux-5.12/fs/aufs/Kconfig
 --- /dev/null
-+++ linux-5.11/fs/aufs/Kconfig	2021-03-04 13:26:00.792273771 +0100
++++ linux-5.12/fs/aufs/Kconfig	2021-05-04 17:45:33.495803330 +0200
 @@ -0,0 +1,199 @@
 +# SPDX-License-Identifier: GPL-2.0
 +config AUFS_FS
@@ -22922,9 +22991,9 @@ diff -Naur null/fs/aufs/Kconfig linux-5.11/fs/aufs/Kconfig
 +	Automatic configuration for internal use.
 +	When aufs supports Magic SysRq, enabled automatically.
 +endif
-diff -Naur null/fs/aufs/lcnt.h linux-5.11/fs/aufs/lcnt.h
+diff -Naur null/fs/aufs/lcnt.h linux-5.12/fs/aufs/lcnt.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/lcnt.h	2021-03-04 13:26:00.794273784 +0100
++++ linux-5.12/fs/aufs/lcnt.h	2021-05-04 17:45:33.497803346 +0200
 @@ -0,0 +1,186 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -23112,9 +23181,9 @@ diff -Naur null/fs/aufs/lcnt.h linux-5.11/fs/aufs/lcnt.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LCNT_H__ */
-diff -Naur null/fs/aufs/loop.c linux-5.11/fs/aufs/loop.c
+diff -Naur null/fs/aufs/loop.c linux-5.12/fs/aufs/loop.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/loop.c	2021-03-04 13:26:00.794273784 +0100
++++ linux-5.12/fs/aufs/loop.c	2021-05-04 17:45:33.497803346 +0200
 @@ -0,0 +1,148 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -23264,9 +23333,9 @@ diff -Naur null/fs/aufs/loop.c linux-5.11/fs/aufs/loop.c
 +		symbol_put(loop_backing_file);
 +	au_kfree_try_rcu(au_warn_loopback_array);
 +}
-diff -Naur null/fs/aufs/loop.h linux-5.11/fs/aufs/loop.h
+diff -Naur null/fs/aufs/loop.h linux-5.12/fs/aufs/loop.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/loop.h	2021-03-04 13:26:00.794273784 +0100
++++ linux-5.12/fs/aufs/loop.h	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,55 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -23323,9 +23392,9 @@ diff -Naur null/fs/aufs/loop.h linux-5.11/fs/aufs/loop.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LOOP_H__ */
-diff -Naur null/fs/aufs/magic.mk linux-5.11/fs/aufs/magic.mk
+diff -Naur null/fs/aufs/magic.mk linux-5.12/fs/aufs/magic.mk
 --- /dev/null
-+++ linux-5.11/fs/aufs/magic.mk	2021-03-04 13:26:00.794273784 +0100
++++ linux-5.12/fs/aufs/magic.mk	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,31 @@
 +# SPDX-License-Identifier: GPL-2.0
 +
@@ -23358,9 +23427,9 @@ diff -Naur null/fs/aufs/magic.mk linux-5.11/fs/aufs/magic.mk
 +ifdef CONFIG_HFSPLUS_FS
 +ccflags-y += -DHFSPLUS_SUPER_MAGIC=0x482b
 +endif
-diff -Naur null/fs/aufs/Makefile linux-5.11/fs/aufs/Makefile
+diff -Naur null/fs/aufs/Makefile linux-5.12/fs/aufs/Makefile
 --- /dev/null
-+++ linux-5.11/fs/aufs/Makefile	2021-03-04 13:26:00.792273771 +0100
++++ linux-5.12/fs/aufs/Makefile	2021-05-04 17:45:33.495803330 +0200
 @@ -0,0 +1,46 @@
 +# SPDX-License-Identifier: GPL-2.0
 +
@@ -23408,9 +23477,9 @@ diff -Naur null/fs/aufs/Makefile linux-5.11/fs/aufs/Makefile
 +aufs-$(CONFIG_AUFS_BR_HFSPLUS) += hfsplus.o
 +aufs-$(CONFIG_AUFS_DEBUG) += debug.o
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
-diff -Naur null/fs/aufs/module.c linux-5.11/fs/aufs/module.c
+diff -Naur null/fs/aufs/module.c linux-5.12/fs/aufs/module.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/module.c	2021-03-04 13:26:00.794273784 +0100
++++ linux-5.12/fs/aufs/module.c	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,273 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -23685,9 +23754,9 @@ diff -Naur null/fs/aufs/module.c linux-5.11/fs/aufs/module.c
 +
 +module_init(aufs_init);
 +module_exit(aufs_exit);
-diff -Naur null/fs/aufs/module.h linux-5.11/fs/aufs/module.h
+diff -Naur null/fs/aufs/module.h linux-5.12/fs/aufs/module.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/module.h	2021-03-04 13:26:00.794273784 +0100
++++ linux-5.12/fs/aufs/module.h	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,166 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -23855,9 +23924,9 @@ diff -Naur null/fs/aufs/module.h linux-5.11/fs/aufs/module.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_MODULE_H__ */
-diff -Naur null/fs/aufs/mvdown.c linux-5.11/fs/aufs/mvdown.c
+diff -Naur null/fs/aufs/mvdown.c linux-5.12/fs/aufs/mvdown.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/mvdown.c	2021-03-04 13:26:00.794273784 +0100
++++ linux-5.12/fs/aufs/mvdown.c	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,706 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -24565,9 +24634,9 @@ diff -Naur null/fs/aufs/mvdown.c linux-5.11/fs/aufs/mvdown.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur null/fs/aufs/opts.c linux-5.11/fs/aufs/opts.c
+diff -Naur null/fs/aufs/opts.c linux-5.12/fs/aufs/opts.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/opts.c	2021-03-04 13:26:00.794273784 +0100
++++ linux-5.12/fs/aufs/opts.c	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,1880 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -26449,9 +26518,9 @@ diff -Naur null/fs/aufs/opts.c linux-5.11/fs/aufs/opts.c
 +{
 +	return au_mntflags(sb) & AuOptMask_UDBA;
 +}
-diff -Naur null/fs/aufs/opts.h linux-5.11/fs/aufs/opts.h
+diff -Naur null/fs/aufs/opts.h linux-5.12/fs/aufs/opts.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/opts.h	2021-03-04 13:26:00.794273784 +0100
++++ linux-5.12/fs/aufs/opts.h	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,225 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -26678,9 +26747,9 @@ diff -Naur null/fs/aufs/opts.h linux-5.11/fs/aufs/opts.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_OPTS_H__ */
-diff -Naur null/fs/aufs/plink.c linux-5.11/fs/aufs/plink.c
+diff -Naur null/fs/aufs/plink.c linux-5.12/fs/aufs/plink.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/plink.c	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/plink.c	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,516 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -27198,9 +27267,9 @@ diff -Naur null/fs/aufs/plink.c linux-5.11/fs/aufs/plink.c
 +		}
 +	}
 +}
-diff -Naur null/fs/aufs/poll.c linux-5.11/fs/aufs/poll.c
+diff -Naur null/fs/aufs/poll.c linux-5.12/fs/aufs/poll.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/poll.c	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/poll.c	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,51 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -27253,10 +27322,10 @@ diff -Naur null/fs/aufs/poll.c linux-5.11/fs/aufs/poll.c
 +		AuDbg("mask 0x%x\n", mask);
 +	return mask;
 +}
-diff -Naur null/fs/aufs/posix_acl.c linux-5.11/fs/aufs/posix_acl.c
+diff -Naur null/fs/aufs/posix_acl.c linux-5.12/fs/aufs/posix_acl.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/posix_acl.c	2021-03-04 13:26:00.795273791 +0100
-@@ -0,0 +1,105 @@
++++ linux-5.12/fs/aufs/posix_acl.c	2021-05-04 17:45:33.498803354 +0200
+@@ -0,0 +1,106 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2014-2020 Junjiro R. Okajima
@@ -27322,7 +27391,8 @@ diff -Naur null/fs/aufs/posix_acl.c linux-5.11/fs/aufs/posix_acl.c
 +	return acl;
 +}
 +
-+int aufs_set_acl(struct inode *inode, struct posix_acl *acl, int type)
++int aufs_set_acl(struct user_namespace *userns, struct inode *inode,
++		 struct posix_acl *acl, int type)
 +{
 +	int err;
 +	ssize_t ssz;
@@ -27362,9 +27432,9 @@ diff -Naur null/fs/aufs/posix_acl.c linux-5.11/fs/aufs/posix_acl.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/procfs.c linux-5.11/fs/aufs/procfs.c
+diff -Naur null/fs/aufs/procfs.c linux-5.12/fs/aufs/procfs.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/procfs.c	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/procfs.c	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,170 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -27536,9 +27606,9 @@ diff -Naur null/fs/aufs/procfs.c linux-5.11/fs/aufs/procfs.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/rdu.c linux-5.11/fs/aufs/rdu.c
+diff -Naur null/fs/aufs/rdu.c linux-5.12/fs/aufs/rdu.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/rdu.c	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/rdu.c	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,384 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -27924,9 +27994,9 @@ diff -Naur null/fs/aufs/rdu.c linux-5.11/fs/aufs/rdu.c
 +	return err;
 +}
 +#endif
-diff -Naur null/fs/aufs/rwsem.h linux-5.11/fs/aufs/rwsem.h
+diff -Naur null/fs/aufs/rwsem.h linux-5.12/fs/aufs/rwsem.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/rwsem.h	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/rwsem.h	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,85 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -28013,9 +28083,9 @@ diff -Naur null/fs/aufs/rwsem.h linux-5.11/fs/aufs/rwsem.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_RWSEM_H__ */
-diff -Naur null/fs/aufs/sbinfo.c linux-5.11/fs/aufs/sbinfo.c
+diff -Naur null/fs/aufs/sbinfo.c linux-5.12/fs/aufs/sbinfo.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/sbinfo.c	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/sbinfo.c	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,314 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -28331,10 +28401,10 @@ diff -Naur null/fs/aufs/sbinfo.c linux-5.11/fs/aufs/sbinfo.c
 +	di_write_unlock2(d1, d2);
 +	si_read_unlock(d1->d_sb);
 +}
-diff -Naur null/fs/aufs/super.c linux-5.11/fs/aufs/super.c
+diff -Naur null/fs/aufs/super.c linux-5.12/fs/aufs/super.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/super.c	2021-03-04 13:26:00.795273791 +0100
-@@ -0,0 +1,1047 @@
++++ linux-5.12/fs/aufs/super.c	2021-05-04 17:45:33.498803354 +0200
+@@ -0,0 +1,1050 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -29376,15 +29446,18 @@ diff -Naur null/fs/aufs/super.c linux-5.11/fs/aufs/super.c
 +struct file_system_type aufs_fs_type = {
 +	.name		= AUFS_FSTYPE,
 +	/* a race between rename and others */
-+	.fs_flags	= FS_RENAME_DOES_D_MOVE,
++	.fs_flags	= FS_RENAME_DOES_D_MOVE
++				/* untested */
++				/*| FS_ALLOW_IDMAP*/
++				,
 +	.mount		= aufs_mount,
 +	.kill_sb	= aufs_kill_sb,
 +	/* no need to __module_get() and module_put(). */
 +	.owner		= THIS_MODULE,
 +};
-diff -Naur null/fs/aufs/super.h linux-5.11/fs/aufs/super.h
+diff -Naur null/fs/aufs/super.h linux-5.12/fs/aufs/super.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/super.h	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/super.h	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,587 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -29973,9 +30046,9 @@ diff -Naur null/fs/aufs/super.h linux-5.11/fs/aufs/super.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SUPER_H__ */
-diff -Naur null/fs/aufs/sysaufs.c linux-5.11/fs/aufs/sysaufs.c
+diff -Naur null/fs/aufs/sysaufs.c linux-5.12/fs/aufs/sysaufs.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/sysaufs.c	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/sysaufs.c	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,93 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -30070,9 +30143,9 @@ diff -Naur null/fs/aufs/sysaufs.c linux-5.11/fs/aufs/sysaufs.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/sysaufs.h linux-5.11/fs/aufs/sysaufs.h
+diff -Naur null/fs/aufs/sysaufs.h linux-5.12/fs/aufs/sysaufs.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/sysaufs.h	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/sysaufs.h	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,102 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -30176,9 +30249,9 @@ diff -Naur null/fs/aufs/sysaufs.h linux-5.11/fs/aufs/sysaufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __SYSAUFS_H__ */
-diff -Naur null/fs/aufs/sysfs.c linux-5.11/fs/aufs/sysfs.c
+diff -Naur null/fs/aufs/sysfs.c linux-5.12/fs/aufs/sysfs.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/sysfs.c	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/sysfs.c	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,374 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -30554,9 +30627,9 @@ diff -Naur null/fs/aufs/sysfs.c linux-5.11/fs/aufs/sysfs.c
 +		}
 +	}
 +}
-diff -Naur null/fs/aufs/sysrq.c linux-5.11/fs/aufs/sysrq.c
+diff -Naur null/fs/aufs/sysrq.c linux-5.12/fs/aufs/sysrq.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/sysrq.c	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/sysrq.c	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,149 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -30707,9 +30780,9 @@ diff -Naur null/fs/aufs/sysrq.c linux-5.11/fs/aufs/sysrq.c
 +	if (unlikely(err))
 +		pr_err("err %d (ignored)\n", err);
 +}
-diff -Naur null/fs/aufs/vdir.c linux-5.11/fs/aufs/vdir.c
+diff -Naur null/fs/aufs/vdir.c linux-5.12/fs/aufs/vdir.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/vdir.c	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/vdir.c	2021-05-04 17:45:33.498803354 +0200
 @@ -0,0 +1,896 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -31607,10 +31680,10 @@ diff -Naur null/fs/aufs/vdir.c linux-5.11/fs/aufs/vdir.c
 +	/* smp_mb(); */
 +	return 0;
 +}
-diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
+diff -Naur null/fs/aufs/vfsub.c linux-5.12/fs/aufs/vfsub.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/vfsub.c	2021-03-04 13:26:00.795273791 +0100
-@@ -0,0 +1,885 @@
++++ linux-5.12/fs/aufs/vfsub.c	2021-05-04 17:45:33.499803362 +0200
+@@ -0,0 +1,916 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -31857,6 +31930,7 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +{
 +	int err;
 +	struct dentry *d;
++	struct user_namespace *userns;
 +
 +	IMustLock(dir);
 +
@@ -31866,9 +31940,10 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +	path->dentry = d;
 +	if (unlikely(err))
 +		goto out;
++	userns = mnt_user_ns(path->mnt);
 +
 +	lockdep_off();
-+	err = vfs_create(dir, path->dentry, mode, want_excl);
++	err = vfs_create(userns, dir, path->dentry, mode, want_excl);
 +	lockdep_on();
 +	if (!err) {
 +		struct path tmp = *path;
@@ -31890,6 +31965,7 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +{
 +	int err;
 +	struct dentry *d;
++	struct user_namespace *userns;
 +
 +	IMustLock(dir);
 +
@@ -31899,9 +31975,10 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +	path->dentry = d;
 +	if (unlikely(err))
 +		goto out;
++	userns = mnt_user_ns(path->mnt);
 +
 +	lockdep_off();
-+	err = vfs_symlink(dir, path->dentry, symname);
++	err = vfs_symlink(userns, dir, path->dentry, symname);
 +	lockdep_on();
 +	if (!err) {
 +		struct path tmp = *path;
@@ -31923,6 +32000,7 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +{
 +	int err;
 +	struct dentry *d;
++	struct user_namespace *userns;
 +
 +	IMustLock(dir);
 +
@@ -31932,9 +32010,10 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +	path->dentry = d;
 +	if (unlikely(err))
 +		goto out;
++	userns = mnt_user_ns(path->mnt);
 +
 +	lockdep_off();
-+	err = vfs_mknod(dir, path->dentry, mode, dev);
++	err = vfs_mknod(userns, dir, path->dentry, mode, dev);
 +	lockdep_on();
 +	if (!err) {
 +		struct path tmp = *path;
@@ -31967,6 +32046,7 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +{
 +	int err;
 +	struct dentry *d;
++	struct user_namespace *userns;
 +
 +	IMustLock(dir);
 +
@@ -31981,9 +32061,10 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +	path->dentry = d;
 +	if (unlikely(err))
 +		goto out;
++	userns = mnt_user_ns(path->mnt);
 +
 +	lockdep_off();
-+	err = vfs_link(src_dentry, dir, path->dentry, delegated_inode);
++	err = vfs_link(src_dentry, userns, dir, path->dentry, delegated_inode);
 +	lockdep_on();
 +	if (!err) {
 +		struct path tmp = *path;
@@ -32009,6 +32090,7 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +		 struct inode **delegated_inode, unsigned int flags)
 +{
 +	int err;
++	struct renamedata rd;
 +	struct path tmp = {
 +		.mnt	= path->mnt
 +	};
@@ -32025,9 +32107,16 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +	if (unlikely(err))
 +		goto out;
 +
++	rd.old_mnt_userns = mnt_user_ns(path->mnt);
++	rd.old_dir = src_dir;
++	rd.old_dentry = src_dentry;
++	rd.new_mnt_userns = rd.old_mnt_userns;
++	rd.new_dir = dir;
++	rd.new_dentry = path->dentry;
++	rd.delegated_inode = delegated_inode;
++	rd.flags = flags;
 +	lockdep_off();
-+	err = vfs_rename(src_dir, src_dentry, dir, path->dentry,
-+			 delegated_inode, flags);
++	err = vfs_rename(&rd);
 +	lockdep_on();
 +	if (!err) {
 +		int did;
@@ -32051,6 +32140,7 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +{
 +	int err;
 +	struct dentry *d;
++	struct user_namespace *userns;
 +
 +	IMustLock(dir);
 +
@@ -32060,9 +32150,10 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +	path->dentry = d;
 +	if (unlikely(err))
 +		goto out;
++	userns = mnt_user_ns(path->mnt);
 +
 +	lockdep_off();
-+	err = vfs_mkdir(dir, path->dentry, mode);
++	err = vfs_mkdir(userns, dir, path->dentry, mode);
 +	lockdep_on();
 +	if (!err) {
 +		struct path tmp = *path;
@@ -32084,6 +32175,7 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +{
 +	int err;
 +	struct dentry *d;
++	struct user_namespace *userns;
 +
 +	IMustLock(dir);
 +
@@ -32093,9 +32185,10 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +	path->dentry = d;
 +	if (unlikely(err))
 +		goto out;
++	userns = mnt_user_ns(path->mnt);
 +
 +	lockdep_off();
-+	err = vfs_rmdir(dir, path->dentry);
++	err = vfs_rmdir(userns, dir, path->dentry);
 +	lockdep_on();
 +	if (!err) {
 +		struct path tmp = {
@@ -32253,6 +32346,7 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +	int err;
 +	struct inode *h_inode;
 +	struct super_block *h_sb;
++	struct user_namespace *h_userns;
 +
 +	if (!h_file) {
 +		err = vfsub_truncate(h_path, length);
@@ -32268,8 +32362,10 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +	if (!err)
 +		err = security_path_truncate(h_path);
 +	if (!err) {
++		h_userns = mnt_user_ns(h_path->mnt);
 +		lockdep_off();
-+		err = do_truncate(h_path->dentry, length, attr, h_file);
++		err = do_truncate(h_userns, h_path->dentry, length, attr,
++				  h_file);
 +		lockdep_on();
 +	}
 +	lockdep_off();
@@ -32298,8 +32394,10 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +int vfsub_sio_mkdir(struct inode *dir, struct path *path, int mode)
 +{
 +	int err, do_sio, wkq_err;
++	struct user_namespace *userns;
 +
-+	do_sio = au_test_h_perm_sio(dir, MAY_EXEC | MAY_WRITE);
++	userns = mnt_user_ns(path->mnt);
++	do_sio = au_test_h_perm_sio(userns, dir, MAY_EXEC | MAY_WRITE);
 +	if (!do_sio) {
 +		lockdep_off();
 +		err = vfsub_mkdir(dir, path, mode);
@@ -32334,8 +32432,10 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +int vfsub_sio_rmdir(struct inode *dir, struct path *path)
 +{
 +	int err, do_sio, wkq_err;
++	struct user_namespace *userns;
 +
-+	do_sio = au_test_h_perm_sio(dir, MAY_EXEC | MAY_WRITE);
++	userns = mnt_user_ns(path->mnt);
++	do_sio = au_test_h_perm_sio(userns, dir, MAY_EXEC | MAY_WRITE);
 +	if (!do_sio) {
 +		lockdep_off();
 +		err = vfsub_rmdir(dir, path);
@@ -32367,14 +32467,16 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +{
 +	struct notify_change_args *a = args;
 +	struct inode *h_inode;
++	struct user_namespace *userns;
 +
 +	h_inode = d_inode(a->path->dentry);
 +	IMustLock(h_inode);
 +
 +	*a->errp = -EPERM;
 +	if (!IS_IMMUTABLE(h_inode) && !IS_APPEND(h_inode)) {
++		userns = mnt_user_ns(a->path->mnt);
 +		lockdep_off();
-+		*a->errp = notify_change(a->path->dentry, a->ia,
++		*a->errp = notify_change(userns, a->path->dentry, a->ia,
 +					 a->delegated_inode);
 +		lockdep_on();
 +		if (!*a->errp)
@@ -32431,6 +32533,7 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +	struct unlink_args *a = args;
 +	struct dentry *d = a->path->dentry;
 +	struct inode *h_inode;
++	struct user_namespace *userns;
 +	const int stop_sillyrename = (au_test_nfs(d->d_sb)
 +				      && au_dcount(d) == 1);
 +
@@ -32450,8 +32553,9 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +		ihold(h_inode);
 +	}
 +
++	userns = mnt_user_ns(a->path->mnt);
 +	lockdep_off();
-+	*a->errp = vfs_unlink(a->dir, d, a->delegated_inode);
++	*a->errp = vfs_unlink(userns, a->dir, d, a->delegated_inode);
 +	lockdep_on();
 +	if (!*a->errp) {
 +		struct path tmp = {
@@ -32496,10 +32600,10 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.11/fs/aufs/vfsub.c
 +
 +	return err;
 +}
-diff -Naur null/fs/aufs/vfsub.h linux-5.11/fs/aufs/vfsub.h
+diff -Naur null/fs/aufs/vfsub.h linux-5.12/fs/aufs/vfsub.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/vfsub.h	2021-03-04 13:26:00.795273791 +0100
-@@ -0,0 +1,354 @@
++++ linux-5.12/fs/aufs/vfsub.h	2021-05-04 17:45:33.499803362 +0200
+@@ -0,0 +1,358 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -32736,17 +32840,19 @@ diff -Naur null/fs/aufs/vfsub.h linux-5.11/fs/aufs/vfsub.h
 +}
 +
 +#ifdef CONFIG_FS_POSIX_ACL
-+static inline int vfsub_acl_chmod(struct inode *h_inode, umode_t h_mode)
++static inline int vfsub_acl_chmod(struct user_namespace *h_userns,
++				  struct inode *h_inode, umode_t h_mode)
 +{
 +	int err;
 +
-+	err = posix_acl_chmod(h_inode, h_mode);
++	err = posix_acl_chmod(h_userns, h_inode, h_mode);
 +	if (err == -EOPNOTSUPP)
 +		err = 0;
 +	return err;
 +}
 +#else
-+AuStubInt0(vfsub_acl_chmod, struct inode *h_inode, umode_t h_mode);
++AuStubInt0(vfsub_acl_chmod, struct user_namespace *h_userns,
++	   struct inode *h_inode, umode_t h_mode);
 +#endif
 +
 +long vfsub_splice_to(struct file *in, loff_t *ppos,
@@ -32829,24 +32935,26 @@ diff -Naur null/fs/aufs/vfsub.h linux-5.11/fs/aufs/vfsub.h
 +
 +/* ---------------------------------------------------------------------- */
 +
-+static inline int vfsub_setxattr(struct dentry *dentry, const char *name,
++static inline int vfsub_setxattr(struct user_namespace *userns,
++				 struct dentry *dentry, const char *name,
 +				 const void *value, size_t size, int flags)
 +{
 +	int err;
 +
 +	lockdep_off();
-+	err = vfs_setxattr(dentry, name, value, size, flags);
++	err = vfs_setxattr(userns, dentry, name, value, size, flags);
 +	lockdep_on();
 +
 +	return err;
 +}
 +
-+static inline int vfsub_removexattr(struct dentry *dentry, const char *name)
++static inline int vfsub_removexattr(struct user_namespace *userns,
++				    struct dentry *dentry, const char *name)
 +{
 +	int err;
 +
 +	lockdep_off();
-+	err = vfs_removexattr(dentry, name);
++	err = vfs_removexattr(userns, dentry, name);
 +	lockdep_on();
 +
 +	return err;
@@ -32854,9 +32962,9 @@ diff -Naur null/fs/aufs/vfsub.h linux-5.11/fs/aufs/vfsub.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_VFSUB_H__ */
-diff -Naur null/fs/aufs/wbr_policy.c linux-5.11/fs/aufs/wbr_policy.c
+diff -Naur null/fs/aufs/wbr_policy.c linux-5.12/fs/aufs/wbr_policy.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/wbr_policy.c	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/wbr_policy.c	2021-05-04 17:45:33.499803362 +0200
 @@ -0,0 +1,830 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -33688,10 +33796,10 @@ diff -Naur null/fs/aufs/wbr_policy.c linux-5.11/fs/aufs/wbr_policy.c
 +		.fin	= au_wbr_create_fin_mfs
 +	}
 +};
-diff -Naur null/fs/aufs/whout.c linux-5.11/fs/aufs/whout.c
+diff -Naur null/fs/aufs/whout.c linux-5.12/fs/aufs/whout.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/whout.c	2021-03-04 13:26:00.795273791 +0100
-@@ -0,0 +1,1062 @@
++++ linux-5.12/fs/aufs/whout.c	2021-05-04 17:45:33.499803362 +0200
+@@ -0,0 +1,1070 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -33758,7 +33866,8 @@ diff -Naur null/fs/aufs/whout.c linux-5.11/fs/aufs/whout.c
 + * test if the @wh_name exists under @h_parent.
 + * @try_sio specifies the necessary of super-io.
 + */
-+int au_wh_test(struct dentry *h_parent, struct qstr *wh_name, int try_sio)
++int au_wh_test(struct user_namespace *h_userns, struct dentry *h_parent,
++	       struct qstr *wh_name, int try_sio)
 +{
 +	int err;
 +	struct dentry *wh_dentry;
@@ -33766,7 +33875,7 @@ diff -Naur null/fs/aufs/whout.c linux-5.11/fs/aufs/whout.c
 +	if (!try_sio)
 +		wh_dentry = vfsub_lkup_one(wh_name, h_parent);
 +	else
-+		wh_dentry = au_sio_lkup_one(wh_name, h_parent);
++		wh_dentry = au_sio_lkup_one(h_userns, wh_name, h_parent);
 +	err = PTR_ERR(wh_dentry);
 +	if (IS_ERR(wh_dentry)) {
 +		if (err == -ENAMETOOLONG)
@@ -33795,14 +33904,14 @@ diff -Naur null/fs/aufs/whout.c linux-5.11/fs/aufs/whout.c
 +/*
 + * test if the @h_dentry sets opaque or not.
 + */
-+int au_diropq_test(struct dentry *h_dentry)
++int au_diropq_test(struct user_namespace *h_userns, struct dentry *h_dentry)
 +{
 +	int err;
 +	struct inode *h_dir;
 +
 +	h_dir = d_inode(h_dentry);
-+	err = au_wh_test(h_dentry, &diropq_name,
-+			 au_test_h_perm_sio(h_dir, MAY_EXEC));
++	err = au_wh_test(h_userns, h_dentry, &diropq_name,
++			 au_test_h_perm_sio(h_userns, h_dir, MAY_EXEC));
 +	return err;
 +}
 +
@@ -33819,6 +33928,7 @@ diff -Naur null/fs/aufs/whout.c linux-5.11/fs/aufs/whout.c
 +	/* strict atomic_t is unnecessary here */
 +	static unsigned short cnt;
 +	struct qstr qs;
++	struct user_namespace *h_userns;
 +
 +	BUILD_BUG_ON(sizeof(cnt) * 2 > AUFS_WH_TMP_LEN);
 +
@@ -33842,10 +33952,11 @@ diff -Naur null/fs/aufs/whout.c linux-5.11/fs/aufs/whout.c
 +	*p++ = '.';
 +	AuDebugOn(name + qs.len + 1 - p <= AUFS_WH_TMP_LEN);
 +
++	h_userns = au_br_userns(br);
 +	qs.name = name;
 +	for (i = 0; i < 3; i++) {
 +		sprintf(p, "%.*x", AUFS_WH_TMP_LEN, cnt++);
-+		dentry = au_sio_lkup_one(&qs, h_parent);
++		dentry = au_sio_lkup_one(h_userns, &qs, h_parent);
 +		if (IS_ERR(dentry) || d_is_negative(dentry))
 +			goto out_name;
 +		dput(dentry);
@@ -34444,9 +34555,12 @@ diff -Naur null/fs/aufs/whout.c linux-5.11/fs/aufs/whout.c
 +			     unsigned int flags)
 +{
 +	struct dentry *diropq, *h_dentry;
++	struct user_namespace *h_userns;
 +
++	h_userns = au_sbr_userns(dentry->d_sb, bindex);
 +	h_dentry = au_h_dptr(dentry, bindex);
-+	if (!au_test_h_perm_sio(d_inode(h_dentry), MAY_EXEC | MAY_WRITE))
++	if (!au_test_h_perm_sio(h_userns, d_inode(h_dentry),
++				MAY_EXEC | MAY_WRITE))
 +		diropq = do_diropq(dentry, bindex, flags);
 +	else {
 +		int wkq_err;
@@ -34632,11 +34746,13 @@ diff -Naur null/fs/aufs/whout.c linux-5.11/fs/aufs/whout.c
 +	struct path h_tmp;
 +	struct inode *wh_inode, *h_dir;
 +	struct au_branch *br;
++	struct user_namespace *h_userns;
 +
 +	h_dir = d_inode(wh_dentry->d_parent); /* dir inode is locked */
 +	IMustLock(h_dir);
 +
 +	br = au_sbr(dir->i_sb, bindex);
++	h_userns = au_br_userns(br);
 +	wh_inode = d_inode(wh_dentry);
 +	inode_lock_nested(wh_inode, AuLsc_I_CHILD);
 +
@@ -34644,7 +34760,7 @@ diff -Naur null/fs/aufs/whout.c linux-5.11/fs/aufs/whout.c
 +	 * someone else might change some whiteouts while we were sleeping.
 +	 * it means this whlist may have an obsoleted entry.
 +	 */
-+	if (!au_test_h_perm_sio(wh_inode, MAY_EXEC | MAY_WRITE))
++	if (!au_test_h_perm_sio(h_userns, wh_inode, MAY_EXEC | MAY_WRITE))
 +		err = del_wh_children(wh_dentry, whlist, bindex, br);
 +	else {
 +		int wkq_err;
@@ -34754,10 +34870,10 @@ diff -Naur null/fs/aufs/whout.c linux-5.11/fs/aufs/whout.c
 +		au_whtmp_rmdir_free(args);
 +	}
 +}
-diff -Naur null/fs/aufs/whout.h linux-5.11/fs/aufs/whout.h
+diff -Naur null/fs/aufs/whout.h linux-5.12/fs/aufs/whout.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/whout.h	2021-03-04 13:26:00.795273791 +0100
-@@ -0,0 +1,86 @@
++++ linux-5.12/fs/aufs/whout.h	2021-05-04 17:45:33.499803362 +0200
+@@ -0,0 +1,87 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -34789,8 +34905,9 @@ diff -Naur null/fs/aufs/whout.h linux-5.11/fs/aufs/whout.h
 +
 +/* whout.c */
 +int au_wh_name_alloc(struct qstr *wh, const struct qstr *name);
-+int au_wh_test(struct dentry *h_parent, struct qstr *wh_name, int try_sio);
-+int au_diropq_test(struct dentry *h_dentry);
++int au_wh_test(struct user_namespace *h_userns, struct dentry *h_parent,
++	       struct qstr *wh_name, int try_sio);
++int au_diropq_test(struct user_namespace *h_userns, struct dentry *h_dentry);
 +struct au_branch;
 +struct dentry *au_whtmp_lkup(struct dentry *h_parent, struct au_branch *br,
 +			     struct qstr *prefix);
@@ -34844,9 +34961,9 @@ diff -Naur null/fs/aufs/whout.h linux-5.11/fs/aufs/whout.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WHOUT_H__ */
-diff -Naur null/fs/aufs/wkq.c linux-5.11/fs/aufs/wkq.c
+diff -Naur null/fs/aufs/wkq.c linux-5.12/fs/aufs/wkq.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/wkq.c	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/wkq.c	2021-05-04 17:45:33.499803362 +0200
 @@ -0,0 +1,372 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -35220,9 +35337,9 @@ diff -Naur null/fs/aufs/wkq.c linux-5.11/fs/aufs/wkq.c
 +
 +	return err;
 +}
-diff -Naur null/fs/aufs/wkq.h linux-5.11/fs/aufs/wkq.h
+diff -Naur null/fs/aufs/wkq.h linux-5.12/fs/aufs/wkq.h
 --- /dev/null
-+++ linux-5.11/fs/aufs/wkq.h	2021-03-04 13:26:00.795273791 +0100
++++ linux-5.12/fs/aufs/wkq.h	2021-05-04 17:45:33.499803362 +0200
 @@ -0,0 +1,89 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -35313,10 +35430,10 @@ diff -Naur null/fs/aufs/wkq.h linux-5.11/fs/aufs/wkq.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WKQ_H__ */
-diff -Naur null/fs/aufs/xattr.c linux-5.11/fs/aufs/xattr.c
+diff -Naur null/fs/aufs/xattr.c linux-5.12/fs/aufs/xattr.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/xattr.c	2021-03-04 13:26:00.795273791 +0100
-@@ -0,0 +1,356 @@
++++ linux-5.12/fs/aufs/xattr.c	2021-05-04 17:45:33.499803362 +0200
+@@ -0,0 +1,368 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2014-2020 Junjiro R. Okajima
@@ -35383,21 +35500,26 @@ diff -Naur null/fs/aufs/xattr.c linux-5.11/fs/aufs/xattr.c
 +
 +static const int au_xattr_out_of_list = AuBrAttr_ICEX_OTH << 1;
 +
-+static int au_do_cpup_xattr(struct dentry *h_dst, struct dentry *h_src,
++static int au_do_cpup_xattr(struct path *h_dst, struct path *h_src,
 +			    char *name, char **buf, unsigned int ignore_flags,
 +			    unsigned int verbose)
 +{
 +	int err;
 +	ssize_t ssz;
 +	struct inode *h_idst;
++	struct dentry *h_dst_dentry, *h_src_dentry;
++	struct user_namespace *h_dst_userns, *h_src_userns;
 +
-+	ssz = vfs_getxattr_alloc(h_src, name, buf, 0, GFP_NOFS);
++	h_src_userns = mnt_user_ns(h_src->mnt);
++	h_src_dentry = h_src->dentry;
++	ssz = vfs_getxattr_alloc(h_src_userns, h_src_dentry, name, buf, 0,
++				 GFP_NOFS);
 +	err = ssz;
 +	if (unlikely(err <= 0)) {
 +		if (err == -ENODATA
 +		    || (err == -EOPNOTSUPP
 +			&& ((ignore_flags & au_xattr_out_of_list)
-+			    || (au_test_nfs_noacl(d_inode(h_src))
++			    || (au_test_nfs_noacl(d_inode(h_src_dentry))
 +				&& (!strcmp(name, XATTR_NAME_POSIX_ACL_ACCESS)
 +				    || !strcmp(name,
 +					       XATTR_NAME_POSIX_ACL_DEFAULT))))
@@ -35409,9 +35531,12 @@ diff -Naur null/fs/aufs/xattr.c linux-5.11/fs/aufs/xattr.c
 +	}
 +
 +	/* unlock it temporary */
-+	h_idst = d_inode(h_dst);
++	h_dst_userns = mnt_user_ns(h_dst->mnt);
++	h_dst_dentry = h_dst->dentry;
++	h_idst = d_inode(h_dst_dentry);
 +	inode_unlock(h_idst);
-+	err = vfsub_setxattr(h_dst, name, *buf, ssz, /*flags*/0);
++	err = vfsub_setxattr(h_dst_userns, h_dst_dentry, name, *buf, ssz,
++			     /*flags*/0);
 +	inode_lock_nested(h_idst, AuLsc_I_CHILD2);
 +	if (unlikely(err)) {
 +		if (verbose || au_debug_test())
@@ -35423,25 +35548,28 @@ diff -Naur null/fs/aufs/xattr.c linux-5.11/fs/aufs/xattr.c
 +	return err;
 +}
 +
-+int au_cpup_xattr(struct dentry *h_dst, struct dentry *h_src, int ignore_flags,
++int au_cpup_xattr(struct path *h_dst, struct path *h_src, int ignore_flags,
 +		  unsigned int verbose)
 +{
 +	int err, unlocked, acl_access, acl_default;
 +	ssize_t ssz;
++	struct dentry *h_dst_dentry, *h_src_dentry;
 +	struct inode *h_isrc, *h_idst;
 +	char *value, *p, *o, *e;
 +
 +	/* try stopping to update the source inode while we are referencing */
 +	/* there should not be the parent-child relationship between them */
-+	h_isrc = d_inode(h_src);
-+	h_idst = d_inode(h_dst);
++	h_dst_dentry = h_dst->dentry;
++	h_idst = d_inode(h_dst_dentry);
++	h_src_dentry = h_src->dentry;
++	h_isrc = d_inode(h_src_dentry);
 +	inode_unlock(h_idst);
 +	inode_lock_shared_nested(h_isrc, AuLsc_I_CHILD);
 +	inode_lock_nested(h_idst, AuLsc_I_CHILD2);
 +	unlocked = 0;
 +
 +	/* some filesystems don't list POSIX ACL, for example tmpfs */
-+	ssz = vfs_listxattr(h_src, NULL, 0);
++	ssz = vfs_listxattr(h_src_dentry, NULL, 0);
 +	err = ssz;
 +	if (unlikely(err < 0)) {
 +		AuTraceErr(err);
@@ -35460,7 +35588,7 @@ diff -Naur null/fs/aufs/xattr.c linux-5.11/fs/aufs/xattr.c
 +		o = p;
 +		if (unlikely(!p))
 +			goto out;
-+		err = vfs_listxattr(h_src, p, ssz);
++		err = vfs_listxattr(h_src_dentry, p, ssz);
 +	}
 +	inode_unlock_shared(h_isrc);
 +	unlocked = 1;
@@ -35574,7 +35702,7 @@ diff -Naur null/fs/aufs/xattr.c linux-5.11/fs/aufs/xattr.c
 +		break;
 +	case AU_XATTR_GET:
 +		AuDebugOn(d_is_negative(h_path.dentry));
-+		err = vfs_getxattr(h_path.dentry,
++		err = vfs_getxattr(mnt_user_ns(h_path.mnt), h_path.dentry,
 +				   arg->u.get.name, arg->u.get.value,
 +				   arg->u.get.size);
 +		break;
@@ -35646,6 +35774,7 @@ diff -Naur null/fs/aufs/xattr.c linux-5.11/fs/aufs/xattr.c
 +}
 +
 +static int au_xattr_set(const struct xattr_handler *handler,
++			struct user_namespace *userns,
 +			struct dentry *dentry, struct inode *inode,
 +			const char *name, const void *value, size_t size,
 +			int flags)
@@ -35673,9 +35802,9 @@ diff -Naur null/fs/aufs/xattr.c linux-5.11/fs/aufs/xattr.c
 +{
 +	sb->s_xattr = au_xattr_handlers;
 +}
-diff -Naur null/fs/aufs/xino.c linux-5.11/fs/aufs/xino.c
+diff -Naur null/fs/aufs/xino.c linux-5.12/fs/aufs/xino.c
 --- /dev/null
-+++ linux-5.11/fs/aufs/xino.c	2021-03-04 13:26:00.796273798 +0100
++++ linux-5.12/fs/aufs/xino.c	2021-05-04 17:45:33.499803362 +0200
 @@ -0,0 +1,1925 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -35937,7 +36066,7 @@ diff -Naur null/fs/aufs/xino.c linux-5.11/fs/aufs/xino.c
 +	}
 +
 +	/* no need to mnt_want_write() since we call dentry_open() later */
-+	err = vfs_create(dir, path.dentry, 0666, NULL);
++	err = vfs_create(mnt_user_ns(base->mnt), dir, path.dentry, 0666, NULL);
 +	if (unlikely(err)) {
 +		file = ERR_PTR(err);
 +		pr_err("%pd create err %d\n", dentry, err);
@@ -37602,9 +37731,9 @@ diff -Naur null/fs/aufs/xino.c linux-5.11/fs/aufs/xino.c
 +out:
 +	return err;
 +}
-diff -Naur null/include/uapi/linux/aufs_type.h linux-5.11/include/uapi/linux/aufs_type.h
+diff -Naur null/include/uapi/linux/aufs_type.h linux-5.12/include/uapi/linux/aufs_type.h
 --- /dev/null
-+++ linux-5.11/include/uapi/linux/aufs_type.h	2021-03-04 13:26:00.796273798 +0100
++++ linux-5.12/include/uapi/linux/aufs_type.h	2021-05-04 17:45:33.499803362 +0200
 @@ -0,0 +1,452 @@
 +/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 +/*
@@ -37648,7 +37777,7 @@ diff -Naur null/include/uapi/linux/aufs_type.h linux-5.11/include/uapi/linux/auf
 +#include <limits.h>
 +#endif /* __KERNEL__ */
 +
-+#define AUFS_VERSION	"5.11-20210222"
++#define AUFS_VERSION	"5.12-20210503"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
