@@ -29,6 +29,8 @@ Server = https://kaosx.cf/$repo
 Server = http://kaos.youm.org/$repo
 
 # Netherlands
+Server = https://mirror.easylee.nl/kaos/$repo
+Server = http://mirror.easylee.nl/kaos/$repo
 Server = https://repo.kaosx.us/$repo
 
 # United States
