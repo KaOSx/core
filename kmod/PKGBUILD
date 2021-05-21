@@ -1,6 +1,6 @@
 
 pkgname=kmod
-pkgver=28
+pkgver=29
 pkgrel=1
 #_kver=4.0.5-1
 pkgdesc="Linux kernel module handling"
@@ -11,7 +11,7 @@ depends=('glibc' 'zlib' 'zstd')
 options=('!libtool')
 source=("https://www.kernel.org/pub/linux/utils/kernel/kmod/${pkgname}-${pkgver}.tar.xz"
         'depmod-search.conf')
-sha256sums=('3969fc0f13daa98084256337081c442f8749310089e48aa695c9b4dfe1b3a26c'
+sha256sums=('0b80eea7aa184ac6fd20cafa2a1fdf290ffecc70869a797079e2cc5c6225a52a'
             '884bf2246f9cd42a4dce9886153d91a7cdfb0dcabcb0f293d31cb33077be76a4')
 
 build() {
