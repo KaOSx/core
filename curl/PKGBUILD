@@ -1,7 +1,7 @@
 
 pkgname=curl
-pkgver=7.76.1
-pkgrel=3
+pkgver=7.77.0
+pkgrel=1
 pkgdesc="An URL retrival utility and library"
 arch=('x86_64')
 url="https://curl.haxx.se"
@@ -10,7 +10,7 @@ depends=('zlib' 'openssl' 'bash' 'ca-certificates' 'libssh2' 'libpsl' 'libidn2')
 options=('!libtool')
 source=("https://curl.haxx.se/download/${pkgname}-${pkgver}.tar.bz2"
         'curlbuild.h')
-md5sums=('b89c0fda9f234c4a4c6f7955b4d8a4c8'
+md5sums=('045d28029679dabb6b20a814934671ad'
          '751bd433ede935c8fae727377625a8ae')
 
 build() {
@@ -28,6 +28,7 @@ build() {
         --enable-threaded-resolver \
         --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt \
         --with-libssh2 \
+        --with-openssl \
         --with-fish-functions-dir=/usr/share/fish/completions
     make
 }
