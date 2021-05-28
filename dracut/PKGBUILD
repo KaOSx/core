@@ -1,6 +1,6 @@
 
 pkgname=dracut
-pkgver=054
+pkgver=055
 pkgrel=1
 pkgdesc="Event driven initramfs tool used to create an initramfs image by copying tools and files from an installed system and combining it with the dracut framework"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('binutils' 'cpio' 'kmod' 'util-linux' 'libarchive' 'coreutils'
 makedepends=('asciidoc' 'bash-completion' 'libxslt')
 backup=('etc/dracut.conf')
 source=("https://mirrors.edge.kernel.org/pub/linux/utils/boot/dracut/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('517b22cad5a35de9b5706681510c3d0364a13ccbefe72cc23b776c7bcf2579c1')
+sha256sums=('4baa08206cceeb124dbf1075a0daf774b5a8f144ce2e01d82a144af3020fd65b')
 
 build() {
   cd ${pkgname}-${pkgver}
