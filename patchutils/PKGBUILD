@@ -1,11 +1,11 @@
 
 pkgname=patchutils
 pkgver=0.4.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A small collection of programs that operate on patch files"
 license=('GPL')
 url="http://cyberelk.net/tim/patchutils/"
-depends=('perl')
+depends=('perl' 'pcre2')
 arch=('x86_64')
 source=("http://cyberelk.net/tim/data/patchutils/stable/${pkgname}-${pkgver}.tar.xz")
 md5sums=('3b4ab8bd84a31deb54f4a3fcac4db94f')
