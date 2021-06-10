@@ -2,7 +2,7 @@
 pkgname=argon2
 _pkgname=phc-winner-argon2
 pkgver=20190702
-pkgrel=1
+pkgrel=2
 pkgdesc='Password hash Argon2, winner of Password Hashing Competition (PHC).'
 arch=('x86_64')
 url='https://github.com/P-H-C/phc-winner-argon2'

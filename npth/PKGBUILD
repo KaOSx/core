@@ -1,7 +1,7 @@
 
 pkgname=npth
 pkgver=1.6
-pkgrel=1
+pkgrel=2
 pkgdesc='Library to provide the GNU Pth API and thus a non-preemptive threads implementation.'
 url="https://git.gnupg.org/cgi-bin/gitweb.cgi?p=npth.git;a=blob_plain;f=README;hb=refs/heads/master"
 license=('LGPL')
