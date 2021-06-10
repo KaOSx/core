@@ -1,12 +1,12 @@
 
 # all credit for this PKGBUILD goes to Jenya Sovetkin <e.sovetkin@gmail.com>
 pkgname=mkinitcpio-openswap
-pkgver=0.1.0
-pkgrel=3
+pkgver=0.1.1
+pkgrel=1
 pkgdesc="mkinitcpio hook to open swap at boot time"
 arch=('x86_64')
 url="https://aur.archlinux.org/packages/mkinitcpio-openswap/"
-license=('unknown')
+license=('MIT')
 depends=('mkinitcpio')
 backup=('etc/openswap.conf')
 source=('openswap.hook'

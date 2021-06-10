@@ -1,7 +1,7 @@
  
 pkgname=ldns
 pkgver=1.7.1
-pkgrel=1
+pkgrel=2
 pkgdesc='DNS library that facilitates DNS tool programming.'
 url='https://www.nlnetlabs.nl/projects/ldns/'
 license=('custom:BSD')
@@ -13,7 +13,7 @@ sha256sums=('8ac84c16bdca60e710eea75782356f3ac3b55680d40e1530d7cea474ac208229')
 
 build() {
     cd ${pkgname}-${pkgver}
-    
+
     ./configure \
         --prefix=/usr \
         --sysconfdir=/etc \
@@ -28,6 +28,6 @@ build() {
 package() {
     cd ${pkgname}-${pkgver}
     make DESTDIR=${pkgdir} install
-    
+
     install -Dm644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }

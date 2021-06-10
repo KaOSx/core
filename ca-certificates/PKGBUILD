@@ -1,7 +1,7 @@
 
 pkgname=ca-certificates
 pkgver=20170717
-pkgrel=2
+pkgrel=3
 epoch=1
 pkgdesc='Common CA certificates'
 arch=('x86_64')

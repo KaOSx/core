@@ -1,7 +1,7 @@
 
 pkgname=patch
 pkgver=2.7.6
-pkgrel=2
+pkgrel=3
 pkgdesc="A utility to apply patch files to original sources"
 arch=('x86_64')
 url="https://www.gnu.org/software/patch/patch.html"
@@ -14,19 +14,19 @@ md5sums=('78ad9937e4caadcba1526ef1853730d5')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr
   make
 }
 
 check() {
   cd ${pkgname}-${pkgver}
-  
+
   make check
 }
 
 package() {
   cd ${pkgname}-${pkgver}
-  
-  make DESTDIR=$pkgdir install
+
+  make DESTDIR=${pkgdir} install
 }
