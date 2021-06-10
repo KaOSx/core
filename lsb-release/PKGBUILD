@@ -2,7 +2,7 @@
 # code at https://github.com/LinuxStandardBase/lsb
 pkgname=lsb-release
 pkgver=1.4
-pkgrel=13
+pkgrel=14
 pkgdesc="LSB version query program."
 arch=('x86_64')
 url="https://wiki.linuxfoundation.org/lsb/start"
@@ -14,7 +14,7 @@ md5sums=('30537ef5a01e0ca94b7b8eb6a36bb1e4')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   make
 }
 

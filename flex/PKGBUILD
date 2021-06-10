@@ -1,7 +1,7 @@
 
 pkgname=flex
 pkgver=2.6.4
-pkgrel=2
+pkgrel=3
 pkgdesc="A tool for generating text-scanning programs"
 arch=('x86_64')
 url="https://github.com/westes/flex"
@@ -20,7 +20,7 @@ prepare() {
 
 build() {
   cd ${pkgname}-${pkgver} 
-  
+
   ./configure --prefix=/usr 
   make
 }
@@ -34,7 +34,7 @@ check() {
 package() {
   cd ${pkgname}-${pkgver} 
   make DESTDIR=${pkgdir} install
-  
+
   ln -s flex ${pkgdir}/usr/bin/lex 
   install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/license.txt 
 }

@@ -1,7 +1,7 @@
 
 pkgname=mlocate
 pkgver=0.26
-pkgrel=6
+pkgrel=7
 pkgdesc="Faster merging drop-in for slocate"
 arch=('x86_64')
 url="https://pagure.io/mlocate"
