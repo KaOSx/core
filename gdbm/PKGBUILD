@@ -1,6 +1,6 @@
 
 pkgname=gdbm
-pkgver=1.19
+pkgver=1.20
 pkgrel=1
 pkgdesc="GNU database library"
 url="https://www.gnu.org/software/gdbm/gdbm.html"
@@ -8,10 +8,10 @@ license=('GPL')
 arch=('x86_64')
 depends=('glibc' 'sh')
 #makedepends=('clang')
-source=("ftp://ftp.gnu.org/gnu/gdbm/${pkgname}-${pkgver}.tar.gz"
+source=("https://ftp.gnu.org/gnu/gdbm/${pkgname}-${pkgver}.tar.gz"
         'gdbm-1.10-zeroheaders.patch')
 options=('!libtool' '!makeflags')
-sha1sums=('2b6cc7453341904432b457fb8a2450e5f2aaf331'
+sha1sums=('f3200c9c4e5c7de4978f838bbabeaa7c5b857bd7'
           '950bce437298448f71fab8291f00ea27bd6a419a')
 build() {
   cd ${pkgname}-${pkgver}
@@ -29,7 +29,7 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-  
+
   make check
 }
 
