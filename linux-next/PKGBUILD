@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 
 _basekernel=5.12
 _srcname=linux-5.12
-pkgver=5.12.12
+pkgver=5.12.13
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -34,7 +34,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'dracut-next-install'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('8c7420990de85f6754db287337da08b4'
-         'e1266193d65fa40453e3ee72bcdf2cbd'
+         '38bdadc6eef0326af973fde477414d0c'
          '176e48520a7cbed2e90c6ec19b19669f'
          'c3262d3ace78f33f0903d1255ce408ab'
          '33fed06ee3ceadcf2bbebe6621867888'
