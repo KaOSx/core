@@ -1,7 +1,7 @@
 
 pkgname=texinfo
-pkgver=6.7
-pkgrel=6
+pkgver=6.8
+pkgrel=1
 pkgdesc="Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file"
 arch=('x86_64')
 url="https://www.gnu.org/software/texinfo/"
@@ -11,7 +11,7 @@ depends=('ncurses' 'findutils' 'gzip' 'sh' 'perl')
 source=("https://ftp.gnu.org/pub/gnu/texinfo/${pkgname}-${pkgver}.tar.gz"
         'texinfo-install.hook'
         'texinfo-remove.hook')
-md5sums=('f0c1782f68ef73738d74bd1e9e30793a'
+md5sums=('f7f5ca9d3fd80c9d1bb069bc46765d13'
          '38b77649656db93b3c35f2e653ffc858'
          '21205a4b3b5235649490600c739d3c1a')
 
