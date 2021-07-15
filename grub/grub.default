@@ -44,6 +44,13 @@ GRUB_DISABLE_RECOVERY=true
 # Uncomment to get a beep at GRUB start
 #GRUB_INIT_TUNE="480 440 1"
 
+# Uncomment to make GRUB remember the last selection. This requires
+# setting 'GRUB_DEFAULT=saved' above.
 #GRUB_SAVEDEFAULT=true
 
+# Uncomment this option to enable os-prober execution in the grub-mkconfig command
 GRUB_DISABLE_OS_PROBER=false
+
+# Uncomment to disable submenus in boot menu
+#GRUB_DISABLE_SUBMENU=y
+
