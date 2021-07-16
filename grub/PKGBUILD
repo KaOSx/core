@@ -39,7 +39,7 @@ md5sums=('f5e55c9ff79a3db79775101cde69bad7'
          'SKIP'
          '12d4f247b895bf2e7d65285b92f45886'
          '945527e0de8d384166a4cf23439ae9ee'
-         '831fac3dfc9123afb9d209cf3cbf54e0'
+         '75722208518f0750cc3156d364c79007'
          '1c03f9a8196beee4321e89d87862c69b')
 
 prepare() {
