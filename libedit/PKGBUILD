@@ -1,7 +1,7 @@
 
 pkgname=libedit
-pkgver=20210522_3.1
-_pkgver=20210522-3.1
+pkgver=20210714_3.1
+_pkgver=20210714-3.1
 pkgrel=1
 pkgdesc='Command line editor library providing generic line editing, history, and tokenization functions'
 arch=('x86_64')
@@ -10,21 +10,21 @@ license=('BSD')
 depends=('ncurses')
 options=('!libtool')
 source=("https://thrysoee.dk/editline/libedit-${_pkgver}.tar.gz")
-md5sums=('6ad9e9208daf031adf1ebc64441769e0')
+md5sums=('06292bb404df37f915c2029dc4fe02cf')
 
 build() {
-	cd ${pkgname}-${_pkgver}
-	
-	./configure --prefix=/usr --enable-widec --enable-static=no
-	make
+    cd ${pkgname}-${_pkgver}
+
+    ./configure --prefix=/usr --enable-widec --enable-static=no
+    make
 }
 
 package() {
-	cd ${pkgname}-${_pkgver}
-	make prefix=${pkgdir}/usr install
+    cd ${pkgname}-${_pkgver}
+    make prefix=${pkgdir}/usr install
 
-	cp ${pkgdir}/usr/share/man/man3/editline.3 ${pkgdir}/usr/share/man/man3/el.3
-	install -Dm644 COPYING ${pkgdir}/usr/share/licenses/libedit/LICENSE
-	# readline conflict
-	rm ${pkgdir}/usr/share/man/man3/history.3
+    cp ${pkgdir}/usr/share/man/man3/editline.3 ${pkgdir}/usr/share/man/man3/el.3
+    install -Dm644 COPYING ${pkgdir}/usr/share/licenses/libedit/LICENSE
+    # readline conflict
+    rm ${pkgdir}/usr/share/man/man3/history.3
 }
