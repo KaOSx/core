@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=248.3
-_pkgver=248.3
+pkgver=249.1
+_pkgver=249.1
 pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
@@ -11,7 +11,8 @@ license=('GPL2' 'LGPL2.1')
 depends=('acl' 'bash' 'glibc' 'kmod' 'hwids' 'util-linux' 'kbd' 'libcap' 'libxslt' 'iptables'
          'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn2' 'lz4'
          'quota' 'libseccomp' 'cryptsetup' 'pcre2') # 'audit') 
-makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs' 'meson' 'ninja' 'python3-lxml')
+makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs' 'meson' 'ninja'
+             'python3-jinja' 'python3-lxml')
 optdepends=('libmicrohttpd: systemd-journal-gatewayd')
 backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/dbus-1/system.d/org.freedesktop.hostname1.conf
@@ -41,7 +42,7 @@ source=("https://github.com/systemd/systemd-stable/archive/v${_pkgver}.tar.gz"
         'splash.bmp'
         'systemd-tmpfiles.hook'
         'boot_color.diff')
-md5sums=('bb412cc7f9c9c54bcfdb8e7a90f5a8b1'
+md5sums=('f237f154c1085de78503fc2b767e4173'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -91,7 +92,12 @@ build() {
     -Ddbuspolicydir=/etc/dbus-1/system.d \
     -Dpamconfdir=/etc/pam.d \
     -Dman=true \
-    -Dhomed=false
+    -Dhomed=false \
+    -Dsbat-distro=KaOS \
+    -Dsbat-distro-summary=KaOS \
+    -Dsbat-distro-pkgname=systemd \
+    -Dsbat-distro-version=${pkgver} \
+    -Dsbat-distro-url="https://kaosx.us/packages/packages.php?sortby=&sortdir=&flagged=&page=&repo=&exact=&search=systemd"
     # -Ddefault-locale=C
     ninja
 }
