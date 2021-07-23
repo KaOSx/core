@@ -1,25 +1,25 @@
 
 pkgname=iputils
-pkgver=20210202
-pkgrel=4
+pkgver=20210722
+pkgrel=1
 pkgdesc="IP Configuration Utilities (and Ping)."
 arch=('x86_64')
 license=('GPL')
 url="https://github.com/iputils/iputils/blob/master/README.md"
 groups=('base')
 depends=('glibc' 'openssl' 'sysfsutils' 'libcap' 'libidn2')
-makedepends=('libxslt' 'opensp' 'meson' 'ninja')
+makedepends=('libxslt' 'opensp' 'meson' 'ninja' 'iproute2')
 backup=(etc/xinetd.d/tftp)
 install=${pkgname}.install
 source=("https://github.com/iputils/iputils/archive/${pkgver}.tar.gz"
         'tftp.xinetd')
-sha256sums=('3f557ecfd2ace873801231d2c1f42de73ced9fbc1ef3a438d847688b5fb0e8ab'
+sha256sums=('6d1a44b0682d3d4b64586dbaebe61dd61ae16d6e2f4dc0c43336d0e47a9db323'
             '1041ea0e4e71ae98cca84bcc5e2032f68c2c5121b36b87fa1e38b2c6911722e7')
 
 build() {
   mkdir -p build
   cd build
-  
+
   meson ../${pkgname}-${pkgver} \
     --prefix=/usr \
     --buildtype=release \
