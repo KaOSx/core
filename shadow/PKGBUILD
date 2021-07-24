@@ -1,7 +1,7 @@
 
 pkgname=shadow
-pkgver=4.8.1
-pkgrel=4
+pkgver=4.9
+pkgrel=1
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
 url='https://github.com/shadow-maint/shadow'
@@ -15,7 +15,7 @@ backup=(etc/login.defs
         etc/default/useradd)
 options=('!libtool')
 install='shadow.install'
-source=("https://github.com/shadow-maint/shadow/releases/download/${pkgver}/shadow-${pkgver}.tar.gz"
+source=("https://github.com/shadow-maint/shadow/releases/download/v${pkgver}/shadow-${pkgver}.tar.gz"
         'LICENSE'
         'chgpasswd'
         'chpasswd'
@@ -27,8 +27,8 @@ source=("https://github.com/shadow-maint/shadow/releases/download/${pkgver}/shad
         'shadow.timer'
         'useradd.defaults'
         'xstrdup.patch'
-        "https://github.com/shadow-maint/shadow/commit/eaaac67d4face5ffdee443db51c642b20ae2357d.diff")
-md5sums=('3d97f11e66bfb0b14702b115fa8be480'
+        "https://github.com/shadow-maint/shadow/commit/d4b6d1549b2af48ce3cb6ff78d9892095fb8fdd9.diff")
+md5sums=('b3c150ebef96d46afd51ef244ef506c8'
          'bdf93c7bc4b751277159c5de8fc34df2'
          '65e9ebce249a5b9ed021e2790452b9e1'
          'f6760e9701d7ed2cd91371d427faed2a'
@@ -40,11 +40,11 @@ md5sums=('3d97f11e66bfb0b14702b115fa8be480'
          '5bd14862ace022d6682b179c18fe30de'
          '352d2524bfa911d1c50c8fcef57d3acc'
          '0eebe9d13065bec4b5d7ccf3bf46c509'
-         '233b6b0c3b62ad37c69e91b6b6bccc19')
+         'c716248588dcced783b8cfca8a3430c1')
 
 build() {
   cd ${pkgname}-${pkgver}
-  #patch -p1 -i ${srcdir}/eaaac67d4face5ffdee443db51c642b20ae2357d.diff
+  #patch -p1 -i ${srcdir}/d4b6d1549b2af48ce3cb6ff78d9892095fb8fdd9.diff
 
   sed -i '/^SUBDIRS/s/pam.d//' etc/Makefile.am
 
