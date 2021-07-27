@@ -1,7 +1,7 @@
 
 pkgname=automake
-pkgver=1.16.3
-pkgrel=2
+pkgver=1.16.4
+pkgrel=1
 pkgdesc="A GNU tool for automatically creating Makefiles"
 arch=('x86_64')
 license=('GPL')
@@ -11,7 +11,7 @@ depends=('perl' 'bash')
 makedepends=('autoconf')
 checkdepends=('dejagnu' 'python3' 'java-environment' 'vala' 'emacs-nox' 'gcc-fortran')
 source=("https://ftp.gnu.org/gnu/automake/${pkgname}-${pkgver}.tar.xz")
-md5sums=('c27f608a4e1f302ec7ce42f1251c184e')
+md5sums=('86e8e682bd74e6390a016c4d9c11267c')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -24,7 +24,7 @@ check(){
   cd ${pkgname}-${pkgver}
   # see http://www.linuxfromscratch.org/lfs/view/development/chapter06/automake.html
   #sed -i "s:./configure:LEXLIB=/usr/lib/libfl.a &:" t/lex-{clean,depend}-cxx.sh
-  # 7 tests fail with perl 5.32 update, vala, python3 extra packages related, permission issue
+  # 1 test fail > FAIL: t/subobj.sh
   make check PYTHON=/usr/bin/python3
 }
 
