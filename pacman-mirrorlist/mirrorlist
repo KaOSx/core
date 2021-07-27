@@ -5,6 +5,7 @@
 # Default mirror
 # United Kingdom
 Server = https://mirrors.fossho.st/kaos/$repo
+Server = http://kaosx.tk/repo/$repo
 
 # Germany
 Server = http://mirrors.redcorelinux.org/kaosx/$repo
@@ -36,7 +37,6 @@ Server = https://repo.kaosx.us/$repo
 # United States
 Server = https://mirror.math.princeton.edu/pub/kaoslinux/$repo
 Server = http://mirror.dacentec.com/kaosx/$repo
-Server = http://kaosx.tk/repo/$repo
 Server = https://kqtos.tk/repo/$repo
 
 
