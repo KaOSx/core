@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=5.12
-pkgver=5.12.13
+_basekernel=5.13
+pkgver=5.13.9
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.12.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.13.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -28,18 +28,18 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.12.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '99-linux.hook')
-md5sums=('8c7420990de85f6754db287337da08b4'
-         '38bdadc6eef0326af973fde477414d0c'
-         '1278e465cfee024f961bf8f1a6b6af6d'
-         'c3262d3ace78f33f0903d1255ce408ab'
-         '33fed06ee3ceadcf2bbebe6621867888'
-         '0652e879fff965adc18ea4b0a22c8bdf'
-         '8bf0933cd27244ed53bf7e4094f25f5b'
-         '0f16be8d22a1010e7dff91ee49a72706'
-         '2acec9501fcc1c4b4b4d35f21fbcdfaf'
+md5sums=('76c60fb304510a7bbd9c838790bc5fe4'
+         '39a5d2b3ff92c000dc93f9fa2efb2c45'
+         '59dba6dd30eb4c402ea97fc015ca9352'
+         '57f7c475726c104390a961abdaf91106'
+         '97142ae931804c39012165e9bea07449'
+         '5e6e359bf170a4070995d6ad76d35f1e'
+         '70f696594e8366f1e94ec49b81bca36e'
+         'b61b6c0cc68781dfed2565ab00e667be'
+         '669323f107bfde90e0d2bb82b7c078eb'
          '180e55a128db2641e04374ce07d131a7'
-         'b72647b2186e3951725fdb44475e6004'
-         '2912c8b28fe9c4a7d5096ddda5befa3c'
+         '2f93f78ef09f2038d3c767e2a2f9a10d'
+         '8b92e09f56313b5e4971735bb5404a25'
          '8c52e6d232b461446b7363e86522a720'
          'eb14dcfd80c00852ef81ded6e826826a'
          '0b73d293ca1ab91748ae2d2c39921532')
@@ -219,8 +219,8 @@ package_linux-headers() {
   cp net/mac80211/*.h "${pkgdir}/usr/src/linux-${_kernver}/net/mac80211/"
 
   # add dvb headers for external modules
-  mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/"
-  cp include/config/dvb/*.h "${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/"
+  #mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/"
+  #cp include/config/dvb/*.h "${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/"
 
   # add dvb headers for http://mcentral.de/hg/~mrec/em28xx-new
   mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb-frontends/"
