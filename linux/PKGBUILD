@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=5.13
-pkgver=5.13.9
+pkgver=5.13.10
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -29,8 +29,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.13.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('76c60fb304510a7bbd9c838790bc5fe4'
-         '39a5d2b3ff92c000dc93f9fa2efb2c45'
-         '59dba6dd30eb4c402ea97fc015ca9352'
+         '4d745d474d07277daee24107239c8902'
+         '919d64d34b5988b7e692e00a90156319'
          '57f7c475726c104390a961abdaf91106'
          '97142ae931804c39012165e9bea07449'
          '5e6e359bf170a4070995d6ad76d35f1e'
