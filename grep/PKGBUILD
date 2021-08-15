@@ -1,7 +1,7 @@
 
 pkgname=grep
-pkgver=3.6
-pkgrel=4
+pkgver=3.7
+pkgrel=1
 pkgdesc="A string search utility"
 arch=('x86_64')
 license=('GPL3')
@@ -10,7 +10,7 @@ groups=('base')
 depends=('glibc' 'pcre' 'sh')
 makedepends=('texinfo')
 source=("https://ftp.gnu.org/gnu/grep/${pkgname}-${pkgver}.tar.xz")
-md5sums=('f47fe27049510b2249dba7f862ac1b51')
+sha1sums=('4d56da85e468e4012c81533a22052014a4c98b17')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -23,7 +23,7 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-  
+  # 1 fail FAIL: test-regex
   make check
 }
 
