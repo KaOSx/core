@@ -17,13 +17,13 @@ build() {
   # http://lists.gnu.org/archive/html/bug-grep/2017-02/msg00008.html
   #patch -p1 -i ${srcdir}/?id=6e4c8728f0e75af57f839625d0bd51b0a02d091e
 
-  ./configure --prefix=/usr --without-included-regex
+  ./configure --prefix=/usr # --without-included-regex
   make
 }
 
 check() {
   cd ${pkgname}-${pkgver}
-  # 1 fail FAIL: test-regex
+
   make check
 }
 
