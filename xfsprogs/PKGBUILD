@@ -1,7 +1,7 @@
 
 pkgname=xfsprogs
-pkgver=5.12.0
-_pkgver=5.12.0
+pkgver=5.13.0
+_pkgver=5.13.0
 pkgrel=1
 pkgdesc="XFS filesystem utilities"
 arch=('x86_64')
@@ -12,13 +12,13 @@ depends=('util-linux' 'libinih')
 options=('!makeflags' '!libtool')
 source=("https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/${pkgname}-${_pkgver}.tar.xz"
         'sparse_inode.patch')
-sha256sums=('bec44445cf18f49e63971d4f27dc4e90a17b118b852714a1104b621ea30e3507'
+sha256sums=('4e142d4babe086adf9016d8c606c805829da08e46389a4433f40346204f90cdb'
             'eacd18a5c389f87e5d7817873d8ebac219f2179608bed0ade4c0b813d790e72d')
 
 build() {
   cd ${pkgname}-${_pkgver}
   #patch -R -p1 -i ${srcdir}/sparse_inode.patch
-  
+
   export OPTIMIZER="-march=${CARCH/_/-} -O1"
   export DEBUG=-DNDEBUG
   ./configure --prefix=/usr
@@ -28,7 +28,7 @@ build() {
 package() {
   cd ${pkgname}-${_pkgver}
   make DIST_ROOT=${pkgdir} install install-dev
-  
+
   chown -R root ${pkgdir}
   chgrp -R root ${pkgdir}
   mv ${pkgdir}/lib/libhandle.so* ${pkgdir}/usr/lib/
