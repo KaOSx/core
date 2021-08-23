@@ -16,7 +16,6 @@ Server = https://mirror.alpix.eu/kaos/$repo
 Server = https://ca.kaosx.cf/$repo
 
 # China
-Server = https://mirrors.tuna.tsinghua.edu.cn/KaOS/$repo
 Server = https://mirrors.nju.edu.cn/kaos/$repo
 Server = http://mirrors.nju.edu.cn/kaos/$repo
 Server = https://mirrors.aliyun.com/KaOS/$repo
