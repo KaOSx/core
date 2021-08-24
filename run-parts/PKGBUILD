@@ -1,25 +1,25 @@
 
 pkgname=run-parts
-pkgver=4.11.2
+pkgver=5.4
 pkgrel=1
 pkgdesc='Run scripts or programs in a directory'
 arch=('x86_64')
 url='https://packages.qa.debian.org/d/debianutils.html'
 license=('GPL')
 depends=('glibc')
-source=("https://cdn-aws.deb.debian.org/debian/pool/main/d/debianutils/debianutils_${pkgver}.tar.xz") 
-md5sums=('e6ca2f0fc2b0b1976687d769ee064ee6')
+source=("https://cdn-aws.deb.debian.org/debian/pool/main/d/debianutils/debianutils_${pkgver}.orig.tar.xz") 
+md5sums=('8dd07c41f3b0473aac100b92922279ed')
 
 build() {
-	cd debianutils
-	
-	./configure --prefix=/usr
-	make run-parts
+    cd debianutils-${pkgver}
+
+    ./configure --prefix=/usr
+    make run-parts
 }
 
 package() {
-	cd debianutils
-	
-	install -D -m755 run-parts ${pkgdir}/usr/bin/run-parts
-	install -D -m644 run-parts.8 ${pkgdir}/usr/share/man/man8/run-parts.8
+    cd debianutils-${pkgver}
+
+    install -D -m755 run-parts ${pkgdir}/usr/bin/run-parts
+    install -D -m644 run-parts.8 ${pkgdir}/usr/share/man/man8/run-parts.8
 }
