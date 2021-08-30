@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=249.3
-_pkgver=249.3
+pkgver=249.4
+_pkgver=249.4
 pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
@@ -42,7 +42,7 @@ source=("https://github.com/systemd/systemd-stable/archive/v${_pkgver}.tar.gz"
         'splash.bmp'
         'systemd-tmpfiles.hook'
         'boot_color.diff')
-md5sums=('72dc46529e8f4b660f3ecf4e544d8c41'
+md5sums=('dc9d117c35cb9cab411b6f6a6afdcf93'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -110,9 +110,9 @@ check() {
 package() {
   cd build
   DESTDIR=${pkgdir} ninja install
-  
+
   cd ..
-  
+
   install -dm755 ${pkgdir}/bin
   ln -s ../usr/lib/systemd/systemd ${pkgdir}/bin/systemd
 
@@ -142,30 +142,30 @@ package() {
   install -Dm644 ${srcdir}/initcpio-install-systemd ${pkgdir}/usr/lib/initcpio/install/systemd
   install -Dm644 ${srcdir}/initcpio-install-udev ${pkgdir}/usr/lib/initcpio/install/udev
   install -Dm644 ${srcdir}/initcpio-hook-udev ${pkgdir}/usr/lib/initcpio/hooks/udev
-  
+
   rm -r ${pkgdir}/usr/lib/rpm
-  
+
   # 208 changed permissions for /var/log/journal
   #install -o root -g systemd-journal -dm2755 ${pkgdir}/var/log/journal
   chown root:systemd-journal ${pkgdir}/var/log/journal
   chmod 2755 ${pkgdir}/var/log/journal{,/remote}
-  
+
   # Make journalctl persistent, set max
   sed -i -e 's|#SystemMaxUse=|SystemMaxUse=25M|' ${pkgdir}/etc/systemd/journald.conf
-  
+
   # Install systemd-boot files, ex-gummi
   install -D -m0644 ${srcdir}/loader.conf ${pkgdir}/usr/lib/systemd/boot/loader/loader.conf
   install -D -m0644 ${srcdir}/KaOS.conf ${pkgdir}/usr/lib/systemd/boot/loader/entries/KaOS.conf
   install -D -m0644 ${srcdir}/KaOS_fallback.conf ${pkgdir}/usr/lib/systemd/boot/loader/entries/KaOS_fallback.conf
   install -D -m0644 ${srcdir}/splash.bmp ${pkgdir}/usr/lib/systemd/boot/splash.bmp
-  
+
   # adjust default PAM config
   sed 's|account required pam_unix.so|account  include system-login|g' -i ${pkgdir}/etc/pam.d/systemd-user
   sed 's|session optional pam_systemd.so|session  include system-login|g' -i ${pkgdir}/etc/pam.d/systemd-user
-  
+
   # pacman hook
   install -Dm644 ../systemd-tmpfiles.hook ${pkgdir}/usr/share/libalpm/hooks/systemd-tmpfiles.hook
-  
+
   # Systemd 239 started shipping openresolv replacement, remove for now, conflicting file only
   rm ${pkgdir}/usr/sbin/resolvconf
 }
