@@ -1,19 +1,22 @@
 
 pkgname=pacman-contrib
 pkgver=1.4.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Contributed scripts and tools for pacman systems, including paccache and rank-mirrors"
 arch=('x86_64')
-url="https://git.archlinux.org/pacman-contrib.git/about/"
+url="https://gitlab.archlinux.org/pacman/pacman-contrib"
 license=('GPL')
 depends=('pacman' 'mlocate' 'fakeroot' 'perl')
 makedepends=('asciidoc')
-source=("https://git.archlinux.org/pacman-contrib.git/snapshot/${pkgname}-${pkgver}.tar.gz")
-md5sums=('3a88def1276abe45d0705babfa7ad95d')
+source=("https://gitlab.archlinux.org/pacman/pacman-contrib/-/archive/v${pkgver}/${pkgname}-v${pkgver}.tar.gz"
+        "https://gitlab.archlinux.org/pacman/pacman-contrib/-/commit/fd21ee241c85856be941e41942d6c179ca713c41.diff")
+md5sums=('98bfa108b24e35b100100588392103ae'
+         '590d7f6824288e07307404519e3a7ede')
 
 build() {
-  cd ${pkgname}-${pkgver}
-  
+  cd ${pkgname}-v${pkgver}
+  patch -p1 -i ${srcdir}/fd21ee241c85856be941e41942d6c179ca713c41.diff
+
   ./autogen.sh
   ./configure --prefix=/usr \
     --sysconfdir=/etc 
@@ -21,14 +24,14 @@ build() {
 }
 
 check() {
-  make -C ${pkgname}-${pkgver} check
+  make -C ${pkgname}-v${pkgver} check
 }
 
 package() {
-  cd ${pkgname}-${pkgver}
-  
+  cd ${pkgname}-v${pkgver}
+
   make DESTDIR=${pkgdir} install
-  
+
   # stop rankmirrors fail
   sed -e 's|/core}"|/core}" echo|' -i ${pkgdir}/usr/bin/rankmirrors
 }
