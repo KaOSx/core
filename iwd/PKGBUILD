@@ -1,6 +1,6 @@
  
 pkgname=iwd
-pkgver=1.17
+pkgver=1.18
 pkgrel=1
 pkgdesc='Wireless daemon for Linux'
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL-2.1')
 depends=('glibc' 'readline')
 backup=(etc/iwd/main.conf)
 source=("https://www.kernel.org/pub/linux/network/wireless/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('6f946f823b0dc3205e4e72becf8ad1915448d194f5b10d8003e4c8c5a18e4ef7')
+sha256sums=('0225ab81579f027e0fcbf255517f432fcf355d14f3645c36813c71a441dfab55')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -27,7 +27,7 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-  # FAIL: unit/test-eapol
+  # no FAIL
   make -k check
 }
 
