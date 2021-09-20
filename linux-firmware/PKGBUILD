@@ -1,6 +1,6 @@
 
 pkgname=linux-firmware
-pkgver=20210818
+pkgver=20210919
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
@@ -39,12 +39,12 @@ replaces=('ar9170-fw'
            'b43-firmware-legacy')
 options=(!strip emptydirs)
 #source=("git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git#branch=master"
-source=("https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/linux-firmware-20210818.tar.xz"
+source=("https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/${pkgname}-${pkgver}.tar.xz"
         "http://mirror2.openwrt.org/sources/broadcom-wl-${_b43}.tar.bz2"
         "http://downloads.openwrt.org/sources/wl_apsta-${_legacy}.o")
-sha256sums=('bef3d317c348d962b3a1b95cb4e19ea4f282e18112b2c669cff74f9267ce3893'
-            'f4e357b09eaf5d8b1f1920cf3493a555'
-            'e08665c5c5b66beb9c3b2dd54aa80cb3')
+sha256sums=('2fb22a5d7d23bf1f5800ab8152b39a00a445fbf4923de5a01b59d3f6253f0a9f'
+            'f1e7067aac5b62b67b8b6e4c517990277804339ac16065eb13c731ff909ae46f'
+            '7dba610b1d96dd14e901bcbce14cd6ecd1b1ac6f5c0035b0d6b6dc46a7c3ef90')
 
 package() {
   cd ${pkgname}-${pkgver}
