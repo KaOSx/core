@@ -1,7 +1,7 @@
 
 pkgname=pacman
 pkgver=6.0.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="https://www.archlinux.org/pacman/"
@@ -18,7 +18,7 @@ source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.xz"
         'file5.33.patch')
 md5sums=('f71e6f06867749735960d0c1d199d375'
          '38ea69609d8c37d11c7ca49478cd75d1'
-         '9018a0084f5693f8c119cb884e15201c'
+         '0ce6144eaecdbaedf1ca48527aa3df36'
          '9eb04bd318524d87f22c8ce7fa47693f')
 
 build() {
