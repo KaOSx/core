@@ -1,6 +1,6 @@
 
 pkgname=btrfs-progs
-pkgver=5.14
+pkgver=5.14.1
 pkgrel=1
 pkgdesc="Btrfs filesystem utilities."
 arch=('x86_64')
@@ -12,24 +12,24 @@ options=('!staticlibs')
 source=("https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/${pkgname}-v${pkgver}.tar.xz"
         'initcpio-install-btrfs'
         'initcpio-hook-btrfs')
-sha256sums=('aa155471ec5756298d9dc3972b0d518e738e503ab717cddd959269a339879d57'
+sha256sums=('d54a9346545ca46df128e3ccb77d60c097d90c93b7e314990236e28cfaf8c55b'
             '34e1472c028875bb8cc7d06fa18aad9c1c90e3719de416733e9baac82a12cd94'
             '116a8fac508a3872b77f249e71d9de4f9b61cd20edfde01c99a5deba143769df')
 
 build() {
-   cd ${pkgname}-v${pkgver}
-   
-   ./configure --prefix=/usr
-   make  
+  cd ${pkgname}-v${pkgver}
+
+  ./configure --prefix=/usr
+  make 
 }
 
 package() {
-   cd ${pkgname}-v${pkgver}
-   make prefix=${pkgdir}/usr udevdir=${pkgdir}/usr/lib/udev install
+  cd ${pkgname}-v${pkgver}
+  make prefix=${pkgdir}/usr udevdir=${pkgdir}/usr/lib/udev install
 
-   mkdir -p ${pkgdir}/sbin
-   ln -sf /usr/bin/btrfs ${pkgdir}/sbin/btrfs
+  mkdir -p ${pkgdir}/sbin
+  ln -sf /usr/bin/btrfs ${pkgdir}/sbin/btrfs
 
-   install -Dm644 ${srcdir}/initcpio-install-btrfs ${pkgdir}/usr/lib/initcpio/install/btrfs
-   install -Dm644 ${srcdir}/initcpio-hook-btrfs ${pkgdir}/usr/lib/initcpio/hooks/btrfs
+  install -Dm644 ${srcdir}/initcpio-install-btrfs ${pkgdir}/usr/lib/initcpio/install/btrfs
+  install -Dm644 ${srcdir}/initcpio-hook-btrfs ${pkgdir}/usr/lib/initcpio/hooks/btrfs
 }
