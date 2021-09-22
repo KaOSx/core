@@ -1,7 +1,7 @@
 
 pkgname=sudo
-pkgver=1.9.8.p1
-_pkgver=1.9.8p1
+pkgver=1.9.8.p2
+_pkgver=1.9.8p2
 pkgrel=1
 pkgdesc="Give certain users the ability to run some commands as root."
 arch=('x86_64')
@@ -12,7 +12,7 @@ backup=('etc/sudoers' 'etc/pam.d/sudo')
 options=('!libtool')
 source=("https://www.sudo.ws/dist/${pkgname}-${_pkgver}.tar.gz"
         'sudo.pam')
-sha256sums=('0939ee24df7095a92e0ca4aa3bd53b2a10965a7b921d51a26ab70cdd24388d69'
+sha256sums=('9e3b8b8da7def43b6e60c257abe80467205670fd0f7c081de1423c414b680f2d'
             'd1738818070684a5d2c9b26224906aad69a4fea77aabd960fc2675aee2df1fa2')
 
 build() {
