@@ -1,7 +1,7 @@
 
 pkgname=ca-certificates
-pkgver=20170717
-pkgrel=3
+pkgver=20210119
+pkgrel=1
 epoch=1
 pkgdesc='Common CA certificates'
 arch=('x86_64')
@@ -12,16 +12,16 @@ makedepends=('ruby' 'python3')
 install=ca-certificates.install
 backup=('etc/ca-certificates.conf')
 source=("http://sourcearchive.raspbian.org/main/c/${pkgname}/${pkgname}_${pkgver}.tar.xz")
-md5sums=('55a6bb6b98afb16b3cde8e3ad1e262eb')
+md5sums=('c02582bf9ae338e558617291897615eb')
 
 build() {
-  cd ${pkgname}
+  cd work
 
   make
 }
 
 package() {
-  cd ${pkgname}
+  cd work
 
   install -d -m755 ${pkgdir}/{etc/ca-certificates/update.d,usr/{sbin,share/ca-certificates},etc/ssl/certs}
   make install DESTDIR=${pkgdir}
