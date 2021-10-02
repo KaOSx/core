@@ -1,6 +1,6 @@
 
 pkgname=iasl
-pkgver=20210730
+pkgver=20210930
 pkgrel=1
 pkgdesc="Intel ACPI Source Language compiler"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('glibc')
 makedepends=('flex' 'bison')
 options=('!makeflags')
 source=("https://acpica.org/sites/acpica/files/acpica-unix-${pkgver}.tar.gz")
-md5sums=('acedcb5b965f122c8576dbe01502a7e4')
+md5sums=('302329794d836834bc777175931ce3a1')
 
 build() {
   cd acpica-unix-${pkgver}

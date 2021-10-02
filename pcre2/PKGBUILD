@@ -1,6 +1,6 @@
 
 pkgname=pcre2
-pkgver=10.37
+pkgver=10.38
 pkgrel=1
 pkgdesc="A library that implements Perl 5-style regular expressions, next generation."
 arch=('x86_64')
@@ -8,12 +8,13 @@ url="https://www.pcre.org/"
 license=('BSD')
 depends=('gcc-libs' 'readline' 'zlib' 'bzip2' 'libedit')
 options=('!libtool')
-source=("https://ftp.pcre.org/pub/pcre/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('85dc7f2233491b4b6ec6115220da99c6')
+#source=("https://ftp.pcre.org/pub/pcre/${pkgname}-${pkgver}.tar.bz2")
+source=("https://github.com/PhilipHazel/pcre2/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('6369936f8d9b373a5b2246c7b33e19bc')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr \
         --enable-unicode \
         --enable-jit \
@@ -27,7 +28,7 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver} 
-  
+
   make -j1 check
 }
 
