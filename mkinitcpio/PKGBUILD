@@ -1,10 +1,10 @@
 
 pkgname=mkinitcpio
 pkgver=26
-pkgrel=3
+pkgrel=4
 pkgdesc="Modular initramfs image creation utility"
 arch=('x86_64')
-url="https://projects.archlinux.org/mkinitcpio.git/"
+url="https://github.com/archlinux/mkinitcpio"
 license=('GPL')
 depends=('awk' 'mkinitcpio-busybox' 'kmod' 'util-linux' 'libarchive' 'coreutils'
          'bash' 'findutils' 'grep' 'filesystem>=2016.11' 'gzip' 'systemd')
@@ -22,13 +22,14 @@ md5sums=('287e2d7ac5de5d50eb4b0a3adbdc6ca8'
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   patch -p0 -i ${srcdir}/init.diff
   # kmod 27 needed
   patch -p1 -i ${srcdir}/30dbfc2770cb49cb3babfb750205b126d7d88791.diff
 }
 
 package() {
+
    make -C ${pkgname}-${pkgver} DESTDIR=${pkgdir} install
 }
 
