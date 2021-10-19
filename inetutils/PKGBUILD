@@ -1,12 +1,12 @@
 
 pkgname=inetutils
 pkgver=2.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A collection of common network programs."
 arch=('x86_64')
 url="https://www.gnu.org/software/inetutils/"
 license=('GPL')
-depends=('readline' 'ncurses' 'pam')
+depends=('readline' 'ncurses' 'pam' 'libxcrypt')
 makedepends=('help2man' 'clang')
 backup=('etc/conf.d/ftpd' 'etc/xinetd.d/telnet' 'etc/xinetd.d/talk')
 options=('!emptydirs')

@@ -1,7 +1,7 @@
 
 pkgname=libsasl
 pkgver=2.1.27
-pkgrel=2
+pkgrel=3
 pkgdesc="Cyrus Simple Authentication Service Layer (SASL) library"
 arch=('x86_64')
 url="https://www.cyrusimap.org/sasl/"
@@ -16,7 +16,7 @@ md5sums=('a33820c66e0622222c5aefafa1581083'
 build() {
   cd cyrus-sasl-${pkgver}
   #patch -p1 -i ${srcdir}/cyrus-sasl-2.1.26-size_t.patch
-  
+
   ./configure --prefix=/usr \
   	--sysconfdir=/etc \
   	--localstatedir=/var \

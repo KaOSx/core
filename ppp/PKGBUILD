@@ -1,13 +1,13 @@
 
 pkgname=ppp
 pkgver=2.4.9
-pkgrel=4
+pkgrel=5
 pkgdesc="Daemon which implements the Point-to-Point Protocol for dial-up networking"
 arch=('x86_64') 
 url="https://www.samba.org/ppp/"
 license=('custom:GPL/BSD')
 groups=('base')
-depends=('glibc' 'libpcap' 'openssl')
+depends=('glibc' 'libpcap' 'openssl' 'libxcrypt')
 backup=(etc/ppp/{chap-secrets,pap-secrets,options,ip-up,ip-down})
 #source=("https://ftp.samba.org/pub/ppp/ppp-${pkgver}.tar.gz"
 source=("https://github.com/paulusmack/ppp/archive/${pkgname}-${pkgver}.tar.gz"

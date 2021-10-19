@@ -1,7 +1,7 @@
 
 pkgname=guile
 pkgver=2.2.7
-pkgrel=3
+pkgrel=4
 pkgdesc="GNU Ubiquitous Intelligent Language for Extensions, the official extension language for the GNU operating system"
 url="https://www.gnu.org/software/guile/"
 arch=('x86_64')
@@ -13,7 +13,7 @@ sha256sums=('cdf776ea5f29430b1258209630555beea6d2be5481f9da4d64986b077ff37504')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr \
 	--disable-static  \
 	--disable-error-on-warning
@@ -23,7 +23,7 @@ build() {
 package() {
   cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
-  
+
   # stop elfutils warnings
   mkdir -p ${pkgdir}/usr/share/gdb/auto-load/usr/lib
   mv ${pkgdir}/usr/lib/libguile-2.2.so.*gdb.scm ${pkgdir}/usr/share/gdb/auto-load/usr/lib

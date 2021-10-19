@@ -1,12 +1,12 @@
 
 pkgname=pam
 pkgver=1.5.2
-pkgrel=1
+pkgrel=2
 pkgdesc="PAM (Pluggable Authentication Modules) library"
 arch=('x86_64')
 license=('GPL2')
 url="https://github.com/linux-pam/linux-pam"
-depends=('glibc' 'db' 'cracklib' 'libtirpc')
+depends=('glibc' 'db' 'cracklib' 'libtirpc' 'libxcrypt')
 makedepends=('w3m' 'docbook-xml' 'docbook-xsl')
 backup=(etc/security/{access.conf,group.conf,limits.conf,namespace.conf,namespace.init,pam_env.conf,time.conf} etc/pam.d/other etc/default/passwd etc/environment)
 source=("https://github.com/linux-pam/linux-pam/releases/download/v${pkgver}/Linux-PAM-${pkgver}.tar.xz"
