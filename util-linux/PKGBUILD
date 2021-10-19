@@ -2,12 +2,12 @@
 pkgname=util-linux
 pkgver=2.37.2
 _pkgver=2.37
-pkgrel=1
+pkgrel=2
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
 groups=('base')
-depends=('pam' 'shadow' 'coreutils' 'glibc')
+depends=('pam' 'shadow' 'coreutils' 'glibc' 'libxcrypt')
 makedepends=('asciidoctor' 'bc' 'systemd' 'python3')
 conflicts=('util-linux-ng' 'eject' 'rfkill')
 provides=("util-linux-ng=${pkgver}" 'eject' 'rfkill')
@@ -55,7 +55,7 @@ build() {
               --localstatedir=/run \
               --enable-fs-paths-extra=/usr/bin:/usr/sbin \
               --enable-write \
-              --enable-raw \
+              --disable-raw \
               --enable-vipw \
               --enable-newgrp \
               --enable-chfn-chsh \
@@ -66,10 +66,10 @@ build() {
   make
 }
 
-#check() {
+check() {
   # 1 fail column: invalid multibyte, leaving dep to test the rest
-  #make -C ${pkgname}-${pkgver} check
-#}
+  make -C ${pkgname}-${pkgver} check
+}
 
 package() {
   cd ${pkgname}-${pkgver}
