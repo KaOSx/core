@@ -1,9 +1,9 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=binutils
-pkgver=2.36.1
+pkgver=2.37
 _commit=e521dc888158a6cdbdccef0397e663c437450a80
-pkgrel=2
+pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
 url="https://www.gnu.org/software/binutils/"
@@ -15,12 +15,12 @@ options=('!libtool' '!distcc' '!ccache')
 #source=("https://github.com/bminor/binutils-gdb/archive/${_commit}.zip"
 source=("https://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.xz"
         'ld.patch')
-sha256sums=('e81d9edf373f193af428a0f256674aea62a9d74dfe93f65192d4eae030b0f3b0'
+sha256sums=('820d9724f020a3e69cb337893a0b63c2db161dadcb0e06fc11dc29eb1e84a32c'
             'ce4c37dddc1a7945c4e4c5439f6198f53eea001e1a3c82582e9ce2c6b9fd390d')
 
 prepare() {
   cd binutils-${pkgver}
-  
+
   # libiberty configure tests 
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
   # build issue similar to https://bugzilla.redhat.com/show_bug.cgi?id=1599521

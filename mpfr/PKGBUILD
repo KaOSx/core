@@ -4,7 +4,7 @@ _pkgver=4.1.0
 #_patchlevel=p5
 #pkgver=${_pkgver}.${_patchlevel}
 pkgver=${_pkgver}
-pkgrel=5
+pkgrel=6
 pkgdesc="Multiple-precision floating-point library"
 arch=('x86_64')
 url="https://www.mpfr.org/"
@@ -20,20 +20,20 @@ sha256sums=('0c98a3f1732ff6ca4ea690552079da9c597872d30e96ec28414ee23c95558a7f')
 build() {
   cd ${pkgname}-${_pkgver}
   #patch -p1 -i $srcdir/mpfr-${_pkgver}-${_patchlevel}.patch
-  
+
   ./configure --prefix=/usr --enable-thread-safe --enable-shared
   make
 }
 
 check() {
   cd ${pkgname}-${_pkgver}
-  
+
   make check
   make check-exported-symbols
 }
 
 package() {
   cd ${pkgname}-${_pkgver}
-  
+
   make DESTDIR=${pkgdir} install
 }

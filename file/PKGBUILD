@@ -1,7 +1,7 @@
 
 pkgname=file
-pkgver=5.40
-pkgrel=3
+pkgver=5.41
+pkgrel=1
 pkgdesc="File type identification utility"
 arch=('x86_64')
 license=('custom')
@@ -11,13 +11,13 @@ depends=('glibc' 'zlib')
 options=('!libtool')
 source=("ftp://ftp.astron.com/pub/file/${pkgname}-${pkgver}.tar.gz"
         "https://github.com/file/file/commit/3ebd747de661b244f1acec29495d676dd52e71d5.diff")
-md5sums=('72540ea1cc8c6e1dee35d6100ec66589'
+md5sums=('18233bb0a0089dfdc7dfbc93b96f231b'
          '228d7753e9989ee59d1fd85783ec3c60')
 
 build() {
   cd ${pkgname}-${pkgver}
 
-  patch -p1 -R -i ${srcdir}/3ebd747de661b244f1acec29495d676dd52e71d5.diff
+  #patch -p1 -R -i ${srcdir}/3ebd747de661b244f1acec29495d676dd52e71d5.diff
 
   ./configure --prefix=/usr \
     --datadir=/usr/share/file \
@@ -27,7 +27,7 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-  
+
   make check
 }
 
@@ -35,7 +35,7 @@ package() {
   cd ${pkgname}-${pkgver}
 
   make DESTDIR=${pkgdir} install
-  
+
   install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/COPYING
 }
 

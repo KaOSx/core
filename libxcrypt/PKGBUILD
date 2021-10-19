@@ -3,7 +3,7 @@
 # and /usr/lib/libcrypt.so conflict
 pkgname=libxcrypt
 pkgver=4.4.26
-pkgrel=1
+pkgrel=2
 pkgdesc='Extended crypt library for descrypt, md5crypt, bcrypt, and others'
 arch=('x86_64')
 url='https://github.com/besser82/libxcrypt/'
