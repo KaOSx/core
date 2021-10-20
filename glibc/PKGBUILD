@@ -39,7 +39,7 @@ build() {
   mkdir -p build
   cd build
 
-  echo "slibdir=/lib" >> configparms
+  #echo "slibdir=/lib" >> configparms
   
   # remove stack protector for libs
   CFLAGS=${CFLAGS/-fstack-protector/}
@@ -56,7 +56,8 @@ build() {
       --disable-profile \
       --enable-stackguard-randomization \
       --enable-lock-elision \
-      --disable-werror
+      --disable-werror \
+      libc_cv_slibdir=/lib
 
   # build libs without stack protector
   echo "build-programs=no" >> configparms
@@ -73,10 +74,10 @@ check() {
   cd build
   
   # no stack protector for running tests
-  sed -i '5,7d' configparms
-  sed -i '/FORTIFY/d' configparms
+  #sed -i '5,7d' configparms
+  #sed -i '/FORTIFY/d' configparms
   
-  make check || true
+  #make check || true
 }
 
 package() {
@@ -131,6 +132,6 @@ package() {
   
   # part of libxcrypt, keep static .a & /lib/libcrypt.so.1 
   # until all rebuild with libxcrypt & no longer needed
-  rm -f ${pkgdir}/usr/include/crypt.h
-  rm -f ${pkgdir}/usr/lib/libcrypt.so
+  #rm -f ${pkgdir}/usr/include/crypt.h
+  #rm -f ${pkgdir}/usr/lib/libcrypt.so
 }
