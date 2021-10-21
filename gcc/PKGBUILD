@@ -87,10 +87,10 @@ check() {
   cd build
 
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=31827
-  #ulimit -s 32768
+  ulimit -s 32768
 
-  #make -k check || true
-  #${srcdir}/${_basedir}/contrib/test_summary
+  make -k check || true
+  ${srcdir}/${_basedir}/contrib/test_summary
 }
 
 package_gcc-libs() {
