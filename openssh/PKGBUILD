@@ -1,7 +1,7 @@
 
 pkgname=openssh
 pkgver=8.8p1
-pkgrel=2
+pkgrel=3
 pkgdesc='Free version of the SSH connectivity tools'
 arch=('x86_64')
 license=('custom:BSD')

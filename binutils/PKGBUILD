@@ -3,7 +3,7 @@
 pkgname=binutils
 pkgver=2.37
 _commit=e521dc888158a6cdbdccef0397e663c437450a80
-pkgrel=1
+pkgrel=2
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
 url="https://www.gnu.org/software/binutils/"

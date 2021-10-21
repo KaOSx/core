@@ -2,7 +2,7 @@
 
 pkgname=libtool
 pkgver=2.4.6
-pkgrel=23
+pkgrel=24
 pkgdesc="A generic library support script"
 arch=('x86_64')
 url="https://www.gnu.org/software/libtool"

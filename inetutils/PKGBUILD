@@ -1,7 +1,7 @@
 
 pkgname=inetutils
 pkgver=2.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A collection of common network programs."
 arch=('x86_64')
 url="https://www.gnu.org/software/inetutils/"
@@ -23,7 +23,7 @@ md5sums=('7791c582cceeca2a0dd6a8f7753e4b34'
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   export CC=/usr/bin/clang
   export CXX=/usr/bin/clang++
 
@@ -50,14 +50,14 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-  
+
   make check
 }
 
 package() {
   cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
-  
+
   install -d ${pkgdir}/bin
   ln -s /usr/bin/hostname ${pkgdir}/bin/hostname
   ln -s /usr/bin/dnsdomainname ${pkgdir}/bin/dnsdomainname

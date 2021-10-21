@@ -1,7 +1,7 @@
 
 pkgbase=lvm2
 pkgname=('lvm2' 'device-mapper')
-pkgver=2.02.188
+pkgver=2.03.14
 pkgrel=1
 arch=('x86_64')
 url="https://sourceware.org/lvm2/"
@@ -64,7 +64,6 @@ package_device-mapper() {
 package_lvm2() {
   pkgdesc="Logical Volume Manager 2 utilities"
   depends=('bash' "device-mapper>=${pkgver}" 'systemd' 'readline')
-  conflicts=('lvm' 'mkinitcpio<0.7')
   backup=('etc/lvm/lvm.conf')
   options=('!makeflags')
 
@@ -78,7 +77,7 @@ package_lvm2() {
   install -D -m644 ${srcdir}/lvm2_hook ${pkgdir}/usr/lib/initcpio/hooks/lvm2
   install -D -m644 ${srcdir}/lvm2_install ${pkgdir}/usr/lib/initcpio/install/lvm2
   install -D -m644 ${srcdir}/sd-lvm2 ${pkgdir}/usr/lib/initcpio/install/sd-lvm2
- 
+
   make DESTDIR=${pkgdir} install_systemd_units
   rm -f ${pkgdir}/usr/lib/systemd/system/dm-*
   install -d -m755 ${pkgdir}/usr/lib/systemd/system/sysinit.target.wants

@@ -8,7 +8,7 @@ pkgver=11.2.0
 _pkgver=11
 _snapshot=9.3.0-RC-20200305
 _islver=0.18
-pkgrel=1
+pkgrel=2
 pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
@@ -87,16 +87,16 @@ check() {
   cd build
 
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=31827
-  ulimit -s 32768
+  #ulimit -s 32768
 
-  make -k check || true
-  ${srcdir}/${_basedir}/contrib/test_summary
+  #make -k check || true
+  #${srcdir}/${_basedir}/contrib/test_summary
 }
 
 package_gcc-libs() {
   pkgdesc="Runtime libraries shipped by GCC"
   groups=('base')
-  depends=('glibc>=2.34' 'libxcrypt')
+  depends=('glibc>=2.33' 'libxcrypt')
   options=('!emptydirs' '!strip')
   
   cd build
