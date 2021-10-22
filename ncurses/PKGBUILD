@@ -1,18 +1,18 @@
 
 pkgname=ncurses
-pkgver=6.2
+pkgver=6.3
 pkgrel=1
 pkgdesc="System V Release 4.0 curses emulation library"
 arch=('x86_64')
 url="https://invisible-island.net/ncurses/"
 license=('MIT')
 depends=('glibc')
-source=("https://ftp.gnu.org/gnu/ncurses/${pkgname}-${pkgver}.tar.gz")
-md5sums=('e812da327b1c2214ac1aed440ea3ae8d')
+source=("https://invisible-mirror.net/archives/ncurses/${pkgname}-${pkgver}.tar.gz")
+md5sums=('a2736befde5fee7d2b7eb45eb281cdbe')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr \
       --mandir=/usr/share/man \
       --with-pkg-config=/usr/lib/pkgconfig \
@@ -33,7 +33,7 @@ build() {
 package() {
   cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
-  
+
   for lib in ncurses ncurses++ form panel menu; do
     echo "INPUT(-l${lib}w)" > "$pkgdir"/usr/lib/lib${lib}.so
     ln -s ${lib}w.pc ${pkgdir}/usr/lib/pkgconfig/${lib}.pc
