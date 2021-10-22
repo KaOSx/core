@@ -1,7 +1,7 @@
 
 pkgbase=lvm2
 pkgname=('lvm2' 'device-mapper')
-pkgver=2.02.188
+pkgver=2.03.14
 pkgrel=1
 arch=('x86_64')
 url="https://sourceware.org/lvm2/"
@@ -10,12 +10,10 @@ groups=('base')
 makedepends=('systemd' 'libaio')
 source=("https://mirrors.kernel.org/sourceware/lvm2/LVM2.${pkgver}.tgz"
         'lvm2_install'
-        'lvm2_hook'
         '11-dm-initramfs.rules'
         'sd-lvm2')
-sha512sums=('8c9db17c49dc8ebcab6c7f246ab85870a80658be811cf7f4d8f36abbebafa355b030bfc1e3bcbad73ccccb7fcd06d4a95ac547ca15d18d33715126da92703dca'
-            '5f8846849b3d2460720f21712afc81d15216ce3d13a26521c3d3af5c474352b823c507b3f8b524ab83160a0199b5802c6368df375e4a0dc0a0b4980886e8e731'
-            '883e7fa74e285f8d0d27cbed9e0f8e064ae4f72a3ddb221ec74e8db2393f272bbdc1181e8dbaae5ef8aec72620deb567fa85204604b3225fabea6aa55288235a'
+sha512sums=('6a93bed1d5cf36f0f48d4d413d028b0e480cd4fc20e25d173770a892f265d2a0cc68d01a720b1513469953649e989532cd0c45f9538f92a4190eb3dc4555857d'
+            '82e940f906f7bd17eab0ce26af0ff4292e94c1e1c510f0165f5ce7c16660c6b82372a09f0dbc7c042bc6dab356508457e693741e34481b11afcea386a498b3c7'
             'd022aeb42f62445a7f7c4ff103a780527408a78b9d3a737ce76e39fd389c8fdfec5f18d4c5c0b0353b2ec332d80ec3ba5b5f5c43a0c18a3aa74bd8713d611684'
             'eabbc5116a2532983b48af07bc038331c8829d96fa9d44a59bed3c7c4222f34c9b0207c43f80442c71a67517f249bc6a303f4f50bb3438707ecb1eb15885790a')
 
@@ -35,11 +33,9 @@ build() {
     --enable-readline \
     --enable-dmeventd \
     --enable-cmdlib \
-    --enable-applib \
     --enable-udev_sync \
     --enable-udev_rules \
     --with-default-locking-dir=/run/lock/lvm \
-    --enable-lvmetad \
     --enable-udev-systemd-background-jobs \
     --sbindir=/usr/sbin
   make
@@ -64,26 +60,22 @@ package_device-mapper() {
 package_lvm2() {
   pkgdesc="Logical Volume Manager 2 utilities"
   depends=('bash' "device-mapper>=${pkgver}" 'systemd' 'readline')
-  conflicts=('lvm' 'mkinitcpio<0.7')
   backup=('etc/lvm/lvm.conf')
   options=('!makeflags')
 
   cd LVM2.${pkgver}
   make DESTDIR=${pkgdir} install_lvm2
-  # install applib
-  make -C liblvm DESTDIR=${pkgdir} install
+
   # /etc directories
   install -d ${pkgdir}/etc/lvm/{archive,backup}
 
-  install -D -m644 ${srcdir}/lvm2_hook ${pkgdir}/usr/lib/initcpio/hooks/lvm2
   install -D -m644 ${srcdir}/lvm2_install ${pkgdir}/usr/lib/initcpio/install/lvm2
   install -D -m644 ${srcdir}/sd-lvm2 ${pkgdir}/usr/lib/initcpio/install/sd-lvm2
- 
+
   make DESTDIR=${pkgdir} install_systemd_units
   rm -f ${pkgdir}/usr/lib/systemd/system/dm-*
   install -d -m755 ${pkgdir}/usr/lib/systemd/system/sysinit.target.wants
-  ln -sf /usr/lib/systemd/system/lvm2-lvmetad.socket ${pkgdir}/usr/lib/systemd/system/sysinit.target.wants/lvm2-lvmetad.socket
   make DESTDIR=${pkgdir} install_systemd_generators
   # enable lvmetad
-  sed 's|use_lvmetad = 0|use_lvmetad = 1|' -i "${pkgdir}/etc/lvm/lvm.conf"
+  #sed 's|use_lvmetad = 0|use_lvmetad = 1|' -i "${pkgdir}/etc/lvm/lvm.conf"
 }

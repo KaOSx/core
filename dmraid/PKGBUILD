@@ -2,7 +2,7 @@
 pkgname=dmraid
 pkgver=1.0.0.rc16.3
 _pkgver=1.0.0.rc16-3
-pkgrel=3
+pkgrel=4
 pkgdesc="Supports RAID device discovery, set activation, creation, removal, rebuild and display of properties for ATARAID/DDF1 metadata."
 arch=('x86_64')
 license=('GPL')

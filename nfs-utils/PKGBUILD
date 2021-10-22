@@ -1,7 +1,7 @@
 
 pkgname=nfs-utils
 pkgver=2.5.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Support programs for Network File Systems"
 arch=('x86_64')
 url='http://nfs.sourceforge.net'
@@ -17,7 +17,7 @@ sha256sums=('51997d94e4c8bcef5456dd36a9ccc38e231207c4e9b6a9a2c108841e6aebe3dd'
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr \
     --enable-nfsv4 \
     --enable-nfsv41 \
@@ -44,14 +44,14 @@ package() {
   for i in systemd/{*.service,*.mount,*.target}; do
     install -D -m 644 $i ${pkgdir}/usr/lib/systemd/system/$(basename $i)
   done
-  
+
   install -d -m 644 ${pkgdir}/usr/share/doc/${pkgname}
   install -m 644 NEWS ${pkgdir}/usr/share/doc/${pkgname}/
   install -m 644 README ${pkgdir}/usr/share/doc/${pkgname}/
-  
+
   install -D -m 644 ../exports ${pkgdir}/etc/exports
   install -D -m 644 utils/nfsidmap/id_resolver.conf ${pkgdir}/etc/request-key.d/id_resolver.conf
-  
+
   mkdir ${pkgdir}/etc/exports.d
   mkdir -m 555 ${pkgdir}/var/lib/nfs/rpc_pipefs
   mkdir ${pkgdir}/var/lib/nfs/v4recovery
