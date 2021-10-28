@@ -1,23 +1,23 @@
 
 pkgname=libffi
-pkgver=3.3
-pkgrel=4
+pkgver=3.4.2
+pkgrel=1
 pkgdesc="A portable, high level programming interface to various calling conventions."
 arch=('x86_64')
 license=('MIT')
 url="https://sourceware.org/libffi"
 depends=('glibc')
 options=('!libtool')
-source=("https://sourceware.org/pub/libffi/libffi-${pkgver}.tar.gz"
+source=("https://github.com/libffi/libffi/releases/download/v${pkgver}/libffi-${pkgver}.tar.gz"
         'libffi.pc.patch')
-sha512sums=('61513801a156f11420f541d325de697131846487122d6bdcf5491b18b4da788589f5c0bb07e88e396495d3be5830d74e9135595e2b8ddbfe95c448d8597fbd6f'
-            '73ace2fa746deb1e1cfdf9a9434f66859ac261d1ffa1b1b5c66980421cedf24ab7029df5b7149fc9edb395a27ef15beb9f4cbb90a412bc18f83b7203351b1f58')
+sha256sums=('540fb721619a6aba3bdeef7d940d8e9e0e6d2c193595bc243241b77ff9e93620'
+            '9f1f319527a713cda77d5b2a5a446e57638281aba737f187c947aaf7d3b0eb8b')
 
 build() {
   cd ${pkgname}-${pkgver}
   #patch -p1 -i ${srcdir}/libffi.pc.patch
-  
-  autoreconf -fi
+
+  #autoreconf -fi
   ./configure --prefix=/usr --disable-static
   make 
 }
@@ -25,7 +25,7 @@ build() {
 package() {
   cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install 
-  
+
   install -m755 -d ${pkgdir}/usr/share/licenses/${pkgname}
   install -m644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/ 
 }
