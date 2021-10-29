@@ -3,7 +3,7 @@
 pkgname=binutils
 pkgver=2.37
 _commit=e521dc888158a6cdbdccef0397e663c437450a80
-pkgrel=2
+pkgrel=3
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
 url="https://www.gnu.org/software/binutils/"
@@ -14,17 +14,17 @@ checkdepends=('dejagnu' 'bc')
 options=('!libtool' '!distcc' '!ccache')
 #source=("https://github.com/bminor/binutils-gdb/archive/${_commit}.zip"
 source=("https://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.xz"
-        'ld.patch')
+        "https://github.com/bminor/binutils-gdb/commit/1c611b40e6bfc8029bff7696814330b5bc0ee5c0.diff")
 sha256sums=('820d9724f020a3e69cb337893a0b63c2db161dadcb0e06fc11dc29eb1e84a32c'
-            'ce4c37dddc1a7945c4e4c5439f6198f53eea001e1a3c82582e9ce2c6b9fd390d')
+            '1a7329b6c50fed476f2bbe0a926b97128991767f29a3d7ba40600f0f1523fcbb')
 
 prepare() {
   cd binutils-${pkgver}
 
   # libiberty configure tests 
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
-  # build issue similar to https://bugzilla.redhat.com/show_bug.cgi?id=1599521
-  #patch -p1 -i ${srcdir}/ld.patch
+  # build issue similar to https://sourceware.org/bugzilla/show_bug.cgi?id=28138, qtwebengine build fails
+  patch -p1 -i ${srcdir}/1c611b40e6bfc8029bff7696814330b5bc0ee5c0.diff
 }
 
 build() {
