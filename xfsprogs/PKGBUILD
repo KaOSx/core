@@ -2,11 +2,11 @@
 pkgname=xfsprogs
 pkgver=5.13.0
 _pkgver=5.13.0
-pkgrel=2
+pkgrel=3
 pkgdesc="XFS filesystem utilities"
 arch=('x86_64')
 license=('LGPL')
-url="https://xfs.org/index.php/Main_Page"
+url="https://xfs.wiki.kernel.org/"
 groups=('base')
 depends=('util-linux' 'libinih')
 options=('!makeflags' '!libtool')
