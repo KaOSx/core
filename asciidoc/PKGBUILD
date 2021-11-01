@@ -1,6 +1,6 @@
  
 pkgname=asciidoc
-pkgver=10.0.0
+pkgver=10.0.1
 pkgrel=1
 _commit=544574e66ca89c898151c1c6d34b88a76e44343f
 pkgdesc='Text document format for short documents, articles, books and UNIX man pages.'
@@ -9,7 +9,7 @@ url='https://asciidoc-py.github.io/'
 license=('GPL')
 depends=('python3' 'libxslt' 'docbook-xsl')
 source=("https://github.com/asciidoc/asciidoc-py3/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('e8377000468119e427b8776e56cd5cb8')
+md5sums=('ec2a43b0dca1f7539b6e7531702c320a')
 
 build() {
   cd ${pkgname}-${pkgver}
