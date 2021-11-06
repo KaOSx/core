@@ -1,6 +1,6 @@
 
 pkgname=tcl
-pkgver=8.6.11
+pkgver=8.6.12
 _pkgver=8.6
 pkgrel=1
 pkgdesc="The Tcl scripting language"
@@ -9,7 +9,7 @@ url="https://core.tcl-lang.org/index.html"
 license=('custom')
 depends=('glibc' 'zlib')
 source=("https://sourceforge.net/projects/tcl/files/Tcl/${pkgver}/tcl${pkgver}-src.tar.gz")
-md5sums=('8a4c004f48984a03a7747e9ba06e4da4')
+md5sums=('87ea890821d2221f2ab5157bc5eb885f')
 
 build() {
   cd tcl${pkgver}/unix
@@ -17,9 +17,9 @@ build() {
   rm -rf ${srcdir}/tcl${pkgver}/pkgs/sqlite3*
 
   ./configure --prefix=/usr --mandir=/usr/share/man --enable-threads --enable-64bit
-  
+
   make
-  
+
   # LFS recommendation http://www.linuxfromscratch.org/blfs/view/svn/general/tcl.html
   sed -e "s@^\(TCL_SRC_DIR='\).*@\1/usr/include'@" \
       -e "/TCL_B/s@='\(-L\)\?.*unix@='\1/usr/lib@" \
@@ -28,16 +28,16 @@ build() {
 
 check() {
   cd tcl${pkgver}/unix
-  
+
   make test
 }
 
 package()
 {
   cd tcl${pkgver}/unix
-  
+
   make INSTALL_ROOT=${pkgdir} install install-private-headers
   ln -sf tclsh${_pkgver} ${pkgdir}/usr/bin/tclsh
-  
+
   install -Dm644 ../license.terms ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }
