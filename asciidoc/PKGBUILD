@@ -1,30 +1,34 @@
  
 pkgname=asciidoc
-pkgver=10.0.1
+pkgver=10.0.2
 pkgrel=1
-_commit=544574e66ca89c898151c1c6d34b88a76e44343f
+_commit=7bad9d2e77f7d384ac9042732adaefd4f6ed8979
 pkgdesc='Text document format for short documents, articles, books and UNIX man pages.'
 arch=('x86_64')
 url='https://asciidoc-py.github.io/'
 license=('GPL')
 depends=('python3' 'libxslt' 'docbook-xsl')
-source=("https://github.com/asciidoc/asciidoc-py3/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('ec2a43b0dca1f7539b6e7531702c320a')
+makedepends=('python3-setuptools')
+#source=("https://github.com/asciidoc/asciidoc-py3/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.gz")
+source=("https://github.com/asciidoc-py/asciidoc-py/archive/${_commit}.zip")
+md5sums=('caa5fbcf1eb626a596f00a32e0a8b315')
 
 build() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-py-${_commit}
 
-  autoconf -v
-  ./configure \
-    --prefix=/usr \
-    --sysconfdir=/etc
+  python3 setup.py build
+  #autoconf -v
+  #./configure \
+  #  --prefix=/usr \
+  #  --sysconfdir=/etc
 }
 
 package() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-py-${_commit}
 
-  make install DESTDIR=${pkgdir}
+  python3 setup.py install --prefix=/usr --root=${pkgdir} --optimize=1 --skip-build
+  #make install DESTDIR=${pkgdir}
 
-  install -Dm644 asciidocapi.py ${pkgdir}/usr/lib/python3.8/site-packages/asciidocapi.py
+  #install -Dm644 asciidocapi.py ${pkgdir}/usr/lib/python3.8/site-packages/asciidocapi.py
   #install -Dm644 vim/syntax/asciidoc.vim ${pkgdir}/usr/share/vim/vimfiles/syntax/asciidoc.vim
 }
