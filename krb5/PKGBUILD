@@ -2,7 +2,7 @@
 pkgname=krb5
 pkgver=1.19.2
 _pkgver=1.19
-pkgrel=1
+pkgrel=2
 pkgdesc="The Kerberos network authentication system"
 arch=('x86_64')
 url="https://web.mit.edu/kerberos/"
@@ -30,7 +30,7 @@ md5sums=('eb51b7724111e1a458a8c9a261d45a31'
 build() {
    tar xf ${pkgname}-${pkgver}.tar.gz
    cd ${pkgname}-${pkgver}
-   
+
    patch -p1 -i ${srcdir}/krb5-config_LDFLAGS.patch
 
    sed -i "/KRB5ROOT=/s/\/local//" src/util/ac_check_krb5.m4

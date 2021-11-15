@@ -1,7 +1,7 @@
 
 pkgname=quota
 pkgver=4.06
-pkgrel=1
+pkgrel=2
 pkgdesc="Tools and patches for the Linux Diskquota system as part of the Linux kernel"
 arch=('x86_64')
 url="https://sourceforge.net/projects/linuxquota/"
@@ -12,7 +12,7 @@ md5sums=('aef94648438832b684978d46fdf75110')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr \
     --sysconfdir=/etc 
   make
@@ -21,7 +21,7 @@ build() {
 package() {
   cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
-  
+
   install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
   # part of glibc, remove full dir
   rm -rf ${pkgdir}/usr/include
