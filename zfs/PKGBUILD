@@ -1,0 +1,42 @@
+
+pkgname=zfs
+pkgver=2.1.1
+pkgrel=1
+pkgdesc="Userspace utilities for the Zettabyte File System Linux kernel module."
+arch=('x86_64')
+url="https://zfsonlinux.org/"
+license=('CDDL')
+depends=('python3' 'libaio')
+source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/${pkgname}-${pkgver}.tar.gz")
+sha256sums=('bd4f48d009f3b5e291390bde62b0131b8bf3fab09f4fc0fa3591b1f2e7074cff')
+
+build() {
+    cd ${pkgname}-${pkgver}
+
+    ./configure --prefix=/usr \
+        --sysconfdir=/etc \
+        --with-mounthelperdir=/usr/bin \
+        --libdir=/usr/lib \
+        --with-udevdir=/usr/lib/udev \
+        --libexecdir=/usr/lib/zfs \
+        --with-dracutdir=/usr/lib/dracut \
+        --enable-pyzfs=no \
+        --enable-systemd \
+        --with-config=user \
+        --with-linux=/lib/modules/${_extramodules}/build \
+        --with-linux-obj=/lib/modules/${_extramodules}/build \
+        --with-zfsexecdir=/usr/lib/zfs \
+        --with-vendor=KaOS
+    make
+}
+
+    package() {
+    cd ${pkgname}-${pkgver}
+
+    make DESTDIR=${pkgdir} install
+
+    install -D -m644 contrib/bash_completion.d/zfs ${pkgdir}/usr/share/bash-completion/completions/zf
+
+    chmod 750 ${pkgdir}/etc/sudoers.d
+    chmod 440 ${pkgdir}/etc/sudoers.d/zfs
+}

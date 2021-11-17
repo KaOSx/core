@@ -1,0 +1,42 @@
+
+_extramodules=5.15.2-1-next
+
+pkgname=zfs-kmod-next
+pkgver=2.1.1
+pkgrel=1
+pkgdesc="Kernel module for the Zettabyte File System."
+arch=('x86_64')
+url="https://zfsonlinux.org/"
+license=('CDDL')
+depends=('kmod' 'linux-next' "zfs=${pkgver}")
+makedepends=('linux-next-headers' 'elfutils')
+source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-${pkgver}.tar.gz")
+sha256sums=("bd4f48d009f3b5e291390bde62b0131b8bf3fab09f4fc0fa3591b1f2e7074cff")
+
+build() {
+    cd zfs-${pkgver}
+
+    ./autogen.sh
+    ./configure --prefix=/usr \
+        --sysconfdir=/etc \
+        --datadir=/usr/share \
+        --libdir=/lib \
+        --datadir=/usr/share \
+        --includedir=/usr/include \
+        --with-udevdir=/usr/lib/udev \
+        --libexecdir=/usr/lib \
+        --with-config=kernel \
+        --with-linux=/lib/modules/${_extramodules}/build \
+        --with-linux-obj=/lib/modules/${_extramodules}/build
+    make
+}
+
+package() {
+    cd zfs-${pkgver}
+
+    make DESTDIR=${pkgdir} install
+    #remove references to the buildsystem
+    sed -i "s|${srcdir}||" ${pkgdir}/usr/src/zfs-*/${_extramodules}/Module.symvers
+
+    install -D -m0644 LICENSE -t ${pkgdir}/usr/share/licenses/${pkgname}
+}
