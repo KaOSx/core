@@ -1,7 +1,7 @@
 
 pkgname=bash
 _basever=5.1
-_patchlevel=008
+_patchlevel=012
 pkgver=${_basever}.${_patchlevel}
 pkgrel=1
 pkgdesc="The GNU Bourne Again shell"
@@ -36,7 +36,11 @@ md5sums=('bb91a17fd6c9032c26d0b2b78b50aff5'
          '5081278e6c35154e28d09f582251c529'
          'f4a8bcda4b7bd2c72b29c107027608a3'
          'bf7816d63ee0476054bf18a488d8bb1b'
-         '7e5a30d864f834953b22a55c01c8690b')
+         '7e5a30d864f834953b22a55c01c8690b'
+         '8e35f11cbfcefe2c07c64d00601fd713'
+         'd78ad19986c0355a8d67c9a0e82ad4aa'
+         '2416386b5ee94e499ccbf71f6fd4aebd'
+         '879b2d8a03162faebb7234c4cd57c5cd')
 
 build() {
   cd ${pkgname}-${_basever}
@@ -64,7 +68,7 @@ build() {
 
 check() {
   cd ${pkgname}-${_basever}
-  
+
   make check
 }
 
@@ -77,11 +81,11 @@ package() {
   ln -s bash sh
 
   install -dm755 ${pkgdir}/etc/skel/
-  
+
   # system configuration files
   install -m644 ${srcdir}/system.bashrc ${pkgdir}/etc/bash.bashrc
   install -m644 ${srcdir}/system.bash_logout ${pkgdir}/etc/bash.bash_logout
-  
+
   # user configuration files
   install -m644 ${srcdir}/dot.bashrc ${pkgdir}/etc/skel/.bashrc
   install -m644 ${srcdir}/dot.bash_profile ${pkgdir}/etc/skel/.bash_profile
