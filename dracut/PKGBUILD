@@ -1,7 +1,7 @@
 
 pkgname=dracut
 pkgver=055
-pkgrel=1
+pkgrel=2
 pkgdesc="Event driven initramfs tool used to create an initramfs image by copying tools and files from an installed system and combining it with the dracut framework"
 arch=('x86_64')
 url="https://dracut.wiki.kernel.org/index.php/Main_Page"
@@ -10,8 +10,10 @@ depends=('binutils' 'cpio' 'kmod' 'util-linux' 'libarchive' 'coreutils'
          'bash' 'findutils' 'grep' 'filesystem' 'gzip' 'systemd' 'pkg-config')
 makedepends=('asciidoc' 'bash-completion' 'libxslt')
 backup=('etc/dracut.conf')
-source=("https://mirrors.edge.kernel.org/pub/linux/utils/boot/dracut/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('4baa08206cceeb124dbf1075a0daf774b5a8f144ce2e01d82a144af3020fd65b')
+source=("https://mirrors.edge.kernel.org/pub/linux/utils/boot/dracut/${pkgname}-${pkgver}.tar.xz"
+        'kaos.conf')
+sha256sums=('4baa08206cceeb124dbf1075a0daf774b5a8f144ce2e01d82a144af3020fd65b'
+            'b7d19f2d49245cf51e83a28821dc6f053e711268ecbc0678b2d7a06a1a0ed649')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -29,4 +31,5 @@ package() {
   cd ${pkgname}-${pkgver}
 
   DESTDIR=${pkgdir} make install
+  install -Dm755 ../kaos.conf ${pkgdir}/etc/dracut.conf.d/01-kaos.conf
 }
