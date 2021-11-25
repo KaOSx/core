@@ -1,9 +1,9 @@
 
-_extramodules=5.15.4-1-next
+_extramodules=5.15.5-1-next
 
 pkgname=zfs-kmod-next
 pkgver=2.1.1
-pkgrel=3
+pkgrel=4
 pkgdesc="Kernel module for the Zettabyte File System."
 arch=('x86_64')
 url="https://zfsonlinux.org/"

@@ -1,6 +1,6 @@
 
 pkgname=ca-certificates
-pkgver=20210119
+pkgver=20211016
 pkgrel=1
 epoch=1
 pkgdesc='Common CA certificates'
@@ -11,11 +11,14 @@ depends=('bash' 'run-parts' 'openssl' 'findutils' 'coreutils' 'sed')
 makedepends=('ruby' 'python3')
 install=ca-certificates.install
 backup=('etc/ca-certificates.conf')
-source=("http://sourcearchive.raspbian.org/main/c/${pkgname}/${pkgname}_${pkgver}.tar.xz")
-md5sums=('c02582bf9ae338e558617291897615eb')
+source=("http://sourcearchive.raspbian.org/main/c/${pkgname}/${pkgname}_${pkgver}.tar.xz"
+        "https://salsa.debian.org/debian/ca-certificates/-/commit/8033d52259172b4bddc0f8bbcb6f6566b348db72.diff")
+md5sums=('5cce77de047611c4b9384d4ce52d9204'
+         '1a966cb0aaa3258ab431c35d46ce3dcc')
 
 build() {
   cd work
+  patch -p1 -R -i ${srcdir}/8033d52259172b4bddc0f8bbcb6f6566b348db72.diff
 
   make
 }
