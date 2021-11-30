@@ -1,7 +1,7 @@
 
 pkgname=libpsl
 pkgver=0.21.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Library that provides functions to work with the Mozilla Public Suffix List."
 arch=('x86_64')
 url="https://rockdaboot.github.io/libpsl/"
@@ -13,7 +13,7 @@ md5sums=('ad40b970dcb5117d559b62a1e0d8d827')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure \
     --prefix=/usr \
     --disable-static \

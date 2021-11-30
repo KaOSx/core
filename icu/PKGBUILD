@@ -1,7 +1,7 @@
 
 pkgname=icu
-pkgver=69.1
-_pkgver=69_1
+pkgver=70.1
+_pkgver=70_1
 pkgrel=1
 pkgdesc="International Components for Unicode library"
 arch=('x86_64')
@@ -9,8 +9,8 @@ url="http://www.icu-project.org/"
 license=('custom:"icu"')
 depends=('gcc-libs' 'sh')
 makedepends=('python3')
-source=("https://github.com/unicode-org/icu/releases/download/release-69-1/${pkgname}4c-${_pkgver}-src.tgz")
-md5sums=('9403db682507369d0f60a25ea67014c4')
+source=("https://github.com/unicode-org/icu/releases/download/release-70-1/${pkgname}4c-${_pkgver}-src.tgz")
+md5sums=('65287befec8116d79af23a58aa50c60d')
 
 build() {
   cd icu/source
@@ -18,14 +18,14 @@ build() {
   #patch -Rp3 -i ${srcdir}/icu.8198.revert.icu5431.patch
   # http://bugs.icu-project.org/trac/changeset/39484
   #patch -p4 -i ${srcdir}/keyword-list.diff
-  
+
   ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
   make 
 }
 
 check() {
   cd icu/source
-  
+
   make -k check 
 }
 
