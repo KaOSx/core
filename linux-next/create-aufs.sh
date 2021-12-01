@@ -5,7 +5,7 @@ rm -Rf aufs5-standalone
 git clone git://github.com/sfjro/aufs5-standalone.git aufs5-standalone
 cd aufs5-standalone
 git branch -r
-git checkout origin/aufs5.15
+git checkout origin/aufs5.15.5
 
 # modify what you want
 

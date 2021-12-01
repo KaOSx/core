@@ -1,11 +1,11 @@
 SPDX-License-Identifier: GPL-2.0
-aufs5.15 mmap patch
+aufs5.15.5 mmap patch
 
 diff --git a/fs/proc/base.c b/fs/proc/base.c
-index 533d5836eb9a4..f5de60c5327f5 100644
+index 1f394095eb880..93f2479ef319e 100644
 --- a/fs/proc/base.c
 +++ b/fs/proc/base.c
-@@ -2186,7 +2186,7 @@ static int map_files_get_link(struct dentry *dentry, struct path *path)
+@@ -2189,7 +2189,7 @@ static int map_files_get_link(struct dentry *dentry, struct path *path)
  	rc = -ENOENT;
  	vma = find_exact_vma(mm, vm_start, vm_end);
  	if (vma && vma->vm_file) {
@@ -125,7 +125,7 @@ index 7f8ee09c711f4..3a9a798a4ae1f 100644
  
  #ifdef CONFIG_SWAP
 diff --git a/kernel/fork.c b/kernel/fork.c
-index 38681ad44c76b..95de8e9843192 100644
+index 10885c649ca42..f3a9cd12011b3 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
 @@ -573,7 +573,7 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
@@ -151,10 +151,10 @@ index fc60a40ce954b..c715b0138237b 100644
  # Give 'page_alloc' its own module-parameter namespace
  page-alloc-y := page_alloc.o
 diff --git a/mm/filemap.c b/mm/filemap.c
-index dae481293b5d9..52bf3bf87b757 100644
+index 82a17c35eb96b..348e22067abdc 100644
 --- a/mm/filemap.c
 +++ b/mm/filemap.c
-@@ -3350,7 +3350,7 @@ vm_fault_t filemap_page_mkwrite(struct vm_fault *vmf)
+@@ -3349,7 +3349,7 @@ vm_fault_t filemap_page_mkwrite(struct vm_fault *vmf)
  	vm_fault_t ret = VM_FAULT_LOCKED;
  
  	sb_start_pagefault(mapping->host->i_sb);
