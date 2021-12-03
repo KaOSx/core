@@ -1,7 +1,7 @@
 
 pkgname=openssh
 pkgver=8.8p1
-pkgrel=3
+pkgrel=4
 pkgdesc='Free version of the SSH connectivity tools'
 arch=('x86_64')
 license=('custom:BSD')
@@ -50,6 +50,7 @@ check() {
 	cd ${pkgname}-${pkgver}
 
 	# ssh-keygen for ssh-rsa failed, chroot issue
+	# test_sshbuf fail, ldns 1.8.x issue?
 	make tests ||
 	grep $USER /etc/passwd | grep -q /bin/false
 }
