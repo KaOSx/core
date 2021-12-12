@@ -1,7 +1,7 @@
 
 pkgname=libxml2
 pkgver=2.9.12
-pkgrel=1
+pkgrel=2
 pkgdesc="XML parsing library, version 2"
 arch=('x86_64')
 url="http://www.xmlsoft.org/"
@@ -16,7 +16,7 @@ md5sums=('f433a39be087a9f0b197eb2307ad9f75'
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr \
      --with-threads \
      --with-history \
@@ -26,14 +26,14 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-  
+
   mv ${srcdir}/xmlconf .
   make check
 }
 
 package() {
   cd ${pkgname}-${pkgver}
-  
+
   make DESTDIR=${pkgdir} install
   install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/COPYING
 }
