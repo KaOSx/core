@@ -1,6 +1,6 @@
 
 pkgname=iputils
-pkgver=20210722
+pkgver=20211215
 pkgrel=1
 pkgdesc="IP Configuration Utilities (and Ping)."
 arch=('x86_64')
@@ -13,7 +13,7 @@ backup=(etc/xinetd.d/tftp)
 install=${pkgname}.install
 source=("https://github.com/iputils/iputils/archive/${pkgver}.tar.gz"
         'tftp.xinetd')
-sha256sums=('6d1a44b0682d3d4b64586dbaebe61dd61ae16d6e2f4dc0c43336d0e47a9db323'
+sha256sums=('b6f67fc705490673ff4471d006221b4a2f1b1180b929d9fefd771352621ccedf'
             '1041ea0e4e71ae98cca84bcc5e2032f68c2c5121b36b87fa1e38b2c6911722e7')
 
 build() {
@@ -24,8 +24,7 @@ build() {
     --prefix=/usr \
     --buildtype=release \
     --libexecdir=/usr/lib \
-    -DBUILD_MANS=false \
-    -DUSE_CRYPTO=openssl 
+    -DBUILD_MANS=false
   ninja
 }
 
