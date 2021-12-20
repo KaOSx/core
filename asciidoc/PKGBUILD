@@ -1,7 +1,7 @@
  
 pkgname=asciidoc
 pkgver=9.1.1
-pkgrel=2
+pkgrel=3
 _commit=7bad9d2e77f7d384ac9042732adaefd4f6ed8979
 pkgdesc='Text document format for short documents, articles, books and UNIX man pages.'
 arch=('x86_64')
@@ -29,6 +29,6 @@ package() {
   #python3 setup.py install --prefix=/usr --root=${pkgdir} --optimize=1 --skip-build
   make install DESTDIR=${pkgdir}
 
-  install -Dm644 asciidocapi.py ${pkgdir}/usr/lib/python3.8/site-packages/asciidocapi.py
+  install -Dm644 asciidocapi.py ${pkgdir}/usr/lib/python3.9/site-packages/asciidocapi.py
   #install -Dm644 vim/syntax/asciidoc.vim ${pkgdir}/usr/share/vim/vimfiles/syntax/asciidoc.vim
 }
