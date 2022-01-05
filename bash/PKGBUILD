@@ -1,7 +1,7 @@
 
 pkgname=bash
 _basever=5.1
-_patchlevel=012
+_patchlevel=016
 pkgver=${_basever}.${_patchlevel}
 pkgrel=1
 pkgdesc="The GNU Bourne Again shell"
@@ -40,7 +40,11 @@ md5sums=('bb91a17fd6c9032c26d0b2b78b50aff5'
          '8e35f11cbfcefe2c07c64d00601fd713'
          'd78ad19986c0355a8d67c9a0e82ad4aa'
          '2416386b5ee94e499ccbf71f6fd4aebd'
-         '879b2d8a03162faebb7234c4cd57c5cd')
+         '879b2d8a03162faebb7234c4cd57c5cd'
+         'e877b36a486caf45c70220f19757c198'
+         'b03ab0766a153e90162214d2652671de'
+         '26f398ae7771478f1e05dacceb872922'
+         '019066617d263168bf100a70e26f1272')
 
 build() {
   cd ${pkgname}-${_basever}
