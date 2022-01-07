@@ -1,6 +1,6 @@
 
 pkgname=logrotate
-pkgver=3.18.1
+pkgver=3.19.0
 pkgrel=1
 pkgdesc="Rotates system logs automatically"
 url='https://github.com/logrotate/logrotate'
@@ -11,7 +11,7 @@ depends=('popt' 'gzip' 'acl')
 backup=('etc/logrotate.conf')
 source=("https://github.com/logrotate/logrotate/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.xz"
         'logrotate.conf')
-md5sums=('07d5aba26c350f9ab5730c25a7277751'
+md5sums=('1cee3e80df6856435aeb751b98065f9c'
          '416de14f92ef4361adad8b6e7065245a')
 
 build() {
