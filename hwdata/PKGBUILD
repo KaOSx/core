@@ -1,0 +1,31 @@
+
+pkgname=hwdata
+pkgver=0.355
+pkgrel=1
+pkgdesc="Hardware identification and configuration data"
+url="https://github.com/vcrhonek/hwdata"
+license=('GPL2')
+arch=('x86_64')
+provides=('hwids')
+replaces=('hwids')
+conflicts=('hwids')
+source=("https://github.com/vcrhonek/hwdata/archive/refs/tags/v${pkgver}.tar.gz")
+md5sums=('ee30c73571b9392a7b2d77619a6842a5')
+
+build() {
+  cd ${pkgname}-${pkgver}
+
+  ./configure --prefix=/usr \
+    --libdir=/usr/lib \
+    --datadir=/usr/share
+  make
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+
+  make DESTDIR=${pkgdir} install
+  #install -Dm644 usb.ids ${pkgdir}/usr/share/hwdata/usb.ids
+  #install -Dm644 pci.ids ${pkgdir}/usr/share/hwdata/pci.ids
+}
+

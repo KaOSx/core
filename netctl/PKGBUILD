@@ -1,6 +1,6 @@
 
 pkgname=netctl
-pkgver=1.26
+pkgver=1.27
 pkgrel=1
 pkgdesc="Profile based systemd network management"
 url="https://gitlab.archlinux.org/archlinux/netctl"
@@ -11,7 +11,7 @@ makedepends=('pkg-config')
 optdepends=('dialog: for the menu based wifi assistant'
             'dhclient: for DHCP support (or dhcpcd)')
 source=("https://sources.archlinux.org/other/packages/netctl/netctl-${pkgver}.tar.xz")
-md5sums=('16a586ae8f175fd7879b3be940f12161')
+md5sums=('1feb4ec0340f304a24b2d01d9e183322')
 
 package() {
   cd netctl-${pkgver}
