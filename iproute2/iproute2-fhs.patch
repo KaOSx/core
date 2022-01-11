@@ -1,14 +1,15 @@
---- a/Makefile	2015-06-26 17:09:37.000000000 -0400
-+++ b/Makefile	2015-06-26 17:18:24.000000000 -0400
-@@ -1,6 +1,7 @@
+--- a/Makefile	2022-01-11 13:32:24.731809300 +0100
++++ b/Makefile	2022-01-11 13:38:30.034397382 +0100
+@@ -15,7 +15,8 @@
+ endif
+ 
  PREFIX?=/usr
- LIBDIR?=$(PREFIX)/lib
 -SBINDIR?=/sbin
-+SBINDIR=/usr/sbin
++SBINDIR?=/usr/sbin
 +SHAREDIR=/usr/share
  CONFDIR?=/etc/iproute2
- DATADIR?=$(PREFIX)/share
- DOCDIR?=$(DATADIR)/doc/iproute2
+ NETNS_RUN_DIR?=/var/run/netns
+ NETNS_ETC_DIR?=/etc/netns
 diff -Naur iproute2-3.4.0/netem/Makefile iproute2-3.4.0.new/netem/Makefile
 --- iproute2-3.4.0/netem/Makefile	2012-05-21 23:12:19.000000000 +0200
 +++ iproute2-3.4.0.new/netem/Makefile	2012-06-18 10:23:53.896760158 +0200
