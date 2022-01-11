@@ -1,17 +1,17 @@
  
 pkgname=asciidoc
-pkgver=9.1.1
-pkgrel=3
+pkgver=10.1.1
+pkgrel=1
 _commit=7bad9d2e77f7d384ac9042732adaefd4f6ed8979
 pkgdesc='Text document format for short documents, articles, books and UNIX man pages.'
 arch=('x86_64')
 url='https://asciidoc-py.github.io/'
 license=('GPL')
 depends=('python3' 'libxslt' 'docbook-xsl')
-#makedepends=('python3-setuptools')
+makedepends=('python3-pip')
 source=("https://github.com/asciidoc/asciidoc-py3/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.gz")
 #source=("https://github.com/asciidoc-py/asciidoc-py/archive/${_commit}.zip")
-md5sums=('027f111e215a9d9a07d2a2adb1499834')
+md5sums=('f37e8cab409d212820ed2f4f0f5cadee')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -21,6 +21,7 @@ build() {
   ./configure \
     --prefix=/usr \
     --sysconfdir=/etc
+  make build
 }
 
 package() {
