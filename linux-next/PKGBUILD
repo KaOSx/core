@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 
 _basekernel=5.16
 _srcname=linux-5.16
-pkgver=5.16.0
+pkgver=5.16.1
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -14,7 +14,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfuti
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-5.8-rc7.tar.gz"
-        #"https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
+        "https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -34,7 +34,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'dracut-next-install'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('e6680ce7c989a3efe58b51e3f3f0bf93'
-         '4c6fe82e4aa540e3886825d5a5c77eba'
+         'd571392436365678b420e4dece216514'
+         '32afdcbc433ae58d4566c8a9e9d6c22b'
          '876eaef8cb84e985a4e2e5c324c0ae77'
          '5584f713c4b44700f83938bf7ea90fcf'
          '0beef9753be8f5db37d8a243a67eb544'
@@ -54,7 +55,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
