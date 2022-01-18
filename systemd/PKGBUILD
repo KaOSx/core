@@ -1,14 +1,14 @@
 
 pkgname=systemd
-pkgver=249.9
-_pkgver=249.9
+pkgver=250.3
+_pkgver=250.3
 pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
 license=('GPL2' 'LGPL2.1')
-depends=('acl' 'bash' 'glibc' 'kmod' 'hwids' 'util-linux' 'kbd' 'libcap' 'libxslt' 'iptables'
+depends=('acl' 'bash' 'glibc' 'kmod' 'hwdata' 'util-linux' 'kbd' 'libcap' 'libxslt' 'iptables'
          'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn2' 'lz4'
          'quota' 'libseccomp' 'cryptsetup' 'pcre2' 'libxcrypt') # 'audit') 
 makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs' 'meson' 'ninja'
@@ -42,7 +42,7 @@ source=("https://github.com/systemd/systemd-stable/archive/v${_pkgver}.tar.gz"
         'splash.bmp'
         'systemd-tmpfiles.hook'
         'boot_color.diff')
-md5sums=('c9ff48e392e39d2ab0d62d92ea06b0ce'
+md5sums=('e4af37e9e8a52c1f279d9e054b25c06f'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -58,7 +58,7 @@ prepare() {
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
   # set systemd-boot colors
-  patch -p1 -i ${srcdir}/boot_color.diff
+  #patch -p1 -i ${srcdir}/boot_color.diff
 }
 
 build() {
@@ -97,7 +97,11 @@ build() {
     -Dsbat-distro-summary=KaOS \
     -Dsbat-distro-pkgname=systemd \
     -Dsbat-distro-version=${pkgver} \
-    -Dsbat-distro-url="https://kaosx.us/packages/packages.php?sortby=&sortdir=&flagged=&page=&repo=&exact=&search=systemd"
+    -Dsbat-distro-url="https://kaosx.us/packages/packages.php?sortby=&sortdir=&flagged=&page=&repo=&exact=&search=systemd" \
+    -Defi-color-normal='black,lightgray' \
+    -Defi-color-entry='black,lightgray' \
+    -Defi-color-highlight='white,cyan' \
+    -Defi-color-edit='white,cyan'
     # -Ddefault-locale=C
     ninja
 }
@@ -128,7 +132,7 @@ package() {
 
   ln -s ../lib/systemd/systemd-udevd ${pkgdir}/usr/bin/udevd
 
-  install -m644 systemd-stable-${_pkgver}/tmpfiles.d/legacy.conf ${pkgdir}/usr/lib/tmpfiles.d
+  #install -m644 systemd-stable-${_pkgver}/tmpfiles.d/legacy.conf ${pkgdir}/usr/lib/tmpfiles.d
 
   # Replace in optical 
   sed -i 's#GROUP="dialout"#GROUP="uucp"#g;
