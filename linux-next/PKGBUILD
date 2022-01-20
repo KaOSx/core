@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 
 _basekernel=5.16
 _srcname=linux-5.16
-pkgver=5.16.1
+pkgver=5.16.2
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -34,17 +34,17 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         'dracut-next-install'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('e6680ce7c989a3efe58b51e3f3f0bf93'
-         'd571392436365678b420e4dece216514'
+         '3ce3933c25c9a589fb072b81894a8f7b'
          '32afdcbc433ae58d4566c8a9e9d6c22b'
-         '876eaef8cb84e985a4e2e5c324c0ae77'
-         '5584f713c4b44700f83938bf7ea90fcf'
-         '0beef9753be8f5db37d8a243a67eb544'
-         'd21db9c38c7ef5ca8e8bac1ee3f23865'
-         '8da7509aa53f28e4a44d760a7b1f9a01'
-         '8df13ba2737e625e5f65c243afc08f2c'
+         'a5d5e25551ef25db49af67f25217d660'
+         '3cb24a6ccf0c8813e901b9d681001582'
+         'f29af6f02a1cfea3e99b279cf69c02b0'
+         '49cbb2787686062ae68d1bbb953198d8'
+         '1ab6df798e2b61641d3a7a4b7c4f4ad6'
+         '0c6fe2e27c0dcdc3ab25aa0306fd1011'
          '180e55a128db2641e04374ce07d131a7'
-         'e214206a1f066b604013dcf7132f07d2'
-         'df6c4e5e79e2b69f1c2fb867fe2cfeee'
+         'a0a5b72e74f0ec60685d5ff0389131cb'
+         '253fa6faa68ee56f31600bd4c96aef28'
          '8c52e6d232b461446b7363e86522a720'
          'e19be83ca72175a29b36d8ab08105050'
          'fc871b37f1cd4f12ac7b0bab74f8aa5f'
