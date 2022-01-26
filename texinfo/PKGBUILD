@@ -1,7 +1,7 @@
 
 pkgname=texinfo
 pkgver=6.8
-pkgrel=1
+pkgrel=2
 pkgdesc="Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file"
 arch=('x86_64')
 url="https://www.gnu.org/software/texinfo/"
@@ -16,18 +16,18 @@ md5sums=('f7f5ca9d3fd80c9d1bb069bc46765d13'
          '21205a4b3b5235649490600c739d3c1a')
 
 build() {
-   cd ${pkgname}-${pkgver}
-   #sed -i 's|6.0|6.2|' tp/Texinfo/Convert/XSParagraph/TestXS.pm
-   
-   ./configure --prefix=/usr --libexecdir=/usr/lib
-   make
+    cd ${pkgname}-${pkgver}
+    #sed -i 's|6.0|6.2|' tp/Texinfo/Convert/XSParagraph/TestXS.pm
+
+    ./configure --prefix=/usr --libexecdir=/usr/lib
+    make
 }
 
 package() {
-   cd ${pkgname}-${pkgver}
-   make DESTDIR=${pkgdir} install
-   
-   install -dm755 ${pkgdir}/usr/share/libalpm/hooks/
-   install -m644 ../texinfo-install.hook ${pkgdir}/usr/share/libalpm/hooks/
-   install -m644 ../texinfo-remove.hook ${pkgdir}/usr/share/libalpm/hooks/
+    cd ${pkgname}-${pkgver}
+    make DESTDIR=${pkgdir} install
+
+    install -dm755 ${pkgdir}/usr/share/libalpm/hooks/
+    install -m644 ../texinfo-install.hook ${pkgdir}/usr/share/libalpm/hooks/
+    install -m644 ../texinfo-remove.hook ${pkgdir}/usr/share/libalpm/hooks/
 }

@@ -1,7 +1,7 @@
 
 pkgname=subversion
 pkgver=1.14.1
-pkgrel=6
+pkgrel=7
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
 url="https://subversion.apache.org/"
@@ -25,59 +25,57 @@ sha1sums=('ee4283c21b5925ee499f8cb9cb0ff546ac7b4b9a'
           '3d1e28408a9abb42af2e531adc0d01ce21acfad6')
 
 build() {
-   cd ${pkgname}-${pkgver}
+    cd ${pkgname}-${pkgver}
+    #patch -p0 -i ../subversion.rpath.fix.patch
 
-   #patch -p0 -i ../subversion.rpath.fix.patch
-   
-   # configure
-   autoreconf
-   ./configure --prefix=/usr \
-               --with-apr=/usr \
-               --with-apr-util=/usr \
-               --with-zlib=/usr \
-               --with-serf=/usr \
-               --with-apxs \
-               --with-sqlite=/usr \
-               --enable-javahl \
-               --without-gnome-keyring \
-               --without-kwallet \
-               --disable-static \
-               --libexecdir=/usr/lib \
-               --with-utf8proc=internal
+    autoreconf
+    ./configure --prefix=/usr \
+                --with-apr=/usr \
+                --with-apr-util=/usr \
+                --with-zlib=/usr \
+                --with-serf=/usr \
+                --with-apxs \
+                --with-sqlite=/usr \
+                --enable-javahl \
+                --without-gnome-keyring \
+                --without-kwallet \
+                --disable-static \
+                --libexecdir=/usr/lib \
+                --with-utf8proc=internal
 
-   make 
-   make LT_LDFLAGS="-L$Fdestdir/usr/lib" local-all
-   make swig_pydir=/usr/lib/python3.9/site-packages/libsvn \
-     swig_pydir_extra=/usr/lib/python3.9/site-packages/svn swig-py swig-pl javahl # swig-rb
+    make 
+    make LT_LDFLAGS="-L$Fdestdir/usr/lib" local-all
+    make swig_pydir=/usr/lib/python3.9/site-packages/libsvn \
+        swig_pydir_extra=/usr/lib/python3.9/site-packages/svn swig-py swig-pl javahl # swig-rb
 }
 
 package() {
-   cd ${pkgname}-${pkgver}
+    cd ${pkgname}-${pkgver}
 
-   export LD_LIBRARY_PATH=${pkgdir}/usr/lib:${LD_LIBRARY_PATH}
-   make DESTDIR=${pkgdir} INSTALLDIRS=vendor \
-     swig_pydir=/usr/lib/python3.9/site-packages/libsvn \
-     swig_pydir_extra=/usr/lib/python3.9/site-packages/svn \
-     install install-swig-py install-swig-pl install-javahl # install-swig-rb
+    export LD_LIBRARY_PATH=${pkgdir}/usr/lib:${LD_LIBRARY_PATH}
+    make DESTDIR=${pkgdir} INSTALLDIRS=vendor \
+        swig_pydir=/usr/lib/python3.9/site-packages/libsvn \
+        swig_pydir_extra=/usr/lib/python3.9/site-packages/svn \
+        install install-swig-py install-swig-pl install-javahl # install-swig-rb
 
-   install -d ${pkgdir}/usr/share/subversion
-   cp -a tools/hook-scripts ${pkgdir}/usr/share/subversion/
-   rm ${pkgdir}/usr/share/subversion/hook-scripts/*.in
+    install -d ${pkgdir}/usr/share/subversion
+    cp -a tools/hook-scripts ${pkgdir}/usr/share/subversion/
+    rm ${pkgdir}/usr/share/subversion/hook-scripts/*.in
 
-   rm ${pkgdir}/usr/lib/perl5/vendor_perl/auto/SVN/_Core/.packlist
-   rm -r ${pkgdir}/usr/lib/perl5/core_perl
+    rm ${pkgdir}/usr/lib/perl5/vendor_perl/auto/SVN/_Core/.packlist
+    rm -r ${pkgdir}/usr/lib/perl5/core_perl
 
-   ## svnserve
-   install -D -m 644 ${srcdir}/svnserve.conf ${pkgdir}/etc/conf.d/svnserve
+    ## svnserve
+    install -D -m 644 ${srcdir}/svnserve.conf ${pkgdir}/etc/conf.d/svnserve
 
-   # systemd
-   install -D -m 644 ${srcdir}/svnserve.service  ${pkgdir}/usr/lib/systemd/system/svnserve.service
-   install -D -m 644 ${srcdir}/svnserve.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/svnserve.conf
+    # systemd
+    install -D -m 644 ${srcdir}/svnserve.service  ${pkgdir}/usr/lib/systemd/system/svnserve.service
+    install -D -m 644 ${srcdir}/svnserve.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/svnserve.conf
 
-   # bash completion
-   install -Dm 644 tools/client-side/bash_completion \
-     ${pkgdir}/usr/share/bash-completion/completions/subversion
-   for i in svn svnadmin svndumpfilter svnlook svnsync svnversion; do
-      ln -sf subversion "${pkgdir}"/usr/share/bash-completion/completions/${i}
-   done
+    # bash completion
+    install -Dm 644 tools/client-side/bash_completion \
+        ${pkgdir}/usr/share/bash-completion/completions/subversion
+    for i in svn svnadmin svndumpfilter svnlook svnsync svnversion; do
+        ln -sf subversion "${pkgdir}"/usr/share/bash-completion/completions/${i}
+    done
 }

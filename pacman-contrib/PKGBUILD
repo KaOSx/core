@@ -1,7 +1,7 @@
 
 pkgname=pacman-contrib
 pkgver=1.4.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Contributed scripts and tools for pacman systems, including paccache and rank-mirrors"
 arch=('x86_64')
 url="https://gitlab.archlinux.org/pacman/pacman-contrib"

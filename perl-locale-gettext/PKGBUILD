@@ -2,7 +2,7 @@
 pkgname=perl-locale-gettext
 _pkgname=Locale-gettext
 pkgver=1.07
-pkgrel=4
+pkgrel=5
 pkgdesc="Permits access from Perl to the gettext() family of functions"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
@@ -22,7 +22,7 @@ build() {
 
 check() {
   cd ${_pkgname}-${pkgver}
-  
+
   make test
 }
 

@@ -2,7 +2,7 @@
 pkgname=perl-test-pod
 _pkgname=Test-Pod
 pkgver=1.52
-pkgrel=4
+pkgrel=5
 pkgdesc="Check for POD errors in files"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
@@ -21,13 +21,13 @@ build() {
 
 check() {
   cd ${_pkgname}-${pkgver}
-  
+
   make test
 }
 
 package() {
   cd ${_pkgname}-${pkgver}
-  
+
   make DESTDIR=${pkgdir} install 
 
 }

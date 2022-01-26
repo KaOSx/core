@@ -3,7 +3,7 @@ pkgname=perl-xml-parser
 _pkgname=XML-Parser
 pkgver=2.46
 _pkgver=2.46
-pkgrel=2
+pkgrel=3
 pkgdesc="Expat-based XML parser module for perl"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
@@ -25,12 +25,12 @@ build() {
 
 check() {
   cd ${_pkgname}-${_pkgver}
-  
+
   make test
 }
 
 package() {
   cd ${_pkgname}-${_pkgver}
-  
+
   make install DESTDIR=${pkgdir}
 }
