@@ -3,8 +3,8 @@
 
 pkgname=glibc
 pkgver=2.33
-_commit=9533f19aa5cd265db813db6923f8eb2fc9c3bcc3
-pkgrel=4
+_commit=3e2a15c666e40e5ee740e5079c56d83469280323
+pkgrel=5
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="https://www.gnu.org/software/libc"
@@ -17,22 +17,22 @@ backup=(etc/gai.conf
         etc/nscd.conf)
 options=('!strip')
 install=glibc.install
-source=("https://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
-#source=("https://github.com/bminor/glibc/archive/${_commit}.zip"
+#source=("https://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
+source=("https://github.com/bminor/glibc/archive/${_commit}.zip"
         "https://github.com/bminor/glibc/commit/17f0ff097887008b2d3dca270c8ffbb4b43a8749.diff"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('390bbd889c7e8e8a7041564cb6b27cca'
+md5sums=('6128e5ec93ab3f34f392a89d1207be19'
          '1902b3629a1b43cdf7bfa2c2412ba6b6'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
          '8b3298de2392a10905a64ceccf56d2c1')
 
 prepare() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-${_commit}
 
-  patch -p1 -i ${srcdir}/17f0ff097887008b2d3dca270c8ffbb4b43a8749.diff
+  #patch -p1 -i ${srcdir}/17f0ff097887008b2d3dca270c8ffbb4b43a8749.diff
 }
 
 build() {
@@ -45,7 +45,7 @@ build() {
   CFLAGS=${CFLAGS/-fstack-protector/}
   CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
 
-  ../glibc-${pkgver}/configure --prefix=/usr \
+  ../glibc-${_commit}/configure --prefix=/usr \
       --libdir=/usr/lib \
       --libexecdir=/usr/lib \
       --with-headers=/usr/include \
@@ -91,17 +91,17 @@ package() {
 
   install -dm755 ${pkgdir}/{,usr/{sbin,lib/{,locale,systemd/system,tmpfiles.d}}}
 
-  install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.conf ${pkgdir}/etc/nscd.conf
-  install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.service ${pkgdir}/usr/lib/systemd/system
-  install -m644 ${srcdir}/glibc-${pkgver}/nscd/nscd.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/nscd.conf
+  install -m644 ${srcdir}/glibc-${_commit}/nscd/nscd.conf ${pkgdir}/etc/nscd.conf
+  install -m644 ${srcdir}/glibc-${_commit}/nscd/nscd.service ${pkgdir}/usr/lib/systemd/system
+  install -m644 ${srcdir}/glibc-${_commit}/nscd/nscd.tmpfiles ${pkgdir}/usr/lib/tmpfiles.d/nscd.conf
 
   install -m755 ${srcdir}/locale-gen ${pkgdir}/usr/sbin
-  install -m644 ${srcdir}/glibc-${pkgver}/posix/gai.conf ${pkgdir}/etc/gai.conf
+  install -m644 ${srcdir}/glibc-${_commit}/posix/gai.conf ${pkgdir}/etc/gai.conf
 
   # create /etc/locale.gen
   install -m644 ${srcdir}/locale.gen.txt ${pkgdir}/etc/locale.gen
   sed -e '1,3d' -e 's|/| |g' -e 's|\\| |g' -e 's|^|#|g' \
-    ${srcdir}/glibc-${pkgver}/localedata/SUPPORTED >> ${pkgdir}/etc/locale.gen
+    ${srcdir}/glibc-${_commit}/localedata/SUPPORTED >> ${pkgdir}/etc/locale.gen
 
   # fix for the linker
   sed -i '/RTLDLIST/s%lib64%lib%' ${pkgdir}/usr/bin/ldd

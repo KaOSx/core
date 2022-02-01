@@ -6,9 +6,10 @@
 pkgname=('gcc' 'gcc-libs') 
 pkgver=11.2.0
 _pkgver=11
-_snapshot=9.3.0-RC-20200305
+__pkgver=11.2.1
+_snapshot=11-20220129
 _islver=0.18
-pkgrel=2
+pkgrel=3
 pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'FDL' 'custom')
@@ -16,14 +17,14 @@ url="https://gcc.gnu.org"
 makedepends=('binutils>=2.37' 'libmpc' 'doxygen' 'autogen' 'libxcrypt')
 checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
-source=("https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
-#source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
+#source=("https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
+source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
         "https://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2")
-sha512sums=('d53a0a966230895c54f01aea38696f818817b505f1e2bfa65e508753fcd01b2aedb4a61434f41f3a2ddbbd9f41384b96153c684ded3f0fa97c82758d9de5c7cf'
+sha512sums=('bd087da9d9bb5849821c6f2f00356a463a09058815c1ee3e8880cc82629b027ddbbeebb80965f4372ab66f0650b71e8dc1f97cb08c21b29654d76720358ee013'
             '85d0b40f4dbf14cb99d17aa07048cdcab2dc3eb527d2fbb1e84c41b2de5f351025370e57448b63b2b8a8cf8a0843a089c3263f9baee1542d5c2e1cb37ed39d94')
 
-  _basedir="gcc-${pkgver}"
-  #_basedir="gcc-${_snapshot}"
+  #_basedir="gcc-${pkgver}"
+  _basedir="gcc-${_snapshot}"
 
 
 build() {
@@ -35,13 +36,13 @@ build() {
 
   # Do not run fixincludes
   sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
-  
+
   sed -i '/m64=/s/lib64/lib/' gcc/config/i386/t-linux64
   
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
-  
+
   #patch -p1 -i ${srcdir}/isl-0.13.patch
-  
+
   # using -pipe causes test-suite failures
   # http://gcc.gnu.org/bugzilla/show_bug.cgi?id=48565
   CFLAGS=${CFLAGS/-pipe/}
@@ -98,12 +99,12 @@ package_gcc-libs() {
   groups=('base')
   depends=('glibc>=2.33' 'libxcrypt')
   options=('!emptydirs' '!strip')
-  
+
   cd build
 
   make -C $CHOST/libgcc DESTDIR=${pkgdir} install-shared
-  rm ${pkgdir}/usr/lib/gcc/$CHOST/${pkgver}/libgcc_eh.a
-  
+  rm ${pkgdir}/usr/lib/gcc/$CHOST/${__pkgver}/libgcc_eh.a
+
   for lib in libatomic \
              libgfortran \
              libgomp \
@@ -114,13 +115,13 @@ package_gcc-libs() {
              libvtv; do
     make -C $CHOST/$lib DESTDIR=${pkgdir} install-toolexeclibLTLIBRARIES
   done
-  
+
   make -C $CHOST/libsanitizer/tsan DESTDIR=${pkgdir} install-toolexeclibLTLIBRARIES
-  
+
   make -C $CHOST/libobjc DESTDIR=${pkgdir} install-libs
-  
+
   make -C $CHOST/libstdc++-v3/po DESTDIR=${pkgdir} install
-  
+
   #make -C $CHOST/libmpx DESTDIR=${pkgdir} install
 
   for lib in libgomp \
@@ -130,7 +131,7 @@ package_gcc-libs() {
   done
 
   find ${pkgdir} -name *.a -delete
-  
+
   install -Dm644 ${srcdir}/${_basedir}/COPYING.RUNTIME \
     ${pkgdir}/usr/share/licenses/gcc-libs/RUNTIME.LIBRARY.EXCEPTION
 }
@@ -162,10 +163,10 @@ package_gcc() {
   ln -s gfortran ${pkgdir}/usr/bin/f95
   ln -s gcc ${pkgdir}/usr/bin/gnatgcc
   
-  mv ${pkgdir}/usr/lib/gcc/$CHOST/${pkgver}/adalib/libgna{rl,t}-${_pkgver}.so ${pkgdir}/usr/lib
+  mv ${pkgdir}/usr/lib/gcc/$CHOST/${__pkgver}/adalib/libgna{rl,t}-${_pkgver}.so ${pkgdir}/usr/lib
   ln -s libgnarl-${_pkgver}.so ${pkgdir}/usr/lib/libgnarl.so
   ln -s libgnat-${_pkgver}.so ${pkgdir}/usr/lib/libgnat.so
-  rm ${pkgdir}/usr/lib/gcc/$CHOST/${pkgver}/adalib/libgna{rl,t}.so
+  rm ${pkgdir}/usr/lib/gcc/$CHOST/${__pkgver}/adalib/libgna{rl,t}.so
   
   # remove unneeded static libs
   rm $pkgdir/usr/lib/libasan.a
@@ -218,7 +219,7 @@ done
 exec gcc $fl ${1+"$@"}
 EOF
 
-  cat > $pkgdir/usr/bin/c99 <<"EOF"
+  cat > ${pkgdir}/usr/bin/c99 <<"EOF"
 #!/bin/sh
 fl="-std=c99"
 for opt; do
@@ -231,7 +232,7 @@ done
 exec gcc $fl ${1+"$@"}
 EOF
 
-  chmod 755 $pkgdir/usr/bin/c{8,9}9
+  chmod 755 ${pkgdir}/usr/bin/c{8,9}9
 
   # install the libstdc++ man pages
   #make -C $CHOST/libstdc++-v3/doc DESTDIR=$pkgdir doc-install-man
