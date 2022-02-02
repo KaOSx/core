@@ -1,7 +1,7 @@
 
 pkgname=findutils
-pkgver=4.8.0
-pkgrel=4
+pkgver=4.9.0
+pkgrel=1
 pkgdesc="GNU utilities to locate files"
 url="https://www.gnu.org/software/findutils"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL3')
 groups=('base')
 depends=('glibc' 'sh')
 source=("https://ftp.gnu.org/pub/gnu/findutils/findutils-${pkgver}.tar.xz")
-md5sums=('eeefe2e6380931a77dfa6d9350b43186')
+sha1sums=('2a7830f1c25c3c7179150084748099c3c31f819b')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -23,7 +23,7 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-  
+
   make check
 }
 
@@ -31,7 +31,7 @@ check() {
 package() {
   cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
-  
+
   # files used from mlocate
   rm ${pkgdir}/usr/bin/locate
   rm ${pkgdir}/usr/bin/updatedb

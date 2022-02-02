@@ -1,19 +1,18 @@
 
 pkgname=libxcrypt
-pkgver=4.4.27
-pkgrel=2
+pkgver=4.4.28
+pkgrel=1
 pkgdesc='Extended crypt library for descrypt, md5crypt, bcrypt, and others'
 arch=('x86_64')
 url='https://github.com/besser82/libxcrypt/'
 license=('GPL')
 depends=('glibc')
-source=("https://github.com/besser82/libxcrypt/archive/v${pkgver}.tar.gz")
-md5sums=('c9d5dd34bc9e6a0b53b1b206e02ecf9d')
+source=("https://github.com/besser82/libxcrypt/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
+sha256sums=('9e936811f9fad11dbca33ca19bd97c55c52eb3ca15901f27ade046cc79e69e87')
 
 build() {
   cd ${pkgname}-${pkgver}
 
-  ./autogen.sh
   ./configure \
     --prefix=/usr \
     --disable-static \
