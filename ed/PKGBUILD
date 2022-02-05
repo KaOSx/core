@@ -1,6 +1,6 @@
 
 pkgname=ed
-pkgver=1.17
+pkgver=1.18
 pkgrel=1
 pkgdesc="A POSIX-compliant line editor"
 arch=('x86_64')
@@ -9,12 +9,12 @@ url="https://www.gnu.org/software/ed/"
 groups=('base-devel')
 depends=('glibc' 'sh')
 options=('!emptydirs')
-source=("http://mirrors.kernel.org/gnu/ed/${pkgname}-${pkgver}.tar.lz")
-md5sums=('894748c9bbf35cb7c599f5317b1a8cdb')
+source=("https://mirrors.kernel.org/gnu/ed/${pkgname}-${pkgver}.tar.lz")
+md5sums=('9c83a86d63e8d1d048ce2d9cfe7bc0c4')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/ --mandir=/usr/share/man --infodir=/usr/share/info
   make
 }
