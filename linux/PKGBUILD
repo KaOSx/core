@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=5.15
-pkgver=5.15.22
+pkgver=5.15.23
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -29,8 +29,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.15.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('071d49ff4e020d58c04f9f3f76d3b594'
-         'ba3fbfcd320d9b18e1eb5c38b9ef5df9'
-         '8f465981ab1e0d55fa13d9ec0cbd1b66'
+         '8fe384770e029a169c290493ac9a3199'
+         'bf2f2bf04baeb31c69b6405641785b9a'
          '876eaef8cb84e985a4e2e5c324c0ae77'
          '5584f713c4b44700f83938bf7ea90fcf'
          '0beef9753be8f5db37d8a243a67eb544'
