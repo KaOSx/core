@@ -64,7 +64,6 @@ build() {
       --with-system-zlib \
       --with-isl \
       --enable-__cxa_atexit \
-      --disable-libunwind-exceptions \
       --enable-clocale=gnu \
       --disable-libstdcxx-pch \
       --disable-libssp \
