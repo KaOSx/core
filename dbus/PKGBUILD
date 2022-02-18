@@ -31,8 +31,7 @@ build() {
     --disable-tests \
     --disable-asserts \
     --with-systemdsystemunitdir=/usr/lib/systemd/system \
-    --enable-systemd \
-    --without-x
+    --enable-systemd
   make
 }
 
