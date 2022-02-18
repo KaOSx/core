@@ -1,6 +1,6 @@
 
 pkgname=nano
-pkgver=6.1
+pkgver=6.2
 _pkgver=6
 pkgrel=1
 pkgdesc="Pico editor clone with enhancements"
@@ -12,7 +12,7 @@ depends=('glibc' 'ncurses' 'sh')
 makedepends=('groff')
 source=("https://www.nano-editor.org/dist/v${_pkgver}/nano-${pkgver}.tar.xz")
 backup=(etc/nanorc)
-md5sums=('59ecd880ac645676e0a7543c8da3afd0')
+md5sums=('12784a5c245518d7580125ebbd6b7601')
 
 build() {
   cd ${pkgname}-${pkgver}
