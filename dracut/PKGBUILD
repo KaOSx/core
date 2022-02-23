@@ -11,7 +11,9 @@ depends=('binutils' 'cpio' 'kmod' 'util-linux' 'libarchive' 'coreutils'
 makedepends=('asciidoc' 'bash-completion' 'libxslt')
 backup=('etc/dracut.conf')
 source=("https://mirrors.edge.kernel.org/pub/linux/utils/boot/dracut/${pkgname}-${pkgver}.tar.xz"
-        'kaos.conf')
+        'kaos.conf'
+        'aufs-mount.sh')
+        'module-setup.sh'
 sha256sums=('e025bbdce9d1209640fb3f5f674f059c7e1f441537ba421703fe56055502421d'
             '87152ae8f0b2814de378f7657bc03ae59503bbf0305bd151894c0175bb3863e0')
 
@@ -32,4 +34,7 @@ package() {
 
   DESTDIR=${pkgdir} make install
   install -Dm755 ../kaos.conf ${pkgdir}/etc/dracut.conf.d/01-kaos.conf
+  # add custom aufs module
+  install -Dm755 ../aufs-mount.sh ${pkgdir}/usr/lib/dracut/modules.d/90aufs/aufs-mount.sh
+  install -Dm755 ../module-setup.sh ${pkgdir}/usr/lib/dracut/modules.d/90aufs/module-setup.sh
 }
