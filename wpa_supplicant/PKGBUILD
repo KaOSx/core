@@ -1,13 +1,12 @@
 
 pkgname=wpa_supplicant
 pkgver=2.10
-pkgrel=1
+pkgrel=2
 pkgdesc="A utility providing key negotiation for WPA wireless networks"
 arch=('x86_64')
 url="https://w1.fi/"
 depends=('openssl' 'dbus' 'readline' 'libnl')
 license=('GPL')
-groups=('base')
 backup=('etc/wpa_supplicant.conf')
 source=("https://w1.fi/releases/wpa_supplicant-${pkgver}.tar.gz"
         'config'
@@ -19,7 +18,7 @@ md5sums=('d26797fcb002898d4ee989179346e1cc'
 build() {
   cd ${pkgname}-${pkgver}/
   #patch -p1 -i ${srcdir}/rebased-v2.6-0001-hostapd-Avoid-key-reinstallation-in-FT-handshake.patch
-  
+
   cd ${pkgname}/
   cp ${srcdir}/config ./.config
   sed -i 's@/usr/local@$(PREFIX)@g' Makefile
@@ -30,7 +29,7 @@ build() {
 package() {
   cd ${pkgname}-${pkgver}/${pkgname}
   make PREFIX=/usr DESTDIR=${pkgdir} install
-  
+
   install -m755 -d ${pkgdir}/etc
   install -m644 wpa_supplicant.conf ${pkgdir}/etc/wpa_supplicant.conf
   install -d -m755 ${pkgdir}/usr/share/man/man{5,8}
