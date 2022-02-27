@@ -12,7 +12,7 @@ Server = http://mirrors.redcorelinux.org/kaosx/$repo
 Server = http://mirror6.layerjet.com/kaos/$repo
 Server = https://mirror.alpix.eu/kaos/$repo
 
-# Canada
+# Canada - Weekly Mirror
 Server = https://ca.kaosx.cf/$repo
 
 # China
@@ -34,6 +34,8 @@ Server = https://repo.kaosx.us/$repo
 # United States
 Server = https://mirror.math.princeton.edu/pub/kaoslinux/$repo
 Server = http://mirror.dacentec.com/kaosx/$repo
+
+#United States - Monthly mirror
 Server = https://kqtos.tk/repo/$repo
 
 
