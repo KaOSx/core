@@ -7,13 +7,44 @@ url="https://www.freedesktop.org/wiki/Software/dbus/"
 arch=('x86_64')
 license=('GPL' 'custom')
 depends=('expat' 'coreutils' 'filesystem' 'shadow') 
-makedepends=('libx11' 'systemd' 'xmlto')
+makedepends=('libx11' 'systemd' 'xmlto' 'cmake')
 options=('!libtool')
 source=("https://dbus.freedesktop.org/releases/dbus/dbus-${pkgver}.tar.xz"
         '30-dbus')
 md5sums=('ddd5570aff05191dbee8e42d751f1b7d'
          '3314d727fa57fc443fce25b5cbeebbcc')
 
+build() {
+    cmake -B build -S dbus-${pkgver} \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_FULL_SYSCONFDIR=/etc \
+        -DDBUS_LOCALSTATEDIR=/var \
+        -DCMAKE_INSTALL_FULL_LIBEXECDIR=/usr/lib/dbus-1.0 \
+        -DDBUS_INSTALL_SYSTEM_LIBS=1 \
+        -DENABLE_TRADITIONAL_ACTIVATION=OFF \
+        -DENABLE_SYSTEMD=ON \
+        -DDBUS_BUILD_X11=ON \
+        -DDBUS_SYSTEM_PID_FILE=/run/dbus/pid \
+        -DDBUS_SYSTEM_SOCKET=/run/dbus/system_bus_socket \
+        -DDBUS_CONSOLE_AUTH_DIR=/run/console/ \
+        -DDBUS_BUS_ENABLE_INOTIFY=ON \
+        -DDBUS_ENABLE_VERBOSE_MODE=OFF \
+        -DDBUS_USER=dbus \
+        -DDBUS_BUILD_TESTS=OFF \
+        -DDBUS_DISABLE_ASSERT=OFF \
+        -DDBUS_ENABLE_XML_DOCS=OFF
+    cmake --build build
+}
+
+package() {
+    DESTDIR=${pkgdir} cmake --install build
+
+    install -Dm 644 dbus-${pkgver}/COPYING ${pkgdir}/usr/share/licenses/${pkgname}/COPYING
+    rm -rf ${pkgdir}/var/run
+}
+
+: <<'END_COMMENT'
 build() {
   cd dbus-${pkgver}
 
@@ -44,3 +75,4 @@ package(){
   #install -Dm755 ../30-dbus ${pkgdir}/etc/X11/xinit/xinitrc.d/30-dbus
   install -Dm644 COPYING ${pkgdir}/usr/share/licenses/dbus/COPYING
 }
+END_COMMENT
