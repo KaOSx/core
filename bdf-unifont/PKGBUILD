@@ -1,18 +1,18 @@
 
 pkgname=bdf-unifont
 _pkgname=unifont
-pkgver=14.0.01
+pkgver=14.0.02
 pkgrel=1
 epoch=1
 pkgdesc="GNU Unifont, with glyphs for every printable code point in the Unicode Basic Multilingual Plane (BMP)."
 arch=('x86_64')
 license=('custom' 'GPL2')
-url="http://unifoundry.com/unifont/index.html"
+url="https://unifoundry.com/unifont/index.html"
 depends=('xorg-font-utils')
 install=unifont.install
-source=("http://unifoundry.com/pub/unifont/${_pkgname}-${pkgver}/font-builds/${_pkgname}-${pkgver}.bdf.gz"
+source=("https://unifoundry.com/pub/unifont/${_pkgname}-${pkgver}/font-builds/${_pkgname}-${pkgver}.bdf.gz"
         'LICENSE')
-md5sums=('79cf5e91d2f43fd96ad1c1a3ae792fa6'
+md5sums=('363ca5476d9a3407a83d6d4a7b37af4f'
          '64da5a96d6789d29d485cd67a43bc547')
 
 package() {
