@@ -1,8 +1,8 @@
 
 pkgname=krb5
-pkgver=1.19.2
+pkgver=1.19.3
 _pkgver=1.19
-pkgrel=2
+pkgrel=1
 pkgdesc="The Kerberos network authentication system"
 arch=('x86_64')
 url="https://web.mit.edu/kerberos/"
@@ -18,7 +18,7 @@ source=("https://web.mit.edu/kerberos/dist/krb5/${_pkgver}/${pkgname}-${pkgver}.
         'krb5-kpropd.service'
         'krb5-kpropd@.service'
         'krb5-kpropd.socket')
-md5sums=('eb51b7724111e1a458a8c9a261d45a31'
+md5sums=('37722be6228da68ea83a008f782c7f53'
          'a1eb1629bef5427b18f521eff4de61b3'
          'd2c898d376ebe5c62b873da7cab0f7e7'
          'f0245d33083337f95654f4caf1d32f57'
