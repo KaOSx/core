@@ -1,6 +1,6 @@
 
 pkgname=openvpn
-pkgver=2.5.5
+pkgver=2.5.6
 pkgrel=1
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
@@ -11,17 +11,17 @@ license=('custom')
 install=openvpn.install
 backup=(usr/share/openvpn/easy-rsa/vars
         usr/share/openvpn/easy-rsa/openssl.cnf)
-source=("https://github.com/OpenVPN/openvpn/archive/v${pkgver}.tar.gz"
+source=("https://swupdate.openvpn.org/community/releases/openvpn-${pkgver}.tar.gz"
         "https://github.com/OpenVPN/easy-rsa/archive/v3.0.8.tar.gz"
         'openvpn@.service')
-md5sums=('da2b19c19e97197e2179088cbcd7a49e'
+md5sums=('434f02d3b371bf1dcd1e618e56969a4c'
          'fd6b7af7215a5929d16a260788f4af00'
          'c0275a1192a7e3c0a167a0dc4809dbaa')
 
 build() {
   cd ${pkgname}-${pkgver}
 
-    autoreconf -i -v -f
+    #autoreconf -i -v -f
     ./configure --prefix=/usr \
         --mandir=/usr/share/man \
         --enable-iproute2 \
