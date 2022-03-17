@@ -1,8 +1,8 @@
 # NOTE: requires rebuilt with each new gcc version
 
 pkgname=libtool
-pkgver=2.4.6
-pkgrel=25
+pkgver=2.4.7
+pkgrel=1
 pkgdesc="A generic library support script"
 arch=('x86_64')
 url="https://www.gnu.org/software/libtool"
@@ -16,7 +16,7 @@ conflicts=('libltdl')
 replaces=('libltdl')
 source=("https://ftpmirror.gnu.org/libtool/${pkgname}-${pkgver}.tar.xz"
         'no-clean-gnulib.patch')
-md5sums=('1bfb9b923f2c1339b4d2ce1807064aa5'
+md5sums=('2fc0b6ddcd66a89ed6e45db28fa44232'
          '23c8ef65f19705239f1aa362f429e3ad')
 
 build() {
