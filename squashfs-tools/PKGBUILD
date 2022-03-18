@@ -1,7 +1,7 @@
 
 pkgname=squashfs-tools
-pkgver=4.5
-_pkgver=4.5
+pkgver=4.5.1
+_pkgver=4.5.1
 pkgrel=1
 _commit=6e242dc95485ada8d1d0b3dd9346c5243d4a517f
 pkgdesc="Tools for squashfs, a highly compressed read-only filesystem for Linux."
@@ -9,9 +9,9 @@ url="https://github.com/plougher/squashfs-tools"
 license=("GPL")
 arch=('x86_64')
 depends=('zlib' 'glibc' 'lzo2' 'xz' 'lz4' 'zstd')
-source=("https://downloads.sourceforge.net/sourceforge/squashfs/squashfs${pkgver}.tar.gz")
+source=("https://downloads.sourceforge.net/sourceforge/squashfs/squashfs-tools-${pkgver}.tar.gz")
 #source=("https://github.com/plougher/squashfs-tools/archive/refs/tags/${_pkgver}.tar.gz")
-md5sums=('77c4e52decd83f05f11747cb9b29c1e7')
+md5sums=('edc3e14508f2716315787b9c88d163a1')
 
 build() {
     cd ${pkgname}-${_pkgver}/${pkgname}
@@ -22,5 +22,5 @@ build() {
 package() {
     cd ${pkgname}-${_pkgver}/${pkgname}
 
-    make install INSTALL_DIR=${pkgdir}/sbin
+    make install INSTALL_DIR=${pkgdir}/sbin INSTALL_MANPAGES_DIR=${pkgdir}/usr/share/man/man1
 }
