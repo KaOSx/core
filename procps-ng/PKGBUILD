@@ -1,8 +1,8 @@
 
 pkgname=procps-ng
 _pkgname=procps
-pkgver=3.3.17
-pkgrel=4
+pkgver=4.0.0
+pkgrel=1
 pkgdesc='Utilities for monitoring your system and its processes'
 arch=('x86_64')
 url="https://gitlab.com/procps-ng/procps/wikis/home"
@@ -12,11 +12,11 @@ depends=('ncurses')
 provides=('procps')
 options=('!libtool')
 source=("https://downloads.sourceforge.net/project/procps-ng/Production/${pkgname}-${pkgver}.tar.xz")
-md5sums=('d60613e88c2f442ebd462b5a75313d56')
+md5sums=('eedf93f2f6083afb7abf72188018e1e5')
 
 build() {
-  cd ${_pkgname}-${pkgver}
-  
+  cd ${pkgname}-${pkgver}
+
   ./configure --exec-prefix=/ \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -28,7 +28,7 @@ build() {
 }
 
 package() {
-  cd ${_pkgname}-${pkgver}
-  
+  cd ${pkgname}-${pkgver}
+
   make DESTDIR=${pkgdir} install
 }
