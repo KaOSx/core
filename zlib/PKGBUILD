@@ -1,36 +1,36 @@
 
 pkgname=zlib
-pkgver=1.2.11
-pkgrel=3
+pkgver=1.2.12
+pkgrel=1
 pkgdesc='Compression library implementing the deflate compression method found in gzip and PKZIP'
 arch=('x86_64')
 license=('custom')
 url="http://www.zlib.net/"
 depends=('glibc')
-makedepends=('clang')
-source=("http://zlib.net/current/zlib-${pkgver}.tar.gz"
+#makedepends=('clang')
+source=("http://zlib.net/zlib-${pkgver}.tar.xz"
         "https://github.com/madler/zlib/pull/229/commits/e490ddad3091574a0c2e3b5a66a8fee9a7ab212f.diff")
-md5sums=('1c9f62f0778697a09d36121ead88e08e'
-         '009a39d2fd2713f525b35783db269ab2')
+sha256sums=('7db46b8d7726232a621befaab4a1c870f00a90805511c0e0090441dac57def18'
+			'8353c6e0242d63e24e12be4c88a4a8adce590f05b6e04488f44c5ee123281170')
 
 build() {
 
-    export CC=/usr/bin/clang
-    export CXX=/usr/bin/clang++
+    #export CC=/usr/bin/clang
+    #export CXX=/usr/bin/clang++
 
 	cd zlib-${pkgver}
 	# presence of crypt.h causes sigil build fail
 	# https://bugzilla.redhat.com/show_bug.cgi?id=1424609
 	patch -p1 -i ${srcdir}/e490ddad3091574a0c2e3b5a66a8fee9a7ab212f.diff
-	
+
 	./configure --prefix=/usr
 	make
 
 	grep -A 24 '^  Copyright' zlib.h > LICENSE
-	
+
 	cd contrib/minizip
 	cp Makefile Makefile.orig
-	
+
 	autoreconf --install
 	./configure --prefix=/usr
 	make
@@ -38,16 +38,16 @@ build() {
 
 check() {
 	cd zlib-${pkgver}
-	
+
 	make test
 }
 
 package() {
 	cd zlib-${pkgver}
-	
+
 	make install DESTDIR=${pkgdir}
 	install -D -m644 LICENSE ${pkgdir}/usr/share/licenses/zlib/LICENSE
-	
+
 	cd contrib/minizip
 	make install DESTDIR=${pkgdir}
 }
