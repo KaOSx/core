@@ -2,7 +2,7 @@
 # update syslog-ng.conf on 3.xx updates
 pkgname=syslog-ng
 pkgver=3.36.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Next-generation syslogd with advanced networking and filtering capabilities"
 arch=('x86_64')
 license=('GPL2')
@@ -48,6 +48,7 @@ package() {
   install -dm755 ${pkgdir}/var/lib/syslog-ng ${pkgdir}/etc/syslog-ng/patterndb.d
   #install -Dm644 ${srcdir}/syslog-ng.conf ${pkgdir}/etc/syslog-ng/syslog-ng.conf
   install -Dm644 ${srcdir}/syslog-ng.logrotate ${pkgdir}/etc/logrotate.d/syslog-ng
+  install -Dm644 contrib/systemd/syslog-ng@default ${pkgdir}/etc/default/syslog-ng@default
   #part of eventlog
   rm ${pkgdir}/usr/lib/libevtlog.so
 }
