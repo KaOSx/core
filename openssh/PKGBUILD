@@ -1,6 +1,6 @@
 
 pkgname=openssh
-pkgver=8.9p1
+pkgver=9.0p1
 pkgrel=1
 pkgdesc='Free version of the SSH connectivity tools'
 arch=('x86_64')
@@ -17,7 +17,7 @@ source=("https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgve
         'sshd.service'
         'sshd@.service'
         'sshd.socket')
-sha1sums=('205cdf0040a238047e2c49f43460e03d76e5d650'
+sha1sums=('06dd658874dcd22d66311cf5999bd56c614de509'
           'ec102deb69cad7d14f406289d2fc11fee6eddbdd'
           'd93dca5ebda4610ff7647187f8928a3de28703f3'
           'cc1ceec606c98c7407e7ac21ade23aed81e31405'
@@ -49,8 +49,7 @@ build() {
 check() {
 	cd ${pkgname}-${pkgver}
 
-	# ssh-keygen for ssh-rsa failed, chroot issue
-	# test_sshbuf fail, ldns 1.8.x issue?
+	# test_sshkey:......FATAL: no sshd running on port 4242
 	make tests ||
 	grep $USER /etc/passwd | grep -q /bin/false
 }
