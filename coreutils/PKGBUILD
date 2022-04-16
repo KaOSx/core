@@ -1,7 +1,7 @@
 
 pkgname=coreutils
-pkgver=9.0
-pkgrel=2
+pkgver=9.1
+pkgrel=1
 pkgdesc="The basic file, shell and text manipulation utilities of the GNU operating system"
 arch=('x86_64')
 license=('GPL3')
@@ -10,12 +10,12 @@ groups=('base')
 depends=('glibc' 'pam' 'acl' 'gmp' 'libcap')
 source=("https://ftp.gnu.org/gnu/coreutils/${pkgname}-${pkgver}.tar.xz"
         "https://github.com/coreutils/coreutils/commit/e8b56ebd536e82b15542a00c888109471936bfda.diff")
-md5sums=('0d79ae8a6124546e3b94171375e5e5d0'
+md5sums=('8b1ca4e018a7dce9bb937faec6618671'
          'e2e4e42b276f91eb0d818a2ae2e7cea0')
 
 build() {
   cd ${pkgname}-${pkgver}
-  patch -p1 -i ${srcdir}/e8b56ebd536e82b15542a00c888109471936bfda.diff
+  #patch -p1 -i ${srcdir}/e8b56ebd536e82b15542a00c888109471936bfda.diff
 
   ./configure --prefix=/usr --libexecdir=/usr/lib \
               --enable-no-install-program=groups,hostname,kill,uptime

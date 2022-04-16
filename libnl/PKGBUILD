@@ -1,8 +1,8 @@
 
 pkgname=libnl
-pkgver=3.5.0
-_pkgver=3_5_0
-pkgrel=2
+pkgver=3.6.0
+_pkgver=3_6_0
+pkgrel=1
 pkgdesc="Library for applications dealing with netlink sockets"
 arch=('x86_64')
 url="https://www.infradead.org/~tgr/libnl/"
@@ -12,11 +12,11 @@ conflicts=('libnl3')
 backup=('etc/libnl/classid' 'etc/libnl/pktloc')
 options=('!libtool')
 source=("https://github.com/thom311/libnl/releases/download/libnl${_pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('352133ec9545da76f77e70ccb48c9d7e5324d67f6474744647a7ed382b5e05fa')
+sha256sums=('532155fd011e5a805bd67121b87a01c757e2bb24112ac17e69cb86013b970009')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -27,7 +27,7 @@ build() {
 
 package() {
   cd ${pkgname}-${pkgver}
-  
+
   make DESTDIR=${pkgdir} install
 }
 
