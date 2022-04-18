@@ -1,7 +1,7 @@
 
 pkgname=libffi
 pkgver=3.4.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A portable, high level programming interface to various calling conventions."
 arch=('x86_64')
 license=('MIT')
