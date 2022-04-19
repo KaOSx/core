@@ -31,13 +31,13 @@ Server = http://kaos.youm.org/$repo
 # Netherlands
 Server = https://repo.kaosx.us/$repo
 
+# Singapore
+Server = https://mirror.freedif.org/KaOS/$repo
+
 # United States
 Server = https://mirror.math.princeton.edu/pub/kaoslinux/$repo
 Server = http://mirror.dacentec.com/kaosx/$repo
 Server = https://kqtos.tk/repo/$repo
 
-
-# Vietnam
-Server = https://mirror.freedif.org/KaOS/$repo
 
 
