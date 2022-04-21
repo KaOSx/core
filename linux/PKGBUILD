@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=5.15
-pkgver=5.15.23
+_basekernel=5.17
+pkgver=5.17.4
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.15.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.17.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -28,18 +28,18 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.15.tar.xz"
         # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '99-linux.hook')
-md5sums=('071d49ff4e020d58c04f9f3f76d3b594'
-         '8fe384770e029a169c290493ac9a3199'
-         'bf2f2bf04baeb31c69b6405641785b9a'
-         '876eaef8cb84e985a4e2e5c324c0ae77'
-         '5584f713c4b44700f83938bf7ea90fcf'
-         '0beef9753be8f5db37d8a243a67eb544'
-         'd21db9c38c7ef5ca8e8bac1ee3f23865'
-         '8da7509aa53f28e4a44d760a7b1f9a01'
-         '8df13ba2737e625e5f65c243afc08f2c'
+md5sums=('07321a70a48d062cebd0358132f11771'
+         'b76bfbb5308a55f951ec17365fe3560d'
+         'ddb4fdeb910205eed5105f43ffc4fc93'
+         '5684d5d5757d1153c67aa0bb192edcea'
+         '35ccc3c873e98a98438be6b8ff0ac37b'
+         '4eff92f73bf7e25316dc99f6a7bf4c1a'
+         '827482fa8489644e2581a38773cb6f6f'
+         'ff7fda96f88af0672fe160ba802dd07d'
+         '8e8e6b0866726a0db4348f68a09ae5df'
          '180e55a128db2641e04374ce07d131a7'
-         'e214206a1f066b604013dcf7132f07d2'
-         'df6c4e5e79e2b69f1c2fb867fe2cfeee'
+         '87c0c4ca7b5bf32b9d847d9682e9792e'
+         'b30454e96eab34ed4c6ac02892ea7aed'
          '8c52e6d232b461446b7363e86522a720'
          'eb14dcfd80c00852ef81ded6e826826a'
          '0b73d293ca1ab91748ae2d2c39921532')
