@@ -1,7 +1,7 @@
 
 pkgname=popt
 pkgver=1.18
-pkgrel=11
+pkgrel=12
 pkgdesc="A commandline option parser"
 arch=('x86_64') 
 url="https://github.com/rpm-software-management/popt"
@@ -21,7 +21,7 @@ build() {
 
 package() {
   cd ${pkgname}-${pkgver}
-  
+
   make DESTDIR=${pkgdir} install
   install -Dm644 COPYING ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }

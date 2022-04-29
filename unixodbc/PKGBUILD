@@ -1,7 +1,7 @@
 
 pkgname=unixodbc
 pkgver=2.3.9
-pkgrel=1
+pkgrel=2
 pkgdesc="ODBC is an open specification for providing application developers with a predictable API with which to access Data Sources"
 arch=('x86_64')
 license=('GPL2' 'LGPL2.1')
@@ -15,19 +15,19 @@ md5sums=('06f76e034bb41df5233554abe961a16f')
 
 build() {
     cd unixODBC-${pkgver}
-    
+
     ./configure --prefix=/usr --sysconfdir=/etc
     make 
 }
 
 check() {
     cd unixODBC-${pkgver}
-    
+
     make -k check
 }
 
 package() {
     cd unixODBC-${pkgver}
-    
+
     make DESTDIR=${pkgdir} install 
 }
