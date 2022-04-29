@@ -1,7 +1,7 @@
 
 pkgname=db
 pkgver=5.3.28
-pkgrel=6
+pkgrel=7
 pkgdesc="The Berkeley DB embedded database system"
 arch=('x86_64')
 url="https://www.oracle.com/technology/software/products/berkeley-db/index.html"
@@ -11,7 +11,7 @@ options=('!libtool')
 source=("https://download.oracle.com/berkeley-db/db-${pkgver}.tar.gz"
         "https://gitweb.gentoo.org/repo/gentoo.git/plain/sys-libs/db/files/db-5.1.29-rename-atomic-compare-exchange.patch")
 md5sums=('b99454564d5b4479750567031d66fe24'
-         '1b3d100f1c1a23ab78cf898aaf0e021f')
+         '7a5c4806a7f6cdda557b5d6303e7c489')
 
 prepare() {
   cd ${pkgname}-${pkgver}
@@ -34,7 +34,7 @@ build() {
 package() {
   cd $pkgname-${pkgver}/build_unix
   make DESTDIR=${pkgdir} install
-  
+
   rm -rf ${pkgdir}/usr/docs
   install -Dm644 ${srcdir}/${pkgname}-${pkgver}/LICENSE \
     ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE

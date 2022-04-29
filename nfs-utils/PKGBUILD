@@ -1,14 +1,13 @@
 
 pkgname=nfs-utils
 pkgver=2.6.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Support programs for Network File Systems"
 arch=('x86_64')
 url='http://nfs.sourceforge.net'
 license=('GPL')
 backup=(etc/{exports,nfs.conf,nfsmount.conf})
-depends=('glibc' 'e2fsprogs' 'rpcbind' 'libtirpc' 'librpcsecgss' 'libevent'
-         'device-mapper' 'sqlite' 'libldap')
+depends=('glibc' 'e2fsprogs' 'rpcbind' 'libtirpc' 'libevent' 'device-mapper' 'sqlite' 'libldap')
 makedepends=('pkgconfig' 'autoconf' 'automake' 'rpcsvc-proto')
 source=("https://mirrors.edge.kernel.org/pub/linux/utils/nfs-utils/${pkgver}/${pkgname}-${pkgver}.tar.xz"
         'exports')

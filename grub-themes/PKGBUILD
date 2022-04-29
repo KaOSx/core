@@ -2,7 +2,7 @@
 pkgname=grub-theme-midna
 _pkgname=midna
 pkgver=3.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Midna Grub-theme."
 url="https://kaosx.us"
 arch=('x86_64')
@@ -11,9 +11,9 @@ depends=('grub-common')
 install=grub-themes.install
 source=("https://sourceforge.net/projects/kaosx/files/sources/grub-themes/${_pkgname}-${pkgver}.tar.xz")
 md5sums=('a66ce83a84019bb32d0006b594c453f3')
- 
+
 package() {
-  
+
   install -dm755 ${pkgdir}/usr/share/grub/themes
   cp -dpr --no-preserve=ownership ${_pkgname} ${pkgdir}/usr/share/grub/themes
 }

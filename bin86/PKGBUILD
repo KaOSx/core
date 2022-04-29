@@ -1,7 +1,7 @@
 
 pkgname=bin86
 pkgver=0.16.21
-pkgrel=5
+pkgrel=6
 pkgdesc="A complete 8086 assembler and loader"
 arch=('x86_64')
 license=('GPL')
@@ -17,13 +17,13 @@ md5sums=('a94f57453500700cebfea86d7d217481'
 build() {
   cd ${pkgname}-${pkgver}
   patch -p1 -i ${srcdir}/bin86-0.16.17-x86_64-1.patch 
-  
+
   make PREFIX=/usr
 }
 
 package() {
   cd ${pkgname}-${pkgver}
-  
+
   mkdir -p ${pkgdir}/usr/bin ${pkgdir}/usr/share/man/man1
   make PREFIX=${pkgdir}/usr MANDIR=${pkgdir}/usr/share/man/man1 install
 }
