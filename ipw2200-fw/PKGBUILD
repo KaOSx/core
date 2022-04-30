@@ -1,12 +1,12 @@
 
 pkgname=ipw2200-fw
 pkgver=3.1
-pkgrel=10
+pkgrel=11
 pkgdesc="Firmware for the Intel PRO/Wireless 2200BG"
 arch=('x86_64')
 url='http://ipw2200.sourceforge.net/'
 license=('custom')
-source=("http://mirrors.slackware.com/slackware/slackware-current/source/n/$pkgname/$pkgname-$pkgver.tar.xz")
+source=("https://mirrors.slackware.com/slackware/slackware-current/source/n/${pkgname}/${pkgname}-${pkgver}.tar.xz")
 md5sums=('7066e4cf1d94c319c53dfb2603edb757')
 
 package() {

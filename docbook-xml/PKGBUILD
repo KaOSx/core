@@ -1,7 +1,7 @@
 
 pkgname=docbook-xml
 pkgver=4.5
-pkgrel=12
+pkgrel=13
 pkgdesc="A widely used XML scheme for writing documentation and help"
 arch=('x86_64')
 url="https://www.oasis-open.org/docbook/"
@@ -267,5 +267,5 @@ package() {
     "${pkgdir}/etc/xml/docbook-xml"
 
 # license
-  install -D -m644 "${srcdir}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -D -m644 ../LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }

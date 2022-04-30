@@ -2,7 +2,7 @@
 pkgname=wireless_tools
 pkgver=30.pre9
 _pkgver=30
-pkgrel=1
+pkgrel=2
 pkgdesc="Wireless Tools"
 arch=('x86_64')
 url="https://hewlettpackard.github.io/wireless-tools/Tools.html"
@@ -20,7 +20,7 @@ build() {
 
 package() {
   cd ${pkgname}.${_pkgver}
-  
+
   make INSTALL_DIR="${pkgdir}/usr/sbin" \
     INSTALL_LIB="${pkgdir}/usr/lib" \
     INSTALL_INC="${pkgdir}/usr/include" \
