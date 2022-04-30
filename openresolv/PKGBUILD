@@ -1,7 +1,7 @@
 
 pkgname=openresolv
 pkgver=3.12.0
-pkgrel=1
+pkgrel=2
 pkgdesc="resolv.conf management framework (resolvconf)"
 arch=('x86_64')
 url="https://roy.marples.name/projects/openresolv"

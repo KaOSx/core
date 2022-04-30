@@ -1,7 +1,7 @@
 
 pkgname=autoconf
 pkgver=2.71
-pkgrel=1
+pkgrel=2
 pkgdesc="Package of M4 macros that produce shell scripts to automatically configure software source code packages."
 arch=('x86_64')
 license=('GPL2' 'GPL3' 'custom')
@@ -13,7 +13,7 @@ md5sums=('12cfa1687ffa2606337efe1a64416106')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr
   make 
 }
@@ -21,7 +21,7 @@ build() {
 check() {
   cd ${pkgname}-${pkgver}
   # 5 failed (4 expected failures)
-  #309: AC_PROG_CPP without warnings                    FAILED (c.at:165)
+  #310: AC_PROG_CPP without warnings                    FAILED (c.at:165)
   make check
 }
 

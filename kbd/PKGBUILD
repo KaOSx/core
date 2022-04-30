@@ -1,10 +1,10 @@
 
 pkgname=kbd
 pkgver=2.4.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Keytable files and keyboard utilities"
 arch=('x86_64')
-url="http://www.kbd-project.org"
+url="https://www.kbd-project.org"
 license=('GPL')
 depends=('glibc' 'pam')
 makedepends=('check')
@@ -36,6 +36,6 @@ build() {
 
 package() {
   cd ${pkgname}-${pkgver}
-  
+
   make KEYCODES_PROGS=yes RESIZECONS_PROGS=yes DESTDIR=${pkgdir} install
 }
