@@ -1,7 +1,7 @@
 
 pkgname=pacman-contrib
-pkgver=1.4.0
-pkgrel=4
+pkgver=1.5.0
+pkgrel=1
 pkgdesc="Contributed scripts and tools for pacman systems, including paccache and rank-mirrors"
 arch=('x86_64')
 url="https://gitlab.archlinux.org/pacman/pacman-contrib"
@@ -10,12 +10,12 @@ depends=('pacman' 'mlocate' 'fakeroot' 'perl')
 makedepends=('asciidoc')
 source=("https://gitlab.archlinux.org/pacman/pacman-contrib/-/archive/v${pkgver}/${pkgname}-v${pkgver}.tar.gz"
         "https://gitlab.archlinux.org/pacman/pacman-contrib/-/commit/fd21ee241c85856be941e41942d6c179ca713c41.diff")
-md5sums=('98bfa108b24e35b100100588392103ae'
+md5sums=('010b1d8a0b39722503642206374feb69'
          '590d7f6824288e07307404519e3a7ede')
 
 build() {
   cd ${pkgname}-v${pkgver}
-  patch -p1 -i ${srcdir}/fd21ee241c85856be941e41942d6c179ca713c41.diff
+  #patch -p1 -i ${srcdir}/fd21ee241c85856be941e41942d6c179ca713c41.diff
 
   ./autogen.sh
   ./configure --prefix=/usr \
