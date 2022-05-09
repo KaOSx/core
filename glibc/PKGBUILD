@@ -4,7 +4,7 @@
 pkgname=glibc
 pkgver=2.35
 _commit=3e2a15c666e40e5ee740e5079c56d83469280323
-pkgrel=5
+pkgrel=1
 pkgdesc="GNU C Library"
 arch=('x86_64')
 url="https://www.gnu.org/software/libc"
@@ -106,10 +106,10 @@ package() {
 
   # fix for the linker/should be possible to remove with glibc 2.35 toolchain
   sed -i '/RTLDLIST/s%lib64%lib%' ${pkgdir}/usr/bin/ldd
-  # Needed to set this? keep lib64 dir for now
-  #mkdir ${pkgdir}/lib64
-  #cd ${pkgdir}/lib64
-  #ln -v -s ../lib/ld-2* .
+  # With glibc 2.35 ld-linux-x86-64.so moved to /lib, keep symlink until all that link to /lib64 version are rebuild
+  mkdir ${pkgdir}/lib64
+  cd ${pkgdir}/lib64
+  ln -v -s ../lib/ld* .
 
   cd ${pkgdir}
   strip $STRIP_BINARIES sbin/{ldconfig,sln} \

@@ -1,9 +1,9 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=binutils
-pkgver=2.37
+pkgver=2.38
 _commit=5f62caec8175cf80a29f2bcab2c5077cbfae8c89
-pkgrel=4
+pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 arch=('x86_64')
 url="https://www.gnu.org/software/binutils/"
@@ -14,17 +14,17 @@ checkdepends=('dejagnu' 'bc')
 options=('!libtool' '!distcc' '!ccache')
 #source=("https://github.com/bminor/binutils-gdb/archive/${_commit}.zip"
 source=("https://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.xz"
-        "https://github.com/bminor/binutils-gdb/commit/1c611b40e6bfc8029bff7696814330b5bc0ee5c0.diff")
-sha256sums=('820d9724f020a3e69cb337893a0b63c2db161dadcb0e06fc11dc29eb1e84a32c'
-            '1a7329b6c50fed476f2bbe0a926b97128991767f29a3d7ba40600f0f1523fcbb')
+        "https://github.com/bminor/binutils-gdb/commit/6aa1b7df2fc435ba1b744f20db5c6d3013496249.diff")
+sha256sums=('e316477a914f567eccc34d5d29785b8b0f5a10208d36bbacedcc39048ecfe024'
+            '8cc8126661aa3cf62ba32a033284cbc195954f8a467e644f0ae0e561a360084e')
 
 prepare() {
   cd binutils-${pkgver}
 
   # libiberty configure tests 
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
-  # build issue similar to https://sourceware.org/bugzilla/show_bug.cgi?id=28138, qtwebengine build fails
-  patch -p1 -i ${srcdir}/1c611b40e6bfc8029bff7696814330b5bc0ee5c0.diff
+  # Keep indirect symbol from IR if referenced from shared object
+  patch -p1 -i ${srcdir}/6aa1b7df2fc435ba1b744f20db5c6d3013496249.diff
 }
 
 build() {

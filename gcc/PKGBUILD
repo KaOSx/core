@@ -4,27 +4,27 @@
 # http://www.linuxfromscratch.org/lfs/view/7.6/chapter06/gcc.html
 
 pkgname=('gcc' 'gcc-libs') 
-pkgver=11.2.0
+pkgver=11.3.0
 _pkgver=11
-__pkgver=11.2.1
+__pkgver=11.3.0
 _snapshot=11-20220129
-_islver=0.18
-pkgrel=3
+_islver=0.24
+pkgrel=1
 pkgdesc="The GNU Compiler Collection"
 arch=('x86_64')
-license=('GPL' 'LGPL' 'FDL' 'custom')
+license=('GPL3' 'LGPL' 'FDL' 'custom')
 url="https://gcc.gnu.org"
-makedepends=('binutils>=2.37' 'libmpc' 'doxygen' 'autogen' 'libxcrypt')
+makedepends=('binutils>=2.38' 'libmpc' 'doxygen' 'autogen' 'libxcrypt')
 checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
-#source=("https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
-source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
+source=("https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
+#source=("ftp://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
         "https://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2")
-sha512sums=('bd087da9d9bb5849821c6f2f00356a463a09058815c1ee3e8880cc82629b027ddbbeebb80965f4372ab66f0650b71e8dc1f97cb08c21b29654d76720358ee013'
-            '85d0b40f4dbf14cb99d17aa07048cdcab2dc3eb527d2fbb1e84c41b2de5f351025370e57448b63b2b8a8cf8a0843a089c3263f9baee1542d5c2e1cb37ed39d94')
+sha512sums=('f0be5ad705c73b84477128a69c047f57dd47002f375eb60e1e842e08cf2009a509e92152bca345823926d550b7395ae6d4de7db51d1ee371c2dc37313881fca7'
+            'aab3bddbda96b801d0f56d2869f943157aad52a6f6e6a61745edd740234c635c38231af20bc3f1a08d416a5e973a90e18249078ed8e4ae2f1d5de57658738e95')
 
-  #_basedir="gcc-${pkgver}"
-  _basedir="gcc-${_snapshot}"
+  _basedir="gcc-${pkgver}"
+  #_basedir="gcc-${_snapshot}"
 
 
 build() {

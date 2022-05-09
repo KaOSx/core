@@ -1,7 +1,7 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=linux-api-headers
-pkgver=5.15.18
+pkgver=5.17.6
 pkgrel=1
 pkgdesc="Kernel headers sanitized for use in userspace"
 arch=('x86_64')
@@ -11,13 +11,13 @@ provides=("kernel-headers=${pkgver}")
 conflicts=('kernel-headers')
 replaces=('kernel-headers')
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-${pkgver}.tar.xz")
-sha256sums=('21dd70e84d776a3403836d435bc523059a43f5bce72c75728981126dd9786c5e')
+sha256sums=('64ccf18380be5b5491322a3fd54904538b544e523e4bf86289dd8df7404cb10c')
 
 build() {
   cd linux-${pkgver}
 
   make mrproper
-  make headers_check
+  #make headers_check
 }
 
 package() {
