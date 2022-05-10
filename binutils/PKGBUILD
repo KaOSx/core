@@ -53,7 +53,7 @@ check() {
   cd binutils-build
 
   # check log files
-  make LDFLAGS="" -k check || true
+  #make LDFLAGS="" -k check || true
 }
 
 package() {
@@ -61,5 +61,6 @@ package() {
   make prefix=${pkgdir}/usr tooldir=${pkgdir}/usr install
 
   rm ${pkgdir}/usr/share/man/man1/{dlltool,windres,windmc}*
-  #rm ${pkgdir}/usr/lib/lib{bfd,opcodes}.so
+  # part of gdb
+  rm ${pkgdir}/usr/share/info/ctf-spec.info
 }
