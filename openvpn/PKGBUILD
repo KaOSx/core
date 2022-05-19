@@ -1,7 +1,8 @@
 
 pkgname=openvpn
 pkgver=2.5.6
-pkgrel=2
+_rsa_version=3.1.0
+pkgrel=3
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
 url="https://openvpn.net/index.php/open-source.html"
@@ -12,10 +13,10 @@ install=openvpn.install
 backup=(usr/share/openvpn/easy-rsa/vars
         usr/share/openvpn/easy-rsa/openssl.cnf)
 source=("https://swupdate.openvpn.org/community/releases/openvpn-${pkgver}.tar.gz"
-        "https://github.com/OpenVPN/easy-rsa/archive/v3.0.9.tar.gz"
+        "https://github.com/OpenVPN/easy-rsa/archive/refs/tags/v${_rsa_version}.tar.gz"
         'openvpn@.service')
 md5sums=('434f02d3b371bf1dcd1e618e56969a4c'
-         'e16a62dccd62dfbdecd069f8d4020eb1'
+         'e07f1892c4202a213c903c15a33e64ec'
          'c0275a1192a7e3c0a167a0dc4809dbaa')
 
 build() {
@@ -55,7 +56,7 @@ package() {
   install -Dm644 distro/systemd/openvpn-server@.service ${pkgdir}/usr/lib/systemd/system/openvpn-server@.service
 
   # Install easy-rsa
-  cd ${srcdir}/easy-rsa-3.0.9
+  cd ${srcdir}/easy-rsa-${_rsa_version}
   install -d ${pkgdir}/usr/share/doc/easy-rsa/
   mv doc/* ${pkgdir}/usr/share/doc/easy-rsa/
   rmdir doc
