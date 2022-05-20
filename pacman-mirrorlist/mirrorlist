@@ -28,6 +28,9 @@ Server = http://mirror.234.cz/kaos/$repo
 Server = https://fr.kaosx.cf/$repo
 Server = http://kaos.youm.org/$repo
 
+# Iran
+Server = https://mirror.bardia.tech/kaos/$repo
+
 # Netherlands
 Server = https://repo.kaosx.us/$repo
 
