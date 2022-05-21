@@ -1,6 +1,6 @@
 
 pkgname=pacman-contrib
-pkgver=1.5.1
+pkgver=1.5.2
 pkgrel=1
 pkgdesc="Contributed scripts and tools for pacman systems, including paccache and rank-mirrors"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('pacman' 'mlocate' 'fakeroot' 'perl')
 makedepends=('asciidoc')
 source=("https://gitlab.archlinux.org/pacman/pacman-contrib/-/archive/v${pkgver}/${pkgname}-v${pkgver}.tar.gz"
         "https://gitlab.archlinux.org/pacman/pacman-contrib/-/commit/fd21ee241c85856be941e41942d6c179ca713c41.diff")
-md5sums=('03a0243903ede530535cbfdf46b104a7'
+md5sums=('b82d19855e0452ae69a71f4edf50df55'
          '590d7f6824288e07307404519e3a7ede')
 
 build() {
