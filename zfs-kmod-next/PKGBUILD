@@ -1,20 +1,22 @@
 
-_extramodules=5.17.9-1-next
+_extramodules=5.18.0-1-next
 
 pkgname=zfs-kmod-next
 pkgver=2.1.4
-pkgrel=10
+_commit=05147319b0821f61fcff743e20605e191d523906
+pkgrel=11
 pkgdesc="Kernel module for the Zettabyte File System."
 arch=('x86_64')
 url="https://zfsonlinux.org/"
 license=('CDDL')
 depends=('kmod' 'linux-next' "zfs=${pkgver}")
 makedepends=('linux-next-headers' 'elfutils')
-source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-${pkgver}.tar.gz")
-sha256sums=("3b52c0d493f806f638dca87dde809f53861cd318c1ebb0e60daeaa061cf1acf6")
+#source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-${pkgver}.tar.gz")
+source=("https://github.com/openzfs/zfs/archive/${_commit}.zip")
+sha256sums=("ee291663ae19098d4d67f87c533bfe4d98b8a80505281438de8cc2301a1726a6")
 
 build() {
-    cd zfs-${pkgver}
+    cd zfs-${_commit}
 
     ./autogen.sh
     ./configure --prefix=/usr \
@@ -32,7 +34,7 @@ build() {
 }
 
 package() {
-    cd zfs-${pkgver}
+    cd zfs-${_commit}
 
     make DESTDIR=${pkgdir} install
     #remove references to the buildsystem
