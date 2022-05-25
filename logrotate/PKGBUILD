@@ -1,6 +1,6 @@
 
 pkgname=logrotate
-pkgver=3.19.0
+pkgver=3.20.0
 pkgrel=1
 pkgdesc="Rotates system logs automatically"
 url='https://github.com/logrotate/logrotate'
@@ -11,12 +11,12 @@ depends=('popt' 'gzip' 'acl')
 backup=('etc/logrotate.conf')
 source=("https://github.com/logrotate/logrotate/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.xz"
         'logrotate.conf')
-md5sums=('1cee3e80df6856435aeb751b98065f9c'
+md5sums=('e9daf246239d946176239ee6a1e7d530'
          '416de14f92ef4361adad8b6e7065245a')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr \
     --mandir=/usr/share/man \
     --with-acl \
@@ -25,23 +25,23 @@ build() {
     --with-compress-command=/usr/bin/gzip \
     --with-uncompress-command=/usr/bin/gunzip \
     --with-compress-extension=.gz
-  
+
   make 
 }
 
 check() {
   cd ${pkgname}-${pkgver}
-  
+
   make test
 }
 
 package() {
   cd ${pkgname}-${pkgver}
   make DESTDIR=$pkgdir install
-  
+
   install -dm755 $pkgdir/etc/logrotate.d
   install -Dm644 $srcdir/logrotate.conf $pkgdir/etc/logrotate.conf
-  
+
   install -D -m644 examples/logrotate.timer ${pkgdir}/usr/lib/systemd/system/logrotate.timer
   install -D -m644 examples/logrotate.service ${pkgdir}/usr/lib/systemd/system/logrotate.service
   install -d -m755 ${pkgdir}/usr/lib/systemd/system/multi-user.target.wants
