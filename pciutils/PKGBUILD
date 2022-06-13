@@ -1,7 +1,7 @@
 
 pkgname=pciutils
 pkgver=3.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc="PCI bus configuration space access library and tools"
 arch=('x86_64')
 license=('GPL2')
@@ -28,6 +28,6 @@ package() {
   make SHARED=yes PREFIX=/usr SHAREDIR=/usr/share/hwdata MANDIR=/usr/share/man DESTDIR=${pkgdir} install install-lib
 
   install -m644 ${srcdir}/libpci.a ${pkgdir}/usr/lib/
-  # part of hwids package
-  rm -rf $pkgdir/usr/{sbin/update-pciids,share/{man/man8/update-pciids.8.gz,hwdata}}
+  # provided by the hwdata package
+  rm -rf $pkgdir/usr/share/hwdata
 }
