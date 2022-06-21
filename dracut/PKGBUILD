@@ -1,21 +1,24 @@
 
 pkgname=dracut
-pkgver=056
+pkgver=057
 pkgrel=1
 pkgdesc="Event driven initramfs tool used to create an initramfs image by copying tools and files from an installed system and combining it with the dracut framework"
 arch=('x86_64')
-url="https://dracut.wiki.kernel.org/index.php/Main_Page"
+url="https://github.com/dracutdevs/dracut"
 license=('GPLv2')
 depends=('binutils' 'cpio' 'kmod' 'util-linux' 'libarchive' 'coreutils'
          'bash' 'findutils' 'grep' 'filesystem' 'gzip' 'systemd' 'pkg-config')
 makedepends=('asciidoc' 'bash-completion' 'libxslt')
 backup=('etc/dracut.conf')
-source=("https://mirrors.edge.kernel.org/pub/linux/utils/boot/dracut/${pkgname}-${pkgver}.tar.xz"
+#source=("https://mirrors.edge.kernel.org/pub/linux/utils/boot/dracut/${pkgname}-${pkgver}.tar.xz"
+source=("https://github.com/dracutdevs/dracut/archive/refs/tags/${pkgver}.tar.gz"
         'kaos.conf'
-        'aufs-mount.sh')
-        'module-setup.sh'
-sha256sums=('e025bbdce9d1209640fb3f5f674f059c7e1f441537ba421703fe56055502421d'
-            '87152ae8f0b2814de378f7657bc03ae59503bbf0305bd151894c0175bb3863e0')
+        'aufs-mount.sh'
+        'module-setup.sh')
+sha256sums=('24f149d683d188c0d25756529b7d1e5cd6be8028e0c1043110f303d0d706757d'
+            '87152ae8f0b2814de378f7657bc03ae59503bbf0305bd151894c0175bb3863e0'
+            '5351ed6cff01c8b6498dde09ad67074432e3bea363d5ee2de752a15ea9f3aaea'
+            'd99bbc2b013421eb94b7396126533f047585ca45d6755c167b8c8471d5f4fdfd')
 
 build() {
   cd ${pkgname}-${pkgver}
