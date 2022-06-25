@@ -1,9 +1,9 @@
 
 pkgbase="sqlite"
 pkgname=('sqlite' 'sqlite-tcl' 'sqlite-doc') 
-_amalgamationver=3380500
-_docver=3380500
-pkgver=3.38.5
+_amalgamationver=3390000
+_docver=3390000
+pkgver=3.39.0
 pkgrel=1
 pkgdesc="A C library that implements an SQL database engine"
 arch=('x86_64')
@@ -14,8 +14,8 @@ source=("https://www.sqlite.org/2022/sqlite-autoconf-${_amalgamationver}.tar.gz"
         "https://www.sqlite.org/2022/sqlite-doc-${_docver}.zip"
         'license.txt')
 options=('!libtool' '!emptydirs' '!makeflags')
-sha1sums=('e37f9ea8ac088c6f0aa3462f8e1522ccc58de824'
-          'dfaefb2594b9478c744078a9d31b52148f802ec3'
+sha1sums=('a839c65452f7ea66e9ba9efa52b47ba1cd84225c'
+          '95b36247b51bf3841ab03fc33eae18024b943767'
           'f34f6daa4ab3073d74e774aad21d66878cf26853')
 
 build() {
