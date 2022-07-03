@@ -1,5 +1,5 @@
 --- a/contrib/dracut/90zfs/module-setup.sh.in	2022-06-25 21:27:15.418708560 +0200
-+++ b/contrib/dracut/90zfs/module-setup.sh	2022-06-25 21:32:34.044234587 +0200
++++ b/contrib/dracut/90zfs/module-setup.sh.in	2022-07-03 14:32:34.044234587 +0200
 @@ -47,7 +47,7 @@
  			# Otherwise, use dracut's library installation function to find the right one
  		elif ! inst_libdir_file "libgcc_s.so*"; then
@@ -9,23 +9,4 @@
  				{ dfatal "Unable to install libgcc_s.so"; exit 1; }
  		fi
  	fi
-@@ -66,14 +66,14 @@
- 	# -H ensures they are marked host-only
- 	# -o ensures there is no error upon absence of these files
- 	inst_multiple -o -H \
--		"@sysconfdir@/zfs/zpool.cache" \
--		"@sysconfdir@/zfs/vdev_id.conf"
-+		"/etc/zfs/zpool.cache" \
-+		"/etc/zfs/vdev_id.conf"
- 
- 	# Synchronize initramfs and system hostid
--	if ! inst_simple -H @sysconfdir@/hostid; then
-+	if ! inst_simple -H /etc/hostid; then
- 		if HOSTID="$(hostid 2>/dev/null)" && [ "${HOSTID}" != "00000000" ]; then
--			zgenhostid -o "${initdir}@sysconfdir@/hostid" "${HOSTID}"
--			mark_hostonly @sysconfdir@/hostid
-+			zgenhostid -o "${initdir}/etc/hostid" "${HOSTID}"
-+			mark_hostonly /etc/hostid
- 		fi
- 	fi
- 
+
