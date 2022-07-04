@@ -1,7 +1,7 @@
 
 pkgname=mkinitcpio
 pkgver=26
-pkgrel=4
+pkgrel=5
 pkgdesc="Modular initramfs image creation utility"
 arch=('x86_64')
 url="https://github.com/archlinux/mkinitcpio"
@@ -14,11 +14,13 @@ optdepends=('xz: Use lzma or xz compression for the initramfs image'
 backup=('etc/mkinitcpio.conf')
 source=("https://sources.archlinux.org/other/mkinitcpio/${pkgname}-${pkgver}.tar.gz"
         'init.diff'
-        "https://github.com/archlinux/mkinitcpio/commit/30dbfc2770cb49cb3babfb750205b126d7d88791.diff")
+        "https://github.com/archlinux/mkinitcpio/commit/30dbfc2770cb49cb3babfb750205b126d7d88791.diff"
+        "https://github.com/archlinux/mkinitcpio/commit/e629e34f18141a6244eaac2f0288d7b2a5d669ee.diff")
 install=mkinitcpio.install
 md5sums=('287e2d7ac5de5d50eb4b0a3adbdc6ca8'
          '5bce3b1cf3de654151d5522086431624'
-         '34f6032da1305dcfb984f913266939a9')
+         '34f6032da1305dcfb984f913266939a9'
+         'f6f9dfed29a241dd071c237a40ea5d89')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -26,6 +28,8 @@ build() {
   patch -p0 -i ${srcdir}/init.diff
   # kmod 27 needed
   patch -p1 -i ${srcdir}/30dbfc2770cb49cb3babfb750205b126d7d88791.diff
+  # stop warning with kmod 30
+  patch -p1 -i ${srcdir}/e629e34f18141a6244eaac2f0288d7b2a5d669ee.diff
 }
 
 package() {
