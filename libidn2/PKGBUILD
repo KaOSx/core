@@ -1,7 +1,7 @@
 
 pkgname=libidn2
-pkgver=2.3.2
-_pkgver=2.3.2
+pkgver=2.3.3
+_pkgver=2.3.3
 pkgrel=1
 pkgdesc="Implementation of the IDNA2008 + TR46 specifications"
 url="https://www.gnu.org/software/libidn/#libidn2"
@@ -11,11 +11,11 @@ depends=('libunistring')
 makedepends=('pkgconfig')
 options=('!libtool')
 source=("https://ftp.gnu.org/gnu/libidn/${pkgname}-${_pkgver}.tar.gz")
-md5sums=('fb54962eb68cf22d47a4ae61f0aba993')
+md5sums=('82c0739df7ad818c70953453fb9c626d')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr
   make 
 }
@@ -23,12 +23,12 @@ build() {
 check() {
 
   cd ${pkgname}-${pkgver}
-  
+
   make check
 }
 
 package() {
   cd ${pkgname}-${pkgver}
-  
+
   make DESTDIR=${pkgdir} install 
 }
