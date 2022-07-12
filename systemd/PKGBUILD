@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=250.7
-_pkgver=250.7
+pkgver=251.2
+_pkgver=251.2
 pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
@@ -42,13 +42,13 @@ source=("https://github.com/systemd/systemd-stable/archive/v${_pkgver}.tar.gz"
         'splash.bmp'
         'systemd-tmpfiles.hook'
         'boot_color.diff')
-md5sums=('19939d8566a0a2f9afa44f622c35cd7d'
+md5sums=('b5cc5a46e80ab3aa25f8e15f763b05fa'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
          '30b74b38eaf1178bbc540bda9a24bfe2'
-         '8fe91c1336757a7e7564e23b4c2469ce'
-         'b8d8ebeab17edbe91209e705cfc9e774'
+         '9ce78869585891d798aa5208d3626b2b'
+         '614718170cbc5eb6a130a3e0681d924d'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
          '27f5023827fc6fc9361f524436855a1e'
          'a59ceb44b57272d6cebaf86acda7d393')
@@ -102,7 +102,7 @@ build() {
     -Defi-color-entry='black,lightgray' \
     -Defi-color-highlight='white,cyan' \
     -Defi-color-edit='lightgray,black'
-    # -Ddefault-locale=C
+    # -Ddefault-locale='C.UTF-8' \ -Dnspawn-locale='C.UTF-8' \
     ninja
 }
 
