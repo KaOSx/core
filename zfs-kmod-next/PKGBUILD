@@ -1,5 +1,6 @@
 
 _extramodules=5.18.12-1-next
+_kver="$(cat /lib/modules/extramodules-5.18-next/version)"
 
 pkgname=zfs-kmod-next
 pkgver=2.1.5
@@ -31,6 +32,21 @@ build() {
         --with-linux=/lib/modules/${_extramodules}/build \
         --with-linux-obj=/lib/modules/${_extramodules}/build
     make
+
+    # sign the modules
+    _file=/usr/src/linux-${_kver}/scripts/sign-file
+    _pem=/$HOME/signing_key.pem
+    _key=/$HOME/signing_key.x509
+
+    ${_file} sha256 ${_pem} ${_key} module/avl/zavl.ko
+    ${_file} sha256 ${_pem} ${_key} module/icp/icp.ko
+    ${_file} sha256 ${_pem} ${_key} module/lua/zlua.ko
+    ${_file} sha256 ${_pem} ${_key} module/nvpair/znvpair.ko
+    ${_file} sha256 ${_pem} ${_key} module/spl/spl.ko
+    ${_file} sha256 ${_pem} ${_key} module/unicode/zunicode.ko
+    ${_file} sha256 ${_pem} ${_key} module/zcommon/zcommon.ko
+    ${_file} sha256 ${_pem} ${_key} module/zfs/zfs.ko
+    ${_file} sha256 ${_pem} ${_key} module/zstd/zzstd.ko
 }
 
 package() {
