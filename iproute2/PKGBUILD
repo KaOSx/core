@@ -1,6 +1,6 @@
 
 pkgname=iproute2
-pkgver=5.18.0
+pkgver=5.19.0
 pkgrel=1
 pkgdesc="IP Routing Utilities"
 arch=('x86_64')
@@ -13,7 +13,7 @@ backup=('etc/iproute2/ematch_map' 'etc/iproute2/rt_dsfield' 'etc/iproute2/rt_pro
         'etc/iproute2/rt_realms' 'etc/iproute2/rt_scopes' 'etc/iproute2/rt_tables')
 source=("https://www.kernel.org/pub/linux/utils/net/iproute2/${pkgname}-${pkgver}.tar.xz"
         'iproute2-fhs.patch')
-sha256sums=('5ba3d464d51c8c283550d507ffac3d10f7aec587b7c66b0ccb6950643646389e'
+sha256sums=('26b7a34d6a7fd2f7a42e2b39c5a90cb61bac522d1096067ffeb195e5693d7791'
             '532eb9e8b6cb0dc043934e7ce1447c30e16acbe07bab6348f9a338287db9d364')
 
 prepare() {
@@ -29,11 +29,11 @@ build() {
   ./configure
    make
 }
-   
+
 package() {
   cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
-  
+
   # allow loopback to be started before /usr is mounted
   mkdir -p ${pkgdir}/sbin
   mv ${pkgdir}/usr/sbin/ip ${pkgdir}/sbin/ip
