@@ -1,14 +1,14 @@
 
 pkgname=run-parts
-pkgver=5.5
+pkgver=5.7
 pkgrel=1
 pkgdesc='Run scripts or programs in a directory'
 arch=('x86_64')
 url='https://packages.qa.debian.org/d/debianutils.html'
 license=('GPL')
 depends=('glibc')
-source=("https://cdn-aws.deb.debian.org/debian/pool/main/d/debianutils/debianutils_${pkgver}.orig.tar.xz") 
-md5sums=('9255fe588dbbebad615a4a6c6b660e7b')
+source=("https://cdn-aws.deb.debian.org/debian/pool/main/d/debianutils/debianutils_${pkgver}.orig.tar.gz") 
+md5sums=('8bbe5fd5524e1960a792d8a4420b2539')
 
 build() {
     cd debianutils-${pkgver}
