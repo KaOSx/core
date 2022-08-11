@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=5.18
-pkgver=5.18.16
+pkgver=5.18.17
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -29,7 +29,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.18.tar.xz"
         'linux.preset'
         '99-linux.hook')
 md5sums=('58e80452e2d8e1993cd7ec95e697ab5a'
-         'c17bf5925458a93b1ab358ef961e021f'
+         'eb51619bca73002120e8ca1e7dac6bf5'
          'bae47773142f372f7978a96dc762e2a8'
          'fce12dbe73de31753df837a5fbeff221'
          '7396c01e39542f94437e5721d9912935'
