@@ -1,6 +1,6 @@
 
 pkgname=shadow
-pkgver=4.11.1
+pkgver=4.12
 pkgrel=1
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
@@ -16,7 +16,7 @@ backup=(etc/login.defs
         etc/default/useradd)
 options=('!libtool')
 install='shadow.install'
-source=("https://github.com/shadow-maint/shadow/releases/download/v${pkgver}/shadow-${pkgver}.tar.xz"
+source=("https://github.com/shadow-maint/shadow/releases/download/${pkgver}/shadow-${pkgver}.tar.xz"
         'LICENSE'
         'chgpasswd'
         'chpasswd'
@@ -29,7 +29,7 @@ source=("https://github.com/shadow-maint/shadow/releases/download/v${pkgver}/sha
         'useradd.defaults'
         'xstrdup.patch'
         "https://github.com/shadow-maint/shadow/commit/d4b6d1549b2af48ce3cb6ff78d9892095fb8fdd9.diff")
-md5sums=('5a95ec069aa91508167d02fecafaa912'
+md5sums=('ed1a9448e04c917921c1a2738840a861'
          'bdf93c7bc4b751277159c5de8fc34df2'
          '65e9ebce249a5b9ed021e2790452b9e1'
          'f6760e9701d7ed2cd91371d427faed2a'
@@ -46,8 +46,9 @@ md5sums=('5a95ec069aa91508167d02fecafaa912'
 build() {
   cd ${pkgname}-${pkgver}
   #patch -p1 -i ${srcdir}/d4b6d1549b2af48ce3cb6ff78d9892095fb8fdd9.diff
+  sed -e 's|man/uk/Makefile||' -i configure.ac
 
-  #autoreconf -v -f --install
+  autoreconf -v -f #--install
   ./configure \
     --prefix=/usr \
     --bindir=/usr/bin \
