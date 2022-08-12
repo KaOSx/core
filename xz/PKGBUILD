@@ -1,7 +1,7 @@
 
 pkgname=xz
-pkgver=5.2.5
-pkgrel=2
+pkgver=5.2.6
+pkgrel=1
 pkgdesc='Library and command line tools for XZ and LZMA compressed files'
 arch=('x86_64')
 url='https://tukaani.org/xz/'
@@ -10,13 +10,13 @@ depends=('sh')
 options=('!libtool')
 source=("https://tukaani.org/xz/${pkgname}-${pkgver}.tar.xz"
         'xzgrep-ZDI-CAN-16587.patch')
-md5sums=('aa1621ec7013a19abab52a8aff04fe5b'
+md5sums=('d9cd5698e1ec06cf638c0d2d645e8175'
          'a194a4240198e221b7d0249dc2c1fe06')
 
 build() {
     cd ${pkgname}-${pkgver}
     # https://www.mail-archive.com/xz-devel@tukaani.org/msg00551.html
-    patch -p1 -i ${srcdir}/xzgrep-ZDI-CAN-16587.patch
+    #patch -p1 -i ${srcdir}/xzgrep-ZDI-CAN-16587.patch
     export CFLAGS="$CFLAGS -Wno-format-truncation"
 
     ./configure --prefix=/usr \
