@@ -1,6 +1,6 @@
 
 pkgname=shadow
-pkgver=4.12
+pkgver=4.12.1
 pkgrel=1
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
@@ -29,7 +29,7 @@ source=("https://github.com/shadow-maint/shadow/releases/download/${pkgver}/shad
         'useradd.defaults'
         'xstrdup.patch'
         "https://github.com/shadow-maint/shadow/commit/d4b6d1549b2af48ce3cb6ff78d9892095fb8fdd9.diff")
-md5sums=('ed1a9448e04c917921c1a2738840a861'
+md5sums=('c2a467af8cfc179342100de28d0b1919'
          'bdf93c7bc4b751277159c5de8fc34df2'
          '65e9ebce249a5b9ed021e2790452b9e1'
          'f6760e9701d7ed2cd91371d427faed2a'
@@ -46,7 +46,7 @@ md5sums=('ed1a9448e04c917921c1a2738840a861'
 build() {
   cd ${pkgname}-${pkgver}
   #patch -p1 -i ${srcdir}/d4b6d1549b2af48ce3cb6ff78d9892095fb8fdd9.diff
-  sed -e 's|man/uk/Makefile||' -i configure.ac
+  #sed -e 's|man/uk/Makefile||' -i configure.ac
 
   autoreconf -v -f #--install
   ./configure \
