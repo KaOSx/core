@@ -1,6 +1,6 @@
  
 pkgname=ldns
-pkgver=1.8.2
+pkgver=1.8.3
 pkgrel=1
 pkgdesc='DNS library that facilitates DNS tool programming.'
 url='https://www.nlnetlabs.nl/projects/ldns/'
@@ -9,7 +9,7 @@ arch=('x86_64')
 depends=('openssl' 'libpcap')
 options=('!staticlibs')
 source=("https://www.nlnetlabs.nl/downloads/ldns/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('b92b001cdd382de653620a05445e42e17a827eec93d64ee587ad291a533cc1e9')
+sha256sums=('c3f72dd1036b2907e3a56e6acf9dfb2e551256b3c1bbd9787942deeeb70e7860')
 
 build() {
     cd ${pkgname}-${pkgver}
