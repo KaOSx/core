@@ -1,6 +1,6 @@
 
 pkgname=libxslt
-pkgver=1.1.35
+pkgver=1.1.36
 _pkgver=1.1
 pkgrel=1
 pkgdesc="XML stylesheet transformation library"
@@ -8,11 +8,11 @@ arch=('x86_64')
 url="http://xmlsoft.org/XSLT/"
 license=('custom')
 depends=('libxml2' 'libgcrypt')
-#makedepends=('python3')
+makedepends=('python3')
 options=('!libtool')
 source=("https://download.gnome.org/sources/libxslt/${_pkgver}/${pkgname}-${pkgver}.tar.xz"
         'xml_config.patch')
-sha256sums=('8247f33e9a872c6ac859aa45018bc4c4d00b97e2feac9eebc10c93ce1f34dd79'
+sha256sums=('12848f0a4408f65b530d3962cd9ff670b6ae796191cfeff37522b5772de8dc8e'
             '33351d99a96035462fb2adec4dbd1c267810275f626f946c32f5fb914ffb2e98')
 
 build() {
