@@ -2,6 +2,8 @@
 
 timestamp=$( date +%F-%T )
 desktop=$(ps -e | grep kwin)
+# exclude Mac/Apple devices with their own rEfind from running bootctl
+FSTAB=$(cat /etc/fstab | grep /boot)
 
 add_privs() {
   if ! setcap "$2" "$1" 2>/dev/null; then
@@ -69,7 +71,7 @@ post_upgrade() {
   #  _242_changes
   #fi
   
-  if [ -d sys/firmware/efi/efivars ]; then
+  if [ -d sys/firmware/efi/efivars ] && [ "$FSTAB" != "" ]; then
     echo ":: Updating bootctl"
     /usr/bin/bootctl update
   fi
