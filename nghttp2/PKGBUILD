@@ -1,0 +1,37 @@
+
+pkgname=nghttp2
+pkgver=1.49.0
+pkgrel=1
+pkgdesc='Implementation of HTTP/2 and its header compression algorithm HPACK in C.'
+arch=('x86_64')
+url='https://nghttp2.org/'
+license=('MIT')
+depends=('glibc')
+options=('!emptydirs')
+source=("https://github.com/nghttp2/nghttp2/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
+sha256sums=('b0cfd492bbf0b131c472e8f6501c9f4ee82b51b68130f47b278c0b7c9848a66e')
+
+build() {
+  cd ${pkgname}-${pkgver}
+
+  ./configure \
+    --prefix=/usr \
+    --enable-static=no \
+    --disable-failmalloc \
+    --without-cython \
+    --enable-lib-only
+  make
+}
+
+check() {
+  cd ${pkgname}-${pkgver}
+
+  make check
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+
+  make DESTDIR=${pkgdir} install
+  install -Dm644 COPYING ${pkgdir}/usr/share/licenses/libnghttp2/COPYING
+}
