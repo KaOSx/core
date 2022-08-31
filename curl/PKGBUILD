@@ -1,7 +1,7 @@
 
 pkgname=curl
-pkgver=7.84.0
-pkgrel=3
+pkgver=7.85.0
+pkgrel=1
 pkgdesc="An URL retrival utility and library"
 arch=('x86_64')
 url="https://curl.haxx.se"
@@ -11,13 +11,13 @@ options=('!libtool')
 source=("https://curl.haxx.se/download/${pkgname}-${pkgver}.tar.bz2"
         'curlbuild.h'
         "https://github.com/curl/curl/commit/52e822173aa3cd4f610531d32fbf943f026cdca6.diff")
-md5sums=('35fca80437f32dd7ef6c2e30b4916f06'
+md5sums=('cd323cf36bc6f37549dd230ff2a19896'
          '751bd433ede935c8fae727377625a8ae'
          '19c6ad14bc7399401bee43ef14978a14')
 
 build() {
     cd ${pkgname}-${pkgver}
-    patch -p1 -i ${srcdir}/52e822173aa3cd4f610531d32fbf943f026cdca6.diff
+    #patch -p1 -i ${srcdir}/52e822173aa3cd4f610531d32fbf943f026cdca6.diff
 
     ./configure \
         --with-random=/dev/urandom \
