@@ -1,6 +1,6 @@
 
 pkgname=less
-pkgver=590
+pkgver=608
 pkgrel=1
 pkgdesc="Terminal based program for viewing text files"
 license=('GPL3')
@@ -9,7 +9,7 @@ url="https://www.greenwoodsoftware.com/less"
 depends=('glibc' 'ncurses' 'pcre')
 groups=('base')
 source=("https://www.greenwoodsoftware.com/less/${pkgname}-${pkgver}.tar.gz")
-md5sums=('f029087448357812fba450091a1172ab')
+md5sums=('1cdec714569d830a68f4cff11203cdba')
 
 build() {
   cd ${pkgname}-${pkgver}
