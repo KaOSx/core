@@ -1,7 +1,7 @@
 
 pkgname=mkinitcpio
 pkgver=26
-pkgrel=5
+pkgrel=6
 pkgdesc="Modular initramfs image creation utility"
 arch=('x86_64')
 url="https://github.com/archlinux/mkinitcpio"
@@ -17,6 +17,7 @@ source=("https://sources.archlinux.org/other/mkinitcpio/${pkgname}-${pkgver}.tar
         "https://github.com/archlinux/mkinitcpio/commit/30dbfc2770cb49cb3babfb750205b126d7d88791.diff"
         "https://github.com/archlinux/mkinitcpio/commit/e629e34f18141a6244eaac2f0288d7b2a5d669ee.diff")
 install=mkinitcpio.install
+provides=('initrd')
 md5sums=('287e2d7ac5de5d50eb4b0a3adbdc6ca8'
          '5bce3b1cf3de654151d5522086431624'
          '34f6032da1305dcfb984f913266939a9'
