@@ -1,5 +1,5 @@
 
-pkgname=mkinitcpio-busybox
+pkgname=busybox
 pkgver=1.35.0
 pkgrel=1
 pkgdesc="Base initramfs tools"
@@ -7,11 +7,14 @@ arch=('x86_64')
 url="https://www.busybox.net/"
 license=('GPL')
 depends=('glibc' 'libxcrypt')
+provides=('mkinitcpio-busybox')
+replaces=('mkinitcpio-busybox')
+conflicts=('mkinitcpio-busybox')
 options=('!buildflags')
 source=("https://busybox.net/downloads/busybox-${pkgver}.tar.bz2"
         'config')
 md5sums=('585949b1dd4292b604b7d199866e9913'
-         '3a63521b1c5c5f397274730050155a24')
+         '809a08aef9fdb38dfa22de199d425458')
 
 build() {
   cd busybox-${pkgver}
@@ -23,6 +26,9 @@ build() {
 }
 
 package() {
+  # mkinitcpio expects it in /usr/lib/initcpio
   install -Dm755 ${srcdir}/busybox-${pkgver}/busybox ${pkgdir}/usr/lib/initcpio/busybox
+  # drcaut expects it in /usr/bin
+  install -Dm755 ${srcdir}/busybox-${pkgver}/busybox ${pkgdir}/usr/bin/busybox
 }
 
