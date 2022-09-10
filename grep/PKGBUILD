@@ -1,13 +1,13 @@
 
 pkgname=grep
 pkgver=3.8
-pkgrel=1
+pkgrel=2
 pkgdesc="A string search utility"
 arch=('x86_64')
 license=('GPL3')
 url="https://www.gnu.org/software/grep/grep.html"
 groups=('base')
-depends=('glibc' 'pcre' 'sh')
+depends=('glibc' 'pcre2' 'sh')
 makedepends=('texinfo')
 source=("https://ftp.gnu.org/gnu/grep/${pkgname}-${pkgver}.tar.xz")
 sha1sums=('6d0d32cabaf44efac9e1d2c449eb041525c54b2e')
