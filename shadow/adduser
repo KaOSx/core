@@ -43,8 +43,8 @@
 # v1.07 - 07/03/03
 #       * When supplying a null string for the uid (meaning 'Choose next available'), 
 #         if there were file names in the range 'a-z' in the pwd then the 
-#         egrep command considered these files rather than the null string. 
-#         The egrep expression is now in quotes.  
+#         grep -E command considered these files rather than the null string. 
+#         The grep -E expression is now in quotes.  
 #         Reported & fixed by Vadim O. Ustiansky <sw>
 # v1.06 - 31/03/03
 #       * Ask to chown user.group the home directory if it already exists.
@@ -208,7 +208,7 @@ while [ ! -z "$needinput" ]; do
   grep -v "^$" $pfile | awk -F: '{print $3}' | grep "^${_UID}$" >/dev/null 2>&1
   if [ $? -eq 0 ]; then
     echo "- That UID is already in use; please choose another"
-  elif [ ! -z "$(echo $_UID | egrep '[A-Za-z]')" ]; then
+  elif [ ! -z "$(echo $_UID | grep -E '[A-Za-z]')" ]; then
     echo "- UIDs are numerics only"         
   else
     unset needinput
