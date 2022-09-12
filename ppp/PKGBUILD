@@ -1,7 +1,7 @@
 
 pkgname=ppp
 pkgver=2.4.9
-pkgrel=6
+pkgrel=7
 pkgdesc="Daemon which implements the Point-to-Point Protocol for dial-up networking"
 arch=('x86_64') 
 url="https://www.samba.org/ppp/"
@@ -26,7 +26,7 @@ source=("https://github.com/paulusmack/ppp/archive/${pkgname}-${pkgver}.tar.gz"
         'ppp.service'
         'fix-linux-vs-glibc-headers-compile-error-mess.patch')
 md5sums=('040efef7eb4ae6434cd006bc9d795838'
-         '7a9259a8f038073eeea7e4552ff1849f'
+         '788fea4faa62df13fd3965c0ec571739'
          '48c024f73a80c8b69c4def22f86902cc'
          '2d811f8470ccdea3b8c4505a438483e9'
          '86cdaf133f7a79fb464f02d83afc7734'
