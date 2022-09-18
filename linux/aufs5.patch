@@ -1,6 +1,6 @@
-diff -Naur null/Documentation/ABI/testing/debugfs-aufs linux-5.18/Documentation/ABI/testing/debugfs-aufs
+diff -Naur null/Documentation/ABI/testing/debugfs-aufs linux-5.19/Documentation/ABI/testing/debugfs-aufs
 --- /dev/null
-+++ linux-5.18/Documentation/ABI/testing/debugfs-aufs	2022-06-09 16:22:53.422948658 +0200
++++ linux-5.19/Documentation/ABI/testing/debugfs-aufs	2022-08-11 14:29:49.294138005 +0200
 @@ -0,0 +1,55 @@
 +What:		/debug/aufs/si_<id>/
 +Date:		March 2009
@@ -57,9 +57,9 @@ diff -Naur null/Documentation/ABI/testing/debugfs-aufs linux-5.18/Documentation/
 +		be created.
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
-diff -Naur null/Documentation/ABI/testing/sysfs-aufs linux-5.18/Documentation/ABI/testing/sysfs-aufs
+diff -Naur null/Documentation/ABI/testing/sysfs-aufs linux-5.19/Documentation/ABI/testing/sysfs-aufs
 --- /dev/null
-+++ linux-5.18/Documentation/ABI/testing/sysfs-aufs	2022-06-09 16:22:53.422948658 +0200
++++ linux-5.19/Documentation/ABI/testing/sysfs-aufs	2022-08-11 14:29:49.294138005 +0200
 @@ -0,0 +1,31 @@
 +What:		/sys/fs/aufs/si_<id>/
 +Date:		March 2009
@@ -92,9 +92,9 @@ diff -Naur null/Documentation/ABI/testing/sysfs-aufs linux-5.18/Documentation/AB
 +		even if it is the default path.
 +		When the aufs mount option 'noxino' is specified, it
 +		will be empty. About XINO files, see the aufs manual.
-diff -Naur null/Documentation/filesystems/aufs/design/01intro.txt linux-5.18/Documentation/filesystems/aufs/design/01intro.txt
+diff -Naur null/Documentation/filesystems/aufs/design/01intro.txt linux-5.19/Documentation/filesystems/aufs/design/01intro.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/01intro.txt	2022-06-09 16:22:53.422948658 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/01intro.txt	2022-08-11 14:29:49.294138005 +0200
 @@ -0,0 +1,171 @@
 +
 +# Copyright (C) 2005-2021 Junjiro R. Okajima
@@ -267,9 +267,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/01intro.txt linux-5.18/Doc
 +Some people may think it is better to pass such work to user space
 +helper, instead of doing in kernel space. Actually I am still thinking
 +about it. But currently I have implemented it in kernel space.
-diff -Naur null/Documentation/filesystems/aufs/design/02struct.txt linux-5.18/Documentation/filesystems/aufs/design/02struct.txt
+diff -Naur null/Documentation/filesystems/aufs/design/02struct.txt linux-5.19/Documentation/filesystems/aufs/design/02struct.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/02struct.txt	2022-06-09 16:22:53.422948658 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/02struct.txt	2022-08-11 14:29:49.294138005 +0200
 @@ -0,0 +1,258 @@
 +
 +# Copyright (C) 2005-2021 Junjiro R. Okajima
@@ -529,9 +529,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/02struct.txt linux-5.18/Do
 +- etc.
 +
 +For this purpose, use "aumvdown" command in aufs-util.git.
-diff -Naur null/Documentation/filesystems/aufs/design/03atomic_open.txt linux-5.18/Documentation/filesystems/aufs/design/03atomic_open.txt
+diff -Naur null/Documentation/filesystems/aufs/design/03atomic_open.txt linux-5.19/Documentation/filesystems/aufs/design/03atomic_open.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/03atomic_open.txt	2022-06-09 16:22:53.422948658 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/03atomic_open.txt	2022-08-11 14:29:49.294138005 +0200
 @@ -0,0 +1,85 @@
 +
 +# Copyright (C) 2015-2021 Junjiro R. Okajima
@@ -618,9 +618,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/03atomic_open.txt linux-5.
 +       ->atomic_open() are lost. in the ordinary case, the checks are
 +       done by VFS:do_last(), lookup_open() and atomic_open(). some can
 +       be implemented in aufs, but not all I am afraid.
-diff -Naur null/Documentation/filesystems/aufs/design/03lookup.txt linux-5.18/Documentation/filesystems/aufs/design/03lookup.txt
+diff -Naur null/Documentation/filesystems/aufs/design/03lookup.txt linux-5.19/Documentation/filesystems/aufs/design/03lookup.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/03lookup.txt	2022-06-09 16:22:53.422948658 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/03lookup.txt	2022-08-11 14:29:49.294138005 +0200
 @@ -0,0 +1,113 @@
 +
 +# Copyright (C) 2005-2021 Junjiro R. Okajima
@@ -735,9 +735,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/03lookup.txt linux-5.18/Do
 +   test, and skip the revalidation in step 4. It is useful and improves
 +   aufs performance when system surely hide the aufs branches from user,
 +   by over-mounting something (or another method).
-diff -Naur null/Documentation/filesystems/aufs/design/04branch.txt linux-5.18/Documentation/filesystems/aufs/design/04branch.txt
+diff -Naur null/Documentation/filesystems/aufs/design/04branch.txt linux-5.19/Documentation/filesystems/aufs/design/04branch.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/04branch.txt	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/04branch.txt	2022-08-11 14:29:49.294138005 +0200
 @@ -0,0 +1,74 @@
 +
 +# Copyright (C) 2005-2021 Junjiro R. Okajima
@@ -813,9 +813,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/04branch.txt linux-5.18/Do
 +  - a file on the branch is mmap-ed.
 +  - a regular file on the branch is opened for write and there is no
 +    same named entry on the upper branch.
-diff -Naur null/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-5.18/Documentation/filesystems/aufs/design/05wbr_policy.txt
+diff -Naur null/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-5.19/Documentation/filesystems/aufs/design/05wbr_policy.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/05wbr_policy.txt	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/05wbr_policy.txt	2022-08-11 14:29:49.294138005 +0200
 @@ -0,0 +1,64 @@
 +
 +# Copyright (C) 2005-2021 Junjiro R. Okajima
@@ -881,9 +881,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/05wbr_policy.txt linux-5.1
 +  where the source and the target exists and selects the higher
 +  one. If the selected branch is readonly, then aufs follows the
 +  copyup policy.
-diff -Naur null/Documentation/filesystems/aufs/design/06dirren.dot linux-5.18/Documentation/filesystems/aufs/design/06dirren.dot
+diff -Naur null/Documentation/filesystems/aufs/design/06dirren.dot linux-5.19/Documentation/filesystems/aufs/design/06dirren.dot
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/06dirren.dot	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/06dirren.dot	2022-08-11 14:29:49.294138005 +0200
 @@ -0,0 +1,31 @@
 +
 +// to view this graph, run dot(1) command in GRAPHVIZ.
@@ -916,9 +916,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06dirren.dot linux-5.18/Do
 +
 +aufs_lookup -> whinfo [label="load/remove"];
 +}
-diff -Naur null/Documentation/filesystems/aufs/design/06dirren.txt linux-5.18/Documentation/filesystems/aufs/design/06dirren.txt
+diff -Naur null/Documentation/filesystems/aufs/design/06dirren.txt linux-5.19/Documentation/filesystems/aufs/design/06dirren.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/06dirren.txt	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/06dirren.txt	2022-08-11 14:29:49.295138017 +0200
 @@ -0,0 +1,102 @@
 +
 +# Copyright (C) 2017-2021 Junjiro R. Okajima
@@ -999,7 +999,7 @@ diff -Naur null/Documentation/filesystems/aufs/design/06dirren.txt linux-5.18/Do
 +simply the inode-numbers on the branch. The file is created or updated
 +in removing the branch, and loaded in adding the branch. Its lifetime is
 +equal to the branch.
-+The list is refered in lookup, and when the current target inode is
++The list is referred in lookup, and when the current target inode is
 +found in the list, the aufs tries loading the "detailed info per
 +directory" and get the changed and valid name of the dir.
 +
@@ -1022,9 +1022,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06dirren.txt linux-5.18/Do
 +contains two names, before- and after-rename, the name comparision in
 +UDBA handler may not work correctly. In this case, the behaviour will be
 +equivalen to udba=reval case.
-diff -Naur null/Documentation/filesystems/aufs/design/06fhsm.txt linux-5.18/Documentation/filesystems/aufs/design/06fhsm.txt
+diff -Naur null/Documentation/filesystems/aufs/design/06fhsm.txt linux-5.19/Documentation/filesystems/aufs/design/06fhsm.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/06fhsm.txt	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/06fhsm.txt	2022-08-11 14:29:49.295138017 +0200
 @@ -0,0 +1,120 @@
 +
 +# Copyright (C) 2011-2021 Junjiro R. Okajima
@@ -1146,9 +1146,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06fhsm.txt linux-5.18/Docu
 +
 +And of course, in every step, an error may happen. So the operation
 +should restore the original file state after an error happens.
-diff -Naur null/Documentation/filesystems/aufs/design/06mmap.txt linux-5.18/Documentation/filesystems/aufs/design/06mmap.txt
+diff -Naur null/Documentation/filesystems/aufs/design/06mmap.txt linux-5.19/Documentation/filesystems/aufs/design/06mmap.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/06mmap.txt	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/06mmap.txt	2022-08-11 14:29:49.295138017 +0200
 @@ -0,0 +1,72 @@
 +
 +# Copyright (C) 2005-2021 Junjiro R. Okajima
@@ -1222,9 +1222,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06mmap.txt linux-5.18/Docu
 +  equivalent to vm_prfile described above.
 +
 +I have to give up this "looks-smater" approach.
-diff -Naur null/Documentation/filesystems/aufs/design/06xattr.txt linux-5.18/Documentation/filesystems/aufs/design/06xattr.txt
+diff -Naur null/Documentation/filesystems/aufs/design/06xattr.txt linux-5.19/Documentation/filesystems/aufs/design/06xattr.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/06xattr.txt	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/06xattr.txt	2022-08-11 14:29:49.295138017 +0200
 @@ -0,0 +1,96 @@
 +
 +# Copyright (C) 2014-2021 Junjiro R. Okajima
@@ -1322,9 +1322,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/06xattr.txt linux-5.18/Doc
 +Some contradiction may happen I am afraid.
 +Do we need another attribute to stop copying XATTR? I am unsure. For
 +now, aufs implements the branch attributes to ignore the error.
-diff -Naur null/Documentation/filesystems/aufs/design/07export.txt linux-5.18/Documentation/filesystems/aufs/design/07export.txt
+diff -Naur null/Documentation/filesystems/aufs/design/07export.txt linux-5.19/Documentation/filesystems/aufs/design/07export.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/07export.txt	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/07export.txt	2022-08-11 14:29:49.295138017 +0200
 @@ -0,0 +1,58 @@
 +
 +# Copyright (C) 2005-2021 Junjiro R. Okajima
@@ -1384,9 +1384,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/07export.txt linux-5.18/Do
 +  convert it into ESTALE for NFSD.
 +- readdir(): call lockdep_on/off() because filldir in NFSD calls
 +  lookup_one_len(), vfs_getattr(), encode_fh() and others.
-diff -Naur null/Documentation/filesystems/aufs/design/08shwh.txt linux-5.18/Documentation/filesystems/aufs/design/08shwh.txt
+diff -Naur null/Documentation/filesystems/aufs/design/08shwh.txt linux-5.19/Documentation/filesystems/aufs/design/08shwh.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/08shwh.txt	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/08shwh.txt	2022-08-11 14:29:49.295138017 +0200
 @@ -0,0 +1,52 @@
 +
 +# Copyright (C) 2005-2021 Junjiro R. Okajima
@@ -1440,9 +1440,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/08shwh.txt linux-5.18/Docu
 +
 +This new squashfs archive can be stored on the boot device and the
 +initramfs will use it to replace the old one at the next boot.
-diff -Naur null/Documentation/filesystems/aufs/design/10dynop.txt linux-5.18/Documentation/filesystems/aufs/design/10dynop.txt
+diff -Naur null/Documentation/filesystems/aufs/design/10dynop.txt linux-5.19/Documentation/filesystems/aufs/design/10dynop.txt
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/design/10dynop.txt	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/Documentation/filesystems/aufs/design/10dynop.txt	2022-08-11 14:29:49.295138017 +0200
 @@ -0,0 +1,47 @@
 +
 +# Copyright (C) 2010-2021 Junjiro R. Okajima
@@ -1491,9 +1491,9 @@ diff -Naur null/Documentation/filesystems/aufs/design/10dynop.txt linux-5.18/Doc
 +XIP (DAX) mainly.
 +Currently this approach is applied to address_space_operations for
 +regular files only.
-diff -Naur null/Documentation/filesystems/aufs/README linux-5.18/Documentation/filesystems/aufs/README
+diff -Naur null/Documentation/filesystems/aufs/README linux-5.19/Documentation/filesystems/aufs/README
 --- /dev/null
-+++ linux-5.18/Documentation/filesystems/aufs/README	2022-06-09 16:22:53.422948658 +0200
++++ linux-5.19/Documentation/filesystems/aufs/README	2022-08-11 14:29:49.294138005 +0200
 @@ -0,0 +1,397 @@
 +
 +Aufs5 -- advanced multi layered unification filesystem version 5.x
@@ -1892,9 +1892,9 @@ diff -Naur null/Documentation/filesystems/aufs/README linux-5.18/Documentation/f
 +# Local variables: ;
 +# mode: text;
 +# End: ;
-diff -Naur null/fs/aufs/aufs.h linux-5.18/fs/aufs/aufs.h
+diff -Naur null/fs/aufs/aufs.h linux-5.19/fs/aufs/aufs.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/aufs.h	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/fs/aufs/aufs.h	2022-08-11 14:29:49.296138029 +0200
 @@ -0,0 +1,62 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -1958,9 +1958,9 @@ diff -Naur null/fs/aufs/aufs.h linux-5.18/fs/aufs/aufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_H__ */
-diff -Naur null/fs/aufs/branch.c linux-5.18/fs/aufs/branch.c
+diff -Naur null/fs/aufs/branch.c linux-5.19/fs/aufs/branch.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/branch.c	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/fs/aufs/branch.c	2022-08-11 14:29:49.296138029 +0200
 @@ -0,0 +1,1427 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -3243,7 +3243,7 @@ diff -Naur null/fs/aufs/branch.c linux-5.18/fs/aufs/branch.c
 +		 * file_release_write() for each file, because the branch
 +		 * attribute in aufs world is totally different from the native
 +		 * fs rw/ro mode.
-+		*/
++		 */
 +		/* fi_read_lock(file); */
 +		hfile = &au_fi(file)->fi_htop;
 +		hf = hfile->hf_file;
@@ -3389,9 +3389,9 @@ diff -Naur null/fs/aufs/branch.c linux-5.18/fs/aufs/branch.c
 +
 +	return err;
 +}
-diff -Naur null/fs/aufs/branch.h linux-5.18/fs/aufs/branch.h
+diff -Naur null/fs/aufs/branch.h linux-5.19/fs/aufs/branch.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/branch.h	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/fs/aufs/branch.h	2022-08-11 14:29:49.296138029 +0200
 @@ -0,0 +1,375 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -3768,9 +3768,9 @@ diff -Naur null/fs/aufs/branch.h linux-5.18/fs/aufs/branch.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_BRANCH_H__ */
-diff -Naur null/fs/aufs/conf.mk linux-5.18/fs/aufs/conf.mk
+diff -Naur null/fs/aufs/conf.mk linux-5.19/fs/aufs/conf.mk
 --- /dev/null
-+++ linux-5.18/fs/aufs/conf.mk	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/fs/aufs/conf.mk	2022-08-11 14:29:49.296138029 +0200
 @@ -0,0 +1,40 @@
 +# SPDX-License-Identifier: GPL-2.0
 +
@@ -3812,9 +3812,9 @@ diff -Naur null/fs/aufs/conf.mk linux-5.18/fs/aufs/conf.mk
 +${obj}/sysfs.o: ${AuConfName}
 +
 +-include ${srctree}/${src}/conf_priv.mk
-diff -Naur null/fs/aufs/cpup.c linux-5.18/fs/aufs/cpup.c
+diff -Naur null/fs/aufs/cpup.c linux-5.19/fs/aufs/cpup.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/cpup.c	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/cpup.c	2022-08-11 14:29:49.296138029 +0200
 @@ -0,0 +1,1459 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -5275,9 +5275,9 @@ diff -Naur null/fs/aufs/cpup.c linux-5.18/fs/aufs/cpup.c
 +	dput(parent);
 +	return err;
 +}
-diff -Naur null/fs/aufs/cpup.h linux-5.18/fs/aufs/cpup.h
+diff -Naur null/fs/aufs/cpup.h linux-5.19/fs/aufs/cpup.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/cpup.h	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/cpup.h	2022-08-11 14:29:49.296138029 +0200
 @@ -0,0 +1,100 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -5379,9 +5379,9 @@ diff -Naur null/fs/aufs/cpup.h linux-5.18/fs/aufs/cpup.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_CPUP_H__ */
-diff -Naur null/fs/aufs/dbgaufs.c linux-5.18/fs/aufs/dbgaufs.c
+diff -Naur null/fs/aufs/dbgaufs.c linux-5.19/fs/aufs/dbgaufs.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/dbgaufs.c	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/dbgaufs.c	2022-08-11 14:29:49.296138029 +0200
 @@ -0,0 +1,526 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -5909,9 +5909,9 @@ diff -Naur null/fs/aufs/dbgaufs.c linux-5.18/fs/aufs/dbgaufs.c
 +		err = 0;
 +	return err;
 +}
-diff -Naur null/fs/aufs/dbgaufs.h linux-5.18/fs/aufs/dbgaufs.h
+diff -Naur null/fs/aufs/dbgaufs.h linux-5.19/fs/aufs/dbgaufs.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/dbgaufs.h	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/dbgaufs.h	2022-08-11 14:29:49.296138029 +0200
 @@ -0,0 +1,53 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -5966,9 +5966,9 @@ diff -Naur null/fs/aufs/dbgaufs.h linux-5.18/fs/aufs/dbgaufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __DBGAUFS_H__ */
-diff -Naur null/fs/aufs/dcsub.c linux-5.18/fs/aufs/dcsub.c
+diff -Naur null/fs/aufs/dcsub.c linux-5.19/fs/aufs/dcsub.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/dcsub.c	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/dcsub.c	2022-08-11 14:29:49.296138029 +0200
 @@ -0,0 +1,225 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -6195,9 +6195,9 @@ diff -Naur null/fs/aufs/dcsub.c linux-5.18/fs/aufs/dcsub.c
 +
 +	return path_is_under(path + 0, path + 1);
 +}
-diff -Naur null/fs/aufs/dcsub.h linux-5.18/fs/aufs/dcsub.h
+diff -Naur null/fs/aufs/dcsub.h linux-5.19/fs/aufs/dcsub.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/dcsub.h	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/dcsub.h	2022-08-11 14:29:49.297138042 +0200
 @@ -0,0 +1,137 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -6336,9 +6336,9 @@ diff -Naur null/fs/aufs/dcsub.h linux-5.18/fs/aufs/dcsub.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DCSUB_H__ */
-diff -Naur null/fs/aufs/debug.c linux-5.18/fs/aufs/debug.c
+diff -Naur null/fs/aufs/debug.c linux-5.19/fs/aufs/debug.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/debug.c	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/debug.c	2022-08-11 14:29:49.297138042 +0200
 @@ -0,0 +1,444 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -6389,7 +6389,7 @@ diff -Naur null/fs/aufs/debug.c linux-5.18/fs/aufs/debug.c
 +	return sprintf(buffer, "%d", atomic_read(a));
 +}
 +
-+static struct kernel_param_ops param_ops_atomic_t = {
++static const struct kernel_param_ops param_ops_atomic_t = {
 +	.set = param_atomic_t_set,
 +	.get = param_atomic_t_get
 +	/* void (*free)(void *arg) */
@@ -6784,9 +6784,9 @@ diff -Naur null/fs/aufs/debug.c linux-5.18/fs/aufs/debug.c
 +
 +	return 0;
 +}
-diff -Naur null/fs/aufs/debug.h linux-5.18/fs/aufs/debug.h
+diff -Naur null/fs/aufs/debug.h linux-5.19/fs/aufs/debug.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/debug.h	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/debug.h	2022-08-11 14:29:49.297138042 +0200
 @@ -0,0 +1,226 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -7014,9 +7014,9 @@ diff -Naur null/fs/aufs/debug.h linux-5.18/fs/aufs/debug.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DEBUG_H__ */
-diff -Naur null/fs/aufs/dentry.c linux-5.18/fs/aufs/dentry.c
+diff -Naur null/fs/aufs/dentry.c linux-5.19/fs/aufs/dentry.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/dentry.c	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/dentry.c	2022-08-11 14:29:49.297138042 +0200
 @@ -0,0 +1,1168 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -8186,9 +8186,9 @@ diff -Naur null/fs/aufs/dentry.c linux-5.18/fs/aufs/dentry.c
 +const struct dentry_operations aufs_dop_noreval = {
 +	.d_release		= aufs_d_release
 +};
-diff -Naur null/fs/aufs/dentry.h linux-5.18/fs/aufs/dentry.h
+diff -Naur null/fs/aufs/dentry.h linux-5.19/fs/aufs/dentry.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/dentry.h	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/dentry.h	2022-08-11 14:29:49.297138042 +0200
 @@ -0,0 +1,269 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -8459,9 +8459,9 @@ diff -Naur null/fs/aufs/dentry.h linux-5.18/fs/aufs/dentry.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DENTRY_H__ */
-diff -Naur null/fs/aufs/dinfo.c linux-5.18/fs/aufs/dinfo.c
+diff -Naur null/fs/aufs/dinfo.c linux-5.19/fs/aufs/dinfo.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/dinfo.c	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/dinfo.c	2022-08-11 14:29:49.297138042 +0200
 @@ -0,0 +1,554 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -9017,9 +9017,9 @@ diff -Naur null/fs/aufs/dinfo.c linux-5.18/fs/aufs/dinfo.c
 +			return bindex;
 +	return -1;
 +}
-diff -Naur null/fs/aufs/dir.c linux-5.18/fs/aufs/dir.c
+diff -Naur null/fs/aufs/dir.c linux-5.19/fs/aufs/dir.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/dir.c	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/dir.c	2022-08-11 14:29:49.297138042 +0200
 @@ -0,0 +1,765 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -9786,9 +9786,9 @@ diff -Naur null/fs/aufs/dir.c linux-5.18/fs/aufs/dir.c
 +	.flush		= aufs_flush_dir,
 +	.fsync		= aufs_fsync_dir
 +};
-diff -Naur null/fs/aufs/dir.h linux-5.18/fs/aufs/dir.h
+diff -Naur null/fs/aufs/dir.h linux-5.19/fs/aufs/dir.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/dir.h	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/dir.h	2022-08-11 14:29:49.297138042 +0200
 @@ -0,0 +1,134 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -9924,9 +9924,9 @@ diff -Naur null/fs/aufs/dir.h linux-5.18/fs/aufs/dir.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIR_H__ */
-diff -Naur null/fs/aufs/dirren.c linux-5.18/fs/aufs/dirren.c
+diff -Naur null/fs/aufs/dirren.c linux-5.19/fs/aufs/dirren.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/dirren.c	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/dirren.c	2022-08-11 14:29:49.297138042 +0200
 @@ -0,0 +1,1315 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -11243,9 +11243,9 @@ diff -Naur null/fs/aufs/dirren.c linux-5.18/fs/aufs/dirren.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/dirren.h linux-5.18/fs/aufs/dirren.h
+diff -Naur null/fs/aufs/dirren.h linux-5.19/fs/aufs/dirren.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/dirren.h	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/dirren.h	2022-08-11 14:29:49.297138042 +0200
 @@ -0,0 +1,140 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -11387,10 +11387,10 @@ diff -Naur null/fs/aufs/dirren.h linux-5.18/fs/aufs/dirren.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIRREN_H__ */
-diff -Naur null/fs/aufs/dynop.c linux-5.18/fs/aufs/dynop.c
+diff -Naur null/fs/aufs/dynop.c linux-5.19/fs/aufs/dynop.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/dynop.c	2022-06-09 16:22:53.424948679 +0200
-@@ -0,0 +1,367 @@
++++ linux-5.19/fs/aufs/dynop.c	2022-08-11 14:29:49.298138054 +0200
+@@ -0,0 +1,368 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2010-2021 Junjiro R. Okajima
@@ -11569,7 +11569,7 @@ diff -Naur null/fs/aufs/dynop.c linux-5.18/fs/aufs/dynop.c
 +	AuDbg("%s\n", au_sbtype(h_sb));
 +
 +	DySetAop(writepage);
-+	DySetAopForce(readpage);	/* force */
++	DySetAopForce(read_folio);	/* force */
 +	DySetAop(writepages);
 +	DySetAop(dirty_folio);
 +	DySetAop(invalidate_folio);
@@ -11577,8 +11577,8 @@ diff -Naur null/fs/aufs/dynop.c linux-5.18/fs/aufs/dynop.c
 +	DySetAop(write_begin);
 +	DySetAop(write_end);
 +	DySetAop(bmap);
-+	DySetAop(releasepage);
-+	DySetAop(freepage);
++	DySetAop(release_folio);
++	DySetAop(free_folio);
 +	/* this one will be changed according to an aufs mount option */
 +	DySetAop(direct_IO);
 +	DySetAop(migratepage);
@@ -11590,6 +11590,7 @@ diff -Naur null/fs/aufs/dynop.c linux-5.18/fs/aufs/dynop.c
 +	DySetAop(error_remove_page);
 +	DySetAop(swap_activate);
 +	DySetAop(swap_deactivate);
++	DySetAop(swap_rw);
 +
 +	DyDbgSize(cnt, *h_aop);
 +}
@@ -11758,9 +11759,9 @@ diff -Naur null/fs/aufs/dynop.c linux-5.18/fs/aufs/dynop.c
 +	for (i = 0; i < AuDyLast; i++)
 +		WARN_ON(!hlist_bl_empty(dynop + i));
 +}
-diff -Naur null/fs/aufs/dynop.h linux-5.18/fs/aufs/dynop.h
+diff -Naur null/fs/aufs/dynop.h linux-5.19/fs/aufs/dynop.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/dynop.h	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/dynop.h	2022-08-11 14:29:49.298138054 +0200
 @@ -0,0 +1,77 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -11839,9 +11840,9 @@ diff -Naur null/fs/aufs/dynop.h linux-5.18/fs/aufs/dynop.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DYNOP_H__ */
-diff -Naur null/fs/aufs/export.c linux-5.18/fs/aufs/export.c
+diff -Naur null/fs/aufs/export.c linux-5.19/fs/aufs/export.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/export.c	2022-06-09 16:22:53.424948679 +0200
++++ linux-5.19/fs/aufs/export.c	2022-08-11 14:29:49.298138054 +0200
 @@ -0,0 +1,830 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -12673,9 +12674,9 @@ diff -Naur null/fs/aufs/export.c linux-5.18/fs/aufs/export.c
 +	BUILD_BUG_ON(sizeof(u) != sizeof(int));
 +	atomic_set(&sbinfo->si_xigen_next, u);
 +}
-diff -Naur null/fs/aufs/fhsm.c linux-5.18/fs/aufs/fhsm.c
+diff -Naur null/fs/aufs/fhsm.c linux-5.19/fs/aufs/fhsm.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/fhsm.c	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/fhsm.c	2022-08-11 14:29:49.298138054 +0200
 @@ -0,0 +1,427 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -13104,10 +13105,10 @@ diff -Naur null/fs/aufs/fhsm.c linux-5.18/fs/aufs/fhsm.c
 +	if (u != AUFS_FHSM_CACHE_DEF_SEC)
 +		seq_printf(seq, ",fhsm_sec=%u", u);
 +}
-diff -Naur null/fs/aufs/file.c linux-5.18/fs/aufs/file.c
+diff -Naur null/fs/aufs/file.c linux-5.19/fs/aufs/file.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/file.c	2022-06-09 16:22:53.425948689 +0200
-@@ -0,0 +1,861 @@
++++ linux-5.19/fs/aufs/file.c	2022-08-11 14:29:49.298138054 +0200
+@@ -0,0 +1,864 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2021 Junjiro R. Okajima
@@ -13888,9 +13889,9 @@ diff -Naur null/fs/aufs/file.c linux-5.18/fs/aufs/file.c
 +
 +/* cf. aufs_nopage() */
 +/* for madvise(2) */
-+static int aufs_readpage(struct file *file __maybe_unused, struct page *page)
++static int aufs_read_folio(struct file *file __maybe_unused, struct folio *folio)
 +{
-+	unlock_page(page);
++	folio_unlock(folio);
 +	return 0;
 +}
 +
@@ -13901,7 +13902,7 @@ diff -Naur null/fs/aufs/file.c linux-5.18/fs/aufs/file.c
 +/* they will never be called. */
 +#ifdef CONFIG_AUFS_DEBUG
 +static int aufs_write_begin(struct file *file, struct address_space *mapping,
-+			    loff_t pos, unsigned len, unsigned flags,
++			    loff_t pos, unsigned len,
 +			    struct page **pagep, void **fsdata)
 +{ AuUnsupport(); return 0; }
 +static int aufs_write_end(struct file *file, struct address_space *mapping,
@@ -13915,8 +13916,8 @@ diff -Naur null/fs/aufs/file.c linux-5.18/fs/aufs/file.c
 +{ AuUnsupport(); return true; }
 +static void aufs_invalidate_folio(struct folio *folio, size_t offset, size_t len)
 +{ AuUnsupport(); }
-+static int aufs_releasepage(struct page *page, gfp_t gfp)
-+{ AuUnsupport(); return 0; }
++static bool aufs_release_folio(struct folio *folio, gfp_t gfp)
++{ AuUnsupport(); return true; }
 +#if 0 /* called by memory compaction regardless file */
 +static int aufs_migratepage(struct address_space *mapping, struct page *newpage,
 +			    struct page *page, enum migrate_mode mode)
@@ -13931,7 +13932,7 @@ diff -Naur null/fs/aufs/file.c linux-5.18/fs/aufs/file.c
 +static bool aufs_is_partially_uptodate(struct folio *folio, size_t from,
 +				      size_t count)
 +{ AuUnsupport(); return true; }
-+static void aufs_is_dirty_writeback(struct page *page, bool *dirty,
++static void aufs_is_dirty_writeback(struct folio *folio, bool *dirty,
 +				    bool *writeback)
 +{ AuUnsupport(); }
 +static int aufs_error_remove_page(struct address_space *mapping,
@@ -13942,10 +13943,12 @@ diff -Naur null/fs/aufs/file.c linux-5.18/fs/aufs/file.c
 +{ AuUnsupport(); return 0; }
 +static void aufs_swap_deactivate(struct file *file)
 +{ AuUnsupport(); }
++static int aufs_swap_rw(struct kiocb *iocb, struct iov_iter *iter)
++{ AuUnsupport(); return 0; }
 +#endif /* CONFIG_AUFS_DEBUG */
 +
 +const struct address_space_operations aufs_aop = {
-+	.readpage		= aufs_readpage,
++	.read_folio		= aufs_read_folio,
 +	.direct_IO		= aufs_direct_IO,
 +#ifdef CONFIG_AUFS_DEBUG
 +	.writepage		= aufs_writepage,
@@ -13956,7 +13959,7 @@ diff -Naur null/fs/aufs/file.c linux-5.18/fs/aufs/file.c
 +	.write_end		= aufs_write_end,
 +	/* no bmap, no block device */
 +	.invalidate_folio	= aufs_invalidate_folio,
-+	.releasepage		= aufs_releasepage,
++	.release_folio		= aufs_release_folio,
 +	/* is fallback_migrate_page ok? */
 +	/* .migratepage		= aufs_migratepage, */
 +	.isolate_page		= aufs_isolate_page,
@@ -13966,12 +13969,13 @@ diff -Naur null/fs/aufs/file.c linux-5.18/fs/aufs/file.c
 +	.is_dirty_writeback	= aufs_is_dirty_writeback,
 +	.error_remove_page	= aufs_error_remove_page,
 +	.swap_activate		= aufs_swap_activate,
-+	.swap_deactivate	= aufs_swap_deactivate
++	.swap_deactivate	= aufs_swap_deactivate,
++	.swap_rw		= aufs_swap_rw
 +#endif /* CONFIG_AUFS_DEBUG */
 +};
-diff -Naur null/fs/aufs/file.h linux-5.18/fs/aufs/file.h
+diff -Naur null/fs/aufs/file.h linux-5.19/fs/aufs/file.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/file.h	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/file.h	2022-08-11 14:29:49.298138054 +0200
 @@ -0,0 +1,342 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -14315,9 +14319,9 @@ diff -Naur null/fs/aufs/file.h linux-5.18/fs/aufs/file.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FILE_H__ */
-diff -Naur null/fs/aufs/finfo.c linux-5.18/fs/aufs/finfo.c
+diff -Naur null/fs/aufs/finfo.c linux-5.19/fs/aufs/finfo.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/finfo.c	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/finfo.c	2022-08-11 14:29:49.298138054 +0200
 @@ -0,0 +1,149 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -14468,9 +14472,9 @@ diff -Naur null/fs/aufs/finfo.c linux-5.18/fs/aufs/finfo.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/f_op.c linux-5.18/fs/aufs/f_op.c
+diff -Naur null/fs/aufs/f_op.c linux-5.19/fs/aufs/f_op.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/f_op.c	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/f_op.c	2022-08-11 14:29:49.298138054 +0200
 @@ -0,0 +1,771 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -15243,9 +15247,9 @@ diff -Naur null/fs/aufs/f_op.c linux-5.18/fs/aufs/f_op.c
 +	.fallocate	= aufs_fallocate,
 +	.copy_file_range = aufs_copy_file_range
 +};
-diff -Naur null/fs/aufs/fsctx.c linux-5.18/fs/aufs/fsctx.c
+diff -Naur null/fs/aufs/fsctx.c linux-5.19/fs/aufs/fsctx.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/fsctx.c	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/fsctx.c	2022-08-11 14:29:49.298138054 +0200
 @@ -0,0 +1,1242 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -16252,7 +16256,7 @@ diff -Naur null/fs/aufs/fsctx.c linux-5.18/fs/aufs/fsctx.c
 +		case Opt_##name:			\
 +			err = 0;			\
 +			opt->tf = !result.negated;	\
-+			break;
++			break
 +	au_fsctx_TF(trunc_xino);
 +	au_fsctx_TF(trunc_xib);
 +	au_fsctx_TF(dirperm1);
@@ -16329,7 +16333,7 @@ diff -Naur null/fs/aufs/fsctx.c linux-5.18/fs/aufs/fsctx.c
 +{
 +#define do_test(name)					\
 +	if (!strncmp(str, name ":", sizeof(name)))	\
-+		return sizeof(name) - 1;
++		return sizeof(name) - 1
 +	do_test("br");
 +	do_test("add");
 +	do_test("ins");
@@ -16489,9 +16493,9 @@ diff -Naur null/fs/aufs/fsctx.c linux-5.18/fs/aufs/fsctx.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur null/fs/aufs/fstype.h linux-5.18/fs/aufs/fstype.h
+diff -Naur null/fs/aufs/fstype.h linux-5.19/fs/aufs/fstype.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/fstype.h	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/fstype.h	2022-08-11 14:29:49.298138054 +0200
 @@ -0,0 +1,401 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -16894,9 +16898,9 @@ diff -Naur null/fs/aufs/fstype.h linux-5.18/fs/aufs/fstype.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FSTYPE_H__ */
-diff -Naur null/fs/aufs/hbl.h linux-5.18/fs/aufs/hbl.h
+diff -Naur null/fs/aufs/hbl.h linux-5.19/fs/aufs/hbl.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/hbl.h	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/hbl.h	2022-08-11 14:29:49.299138066 +0200
 @@ -0,0 +1,65 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -16963,10 +16967,10 @@ diff -Naur null/fs/aufs/hbl.h linux-5.18/fs/aufs/hbl.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_HBL_H__ */
-diff -Naur null/fs/aufs/hfsnotify.c linux-5.18/fs/aufs/hfsnotify.c
+diff -Naur null/fs/aufs/hfsnotify.c linux-5.19/fs/aufs/hfsnotify.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/hfsnotify.c	2022-06-09 16:22:53.425948689 +0200
-@@ -0,0 +1,289 @@
++++ linux-5.19/fs/aufs/hfsnotify.c	2022-08-11 14:29:49.299138066 +0200
+@@ -0,0 +1,290 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2021 Junjiro R. Okajima
@@ -17208,7 +17212,8 @@ diff -Naur null/fs/aufs/hfsnotify.c linux-5.18/fs/aufs/hfsnotify.c
 +		goto out;
 +
 +	err = 0;
-+	group = fsnotify_alloc_group(&au_hfsn_ops);
++	group = fsnotify_alloc_group(&au_hfsn_ops,
++				     /*flags - not for userspace*/0);
 +	if (IS_ERR(group)) {
 +		err = PTR_ERR(group);
 +		pr_err("fsnotify_alloc_group() failed, %d\n", err);
@@ -17256,9 +17261,9 @@ diff -Naur null/fs/aufs/hfsnotify.c linux-5.18/fs/aufs/hfsnotify.c
 +	.fin_br		= au_hfsn_fin_br,
 +	.init_br	= au_hfsn_init_br
 +};
-diff -Naur null/fs/aufs/hfsplus.c linux-5.18/fs/aufs/hfsplus.c
+diff -Naur null/fs/aufs/hfsplus.c linux-5.19/fs/aufs/hfsplus.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/hfsplus.c	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/hfsplus.c	2022-08-11 14:29:49.299138066 +0200
 @@ -0,0 +1,60 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -17320,9 +17325,9 @@ diff -Naur null/fs/aufs/hfsplus.c linux-5.18/fs/aufs/hfsplus.c
 +		au_lcnt_dec(&br->br_nfiles);
 +	}
 +}
-diff -Naur null/fs/aufs/hnotify.c linux-5.18/fs/aufs/hnotify.c
+diff -Naur null/fs/aufs/hnotify.c linux-5.19/fs/aufs/hnotify.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/hnotify.c	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/hnotify.c	2022-08-11 14:29:49.299138066 +0200
 @@ -0,0 +1,715 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -18039,9 +18044,9 @@ diff -Naur null/fs/aufs/hnotify.c linux-5.18/fs/aufs/hnotify.c
 +	if (au_cache[AuCache_HNOTIFY])
 +		au_hn_destroy_cache();
 +}
-diff -Naur null/fs/aufs/iinfo.c linux-5.18/fs/aufs/iinfo.c
+diff -Naur null/fs/aufs/iinfo.c linux-5.19/fs/aufs/iinfo.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/iinfo.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/iinfo.c	2022-08-11 14:29:49.299138066 +0200
 @@ -0,0 +1,286 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -18329,9 +18334,9 @@ diff -Naur null/fs/aufs/iinfo.c linux-5.18/fs/aufs/iinfo.c
 +	au_kfree_rcu(iinfo->ii_hinode);
 +	AuRwDestroy(&iinfo->ii_rwsem);
 +}
-diff -Naur null/fs/aufs/inode.c linux-5.18/fs/aufs/inode.c
+diff -Naur null/fs/aufs/inode.c linux-5.19/fs/aufs/inode.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/inode.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/inode.c	2022-08-11 14:29:49.300138078 +0200
 @@ -0,0 +1,531 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -18864,9 +18869,9 @@ diff -Naur null/fs/aufs/inode.c linux-5.18/fs/aufs/inode.c
 +		mask |= MAY_READ; /* force permission check */
 +	return au_test_h_perm(h_userns, h_inode, mask);
 +}
-diff -Naur null/fs/aufs/inode.h linux-5.18/fs/aufs/inode.h
+diff -Naur null/fs/aufs/inode.h linux-5.19/fs/aufs/inode.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/inode.h	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/inode.h	2022-08-11 14:29:49.300138078 +0200
 @@ -0,0 +1,705 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -19573,9 +19578,9 @@ diff -Naur null/fs/aufs/inode.h linux-5.18/fs/aufs/inode.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_INODE_H__ */
-diff -Naur null/fs/aufs/ioctl.c linux-5.18/fs/aufs/ioctl.c
+diff -Naur null/fs/aufs/ioctl.c linux-5.19/fs/aufs/ioctl.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/ioctl.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/ioctl.c	2022-08-11 14:29:49.300138078 +0200
 @@ -0,0 +1,220 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -19797,9 +19802,9 @@ diff -Naur null/fs/aufs/ioctl.c linux-5.18/fs/aufs/ioctl.c
 +	return aufs_ioctl_nondir(file, cmd, (unsigned long)compat_ptr(arg));
 +}
 +#endif
-diff -Naur null/fs/aufs/i_op_add.c linux-5.18/fs/aufs/i_op_add.c
+diff -Naur null/fs/aufs/i_op_add.c linux-5.19/fs/aufs/i_op_add.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/i_op_add.c	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/i_op_add.c	2022-08-11 14:29:49.299138066 +0200
 @@ -0,0 +1,941 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -20742,9 +20747,9 @@ diff -Naur null/fs/aufs/i_op_add.c linux-5.18/fs/aufs/i_op_add.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/i_op.c linux-5.18/fs/aufs/i_op.c
+diff -Naur null/fs/aufs/i_op.c linux-5.19/fs/aufs/i_op.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/i_op.c	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/i_op.c	2022-08-11 14:29:49.299138066 +0200
 @@ -0,0 +1,1512 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -22258,9 +22263,9 @@ diff -Naur null/fs/aufs/i_op.c linux-5.18/fs/aufs/i_op.c
 +		.update_time	= aufs_update_time
 +	}
 +};
-diff -Naur null/fs/aufs/i_op_del.c linux-5.18/fs/aufs/i_op_del.c
+diff -Naur null/fs/aufs/i_op_del.c linux-5.19/fs/aufs/i_op_del.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/i_op_del.c	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/i_op_del.c	2022-08-11 14:29:49.299138066 +0200
 @@ -0,0 +1,522 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -22784,9 +22789,9 @@ diff -Naur null/fs/aufs/i_op_del.c linux-5.18/fs/aufs/i_op_del.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur null/fs/aufs/i_op_ren.c linux-5.18/fs/aufs/i_op_ren.c
+diff -Naur null/fs/aufs/i_op_ren.c linux-5.19/fs/aufs/i_op_ren.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/i_op_ren.c	2022-06-09 16:22:53.425948689 +0200
++++ linux-5.19/fs/aufs/i_op_ren.c	2022-08-11 14:29:49.299138066 +0200
 @@ -0,0 +1,1257 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -24045,9 +24050,9 @@ diff -Naur null/fs/aufs/i_op_ren.c linux-5.18/fs/aufs/i_op_ren.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur null/fs/aufs/Kconfig linux-5.18/fs/aufs/Kconfig
+diff -Naur null/fs/aufs/Kconfig linux-5.19/fs/aufs/Kconfig
 --- /dev/null
-+++ linux-5.18/fs/aufs/Kconfig	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/fs/aufs/Kconfig	2022-08-11 14:29:49.296138029 +0200
 @@ -0,0 +1,199 @@
 +# SPDX-License-Identifier: GPL-2.0
 +config AUFS_FS
@@ -24175,7 +24180,7 @@ diff -Naur null/fs/aufs/Kconfig linux-5.18/fs/aufs/Kconfig
 +	his child on the lower branch, since it is a bad idea to issue
 +	rename(2) internally for every lower branch. But user may not
 +	accept this behaviour. So here is a workaround to allow such
-+	rename(2) and store some extra infromation on the writable
++	rename(2) and store some extra information on the writable
 +	branch. Obviously this costs high (and I don't like it).
 +	To use this feature, you need to enable this configuration AND
 +	to specify the mount option `dirren.'
@@ -24248,9 +24253,9 @@ diff -Naur null/fs/aufs/Kconfig linux-5.18/fs/aufs/Kconfig
 +	Automatic configuration for internal use.
 +	When aufs supports Magic SysRq, enabled automatically.
 +endif
-diff -Naur null/fs/aufs/lcnt.h linux-5.18/fs/aufs/lcnt.h
+diff -Naur null/fs/aufs/lcnt.h linux-5.19/fs/aufs/lcnt.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/lcnt.h	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/lcnt.h	2022-08-11 14:29:49.300138078 +0200
 @@ -0,0 +1,186 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -24438,9 +24443,9 @@ diff -Naur null/fs/aufs/lcnt.h linux-5.18/fs/aufs/lcnt.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LCNT_H__ */
-diff -Naur null/fs/aufs/loop.c linux-5.18/fs/aufs/loop.c
+diff -Naur null/fs/aufs/loop.c linux-5.19/fs/aufs/loop.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/loop.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/loop.c	2022-08-11 14:29:49.300138078 +0200
 @@ -0,0 +1,148 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -24590,9 +24595,9 @@ diff -Naur null/fs/aufs/loop.c linux-5.18/fs/aufs/loop.c
 +		symbol_put(loop_backing_file);
 +	au_kfree_try_rcu(au_warn_loopback_array);
 +}
-diff -Naur null/fs/aufs/loop.h linux-5.18/fs/aufs/loop.h
+diff -Naur null/fs/aufs/loop.h linux-5.19/fs/aufs/loop.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/loop.h	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/loop.h	2022-08-11 14:29:49.300138078 +0200
 @@ -0,0 +1,55 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -24649,9 +24654,9 @@ diff -Naur null/fs/aufs/loop.h linux-5.18/fs/aufs/loop.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LOOP_H__ */
-diff -Naur null/fs/aufs/magic.mk linux-5.18/fs/aufs/magic.mk
+diff -Naur null/fs/aufs/magic.mk linux-5.19/fs/aufs/magic.mk
 --- /dev/null
-+++ linux-5.18/fs/aufs/magic.mk	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/magic.mk	2022-08-11 14:29:49.300138078 +0200
 @@ -0,0 +1,31 @@
 +# SPDX-License-Identifier: GPL-2.0
 +
@@ -24684,9 +24689,9 @@ diff -Naur null/fs/aufs/magic.mk linux-5.18/fs/aufs/magic.mk
 +ifdef CONFIG_HFSPLUS_FS
 +ccflags-y += -DHFSPLUS_SUPER_MAGIC=0x482b
 +endif
-diff -Naur null/fs/aufs/Makefile linux-5.18/fs/aufs/Makefile
+diff -Naur null/fs/aufs/Makefile linux-5.19/fs/aufs/Makefile
 --- /dev/null
-+++ linux-5.18/fs/aufs/Makefile	2022-06-09 16:22:53.423948668 +0200
++++ linux-5.19/fs/aufs/Makefile	2022-08-11 14:29:49.296138029 +0200
 @@ -0,0 +1,46 @@
 +# SPDX-License-Identifier: GPL-2.0
 +
@@ -24734,9 +24739,9 @@ diff -Naur null/fs/aufs/Makefile linux-5.18/fs/aufs/Makefile
 +aufs-$(CONFIG_AUFS_BR_HFSPLUS) += hfsplus.o
 +aufs-$(CONFIG_AUFS_DEBUG) += debug.o
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
-diff -Naur null/fs/aufs/module.c linux-5.18/fs/aufs/module.c
+diff -Naur null/fs/aufs/module.c linux-5.19/fs/aufs/module.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/module.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/module.c	2022-08-11 14:29:49.300138078 +0200
 @@ -0,0 +1,273 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -25011,9 +25016,9 @@ diff -Naur null/fs/aufs/module.c linux-5.18/fs/aufs/module.c
 +
 +module_init(aufs_init);
 +module_exit(aufs_exit);
-diff -Naur null/fs/aufs/module.h linux-5.18/fs/aufs/module.h
+diff -Naur null/fs/aufs/module.h linux-5.19/fs/aufs/module.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/module.h	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/module.h	2022-08-11 14:29:49.300138078 +0200
 @@ -0,0 +1,180 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -25195,9 +25200,9 @@ diff -Naur null/fs/aufs/module.h linux-5.18/fs/aufs/module.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_MODULE_H__ */
-diff -Naur null/fs/aufs/mvdown.c linux-5.18/fs/aufs/mvdown.c
+diff -Naur null/fs/aufs/mvdown.c linux-5.19/fs/aufs/mvdown.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/mvdown.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/mvdown.c	2022-08-11 14:29:49.300138078 +0200
 @@ -0,0 +1,706 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -25905,9 +25910,9 @@ diff -Naur null/fs/aufs/mvdown.c linux-5.18/fs/aufs/mvdown.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur null/fs/aufs/opts.c linux-5.18/fs/aufs/opts.c
+diff -Naur null/fs/aufs/opts.c linux-5.19/fs/aufs/opts.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/opts.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/opts.c	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,1032 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -26941,9 +26946,9 @@ diff -Naur null/fs/aufs/opts.c linux-5.18/fs/aufs/opts.c
 +{
 +	return au_mntflags(sb) & AuOptMask_UDBA;
 +}
-diff -Naur null/fs/aufs/opts.h linux-5.18/fs/aufs/opts.h
+diff -Naur null/fs/aufs/opts.h linux-5.19/fs/aufs/opts.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/opts.h	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/opts.h	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,263 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -27208,9 +27213,9 @@ diff -Naur null/fs/aufs/opts.h linux-5.18/fs/aufs/opts.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_OPTS_H__ */
-diff -Naur null/fs/aufs/plink.c linux-5.18/fs/aufs/plink.c
+diff -Naur null/fs/aufs/plink.c linux-5.19/fs/aufs/plink.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/plink.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/plink.c	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,516 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -27728,9 +27733,9 @@ diff -Naur null/fs/aufs/plink.c linux-5.18/fs/aufs/plink.c
 +		}
 +	}
 +}
-diff -Naur null/fs/aufs/poll.c linux-5.18/fs/aufs/poll.c
+diff -Naur null/fs/aufs/poll.c linux-5.19/fs/aufs/poll.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/poll.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/poll.c	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,51 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -27783,9 +27788,9 @@ diff -Naur null/fs/aufs/poll.c linux-5.18/fs/aufs/poll.c
 +		AuDbg("mask 0x%x\n", mask);
 +	return mask;
 +}
-diff -Naur null/fs/aufs/posix_acl.c linux-5.18/fs/aufs/posix_acl.c
+diff -Naur null/fs/aufs/posix_acl.c linux-5.19/fs/aufs/posix_acl.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/posix_acl.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/posix_acl.c	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,111 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -27898,9 +27903,9 @@ diff -Naur null/fs/aufs/posix_acl.c linux-5.18/fs/aufs/posix_acl.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/procfs.c linux-5.18/fs/aufs/procfs.c
+diff -Naur null/fs/aufs/procfs.c linux-5.19/fs/aufs/procfs.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/procfs.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/procfs.c	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,170 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -28072,9 +28077,9 @@ diff -Naur null/fs/aufs/procfs.c linux-5.18/fs/aufs/procfs.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/rdu.c linux-5.18/fs/aufs/rdu.c
+diff -Naur null/fs/aufs/rdu.c linux-5.19/fs/aufs/rdu.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/rdu.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/rdu.c	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,384 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -28460,9 +28465,9 @@ diff -Naur null/fs/aufs/rdu.c linux-5.18/fs/aufs/rdu.c
 +	return err;
 +}
 +#endif
-diff -Naur null/fs/aufs/rwsem.h linux-5.18/fs/aufs/rwsem.h
+diff -Naur null/fs/aufs/rwsem.h linux-5.19/fs/aufs/rwsem.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/rwsem.h	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/rwsem.h	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,85 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -28549,9 +28554,9 @@ diff -Naur null/fs/aufs/rwsem.h linux-5.18/fs/aufs/rwsem.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_RWSEM_H__ */
-diff -Naur null/fs/aufs/sbinfo.c linux-5.18/fs/aufs/sbinfo.c
+diff -Naur null/fs/aufs/sbinfo.c linux-5.19/fs/aufs/sbinfo.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/sbinfo.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/sbinfo.c	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,316 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -28869,9 +28874,9 @@ diff -Naur null/fs/aufs/sbinfo.c linux-5.18/fs/aufs/sbinfo.c
 +	di_write_unlock2(d1, d2);
 +	si_read_unlock(d1->d_sb);
 +}
-diff -Naur null/fs/aufs/super.c linux-5.18/fs/aufs/super.c
+diff -Naur null/fs/aufs/super.c linux-5.19/fs/aufs/super.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/super.c	2022-06-09 16:22:53.426948700 +0200
++++ linux-5.19/fs/aufs/super.c	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,871 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -29744,9 +29749,9 @@ diff -Naur null/fs/aufs/super.c linux-5.18/fs/aufs/super.c
 +	/* no need to __module_get() and module_put(). */
 +	.owner		= THIS_MODULE,
 +};
-diff -Naur null/fs/aufs/super.h linux-5.18/fs/aufs/super.h
+diff -Naur null/fs/aufs/super.h linux-5.19/fs/aufs/super.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/super.h	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/super.h	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,592 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -30340,9 +30345,9 @@ diff -Naur null/fs/aufs/super.h linux-5.18/fs/aufs/super.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SUPER_H__ */
-diff -Naur null/fs/aufs/sysaufs.c linux-5.18/fs/aufs/sysaufs.c
+diff -Naur null/fs/aufs/sysaufs.c linux-5.19/fs/aufs/sysaufs.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/sysaufs.c	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/sysaufs.c	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,94 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -30438,9 +30443,9 @@ diff -Naur null/fs/aufs/sysaufs.c linux-5.18/fs/aufs/sysaufs.c
 +out:
 +	return err;
 +}
-diff -Naur null/fs/aufs/sysaufs.h linux-5.18/fs/aufs/sysaufs.h
+diff -Naur null/fs/aufs/sysaufs.h linux-5.19/fs/aufs/sysaufs.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/sysaufs.h	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/sysaufs.h	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,102 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -30544,9 +30549,9 @@ diff -Naur null/fs/aufs/sysaufs.h linux-5.18/fs/aufs/sysaufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __SYSAUFS_H__ */
-diff -Naur null/fs/aufs/sysfs.c linux-5.18/fs/aufs/sysfs.c
+diff -Naur null/fs/aufs/sysfs.c linux-5.19/fs/aufs/sysfs.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/sysfs.c	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/sysfs.c	2022-08-11 14:29:49.301138091 +0200
 @@ -0,0 +1,374 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -30922,9 +30927,9 @@ diff -Naur null/fs/aufs/sysfs.c linux-5.18/fs/aufs/sysfs.c
 +		}
 +	}
 +}
-diff -Naur null/fs/aufs/sysrq.c linux-5.18/fs/aufs/sysrq.c
+diff -Naur null/fs/aufs/sysrq.c linux-5.19/fs/aufs/sysrq.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/sysrq.c	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/sysrq.c	2022-08-11 14:29:49.302138103 +0200
 @@ -0,0 +1,149 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -31075,9 +31080,9 @@ diff -Naur null/fs/aufs/sysrq.c linux-5.18/fs/aufs/sysrq.c
 +	if (unlikely(err))
 +		pr_err("err %d (ignored)\n", err);
 +}
-diff -Naur null/fs/aufs/vdir.c linux-5.18/fs/aufs/vdir.c
+diff -Naur null/fs/aufs/vdir.c linux-5.19/fs/aufs/vdir.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/vdir.c	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/vdir.c	2022-08-11 14:29:49.302138103 +0200
 @@ -0,0 +1,896 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -31975,9 +31980,9 @@ diff -Naur null/fs/aufs/vdir.c linux-5.18/fs/aufs/vdir.c
 +	/* smp_mb(); */
 +	return 0;
 +}
-diff -Naur null/fs/aufs/vfsub.c linux-5.18/fs/aufs/vfsub.c
+diff -Naur null/fs/aufs/vfsub.c linux-5.19/fs/aufs/vfsub.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/vfsub.c	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/vfsub.c	2022-08-11 14:29:49.302138103 +0200
 @@ -0,0 +1,918 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -32897,9 +32902,9 @@ diff -Naur null/fs/aufs/vfsub.c linux-5.18/fs/aufs/vfsub.c
 +
 +	return err;
 +}
-diff -Naur null/fs/aufs/vfsub.h linux-5.18/fs/aufs/vfsub.h
+diff -Naur null/fs/aufs/vfsub.h linux-5.19/fs/aufs/vfsub.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/vfsub.h	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/vfsub.h	2022-08-11 14:29:49.302138103 +0200
 @@ -0,0 +1,358 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -33259,9 +33264,9 @@ diff -Naur null/fs/aufs/vfsub.h linux-5.18/fs/aufs/vfsub.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_VFSUB_H__ */
-diff -Naur null/fs/aufs/wbr_policy.c linux-5.18/fs/aufs/wbr_policy.c
+diff -Naur null/fs/aufs/wbr_policy.c linux-5.19/fs/aufs/wbr_policy.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/wbr_policy.c	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/wbr_policy.c	2022-08-11 14:29:49.302138103 +0200
 @@ -0,0 +1,830 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -34093,9 +34098,9 @@ diff -Naur null/fs/aufs/wbr_policy.c linux-5.18/fs/aufs/wbr_policy.c
 +		.fin	= au_wbr_create_fin_mfs
 +	}
 +};
-diff -Naur null/fs/aufs/whout.c linux-5.18/fs/aufs/whout.c
+diff -Naur null/fs/aufs/whout.c linux-5.19/fs/aufs/whout.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/whout.c	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/whout.c	2022-08-11 14:29:49.302138103 +0200
 @@ -0,0 +1,1072 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -35169,9 +35174,9 @@ diff -Naur null/fs/aufs/whout.c linux-5.18/fs/aufs/whout.c
 +		au_whtmp_rmdir_free(args);
 +	}
 +}
-diff -Naur null/fs/aufs/whout.h linux-5.18/fs/aufs/whout.h
+diff -Naur null/fs/aufs/whout.h linux-5.19/fs/aufs/whout.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/whout.h	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/whout.h	2022-08-11 14:29:49.302138103 +0200
 @@ -0,0 +1,87 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -35260,9 +35265,9 @@ diff -Naur null/fs/aufs/whout.h linux-5.18/fs/aufs/whout.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WHOUT_H__ */
-diff -Naur null/fs/aufs/wkq.c linux-5.18/fs/aufs/wkq.c
+diff -Naur null/fs/aufs/wkq.c linux-5.19/fs/aufs/wkq.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/wkq.c	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/wkq.c	2022-08-11 14:29:49.302138103 +0200
 @@ -0,0 +1,372 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -35636,9 +35641,9 @@ diff -Naur null/fs/aufs/wkq.c linux-5.18/fs/aufs/wkq.c
 +
 +	return err;
 +}
-diff -Naur null/fs/aufs/wkq.h linux-5.18/fs/aufs/wkq.h
+diff -Naur null/fs/aufs/wkq.h linux-5.19/fs/aufs/wkq.h
 --- /dev/null
-+++ linux-5.18/fs/aufs/wkq.h	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/wkq.h	2022-08-11 14:29:49.302138103 +0200
 @@ -0,0 +1,89 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
@@ -35729,9 +35734,9 @@ diff -Naur null/fs/aufs/wkq.h linux-5.18/fs/aufs/wkq.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WKQ_H__ */
-diff -Naur null/fs/aufs/xattr.c linux-5.18/fs/aufs/xattr.c
+diff -Naur null/fs/aufs/xattr.c linux-5.19/fs/aufs/xattr.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/xattr.c	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/xattr.c	2022-08-11 14:29:49.303138115 +0200
 @@ -0,0 +1,368 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -36101,9 +36106,9 @@ diff -Naur null/fs/aufs/xattr.c linux-5.18/fs/aufs/xattr.c
 +{
 +	sb->s_xattr = au_xattr_handlers;
 +}
-diff -Naur null/fs/aufs/xino.c linux-5.18/fs/aufs/xino.c
+diff -Naur null/fs/aufs/xino.c linux-5.19/fs/aufs/xino.c
 --- /dev/null
-+++ linux-5.18/fs/aufs/xino.c	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/fs/aufs/xino.c	2022-08-11 14:29:49.303138115 +0200
 @@ -0,0 +1,1926 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -38031,9 +38036,9 @@ diff -Naur null/fs/aufs/xino.c linux-5.18/fs/aufs/xino.c
 +out:
 +	return err;
 +}
-diff -Naur null/include/uapi/linux/aufs_type.h linux-5.18/include/uapi/linux/aufs_type.h
+diff -Naur null/include/uapi/linux/aufs_type.h linux-5.19/include/uapi/linux/aufs_type.h
 --- /dev/null
-+++ linux-5.18/include/uapi/linux/aufs_type.h	2022-06-09 16:22:53.427948711 +0200
++++ linux-5.19/include/uapi/linux/aufs_type.h	2022-08-11 14:29:49.303138115 +0200
 @@ -0,0 +1,452 @@
 +/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 +/*
@@ -38077,7 +38082,7 @@ diff -Naur null/include/uapi/linux/aufs_type.h linux-5.18/include/uapi/linux/auf
 +#include <limits.h>
 +#endif /* __KERNEL__ */
 +
-+#define AUFS_VERSION	"5.18-20220606"
++#define AUFS_VERSION	"5.19-20220808"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')

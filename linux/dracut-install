@@ -1,0 +1,16 @@
+#!/bin/bash
+
+KERNEL_VERSION=5.19.10-1
+
+if [ -f /usr/bin/dracut ]; then 
+
+    echo ":: Building initramfs for linux-${KERNEL_VERSION}"
+	dracut -f --no-hostonly-cmdline "/boot/initramfs-linux.img" --kver ${KERNEL_VERSION}
+	echo ":: Building initramfs for linux-fallback"
+	dracut -f --no-hostonly --no-hostonly-cmdline "/boot/initramfs-linux-fallback.img" --kver ${KERNEL_VERSION}
+
+else
+
+    /usr/bin/mkinitcpio -p linux
+
+fi

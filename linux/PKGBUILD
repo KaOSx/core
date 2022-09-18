@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=5.18
-pkgver=5.18.17
+_basekernel=5.19
+pkgver=5.19.10
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.18.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.19.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -25,9 +25,10 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.18.tar.xz"
         'tmpfs-idr.patch'
         'vfs-ino.patch'
         'k510.patch'
-        # standard config files for mkinitcpio ramdisk
+        # standard config files for mkinitcpio & dracut ramdisk
         'linux.preset'
-        '99-linux.hook')
+        '99-linux.hook'
+        'dracut-install')
 md5sums=('58e80452e2d8e1993cd7ec95e697ab5a'
          'eb51619bca73002120e8ca1e7dac6bf5'
          'bae47773142f372f7978a96dc762e2a8'
@@ -97,7 +98,7 @@ build() {
 package_linux() {
   pkgdesc="The Linux Kernel and modules"
   groups=('base')
-  depends=('coreutils' 'linux-firmware' 'kmod' 'mkinitcpio>=0.7')
+  depends=('coreutils' 'linux-firmware' 'kmod' 'initrd')
   provides=('acerhk=0.5.35' 'aufs3')
   conflicts=('acerhk')
   replaces=('aufs3')
@@ -116,15 +117,16 @@ package_linux() {
   # add vmlinux
   install -D -m644 vmlinux "${pkgdir}/usr/src/linux-${_kernver}/vmlinux"
 
-  # install fallback mkinitcpio preset file and pacman hook for kernel
+  # install mkinitcpio preset file, dracut-install file and pacman hook for kernel
   install -D -m644 "${srcdir}/linux.preset" "${pkgdir}/etc/mkinitcpio.d/linux.preset"
   install -D -m644 "${srcdir}/99-linux.hook" "${pkgdir}/usr/share/libalpm/hooks/99-${pkgbase}.hook"
+  install -D -m755 "${srcdir}/dracut-install" "${pkgdir}/usr/share/libalpm/scripts/dracut-install"
 
   # set correct depmod command for install
   sed \
     -e  "s/KERNEL_NAME=.*/KERNEL_NAME=${_kernelname}/" \
     -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/" \
-    -i "${startdir}/linux.install"
+    -i "${startdir}/linux.install" "${pkgdir}/usr/share/libalpm/scripts/dracut-install"
   sed \
     -e "1s|'linux.*'|'${pkgname}'|" \
     -e "s|ALL_kver=.*|ALL_kver=\"/boot/vmlinuz-${pkgname}\"|" \
