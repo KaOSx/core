@@ -7,7 +7,7 @@ pkgdesc="Common C routines used by GTK+ and other libs"
 url="https://www.gtk.org/"
 arch=('x86_64')
 license=('LGPL')
-depends=('pcre' 'libffi')
+depends=('pcre2' 'libffi')
 makedepends=('pkg-config' 'python3' 'libxslt' 'docbook-xml' 'elfutils' 'meson' 'ninja')
 options=('!docs' '!libtool' '!emptydirs')
 conflicts=('glib2-docs')
@@ -23,14 +23,14 @@ sha256sums=('4a39a2f624b8512d500d5840173eda7fa85f51c109052eae806acece85d345f0'
 
 prepare() {
   cd glib-${pkgver}
-  
+
   #patch -p1 -i ../revert_wakeups.patch
 }
   
 build() {
   mkdir -p build
   cd build
-  
+
   meson ../glib-${pkgver} \
     --prefix=/usr \
     --buildtype=release \
@@ -43,7 +43,7 @@ build() {
 package() {
   cd build
   DESTDIR=${pkgdir} ninja install
-  
+
   install -dm755 ${pkgdir}/usr/share/libalpm/hooks/
   install -m644 ../glib-compile-schemes.hook ${pkgdir}/usr/share/libalpm/hooks/
   install -m644 ../gio-querymodules.hook ${pkgdir}/usr/share/libalpm/hooks/
