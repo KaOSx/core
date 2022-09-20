@@ -5,12 +5,12 @@ _kver="$(cat /lib/modules/extramodules-5.19-next/version)"
 pkgname=zfs-kmod-next
 pkgver=2.1.5
 _commit=05147319b0821f61fcff743e20605e191d523906
-pkgrel=21
+pkgrel=22
 pkgdesc="Kernel module for the Zettabyte File System (linux-next version)."
 arch=('x86_64')
 url="https://zfsonlinux.org/"
 license=('CDDL')
-depends=('kmod' 'linux-next' "zfs=${pkgver}")
+depends=('kmod' 'linux-next' "zfs=${pkgver}" 'zfs-headers')
 makedepends=('linux-next-headers' 'elfutils')
 source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-${pkgver}.tar.gz")
 #source=("https://github.com/openzfs/zfs/archive/${_commit}.zip")
@@ -55,6 +55,11 @@ package() {
     make DESTDIR=${pkgdir} install
     #remove references to the buildsystem
     sed -i "s|${srcdir}||" ${pkgdir}/usr/src/zfs-*/${_extramodules}/Module.symvers
+    #remove header files packaged in zfs-headers
+    rm -r ${pkgdir}/usr/src/zfs-${pkgver}/include
+    rm -r ${pkgdir}/usr/src/spl-${pkgver}/include
+    rm ${pkgdir}/usr/src/zfs-${pkgver}/zfs*
+    rm -r ${pkgdir}/usr/src/spl-${pkgver}/spl*
 
     install -D -m0644 LICENSE -t ${pkgdir}/usr/share/licenses/${pkgname}
 }
