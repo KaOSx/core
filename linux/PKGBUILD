@@ -29,21 +29,22 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.19.tar.xz"
         'linux.preset'
         '99-linux.hook'
         'dracut-install')
-md5sums=('58e80452e2d8e1993cd7ec95e697ab5a'
-         'eb51619bca73002120e8ca1e7dac6bf5'
-         'bae47773142f372f7978a96dc762e2a8'
-         'fce12dbe73de31753df837a5fbeff221'
-         '7396c01e39542f94437e5721d9912935'
-         'b0feea67790dd1ed1af0aaad5dd5fecc'
-         '40e2630ce943a665218909d4b502b75a'
-         '615ad46da042c71b7c414a670a1d0b90'
-         '3415229ef2fafdefbcd5a17ff2cb3b8d'
+md5sums=('f91bfe133d2cb1692f705947282e123a'
+         '5cbd0c86c42318067a64ccbb626afad9'
+         'bf6d30af68f2366a666cf1fb2a5a16b6'
+         'c3c0f610d10afd2a12f241c94d569bcd'
+         '37b8a457407d955cfdcbc409dee61ad1'
+         'c5a2f19fce740fdf79ca301025a87c1d'
+         'bd981049a8f7390272d12f1b31748104'
+         '6c9dd76e9103774e8b9eb327f845dc67'
+         '071c8b9477349e2c569389a0774aee2b'
          '180e55a128db2641e04374ce07d131a7'
-         '1aac5a95cdb8b87ee461bca74d76cc83'
-         'd6550d76e46a8b755a6e0bab2c2b5739'
+         'f8171e7fbbe1f70b5d6bfea4a858a16a'
+         'e45313ba0347efbdc19a52c89eb86ed0'
          '8c52e6d232b461446b7363e86522a720'
          'eb14dcfd80c00852ef81ded6e826826a'
-         '0b73d293ca1ab91748ae2d2c39921532')
+         '1d7d087c55698405e97161c77387ef81'
+         '16aa2f266d366c223ec7555ad3afd4be')
 
 prepare() {
   cd "${srcdir}/linux-${_basekernel}"
