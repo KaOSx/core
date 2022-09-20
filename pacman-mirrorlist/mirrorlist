@@ -22,7 +22,7 @@ Server = https://mirrors.aliyun.com/KaOS/$repo
 Server = http://mirrors.aliyun.com/KaOS/$repo
 
 # Czech Republic
-Server = http://mirror.234.cz/kaos/$repo
+Server = https://mirror.234.cz/kaos/$repo
 
 # France
 Server = https://fr.kaosx.cf/$repo
@@ -39,7 +39,6 @@ Server = https://mirror.freedif.org/KaOS/$repo
 
 # United States
 Server = https://mirror.math.princeton.edu/pub/kaoslinux/$repo
-Server = http://mirror.dacentec.com/kaosx/$repo
 Server = https://kqtos.tk/repo/$repo
 
 
