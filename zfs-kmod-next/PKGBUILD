@@ -24,7 +24,6 @@ build() {
         --sysconfdir=/etc \
         --datadir=/usr/share \
         --libdir=/lib \
-        --datadir=/usr/share \
         --includedir=/usr/include \
         --with-udevdir=/usr/lib/udev \
         --libexecdir=/usr/lib \
