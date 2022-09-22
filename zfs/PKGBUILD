@@ -1,7 +1,7 @@
 
 pkgname=zfs
 pkgver=2.1.5
-pkgrel=4
+pkgrel=5
 pkgdesc="Userspace utilities for the Zettabyte File System Linux kernel module."
 arch=('x86_64')
 url="https://zfsonlinux.org/"
@@ -42,4 +42,7 @@ build() {
 
     chmod 750 ${pkgdir}/etc/sudoers.d
     chmod 440 ${pkgdir}/etc/sudoers.d/zfs
+
+    # Sysvinit files take precedent, remove
+    rm -r ${pkgdir}/etc/init.d
 }
