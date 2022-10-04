@@ -1,11 +1,11 @@
 
-_extramodules=5.19.12-1
+_extramodules=5.19.13-1
 __extramodules=extramodules-5.19
 _kver="$(cat /lib/modules/${__extramodules}/version)"
 
 pkgname=zfs-kmod
 pkgver=2.1.6
-pkgrel=1
+pkgrel=2
 pkgdesc="Kernel module for the Zettabyte File System."
 arch=('x86_64')
 url="https://zfsonlinux.org/"

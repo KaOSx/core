@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=5.19
-pkgver=5.19.12
+pkgver=5.19.13
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -30,7 +30,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.19.tar.xz"
         '99-linux.hook'
         'dracut-install')
 md5sums=('f91bfe133d2cb1692f705947282e123a'
-         '2f9945a50613017d430f7091be9939f8'
+         'cc9f3b62e1274e401b9c37f758493a86'
          'bf6d30af68f2366a666cf1fb2a5a16b6'
          'c3c0f610d10afd2a12f241c94d569bcd'
          '37b8a457407d955cfdcbc409dee61ad1'
