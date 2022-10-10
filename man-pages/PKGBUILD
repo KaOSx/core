@@ -1,6 +1,6 @@
 
 pkgname=man-pages
-pkgver=5.13
+pkgver=6.00
 _posixver=2017-a
 __posixver=2017
 pkgrel=1
