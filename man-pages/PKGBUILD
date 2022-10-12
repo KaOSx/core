@@ -10,9 +10,10 @@ license=('GPL')
 url="https://www.kernel.org/doc/man-pages/"
 groups=('base')
 depends=()
-source=("https://www.kernel.org/pub/linux/docs/man-pages/${pkgname}-${pkgver}.tar.xz"
+#source=("https://www.kernel.org/pub/linux/docs/man-pages/${pkgname}-${pkgver}.tar.xz"
+source=("https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/snapshot/${pkgname}-${pkgver}.tar.gz"
         "https://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/${pkgname}-posix-${_posixver}.tar.xz")
-sha256sums=('614dae3efe7dfd480986763a2a2a8179215032a5a4526c0be5e899a25f096b8b'
+sha256sums=('fd8eb4763fc9b4117131cc9c5c069dfe314682c07811d88c6e859b9c2ca18175'
             'ce67bb25b5048b20dad772e405a83f4bc70faf051afa289361c81f9660318bc3')
 
 build() {
