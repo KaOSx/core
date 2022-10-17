@@ -1,11 +1,11 @@
 
 pkgname=e2fsprogs
 pkgver=1.46.5
-pkgrel=2
+pkgrel=3
 pkgdesc="Ext2/3/4 filesystem utilities"
 arch=('x86_64')
 license=('GPL' 'LGPL' 'MIT')
-url="http://e2fsprogs.sourceforge.net"
+url="https://e2fsprogs.sourceforge.net"
 groups=('base')
 depends=('sh' 'util-linux')
 makedepends=('bc')

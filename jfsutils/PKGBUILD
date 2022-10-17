@@ -1,10 +1,10 @@
 
 pkgname=jfsutils
 pkgver=1.1.15
-pkgrel=9
+pkgrel=10
 pkgdesc="JFS filesystem utilities"
 arch=('x86_64')
-url="http://jfs.sourceforge.net"
+url="https://jfs.sourceforge.net"
 license=('GPL')
 groups=('base')
 depends=('e2fsprogs' 'util-linux')
@@ -19,20 +19,20 @@ build() {
   cd ${pkgname}-${pkgver}
   patch -p1 -i ${srcdir}/inttypes.patch
   patch -p1 -i ${srcdir}/jfsutils-1.1.15-gcc10.patch
-  
+
   ./configure --prefix=/usr --sbindir=/sbin 
   make
 }
 
 check() {
   cd ${pkgname}-${pkgver}
-  
+
   make check
 }
 
 package() {
   cd ${pkgname}-${pkgver}
-  
+
   make DESTDIR=${pkgdir} install
 }
 

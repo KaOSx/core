@@ -1,9 +1,9 @@
 
 pkgname=pptpclient 
 pkgver=1.10.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Client for the proprietary Microsoft Point-to-Point Tunneling Protocol, PPTP."
-url="http://pptpclient.sourceforge.net/"
+url="https://pptpclient.sourceforge.net/"
 arch=('x86_64')
 license=('GPL')
 depends=('glibc' 'ppp' 'iproute2')

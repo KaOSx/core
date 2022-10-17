@@ -1,10 +1,10 @@
 
 pkgname=nfs-utils
 pkgver=2.6.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Support programs for Network File Systems"
 arch=('x86_64')
-url='http://nfs.sourceforge.net'
+url='https://nfs.sourceforge.net'
 license=('GPL')
 backup=(etc/{exports,nfs.conf,nfsmount.conf})
 depends=('glibc' 'e2fsprogs' 'rpcbind' 'libtirpc' 'libevent' 'device-mapper' 'sqlite' 'libldap')
