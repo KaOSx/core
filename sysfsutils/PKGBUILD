@@ -1,11 +1,11 @@
 
 pkgname=sysfsutils
 pkgver=2.1.1
-pkgrel=4
+pkgrel=5
 pkgdesc="System Utilities Based on Sysfs"
 arch=('x86_64')
 license=('GPL' 'LGPL')
-url="http://linux-diag.sourceforge.net/Sysfsutils.html"
+url="https://linux-diag.sourceforge.net/Sysfsutils.html"
 groups=('base')
 depends=('glibc')
 options=('!libtool')
