@@ -1,6 +1,6 @@
 
 pkgname=usbutils
-pkgver=014
+pkgver=015
 pkgrel=1
 pkgdesc="USB Device Utilities"
 arch=('x86_64')
@@ -8,13 +8,14 @@ url="http://linux-usb.sourceforge.net/"
 license=('GPL')
 groups=('base')
 depends=('libusb' 'hwids')
-source=("https://www.kernel.org/pub/linux/utils/usb/usbutils/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('3a079cfad60560227b67192482d7813bf96326fcbb66c04254839715f276fc69')
+#source=("https://www.kernel.org/pub/linux/utils/usb/usbutils/${pkgname}-${pkgver}.tar.xz")
+source=("https://github.com/gregkh/usbutils/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('659669e08cbc3961bc085c33f328f950a9570400519c3213b6908f3cc5f44227')
 
 build() {
   cd ${pkgname}-${pkgver}
 
-  #./autogen.sh
+  ./autogen.sh
   ./configure --prefix=/usr \
     --datadir=/usr/share/hwdata \
     --disable-zlib
