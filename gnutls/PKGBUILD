@@ -3,13 +3,14 @@ pkgname=gnutls
 pkgver=3.7.8
 __pkgver=3.7.8
 _pkgver=3.7
-pkgrel=1
+pkgrel=2
 pkgdesc="Secure communications library implementing the SSL, TLS and DTLS protocols and technologies around them"
 arch=('x86_64')
 license=('GPL3' 'LGPL')
 url="https://www.gnutls.org/"
 options=('libtool')
-depends=('brotli' 'gcc-libs' 'libtasn1' 'readline' 'zlib' 'texinfo' 'nettle' 'p11-kit' 'libidn2')
+depends=('brotli' 'gcc-libs' 'libtasn1' 'readline' 'zlib' 'texinfo' 'nettle' 'p11-kit'
+         'libidn2' 'libunistring')
 makepends=('valgrind' 'strace')
 source=("https://www.gnupg.org/ftp/gcrypt/gnutls/v${_pkgver}/${pkgname}-${pkgver}.tar.xz"
         "https://gitlab.com/gnutls/gnutls/-/commit/c061da4fd42eb98ec3ac4e80a75e63924e21b437.diff")
