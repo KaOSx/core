@@ -1,7 +1,7 @@
 
 pkgname=libffi
-pkgver=3.4.2
-pkgrel=2
+pkgver=3.4.4
+pkgrel=1
 pkgdesc="A portable, high level programming interface to various calling conventions."
 arch=('x86_64')
 license=('MIT')
@@ -10,7 +10,7 @@ depends=('glibc')
 options=('!libtool')
 source=("https://github.com/libffi/libffi/releases/download/v${pkgver}/libffi-${pkgver}.tar.gz"
         'libffi.pc.patch')
-sha256sums=('540fb721619a6aba3bdeef7d940d8e9e0e6d2c193595bc243241b77ff9e93620'
+sha256sums=('d66c56ad259a82cf2a9dfc408b32bf5da52371500b84745f7fb8b645712df676'
             '9f1f319527a713cda77d5b2a5a446e57638281aba737f187c947aaf7d3b0eb8b')
 
 build() {
