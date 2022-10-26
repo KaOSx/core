@@ -1,6 +1,6 @@
 
 pkgname=inetutils
-pkgver=2.3
+pkgver=2.4
 pkgrel=1
 pkgdesc="A collection of common network programs."
 arch=('x86_64')
@@ -13,7 +13,7 @@ options=('!emptydirs')
 source=("https://ftp.gnu.org/gnu/inetutils/${pkgname}-${pkgver}.tar.gz"
         'ftpd.conf' 'telnet.xinetd' 'talk.xinetd' 'rlogin.xinetd'
         'rsh.xinetd' 'ftpd.service')
-md5sums=('fd25cc5ea75dfa5738a1ed13398647ea'
+md5sums=('04f8ca625d4f08ee824e98fee65b35eb'
          'e6e6e5990a2e8159a276fef8fbf54c04'
          '8596208d119045543c5fb644e1d713d5'
          '2c3655985cf122591d71d031af84ff90'
