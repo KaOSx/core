@@ -1,11 +1,11 @@
 
 pkgname=openvpn
-pkgver=2.5.7
-_rsa_version=3.1.0
+pkgver=2.5.8
+_rsa_version=3.1.1
 pkgrel=1
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
-url="https://openvpn.net/index.php/open-source.html"
+url="https://openvpn.net/community/"
 depends=('openssl' 'lzo2' 'iproute2')
 makedepends=('python3-docutils')
 license=('custom')
