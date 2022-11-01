@@ -15,16 +15,16 @@ options=('!libtool')
 source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.xz"
         'pacman.conf'
         'makepkg.conf'
-        "https://gitlab.archlinux.org/pacman/pacman/-/commit/a6b06a5b17e19db8700597ee06bae42b2cfe7b5a.diff")
-md5sums=('f71e6f06867749735960d0c1d199d375'
+        "https://gitlab.archlinux.org/pacman/pacman/-/commit/de11824527ec4e2561e161ac40a5714ec943543c.diff")
+md5sums=('f2c7e82cc5483a2c90f228a0393f5526'
          '38ea69609d8c37d11c7ca49478cd75d1'
          '0ce6144eaecdbaedf1ca48527aa3df36'
-         'c8569599f262236d0e069603640aaa84')
+         '9b944e898030bd5afedc27bcdccebe70')
 
 prepare() {
   cd ${pkgname}-${pkgver}
-  # bash 5.2 needed
-  patch -p1 -i ${srcdir}/a6b06a5b17e19db8700597ee06bae42b2cfe7b5a.diff
+  # strip fixes, needed for 6.0.2
+  patch -p1 -i ${srcdir}/de11824527ec4e2561e161ac40a5714ec943543c.diff
 }
 
 build() {
