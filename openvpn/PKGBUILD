@@ -15,8 +15,8 @@ backup=(usr/share/openvpn/easy-rsa/vars
 source=("https://swupdate.openvpn.org/community/releases/openvpn-${pkgver}.tar.gz"
         "https://github.com/OpenVPN/easy-rsa/archive/refs/tags/v${_rsa_version}.tar.gz"
         'openvpn@.service')
-md5sums=('0715df64dcebc9b49bf301b2e1541ba4'
-         'e07f1892c4202a213c903c15a33e64ec'
+md5sums=('8c1181a2baaa25b36e4aa67161c2829e'
+         '82747bc1e6bec779eaf4d8739992a2a8'
          'c0275a1192a7e3c0a167a0dc4809dbaa')
 
 build() {
