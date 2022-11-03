@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 
 _basekernel=6.0
 _srcname=linux-6.0
-pkgver=6.0.6
+pkgver=6.0.7
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -34,7 +34,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         'dracut-next-install'
         "https://github.com/torvalds/linux/commit/e16c4790de39dc861b749674c2a9319507f6f64f.diff")
 md5sums=('d681bd1d62d48049a4874646f6774d92'
-         'cf1eefacef3381cee848a45c343fc38c'
+         '563ee75865b377496172e408ed7eed60'
          '060e7048108393a14fb7a27d54637482'
          'ab142f1bc42b85cd55a1cd45700d14bf'
          '8029362caf6d8f316163e87b81668348'
