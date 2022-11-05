@@ -2,7 +2,7 @@
 pkgname=glib2
 pkgver=2.74.1
 _pkgver=2.74
-pkgrel=1
+pkgrel=2
 pkgdesc="Common C routines used by GTK+ and other libs"
 url="https://www.gtk.org/"
 arch=('x86_64')
@@ -34,6 +34,7 @@ build() {
   meson ../glib-${pkgver} \
     --prefix=/usr \
     --buildtype=release \
+    --libexecdir=/usr/lib \
     -D man=true \
     -D selinux=disabled \
     -D glib_debug=disabled
