@@ -1,9 +1,9 @@
 
 pkgname=linux-firmware
-pkgver=20221012
+pkgver=20221109
 _b43=5.100.138
 _legacy=3.130.20.0
-pkgrel=2
+pkgrel=1
 pkgdesc="Firmware files for Linux"
 arch=('x86_64')
 url="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git"
@@ -42,7 +42,7 @@ options=(!strip emptydirs)
 source=("https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/${pkgname}-${pkgver}.tar.xz"
         "http://mirror2.openwrt.org/sources/broadcom-wl-${_b43}.tar.bz2"
         "http://downloads.openwrt.org/sources/wl_apsta-${_legacy}.o")
-sha256sums=('e9d174af729511c8cccb60ec4e0b223b3c44b67d813b42d1ab9813acfa667fa5'
+sha256sums=('c0ddffbbcf30f2e015bddd5c6d3ce1f13976b906aceabda4a57e3c41a3190701'
             'f1e7067aac5b62b67b8b6e4c517990277804339ac16065eb13c731ff909ae46f'
             '7dba610b1d96dd14e901bcbce14cd6ecd1b1ac6f5c0035b0d6b6dc46a7c3ef90')
 
