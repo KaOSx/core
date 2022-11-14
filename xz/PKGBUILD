@@ -1,6 +1,6 @@
 
 pkgname=xz
-pkgver=5.2.7
+pkgver=5.2.8
 pkgrel=1
 pkgdesc='Library and command line tools for XZ and LZMA compressed files'
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('sh')
 options=('!libtool')
 source=("https://tukaani.org/xz/${pkgname}-${pkgver}.tar.xz"
         'xzgrep-ZDI-CAN-16587.patch')
-md5sums=('6c130d21e260d4476e971985e7394e83'
+md5sums=('7cfa6136d984083e7d4da12c8fb083ea'
          'a194a4240198e221b7d0249dc2c1fe06')
 
 build() {
