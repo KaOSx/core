@@ -38,7 +38,6 @@ replaces=('ar9170-fw'
            'b43-firmware'
            'b43-firmware-legacy')
 options=(!strip emptydirs)
-#source=("git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git#branch=master"
 source=("https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/${pkgname}-${pkgver}.tar.xz"
         "http://mirror2.openwrt.org/sources/broadcom-wl-${_b43}.tar.bz2"
         "http://downloads.openwrt.org/sources/wl_apsta-${_legacy}.o")
