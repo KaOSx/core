@@ -2,7 +2,7 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.35
+pkgver=2.36
 _commit=3e2a15c666e40e5ee740e5079c56d83469280323
 pkgrel=1
 pkgdesc="GNU C Library"
@@ -19,20 +19,20 @@ options=('!strip')
 install=glibc.install
 source=("https://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
 #source=("https://github.com/bminor/glibc/archive/${_commit}.zip"
-        "https://github.com/bminor/glibc/commit/17f0ff097887008b2d3dca270c8ffbb4b43a8749.diff"
+        "https://github.com/bminor/glibc/commit/2d7ed98add14f75041499ac189696c9bd3d757fe.diff"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('dd571c67d85d89d7f60b854a4e207423'
-         '1902b3629a1b43cdf7bfa2c2412ba6b6'
+md5sums=('00e9b89e043340f688bc93ec03239b57'
+         'cbcd16c200d09d00b152a3bdb0ea7ed6'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
          '8b3298de2392a10905a64ceccf56d2c1')
 
 prepare() {
   cd ${pkgname}-${pkgver}
-
-  #patch -p1 -i ${srcdir}/17f0ff097887008b2d3dca270c8ffbb4b43a8749.diff
+  # make 4.4 needed
+  patch -p1 -i ${srcdir}/2d7ed98add14f75041499ac189696c9bd3d757fe.diff
 }
 
 build() {
