@@ -9,18 +9,24 @@ license=('GPL3')
 depends=('guile' 'libxml2')
 makedepends=('autogen')
 options=('!libtool')
-source=("https://ftp.gnu.org/gnu/autogen/rel${pkgver}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('27c28df902a9fdb2b64f008a0a49fd05')
+source=("https://ftp.gnu.org/gnu/autogen/rel${pkgver}/${pkgname}-${pkgver}.tar.xz"
+        'autogen-guile-3.0.patch'
+        "https://gitweb.gentoo.org/repo/gentoo.git/plain/sys-devel/autogen/files/autogen-5.18.16-no-werror.patch")
+md5sums=('27c28df902a9fdb2b64f008a0a49fd05'
+         '7b1ab945692a0fac3a477da2ba5e00d1'
+         '1d81e34dee9269ad7f3bdfba8223056d')
 
 build() {
   cd ${pkgname}-${pkgver}
-  #sed -i -e 's|_guile_versions_to_search="2.0 1.8"|_guile_versions_to_search="2.2"|' configure
-  sed -i 's| -Werror | |' configure
+  # https://sourceforge.net/p/autogen/bugs/196/
+  #patch -p1 -i ${srcdir}/autogen-guile-3.0.patch
+  #patch -p1 -i ${srcdir}/autogen-5.18.16-no-werror.patch
+  #sed -i 's| -Werror ||' configure
 
   ./configure --prefix=/usr \
     --with-packager="KaOS" \
     --with-packager-bug-reports="https://kaosx.us/bugs"
-  make 
+  make
 }
 
 package() {

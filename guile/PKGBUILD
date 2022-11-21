@@ -6,7 +6,7 @@ pkgdesc="GNU Ubiquitous Intelligent Language for Extensions, the official extens
 url="https://www.gnu.org/software/guile/"
 arch=('x86_64')
 license=('GPL')
-depends=('gmp' 'libltdl' 'ncurses' 'texinfo' 'gc' 'libffi' 'libunistring')
+depends=('gmp' 'libltdl' 'ncurses' 'texinfo' 'gc' 'libffi' 'libunistring' 'libxcrypt')
 source=("https://ftp.gnu.org/gnu/guile/${pkgname}-${pkgver}.tar.xz")
 options=('!libtool')
 sha256sums=('cdf776ea5f29430b1258209630555beea6d2be5481f9da4d64986b077ff37504')
@@ -15,8 +15,8 @@ build() {
   cd ${pkgname}-${pkgver}
 
   ./configure --prefix=/usr \
-	--disable-static  \
-	--disable-error-on-warning
+    --disable-static  \
+    --disable-error-on-warning
   make 
 }
 
@@ -26,5 +26,5 @@ package() {
 
   # stop elfutils warnings
   mkdir -p ${pkgdir}/usr/share/gdb/auto-load/usr/lib
-  mv ${pkgdir}/usr/lib/libguile-2.2.so.*gdb.scm ${pkgdir}/usr/share/gdb/auto-load/usr/lib
+  mv ${pkgdir}/usr/lib/libguile-3.0.so.*gdb.scm ${pkgdir}/usr/share/gdb/auto-load/usr/lib
 }
