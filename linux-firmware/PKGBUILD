@@ -3,7 +3,7 @@ pkgname=linux-firmware
 pkgver=20221109
 _b43=5.100.138
 _legacy=3.130.20.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Firmware files for Linux"
 arch=('x86_64')
 url="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git"
@@ -52,6 +52,8 @@ package() {
 
   install -d ${pkgdir}/usr/share/licenses/${pkgname}
   install -Dm644 LICEN* WHENCE ${pkgdir}/usr/share/licenses/linux-firmware/
+  # arm firmware is useless
+  rm ${pkgdir}/lib/firmware/mrvl/prestera/mvsw_prestera_fw_arm64-v4.1.img
 
   # install b43-firmware
   b43-fwcutter -w ${pkgdir}/lib/firmware/ ${srcdir}/broadcom-wl-${_b43}/linux/wl_apsta.o
