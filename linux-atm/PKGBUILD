@@ -1,10 +1,10 @@
 
 pkgname=linux-atm
 pkgver=2.5.2
-pkgrel=6
+pkgrel=7
 pkgdesc="Drivers and tools to support ATM networking under Linux."
 arch=('x86_64')
-url="http://linux-atm.sourceforge.net/"
+url="https://linux-atm.sourceforge.net/"
 license=('GPL')
 depends=('glibc')
 options=('!libtool' '!makeflags')
@@ -20,7 +20,7 @@ prepare() {
 
   patch -p1 -i ${srcdir}/linux5x.patch
   patch -p1 -i ${srcdir}/linux-atm-2.5.2-linux-5.2-SIOCGSTAMP.patch
-}         
+}
 
 build() {
   cd ${pkgname}-${pkgver} 
