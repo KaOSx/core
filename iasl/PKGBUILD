@@ -1,6 +1,6 @@
 
 pkgname=iasl
-pkgver=20220331
+pkgver=20221020
 pkgrel=1
 pkgdesc="Intel ACPI Source Language compiler"
 arch=('x86_64')
@@ -9,13 +9,14 @@ license=('GPLv2')
 depends=('glibc')
 makedepends=('flex' 'bison')
 options=('!makeflags')
-source=("https://acpica.org/sites/acpica/files/acpica-unix-${pkgver}.tar.gz")
-md5sums=('1aa20c05aa3bcb5282daeb6bf33acde2')
+source=("https://acpica.org/sites/acpica/files/acpica-unix-${pkgver}.tar_0.gz")
+md5sums=('907b0d617604abea3ec223acd80fbf87')
 
 build() {
   cd acpica-unix-${pkgver}
+  export CFLAGS="-Wno-dangling-pointer"
 
-  make 
+  make
 }
 
 package() {
