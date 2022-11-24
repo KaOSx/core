@@ -14,6 +14,7 @@ md5sums=('907b0d617604abea3ec223acd80fbf87')
 
 build() {
   cd acpica-unix-${pkgver}
+  # fails to build with gcc 12, see https://github.com/acpica/acpica/issues/771
   export CFLAGS="-Wno-dangling-pointer"
 
   make
