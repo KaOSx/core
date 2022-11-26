@@ -3,7 +3,7 @@ pkgbase=boost
 pkgname=('boost-libs' 'boost')
 pkgver=1.80.0
 _pkgver=1_80_0
-pkgrel=1
+pkgrel=2
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="https://www.boost.org/"
@@ -27,7 +27,7 @@ build() {
   install -d -m 755 ${_stagedir}/bin
   install tools/build/src/engine/b2 ${_stagedir}/bin/b2
 
-   sed -i 's|using python : 3.9 : "/usr" ;|using python : 3.9 : /usr/bin/python3 : /usr/include/python3.9 : /usr/lib ;|g' project-config.jam 
+   sed -i 's|using python : 3.10 : "/usr" ;|using python : 3.10 : /usr/bin/python3 : /usr/include/python3.10 : /usr/lib ;|g' project-config.jam 
    # Support for OpenMPI
    echo "using mpi ;" >> project-config.jam
   
@@ -43,7 +43,7 @@ build() {
       runtime-link=shared \
       link=shared,static \
       toolset=gcc \
-      python=3.9 \
+      python=3.10 \
       cflags="${CPPFLAGS} ${CFLAGS} -O3" linkflags="${LDFLAGS}" \
       --prefix=${_stagedir} \
       --layout=system \
@@ -87,7 +87,7 @@ package_boost-libs() {
     rm -r ${pkgdir}/usr/lib/cmake
 
     # issue with finding new python lib versioning, vigra exposed, add link for old scheme
-    ln -s /usr/lib/libboost_python39.so.${pkgver} ${pkgdir}/usr/lib/libboost_python3.so
+    ln -s /usr/lib/libboost_python310.so.${pkgver} ${pkgdir}/usr/lib/libboost_python3.so
 
     # license
     install -D -m644 ${pkgbase}_${_pkgver}/LICENSE_1_0.txt ${pkgdir}/usr/share/licenses/boost-libs/LICENSE_1_0.txt
