@@ -2,7 +2,7 @@
 pkgname=gobject-introspection
 pkgver=1.74.0
 _pkgver=1.74
-pkgrel=1
+pkgrel=3
 pkgdesc="Introspection system for GObject-based libraries"
 url="https://wiki.gnome.org/Projects/GObjectIntrospection"
 arch=('x86_64')
