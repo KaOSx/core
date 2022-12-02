@@ -3,8 +3,8 @@ _extramodules=6.0.10-1
 _kver="$(cat /lib/modules/extramodules-6.0/version)"
 
 pkgname=zfs-headers
-pkgver=2.1.6
-pkgrel=2
+pkgver=2.1.7
+pkgrel=1
 pkgdesc="Kernel headers for the Zettabyte File System."
 arch=('x86_64')
 url="https://zfsonlinux.org/"
@@ -12,7 +12,7 @@ license=('CDDL')
 depends=('kmod' 'linux' "zfs=${pkgver}")
 makedepends=('linux-headers' 'elfutils')
 source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-${pkgver}.tar.gz")
-sha256sums=("15339014f8d2131348eb937bf8893849806b6d2645ea607a18c7f117749dbd7a")
+sha256sums=("6462e63e185de6ff10c64ffa6ed773201a082f9dd13e603d7e8136fcb4aca71b")
 
 build() {
     cd zfs-${pkgver}
