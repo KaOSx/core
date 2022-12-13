@@ -1,6 +1,6 @@
 
 pkgname=pcre2
-pkgver=10.41
+pkgver=10.42
 pkgrel=1
 pkgdesc="A library that implements Perl 5-style regular expressions, next generation."
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('gcc-libs' 'readline' 'zlib' 'bzip2' 'libedit')
 options=('!libtool')
 #source=("https://ftp.pcre.org/pub/pcre/${pkgname}-${pkgver}.tar.bz2")
 source=("https://github.com/PhilipHazel/pcre2/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('5ee8e1d11557b677e1b159657e2aaf3c')
+md5sums=('a8e9ab2935d428a4807461f183034abe')
 
 build() {
   cd ${pkgname}-${pkgver}
