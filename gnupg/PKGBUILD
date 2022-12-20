@@ -29,7 +29,7 @@ build() {
 
 check() {
     cd gnupg-${pkgver}
-
+    # fails mkdir setup.scm in gpgme test
     make check
 }
 
