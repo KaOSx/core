@@ -4,11 +4,11 @@ pkgver=7.87.0
 pkgrel=1
 pkgdesc="An URL retrival utility and library"
 arch=('x86_64')
-url="https://curl.haxx.se"
+url="https://curl.se/"
 license=('MIT')
 depends=('zlib' 'openssl' 'bash' 'ca-certificates' 'libssh2' 'libpsl' 'libidn2' 'nghttp2')
 options=('!libtool')
-source=("https://curl.haxx.se/download/${pkgname}-${pkgver}.tar.bz2"
+source=("https://curl.se/download/${pkgname}-${pkgver}.tar.bz2"
         'curlbuild.h'
         "https://github.com/curl/curl/commit/52e822173aa3cd4f610531d32fbf943f026cdca6.diff")
 md5sums=('f31433df52c5dba5359a6bd171423d14'
