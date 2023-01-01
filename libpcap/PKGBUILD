@@ -1,6 +1,6 @@
 
 pkgname=libpcap
-pkgver=1.10.1
+pkgver=1.10.2
 pkgrel=1
 pkgdesc="A system-independent interface for user-level packet capture"
 arch=('x86_64')
@@ -9,11 +9,11 @@ license=('BSD')
 depends=('glibc' 'libnl' 'sh' 'libusb')
 makedepends=('flex' 'bluez') # 'linux-headers')
 source=("https://github.com/the-tcpdump-group/libpcap/archive/libpcap-${pkgver}.tar.gz")
-md5sums=('81fc402b01ccacac7fff08518c4458ec')
+md5sums=('248498d9f46deae82ed14315d3e2922e')
 
 build() {
   cd ${pkgname}-${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr --enable-ipv6 
   make
 }
@@ -22,11 +22,11 @@ package() {
   cd ${pkgname}-${pkgname}-${pkgver}
   install -d -m755 ${pkgdir}/usr/bin
   make DESTDIR=${pkgdir} install
-  
+
   install -D -m644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
-  
+
   rm -rf ${pkgdir}/usr/lib/libpcap.a
-  
+
   # backwards compatibility, programs often look for net/bpf.h
   mkdir -p ${pkgdir}/usr/include/net
   cd ${pkgdir}/usr/include/net
