@@ -1,6 +1,6 @@
 
 pkgname=ncurses
-pkgver=6.3
+pkgver=6.4
 pkgrel=1
 pkgdesc="System V Release 4.0 curses emulation library"
 arch=('x86_64')
@@ -8,7 +8,7 @@ url="https://invisible-island.net/ncurses/"
 license=('MIT')
 depends=('glibc')
 source=("https://invisible-mirror.net/archives/ncurses/${pkgname}-${pkgver}.tar.gz")
-md5sums=('a2736befde5fee7d2b7eb45eb281cdbe')
+md5sums=('5a62487b5d4ac6b132fe2bf9f8fad29b')
 
 build() {
   cd ${pkgname}-${pkgver}
