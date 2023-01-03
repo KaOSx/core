@@ -1,6 +1,6 @@
 
 pkgname=busybox
-pkgver=1.35.0
+pkgver=1.36.0
 pkgrel=1
 pkgdesc="Base initramfs tools"
 arch=('x86_64')
@@ -13,8 +13,8 @@ conflicts=('mkinitcpio-busybox')
 options=('!buildflags')
 source=("https://busybox.net/downloads/busybox-${pkgver}.tar.bz2"
         'config')
-md5sums=('585949b1dd4292b604b7d199866e9913'
-         '809a08aef9fdb38dfa22de199d425458')
+md5sums=('835e3ac11e8a5ca13756eb1573719566'
+         '391328c0540790684d3f5a1ace9dc391')
 
 build() {
   cd busybox-${pkgver}
