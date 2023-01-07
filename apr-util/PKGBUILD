@@ -1,11 +1,11 @@
 
 pkgname=apr-util
 pkgver=1.6.1
-pkgrel=9
+pkgrel=10
 pkgdesc="The Apache Portable Runtime"
 arch=('x86_64')
 url="https://apr.apache.org/"
-depends=('apr' 'gdbm' 'expat' 'db' 'libldap' 'unixodbc' 'libxcrypt')
+depends=('apr' 'gdbm' 'expat' 'libldap' 'unixodbc' 'libxcrypt')
 options=('!libtool')
 license=('APACHE')
 source=("https://www.apache.org/dist/apr/apr-util-${pkgver}.tar.bz2")
@@ -19,7 +19,6 @@ build() {
     --without-mysql \
     --without-sqlite2 \
     --without-sqlite3 \
-    --with-berkeley-db=/usr \
     --with-gdbm=/usr \
     --with-ldap
   make
