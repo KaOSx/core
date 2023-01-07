@@ -1,13 +1,13 @@
 
 pkgname=perl
 pkgver=5.34.1
-pkgrel=1
+pkgrel=2
 pkgdesc="A highly capable, feature-rich programming language"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
 url="https://www.perl.org"
 groups=('base')
-depends=('gdbm' 'db' 'coreutils' 'glibc' 'sh' 'libxcrypt')
+depends=('gdbm' 'coreutils' 'glibc' 'sh' 'libxcrypt')
 provides=('perl-archive-tar=2.38'
           'perl-attribute-handlers=1.01'
           'perl-autodie=2.34'
