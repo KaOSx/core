@@ -1,6 +1,6 @@
 
 pkgname=diffutils
-pkgver=3.8
+pkgver=3.9
 pkgrel=1
 pkgdesc="Utility programs used for creating patch files"
 arch=('x86_64')
@@ -9,11 +9,11 @@ license=('GPL3')
 groups=('base')
 depends=('glibc' 'sh')
 source=("https://ftp.gnu.org/gnu/diffutils/${pkgname}-${pkgver}.tar.xz")
-md5sums=('6a6b0fdc72acfe3f2829aab477876fbc')
+sha1sums=('35905d7c3d1ce116e6794be7fe894cd25b2ded74')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr \
     --with-packager="KaOS" \
     --with-packager-bug-reports="https://github.com/KaOSx/core/issues"
@@ -22,13 +22,13 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-
+  # 1 fail on colors
   make check
 }
 
 package() {
   cd ${pkgname}-${pkgver}
-  
+
   make DESTDIR=${pkgdir} install
 }
 
