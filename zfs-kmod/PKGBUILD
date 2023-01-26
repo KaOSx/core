@@ -4,7 +4,7 @@ __extramodules=extramodules-6.0
 _kver="$(cat /lib/modules/${__extramodules}/version)"
 
 pkgname=zfs-kmod
-pkgver=2.1.8
+pkgver=2.1.9
 pkgrel=1
 pkgdesc="Kernel module for the Zettabyte File System."
 arch=('x86_64')
@@ -15,7 +15,7 @@ makedepends=('linux-headers' 'elfutils')
 install=zfs-kmod.install
 source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-${pkgver}.tar.gz")
 #source=("https://github.com/openzfs/zfs/archive/${_commit}.zip")
-sha256sums=("c81c6cdcc6c1deb24dda02e33389e9242f338ef8892e0c161945db1db8b48937")
+sha256sums=("6b172cdf2eb54e17fcd68f900fab33c1430c5c59848fa46fab83614922fe50f6")
 
 build() {
     cd zfs-${pkgver}
