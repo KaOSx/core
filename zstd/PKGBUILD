@@ -1,7 +1,7 @@
 
 pkgname=zstd
 pkgver=1.5.2
-pkgrel=1
+pkgrel=2
 pkgdesc='Zstandard is a real-time compression algorithm, providing high compression ratios.'
 arch=('x86_64')
 url='https://facebook.github.io/zstd/'
@@ -17,6 +17,9 @@ build() {
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=lib \
     -DZSTD_BUILD_CONTRIB=ON \
+    -DZSTD_LZ4_SUPPORT=ON \
+    -DZSTD_LZMA_SUPPORT=ON \
+    -DZSTD_ZLIB_SUPPORT=ON \
     -DZSTD_BUILD_TESTS=ON
   cmake --build build
 }
