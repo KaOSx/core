@@ -41,7 +41,8 @@ source=("https://github.com/systemd/systemd-stable/archive/v${_pkgver}.tar.gz"
         'KaOS_fallback.conf'
         'splash.bmp'
         'systemd-tmpfiles.hook'
-        'boot_color.diff')
+        'boot_color.diff'
+        "https://github.com/systemd/systemd/commit/1bb6ba08b128d62acdbbc566d60a054ff5bb9565.diff")
 md5sums=('31d247df965121f453f1339371cca831'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
@@ -51,14 +52,15 @@ md5sums=('31d247df965121f453f1339371cca831'
          '614718170cbc5eb6a130a3e0681d924d'
          'd7eec59a2aaa54770d22ccfa52d0ac2b'
          '27f5023827fc6fc9361f524436855a1e'
-         'a59ceb44b57272d6cebaf86acda7d393')
+         'a59ceb44b57272d6cebaf86acda7d393'
+         'fffaf28b17b0b4a26cb4c2e83a0e8100')
 
 prepare() {
   cd ${pkgname}-stable-${_pkgver}
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
-  # set systemd-boot colors
-  #patch -p1 -i ${srcdir}/boot_color.diff
+
+  patch -p1 -i ${srcdir}/1bb6ba08b128d62acdbbc566d60a054ff5bb9565.diff
 }
 
 build() {
