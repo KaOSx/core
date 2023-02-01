@@ -1,7 +1,7 @@
 
 pkgname=apr-util
-pkgver=1.6.1
-pkgrel=10
+pkgver=1.6.2
+pkgrel=1
 pkgdesc="The Apache Portable Runtime"
 arch=('x86_64')
 url="https://apr.apache.org/"
@@ -9,10 +9,10 @@ depends=('apr' 'gdbm' 'expat' 'libldap' 'unixodbc' 'libxcrypt')
 options=('!libtool')
 license=('APACHE')
 source=("https://www.apache.org/dist/apr/apr-util-${pkgver}.tar.bz2")
-sha256sums=('d3e12f7b6ad12687572a3a39475545a072608f4ba03a6ce8a3778f607dd0035b')
+sha256sums=('4fe57443a7905027e13707c875c5de6f9fc6e2e5a2725d695b25a8a10c2d27e0')
 
 build() {
-  cd apr-util-${pkgver}
+  cd apr-util-${pkgver}-rc3
   ./configure --prefix=/usr \
     --with-apr=/usr \
     --without-pgsql \
@@ -25,7 +25,7 @@ build() {
 }
 
 package() {
-  cd apr-util-${pkgver}
+  cd apr-util-${pkgver}-rc3
 
   make DESTDIR=${pkgdir} install
 }

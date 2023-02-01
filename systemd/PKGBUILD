@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=252.4
-_pkgver=252.4
+pkgver=252.5
+_pkgver=252.5
 pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
@@ -42,7 +42,7 @@ source=("https://github.com/systemd/systemd-stable/archive/v${_pkgver}.tar.gz"
         'splash.bmp'
         'systemd-tmpfiles.hook'
         'boot_color.diff')
-md5sums=('be1709332649a39c7a143d99a3b1043a'
+md5sums=('31d247df965121f453f1339371cca831'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -69,7 +69,7 @@ build() {
   # cp locale-archive from /usr/lib/locale
   #export LANG=en_US.UTF-8
   
-  meson ../${pkgname}-stable-${_pkgver} \
+  meson setup ../${pkgname}-stable-${_pkgver} \
     --prefix=/usr \
     --buildtype=release \
     --libexecdir=/usr/lib \

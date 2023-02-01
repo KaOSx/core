@@ -1,7 +1,7 @@
 
 pkgname=apr
-pkgver=1.7.0
-pkgrel=3
+pkgver=1.7.1
+pkgrel=1
 pkgdesc="The Apache Portable Runtime"
 arch=('x86_64')
 url="https://apr.apache.org/"
@@ -9,10 +9,10 @@ depends=('util-linux')
 options=('!libtool')
 license=('APACHE')
 source=("https://www.apache.org/dist/apr/apr-${pkgver}.tar.bz2")
-sha256sums=('e2e148f0b2e99b8e5c6caa09f6d4fb4dd3e83f744aa72a952f94f5a14436f7ea')
+sha256sums=('402f8fcd12fbedbf12e681900d341c1f78d71b033104b201680933dc839c8d26')
 
 build() {
-  cd apr-${pkgver}
+  cd apr-${pkgver}-rc2
 
   ./configure --prefix=/usr \
     --includedir=/usr/include/apr-1 \
@@ -24,13 +24,13 @@ build() {
 }
 
 check() {
-  cd apr-${pkgver}
-  
+  cd apr-${pkgver}-rc2
+
   make -j1 check
 }
 
 package() {
-  cd apr-${pkgver}
-  
+  cd apr-${pkgver}-rc2
+
   make DESTDIR=${pkgdir} install
 }
