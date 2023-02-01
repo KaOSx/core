@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=6.0
-pkgver=6.0.12
+_basekernel=6.1
+pkgver=6.1.9
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.0.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.1.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v6.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -29,18 +29,18 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.0.tar.xz"
         'linux.preset'
         '99-linux.hook'
         'dracut-install')
-md5sums=('d681bd1d62d48049a4874646f6774d92'
-         '004602adceb57082a6ee545b84c45eae'
-         '4b15852074dfbca4771602be7f281bbc'
-         'ab142f1bc42b85cd55a1cd45700d14bf'
-         '8029362caf6d8f316163e87b81668348'
-         '8a58d1b22c32a24098a3231edf15b5a9'
-         '3099c5f62c07080eaabffcd2060874ef'
-         '88fc19661471326b772761d10e30c875'
-         '394865849faa035a822e5ed47e1adb41'
+md5sums=('475320de08f16c9fa486fc4edfe98b30'
+         '14bc8ed6e48750bb48ee534173abbfcd'
+         '11fcba88954d33ea3d1dd27091b3f882'
+         '689feec39ada24e4ab8b2c0e1bde6c6c'
+         'c1e121db0cec455bd931be8788bc4413'
+         '9ec72445556860313d706663257692ed'
+         '5d390ada22f22b3bd8858630ff6be766'
+         '0efa9266cdfaa82b589c1af320a4c55b'
+         '4c0ee7ba416417df880551ce487c3f64'
          '180e55a128db2641e04374ce07d131a7'
-         '47eeb2556b3f5cfdd01ea15d3f166325'
-         '7712ee14e3af484f36a7e2d6dc7ed504'
+         '27043cffc55273c647d5441a16127cc7'
+         '6c6915bf242ca26e22caf051470e6366'
          '8c52e6d232b461446b7363e86522a720'
          'eb14dcfd80c00852ef81ded6e826826a'
          '1d7d087c55698405e97161c77387ef81'
@@ -197,7 +197,7 @@ package_linux-headers() {
     cp -a drivers/media/pci/${i}/*.h "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/pci/${i}"
   done
   # usb
-  for i in cpia2 em28xx pwc; do
+  for i in em28xx pwc; do
     mkdir -p "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/usb/${i}"
     cp -a drivers/media/usb/${i}/*.h "${pkgdir}/usr/src/linux-${_kernver}/drivers/media/usb/${i}"
   done

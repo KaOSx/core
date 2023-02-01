@@ -2,10 +2,10 @@
 
 rm -Rf aufs-standalone
 # clone the aufs repository to the local disk
-git clone https://github.com/sfjro/aufs-standalone.git aufs5-standalone
-cd aufs5-standalone
+git clone https://github.com/sfjro/aufs-standalone.git aufs6-standalone
+cd aufs6-standalone
 git branch -r
-git checkout origin/aufs6.0
+git checkout origin/aufs6.1
 
 # modify what you want
 
@@ -13,18 +13,18 @@ git checkout origin/aufs6.0
 # create the patch with the directories: fs, include and Documentation
 
 rm -v $(find . -type f -name '*.orig')
-grep -qse 'EXPORT_SYMBOL(' aufs5-standalone.patch && \
+grep -qse 'EXPORT_SYMBOL(' aufs6-standalone.patch && \
 sed -i-old -e 's|EXPORT_SYMBOL(|EXPORT_SYMBOL_GPL(|' aufs5-standalone.patch
-rm -rf ../tmp/linux-6.0
-mkdir -p ../tmp/linux-6.0
-cp -a fs ../tmp/linux-6.0
-cp -a include ../tmp/linux-6.0
-cp -a Documentation ../tmp/linux-6.0
-rm ../tmp/linux-6.0/include/uapi/linux/Kbuild
+rm -rf ../tmp/linux-6.1
+mkdir -p ../tmp/linux-6.1
+cp -a fs ../tmp/linux-6.1
+cp -a include ../tmp/linux-6.1
+cp -a Documentation ../tmp/linux-6.1
+rm ../tmp/linux-6.1/include/uapi/linux/Kbuild
 cd ../tmp
-diff -Naur null linux-6.0  | filterdiff | \
-sed -e 's|null\(/include/uapi/linux/Kbuild\)|linux-6.0-old\1|;s|^--- null.*|--- /dev/null|;\|linux-6.0/include/uapi/linux/Kbuild|,${\|@@ -0,0 +1 @@|,$d}' \
-| bzip2 > aufs$(sed -ne 's|#define.*AUFS_VERSION.*"\(.*\)"|\1|p'  linux-6.0/include/uapi/linux/aufs_type.h).patch.bz2
+diff -Naur null linux-6.1  | filterdiff | \
+sed -e 's|null\(/include/uapi/linux/Kbuild\)|linux-6.1-old\1|;s|^--- null.*|--- /dev/null|;\|linux-6.1/include/uapi/linux/Kbuild|,${\|@@ -0,0 +1 @@|,$d}' \
+| bzip2 > aufs$(sed -ne 's|#define.*AUFS_VERSION.*"\(.*\)"|\1|p'  linux-6.1/include/uapi/linux/aufs_type.h).patch.bz2
 mv *.bz2 $OLDPWD
 cd $OLDPWD
 mv *patch* ..
