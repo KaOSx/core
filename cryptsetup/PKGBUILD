@@ -1,6 +1,6 @@
 
 pkgname=cryptsetup
-pkgver=2.6.0
+pkgver=2.6.1
 _pkgver=2.6
 pkgrel=1
 pkgdesc="Utility used to conveniently setup disk encryption based on DMCrypt kernel module."
@@ -16,7 +16,7 @@ source=("https://www.kernel.org/pub/linux/utils/cryptsetup/v${_pkgver}/${pkgname
         'encrypt_install'
         'sd-encrypt'
         "https://gitlab.com/cryptsetup/cryptsetup/-/commit/604abec333a0efb44fd8bc610aa0b1151dd0f612.diff")
-sha256sums=('44397ba76e75a9cde5b02177bc63cd7af428a785788e3a7067733e7761842735'
+sha256sums=('410ded65a1072ab9c8e41added37b9729c087fef4d2db02bb4ef529ad6da4693'
             '5cbc819a1c867fabcbc0721b078be96c1f22116bbdf11ae7da1e50a8f6590acb'
             '9f78cab3caf45dcd6534973472a9f6051ac0a6859369afb143f24a9c34a3073f'
             '01956fc738ee1d42ba9d962615fcd2c13ad2e8119b1ba38a002e15c631ee8daf'
