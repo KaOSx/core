@@ -1,7 +1,7 @@
 
 pkgname=systemd
-pkgver=252.5
-_pkgver=252.5
+pkgver=252.6
+_pkgver=252.6
 pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
@@ -43,7 +43,7 @@ source=("https://github.com/systemd/systemd-stable/archive/v${_pkgver}.tar.gz"
         'systemd-tmpfiles.hook'
         'boot_color.diff'
         "https://github.com/systemd/systemd/commit/1bb6ba08b128d62acdbbc566d60a054ff5bb9565.diff")
-md5sums=('31d247df965121f453f1339371cca831'
+md5sums=('365e37fc6eb39f56c33b97ed0c13d5be'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -60,7 +60,7 @@ prepare() {
   
   sed -i 's|Linux Boot Manager|Systemd Boot Manager|' src/boot/bootctl.c
 
-  patch -p1 -i ${srcdir}/1bb6ba08b128d62acdbbc566d60a054ff5bb9565.diff
+  #patch -p1 -i ${srcdir}/1bb6ba08b128d62acdbbc566d60a054ff5bb9565.diff
 }
 
 build() {
