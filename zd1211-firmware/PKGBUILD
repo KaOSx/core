@@ -1,7 +1,7 @@
 
 pkgname=zd1211-firmware
 pkgver=1.5
-pkgrel=6
+pkgrel=7
 pkgdesc="Firmware for the in-kernel26 zd1211rw wireless driver"
 arch=('x86_64')
 url="https://sourceforge.net/projects/zd1211/"
@@ -15,6 +15,6 @@ package() {
   # Install firmware
   for i in zd1211* WS11U*
   do                
-    install -D -m 644 $i ${pkgdir}/usr/lib/firmware/zd1211/$i
+    install -D -m 644 $i ${pkgdir}/lib/firmware/zd1211/$i
   done
 }
