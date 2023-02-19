@@ -1,7 +1,7 @@
 
 pkgname=git
 pkgver=2.39.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency."
 arch=('x86_64')
 url="https://git-scm.com/"

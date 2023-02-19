@@ -1,7 +1,7 @@
 
 pkgname=automake
 pkgver=1.16.5
-pkgrel=2
+pkgrel=3
 pkgdesc="A GNU tool for automatically creating Makefiles"
 arch=('x86_64')
 license=('GPL')
@@ -24,7 +24,7 @@ check(){
   cd ${pkgname}-${pkgver}
   # see http://www.linuxfromscratch.org/lfs/view/development/chapter06/automake.html
   #sed -i "s:./configure:LEXLIB=/usr/lib/libfl.a &:" t/lex-{clean,depend}-cxx.sh
-  # no test fail 
+  # 10 txinfo test fails
   make check PYTHON=/usr/bin/python3
 }
 
