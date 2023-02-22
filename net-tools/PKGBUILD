@@ -2,7 +2,7 @@
 pkgname=net-tools
 pkgver=2.10
 _commit=0eebece8c964e3cfa8a018f42b2e7e751a7009a0
-pkgrel=4
+pkgrel=5
 pkgdesc="Configuration tools for Linux networking"
 arch=('x86_64')
 license=('GPL')
@@ -16,7 +16,7 @@ md5sums=('78aae762c95e2d731faf88d482e4cde5')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   yes "" | make
 }
 

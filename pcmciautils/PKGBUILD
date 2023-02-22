@@ -1,7 +1,7 @@
 
 pkgname=pcmciautils
 pkgver=018
-pkgrel=13
+pkgrel=14
 pkgdesc="Utilities for inserting and removing PCMCIA cards"
 arch=('x86_64')
 url="https://mirrors.edge.kernel.org/pub/linux/utils/kernel/pcmcia/"

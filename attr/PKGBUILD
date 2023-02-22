@@ -1,7 +1,7 @@
 
 pkgname=attr
 pkgver=2.5.1
-pkgrel=3
+pkgrel=4
 pkgdesc="Extended attribute support library for ACL support"
 arch=('x86_64')
 url="https://savannah.nongnu.org/projects/attr"
@@ -15,7 +15,7 @@ md5sums=('ac1c5a7a084f0f83b8cace34211f64d8')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr \
     --libdir=/usr/lib \
     --libexecdir=/usr/lib \
@@ -27,6 +27,6 @@ package() {
   cd ${pkgname}-${pkgver}
 
   make DESTDIR=${pkgdir} install
-  
+
   rm -f ${pkgdir}/usr/lib/libattr.a
 }

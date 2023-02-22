@@ -1,7 +1,7 @@
 
 pkgname=reiserfsprogs
 pkgver=3.6.27
-pkgrel=5
+pkgrel=6
 pkgdesc="Reiserfs utilities"
 arch=('x86_64')
 url="https://git.kernel.org/pub/scm/linux/kernel/git/jeffm/reiserfsprogs.git/tree/README"
@@ -16,7 +16,7 @@ sha256sums=('0e95b67fa7746a3c2d59145e9b9c2feb4a6be52853e83b497b182eae508e62e3'
 build() {
   cd ${pkgname}-${pkgver}
   patch -p1 -i ${srcdir}/reiserfsprogs-3.6.27-loff_t.patch
-  
+
   autoreconf -vi
   ./configure --prefix=/usr --sbindir=/sbin
   make
@@ -24,12 +24,12 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-  
+
   make check
 }
 
 package() {
   cd ${pkgname}-${pkgver}
-  
+
   make DESTDIR=${pkgdir} install
 }

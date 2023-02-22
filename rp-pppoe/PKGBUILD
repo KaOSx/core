@@ -1,7 +1,7 @@
 
 pkgname=rp-pppoe
 pkgver=3.15
-pkgrel=1
+pkgrel=2
 pkgdesc="Roaring Penguin's Point-to-Point Protocol over Ethernet client"
 arch=('x86_64')
 url="https://dianne.skoll.ca/projects/rp-pppoe/"
@@ -18,7 +18,7 @@ md5sums=('5b6e19e7a31ff228fafd2e62f023e521'
 build() {
   cd ${pkgname}-${pkgver}/src
   #patch -p2 -i ${srcdir}/kmode.patch
-  
+
   ./configure --prefix=/usr \
     --enable-plugin
   make
@@ -27,6 +27,6 @@ build() {
 package() {
   cd ${pkgname}-${pkgver}/src
   make PLUGIN_DIR="/usr/lib/rp-pppoe" DESTDIR=${pkgdir} install
-  
+
   install -Dm644 ../../adsl.service ${pkgdir}/usr/lib/systemd/system/adsl.service
 }

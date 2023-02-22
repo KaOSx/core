@@ -1,7 +1,7 @@
 
 pkgname=rpcbind
 pkgver=1.2.6
-pkgrel=1
+pkgrel=2
 pkgdesc="portmap replacement which supports RPC over various protocols"
 arch=('x86_64')
 depends=('bash' 'glibc' 'libtirpc')
@@ -23,7 +23,7 @@ build() {
   # http://seclists.org/oss-sec/2017/q2/209
   # https://github.com/guidovranken/rpcbomb/
   patch -p1 -i ${srcdir}/rpcbind.patch
-  
+
   ./configure --prefix=/usr \
         --with-rpcuser=rpc \
         --enable-warmstarts \
@@ -33,9 +33,9 @@ build() {
 package() {
   cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
-  
+
   install -D -m644 ${srcdir}/rpcbind.conf ${pkgdir}/etc/conf.d/rpcbind
   install -d -m 700 -o 32 -g 32 ${pkgdir}/var/lib/rpcbind
-  
+
   install -D -m644 COPYING ${pkgdir}/usr/share/licenses/rpcbind/COPYING
 }
