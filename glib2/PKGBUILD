@@ -1,6 +1,6 @@
 
 pkgname=glib2
-pkgver=2.74.5
+pkgver=2.74.6
 _pkgver=2.74
 pkgrel=1
 pkgdesc="Common C routines used by GTK+ and other libs"
@@ -16,7 +16,7 @@ source=("https://ftp.gnome.org/pub/GNOME/sources/glib/${_pkgver}/glib-${pkgver}.
         'gio-querymodules.hook'
         'glib-compile-schemes.hook'
         'revert_wakeups.patch')
-sha256sums=('ceba83a5999ceb31a4c4fc9921207cb9ffffd2ab1d6ec03c162d3f608a5c14c8'
+sha256sums=('069cf7e51cd261eb163aaf06c8d1754c6835f31252180aff5814e5afc7757fbc'
             '557c88177f011ced17bdeac1af3f882b2ca33b386a866fdf900b35f927a2bbe8'
             '64ae5597dda3cc160fc74be038dbe6267d41b525c0c35da9125fbf0de27f9b25'
             '05635ffbeb5875fc5cb4adb4c8c85450693c36fc15e4c85f2f04fdbaf7e9d1e8')
@@ -31,7 +31,7 @@ build() {
   mkdir -p build
   cd build
 
-  meson ../glib-${pkgver} \
+  meson setup ../glib-${pkgver} \
     --prefix=/usr \
     --buildtype=release \
     --libexecdir=/usr/lib \
