@@ -1,6 +1,6 @@
 
 pkgname=btrfs-progs
-pkgver=6.2
+pkgver=6.2.1
 pkgrel=1
 pkgdesc="Btrfs filesystem utilities."
 arch=('x86_64')
@@ -12,13 +12,13 @@ options=('!staticlibs')
 source=("https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/${pkgname}-v${pkgver}.tar.xz"
         'initcpio-install-btrfs'
         'initcpio-hook-btrfs')
-sha256sums=('5fa59b9304bec59a8f0cb505f60c95d8c46b2948389033ad9d3cd72928bfd144'
+sha256sums=('af55e3104cf5e52252bb940a291ed34852916224a50206600c94134664273299'
             '34e1472c028875bb8cc7d06fa18aad9c1c90e3719de416733e9baac82a12cd94'
             '116a8fac508a3872b77f249e71d9de4f9b61cd20edfde01c99a5deba143769df')
 
 build() {
   cd ${pkgname}-v${pkgver}
-  cp config.h.in include/
+  #cp config.h.in include/
 
   ./configure --prefix=/usr \
     --disable-documentation
