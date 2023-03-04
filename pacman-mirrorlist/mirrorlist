@@ -38,9 +38,3 @@ Server = https://repo.kaosx.us/$repo
 
 # Singapore
 Server = https://mirror.freedif.org/KaOS/$repo
-
-# United Kingdom
-Server = https://mirrors.fossho.st/kaos/$repo
-Server = http://kaosx.ml/repo/$repo
-
-
