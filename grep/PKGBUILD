@@ -1,7 +1,7 @@
 
 pkgname=grep
-pkgver=3.8
-pkgrel=2
+pkgver=3.9
+pkgrel=1
 pkgdesc="A string search utility"
 arch=('x86_64')
 license=('GPL3')
@@ -10,7 +10,7 @@ groups=('base')
 depends=('glibc' 'pcre2' 'sh')
 makedepends=('texinfo')
 source=("https://ftp.gnu.org/gnu/grep/${pkgname}-${pkgver}.tar.xz")
-sha1sums=('6d0d32cabaf44efac9e1d2c449eb041525c54b2e')
+sha1sums=('bcaa3f0c4b81ae4192c8d0a2be3571a14ea27383')
 
 build() {
   cd ${pkgname}-${pkgver}
