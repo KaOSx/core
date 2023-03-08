@@ -1,6 +1,6 @@
 
 pkgname=cracklib
-pkgver=2.9.8
+pkgver=2.9.9
 pkgrel=1
 pkgdesc="Password Checking Library"
 arch=('x86_64')
@@ -8,11 +8,15 @@ license=('GPL')
 url="https://github.com/cracklib/cracklib"
 depends=('glibc' 'zlib')
 options=('!libtool')
-source=("https://github.com/cracklib/cracklib/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('a242301bad13421476db8eecbbc9536a')
+source=("https://github.com/cracklib/cracklib/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.bz2"
+        "https://github.com/drfiemost/cracklib/commit/f795a7d04a04253a3cb9faa30b57d8eba713b0cc.diff")
+md5sums=('66f21c984d73cb9b201e68dda4d84e73'
+         '79ab4eb414820ffa3c568cf3d33a5d5f')
 
 build() {
   cd ${pkgname}-${pkgver}
+  # https://github.com/cracklib/cracklib/issues/52
+  patch -p2 -i ${srcdir}/f795a7d04a04253a3cb9faa30b57d8eba713b0cc.diff
 
   ./configure --prefix=/usr --without-python
   make 
