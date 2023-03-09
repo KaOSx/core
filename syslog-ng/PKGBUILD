@@ -1,7 +1,7 @@
 
 # update syslog-ng.conf on 3.xx updates
 pkgname=syslog-ng
-pkgver=4.0.1
+pkgver=4.1.0
 pkgrel=1
 pkgdesc="Next-generation syslogd with advanced networking and filtering capabilities"
 arch=('x86_64')
@@ -18,8 +18,8 @@ backup=('etc/syslog-ng/scl.conf'
 source=("https://github.com/balabit/syslog-ng/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.gz"
         'syslog-ng.conf'
         'syslog-ng.logrotate')
-md5sums=('d217fd29873a063bcc21409eaa7a7b19'
-         'b907ceafe19ad791f697bfc1eb68f770'
+md5sums=('ec48450536d38860166b5af05ce19dfc'
+         '5381a0387b22a24d6c4aea984b6b8b83'
          '0c0d5149bd3e8d666c506351edecbe71')
 
 build() {
