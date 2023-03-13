@@ -1,6 +1,6 @@
 
 pkgname=ca-certificates
-pkgver=20211016
+pkgver=20230311
 pkgrel=1
 epoch=1
 pkgdesc='Common CA certificates'
@@ -11,20 +11,21 @@ depends=('bash' 'run-parts' 'openssl' 'findutils' 'coreutils' 'sed')
 makedepends=('ruby' 'python3')
 install=ca-certificates.install
 backup=('etc/ca-certificates.conf')
-source=("http://sourcearchive.raspbian.org/main/c/${pkgname}/${pkgname}_${pkgver}.tar.xz"
-        "https://salsa.debian.org/debian/ca-certificates/-/commit/8033d52259172b4bddc0f8bbcb6f6566b348db72.diff")
-md5sums=('5cce77de047611c4b9384d4ce52d9204'
-         '1a966cb0aaa3258ab431c35d46ce3dcc')
+#source=("http://sourcearchive.raspbian.org/main/c/${pkgname}/${pkgname}_${pkgver}.tar.xz"
+source=("http://deb.debian.org/debian/pool/main/c/ca-certificates/${pkgname}_${pkgver}.tar.xz"
+        'warning.diff')
+md5sums=('fc1c3ec0067385f0be8ac7f6e670a0f8'
+         '163c1e224a48d4df96d2f0a40a7cc01a')
 
 build() {
-  cd work
-  patch -p1 -R -i ${srcdir}/8033d52259172b4bddc0f8bbcb6f6566b348db72.diff
+  cd ${pkgname}
+  patch -p1 -R -i ${srcdir}/warning.diff
 
   make
 }
 
 package() {
-  cd work
+  cd ${pkgname}
 
   install -d -m755 ${pkgdir}/{etc/ca-certificates/update.d,usr/{sbin,share/ca-certificates},etc/ssl/certs}
   make install DESTDIR=${pkgdir}
