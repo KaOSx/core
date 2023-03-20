@@ -2,7 +2,7 @@
 pkgname=subversion
 pkgver=1.14.2
 _pythonver=3.10
-pkgrel=6
+pkgrel=7
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
 url="https://subversion.apache.org/"
@@ -40,6 +40,7 @@ build() {
                 --enable-javahl \
                 --without-gnome-keyring \
                 --without-kwallet \
+                --without-berkeley-db \
                 --disable-static \
                 --libexecdir=/usr/lib \
                 --with-utf8proc=internal
