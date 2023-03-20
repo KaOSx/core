@@ -1,6 +1,6 @@
 
 pkgname=coreutils
-pkgver=9.1
+pkgver=9.2
 pkgrel=1
 pkgdesc="The basic file, shell and text manipulation utilities of the GNU operating system"
 arch=('x86_64')
@@ -10,8 +10,8 @@ groups=('base')
 depends=('glibc' 'pam' 'acl' 'gmp' 'libcap')
 source=("https://ftp.gnu.org/gnu/coreutils/${pkgname}-${pkgver}.tar.xz"
         "https://github.com/coreutils/coreutils/commit/e8b56ebd536e82b15542a00c888109471936bfda.diff")
-md5sums=('8b1ca4e018a7dce9bb937faec6618671'
-         'e2e4e42b276f91eb0d818a2ae2e7cea0')
+sha1sums=('3769071b357890dc36d820c597c1c626a1073fcb'
+          '0ac2513c3f7c3ad1d32369b14be66765f0379e4a')
 
 build() {
   cd ${pkgname}-${pkgver}
