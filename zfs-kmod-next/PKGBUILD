@@ -15,16 +15,20 @@ depends=('kmod' 'linux-next>=6.2' 'linux-next<6.3.0' "zfs=${pkgver}" 'zfs-header
 makedepends=('linux-next-headers' 'elfutils')
 install=zfs-kmod-next.install
 source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-${pkgver}.tar.gz"
-        "https://github.com/openzfs/zfs/commit/ad0967638b834390fd8a9d0a12c10270353d771b.diff")
+        "https://github.com/openzfs/zfs/commit/3ace9dea01f2088e81c0b90ca8e07faad7364eca.diff"
+        "https://github.com/openzfs/zfs/commit/2e9c9b792fd34b4fe1fb524444529f41bcb1b7c5.diff")
 #source=("https://github.com/openzfs/zfs/archive/${_commit}.zip")
 sha256sums=('6b172cdf2eb54e17fcd68f900fab33c1430c5c59848fa46fab83614922fe50f6'
-            '44693540ad98e3f64dcf06d441ca603f2671b6c34b1c8baef1a1389b0d2db726')
+            '1c1322194bbaee4c13186033b9b25eed1440b1f076faf735e45aa7a30fd6dd87'
+            '41e05c2f20e630c8f943af253fa73024b1cb8e222c7caf3ed5883d58ca2cc31e')
 
 build() {
     cd zfs-${pkgver}
-    #patch -p1 -i ${srcdir}/ad0967638b834390fd8a9d0a12c10270353d771b.diff
+    # from https://github.com/openzfs/zfs/commit/3ace9dea01f2088e81c0b90ca8e07faad7364eca
+    patch -p1 -i ${srcdir}/3ace9dea01f2088e81c0b90ca8e07faad7364eca.diff
+    patch -p1 -i ${srcdir}/2e9c9b792fd34b4fe1fb524444529f41bcb1b7c5.diff
 
-    #./autogen.sh
+    ./autogen.sh
     ./configure --prefix=/usr \
         --sysconfdir=/etc \
         --datadir=/usr/share \
