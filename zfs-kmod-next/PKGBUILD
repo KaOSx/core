@@ -24,7 +24,6 @@ sha256sums=('6b172cdf2eb54e17fcd68f900fab33c1430c5c59848fa46fab83614922fe50f6'
 
 build() {
     cd zfs-${pkgver}
-    # from https://github.com/openzfs/zfs/commit/3ace9dea01f2088e81c0b90ca8e07faad7364eca
     patch -p1 -i ${srcdir}/3ace9dea01f2088e81c0b90ca8e07faad7364eca.diff
     patch -p1 -i ${srcdir}/2e9c9b792fd34b4fe1fb524444529f41bcb1b7c5.diff
 

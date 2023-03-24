@@ -1,7 +1,7 @@
 
 pkgname=coreutils
 pkgver=9.2
-pkgrel=1
+pkgrel=2
 pkgdesc="The basic file, shell and text manipulation utilities of the GNU operating system"
 arch=('x86_64')
 license=('GPL3')
@@ -9,13 +9,14 @@ url="https://www.gnu.org/software/coreutils"
 groups=('base')
 depends=('glibc' 'pam' 'acl' 'gmp' 'libcap')
 source=("https://ftp.gnu.org/gnu/coreutils/${pkgname}-${pkgver}.tar.xz"
-        "https://github.com/coreutils/coreutils/commit/e8b56ebd536e82b15542a00c888109471936bfda.diff")
+        "https://github.com/coreutils/coreutils/commit/76f2fb627118a26c25003dbd98c22c153b7ee1d2.diff")
 sha1sums=('3769071b357890dc36d820c597c1c626a1073fcb'
-          '0ac2513c3f7c3ad1d32369b14be66765f0379e4a')
+          '57122c0da51f78ffdd552fc9d9df97d611b47033')
 
 build() {
   cd ${pkgname}-${pkgver}
-  #patch -p1 -i ${srcdir}/e8b56ebd536e82b15542a00c888109471936bfda.diff
+  # https://debbugs.gnu.org/cgi/bugreport.cgi?bug=62403
+  patch -p1 -i ${srcdir}/76f2fb627118a26c25003dbd98c22c153b7ee1d2.diff
 
   ./configure --prefix=/usr --libexecdir=/usr/lib \
               --enable-no-install-program=groups,hostname,kill,uptime
