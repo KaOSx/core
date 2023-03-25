@@ -2,7 +2,7 @@
 pkgname=vpnc
 pkgver=0.5.3.5
 _commit=99634a76eb0d0712799bbc25126d8241b2bb80e7
-pkgrel=3
+pkgrel=4
 pkgdesc="VPN client for cisco3000 VPN Concentrators"
 url="https://www.unix-ag.uni-kl.de/~massar/vpnc/"
 license=('GPL')
