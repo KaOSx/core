@@ -1,31 +1,34 @@
 
 pkgname=openssl
-pkgver=1.1.1.20
-_pkgver=1.1.1t
-pkgrel=2
+pkgver=3.0.8
+_pkgver=3.0.8
+pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
 url='https://www.openssl.org'
-license=('custom:BSD')
+license=('Apache-2.0')
 depends=('perl' 'zlib')
 optdepends=('ca-certificates')
 options=('!makeflags')
 backup=('etc/ssl/openssl.cnf')
 source=("https://www.openssl.org/source/${pkgname}-${_pkgver}.tar.gz"
-        'ca-dir_openssl1.1.patch')
-sha256sums=('8dee9b24bdb1dcbf0c3d1e9b02fb8f6bf22165e807f45adeb7c9677536859d3b'
-            'd6dd76398e67f07640e49e7a6b0f0585801dcd6a031b72bf4d19938562512c4d')
+        'CA.diff'
+        'openssl.diff')
+sha256sums=('6c13d2bf38fdf31eac3ce2a347073673f5d63263398f1f69d0df4a41253e4b3e'
+            '8f2248556951c398334bd16fe944bf0b5acfcbd5d18f7b7975d6b89ff622e4e0'
+            '9e7275812f96caa39d7dc2eddfdb8b020b59154827ba60e665f3701985d645de')
 
 build() {
     cd ${pkgname}-${_pkgver}
 
     # set ca dir to /etc/ssl by default
-    patch -p0 -i ${srcdir}/ca-dir_openssl1.1.patch
+    patch -p1 -i ${srcdir}/CA.diff
+    patch -p1 -i ${srcdir}/openssl.diff
 
     ./Configure --prefix=/usr \
         --openssldir=/etc/ssl \
         --libdir=lib \
-        shared zlib enable-ec_nistp_64_gcc_128 \
+        shared enable-ktls zlib enable-ec_nistp_64_gcc_128 \
         linux-x86_64 \
         -Wa,--noexecstack ${CFLAGS} ${LDFLAGS} \
 
@@ -37,15 +40,17 @@ check() {
     cd ${pkgname}-${_pkgver}
     # the test fails due to missing write permissions in /etc/ssl
     # revert this patch for make test
-    patch -p0 -R -i ${srcdir}/ca-dir_openssl1.1.patch
-    # /test/recipes/30-test_afalg.t                  (Wstat: 256 Tests: 1 Failed: 1)
+    patch -p1 -R -i ${srcdir}/CA.diff
+    patch -p1 -R -i ${srcdir}/openssl.diff
+    # no fail
     make test
-    patch -p0 -i ${srcdir}/ca-dir_openssl1.1.patch
+    patch -p1 -i ${srcdir}/CA.diff
+    patch -p1 -i ${srcdir}/openssl.diff
 }
 
 package() {
     cd ${pkgname}-${_pkgver}
     make DESTDIR=${pkgdir} MANDIR=/usr/share/man MANSUFFIX=ssl install
 
-    install -D -m644 LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
+    install -D -m644 LICENSE.txt ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.txt
 }

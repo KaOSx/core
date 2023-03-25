@@ -1,7 +1,7 @@
  
 pkgname=ldns
 pkgver=1.8.3
-pkgrel=1
+pkgrel=2
 pkgdesc='DNS library that facilitates DNS tool programming.'
 url='https://www.nlnetlabs.nl/projects/ldns/'
 license=('custom:BSD')

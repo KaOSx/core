@@ -2,7 +2,7 @@
 pkgname=sudo
 pkgver=1.9.13.p3
 _pkgver=1.9.13p3
-pkgrel=1
+pkgrel=2
 pkgdesc="Give certain users the ability to run some commands as root."
 arch=('x86_64')
 url="https://www.sudo.ws/sudo/"

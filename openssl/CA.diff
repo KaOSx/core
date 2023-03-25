@@ -1,0 +1,11 @@
+--- a/apps/CA.pl.in	2023-02-07 14:43:33.000000000 +0100
++++ b/apps/CA.pl1.in	2023-03-25 15:19:52.618830900 +0100
+@@ -29,7 +29,7 @@
+ my $PKCS12 = "$openssl pkcs12";
+ 
+ # Default values for various configuration settings.
+-my $CATOP = "./demoCA";
++my $CATOP = "/etc/ssl";
+ my $CAKEY = "cakey.pem";
+ my $CAREQ = "careq.pem";
+ my $CACERT = "cacert.pem";
