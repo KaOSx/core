@@ -1,7 +1,7 @@
 
 pkgname=zfs
 pkgver=2.1.9
-pkgrel=1
+pkgrel=2
 pkgdesc="Userspace utilities for the Zettabyte File System Linux kernel module."
 arch=('x86_64')
 url="https://zfsonlinux.org/"
