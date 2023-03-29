@@ -1,8 +1,8 @@
 
 pkgname=systemd
-pkgver=252.7
-_pkgver=252.7
-pkgrel=2
+pkgver=253.2
+_pkgver=253.2
+pkgrel=1
 epoch=1
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=('acl' 'bash' 'glibc' 'kmod' 'hwdata' 'util-linux' 'kbd' 'libcap' 'libxs
          'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn2' 'lz4'
          'quota' 'libseccomp' 'cryptsetup' 'pcre2' 'libxcrypt') # 'audit') 
 makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs' 'meson' 'ninja'
-             'python3-jinja' 'python3-lxml')
+             'python3-jinja' 'python3-lxml' 'tpm2-tss')
 optdepends=('libmicrohttpd: systemd-journal-gatewayd')
 backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
         etc/dbus-1/system.d/org.freedesktop.hostname1.conf
@@ -43,7 +43,7 @@ source=("https://github.com/systemd/systemd-stable/archive/v${_pkgver}.tar.gz"
         'systemd-tmpfiles.hook'
         'boot_color.diff'
         "https://github.com/systemd/systemd/commit/1bb6ba08b128d62acdbbc566d60a054ff5bb9565.diff")
-md5sums=('3f284e577e2a47b2baf6d52db64ebac4'
+md5sums=('b9b868d3bb86061e7c5c7f43d6974f79'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'

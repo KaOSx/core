@@ -15,7 +15,7 @@ add_privs() {
 post_common() {
   systemd-machine-id-setup
 
-  udevadm hwdb --update
+  systemd-hwdb update
   journalctl --update-catalog
 
 }
