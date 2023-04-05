@@ -1,6 +1,6 @@
 
 pkgname=zstd
-pkgver=1.5.4
+pkgver=1.5.5
 pkgrel=1
 pkgdesc='Zstandard is a real-time compression algorithm, providing high compression ratios.'
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('BSD' 'GPL2')
 depends=('lz4' 'xz' 'zlib')
 makedepends=('googletest' 'cmake')
 source=("https://github.com/facebook/zstd/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('0f470992aedad543126d06efab344dc5f3e171893810455787d38347343a4424')
+sha256sums=('9c4396cc829cfae319a6e2615202e82aad41372073482fce286fac78646d3ee4')
 
 build() {
   cmake -B build -S ${pkgname}-${pkgver}/build/cmake \
