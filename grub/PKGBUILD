@@ -6,8 +6,8 @@
 pkgname=grub
 pkgdesc="GNU GRand Unified Bootloader"
 pkgver=2.06
-pkgrel=3
-_commit=ae94b97be2b81b625d6af6654d3ed79078b50ff6
+pkgrel=4
+_commit=7fd5feff97c4b1f446f8fcf6d37aca0c64e7c763
 _gnulib=9ce9be2ef0cb1180e35dfe9dfbbe90d774b374bd
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
@@ -35,7 +35,7 @@ source=("https://git.savannah.nongnu.org/cgit/grub.git/snapshot/grub-${_commit}.
         'grub-10_linux-detect-initramfs.patch'
         'grub.default'
         'grub.cfg')
-md5sums=('f5e55c9ff79a3db79775101cde69bad7'
+md5sums=('5a7ec9de5ef980d560eb3078d5a6fe5a'
          'SKIP'
          '12d4f247b895bf2e7d65285b92f45886'
          '945527e0de8d384166a4cf23439ae9ee'
