@@ -1,7 +1,7 @@
 
 pkgname=openresolv
-pkgver=3.12.0
-pkgrel=2
+pkgver=3.13.0
+pkgrel=1
 pkgdesc="resolv.conf management framework (resolvconf)"
 arch=('x86_64')
 url="https://roy.marples.name/projects/openresolv"
@@ -10,20 +10,20 @@ depends=('bash')
 makedepends=('systemd')
 backup=('etc/resolvconf.conf')
 provides=('resolvconf')
-source=("https://roy.marples.name/downloads/openresolv/${pkgname}-${pkgver}.tar.xz"
+source=("https://github.com/NetworkConfiguration/openresolv/archive/refs/tags/${pkgname}-${pkgver}.tar.gz"
         'fs33801.patch')
-sha256sums=('42b30508e857a228535c631eaac936862d86eca68c14b5c0bf387ba176b91b97'
+sha256sums=('799d075542185217dcdaec00f32d7b92000d89029d29e50645a5d2a39736921b'
             '934a65dff1b080f8fd6367781a4b3357d29d10516fbaeb282a68c32f44782dac')
 
 build() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgname}-${pkgver}
   #patch -p1 -i ${srcdir}/fs33801.patch
 
   ./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib/resolvconf
 }
 
 package() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
 
   mkdir -p ${pkgdir}/usr/share/licenses/${pkgname}
