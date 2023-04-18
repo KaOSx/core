@@ -1,9 +1,9 @@
 
 pkgname=mpfr
 _pkgver=4.2.0
-#_patchlevel=p1
-#pkgver=${_pkgver}.${_patchlevel}
-pkgver=${_pkgver}
+_patchlevel=p4
+pkgver=${_pkgver}.${_patchlevel}
+#pkgver=${_pkgver}
 pkgrel=1
 pkgdesc="Multiple-precision floating-point library"
 arch=('x86_64')
@@ -12,15 +12,15 @@ license=('LGPL')
 depends=('gmp')
 options=('!libtool')
 source=("https://www.mpfr.org/mpfr-current/mpfr-${_pkgver}.tar.xz"
-        # https://www.mpfr.org/mpfr-4.1.1/allpatches  http://www.mpfr.org/mpfr-4.1.1/#bugs
+        # https://www.mpfr.org/mpfr-4.2.0/allpatches  http://www.mpfr.org/mpfr-4.2.0/#bugs
         'allpatches.diff')
         #"mpfr-${_pkgver}-${_patchlevel}.patch")
 sha256sums=('06a378df13501248c1b2db5aa977a2c8126ae849a9d9b7be2546fb4a9c26d993'
-            '80a3c2709be21acaac12a9cc99888d63a00fa77fb75576f205fe8ba1984ff44a')
+            '811d3b45c8fc98affbeb0aba2d183ff17339ca2c31958b2f1dfeda1249cc3366')
 
 build() {
   cd ${pkgname}-${_pkgver}
-  #patch -p1 -i $srcdir/allpatches.diff
+  patch -p1 -i $srcdir/allpatches.diff
 
   ./configure --prefix=/usr --enable-thread-safe --enable-shared
   make
