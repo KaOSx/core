@@ -1,7 +1,7 @@
 
 pkgname=rp-pppoe
-pkgver=3.15
-pkgrel=2
+pkgver=4.0
+pkgrel=1
 pkgdesc="Roaring Penguin's Point-to-Point Protocol over Ethernet client"
 arch=('x86_64')
 url="https://dianne.skoll.ca/projects/rp-pppoe/"
@@ -9,10 +9,10 @@ license=('GPL')
 groups=('base')
 depends=('ppp' 'sh')
 options=('!makeflags')
-backup=(etc/ppp/{pppoe.conf,firewall-standalone,firewall-masq,pppoe-server-options})
+backup=(etc/ppp/pppoe-server-options)
 source=("https://dianne.skoll.ca/projects/rp-pppoe/download/rp-pppoe-${pkgver}.tar.gz"
         'adsl.service')
-md5sums=('5b6e19e7a31ff228fafd2e62f023e521'
+md5sums=('063d21dd94d9c80503470c830a97d12a'
          'ae14bb45cdd6aad31395a301f96ddd82')
 
 build() {
