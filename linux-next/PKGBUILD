@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 
 _basekernel=6.3
 _srcname=linux-6.3
-pkgver=6.3.0
+pkgver=6.3.1
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -14,7 +14,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfuti
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-5.8-rc7.tar.gz"
-        ##"https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-${pkgver}.xz"
+        "https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -33,6 +33,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         'dracut-next-install')
 md5sums=('df4f97e65bde4174dd8be2af836f28e1'
+         'add347d8e354c42273c13c1d0f44a442'
          '293828e5e295ed36f62042737ad5d985'
          '014ecaa849b47279e945aac979948ab5'
          '358803f408779e5ff435ed2f1564e508'
@@ -52,7 +53,7 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
+  patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
