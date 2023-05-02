@@ -1,7 +1,7 @@
 
 pkgname=guile
 pkgver=2.2.7
-pkgrel=8
+pkgrel=9
 pkgdesc="GNU Ubiquitous Intelligent Language for Extensions, the official extension language for the GNU operating system"
 url="https://www.gnu.org/software/guile/"
 arch=('x86_64')
@@ -26,5 +26,5 @@ package() {
 
   # stop elfutils warnings
   mkdir -p ${pkgdir}/usr/share/gdb/auto-load/usr/lib
-  mv ${pkgdir}/usr/lib/libguile-3.0.so.*gdb.scm ${pkgdir}/usr/share/gdb/auto-load/usr/lib
+  mv ${pkgdir}/usr/lib/libguile-2.2.so.*gdb.scm ${pkgdir}/usr/share/gdb/auto-load/usr/lib
 }

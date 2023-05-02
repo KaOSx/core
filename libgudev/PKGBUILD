@@ -1,7 +1,7 @@
 
 pkgname=libgudev
 pkgver=237
-pkgrel=4
+pkgrel=5
 pkgdesc="UDev GObject bindings"
 arch=('x86_64')
 license=('LGPL')
@@ -16,7 +16,7 @@ build() {
   mkdir -p build
   cd build
 
-  meson ../${pkgname}-${pkgver} \
+  meson setup ../${pkgname}-${pkgver} \
     --prefix=/usr \
     --buildtype=release 
   ninja
