@@ -1,20 +1,18 @@
 
 pkgname=cpio
-pkgver=2.13
-pkgrel=2
+pkgver=2.14
+pkgrel=1
 pkgdesc="A tool to copy files into or out of a cpio or tar archive"
 arch=('x86_64')
 license=('GPL')
 url="https://www.gnu.org/software/cpio"
 depends=('glibc')
-source=("https://ftp.gnu.org/gnu/cpio/cpio-${pkgver}.tar.gz"
-        "https://gitweb.gentoo.org/repo/gentoo.git/plain/app-arch/cpio/files/cpio-2.12-gcc-10.patch")
-md5sums=('389c5452d667c23b5eceb206f5000810'
-         '9608f5031d01ca760cf4dfec5988d899')
+source=("https://ftp.gnu.org/gnu/cpio/cpio-${pkgver}.tar.gz")
+sha1sums=('f304fe18df5af642c87f240dd5631bfcee9ba8ed')
 
 build() {
   cd ${pkgname}-${pkgver}
-  patch -p1 -i ${srcdir}/cpio-2.12-gcc-10.patch
+  #patch -p1 -i ${srcdir}/cpio-2.12-gcc-10.patch
 
   ./configure --prefix=/usr --mandir=/usr/share/man
   make
