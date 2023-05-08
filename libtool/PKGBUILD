@@ -2,13 +2,13 @@
 
 pkgname=libtool
 pkgver=2.4.7
-pkgrel=3
+pkgrel=4
 pkgdesc="A generic library support script"
 arch=('x86_64')
 url="https://www.gnu.org/software/libtool"
 license=('GPL')
 options=('!libtool')
-depends=('sed' 'grep' 'sh' 'tar' 'gcc=12.2.0') # Needed by libtoolize
+depends=('sed' 'grep' 'sh' 'tar' 'gcc=12.3.0') # Needed by libtoolize
 makedepends=('help2man')
 groups=('base-devel')
 provides=('libltdl')
@@ -32,6 +32,7 @@ check() {
   cd ${pkgbase}-${pkgver}
   # 66: Link order test                                 FAILED (link-order.at:106)
   # see https://src.fedoraproject.org/rpms/libtool/c/74058f9770441b4dd984abf471a00739f0dafaee?branch=rawhide
+  # 169: Run tests with low max_cmd_len                 FAILED (cmdline_wrap.at:48)
   make check
 }
 

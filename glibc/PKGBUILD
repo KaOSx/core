@@ -2,7 +2,7 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.36
+pkgver=2.37
 _commit=3e2a15c666e40e5ee740e5079c56d83469280323
 pkgrel=1
 pkgdesc="GNU C Library"
@@ -19,20 +19,20 @@ options=('!strip')
 install=glibc.install
 source=("https://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
 #source=("https://github.com/bminor/glibc/archive/${_commit}.zip"
-        "https://github.com/bminor/glibc/commit/2d7ed98add14f75041499ac189696c9bd3d757fe.diff"
+        "https://github.com/bminor/glibc/commit/07b9521fc6369d000216b96562ff7c0ed32a16c4.diff"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('00e9b89e043340f688bc93ec03239b57'
-         'cbcd16c200d09d00b152a3bdb0ea7ed6'
+md5sums=('e89cf3dcb64939d29f04b4ceead5cc4e'
+         '66c0a97180c00ade30fec1d0c219198b'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
          '8b3298de2392a10905a64ceccf56d2c1')
 
 prepare() {
   cd ${pkgname}-${pkgver}
-  # make 4.4 needed
-  patch -p1 -i ${srcdir}/2d7ed98add14f75041499ac189696c9bd3d757fe.diff
+  # CVE-2023-25139
+  patch -p1 -i ${srcdir}/07b9521fc6369d000216b96562ff7c0ed32a16c4.diff
 }
 
 build() {

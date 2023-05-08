@@ -1,7 +1,7 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=binutils
-pkgver=2.39
+pkgver=2.40
 _commit=5f62caec8175cf80a29f2bcab2c5077cbfae8c89
 pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
@@ -15,7 +15,7 @@ options=('!libtool' '!distcc' '!ccache')
 #source=("https://github.com/bminor/binutils-gdb/archive/${_commit}.zip"
 source=("https://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.xz"
         "https://github.com/bminor/binutils-gdb/commit/6aa1b7df2fc435ba1b744f20db5c6d3013496249.diff")
-sha256sums=('645c25f563b8adc0a81dbd6a41cffbf4d37083a382e02d5d3df4f65c09516d00'
+sha256sums=('0f8a4c272d7f17f369ded10a4aca28b8e304828e95526da482b0ccc4dfc9d8e1'
             '8cc8126661aa3cf62ba32a033284cbc195954f8a467e644f0ae0e561a360084e')
 
 prepare() {
@@ -65,4 +65,8 @@ package() {
   rm ${pkgdir}/usr/share/man/man1/{dlltool,windres,windmc}*
   # part of gdb
   rm ${pkgdir}/usr/share/info/ctf-spec.info
+  rm ${pkgdir}/usr/share/info/sframe-spec.info
+  rm ${pkgdir}/usr/include/sframe.h
+  rm ${pkgdir}/usr/include/sframe-api.h
+  rm ${pkgdir}/usr/lib/libsframe.a
 }
