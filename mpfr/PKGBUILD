@@ -1,10 +1,10 @@
 
 pkgname=mpfr
 _pkgver=4.2.0
-_patchlevel=p4
+_patchlevel=p7
 pkgver=${_pkgver}.${_patchlevel}
 #pkgver=${_pkgver}
-pkgrel=2
+pkgrel=1
 pkgdesc="Multiple-precision floating-point library"
 arch=('x86_64')
 url="https://www.mpfr.org/"
@@ -16,7 +16,7 @@ source=("https://www.mpfr.org/mpfr-current/mpfr-${_pkgver}.tar.xz"
         'allpatches.diff')
         #"mpfr-${_pkgver}-${_patchlevel}.patch")
 sha256sums=('06a378df13501248c1b2db5aa977a2c8126ae849a9d9b7be2546fb4a9c26d993'
-            '811d3b45c8fc98affbeb0aba2d183ff17339ca2c31958b2f1dfeda1249cc3366')
+            'c4570f9ed20cee8280c59fedddce6e16ee5b8ededa7004af13c6cacbc487bb93')
 
 build() {
   cd ${pkgname}-${_pkgver}
