@@ -21,7 +21,9 @@ build() {
   ./configure \
     --libdir=/usr/lib \
     --with-systemdunitdir=/usr/lib/systemd/system \
-    --enable-db=no
+    --enable-db=no \
+    --disable-logind \
+    --enable-lastlog
   make
 }
 
