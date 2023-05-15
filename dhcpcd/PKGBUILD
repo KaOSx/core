@@ -1,6 +1,6 @@
 
 pkgname=dhcpcd
-pkgver=9.5.0
+pkgver=10.0.1
 pkgrel=1
 pkgdesc="RFC2131 compliant DHCP client daemon"
 url="https://roy.marples.name/projects/dhcpcd/"
@@ -12,17 +12,17 @@ makedepends=('ntp')
 backup=('etc/dhcpcd.conf')
 options=('emptydirs')  
 #source=("https://roy.marples.name/downloads/dhcpcd/${pkgname}-${pkgver}.tar.xz" 
-source=("https://github.com/NetworkConfiguration/dhcpcd/archive/refs/tags/${pkgname}-${pkgver}.tar.gz"
+source=("https://github.com/NetworkConfiguration/dhcpcd/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz"
         'dhcpcd@.service'
         'dhcpcd.service'
         "https://github.com/rsmarples/dhcpcd/commit/73ac184333f77b38a8b4c4202c2928278e2237ca.diff")
-sha256sums=('bb8ebda4b250ca8c2faa910205f5ffac66ae83a786b59f5cedbfe7624ad04bc2'
+sha256sums=('6e9f6a5c47fcd8a763cfa26f1ca6eedf1e534992224a01d6c1ab8abb154af972'
             '1c039df7fcf5a002336bc14f289a05606abbdbf6266d95e8e3d2dd3f02812446'
             '3e1900bead9ddcc7ec734f6d5c7e797f82dad60854c2cdc174dfc169dc5170dd'
             '7ad97ed7cbc6faec81a3028cf1a51006aa592cc700bbb31da664cd05a4498b66')
 
 build() {
-  cd ${pkgname}-${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   #sed -i -e 's|#include "queue.h"|#include "compat/queue.h"|' eloop.c
   #patch -p1 -i ${srcdir}/73ac184333f77b38a8b4c4202c2928278e2237ca.diff
 
@@ -34,7 +34,7 @@ build() {
 }
 
 package() {
-  cd ${pkgname}-${pkgname}-${pkgver}
+  cd ${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install
 
   # Create Binary Symlink
