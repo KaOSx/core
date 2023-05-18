@@ -1,8 +1,8 @@
 
 pkgname=util-linux
-pkgver=2.38.1
-_pkgver=2.38
-pkgrel=2
+pkgver=2.39
+_pkgver=2.39
+pkgrel=1
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -31,7 +31,7 @@ backup=(etc/pam.d/chfn
         etc/pam.d/su
         etc/pam.d/su-l)
 install=util-linux.install
-sha256sums=('60492a19b44e6cf9a3ddff68325b333b8b52b6c59ce3ebd6a0ecaa4c5117e84f'
+sha256sums=('32b30a336cda903182ed61feb3e9b908b762a5e66fe14e43efb88d37162075cb'
             '5de0aadbbeb1ebb0776f3c550111fe045dfdf3571c574f415c62ca1966c49616'
             '993a3096c2b113e6800f2abbd5d4233ebf1a97eef423990d3187d665d3490b92'
             'fc6807842f92e9d3f792d6b64a0d5aad87995a279153ab228b1b2a64d9f32f20'
@@ -41,8 +41,8 @@ sha256sums=('60492a19b44e6cf9a3ddff68325b333b8b52b6c59ce3ebd6a0ecaa4c5117e84f'
             '803ebb0e37763d2653ead76db115d76dcc30b050fce069be195a05b3ca53d304'
             '005736b9bd650ff5e5d82a7e288853776d5bb8c90185d5774c07231c1e1c64a9'
             '6eb1acdd3fa9f71a7f93fbd529be57ea65bcafc6e3a98a06af4d88013fc6a567'
-            'e4a2cb349ccf338fe33136cc0c66017b3fa7317e53c1dfd26d3393018f5d0df5'
-            '6f874f00306b4047f70dc114d883f73df5b00777b312df2da85689bff33cb1b7')
+            '941b2d892aabaa54435af6de6ea905e89d93d2a1004b2ffc8e4f135fda60ed5b'
+            '54e66afaea0bf13a7a622bf9f3dbb8409a5a4171b3869a108acc5dccdea58d91')
 
 build() {
   cd ${pkgname}-${pkgver}

@@ -1,8 +1,8 @@
 
 pkgname=asciidoctor
-pkgver=2.0.18
+pkgver=2.0.20
 _rubyver=3.2.0
-pkgrel=3
+pkgrel=1
 pkgdesc='Text processor and publishing toolchain for converting AsciiDoc content to HTML5, DocBook, PDF, and other formats.'
 arch=('x86_64')
 url='https://asciidoctor.org'
@@ -10,7 +10,7 @@ license=('MIT')
 depends=('ruby')
 source=("https://rubygems.org/downloads/${pkgname}-${pkgver}.gem")
 noextract=("${pkgname}-${pkgver}.gem")
-sha256sums=('bbd1e1d16deed8db94bf9624b9f4474fac32d9ca7225d377f076c08d9adde387')
+sha256sums=('835eabd445e4ae88f56a5f4e07593c3612b2be72eb661c612c3a8e1e17c57479')
 
 package() {
     gem install --ignore-dependencies --no-user-install -V \
