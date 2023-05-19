@@ -1,7 +1,7 @@
 
 pkgname=mpfr
 _pkgver=4.2.0
-_patchlevel=p7
+_patchlevel=p9
 pkgver=${_pkgver}.${_patchlevel}
 #pkgver=${_pkgver}
 pkgrel=1
@@ -16,7 +16,7 @@ source=("https://www.mpfr.org/mpfr-current/mpfr-${_pkgver}.tar.xz"
         'allpatches.diff')
         #"mpfr-${_pkgver}-${_patchlevel}.patch")
 sha256sums=('06a378df13501248c1b2db5aa977a2c8126ae849a9d9b7be2546fb4a9c26d993'
-            'c4570f9ed20cee8280c59fedddce6e16ee5b8ededa7004af13c6cacbc487bb93')
+            '06da0b2a56e365f7e74ac241926f61d2574a0754548ff8116e9ddee0dabacda0')
 
 build() {
   cd ${pkgname}-${_pkgver}
