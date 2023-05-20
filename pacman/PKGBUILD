@@ -1,7 +1,7 @@
 
 pkgname=pacman
 pkgver=6.0.2
-pkgrel=2
+pkgrel=3
 pkgdesc="A library-based package manager with dependency support"
 arch=('x86_64')
 url="https://www.archlinux.org/pacman/"
@@ -15,16 +15,26 @@ options=('!libtool')
 source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.xz"
         'pacman.conf'
         'makepkg.conf'
-        "https://gitlab.archlinux.org/pacman/pacman/-/commit/de11824527ec4e2561e161ac40a5714ec943543c.diff")
+        "https://gitlab.archlinux.org/pacman/pacman/-/commit/de11824527ec4e2561e161ac40a5714ec943543c.diff"
+        "https://gitlab.archlinux.org/pacman/pacman/-/commit/efd0c24c07b86be014a4edb5a8ece021b87e3900.diff"
+        "https://gitlab.archlinux.org/pacman/pacman/-/commit/86981383a2f4380bda26311831be94cdc743649b.diff"
+        "https://gitlab.archlinux.org/pacman/pacman/-/commit/fcb1d4f87e67f3f6d56ef360302e8d4f8ead27d9.diff")
 md5sums=('f2c7e82cc5483a2c90f228a0393f5526'
          '38ea69609d8c37d11c7ca49478cd75d1'
          '0ce6144eaecdbaedf1ca48527aa3df36'
-         '9b944e898030bd5afedc27bcdccebe70')
+         '9b944e898030bd5afedc27bcdccebe70'
+         'ad80cfc9168700af1d5c7209a8a85db0'
+         'c5da6b433a993f4153dcd3451432ff1a'
+         '4bc06aa22089e0db27995f1b5187db6b')
 
 prepare() {
   cd ${pkgname}-${pkgver}
   # strip fixes, needed for 6.0.2
   patch -p1 -i ${srcdir}/de11824527ec4e2561e161ac40a5714ec943543c.diff
+  # debug packages missing /usr/src files
+  patch -p1 -i ${srcdir}/efd0c24c07b86be014a4edb5a8ece021b87e3900.diff
+  patch -p1 -i ${srcdir}/86981383a2f4380bda26311831be94cdc743649b.diff
+  patch -p1 -i ${srcdir}/fcb1d4f87e67f3f6d56ef360302e8d4f8ead27d9.diff
 }
 
 build() {
