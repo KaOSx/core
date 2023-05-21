@@ -1,6 +1,6 @@
 
 pkgname=diffutils
-pkgver=3.9
+pkgver=3.10
 pkgrel=1
 pkgdesc="Utility programs used for creating patch files"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL3')
 groups=('base')
 depends=('glibc' 'sh')
 source=("https://ftp.gnu.org/gnu/diffutils/${pkgname}-${pkgver}.tar.xz")
-sha1sums=('35905d7c3d1ce116e6794be7fe894cd25b2ded74')
+sha1sums=('c16a9cf107ad1f0f791b6d00852dc5e961c1c451')
 
 build() {
   cd ${pkgname}-${pkgver}
