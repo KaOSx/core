@@ -1,6 +1,6 @@
 
 pkgname=nettle
-pkgver=3.9
+pkgver=3.9.1
 pkgrel=1
 pkgdesc="Nettle - a low-level cryptographic library."
 arch=('x86_64')
@@ -8,7 +8,7 @@ url="https://www.lysator.liu.se/~nisse/nettle/"
 license=('GPL')
 depends=('gmp')
 source=("https://ftp.gnu.org/gnu/nettle/${pkgname}-${pkgver}.tar.gz")
-md5sums=('785726c81122bbf230be5a7a359c0094')
+md5sums=('29fcd2dec6bf5b48e5e3ffb3cbc4779e')
 
 build() {
   cd ${pkgname}-${pkgver}
