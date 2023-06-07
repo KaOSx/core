@@ -1,6 +1,6 @@
 
 pkgname=libxcrypt
-pkgver=4.4.34
+pkgver=4.4.35
 pkgrel=1
 pkgdesc='Extended crypt library for descrypt, md5crypt, bcrypt, and others'
 arch=('x86_64')
@@ -8,7 +8,7 @@ url='https://github.com/besser82/libxcrypt/'
 license=('GPL')
 depends=('glibc')
 source=("https://github.com/besser82/libxcrypt/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('bb3f467af21c48046ce662186eb2ddf078ca775c441fdf1c3628448a3833a230')
+sha256sums=('a8c935505b55f1df0d17f8bfd59468c7c6709a1d31831b0f8e3e045ab8fd455d')
 
 build() {
   cd ${pkgname}-${pkgver}
