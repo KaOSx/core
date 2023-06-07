@@ -1,5 +1,5 @@
 
-_extramodules=6.2.11-1
+_extramodules=6.2.16-1
 _kver="$(cat /lib/modules/extramodules-6.2/version)"
 
 pkgname=zfs-headers
