@@ -1,6 +1,6 @@
 
 pkgname=util-linux
-pkgver=2.39
+pkgver=2.39.1
 _pkgver=2.39
 _commit=205e88e51c11d039cd80c9f1104bee5555a4ddaa
 pkgrel=2
@@ -14,8 +14,8 @@ conflicts=('util-linux-ng' 'eject' 'rfkill')
 provides=("util-linux-ng=${pkgver}" 'eject' 'rfkill')
 license=('GPL2')
 options=('!libtool')
-#source=("https://www.kernel.org/pub/linux/utils/util-linux/v${_pkgver}/${pkgname}-${pkgver}.tar.xz"
-source=("https://github.com/util-linux/util-linux/archive/${_commit}.zip"
+source=("https://www.kernel.org/pub/linux/utils/util-linux/v${_pkgver}/${pkgname}-${pkgver}.tar.xz"
+#source=("https://github.com/util-linux/util-linux/archive/${_commit}.zip"
         'uuidd.tmpfiles'
         'pam-login'
         'pam-common'
@@ -33,7 +33,7 @@ backup=(etc/pam.d/chfn
         etc/pam.d/su
         etc/pam.d/su-l)
 install=util-linux.install
-sha256sums=('bf083c2633a5836c6c7573068220dbeb6ae7341e85b44d784de452ad738efba5'
+sha256sums=('890ae8ff810247bd19e274df76e8371d202cda01ad277681b0ea88eeaa00286b'
             '5de0aadbbeb1ebb0776f3c550111fe045dfdf3571c574f415c62ca1966c49616'
             '993a3096c2b113e6800f2abbd5d4233ebf1a97eef423990d3187d665d3490b92'
             'fc6807842f92e9d3f792d6b64a0d5aad87995a279153ab228b1b2a64d9f32f20'
@@ -47,7 +47,7 @@ sha256sums=('bf083c2633a5836c6c7573068220dbeb6ae7341e85b44d784de452ad738efba5'
             '54e66afaea0bf13a7a622bf9f3dbb8409a5a4171b3869a108acc5dccdea58d91')
 
 build() {
-  cd ${pkgname}-${_commit}
+  cd ${pkgname}-${pkgver}
   #fix sfdisk failures with extended partitions
   #patch -p1 -i ${srcdir}/fa3fface0f83dbf186f046210700473da7a4800b.diff
   #patch -p1 -i ${srcdir}/ac762ed71f982468f4c83291158e97cf86281beb.diff
@@ -72,11 +72,11 @@ build() {
 
 check() {
   # 1 fail column: invalid multibyte, leaving dep to test the rest
-  make -C ${pkgname}-${_commit} check
+  make -C ${pkgname}-${pkgver} check
 }
 
 package() {
-  cd ${pkgname}-${_commit}
+  cd ${pkgname}-${pkgver}
 
   make DESTDIR=${pkgdir} install
 
