@@ -6,7 +6,6 @@
 # United States
 Server = https://mirror.math.princeton.edu/pub/kaoslinux/$repo
 Server = https://kaosx.yourhostingsolutions.com/$repo
-Server = https://kqtos.tk/repo/$repo
 Server = http://kaosx.tk/repo/$repo
 
 # Germany
