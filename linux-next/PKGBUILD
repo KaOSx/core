@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 
 _basekernel=6.4
 _srcname=linux-6.4
-pkgver=6.4.1
+pkgver=6.4.2
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -33,8 +33,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         'dracut-next-install')
 md5sums=('bb65b2232cf596e7044c56a7c4205f51'
-         'b6dffe6dad87039097de07a02bc16970'
-         '1ee08d741cc485ac433ea48549026860'
+         '69a1dcc7b3b1535dd77765146af6927c'
+         'efac7a9cf81dff8513768561fb55db60'
          '6fe414cef58569f769c5cd0b8d6b3486'
          '0e9fefc26adeb0c3a824e31f5abcc3f8'
          'bd9a7f9bd68b18c6ff611b768aafaea7'
@@ -255,7 +255,7 @@ package_linux-next-headers() {
   cp certs/signing_key.pem "/$HOME/signing_key.pem"
   cp certs/signing_key.x509 "/$HOME/signing_key.x509"
 
-  chown -R root.root "${pkgdir}/usr/src/linux-${_kernver}"
+  chown -R root:root "${pkgdir}/usr/src/linux-${_kernver}"
   find "${pkgdir}/usr/src/linux-${_kernver}" -type d -exec chmod 755 {} \;
 
   # strip scripts directory
