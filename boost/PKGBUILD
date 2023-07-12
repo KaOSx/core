@@ -1,19 +1,19 @@
  
 pkgbase=boost
 pkgname=('boost-libs' 'boost')
-pkgver=1.80.0
-_pkgver=1_80_0
-pkgrel=2
+pkgver=1.82.0
+_pkgver=1_82_0
+pkgrel=1
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="https://www.boost.org/"
 license=('custom')
 makedepends=('icu' 'python3' 'bzip2' 'zlib' 'openmpi' 'zstd') 
 source=("https://boostorg.jfrog.io/artifactory/main/release/${pkgver}/source/${pkgbase}_${_pkgver}.tar.bz2"
-        "python.diff")
+        "https://gitweb.gentoo.org/repo/gentoo.git/plain/dev-libs/boost/files/boost-1.81.0-phoenix-multiple-definitions.patch")
 license=('custom')
-sha256sums=('1e19565d82e43bc59209a168f5ac899d3ba471d55c7610c677d4ccf2c9c500c0'
-            '3984cfb1922a909d65794f173068da59fb2a7c4efdaf42911c3add329a2b9789')
+sha256sums=('a6e1ab9b0860e6a2881dd7b21fe9f737a095e5f33a3a874afc6a345228597ee6'
+            '3ebf428ef6be090a7b56a233330375539ac429333b83708e28fe5db049cfecdb')
 
 build() {
   export _stagedir=${srcdir}/stagedir
@@ -21,6 +21,8 @@ build() {
 
   cd ${pkgbase}_${_pkgver}
 
+  # https://github.com/boostorg/phoenix/issues/111
+  patch -p1 -i ${srcdir}/boost-1.81.0-phoenix-multiple-definitions.patch
   ./bootstrap.sh --with-toolset=gcc --with-icu --with-python=/usr/bin/python3
 
   # tools

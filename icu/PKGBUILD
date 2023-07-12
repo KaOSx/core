@@ -1,8 +1,8 @@
 
 pkgname=icu
-pkgver=72.1
-_pkgver=72_1
-__pkgver=72-1
+pkgver=73.2
+_pkgver=73_2
+__pkgver=73-2
 pkgrel=1
 pkgdesc="International Components for Unicode library"
 arch=('x86_64')
@@ -11,7 +11,7 @@ license=('custom:"icu"')
 depends=('gcc-libs' 'sh')
 makedepends=('python3')
 source=("https://github.com/unicode-org/icu/releases/download/release-${__pkgver}/${pkgname}4c-${_pkgver}-src.tgz")
-md5sums=('4de6484a6c460d3d1468a6fe50369439')
+md5sums=('b8a4b8cf77f2e2f6e1341eac0aab2fc4')
 
 build() {
   cd icu/source
