@@ -1,6 +1,6 @@
 
 pkgname=pacman-contrib
-pkgver=1.9.0
+pkgver=1.9.1
 _commit=20aad854f50a34b18845e34e69409d8a230c2676
 pkgrel=1
 pkgdesc="Contributed scripts and tools for pacman systems, including paccache and rank-mirrors"
@@ -9,14 +9,14 @@ url="https://gitlab.archlinux.org/pacman/pacman-contrib"
 license=('GPL')
 depends=('pacman' 'mlocate' 'fakeroot' 'perl')
 makedepends=('asciidoc')
-#source=("https://gitlab.archlinux.org/pacman/pacman-contrib/-/archive/v${pkgver}/${pkgname}-v${pkgver}.tar.gz"
-source=("https://gitlab.archlinux.org/pacman/pacman-contrib/-/archive/${_commit}/pacman-contrib-${_commit}.tar.bz2"
+source=("https://gitlab.archlinux.org/pacman/pacman-contrib/-/archive/v${pkgver}/${pkgname}-v${pkgver}.tar.gz"
+#source=("https://gitlab.archlinux.org/pacman/pacman-contrib/-/archive/${_commit}/pacman-contrib-${_commit}.tar.bz2"
         "https://gitlab.archlinux.org/pacman/pacman-contrib/-/commit/fd21ee241c85856be941e41942d6c179ca713c41.diff")
-md5sums=('2ba481307ae06c1467e12db94853187c'
+md5sums=('a906e75268c24e62c9085b394744e89a'
          '590d7f6824288e07307404519e3a7ede')
 
 build() {
-  cd ${pkgname}-${_commit}
+  cd ${pkgname}-v${pkgver}
   #patch -p1 -i ${srcdir}/fd21ee241c85856be941e41942d6c179ca713c41.diff
 
   ./autogen.sh
@@ -26,11 +26,11 @@ build() {
 }
 
 check() {
-  make -C ${pkgname}-${_commit} check
+  make -C ${pkgname}-v${pkgver} check
 }
 
 package() {
-  cd ${pkgname}-${_commit}
+  cd ${pkgname}-v${pkgver}
 
   make DESTDIR=${pkgdir} install
 
