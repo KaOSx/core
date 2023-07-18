@@ -1,7 +1,7 @@
 
 pkgname=dracut
 pkgver=059
-pkgrel=1
+pkgrel=2
 pkgdesc="Event driven initramfs tool used to create an initramfs image by copying tools and files from an installed system and combining it with the dracut framework"
 arch=('x86_64')
 url="https://github.com/dracutdevs/dracut"
