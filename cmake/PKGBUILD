@@ -1,17 +1,17 @@
 
 pkgname=cmake
-pkgver=3.26.4
-_pkgver=3.26
-pkgrel=2
+pkgver=3.27.0
+_pkgver=3.27
+pkgrel=1
 pkgdesc="A cross-platform open-source make system"
 arch=('x86_64')
 license=('custom')
 url="https://www.cmake.org"
-depends=('curl' 'libarchive' 'shared-mime-info' 'libuv')
+depends=('curl' 'libarchive' 'shared-mime-info' 'libuv' 'jsoncpp')
 makedepends=('qt6-base')
 source=("https://www.cmake.org/files/v${_pkgver}/${pkgname}-${pkgver}.tar.gz")
 #source=("https://github.com/Kitware/CMake/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('313b6880c291bd4fe31c0aa51d6e62659282a521e695f30d5cc0d25abbd5c208')
+sha256sums=('aaeddb6b28b993d0a6e32c88123d728a17561336ab90e0bf45032383564d3cb8')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -23,7 +23,7 @@ build() {
     --docdir=/share/doc/cmake \
     --system-libs \
     --qt-gui \
-    --no-system-jsoncpp \
+    --no-system-cppdap \
     --no-system-librhash \
     --parallel=$(/usr/bin/getconf _NPROCESSORS_ONLN)
   make
