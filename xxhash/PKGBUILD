@@ -1,7 +1,7 @@
  
 # rebuild rsync & gdb on any update
 pkgname=xxhash
-pkgver=0.8.1
+pkgver=0.8.2
 pkgrel=1
 pkgdesc="Extremely fast non-cryptographic hash algorithm, working at speeds close to RAM limits."
 arch=('x86_64')
@@ -9,7 +9,7 @@ url="https://cyan4973.github.io/xxHash/"
 license=('GPL2' 'BSD')
 makedepends=('cmake')
 source=("https://github.com/Cyan4973/xxHash/archive/v${pkgver}.tar.gz")
-md5sums=('b67c587f5ff4894253da0095ba7ea393')
+md5sums=('a7628d7a4fd608a7573c5a3e2c856ea5')
 
 build() {
   cmake -B build -S xxHash-${pkgver}/cmake_unofficial \
