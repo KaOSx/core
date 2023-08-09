@@ -1,6 +1,6 @@
 
 pkgname=libxml2
-pkgver=2.11.4
+pkgver=2.11.5
 _pkgver=2.11
 pkgrel=1
 pkgdesc="XML parsing library, version 2"
@@ -12,7 +12,7 @@ makedepends=('python3')
 options=('!libtool')
 source=("https://download.gnome.org/sources/${pkgname}/${_pkgver}/${pkgname}-${pkgver}.tar.xz"
         "http://www.w3.org/XML/Test/xmlts20080827.tar.gz")
-sha256sums=('737e1d7f8ab3f139729ca13a2494fd17bf30ddb4b7a427cf336252cab57f57f7'
+sha256sums=('3727b078c360ec69fa869de14bd6f75d7ee8d36987b071e6928d4720a28df3a6'
             '96151685cec997e1f9f3387e3626d61e6284d4d6e66e0e440c209286c03e9cc7')
 
 build() {
