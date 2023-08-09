@@ -1,7 +1,7 @@
 
 pkgname=unixodbc
-pkgver=2.3.11
-pkgrel=2
+pkgver=2.3.12
+pkgrel=1
 pkgdesc="ODBC is an open specification for providing application developers with a predictable API with which to access Data Sources"
 arch=('x86_64')
 license=('GPL2' 'LGPL2.1')
@@ -11,7 +11,7 @@ depends=('readline' 'libtool')
 options=('!libtool')
 #source=("http://www.unixodbc.org/unixODBC-${pkgver}.tar.gz")
 source=("ftp://ftp.unixodbc.org/pub/unixODBC/unixODBC-${pkgver}.tar.gz")
-md5sums=('0ff1fdbcb4c3c7dc2357f3fd6ba09169')
+md5sums=('d62167d85bcb459c200c0e4b5a63ee48')
 
 build() {
     cd unixODBC-${pkgver}
