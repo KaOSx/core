@@ -1,7 +1,7 @@
 
 pkgname=npth
 pkgver=1.6
-pkgrel=3
+pkgrel=4
 pkgdesc='Library to provide the GNU Pth API and thus a non-preemptive threads implementation.'
 url="https://www.gnupg.org/software/npth/index.html"
 license=('LGPL')

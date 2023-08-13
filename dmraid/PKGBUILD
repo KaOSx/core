@@ -9,20 +9,24 @@ license=('GPL')
 url="https://people.redhat.com/~heinzm/sw/dmraid/"
 depends=('device-mapper')
 makedepend=('gobject-introspection')
-source=("http://people.redhat.com/~heinzm/sw/dmraid/src/${pkgname}-${_pkgver}.tar.bz2"
+source=("https://people.redhat.com/~heinzm/sw/dmraid/src/${pkgname}-${_pkgver}.tar.bz2"
         'dmraid_install'
         'dmraid_hook'
-        'dmraid.service')
+        'dmraid.service'
+        "https://gitlab.archlinux.org/archlinux/packaging/packages/dmraid/-/raw/main/dmraid-format-security.patch")
 md5sums=('819338fcef98e8e25819f0516722beeb'
          '7c2b38f215b43e9bc1d86dda4443929d'
          '6bd93c2e827f18f589f46629d2fe093d'
-         '470d575de82ab9a983b09638115dd3b9')
+         '470d575de82ab9a983b09638115dd3b9'
+         'fc253a9f3211080cc148715e86f86f71')
 
 build() {
   cd ${pkgname}/${_pkgver}/${pkgname}
+  # https://listman.redhat.com/archives/ataraid-list/2022-October/001682.html
+  patch -p1 -i ${srcdir}/dmraid-format-security.patch
 
   ./configure --enable-led --enable-intel_led
-  make
+  make -j1
 }
 
 package() {

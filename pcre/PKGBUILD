@@ -1,7 +1,7 @@
 
 pkgname=pcre
 pkgver=8.45
-pkgrel=1
+pkgrel=2
 pkgdesc="A library that implements Perl 5-style regular expressions"
 arch=('x86_64')
 url="https://www.pcre.org/"
@@ -13,7 +13,7 @@ md5sums=('4452288e6a0eefb2ab11d36010a1eebb')
 
 build() {
   cd ${pkgname}-${pkgver}
-  
+
   ./configure --prefix=/usr \
         --enable-utf \
         --enable-unicode-properties \
@@ -28,7 +28,7 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver} 
-  
+
   make -j1 check
 }
 

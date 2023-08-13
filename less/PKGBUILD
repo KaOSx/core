@@ -1,12 +1,12 @@
 
 pkgname=less
 pkgver=643
-pkgrel=1
+pkgrel=2
 pkgdesc="Terminal based program for viewing text files"
 license=('GPL3')
 arch=('x86_64')
 url="https://www.greenwoodsoftware.com/less"
-depends=('glibc' 'ncurses' 'pcre')
+depends=('glibc' 'ncurses' 'pcre2')
 groups=('base')
 source=("https://www.greenwoodsoftware.com/less/${pkgname}-${pkgver}.tar.gz")
 md5sums=('cf05e2546a3729492b944b4874dd43dd')
@@ -14,7 +14,7 @@ md5sums=('cf05e2546a3729492b944b4874dd43dd')
 build() {
   cd ${pkgname}-${pkgver}
 
-  sh configure --prefix=/usr --sysconfdir=/etc --with-regex=pcre
+  sh configure --prefix=/usr --sysconfdir=/etc --with-regex=pcre2
   make
 }
 

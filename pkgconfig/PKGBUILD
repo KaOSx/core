@@ -1,7 +1,7 @@
 
 pkgname=pkg-config
 pkgver=0.29.2
-pkgrel=3
+pkgrel=4
 pkgdesc="A system for managing library compile/link flags"
 arch=('x86_64')
 url="https://pkgconfig.freedesktop.org/wiki/"
@@ -11,11 +11,15 @@ depends=('glibc' 'glib2')
 provides=("pkgconfig=${pkgver}")
 conflicts=('pkgconfig')
 replaces=('pkgconfig')
-source=("https://pkg-config.freedesktop.org/releases/${pkgname}-${pkgver}.tar.gz")
-md5sums=('f6e931e319531b736fadc017f470e68a')
+source=("https://pkg-config.freedesktop.org/releases/${pkgname}-${pkgver}.tar.gz"
+        "https://gitlab.freedesktop.org/pkg-config/pkg-config/-/commit/2ad16fa7ac9e951bfd8982835df1e7ea5c9ffb57.diff")
+md5sums=('f6e931e319531b736fadc017f470e68a'
+         '1f5c4d75475d037b59a5465ac415e2c4')
 
 build() {
   cd ${pkgname}-${pkgver}
+  # fix 1 test
+  patch -p1 -i ${srcdir}/2ad16fa7ac9e951bfd8982835df1e7ea5c9ffb57.diff
 
   ./configure --prefix=/usr
   make

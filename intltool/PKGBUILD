@@ -1,7 +1,7 @@
 
 pkgname=intltool
 pkgver=0.51.0
-pkgrel=5
+pkgrel=6
 pkgdesc="The internationalization tool collection"
 arch=('x86_64')
 url="https://launchpad.net/intltool"
@@ -22,7 +22,7 @@ build() {
 
 package() {
 	cd ${pkgname}-${pkgver}
-	
+
 	make DESTDIR=${pkgdir} install 
     install -Dm644 doc/I18N-HOWTO ${pkgdir}/usr/share/doc/${pkgname}/I18N-HOWTO 
 }
