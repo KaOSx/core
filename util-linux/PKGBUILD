@@ -1,9 +1,9 @@
 
 pkgname=util-linux
-pkgver=2.39.1
+pkgver=2.39.2
 _pkgver=2.39
 _commit=205e88e51c11d039cd80c9f1104bee5555a4ddaa
-pkgrel=2
+pkgrel=1
 pkgdesc="Miscellaneous system utilities for Linux"
 url="http://www.kernel.org/pub/linux/utils/util-linux/"
 arch=('x86_64')
@@ -33,7 +33,7 @@ backup=(etc/pam.d/chfn
         etc/pam.d/su
         etc/pam.d/su-l)
 install=util-linux.install
-sha256sums=('890ae8ff810247bd19e274df76e8371d202cda01ad277681b0ea88eeaa00286b'
+sha256sums=('87abdfaa8e490f8be6dde976f7c80b9b5ff9f301e1b67e3899e1f05a59a1531f'
             '5de0aadbbeb1ebb0776f3c550111fe045dfdf3571c574f415c62ca1966c49616'
             '993a3096c2b113e6800f2abbd5d4233ebf1a97eef423990d3187d665d3490b92'
             'fc6807842f92e9d3f792d6b64a0d5aad87995a279153ab228b1b2a64d9f32f20'
