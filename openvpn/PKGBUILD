@@ -1,8 +1,8 @@
 
 pkgname=openvpn
 pkgver=2.6.6
-_rsa_version=3.1.5
-pkgrel=1
+_rsa_version=3.1.6
+pkgrel=2
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
 arch=('x86_64')
 url="https://openvpn.net/community/"
@@ -16,7 +16,7 @@ source=("https://swupdate.openvpn.org/community/releases/openvpn-${pkgver}.tar.g
         "https://github.com/OpenVPN/easy-rsa/archive/refs/tags/v${_rsa_version}.tar.gz"
         'openvpn@.service')
 md5sums=('660e71db3ed3161e33b4b649855c2477'
-         'cb4e2b1230606a8e0c74d4c771b1a5ea'
+         '4b3805847dfb61aa9c98276fc823a774'
          'c0275a1192a7e3c0a167a0dc4809dbaa')
 
 build() {
