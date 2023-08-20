@@ -1,6 +1,6 @@
 
 pkgname=gzip
-pkgver=1.12
+pkgver=1.13
 pkgrel=1
 pkgdesc="GNU compression utility"
 arch=('x86_64')
@@ -10,7 +10,7 @@ groups=('base')
 depends=('glibc' 'bash')
 makedepends=('patch' 'less')
 source=("https://ftp.gnu.org/gnu/gzip/gzip-${pkgver}.tar.xz")
-sha1sums=('318107297587818c8f1e1fbb55962f4b2897bc0b')
+sha1sums=('a793e107a54769576adc16703f97c39ee7afdd4e')
 
 build() {
   cd ${pkgname}-${pkgver}
