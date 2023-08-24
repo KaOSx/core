@@ -1,21 +1,21 @@
 
 pkgbase="sqlite"
-pkgname=('sqlite' 'sqlite-tcl' 'sqlite-doc') 
-_amalgamationver=3420000
-_docver=3420000
-pkgver=3.42.0
+pkgname=('sqlite' 'sqlite-doc') 
+_pkgver=3430000
+_docver=3430000
+pkgver=3.43.0
 pkgrel=1
 pkgdesc="A C library that implements an SQL database engine"
 arch=('x86_64')
 license=('custom')
 url="https://www.sqlite.org/"
 makedepends=('tcl' 'readline')
-source=("https://www.sqlite.org/2023/sqlite-autoconf-${_amalgamationver}.tar.gz"
+source=("https://www.sqlite.org/2023/sqlite-src-${_pkgver}.zip"
         "https://www.sqlite.org/2023/sqlite-doc-${_docver}.zip"
         'license.txt')
 options=('!libtool' '!emptydirs' '!makeflags')
-sha1sums=('036575929b174c1b829769255491ba2b32bda9ee'
-          '0e32989368bb6bf9a9c6ed59e04f3853eb042ecd'
+sha1sums=('391fcf9c1b31d5d19345a2d01609aee4a8df7bae'
+          '680040adaba074c6ac0de42a7dbb293d2b9921ab'
           'f34f6daa4ab3073d74e774aad21d66878cf26853')
 
 build() {
@@ -23,56 +23,38 @@ build() {
                          -DSQLITE_ENABLE_UNLOCK_NOTIFY \
                          -DSQLITE_SECURE_DELETE \
                          -DSQLITE_ENABLE_DBSTAT_VTAB=1"
+  export TCLLIBDIR="/usr/lib/sqlite-${pkgver}"
 
   # sqlite
-  cd ${srcdir}/sqlite-autoconf-${_amalgamationver}
+  cd sqlite-src-${_pkgver}
   ./configure --prefix=/usr \
 	--disable-static \
-	--enable-fts5 \
-	--enable-json1 
+	--enable-fts5 
   make
-  
-  # tcl extension    
-  cd ${srcdir}/sqlite-autoconf-${_amalgamationver}/tea
-  ./configure --prefix=/usr \
-	--with-system-sqlite
-  make
-
 }
 
 package_sqlite() {
- 
+
  pkgdesc="A C library that implements an SQL database engine"
  depends=('readline>=6.0.00')
- provides=("sqlite3=$pkgver")
- replaces=('sqlite3')
- 
-  cd ${srcdir}/sqlite-autoconf-${_amalgamationver}
-  make DESTDIR=${pkgdir} install
-  
-  install -D -m644 ${srcdir}/license.txt ${pkgdir}/usr/share/licenses/${pkgname}/license.txt
-}
+ provides=("sqlite3=$pkgver" 'sqlite-tcl')
+ replaces=('sqlite3' 'sqlite-tcl')
 
-package_sqlite-tcl() {
- 
- pkgdesc="sqlite Tcl Extension Architecture (TEA)"
- depends=('sqlite')
- provides=("sqlite3-tcl=$pkgver")
- replaces=("sqlite3-tcl")
-
-  cd ${srcdir}/sqlite-autoconf-${_amalgamationver}/tea
+  cd sqlite-src-${_pkgver}
   make DESTDIR=${pkgdir} install
+
+  install -D -m644 ../license.txt ${pkgdir}/usr/share/licenses/${pkgname}/license.txt
 }
 
 package_sqlite-doc() {
  pkgdesc="most of the static HTML files that comprise this website, including all of the SQL Syntax and the C/C++ interface specs and other miscellaneous documentation"
  provides=("sqlite3-doc=$pkgver")
  replaces=("sqlite3-doc")
- 
+
   cd ${srcdir}/sqlite-doc-${_docver}
   mkdir -p ${pkgdir}/usr/share/doc/${pkgbase}
   cp -R *  ${pkgdir}/usr/share/doc/${pkgbase}/
-  
+
   # fix permissions and remove obsolete files
   find ${pkgdir} -type f -perm 755 -exec ls -lha {} \;
   find ${pkgdir} -type f -perm 755 -exec chmod 644 {} \;
