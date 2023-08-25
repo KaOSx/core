@@ -1,6 +1,6 @@
 
 pkgname=python3
-pkgver=3.10.12
+pkgver=3.10.13
 pkgrel=1
 _pybasever=3.10
 pkgdesc="Next generation of the python high-level scripting language"
@@ -11,7 +11,7 @@ depends=('expat' 'bzip2' 'gdbm' 'openssl' 'libffi' 'zlib' 'libxcrypt')
 makedepends=('sqlite' 'valgrind' 'bluez' 'llvm' 'xorg-server')
 options=('!makeflags')
 source=("https://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz")
-md5sums=('49b0342476b984e106d308c25d657f12')  
+md5sums=('8847dc6458d1431d0ae0f55942deeb89')  
 
 build() {
   cd Python-${pkgver}
@@ -39,6 +39,7 @@ build() {
 check() {
   cd Python-${pkgver}
 
+  # 1 fail test test___all__ failed
   LD_LIBRARY_PATH=${srcdir}/Python-${pkgver}:${LD_LIBRARY_PATH} \
      ${srcdir}/Python-${pkgver}/python -m test.regrtest -x test_posixpath test_logging test_site test_urllib2_localnet test_pyexpat
 }
