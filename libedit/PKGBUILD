@@ -1,7 +1,7 @@
 
 pkgname=libedit
-pkgver=20221030_3.1
-_pkgver=20221030-3.1
+pkgver=20230828_3.1
+_pkgver=20230828-3.1
 pkgrel=1
 pkgdesc='Command line editor library providing generic line editing, history, and tokenization functions'
 arch=('x86_64')
@@ -10,12 +10,14 @@ license=('BSD')
 depends=('ncurses')
 options=('!libtool')
 source=("https://thrysoee.dk/editline/libedit-${_pkgver}.tar.gz")
-md5sums=('103fc913cf691dbe391dcf7bff0e6a84')
+md5sums=('16bb2ab0d33bce3467f5cd4ec7d8f3ee')
 
 build() {
     cd ${pkgname}-${_pkgver}
 
-    ./configure --prefix=/usr --enable-widec --enable-static=no
+    ./configure --prefix=/usr \
+        --enable-widec \
+        --enable-static=no
     make
 }
 
