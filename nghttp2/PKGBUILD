@@ -1,6 +1,6 @@
 
 pkgname=nghttp2
-pkgver=1.55.1
+pkgver=1.56.0
 pkgrel=1
 pkgdesc='Implementation of HTTP/2 and its header compression algorithm HPACK in C.'
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('MIT')
 depends=('glibc')
 options=('!emptydirs')
 source=("https://github.com/nghttp2/nghttp2/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
-sha256sums=('19490b7c8c2ded1cf7c3e3a54ef4304e3a7876ae2d950d60a81d0dc6053be419')
+sha256sums=('65eee8021e9d3620589a4a4e91ce9983d802b5229f78f3313770e13f4d2720e9')
 
 build() {
   cd ${pkgname}-${pkgver}
