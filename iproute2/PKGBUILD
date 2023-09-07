@@ -1,6 +1,6 @@
 
 pkgname=iproute2
-pkgver=6.4.0
+pkgver=6.5.0
 pkgrel=1
 pkgdesc="IP Routing Utilities"
 arch=('x86_64')
@@ -9,12 +9,10 @@ url="https://wiki.linuxfoundation.org/networking/start"
 depends=('linux-atm' 'perl')
 makedepends=('iptables')
 options=('!makeflags')
-backup=('etc/iproute2/ematch_map' 'etc/iproute2/rt_dsfield' 'etc/iproute2/rt_protos' \
-        'etc/iproute2/rt_realms' 'etc/iproute2/rt_scopes' 'etc/iproute2/rt_tables')
 source=("https://www.kernel.org/pub/linux/utils/net/iproute2/${pkgname}-${pkgver}.tar.xz"
         'iproute2-fhs.patch')
-sha256sums=('4c51b8decbc7e4da159ffb066f590cfb93dbf9af7ff86b1647ce42b7c179a272'
-            '532eb9e8b6cb0dc043934e7ce1447c30e16acbe07bab6348f9a338287db9d364')
+sha256sums=('a70179085fa1b96d3c33b040c809b75e2b57563adc505a4ad05e2609df373463'
+            '84234a9a89e3af00cb8f2a3f175497f5875fcb99fcf1e4612230dfd18d7d079a')
 
 prepare() {
   cd ${pkgname}-${pkgver}

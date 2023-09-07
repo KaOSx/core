@@ -7,9 +7,10 @@
 -SBINDIR?=/sbin
 +SBINDIR?=/usr/sbin
 +SHAREDIR=/usr/share
- CONFDIR?=/etc/iproute2
+ CONF_ETC_DIR?=/etc/iproute2
+ CONF_USR_DIR?=$(PREFIX)/lib/iproute2
  NETNS_RUN_DIR?=/var/run/netns
- NETNS_ETC_DIR?=/etc/netns
+
 diff -Naur iproute2-3.4.0/netem/Makefile iproute2-3.4.0.new/netem/Makefile
 --- iproute2-3.4.0/netem/Makefile	2012-05-21 23:12:19.000000000 +0200
 +++ iproute2-3.4.0.new/netem/Makefile	2012-06-18 10:23:53.896760158 +0200
