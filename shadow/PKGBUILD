@@ -1,14 +1,14 @@
 
 pkgname=shadow
 pkgver=4.14.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
 url='https://github.com/shadow-maint/shadow'
 license=('BSD')
 groups=('base')
-depends=('bash' 'pam' 'acl' 'libxcrypt')
-makedepends=('itstool' 'libbsd')
+depends=('bash' 'pam' 'acl' 'libxcrypt' 'libbsd')
+makedepends=('itstool')
 backup=(etc/login.defs
         etc/pam.d/{chage,passwd,shadow,useradd,usermod,userdel}
         etc/pam.d/{chpasswd,newusers,groupadd,groupdel,groupmod}
