@@ -1,10 +1,10 @@
 
 pkgname=btrfs-progs
-pkgver=6.5.1
+pkgver=6.5.2
 pkgrel=1
 pkgdesc="Btrfs filesystem utilities."
 arch=('x86_64')
-url="https://btrfs.wiki.kernel.org/"
+url="https://btrfs.readthedocs.io/en/latest/"
 license=('GPL2')
 depends=('glibc' 'e2fsprogs' 'lzo2' 'python3' 'zstd')
 makedepends=('asciidoc' 'git' 'xmlto' 'python3-setuptools')
@@ -12,7 +12,7 @@ options=('!staticlibs')
 source=("https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/${pkgname}-v${pkgver}.tar.xz"
         'initcpio-install-btrfs'
         'initcpio-hook-btrfs')
-sha256sums=('dacbb28136e82586af802205263a428c3d1941778bc3fdc9b1b386ea12eb904e'
+sha256sums=('c558b2ddd43f5747a2f5cb62aed3e5c5099703886485a480310fed4698d3610c'
             '34e1472c028875bb8cc7d06fa18aad9c1c90e3719de416733e9baac82a12cd94'
             '116a8fac508a3872b77f249e71d9de4f9b61cd20edfde01c99a5deba143769df')
 
