@@ -1,6 +1,6 @@
 
 pkgname=shared-mime-info
-pkgver=2.2
+pkgver=2.3
 pkgrel=1
 pkgdesc="Freedesktop.org Shared MIME Info"
 arch=('x86_64')
@@ -12,14 +12,14 @@ options=('!makeflags')
 #source=("https://freedesktop.org/~hadess/${pkgname}-${pkgver}.tar.xz"
 source=("https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/${pkgver}/${pkgname}-${pkgver}.tar.bz2"
         'update-mime-database.hook')
-md5sums=('22574ee319c1690a058fbcfcbc4542d3'
+md5sums=('a6c4b35bc36c3764d18e2472dc9c8484'
          'e7c5fd94c7e17ff8c3af7a8c6618abaa')
 
 build() {
   mkdir -p build
   cd build
 
-  meson ../${pkgname}-${pkgver} \
+  meson setup ../${pkgname}-${pkgver} \
     --prefix=/usr \
     --buildtype=release \
     -Dupdate-mimedb=false
