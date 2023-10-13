@@ -1,14 +1,14 @@
 
 pkgname=libnsl
-pkgver=2.0.0
-pkgrel=2
+pkgver=2.0.1
+pkgrel=1
 pkgdesc='Public client interface for NIS(YP) and NIS+ in a IPv6 ready version'
 arch=('x86_64')
 url='https://github.com/thkukuk/libnsl'
 license=('LGPL2.1')
 depends=('libtirpc')
 source=("https://github.com/thkukuk/libnsl/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('1e8c0615071ea13202452304de1eaab9')
+md5sums=('fb178645dfa85ebab0f1e42e219b42ae')
 
 build() {
   cd ${pkgname}-${pkgver}
