@@ -3,7 +3,7 @@ _extramodules=6.4.16-1
 _kver="$(cat /lib/modules/extramodules-6.4/version)"
 
 pkgname=zfs-headers
-pkgver=2.1.13
+pkgver=2.2.0
 pkgrel=1
 pkgdesc="Kernel headers for the Zettabyte File System."
 arch=('x86_64')
@@ -13,7 +13,7 @@ depends=('kmod' 'linux' "zfs=${pkgver}")
 makedepends=('linux-headers' 'elfutils')
 source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-${pkgver}.tar.gz"
         "https://github.com/openzfs/zfs/commit/3ace9dea01f2088e81c0b90ca8e07faad7364eca.diff")
-sha256sums=('06b24cbb3cbc1554e2edf2fcd71d1f8bec4febf4412aeac17070877c44302abd'
+sha256sums=('42035fd059faa25a09cd511b24a57b8ad1285cb69127f2a0043b98562c5ec690'
             '1c1322194bbaee4c13186033b9b25eed1440b1f076faf735e45aa7a30fd6dd87')
 
 build() {
@@ -44,7 +44,7 @@ package() {
     rm -r ${pkgdir}/lib
     #remove kernel specific headers
     rm -r ${pkgdir}/usr/src/zfs-${pkgver}/${_extramodules}
-    rm -r ${pkgdir}/usr/src/spl-${pkgver}/${_extramodules}
+    #rm -r ${pkgdir}/usr/src/spl-${pkgver}/${_extramodules}
 
     install -D -m0644 LICENSE -t ${pkgdir}/usr/share/licenses/${pkgname}
 }

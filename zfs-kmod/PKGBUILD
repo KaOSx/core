@@ -4,7 +4,7 @@ __extramodules=extramodules-6.4
 _kver="$(cat /lib/modules/${__extramodules}/version)"
 
 pkgname=zfs-kmod
-pkgver=2.1.13
+pkgver=2.2.0
 pkgrel=1
 pkgdesc="Kernel module for the Zettabyte File System."
 arch=('x86_64')
@@ -16,7 +16,7 @@ install=zfs-kmod.install
 source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-${pkgver}.tar.gz"
         "https://github.com/openzfs/zfs/commit/3ace9dea01f2088e81c0b90ca8e07faad7364eca.diff")
 #source=("https://github.com/openzfs/zfs/archive/${_commit}.zip")
-sha256sums=('06b24cbb3cbc1554e2edf2fcd71d1f8bec4febf4412aeac17070877c44302abd'
+sha256sums=('42035fd059faa25a09cd511b24a57b8ad1285cb69127f2a0043b98562c5ec690'
             '1c1322194bbaee4c13186033b9b25eed1440b1f076faf735e45aa7a30fd6dd87')
 
 build() {
@@ -41,15 +41,15 @@ build() {
     _pem=/$HOME/signing_key.pem
     _key=/$HOME/signing_key.x509
 
-    ${_file} sha256 ${_pem} ${_key} module/avl/zavl.ko
-    ${_file} sha256 ${_pem} ${_key} module/icp/icp.ko
-    ${_file} sha256 ${_pem} ${_key} module/lua/zlua.ko
-    ${_file} sha256 ${_pem} ${_key} module/nvpair/znvpair.ko
-    ${_file} sha256 ${_pem} ${_key} module/spl/spl.ko
-    ${_file} sha256 ${_pem} ${_key} module/unicode/zunicode.ko
-    ${_file} sha256 ${_pem} ${_key} module/zcommon/zcommon.ko
-    ${_file} sha256 ${_pem} ${_key} module/zfs/zfs.ko
-    ${_file} sha256 ${_pem} ${_key} module/zstd/zzstd.ko
+    #${_file} sha256 ${_pem} ${_key} module/avl/zavl.ko
+    #${_file} sha256 ${_pem} ${_key} module/icp/icp.ko
+    #${_file} sha256 ${_pem} ${_key} module/lua/zlua.ko
+    #${_file} sha256 ${_pem} ${_key} module/nvpair/znvpair.ko
+    ${_file} sha256 ${_pem} ${_key} module/spl.ko
+    #${_file} sha256 ${_pem} ${_key} module/unicode/zunicode.ko
+    #${_file} sha256 ${_pem} ${_key} module/zcommon/zcommon.ko
+    ${_file} sha256 ${_pem} ${_key} module/zfs.ko
+    #${_file} sha256 ${_pem} ${_key} module/zstd/zzstd.ko
 }
 
 package() {
@@ -60,9 +60,9 @@ package() {
     sed -i "s|${srcdir}||" ${pkgdir}/usr/src/zfs-*/${_extramodules}/Module.symvers
     #remove header files packaged in zfs-headers
     rm -r ${pkgdir}/usr/src/zfs-${pkgver}/include
-    rm -r ${pkgdir}/usr/src/spl-${pkgver}/include
+    #rm -r ${pkgdir}/usr/src/spl-${pkgver}/include
     rm ${pkgdir}/usr/src/zfs-${pkgver}/zfs*
-    rm -r ${pkgdir}/usr/src/spl-${pkgver}/spl*
+    #rm -r ${pkgdir}/usr/src/spl-${pkgver}/spl*
 
     sed -i -e "s/EXTRAMODULES='.*'/EXTRAMODULES='${__extramodules}'/" "${startdir}/zfs-kmod.install"
     install -D -m0644 LICENSE -t ${pkgdir}/usr/share/licenses/${pkgname}
