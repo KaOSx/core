@@ -1,6 +1,6 @@
 
 pkgname=cronie
-pkgver=1.6.1
+pkgver=1.7.0
 pkgrel=1
 pkgdesc='Daemon that runs specified programs at scheduled times and related tools'
 url='https://github.com/cronie-crond/cronie'
@@ -14,17 +14,13 @@ conflicts=('dcron')
 replaces=('dcron')
 provides=('cron')
 backup=('etc/anacrontab'
-        'etc/conf.d/crond'
+        'etc/sysconfig/crond'
         'etc/pam.d/crond'
         'etc/cron.deny')
 source=("https://github.com/cronie-crond/cronie/releases/download/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.gz"
-        'cron.deny'
-        'service'
-        'pam.d')
-md5sums=('de07b7229520bc859d987c721bab87c5'
-         '2962d9812fbbbdee1bd7f1c1ccb5e372'
-         'b4e1316eaa8f3806f20bad21a5101caa'
-         'ace2584e5467371e35acf5f5af8f3c29')
+        'cron.deny')
+md5sums=('9b7d67884d35685b348523b26f52fe73'
+         '2962d9812fbbbdee1bd7f1c1ccb5e372')
 
 build() {
 	cd ${pkgname}-${pkgver}
@@ -49,11 +45,11 @@ package() {
 	install -d ${pkgdir}/var/spool/{ana,}cron
 	install -d ${pkgdir}/etc/cron.{d,hourly,daily,weekly,monthly}
 
-	install -Dm644 ../pam.d ${pkgdir}/etc/pam.d/crond
+	install -Dm644 pam/crond ${pkgdir}/etc/pam.d/crond
 	install -Dm644 ../cron.deny ${pkgdir}/etc/cron.deny
-	install -Dm644 ../service ${pkgdir}/usr/lib/systemd/system/cronie.service
+	install -Dm644 contrib/cronie.systemd ${pkgdir}/usr/lib/systemd/system/cronie.service
 
-	install -Dm644 crond.sysconfig ${pkgdir}/etc/conf.d/crond
+	install -Dm644 crond.sysconfig ${pkgdir}/etc/sysconfig/crond
 	install -Dm644 contrib/anacrontab ${pkgdir}/etc/anacrontab
 	install -Dm644 contrib/0hourly ${pkgdir}/etc/cron.d/0hourly
 	install -Dm755 contrib/0anacron ${pkgdir}/etc/cron.hourly/0anacron
