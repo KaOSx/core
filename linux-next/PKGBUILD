@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 
 _basekernel=6.5
 _srcname=linux-6.5
-pkgver=6.5.7
+pkgver=6.5.8
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -33,7 +33,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         'dracut-next-install')
 md5sums=('42c2796f9babe4a1be3f2001c817ff4a'
-         '98bc682c2fe896121ee21f40888fc773'
+         '53c42a9f4eea5b08cc21f905a0c941b5'
          'ccad339b277eac83d6b2f1494838b630'
          '99209661e33a1918b3decde80b54f306'
          '827ed4d7e2c6aefb9a6a35a51ba2a4dc'
