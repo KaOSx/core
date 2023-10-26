@@ -1,29 +1,32 @@
 
 pkgname=p11-kit
-pkgver=0.25.0
+pkgver=0.25.1
 pkgrel=1
 pkgdesc="Library to work with PKCS#11 modules"
 arch=('x86_64')
 url="https://p11-glue.freedesktop.org"
 license=('BSD')
 depends=('glibc' 'libtasn1' 'libffi')
+makedepends=('meson' 'ninja')
 options=('!libtool')
 source=("https://github.com/p11-glue/p11-kit/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('9fcb1ec80b5d083dd9b34122fa7c3c23')
+md5sums=('3f58ddd9f0feb2bd3cc3ef2821ac7429')
 
 build() {
-  cd ${pkgname}-${pkgver}
+  mkdir -p build
+  cd build
 
-  ./configure --prefix=/usr \
-    --sysconfdir=/etc \
+  meson setup ../${pkgname}-${pkgver} \
+    --prefix=/usr \
+    --buildtype=release \
     --libexecdir=/usr/lib \
-    --with-module-path=/usr/lib/pkcs11
-  make
+    -Dmodule_path=/usr/lib/pkcs11
+  ninja
 }
 
 package() {
-  cd  ${pkgname}-${pkgver}
-  make DESTDIR=${pkgdir} install
+  cd build
 
-  install -Dm644 COPYING $pkgdir/usr/share/licenses/${pkgname}/COPYING
+  DESTDIR=${pkgdir} ninja install
+  install -Dm644 ../${pkgname}-${pkgver}/COPYING $pkgdir/usr/share/licenses/${pkgname}/COPYING
 }
