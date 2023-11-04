@@ -1,6 +1,6 @@
 
 pkgname=iproute2
-pkgver=6.5.0
+pkgver=6.6.0
 pkgrel=1
 pkgdesc="IP Routing Utilities"
 arch=('x86_64')
@@ -9,27 +9,27 @@ url="https://wiki.linuxfoundation.org/networking/start"
 depends=('linux-atm' 'perl')
 makedepends=('iptables')
 options=('!makeflags')
-source=("https://www.kernel.org/pub/linux/utils/net/iproute2/${pkgname}-${pkgver}.tar.xz"
+source=("https://www.kernel.org/pub/linux/utils/net/iproute2/${pkgname}-v${pkgver}.tar.xz"
         'iproute2-fhs.patch')
-sha256sums=('a70179085fa1b96d3c33b040c809b75e2b57563adc505a4ad05e2609df373463'
+sha256sums=('77e49171a58ae1a507d890f76336a0b4704bb5057be5bb9b4d721c4b1d199d56'
             '84234a9a89e3af00cb8f2a3f175497f5875fcb99fcf1e4612230dfd18d7d079a')
 
 prepare() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-v${pkgver}
   patch -p1 -i ${srcdir}/iproute2-fhs.patch
 
   sed -i 's|-Werror||' Makefile
 }
 
 build() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-v${pkgver}
 
   ./configure
    make
 }
 
 package() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-v${pkgver}
   make DESTDIR=${pkgdir} install
 
   # allow loopback to be started before /usr is mounted
