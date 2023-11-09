@@ -1,6 +1,7 @@
 
 pkgname=iasl
-pkgver=20230331
+pkgver=20230628
+_pkgver=R06_28_23
 pkgrel=1
 pkgdesc="Intel ACPI Source Language compiler"
 arch=('x86_64')
@@ -9,11 +10,12 @@ license=('GPLv2')
 depends=('glibc')
 makedepends=('flex' 'bison')
 options=('!makeflags')
-source=("https://acpica.org/sites/acpica/files/acpica-unix-${pkgver}.tar.gz")
-md5sums=('9610f97f23389bbe72c75a4c1bd6442f')
+#source=("https://acpica.org/sites/acpica/files/acpica-unix-${pkgver}.tar.gz")
+source=("https://github.com/acpica/acpica/archive/refs/tags/${_pkgver}.tar.gz")
+md5sums=('ca8425f76b1b42cb4956e81025c1df6d')
 
 build() {
-  cd acpica-unix-${pkgver}
+  cd acpica-${_pkgver}
   # fails to build with gcc 12, see https://github.com/acpica/acpica/issues/771
   export CFLAGS="-Wno-dangling-pointer"
 
@@ -21,7 +23,7 @@ build() {
 }
 
 package() {
-  cd acpica-unix-${pkgver}
+  cd acpica-${_pkgver}
 
   make DESTDIR=${pkgdir} install
   #install -D -m644 ../LICENSE ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
