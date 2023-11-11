@@ -1,7 +1,8 @@
 
 pkgname=dracut
-pkgver=059
-pkgrel=2
+pkgver=060
+pkgrel=1
+_commit=856e7acdb1462803c2517c8d64afb2e34c73c735
 pkgdesc="Event driven initramfs tool used to create an initramfs image by copying tools and files from an installed system and combining it with the dracut framework"
 arch=('x86_64')
 url="https://github.com/dracutdevs/dracut"
@@ -13,17 +14,17 @@ makedepends=('asciidoc' 'bash-completion' 'libxslt')
 backup=('etc/dracut.conf')
 provides=('initrd')
 #source=("https://mirrors.edge.kernel.org/pub/linux/utils/boot/dracut/${pkgname}-${pkgver}.tar.xz"
-source=("https://github.com/dracutdevs/dracut/archive/refs/tags/${pkgver}.tar.gz"
+source=("https://github.com/dracutdevs/dracut/archive/${_commit}.tar.gz"
         'kaos.conf'
         'aufs-mount.sh'
         'module-setup.sh')
-sha256sums=('eabf0bb685420c1e1d5475b6855ef787104508f0135ff570312845256e0fcecf'
+sha256sums=('f6cfa407ca55b9db98c1f86cc1641de6c8dba384d4b1c197f6ce70ef8a5842f1'
             '1b209a69645925372f6fd5aee9bf23510e5f72c797c2f61a0b8e5aa0e90d27f8'
             '5351ed6cff01c8b6498dde09ad67074432e3bea363d5ee2de752a15ea9f3aaea'
             'd99bbc2b013421eb94b7396126533f047585ca45d6755c167b8c8471d5f4fdfd')
 
 build() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-${_commit}
 
   ./configure \
     --prefix=/usr \
@@ -35,7 +36,7 @@ build() {
 }
 
 package() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-${_commit}
 
   DESTDIR=${pkgdir} make install
   install -Dm755 ../kaos.conf ${pkgdir}/etc/dracut.conf.d/01-kaos.conf
