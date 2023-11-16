@@ -1,6 +1,6 @@
 
 pkgname=btrfs-progs
-pkgver=6.6.1
+pkgver=6.6.2
 pkgrel=1
 pkgdesc="Btrfs filesystem utilities."
 arch=('x86_64')
@@ -12,7 +12,7 @@ options=('!staticlibs')
 source=("https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/${pkgname}-v${pkgver}.tar.xz"
         'initcpio-install-btrfs'
         'initcpio-hook-btrfs')
-sha256sums=('3e92cb6d83bdde612318fd8046dd6eff47c786e59d56dd4ece987945d5137c9e'
+sha256sums=('b426736dc94e2b04b6983e998c4dc427dc166d66ddea246c890ed9c2a450044f'
             '34e1472c028875bb8cc7d06fa18aad9c1c90e3719de416733e9baac82a12cd94'
             '116a8fac508a3872b77f249e71d9de4f9b61cd20edfde01c99a5deba143769df')
 
