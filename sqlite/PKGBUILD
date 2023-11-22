@@ -1,9 +1,9 @@
 
 pkgbase="sqlite"
 pkgname=('sqlite' 'sqlite-doc') 
-_pkgver=3440000
+_pkgver=3440100
 _docver=3440000
-pkgver=3.44.0
+pkgver=3.44.1
 pkgrel=1
 pkgdesc="A C library that implements an SQL database engine"
 arch=('x86_64')
@@ -14,7 +14,7 @@ source=("https://www.sqlite.org/2023/sqlite-src-${_pkgver}.zip"
         "https://www.sqlite.org/2023/sqlite-doc-${_docver}.zip"
         'license.txt')
 options=('!libtool' '!emptydirs' '!makeflags')
-sha1sums=('cd91802c4d53292d6ee6470ef5a0b720022653b6'
+sha1sums=('aec55201680a23c47cb7a82cebea616bb8005940'
           'e28ac34c214e2d42d49bd6354074e1e727346dba'
           'f34f6daa4ab3073d74e774aad21d66878cf26853')
 
@@ -47,7 +47,7 @@ package_sqlite() {
 }
 
 package_sqlite-doc() {
- pkgdesc="most of the static HTML files that comprise this website, including all of the SQL Syntax and the C/C++ interface specs and other miscellaneous documentation"
+ pkgdesc="Documentation as a bundle of static HTML files, including all of the SQL Syntax and the C/C++ interface specs."
  provides=("sqlite3-doc=$pkgver")
  replaces=("sqlite3-doc")
 
