@@ -1,10 +1,10 @@
 
-_extramodules=6.6.0-1-next
+_extramodules=6.6.2-1-next
 __extramodules=extramodules-6.6-next
 _kver="$(cat /lib/modules/${__extramodules}/version)"
 
 pkgname=zfs-kmod-next
-pkgver=2.2.0
+pkgver=2.2.1
 _commit=05147319b0821f61fcff743e20605e191d523906
 pkgrel=4
 pkgdesc="Kernel module for the Zettabyte File System (linux-next version)."
@@ -15,20 +15,14 @@ depends=('kmod' 'linux-next>=6.6' 'linux-next<6.7.0' "zfs=${pkgver}" 'zfs-header
 makedepends=('linux-next-headers' 'elfutils')
 install=zfs-kmod-next.install
 source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-${pkgver}.tar.gz"
-        "https://github.com/openzfs/zfs/commit/b37f29341b9aec1b6e45d55b6f7a1bc5b2723f7a.diff"
-        "https://github.com/openzfs/zfs/commit/01d00dfa9e47dba025522790736fc34d65baf2f1.diff"
-        "https://github.com/openzfs/zfs/commit/7ac56b86cd69487fa018b6c92cb2cfb2f82fefba.diff")
+        "https://github.com/openzfs/zfs/commit/b37f29341b9aec1b6e45d55b6f7a1bc5b2723f7a.diff")
 #source=("https://github.com/openzfs/zfs/archive/${_commit}.zip")
-sha256sums=('42035fd059faa25a09cd511b24a57b8ad1285cb69127f2a0043b98562c5ec690'
-            'a74a013f4393e1c3fa0320873a37f0528f01639ea7b82ef69b9f1f90342d4a59'
-            '2f41ff29c9ba7388e3f37c3f2171c15ce8db3086a8e9c46ac3b372400c2c8c78'
-            'ff0411f6da4735d52bb09d4e265e4a9abd695e4f82d8238391735e56eb07e952')
+sha256sums=('4ff2de43d39710283ae8ff1744aa96e6cdc83c8efe86a715294d4f6bc34a8e8e'
+            'a74a013f4393e1c3fa0320873a37f0528f01639ea7b82ef69b9f1f90342d4a59')
 
 build() {
     cd zfs-${pkgver}
-    patch -p1 -i ${srcdir}/b37f29341b9aec1b6e45d55b6f7a1bc5b2723f7a.diff
-    patch -p1 -i ${srcdir}/01d00dfa9e47dba025522790736fc34d65baf2f1.diff
-    patch -p1 -i ${srcdir}/7ac56b86cd69487fa018b6c92cb2cfb2f82fefba.diff
+    #patch -p1 -i ${srcdir}/b37f29341b9aec1b6e45d55b6f7a1bc5b2723f7a.diff
 
     #./autogen.sh
     ./configure --prefix=/usr \

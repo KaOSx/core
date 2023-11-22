@@ -1,6 +1,6 @@
 
 pkgname=zfs
-pkgver=2.2.0
+pkgver=2.2.1
 pkgrel=1
 pkgdesc="Userspace utilities for the Zettabyte File System Linux kernel module."
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('CDDL')
 depends=('python3' 'libaio')
 source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/${pkgname}-${pkgver}.tar.gz"
         'module-setup.diff')
-sha256sums=('42035fd059faa25a09cd511b24a57b8ad1285cb69127f2a0043b98562c5ec690'
+sha256sums=('4ff2de43d39710283ae8ff1744aa96e6cdc83c8efe86a715294d4f6bc34a8e8e'
             '830bac4b160d7df629acdffba638e5e40095cc960824534ca35ee2c5f2211bf6')
 
 build() {
