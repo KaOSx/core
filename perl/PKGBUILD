@@ -1,6 +1,6 @@
 
 pkgname=perl
-pkgver=5.36.1
+pkgver=5.36.2
 pkgrel=1
 pkgdesc="A highly capable, feature-rich programming language"
 arch=('x86_64')
@@ -72,7 +72,7 @@ provides=('perl-archive-tar=2.40'
           'perl-math-complex=1.5902'
           'perl-memoize=1.03_01'
           'perl-mime-base64=3.16'
-          'perl-module-corelist=5.20230423'
+          'perl-module-corelist=5.20231125'
           'perl-module-load-conditional=0.74'
           'perl-module-load=0.36'
           'perl-module-loaded=0.08'
@@ -126,10 +126,10 @@ source=("https://www.cpan.org/src/5.0/perl-${pkgver}.tar.xz"
         'perlbin.csh'
         "https://github.com/Perl/perl5/commit/5bc1e5fdd87aa205011512cd1e6cc655bcf677fd.diff")
 options=('makeflags' '!purge' 'emptydirs')
-sha256sums=('bd91217ea8a8c8b81f21ebbb6cefdf0d13ae532013f944cdece2cd51aef4b6a7'
+sha256sums=('19445f09ea9f6ada33297010d5b76ac46be565568d1a4377a6bc736cd795a128'
             '984f140969a38bf9015b773b20d352905d5f00f7f0c8417229293c11d74e64b0'
             'fd5d38ce3d624dcac5736d34af4b71edab447dceb4123dd1a2ad821f487151c2'
-            '97297278e3bd3a4a70d1cce7b0b7164f812d7c6a38b67581b6426dcf7cce1fd7')
+            '2f700172cb523c87d935aba7838d48622685496d23c29ee1be7f57a8170b7631')
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -157,7 +157,8 @@ build() {
 
 check() {
   cd ${pkgname}-${pkgver}
-
+  # 1 of 2623 failed:
+  # t/porting/regen .............. 'META.json-new' and 'META.json' differ
   make test
 }
 
