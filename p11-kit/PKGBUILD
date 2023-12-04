@@ -1,7 +1,7 @@
 
 pkgname=p11-kit
 pkgver=0.25.3
-pkgrel=1
+pkgrel=4
 pkgdesc="Library to work with PKCS#11 modules"
 arch=('x86_64')
 url="https://p11-glue.freedesktop.org"
@@ -13,20 +13,39 @@ source=("https://github.com/p11-glue/p11-kit/releases/download/${pkgver}/${pkgna
 md5sums=('2610cef2951d83d7037577eaae1acb54')
 
 build() {
-  mkdir -p build
-  cd build
+  cd ${pkgname}-${pkgver}
 
-  meson setup ../${pkgname}-${pkgver} \
-    --prefix=/usr \
-    --buildtype=release \
+  ./configure --prefix=/usr \
+    --sysconfdir=/etc \
     --libexecdir=/usr/lib \
-    -Dmodule_path=/usr/lib/pkcs11
-  ninja
+    --with-module-path=/usr/lib/pkcs11
+  make
 }
 
 package() {
-  cd build
+  cd  ${pkgname}-${pkgver}
+  make DESTDIR=${pkgdir} install
 
-  DESTDIR=${pkgdir} ninja install
-  install -Dm644 ../${pkgname}-${pkgver}/COPYING $pkgdir/usr/share/licenses/${pkgname}/COPYING
+  install -Dm644 COPYING $pkgdir/usr/share/licenses/${pkgname}/COPYING
 }
+
+#build() {
+#  mkdir -p build
+#  cd build
+
+#  meson setup ../${pkgname}-${pkgver} \
+#    --prefix=/usr \
+#    --buildtype=release \
+#    --libexecdir=/usr/lib \
+#    -Dmodule_path=/usr/lib/pkcs11 \
+#    -Dtrust_module=enabled \
+#    -Dtrust_paths=etc/ssl/certs/ca-certificates.crt
+#  ninja
+#}
+
+#package() {
+#  cd build
+
+#  DESTDIR=${pkgdir} ninja install
+#  install -Dm644 ../${pkgname}-${pkgver}/COPYING $pkgdir/usr/share/licenses/${pkgname}/COPYING
+#}
