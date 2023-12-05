@@ -1,6 +1,7 @@
 
 pkgname=hwdata
-pkgver=0.377
+pkgver=0.377.2
+_pkgver=0.377-2
 pkgrel=1
 pkgdesc="Hardware identification and configuration data"
 url="https://github.com/vcrhonek/hwdata"
@@ -9,11 +10,11 @@ arch=('x86_64')
 provides=('hwids')
 replaces=('hwids')
 conflicts=('hwids')
-source=("https://github.com/vcrhonek/hwdata/archive/refs/tags/v${pkgver}.tar.gz")
-md5sums=('c399de988a273c7687ec6de4ec11de58')
+source=("https://github.com/vcrhonek/hwdata/archive/refs/tags/v${_pkgver}.tar.gz")
+md5sums=('6e813b84709f9c0d8cfe8b2b045524c8')
 
 build() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-${_pkgver}
 
   ./configure --prefix=/usr \
     --libdir=/usr/lib \
@@ -22,7 +23,7 @@ build() {
 }
 
 package() {
-  cd ${pkgname}-${pkgver}
+  cd ${pkgname}-${_pkgver}
 
   make DESTDIR=${pkgdir} install
   #install -Dm644 usb.ids ${pkgdir}/usr/share/hwdata/usb.ids
