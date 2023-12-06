@@ -1,7 +1,7 @@
 
 pkgname=cmake
-pkgver=3.27.9
-_pkgver=3.27
+pkgver=3.28.0
+_pkgver=3.28
 pkgrel=1
 pkgdesc="A cross-platform open-source make system"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('curl' 'libarchive' 'shared-mime-info' 'libuv' 'jsoncpp')
 makedepends=('qt6-base')
 source=("https://www.cmake.org/files/v${_pkgver}/${pkgname}-${pkgver}.tar.gz")
 #source=("https://github.com/Kitware/CMake/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('609a9b98572a6a5ea477f912cffb973109ed4d0a6a6b3f9e2353d2cdc048708e')
+sha256sums=('e1dcf9c817ae306e73a45c2ba6d280c65cf4ec00dd958eb144adaf117fb58e71')
 
 build() {
   cd ${pkgname}-${pkgver}
