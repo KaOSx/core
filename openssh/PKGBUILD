@@ -1,6 +1,6 @@
 
 pkgname=openssh
-pkgver=9.5p1
+pkgver=9.6p1
 pkgrel=1
 pkgdesc='Free version of the SSH connectivity tools'
 arch=('x86_64')
@@ -17,7 +17,7 @@ source=("https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgve
         'sshd.service'
         'sshd@.service'
         'sshd.socket')
-sha1sums=('35c16dcc6e7d0a9465faa241476ef24f76b196cc'
+sha1sums=('de300d09ec79fdbf37de4e6672cce4161439f2c3'
           'ec102deb69cad7d14f406289d2fc11fee6eddbdd'
           'd93dca5ebda4610ff7647187f8928a3de28703f3'
           'cc1ceec606c98c7407e7ac21ade23aed81e31405'
@@ -34,7 +34,6 @@ build() {
 		--sysconfdir=/etc/ssh \
 		--with-libedit \
 		--with-privsep-user=nobody \
-		--with-md5-passwords \
 		--with-pam \
 		--with-mantype=man \
 		--with-xauth=/usr/bin/xauth \
