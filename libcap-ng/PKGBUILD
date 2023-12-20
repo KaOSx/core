@@ -1,6 +1,6 @@
 
 pkgname=libcap-ng
-pkgver=0.8.3
+pkgver=0.8.4
 pkgrel=1
 pkgdesc='Library intended to make programming with posix capabilities easier than the traditional libcap library.'
 arch=('x86_64')
@@ -8,7 +8,7 @@ url='https://people.redhat.com/sgrubb/libcap-ng/'
 license=('LGPL2.1')
 depends=('glibc')
 source=("https://people.redhat.com/sgrubb/libcap-ng/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('bed6f6848e22bb2f83b5f764b2aef0ed393054e803a8e3a8711cb2a39e6b492d')
+sha256sums=('68581d3b38e7553cb6f6ddf7813b1fc99e52856f21421f7b477ce5abd2605a8a')
 
 build() {
   cd ${pkgname}-${pkgver}
