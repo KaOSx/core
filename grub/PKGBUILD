@@ -5,10 +5,10 @@
 
 pkgname=grub
 pkgdesc="GNU GRand Unified Bootloader"
-pkgver=2.06
-pkgrel=4
-_commit=7fd5feff97c4b1f446f8fcf6d37aca0c64e7c763
-_gnulib=9ce9be2ef0cb1180e35dfe9dfbbe90d774b374bd
+pkgver=2.12
+pkgrel=1
+_commit=5ca9db22e8ed0dbebb2aec53722972de0680a463
+_gnulib=811698980f0ba2d975e0e9e7f28a53740df58b1a
 url="https://www.gnu.org/software/grub/"
 arch=('x86_64')
 license=('GPL3')
@@ -35,9 +35,9 @@ source=("https://git.savannah.nongnu.org/cgit/grub.git/snapshot/grub-${_commit}.
         'grub-10_linux-detect-initramfs.patch'
         'grub.default'
         'grub.cfg')
-md5sums=('5a7ec9de5ef980d560eb3078d5a6fe5a'
+md5sums=('1d62b39386bfb5b88cae54d5646f7956'
          'SKIP'
-         '12d4f247b895bf2e7d65285b92f45886'
+         '21d4f506ee6136a3239c60e82b6d9ea9'
          '945527e0de8d384166a4cf23439ae9ee'
          '75722208518f0750cc3156d364c79007'
          '1c03f9a8196beee4321e89d87862c69b')
@@ -97,7 +97,6 @@ _build_grub-common_and_bios() {
 		--with-platform="pc" \
 		--target="i386" \
 		--enable-efiemu \
-		--enable-mm-debug \
 		--enable-nls \
 		--enable-device-mapper \
 		--enable-cache-stats \
@@ -144,7 +143,6 @@ _build_grub-efi() {
 		--with-platform="efi" \
 		--target="x86_64" \
 		--disable-efiemu \
-		--enable-mm-debug \
 		--enable-nls \
 		--enable-device-mapper \
 		--enable-cache-stats \
