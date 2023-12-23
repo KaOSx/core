@@ -1,7 +1,7 @@
 
 pkgname=iputils
-pkgver=20221126
-pkgrel=2
+pkgver=20231222
+pkgrel=1
 pkgdesc="IP Configuration Utilities (and Ping)."
 arch=('x86_64')
 license=('GPL')
@@ -13,14 +13,14 @@ backup=(etc/xinetd.d/tftp)
 install=${pkgname}.install
 source=("https://github.com/iputils/iputils/archive/${pkgver}.tar.gz"
         'tftp.xinetd')
-sha256sums=('745ea711fe06d5c57d470d21acce3c3ab866eb6afb69379a16c6d60b89bd4311'
+sha256sums=('18d51e7b416da0ecbc0ae18a2cba76407ca0b5b3f32c356034f258a0cb56793f'
             '1041ea0e4e71ae98cca84bcc5e2032f68c2c5121b36b87fa1e38b2c6911722e7')
 
 build() {
   mkdir -p build
   cd build
 
-  meson ../${pkgname}-${pkgver} \
+  meson setup ../${pkgname}-${pkgver} \
     --prefix=/usr \
     --buildtype=release \
     --libexecdir=/usr/lib \

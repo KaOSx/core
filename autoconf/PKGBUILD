@@ -1,7 +1,7 @@
 
 pkgname=autoconf
-pkgver=2.71
-pkgrel=2
+pkgver=2.72
+pkgrel=1
 pkgdesc="Package of M4 macros that produce shell scripts to automatically configure software source code packages."
 arch=('x86_64')
 license=('GPL2' 'GPL3' 'custom')
@@ -9,7 +9,7 @@ url="https://www.gnu.org/software/autoconf"
 groups=('base-devel')
 depends=('awk' 'm4' 'diffutils' 'bash')
 source=("https://ftp.gnu.org/gnu/autoconf/${pkgname}-${pkgver}.tar.xz")
-md5sums=('12cfa1687ffa2606337efe1a64416106')
+sha1sums=('1d082d999ff4506ec8f92c6ecb9732546f5204fb')
 
 build() {
   cd ${pkgname}-${pkgver}
