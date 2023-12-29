@@ -1,20 +1,17 @@
 
 pkgname=perl-xml-parser
 _pkgname=XML-Parser
-pkgver=2.46
-_pkgver=2.46
-pkgrel=4
+pkgver=2.47
+_pkgver=2.47
+pkgrel=1
 pkgdesc="Expat-based XML parser module for perl"
 arch=('x86_64')
 license=('GPL' 'PerlArtistic')
 url="https://metacpan.org/release/XML-Parser"
 depends=('perl' 'expat')
-replaces=('perlxml')
-provides=("perlxml=${pkgver}")
-conflicts=('perlxml')
 options=('!emptydirs')
 source=("https://cpan.metacpan.org/authors/id/T/TO/TODDR/${_pkgname}-${_pkgver}.tar.gz")
-md5sums=('80bb18a8e6240fcf7ec2f7b57601c170')
+md5sums=('89a8e82cfd2ad948b349c0a69c494463')
 
 build() {
   cd ${_pkgname}-${_pkgver}
