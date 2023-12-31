@@ -1,19 +1,19 @@
 
 pkgname=inetutils
-pkgver=2.4
+pkgver=2.5
 pkgrel=1
 pkgdesc="A collection of common network programs."
 arch=('x86_64')
 url="https://www.gnu.org/software/inetutils/"
 license=('GPL')
 depends=('readline' 'ncurses' 'pam' 'libxcrypt')
-makedepends=('help2man' 'clang')
+makedepends=('help2man') # 'clang')
 backup=('etc/conf.d/ftpd' 'etc/xinetd.d/telnet' 'etc/xinetd.d/talk')
 options=('!emptydirs')
 source=("https://ftp.gnu.org/gnu/inetutils/${pkgname}-${pkgver}.tar.gz"
         'ftpd.conf' 'telnet.xinetd' 'talk.xinetd' 'rlogin.xinetd'
         'rsh.xinetd' 'ftpd.service')
-md5sums=('04f8ca625d4f08ee824e98fee65b35eb'
+md5sums=('96526671eca6c2c531352d28dd6246fd'
          'e6e6e5990a2e8159a276fef8fbf54c04'
          '8596208d119045543c5fb644e1d713d5'
          '2c3655985cf122591d71d031af84ff90'
@@ -24,8 +24,8 @@ md5sums=('04f8ca625d4f08ee824e98fee65b35eb'
 build() {
   cd ${pkgname}-${pkgver}
 
-  export CC=/usr/bin/clang
-  export CXX=/usr/bin/clang++
+  #export CC=/usr/bin/clang
+  #export CXX=/usr/bin/clang++
 
   ./configure --prefix=/usr --libexec=/usr/sbin --localstatedir=/var \
     --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info \
