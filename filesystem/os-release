@@ -1,7 +1,7 @@
 NAME="KaOS"
-VERSION="2023"
+VERSION="2024"
 ID=kaos
-PRETTY_NAME="KaOS (2023)"
+PRETTY_NAME="KaOS (2024)"
 BUILD_ID=rolling
 ANSI_COLOR="0;36"
 HOME_URL="https://kaosx.us/"
