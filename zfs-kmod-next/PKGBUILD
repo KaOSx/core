@@ -1,12 +1,12 @@
 
-_extramodules=6.6.9-1-next
+_extramodules=6.6.10-1-next
 __extramodules=extramodules-6.6-next
 _kver="$(cat /lib/modules/${__extramodules}/version)"
 
 pkgname=zfs-kmod-next
 pkgver=2.2.2
 _commit=05147319b0821f61fcff743e20605e191d523906
-pkgrel=7
+pkgrel=8
 pkgdesc="Kernel module for the Zettabyte File System (linux-next version)."
 arch=('x86_64')
 url="https://zfsonlinux.org/"
