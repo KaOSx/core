@@ -1,7 +1,7 @@
 
 pkgname=keyutils
 pkgver=1.6.3
-pkgrel=2
+pkgrel=3
 pkgdesc="Linux Key Management Utilities"
 arch=('x86_64')
 url="https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/tree/README"

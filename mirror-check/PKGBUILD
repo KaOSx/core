@@ -1,7 +1,7 @@
 
 pkgname=mirror-check
 pkgver=2.5
-pkgrel=3
+pkgrel=4
 pkgdesc="Checks whether the locally used mirror is synced with the main mirror"
 arch=('x86_64')
 url="https://kaosx.us"

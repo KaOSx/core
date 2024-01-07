@@ -1,7 +1,7 @@
 
 pkgname=run-parts
 pkgver=5.7
-pkgrel=1
+pkgrel=2
 pkgdesc='Run scripts or programs in a directory'
 arch=('x86_64')
 url='https://packages.qa.debian.org/d/debianutils.html'

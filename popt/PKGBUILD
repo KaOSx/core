@@ -1,7 +1,7 @@
 
 pkgname=popt
 pkgver=1.19
-pkgrel=1
+pkgrel=2
 pkgdesc="A commandline option parser"
 arch=('x86_64') 
 url="https://github.com/rpm-software-management/popt"

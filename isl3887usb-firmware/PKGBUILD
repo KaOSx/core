@@ -1,7 +1,7 @@
 
 pkgname=isl3887usb-firmware
 pkgver=2.13.25.0
-pkgrel=8
+pkgrel=9
 pkgdesc="Firmware for wireless cards using isl3887usb"
 arch=('x86_64')
 url="https://daemonizer.de/prism54/prism54-fw/"
