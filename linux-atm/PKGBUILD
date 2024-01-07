@@ -1,7 +1,7 @@
 
 pkgname=linux-atm
 pkgver=2.5.2
-pkgrel=7
+pkgrel=8
 pkgdesc="Drivers and tools to support ATM networking under Linux."
 arch=('x86_64')
 url="https://linux-atm.sourceforge.net/"

@@ -1,7 +1,7 @@
 
 pkgname=vi
 pkgver=070224
-pkgrel=4
+pkgrel=5
 pkgdesc='The original ex/vi text editor.'
 arch=('x86_64')
 url='https://ex-vi.sourceforge.net/'

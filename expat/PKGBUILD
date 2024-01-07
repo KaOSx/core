@@ -1,7 +1,7 @@
 
 pkgname=expat
 pkgver=2.5.0
-pkgrel=1
+pkgrel=2
 pkgdesc="An XML Parser library written in C"
 arch=('x86_64')
 url="https://libexpat.github.io/"

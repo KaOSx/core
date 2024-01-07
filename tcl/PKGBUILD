@@ -2,7 +2,7 @@
 pkgname=tcl
 pkgver=8.6.13
 _pkgver=8.6
-pkgrel=1
+pkgrel=2
 pkgdesc="The Tcl scripting language"
 arch=('x86_64')
 url="https://core.tcl-lang.org/index.html"
