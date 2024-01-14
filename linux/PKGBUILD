@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=6.6
-pkgver=6.6.11
+pkgver=6.6.12
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -24,7 +24,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.6.tar.xz"
         'config.aufs'
         'tmpfs-idr.patch'
         'vfs-ino.patch'
-        'k510.patch'
+        'aufs_permission.diff'
         # standard config files for mkinitcpio & dracut ramdisk
         'linux.preset'
         '99-linux.hook'
@@ -64,7 +64,7 @@ prepare() {
   ###patch -p1 -i "${srcdir}/aufs6-standalone.patch"
   ###patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   ###patch -p1 -i "${srcdir}/vfs-ino.patch"
-  #patch -p1 -i "${srcdir}/k510.patch"
+  patch -p1 -i "${srcdir}/aufs_permission.diff"
   # Nvidia 390xx & 5.8 needed
   #sed -i "s|EXPORT_PER_CPU_SYMBOL_GPL(radix_tree_preloads)|EXPORT_PER_CPU_SYMBOL(radix_tree_preloads)|g" lib/radix-tree.c
   
