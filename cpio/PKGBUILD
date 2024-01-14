@@ -1,14 +1,14 @@
 
 pkgname=cpio
-pkgver=2.14
+pkgver=2.15
 pkgrel=1
 pkgdesc="A tool to copy files into or out of a cpio or tar archive"
 arch=('x86_64')
 license=('GPL')
 url="https://www.gnu.org/software/cpio"
 depends=('glibc')
-source=("https://ftp.gnu.org/gnu/cpio/cpio-${pkgver}.tar.gz")
-sha1sums=('f304fe18df5af642c87f240dd5631bfcee9ba8ed')
+source=("https://ftp.gnu.org/gnu/cpio/cpio-${pkgver}.tar.bz2")
+sha256sums=('937610b97c329a1ec9268553fb780037bcfff0dcffe9725ebc4fd9c1aa9075db')
 
 build() {
   cd ${pkgname}-${pkgver}
