@@ -1,7 +1,7 @@
 
 pkgname=gnutls
-pkgver=3.8.2
-__pkgver=3.8.2
+pkgver=3.8.3
+__pkgver=3.8.3
 _pkgver=3.8
 pkgrel=1
 pkgdesc="Secure communications library implementing the SSL, TLS and DTLS protocols and technologies around them"
@@ -14,7 +14,7 @@ depends=('brotli' 'gcc-libs' 'libtasn1' 'readline' 'zlib' 'texinfo' 'nettle' 'p1
 makepends=('valgrind' 'strace')
 source=("https://www.gnupg.org/ftp/gcrypt/gnutls/v${_pkgver}/${pkgname}-${pkgver}.tar.xz"
         "https://gitlab.com/gnutls/gnutls/-/commit/c061da4fd42eb98ec3ac4e80a75e63924e21b437.diff")
-md5sums=('8edaa18bce2a5e7a48d8917352a2ba88'
+md5sums=('269966167fa5bf8bae5f7534bcc3c454'
          '7868ca2e2fc19f5676faa3677c76db93')
 
 build() {
@@ -30,7 +30,7 @@ build() {
 
 check() {
   cd ${pkgname}-${__pkgver}
-  # 1 FAIL: trust-store
+  # no FAIL
   make check
 }
 
