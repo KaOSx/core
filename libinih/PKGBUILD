@@ -1,6 +1,6 @@
 
 pkgname=libinih
-pkgver=57
+pkgver=58
 pkgrel=1
 pkgdesc='INI Not Invented Here is a simple .INI file parser written in C'
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('BSD')
 depends=('gcc-libs')
 makedepends=('meson' 'ninja')
 source=("https://github.com/benhoyt/inih/archive/r${pkgver}.tar.gz")
-md5sums=('07aa33593487633519fb3a0e55546c09')
+md5sums=('5c9725320ad2c79e0b1f76568bd0ff24')
 
 build() {
   mkdir -p build
