@@ -1,6 +1,6 @@
 
 pkgname=pacman-contrib
-pkgver=1.10.1
+pkgver=1.10.2
 _commit=20aad854f50a34b18845e34e69409d8a230c2676
 pkgrel=1
 pkgdesc="Contributed scripts and tools for pacman systems, including paccache and rank-mirrors"
@@ -12,7 +12,7 @@ makedepends=('asciidoc')
 source=("https://gitlab.archlinux.org/pacman/pacman-contrib/-/archive/v${pkgver}/${pkgname}-v${pkgver}.tar.gz"
 #source=("https://gitlab.archlinux.org/pacman/pacman-contrib/-/archive/${_commit}/pacman-contrib-${_commit}.tar.bz2"
         "https://gitlab.archlinux.org/pacman/pacman-contrib/-/commit/fd21ee241c85856be941e41942d6c179ca713c41.diff")
-md5sums=('1b7312157a6f856605b184896298d52d'
+md5sums=('7d8fdc65e8d0b0fa97cb66e7eb017490'
          '590d7f6824288e07307404519e3a7ede')
 
 build() {
