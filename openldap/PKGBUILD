@@ -1,7 +1,7 @@
 
 pkgbase=openldap
 pkgname=('libldap' 'openldap')
-pkgver=2.6.6
+pkgver=2.6.7
 pkgrel=1
 arch=('x86_64')
 url="https://www.openldap.org/"
@@ -10,7 +10,7 @@ makedepends=('libtool' 'libsasl' 'e2fsprogs' 'util-linux' 'groff')
 options=('!makeflags')
 source=("https://www.openldap.org/software/download/OpenLDAP/openldap-release/${pkgbase}-${pkgver}.tgz"
         'slapd.tmpfiles')
-sha1sums=('633bc0ce9b5d91852c1fe38c720763f32d18390f'
+sha1sums=('9ac8167b0cad4f9830c123faf9eba52a851c1ae0'
           '59241a813d7508294e4ef1cec3bfe1f5495e109d')
 
 build() {
