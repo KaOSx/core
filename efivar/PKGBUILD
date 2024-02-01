@@ -2,30 +2,35 @@
 pkgname=efivar
 _pkgname=vathpela-efivar
 _commit=70e63d4
-pkgver=38
-pkgrel=2
+pkgver=39
+pkgrel=1
 pkgdesc="Library to manipulate EFI variables"
 arch=('x86_64')
-url="https://github.com/rhinstaller/efivar"
+url="https://github.com/rhboot/efivar"
 license=('LGPL2.1')
 depends=('glibc')
 #options=('zipman' 'docs' '!makeflags')
-source=("https://github.com/rhinstaller/efivar/releases/download/${pkgver}/efivar-${pkgver}.tar.bz2"
+#source=("https://github.com/rhboot/efivar/releases/download/${pkgver}/efivar-${pkgver}.tar.bz2"
+source=("https://github.com/rhboot/efivar/archive/refs/tags/${pkgver}.tar.gz"
         'compiler.patch')
-md5sums=('243fdbc48440212695cb9c6e6fd0f44f'
+md5sums=('a8fc3e79336cd6e738ab44f9bc96a5aa'
          '76d1d1cc85f021ea9d820395af8fa8d4')
 
 build() {
     cd ${pkgname}-${pkgver}/
     #patch -p1 -i $srcdir/compiler.patch
-    # needs mandoc to compile manpages
-    sed -i -e 's|SUBDIRS := src docs|SUBDIRS := src|' Makefile
 
-    make all
+    make ENABLE_DOCS=0 all
 }
 
 package() {
     cd ${pkgname}-${pkgver}/
 
-    make -j1 V=1 DESTDIR=${pkgdir}/ libdir="/usr/lib/" bindir="/usr/bin/" mandir="/usr/share/man/" includedir="/usr/include/" install
+    make -j1 V=1 DESTDIR=${pkgdir}/ \
+        libdir="/usr/lib/" \
+        bindir="/usr/bin/" \
+        mandir="/usr/share/man/" \
+        includedir="/usr/include/" \
+        ENABLE_DOCS=0 \
+        install
 }
