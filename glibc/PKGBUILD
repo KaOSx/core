@@ -2,7 +2,7 @@
 # NOTE: valgrind requires rebuilt with each major glibc version
 
 pkgname=glibc
-pkgver=2.37
+pkgver=2.39
 _commit=3e2a15c666e40e5ee740e5079c56d83469280323
 pkgrel=1
 pkgdesc="GNU C Library"
@@ -23,7 +23,7 @@ source=("https://ftp.gnu.org/gnu/libc/${pkgname}-${pkgver}.tar.xz"
         'locale.gen.txt'
         'locale-gen'
         'glibc.conf')
-md5sums=('e89cf3dcb64939d29f04b4ceead5cc4e'
+md5sums=('be81e87f72b5ea2c0ffe2bedfeb680c6'
          '66c0a97180c00ade30fec1d0c219198b'
          '07ac979b6ab5eeb778d55f041529d623'
          '476e9113489f93b348b21e144b6a8fcf'
@@ -32,7 +32,7 @@ md5sums=('e89cf3dcb64939d29f04b4ceead5cc4e'
 prepare() {
   cd ${pkgname}-${pkgver}
   # CVE-2023-25139
-  patch -p1 -i ${srcdir}/07b9521fc6369d000216b96562ff7c0ed32a16c4.diff
+  #patch -p1 -i ${srcdir}/07b9521fc6369d000216b96562ff7c0ed32a16c4.diff
 }
 
 build() {
@@ -43,8 +43,8 @@ build() {
   echo "rtlddir=/lib" >> configparms
 
   # remove stack protector for libs
-  CFLAGS=${CFLAGS/-fstack-protector/}
-  CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
+  #CFLAGS=${CFLAGS/-fstack-protector/}
+  #CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
 
   ../glibc-${pkgver}/configure --prefix=/usr \
       --libdir=/usr/lib \
@@ -53,6 +53,7 @@ build() {
       --with-bugurl=https://github.com/KaOSx/core/issues \
       --enable-add-ons \
       --enable-bind-now \
+      --enable-fortify-source \
       --enable-kernel=4.4 \
       --disable-profile \
       --enable-stackguard-randomization \
@@ -60,13 +61,13 @@ build() {
       --disable-werror
 
   # build libs without stack protector
-  echo "build-programs=no" >> configparms
-  make
+  #echo "build-programs=no" >> configparms
+  #make
 
   # build bins with stack protector
-  sed -i "/build-programs=/s#no#yes#" configparms
-  echo "CC += -fstack-protector -D_FORTIFY_SOURCE=2" >> configparms
-  echo "CXX += -fstack-protector -D_FORTIFY_SOURCE=2" >> configparms
+  #sed -i "/build-programs=/s#no#yes#" configparms
+  #echo "CC += -fstack-protector -D_FORTIFY_SOURCE=2" >> configparms
+  #echo "CXX += -fstack-protector -D_FORTIFY_SOURCE=2" >> configparms
   make
 }
 
@@ -120,7 +121,7 @@ package() {
 
   #strip $STRIP_STATIC usr/lib/*.a 
 
-  strip $STRIP_SHARED lib/{libanl,libBrokenLocale,libcrypt}.so.1 \
+  strip $STRIP_SHARED lib/{libanl,libBrokenLocale}.so.1 \
                       lib/libnss_{compat,dns,files,hesiod}.so.2 \
                       lib/{libdl,libresolv}.so.2 \
                       lib/{libnsl,librt,libutil}.so.1 \
@@ -136,6 +137,6 @@ package() {
   
   # part of libxcrypt, keep static .a & /lib/libcrypt.so.1 
   # until all rebuild with libxcrypt & no longer needed
-  rm -f ${pkgdir}/usr/include/crypt.h
-  rm -f ${pkgdir}/usr/lib/libcrypt.so
+  #rm -f ${pkgdir}/usr/include/crypt.h
+  #rm -f ${pkgdir}/usr/lib/libcrypt.so
 }
