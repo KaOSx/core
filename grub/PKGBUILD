@@ -20,7 +20,7 @@ provides=('grub-common' 'grub-bios' 'grub-efi')
 replaces=('grub-common' 'grub-bios' 'grub-efi')
 depends=('sh' 'xz' 'gettext' 'device-mapper')
 makedepends=('git' 'rsync' 'xz' 'freetype2' 'ttf-dejavu' 'python3' 'autogen'
-             'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse' 'bdf-unifont')
+             'texinfo' 'help2man' 'gettext' 'device-mapper' 'fuse3' 'bdf-unifont')
 optdepends=('freetype2: For grub-mkfont usage'
             'fuse: For grub-mount usage'
             'dosfstools: For grub-mkrescue FAT FS and EFI support' 
@@ -31,13 +31,13 @@ optdepends=('freetype2: For grub-mkfont usage'
 # http://git.savannah.gnu.org/cgit/grub.git
 source=("https://git.savannah.nongnu.org/cgit/grub.git/snapshot/grub-${_commit}.tar.gz"
         "grub-extras::git+git://git.sv.gnu.org/grub-extras.git#branch=master"
-        "https://git.savannah.nongnu.org/cgit/gnulib.git/snapshot/gnulib-${_gnulib}.tar.gz"
+        "git+https://git.savannah.gnu.org/git/gnulib.git"
         'grub-10_linux-detect-initramfs.patch'
         'grub.default'
         'grub.cfg')
 md5sums=('1d62b39386bfb5b88cae54d5646f7956'
          'SKIP'
-         '21d4f506ee6136a3239c60e82b6d9ea9'
+         'SKIP'
          '945527e0de8d384166a4cf23439ae9ee'
          '75722208518f0750cc3156d364c79007'
          '1c03f9a8196beee4321e89d87862c69b')
@@ -50,7 +50,7 @@ prepare() {
 	patch -p1 -i "${srcdir}/grub-10_linux-detect-initramfs.patch"
 	
 	## Fix DejaVuSans.ttf location so that grub-mkfont can create *.pf2 files for starfield theme
-	sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i "${srcdir}/grub-${_commit}/configure.ac"
+	#sed 's|/usr/share/fonts/dejavu|/usr/share/fonts/dejavu /usr/share/fonts/TTF|g' -i "${srcdir}/grub-${_commit}/configure.ac"
 	
 	## Fix mkinitcpio 'rw' 
 	sed 's| ro | rw |g' -i "${srcdir}/grub-${_commit}/util/grub.d/10_linux.in"
@@ -66,7 +66,7 @@ prepare() {
 	
 	## bootstrap gnulib
 	./bootstrap \
-		--gnulib-srcdir="${srcdir}/gnulib-${_gnulib}/" \
+		--gnulib-srcdir="${srcdir}/gnulib/" \
 		--no-git
 }
 
