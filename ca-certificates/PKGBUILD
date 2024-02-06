@@ -1,7 +1,7 @@
 
 pkgname=ca-certificates
-pkgver=20230311
-pkgrel=2
+pkgver=20240203
+pkgrel=1
 epoch=1
 pkgdesc='Common CA certificates'
 arch=('x86_64')
@@ -14,7 +14,7 @@ backup=('etc/ca-certificates.conf')
 #source=("http://sourcearchive.raspbian.org/main/c/${pkgname}/${pkgname}_${pkgver}.tar.xz"
 source=("http://deb.debian.org/debian/pool/main/c/ca-certificates/${pkgname}_${pkgver}.tar.xz"
         'warning.diff')
-md5sums=('fc1c3ec0067385f0be8ac7f6e670a0f8'
+md5sums=('228129ccf8cd99b991d771c44dd4052c'
          '163c1e224a48d4df96d2f0a40a7cc01a')
 
 build() {
