@@ -2,15 +2,23 @@
 pkgname=libssh
 pkgver=0.10.6
 _pkgver=0.10
-pkgrel=1
+pkgrel=2
 pkgdesc="Library for accessing ssh client services through C libraries"
 url="https://www.libssh.org/"
 license=('LGPL')
 arch=('x86_64')
 depends=('openssl')
 makedepends=('cmake' 'doxygen')
-source=("https://www.libssh.org/files/${_pkgver}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('5f46371aa8bfa7e6bff7f2a6f3edf80e')
+source=("https://www.libssh.org/files/${_pkgver}/${pkgname}-${pkgver}.tar.xz"
+        "https://gitlab.com/libssh/libssh-mirror/-/commit/1a02364b5107a4125ea3cb76fcdb6beabaebf3be.diff")
+md5sums=('5f46371aa8bfa7e6bff7f2a6f3edf80e'
+         '4a91805d7ffd904a597a25f47a288982')
+
+prepare() {
+  cd ${pkgname}-${pkgver}
+
+  patch -p1 -i ${srcdir}/1a02364b5107a4125ea3cb76fcdb6beabaebf3be.diff
+}
 
 build() {
   cmake -B build -S ${pkgname}-${pkgver} \
