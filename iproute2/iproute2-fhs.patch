@@ -19,10 +19,10 @@ diff -Naur iproute2-3.4.0/netem/Makefile iproute2-3.4.0.new/netem/Makefile
  
  install: all
 -	mkdir -p $(DESTDIR)$(LIBDIR)/tc
-+	mkdir -p $(DESTDIR)$(SHAREDIR)/tc
++	mkdir -p $(DESTDIR)$(DATADIR)/tc
  	for i in $(DISTDATA); \
 -	do install -m 644 $$i $(DESTDIR)$(LIBDIR)/tc; \
-+	do install -m 644 $$i $(DESTDIR)$(SHAREDIR)/tc; \
++	do install -m 644 $$i $(DESTDIR)$(DATADIR)/tc; \
  	done
  
  clean:
@@ -34,11 +34,11 @@ diff -Naur iproute2-3.4.0/tc/Makefile iproute2-3.4.0.new/tc/Makefile
  
  install: all
 -	mkdir -p $(MODDESTDIR)
-+	mkdir -p $(DESTDIR)$(LIBDIR)/tc
++	mkdir -p $(DESTDIR)$(DATADIR)/tc
  	install -m 0755 tc $(DESTDIR)$(SBINDIR)
  	for i in $(TCSO); \
 -	do install -m 755 $$i $(MODDESTDIR); \
-+	do install -m 755 $$i $(DESTDIR)$(LIBDIR)/tc; \
++	do install -m 755 $$i $(DESTDIR)$(DATADIR)/tc; \
  	done
 -	if [ ! -f $(MODDESTDIR)/m_ipt.so ]; then \
 -	if [ -f $(MODDESTDIR)/m_xt.so ]; \

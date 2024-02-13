@@ -1,6 +1,6 @@
 
 pkgname=openvpn
-pkgver=2.6.8
+pkgver=2.6.9
 _rsa_version=3.1.7
 pkgrel=1
 pkgdesc="An easy-to-use, robust, and highly configurable VPN (Virtual Private Network)"
@@ -15,7 +15,7 @@ backup=(usr/share/openvpn/easy-rsa/vars
 source=("https://swupdate.openvpn.org/community/releases/openvpn-${pkgver}.tar.gz"
         "https://github.com/OpenVPN/easy-rsa/archive/refs/tags/v${_rsa_version}.tar.gz"
         'openvpn@.service')
-md5sums=('427fe070a4ab9fd78dc64195458dc361'
+md5sums=('e5beda906a40e997e26766f0de09ecbf'
          '9a2a8e0fd1e475d107bba13715cf89f8'
          'c0275a1192a7e3c0a167a0dc4809dbaa')
 
