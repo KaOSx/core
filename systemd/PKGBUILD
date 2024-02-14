@@ -1,9 +1,9 @@
 
 pkgname=systemd
-pkgver=254.9
-_pkgver=254.9
+pkgver=253.16
+_pkgver=253.16
 pkgrel=1
-epoch=1
+epoch=2
 pkgdesc="System and Session Manager"
 arch=('x86_64')
 url="http://www.freedesktop.org/wiki/Software/systemd"
@@ -11,7 +11,7 @@ license=('GPL2' 'LGPL2.1')
 depends=('acl' 'bash' 'glibc' 'kmod' 'hwdata' 'util-linux' 'kbd' 'libcap' 'libxslt' 'iptables'
          'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn2' 'lz4'
          'quota' 'libseccomp' 'cryptsetup' 'pcre2' 'libxcrypt') # 'audit') 
-makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'meson' 'ninja'
+makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs' 'meson' 'ninja'
              'python3-jinja' 'python3-lxml' 'tpm2-tss' 'python3-pyelftools')
 optdepends=('libmicrohttpd: systemd-journal-gatewayd')
 backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
@@ -42,7 +42,7 @@ source=("https://github.com/systemd/systemd-stable/archive/v${_pkgver}.tar.gz"
         'splash.bmp'
         'systemd-tmpfiles.hook'
         'boot_color.diff')
-md5sums=('57a78e3b894299621b7fa4321d7bad92'
+md5sums=('3aaddf0cd130405ed4a7cdf2d4f4a8a6'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
@@ -78,7 +78,7 @@ build() {
     -Dlz4=true \
     -Dpcre2=true \
     -Defi=true \
-    -Dbootloader=true \
+    -Dgnu-efi=true \
     -Daudit=false \
     -Dima=false \
     -Dlibidn2=true \
