@@ -54,7 +54,6 @@ build() {
     --bindir=/usr/bin \
     --sbindir=/usr/sbin \
     --libdir=/usr/lib \
-    --libdir=/usr/lib \
     --mandir=/usr/share/man \
     --sysconfdir=/etc \
     --with-libpam \
@@ -79,7 +78,7 @@ package() {
   install -D -m644 ${srcdir}/shadow.timer ${pkgdir}/usr/lib/systemd/system/shadow.timer
   install -D -m644 ${srcdir}/shadow.service ${pkgdir}/usr/lib/systemd/system/shadow.service
   install -d -m755 ${pkgdir}/usr/lib/systemd/system/multi-user.target.wants
-  ln -s ../shadow.timer ${pkgdir}//usr/lib/systemd/system/multi-user.target.wants/shadow.timer
+  ln -s ../shadow.timer ${pkgdir}/usr/lib/systemd/system/multi-user.target.wants/shadow.timer
 
   install -Dm644 ${srcdir}/login.defs ${pkgdir}/etc/login.defs
 
