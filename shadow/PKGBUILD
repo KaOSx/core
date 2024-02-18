@@ -1,7 +1,7 @@
 
 pkgname=shadow
 pkgver=4.14.5
-pkgrel=1
+pkgrel=2
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
 url='https://github.com/shadow-maint/shadow'
@@ -18,7 +18,6 @@ options=('!libtool')
 install='shadow.install'
 source=("https://github.com/shadow-maint/shadow/releases/download/${pkgver}/shadow-${pkgver}.tar.xz"
         'LICENSE'
-        'chgpasswd'
         'chpasswd'
         'defaults.pam'
         'login.defs'
@@ -31,7 +30,6 @@ source=("https://github.com/shadow-maint/shadow/releases/download/${pkgver}/shad
         "https://github.com/shadow-maint/shadow/commit/d4b6d1549b2af48ce3cb6ff78d9892095fb8fdd9.diff")
 md5sums=('452b0e59f08bf618482228ba3732d0ae'
          'bdf93c7bc4b751277159c5de8fc34df2'
-         '65e9ebce249a5b9ed021e2790452b9e1'
          'f6760e9701d7ed2cd91371d427faed2a'
          'a31374fef2cba0ca34dfc7078e2969e4'
          'c4db3dbd4d5759d3e4f29366946d14e5'
@@ -84,11 +82,11 @@ package() {
 
   # PAM config upstream provided & KaOS specific
   install -dm755 ${pkgdir}/etc/pam.d
-  install -t ${pkgdir}/etc/pam.d -m644 ${srcdir}/{passwd,chgpasswd,chpasswd,newusers}
+  install -t ${pkgdir}/etc/pam.d -m644 ${srcdir}/{passwd,chpasswd,newusers}
 
   install -Dm644 etc/pam.d/groupmems ${pkgdir}/etc/pam.d/groupmems
 
-  for file in chage groupadd groupdel groupmod shadow \
+  for file in chage chgpasswd groupadd groupdel groupmod shadow \
       useradd usermod userdel; do
     install -Dm644 ${srcdir}/defaults.pam ${pkgdir}/etc/pam.d/$file
   done
