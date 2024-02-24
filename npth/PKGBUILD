@@ -1,14 +1,14 @@
 
 pkgname=npth
-pkgver=1.6
-pkgrel=4
+pkgver=1.7
+pkgrel=1
 pkgdesc='Library to provide the GNU Pth API and thus a non-preemptive threads implementation.'
 url="https://www.gnupg.org/software/npth/index.html"
 license=('LGPL')
 options=('!libtool')
 arch=('x86_64')
 source=("https://www.gnupg.org/ftp/gcrypt/npth/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('375d1a15ad969f32d25f1a7630929854')
+sha256sums=('8589f56937b75ce33b28d312fccbf302b3b71ec3f3945fde6aaa74027914ad05')
 
 build() {
     cd ${pkgname}-${pkgver}
