@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=6.6
-pkgver=6.6.16
+_basekernel=6.7
+pkgver=6.7.7
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.6.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.7.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v6.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -29,17 +29,17 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.6.tar.xz"
         'linux.preset'
         '99-linux.hook'
         'dracut-install')
-md5sums=('452098d80ba925af3a4ab35998f3aef5'
-         '295ba7c1023db58fd9a41c5de931e235'
-         'fde26f5c1b17414e0f0608e9b0e71f8d'
-         '985fc032fe1d9bf7dbf8c36096afba12'
-         '48180efa8a0fb0d7e9655d3e3b1aa1ba'
-         'e380d85cc49012ce14c927f417c5b227'
-         '7246b8605ac7cbbd463dd1d4267732a1'
-         '2c64ddf000f29acd8377cd1ceef4677d'
-         '1be7106d088755be7c29c9966705cb8c'
+md5sums=('7861a2ed9d33c0694df738203532b715'
+         '8ae629974a8617a733bb488325774791'
+         'f6efd3d74a05d6d494abae1fadc44bcb'
+         'e54cc38d67dde04c3b98c97261981048'
+         'fa6e2ce57027a26a8539eb4869249775'
+         '479c32bf9b9234c0c4188d550cbff36c'
+         'b8c81e3e39a87c554ab2f2d25fe59245'
+         '34dfa6dbe207309446e8232a8a1bda52'
+         '5e607f9d36d74d95519d32e7a21eacad'
          '180e55a128db2641e04374ce07d131a7'
-         '21a08af41d9fda235515cd82942ea55a'
+         'b46b7c56e051d994d480c7b7ce189e46'
          'b24d30d942751a7a0ec60cf23c051ede'
          'f1917f99f3351b096f93698689c657d7'
          'eb14dcfd80c00852ef81ded6e826826a'
@@ -64,7 +64,7 @@ prepare() {
   ###patch -p1 -i "${srcdir}/aufs6-standalone.patch"
   ###patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   ###patch -p1 -i "${srcdir}/vfs-ino.patch"
-  patch -p1 -i "${srcdir}/aufs_permission.diff"
+  #patch -p1 -i "${srcdir}/aufs_permission.diff"
   # Nvidia 390xx & 5.8 needed
   #sed -i "s|EXPORT_PER_CPU_SYMBOL_GPL(radix_tree_preloads)|EXPORT_PER_CPU_SYMBOL(radix_tree_preloads)|g" lib/radix-tree.c
   
@@ -100,9 +100,6 @@ package_linux() {
   pkgdesc="The Linux Kernel and modules"
   groups=('base')
   depends=('coreutils' 'linux-firmware' 'kmod' 'initrd')
-  provides=('acerhk=0.5.35' 'aufs3')
-  conflicts=('acerhk')
-  replaces=('aufs3')
   backup=("etc/mkinitcpio.d/${pkgname}.preset")
   install=linux.install
 
