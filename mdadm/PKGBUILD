@@ -15,7 +15,7 @@ source=("https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-${pkgver}.tar.x
         'mdadm_hook'
         'mdadm_udev_install'
         'disable-werror.patch')
-sha256sums=('461c215670864bb74a4d1a3620684aa2b2f8296dffa06743f26dda5557acf01d'
+sha256sums=('416727ae1f1080ea6e3090cea36dd076826fc369151e36ab736557ba92196f9f'
             '4ce1e90690282f98e4828e11576fbd61be65e97a2cdae6c7eac7035ea5ee53e5'
             'c016fc330d6c8d95ebd8f1c19cf55eae1455fc95398fe30d6c1e256b888729c3'
             '6c68e429616a4677d5f1342fc1d1632683ce51d5b2ec68e6520b0462c1ee3b14'
@@ -26,7 +26,7 @@ build() {
   cd ${pkgname}-${pkgver}
   #patch -p0 -i ${srcdir}/disable-werror.patch
 
-  make CWFLAGS="-Wall"
+  #make CWFLAGS="-Wall"
   #make MDASSEMBLE_AUTO=1 mdassemble
 
 }
