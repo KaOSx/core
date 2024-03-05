@@ -1,7 +1,7 @@
 
 pkgname=psmisc
-pkgver=23.6
-pkgrel=2
+pkgver=23.7
+pkgrel=1
 pkgdesc="Package of small utilities that use the proc file-system."
 arch=('x86_64')
 url="https://gitlab.com/psmisc/psmisc"
@@ -9,7 +9,7 @@ license=('GPL')
 groups=('base')
 depends=('glibc' 'ncurses')
 source=("https://downloads.sourceforge.net/psmisc/${pkgname}-${pkgver}.tar.xz")
-md5sums=('ed3206da1184ce9e82d607dc56c52633')
+md5sums=('53eae841735189a896d614cba440eb10')
 
 build() {
   cd ${pkgname}-${pkgver}
