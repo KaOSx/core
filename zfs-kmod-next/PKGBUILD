@@ -1,5 +1,5 @@
 
-_extramodules=6.7.8-1-next
+_extramodules=6.7.9-1-next
 __extramodules=extramodules-6.7-next
 _kver="$(cat /lib/modules/${__extramodules}/version)"
 
