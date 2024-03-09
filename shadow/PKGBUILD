@@ -1,6 +1,6 @@
 
 pkgname=shadow
-pkgver=4.14.6
+pkgver=4.15.0
 pkgrel=1
 pkgdesc="Password and account management tool suite with support for shadow files and PAM"
 arch=('x86_64')
@@ -28,7 +28,7 @@ source=("https://github.com/shadow-maint/shadow/releases/download/${pkgver}/shad
         'useradd.defaults'
         'xstrdup.patch'
         "https://github.com/shadow-maint/shadow/commit/d4b6d1549b2af48ce3cb6ff78d9892095fb8fdd9.diff")
-md5sums=('293e93f78f2d3217b253d289271a40fa'
+md5sums=('d957ddf8f56bf695aeb03aa1ca702091'
          'bdf93c7bc4b751277159c5de8fc34df2'
          'f6760e9701d7ed2cd91371d427faed2a'
          'a31374fef2cba0ca34dfc7078e2969e4'
