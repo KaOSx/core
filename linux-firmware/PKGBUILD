@@ -1,6 +1,6 @@
 
 pkgname=linux-firmware
-pkgver=20240220
+pkgver=20240312
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
@@ -41,7 +41,7 @@ options=(!strip emptydirs)
 source=("https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/${pkgname}-${pkgver}.tar.xz"
         "http://mirror2.openwrt.org/sources/broadcom-wl-${_b43}.tar.bz2"
         "http://downloads.openwrt.org/sources/wl_apsta-${_legacy}.o")
-sha256sums=('bf0f239dc0801e9d6bf5d5fb3e2f549575632cf4688f4348184199cb02c2bcd7'
+sha256sums=('b2327a54ad1897c828008caf63af5ee15469ba723a5016be58f2b44f07bd4b94'
             'f1e7067aac5b62b67b8b6e4c517990277804339ac16065eb13c731ff909ae46f'
             '7dba610b1d96dd14e901bcbce14cd6ecd1b1ac6f5c0035b0d6b6dc46a7c3ef90')
 
