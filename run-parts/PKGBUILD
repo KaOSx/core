@@ -1,18 +1,19 @@
 
 pkgname=run-parts
-pkgver=5.7
-pkgrel=2
+pkgver=5.17
+pkgrel=1
 pkgdesc='Run scripts or programs in a directory'
 arch=('x86_64')
 url='https://packages.qa.debian.org/d/debianutils.html'
 license=('GPL')
 depends=('glibc')
-source=("https://cdn-aws.deb.debian.org/debian/pool/main/d/debianutils/debianutils_${pkgver}.orig.tar.gz") 
-md5sums=('8bbe5fd5524e1960a792d8a4420b2539')
+source=("https://cdn-aws.deb.debian.org/debian/pool/main/d/debianutils/debianutils_${pkgver}.tar.xz") 
+md5sums=('20f538efb1d4ddfa9971714e8fc6e5a7')
 
 build() {
     cd debianutils-${pkgver}
 
+    autoreconf -vfi
     ./configure --prefix=/usr
     make run-parts
 }
