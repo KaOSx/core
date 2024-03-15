@@ -3,7 +3,7 @@ pkgbase=boost
 pkgname=('boost-libs' 'boost')
 pkgver=1.83.0
 _pkgver=1_83_0
-pkgrel=2
+pkgrel=3
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="https://www.boost.org/"
@@ -29,7 +29,7 @@ build() {
   install -d -m 755 ${_stagedir}/bin
   install tools/build/src/engine/b2 ${_stagedir}/bin/b2
 
-   sed -i 's|using python : 3.10 : "/usr" ;|using python : 3.10 : /usr/bin/python3 : /usr/include/python3.10 : /usr/lib ;|g' project-config.jam 
+   sed -i 's|using python : 3.11 : "/usr" ;|using python : 3.11 : /usr/bin/python3 : /usr/include/python3.11 : /usr/lib ;|g' project-config.jam 
    # Support for OpenMPI
    echo "using mpi ;" >> project-config.jam
   
@@ -45,7 +45,7 @@ build() {
       runtime-link=shared \
       link=shared,static \
       toolset=gcc \
-      python=3.10 \
+      python=3.11 \
       cflags="${CPPFLAGS} ${CFLAGS} -O3" linkflags="${LDFLAGS}" \
       --prefix=${_stagedir} \
       --layout=system \
