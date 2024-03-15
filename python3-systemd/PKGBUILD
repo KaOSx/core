@@ -2,7 +2,7 @@
 pkgname=python3-systemd
 _pkgname=python-systemd
 pkgver=235
-pkgrel=3
+pkgrel=4
 pkgdesc="Python module for native access to the systemd facilities."
 arch=('x86_64')
 license=('LGPLv2+')
