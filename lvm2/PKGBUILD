@@ -36,6 +36,7 @@ build() {
     --enable-udev_sync \
     --enable-udev_rules \
     --with-default-locking-dir=/run/lock/lvm \
+    --with-libexecdir=/usr/lib/lvm2 \
     --enable-udev-systemd-background-jobs \
     --sbindir=/usr/sbin
   make
