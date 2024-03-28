@@ -1,7 +1,7 @@
 
 pkgname=curl
 pkgver=8.7.1
-pkgrel=2
+pkgrel=3
 pkgdesc="An URL retrival utility and library"
 arch=('x86_64')
 url="https://curl.se/"
@@ -31,7 +31,8 @@ build() {
         --enable-threaded-resolver \
         --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt \
         --with-libssh2 \
-        --with-openssl
+        --with-openssl \
+        --with-fish-functions-dir=/usr/share/fish/vendor_completions.d/completions
     make
 }
 
