@@ -1,13 +1,13 @@
 
 pkgname=gnupg
 pkgver=2.4.5
-pkgrel=1
+pkgrel=2
 pkgdesc="GNU Privacy Guard 2 - a PGP replacement tool"
 arch=('x86_64')
 license=('GPL')
 url="https://www.gnupg.org/"
 depends=('libldap' 'curl' 'bzip2' 'zlib' 'libksba' 'libgcrypt' 'libgpg-error'
-        'npth' 'libassuan' 'texinfo' 'readline' 'pinentry' 'gnutls') # 'libusb')
+        'npth' 'libassuan' 'texinfo' 'readline' 'pinentry' 'gnutls' 'sqlite') # 'libusb')
 # https://www.gnupg.org/faq/whats-new-in-2.1.html
 conflicts=('gnupg2' 'dirmngr')
 provides=("gnupg2=${pkgver}" 'dirmngr')
@@ -22,14 +22,13 @@ build() {
         --sysconfdir=/etc \
         --libexecdir=/usr/lib/gnupg \
         --enable-maintainer-mode \
-        --enable-symcryptrun \
         --enable-gpgtar 
   make
 }
 
 check() {
     cd gnupg-${pkgver}
-    # fails mkdir setup.scm in gpgme test
+    # no fail
     make check
 }
 
