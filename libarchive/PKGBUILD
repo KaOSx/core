@@ -1,17 +1,17 @@
 
 # with cmake build, always check for .so up
 pkgname=libarchive
-pkgver=3.7.2
-_pkgver=3.7.2
+pkgver=3.7.3
+_pkgver=3.7.3
 pkgrel=1
 pkgdesc="library that can create and read several streaming archive formats"
 arch=('x86_64')
 url="https://libarchive.org/"
 license=('BSD')
-depends=('zlib' 'bzip2' 'xz' 'acl' 'openssl' 'expat' 'lzo2' 'attr' 'zstd' 'nettle')
+depends=('zlib' 'bzip2' 'xz' 'acl' 'openssl' 'expat' 'lzo2' 'attr' 'zstd' 'nettle' 'pcre2')
 makedepends=('cmake') # 'clang')
 source=("https://github.com/libarchive/libarchive/releases/download/v${_pkgver}/${pkgname}-${_pkgver}.tar.xz")
-sha256sums=('04357661e6717b6941682cde02ad741ae4819c67a260593dfb2431861b251acb')
+sha256sums=('63e7a7174638fc7d6b79b4c8b0ad954e0f4f45abe7239c1ecb200232aa9a43d2')
 
 build() {
   mkdir -p build
@@ -30,7 +30,7 @@ build() {
 
 check() {
   cd build
-
+  # 1 tests FAILED:       766 - bsdunzip_test_I (Failed)
   make test
 }
 
