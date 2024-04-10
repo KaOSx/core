@@ -43,6 +43,10 @@ function get_database() {
     # Get databases
     local mirror="$(grep '^[^#]erver' /etc/pacman.d/mirrorlist | head -1 | cut -d' ' -f3 |sed 's,$repo.*,'"${1}/${1}.db.tar.gz,")"
     curl -s -4 -o /tmp/.${UID}mirrordb.tmp "$mirror" 
+    local error=$?
+    if [[ $error != 0 ]]; then
+      return $error
+    fi
     local cmirror="http://kaosx.tk/repo/${1}/${1}.db.tar.gz"
     curl -s -4 -o /tmp/.${UID}maindb.tmp "$cmirror" 
 }
