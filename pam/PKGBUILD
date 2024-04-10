@@ -1,6 +1,6 @@
 
 pkgname=pam
-pkgver=1.6.0
+pkgver=1.6.1
 pkgrel=1
 pkgdesc="PAM (Pluggable Authentication Modules) library"
 arch=('x86_64')
@@ -12,7 +12,7 @@ backup=(etc/security/{access.conf,group.conf,limits.conf,namespace.conf,namespac
 source=("https://github.com/linux-pam/linux-pam/releases/download/v${pkgver}/Linux-PAM-${pkgver}.tar.xz"
         'other')
 options=('!libtool' '!emptydirs')
-md5sums=('41a10af5fc35a7be472ae9864338e64a'
+md5sums=('8ad1e72d1ff6480d8e0af658e2d7b768'
          '6e6c8719e5989d976a14610f340bd33a')
 
 build() {
