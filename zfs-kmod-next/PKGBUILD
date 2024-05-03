@@ -4,9 +4,9 @@ __extramodules=extramodules-6.8-next
 _kver="$(cat /lib/modules/${__extramodules}/version)"
 
 pkgname=zfs-kmod-next
-pkgver=2.2.3
+pkgver=2.2.4
 _commit=05147319b0821f61fcff743e20605e191d523906
-pkgrel=14
+pkgrel=1
 pkgdesc="Kernel module for the Zettabyte File System (linux-next version)."
 arch=('x86_64')
 url="https://zfsonlinux.org/"
@@ -17,7 +17,7 @@ install=zfs-kmod-next.install
 source=("https://github.com/zfsonlinux/zfs/releases/download/zfs-${pkgver}/zfs-${pkgver}.tar.gz"
         "https://github.com/openzfs/zfs/commit/b37f29341b9aec1b6e45d55b6f7a1bc5b2723f7a.diff")
 #source=("https://github.com/openzfs/zfs/archive/${_commit}.zip")
-sha256sums=('30a512f34ec5c841b8b2b32cc9c1a03fd49391b26c9164d3fb30573fb5d81ac3'
+sha256sums=('9790905f7683d41759418e1ef3432828c31116654ff040e91356ff1c21c31ec0'
             'a74a013f4393e1c3fa0320873a37f0528f01639ea7b82ef69b9f1f90342d4a59')
 
 build() {
