@@ -1,6 +1,6 @@
 
 pkgname=util-linux
-pkgver=2.40
+pkgver=2.40.1
 _pkgver=2.40
 _commit=205e88e51c11d039cd80c9f1104bee5555a4ddaa
 pkgrel=1
@@ -33,7 +33,7 @@ backup=(etc/pam.d/chfn
         etc/pam.d/su
         etc/pam.d/su-l)
 install=util-linux.install
-sha256sums=('d57a626081f9ead02fa44c63a6af162ec19c58f53e993f206ab7c3a6641c2cd7'
+sha256sums=('59e676aa53ccb44b6c39f0ffe01a8fa274891c91bef1474752fad92461def24f'
             '5de0aadbbeb1ebb0776f3c550111fe045dfdf3571c574f415c62ca1966c49616'
             '993a3096c2b113e6800f2abbd5d4233ebf1a97eef423990d3187d665d3490b92'
             'fc6807842f92e9d3f792d6b64a0d5aad87995a279153ab228b1b2a64d9f32f20'
@@ -71,9 +71,7 @@ build() {
 }
 
 check() {
-  # 3 fail column: column/invalid-multibyte
-  #   lsfd/mkfds-unix-stream-requiring-sockdiag
-  #   lsfd/mkfds-socketpair   leaving dep to test the rest
+  # 1 fail column: column/invalid-multibyte  leaving dep to test the rest
   make -C ${pkgname}-${pkgver} check
 }
 
