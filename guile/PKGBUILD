@@ -1,7 +1,7 @@
 
 pkgname=guile
 pkgver=2.2.7
-pkgrel=9
+pkgrel=10
 pkgdesc="GNU Ubiquitous Intelligent Language for Extensions, the official extension language for the GNU operating system"
 url="https://www.gnu.org/software/guile/"
 arch=('x86_64')
