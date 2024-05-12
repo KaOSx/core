@@ -2,7 +2,7 @@
 pkgname=systemd
 pkgver=253.19
 _pkgver=253.19
-pkgrel=1
+pkgrel=2
 epoch=2
 pkgdesc="System and Session Manager"
 arch=('x86_64')
