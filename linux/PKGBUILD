@@ -2,15 +2,15 @@
 pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
-_basekernel=6.7
-pkgver=6.7.9
+_basekernel=6.8
+pkgver=6.8.9
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfutils' 'cpio')
 options=('!strip')
-source=("https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.7.tar.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.8.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v6.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
@@ -29,18 +29,18 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.7.tar.xz"
         'linux.preset'
         '99-linux.hook'
         'dracut-install')
-md5sums=('7861a2ed9d33c0694df738203532b715'
-         '5b31116070986a56ee2747daf53ca48c'
-         'f6efd3d74a05d6d494abae1fadc44bcb'
-         'e54cc38d67dde04c3b98c97261981048'
-         'fa6e2ce57027a26a8539eb4869249775'
-         '479c32bf9b9234c0c4188d550cbff36c'
-         'b8c81e3e39a87c554ab2f2d25fe59245'
-         '34dfa6dbe207309446e8232a8a1bda52'
-         '5e607f9d36d74d95519d32e7a21eacad'
+md5sums=('72d623b959a11850b57406f0b9fe3946'
+         'dc5d54c8f0e01412d18a520ff3f95a06'
+         'f0657df5d41bda3ff5c93d779166f2bb'
+         '09225d6ae2b1b40d699e181a1060738a'
+         '2eb75c82f88f6b408ffe95feb6908004'
+         'd52b28059acea28c607c835e6bab5769'
+         'b3860181ed89c8d17ffa25b0fbd54a71'
+         '10e6e24e0c4336ab292a96d3bdb0a09e'
+         'f94db2c0c1c8d49ed7b83411894ac53e'
          '180e55a128db2641e04374ce07d131a7'
-         'b46b7c56e051d994d480c7b7ce189e46'
-         'b24d30d942751a7a0ec60cf23c051ede'
+         '7a0f78e22c615610488a3e99ff74a705'
+         '373d197ba5e2bdb9405b26d207efb6cb'
          'f1917f99f3351b096f93698689c657d7'
          'eb14dcfd80c00852ef81ded6e826826a'
          '1d7d087c55698405e97161c77387ef81'

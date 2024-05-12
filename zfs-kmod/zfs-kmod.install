@@ -1,15 +1,15 @@
 post_install() {
-    EXTRAMODULES='extramodules-6.7'
+    EXTRAMODULES='extramodules-6.8'
     depmod -a $(cat /lib/modules/$EXTRAMODULES/version)
 }
 
 post_upgrade() {
-    EXTRAMODULES='extramodules-6.7'
+    EXTRAMODULES='extramodules-6.8'
     depmod -a $(cat /lib/modules/$EXTRAMODULES/version)
 }
 
 post_remove() {
-    EXTRAMODULES='extramodules-6.7'
+    EXTRAMODULES='extramodules-6.8'
     depmod -a $(cat /lib/modules/$EXTRAMODULES/version)
     
 }
