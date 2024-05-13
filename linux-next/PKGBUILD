@@ -3,9 +3,9 @@ pkgbase=linux-next
 pkgname=('linux-next' 'linux-next-headers' 'linux-next-docs') 
 _kernelname=${pkgname#linux}
 
-_basekernel=6.8
-_srcname=linux-6.8
-pkgver=6.8.9
+_basekernel=6.9
+_srcname=linux-6.9
+pkgver=6.9.0
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -14,7 +14,7 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'intel-ucode' 'elfuti
 options=('!strip')
 source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
 #source=("https://git.kernel.org/torvalds/t/linux-5.8-rc7.tar.gz"
-        "https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-${pkgver}.xz"
+        ##"https://cdn.kernel.org/pub/linux/kernel/v6.x/patch-${pkgver}.xz"
         # the main kernel config files
         'config'
         #aufs patches
@@ -32,9 +32,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         'linux-next.preset'
         '99-linux-next.hook'
         'dracut-next-install')
-md5sums=('72d623b959a11850b57406f0b9fe3946'
-         'dc5d54c8f0e01412d18a520ff3f95a06'
-         'f078d3843be8944ca07810e6fabb227e'
+md5sums=('b9828ed78dae306e3d90643cd5cdb8f1'
+         'f07432ba406dda53f67ff87e57515148'
          '09225d6ae2b1b40d699e181a1060738a'
          '2eb75c82f88f6b408ffe95feb6908004'
          'd52b28059acea28c607c835e6bab5769'
@@ -53,17 +52,17 @@ build() {
   cd "${srcdir}/linux-${_basekernel}"
 
   # add upstream patch
-  patch -p1 -i "${srcdir}/patch-${pkgver}"
+  ##patch -p1 -i "${srcdir}/patch-${pkgver}"
 
   # add latest fixes from stable queue, if needed
   # http://git.kernel.org/?p=linux/kernel/git/stable/stable-queue.git
 
   #aufs patches for Live:
-  patch -p1 -i "${srcdir}/aufs6.patch"
-  patch -p1 -i "${srcdir}/aufs6-base.patch"
-  patch -p1 -i "${srcdir}/aufs6-kbuild.patch"
+  #patch -p1 -i "${srcdir}/aufs6.patch"
+  #patch -p1 -i "${srcdir}/aufs6-base.patch"
+  #patch -p1 -i "${srcdir}/aufs6-kbuild.patch"
   ###patch -p1 -i "${srcdir}/aufs6-loopback.patch"
-  patch -p1 -i "${srcdir}/aufs6-mmap.patch"
+  #patch -p1 -i "${srcdir}/aufs6-mmap.patch"
   ###patch -p1 -i "${srcdir}/aufs6-standalone.patch"
   ###patch -p1 -i "${srcdir}/tmpfs-idr.patch"
   ###patch -p1 -i "${srcdir}/vfs-ino.patch"
@@ -73,7 +72,7 @@ build() {
   
   cat "${srcdir}/config" > ./.config
 
-  cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -241,7 +240,7 @@ package_linux-next-headers() {
   cp fs/xfs/libxfs/xfs_sb.h "${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/libxfs/xfs_sb.h"
 
   #aufs6-util need
-  sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
+  ##sed -i "s:__user::g" "${pkgdir}/usr/src/linux-${_kernver}/include/uapi/linux/aufs_type.h"
 
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do
