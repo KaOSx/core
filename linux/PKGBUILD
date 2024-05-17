@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=6.8
-pkgver=6.8.9
+pkgver=6.8.10
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -30,8 +30,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.8.tar.xz"
         '99-linux.hook'
         'dracut-install')
 md5sums=('72d623b959a11850b57406f0b9fe3946'
-         'dc5d54c8f0e01412d18a520ff3f95a06'
-         'f0657df5d41bda3ff5c93d779166f2bb'
+         'ffd60bbdbf18ab719988e9546d1b8613'
+         '092eea91c1c741ca01b37ed0ca8bb5cf'
          '09225d6ae2b1b40d699e181a1060738a'
          '2eb75c82f88f6b408ffe95feb6908004'
          'd52b28059acea28c607c835e6bab5769'
