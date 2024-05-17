@@ -1,7 +1,7 @@
 
 pkgname=xfsprogs
-pkgver=6.7.0
-_pkgver=6.7.0
+pkgver=6.8.0
+_pkgver=6.8.0
 pkgrel=1
 pkgdesc="XFS filesystem utilities"
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=('util-linux' 'libinih' 'liburcu')
 options=('!makeflags' '!libtool')
 source=("https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/${pkgname}-${_pkgver}.tar.xz"
         'sparse_inode.patch')
-sha256sums=('e75d1e012853e11597411cfcb80e26c811881cf0ca03715e852b42946cc61e1f'
+sha256sums=('78b6ab776eebe5ab52e0884a70fa1b3633e64a282b1ecfae91f5dd1d9ec5f07d'
             'eacd18a5c389f87e5d7817873d8ebac219f2179608bed0ade4c0b813d790e72d')
 
 build() {
