@@ -1,6 +1,6 @@
 
 pkgname=man-pages
-pkgver=6.7
+pkgver=6.8
 _posixver=2017-a
 __posixver=2017
 pkgrel=1
@@ -13,7 +13,7 @@ depends=()
 source=("https://www.kernel.org/pub/linux/docs/man-pages/${pkgname}-${pkgver}.tar.xz"
 #source=("https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/snapshot/${pkgname}-${pkgver}.tar.gz"
         "https://www.kernel.org/pub/linux/docs/man-pages/man-pages-posix/${pkgname}-posix-${_posixver}.tar.xz")
-sha256sums=('82403ad4bc17aadb924f68638b79d6930b2cbd551531248a7a9688779db4efb2'
+sha256sums=('b9c6b0a420f839148be04b2fc13a85692313728d54d47c69c8a138379665d226'
             'ce67bb25b5048b20dad772e405a83f4bc70faf051afa289361c81f9660318bc3')
 
 build() {
