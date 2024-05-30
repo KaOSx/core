@@ -1,17 +1,17 @@
 
 pkgname=xz
-pkgver=5.6.1
-pkgrel=2
+pkgver=5.6.2
+pkgrel=1
 pkgdesc='Library and command line tools for XZ and LZMA compressed files'
 arch=('x86_64')
-url='https://xz.tukaani.org/xz-utils/'
+url='https://tukaani.org/xz/'
 license=('GPL' 'LGPL' '0BSD')
 depends=('sh')
 options=('!libtool')
-#source=("https://github.com/tukaani-project/xz/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz"
-source=("https://github.com/tukaani-project/xz/archive/refs/tags/v${pkgver}.tar.gz"
+source=("https://github.com/tukaani-project/xz/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz"
+#source=("https://github.com/tukaani-project/xz/archive/refs/tags/v${pkgver}.tar.gz"
         'xzgrep-ZDI-CAN-16587.patch')
-md5sums=('b873d65db3e66157bf382a0fa9f90b7e'
+md5sums=('bbf73fb28425cebb854328599f85c4cf'
          'a194a4240198e221b7d0249dc2c1fe06')
 
 build() {
@@ -20,7 +20,7 @@ build() {
     #patch -p1 -i ${srcdir}/xzgrep-ZDI-CAN-16587.patch
     #export CFLAGS="$CFLAGS -Wno-format-truncation"
 
-    autoreconf -vfi
+    #autoreconf -vfi
     ./configure --prefix=/usr \
         --disable-rpath \
         --enable-werror
