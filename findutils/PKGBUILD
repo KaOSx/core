@@ -1,7 +1,7 @@
 
 pkgname=findutils
-pkgver=4.9.0
-pkgrel=2
+pkgver=4.10.0
+pkgrel=1
 pkgdesc="GNU utilities to locate files"
 url="https://www.gnu.org/software/findutils"
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL3')
 groups=('base')
 depends=('glibc' 'sh')
 source=("https://ftp.gnu.org/pub/gnu/findutils/findutils-${pkgver}.tar.xz")
-sha1sums=('2a7830f1c25c3c7179150084748099c3c31f819b')
+sha256sums=('1387e0b67ff247d2abde998f90dfbf70c1491391a59ddfecb8ae698789f0a4f5')
 
 build() {
   cd ${pkgname}-${pkgver}
