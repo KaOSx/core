@@ -1,6 +1,6 @@
 
 pkgname=pciutils
-pkgver=3.12.0
+pkgver=3.13.0
 pkgrel=1
 pkgdesc="PCI bus configuration space access library and tools"
 arch=('x86_64')
@@ -10,7 +10,7 @@ url="https://mj.ucw.cz/pciutils.html"
 depends=('glibc' 'hwdata' 'kmod' 'sh')
 makedepends=('wget')
 source=("https://mj.ucw.cz/download/linux/pci/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('827a641d2016a15f0b959804daa5a05f055d0f91d58a70d32ac41ce7ef94164e')
+sha256sums=('a03c88a0aab709b1697ca1753766f443e78297f84c7bcd80a82c1422edd7cb42')
 
 build() {
   cd ${pkgname}-${pkgver}
