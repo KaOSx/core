@@ -1,6 +1,6 @@
 
 pkgname=linux-firmware
-pkgver=20240513
+pkgver=20240610
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
@@ -9,39 +9,11 @@ arch=('x86_64')
 url="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git"
 license=('GPL2' 'GPL3' 'custom')
 makedepends=('b43-fwcutter' 'rdfind')
-conflicts=('linux-firmware-git'
-           'ar9170-fw'
-           'carl9170-fw'
-           'iwlwifi-1000-ucode'
-           'iwlwifi-3945-ucode'
-           'iwlwifi-4965-ucode'
-           'iwlwifi-5000-ucode'
-           'iwlwifi-5150-ucode'
-           'iwlwifi-6000-ucode'
-           'rt2870usb-fw'
-           'rt2x00-rt61-fw'
-           'rt2x00-rt71w-fw'
-           'b43-firmware'
-           'b43-firmware-legacy'
-           'amd-ucode')
-replaces=('ar9170-fw'
-           'carl9170'
-           'iwlwifi-1000-ucode'
-           'iwlwifi-3945-ucode'
-           'iwlwifi-4965-ucode'
-           'iwlwifi-5000-ucode'
-           'iwlwifi-5150-ucode'
-           'iwlwifi-6000-ucode'
-           'rt2870usb-fw'
-           'rt2x00-rt61-fw'
-           'rt2x00-rt71w-fw'
-           'b43-firmware'
-           'b43-firmware-legacy')
 options=(!strip emptydirs)
 source=("https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/${pkgname}-${pkgver}.tar.xz"
         "http://mirror2.openwrt.org/sources/broadcom-wl-${_b43}.tar.bz2"
         "http://downloads.openwrt.org/sources/wl_apsta-${_legacy}.o")
-sha256sums=('9f05edb99668135d37cedc4fdd18aac2802dc9e4566e086e6c6c2e321f3ecc4e'
+sha256sums=('e26a50670fb77394f10d75f96eb1faa1d3d9fb57b8b72075f0af858cb45d2a77'
             'f1e7067aac5b62b67b8b6e4c517990277804339ac16065eb13c731ff909ae46f'
             '7dba610b1d96dd14e901bcbce14cd6ecd1b1ac6f5c0035b0d6b6dc46a7c3ef90')
 
