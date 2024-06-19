@@ -1,19 +1,20 @@
 
 pkgname=xmlto
-pkgver=0.0.28
-pkgrel=5
+pkgver=0.0.29
+pkgrel=1
 pkgdesc="Convert xml to many other formats"
 arch=('x86_64')
 url="https://pagure.io/xmlto"
 license=('GPL')
 depends=('libxslt' 'perl-yaml-syck' 'perl-test-pod')
 makedepends=('docbook-xsl')
-source=("https://releases.pagure.org/xmlto/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('93bab48d446c826399d130d959fe676f')
+source=("https://pagure.io/xmlto/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('556f2642cdcd005749bd4c08bc621c37')
 
 build() {
   cd ${pkgname}-${pkgver}
 
+  autoconf -v
   ./configure BASH=/bin/bash \
        --prefix=/usr \
        --mandir=/usr/share/man
