@@ -2,7 +2,7 @@
 pkgname=systemd
 pkgver=253.21
 _pkgver=253.21
-pkgrel=1
+pkgrel=2
 epoch=2
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -11,7 +11,7 @@ license=('GPL2' 'LGPL2.1')
 depends=('acl' 'bash' 'glibc' 'kmod' 'hwdata' 'util-linux' 'kbd' 'libcap' 'libxslt' 'iptables'
          'linux-api-headers' 'pam' 'xz' 'libgcrypt' 'dbus' 'libidn2' 'lz4'
          'quota' 'libseccomp' 'cryptsetup' 'pcre2' 'libxcrypt') # 'audit') 
-makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs' 'meson' 'ninja'
+makedepends=('docbook-xsl' 'gperf' 'intltool' 'libmicrohttpd' 'gnu-efi-libs=3.0.17' 'meson' 'ninja'
              'python3-jinja' 'python3-lxml' 'tpm2-tss' 'python3-pyelftools')
 optdepends=('libmicrohttpd: systemd-journal-gatewayd')
 backup=(etc/dbus-1/system.d/org.freedesktop.systemd1.conf
