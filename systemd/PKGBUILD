@@ -1,8 +1,8 @@
 
 pkgname=systemd
-pkgver=253.21
-_pkgver=253.21
-pkgrel=2
+pkgver=253.22
+_pkgver=253.22
+pkgrel=1
 epoch=2
 pkgdesc="System and Session Manager"
 arch=('x86_64')
@@ -42,7 +42,7 @@ source=("https://github.com/systemd/systemd-stable/archive/v${_pkgver}.tar.gz"
         'splash.bmp'
         'systemd-tmpfiles.hook'
         'boot_color.diff')
-md5sums=('2d1ebff82238f7b64ca0c15a98c27730'
+md5sums=('2e52bad4833450445107f83b13d85a02'
          'b2da235893d76ed6b810fa5e8d2afe67'
          'f422035c2a36b4fa51f4a369eccc01f4'
          'bde43090d4ac0ef048e3eaee8202a407'
