@@ -1,6 +1,6 @@
 
 pkgname=bcachefs-tools
-pkgver=1.9.1
+pkgver=1.9.3
 pkgrel=1
 pkgdesc='Userspace tools and docs for bcachefs'
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('GPL-2.0-only')
 depends=('keyutils' 'libaio' 'libsodium' 'liburcu' 'lz4' 'zlib' 'zstd')
 makedepends=('clang' 'llvm' 'rust' 'valgrind')
 source=("https://evilpiepirate.org/bcachefs-tools/${pkgname}-${pkgver}.tar.zst")
-sha256sums=('fc82c8e2b89ed72be02940c8af5dcca5ea0b2b2e0816c17ca5389434bec4adfa')
+sha256sums=('5fe089e2cba37e5351b5d18a8994cbb5005a25f4ec80a0476efcf5ec038a9af7')
 
 build() {
   cd ${pkgname}-${pkgver}
