@@ -1,7 +1,7 @@
 
 pkgname=rsync
 pkgver=3.3.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Open source utility that provides fast incremental file transfer. "
 arch=('x86_64')
 url="https://rsync.samba.org/"
