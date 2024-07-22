@@ -7,7 +7,7 @@ arch=('x86_64')
 url="https://www.gnu.org/software/autogen/"
 license=('GPL3')
 depends=('guile' 'libxml2')
-makedepends=('autogen')
+makedepends=('autogen' 'clang')
 options=('!libtool')
 source=("https://ftp.gnu.org/gnu/autogen/rel${pkgver}/${pkgname}-${pkgver}.tar.xz"
         'autogen-guile-3.0.patch'
@@ -18,10 +18,12 @@ md5sums=('27c28df902a9fdb2b64f008a0a49fd05'
 
 build() {
   cd ${pkgname}-${pkgver}
+  export CC=/usr/bin/clang
+  export CXX=/usr/bin/clang++
   # https://sourceforge.net/p/autogen/bugs/196/
   #patch -p1 -i ${srcdir}/autogen-guile-3.0.patch
   #patch -p1 -i ${srcdir}/autogen-5.18.16-no-werror.patch
-  #sed -i 's| -Werror ||' configure
+  sed -i 's| -Werror ||' configure
 
   ./configure --prefix=/usr \
     --with-packager="KaOS" \
