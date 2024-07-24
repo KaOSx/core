@@ -18,8 +18,9 @@ build() {
   # https://debbugs.gnu.org/cgi/bugreport.cgi?bug=62403
   #patch -p1 -i ${srcdir}/76f2fb627118a26c25003dbd98c22c153b7ee1d2.diff
 
-  ./configure --prefix=/usr --libexecdir=/usr/lib \
-              --enable-no-install-program=groups,hostname,kill,uptime
+  ./configure --prefix=/usr \
+    --libexecdir=/usr/lib \
+    --enable-no-install-program=groups,hostname,kill,uptime
   make
 }
 
