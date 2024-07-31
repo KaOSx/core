@@ -1,9 +1,9 @@
  
 pkgbase=boost
 pkgname=('boost-libs' 'boost')
-pkgver=1.83.0
-_pkgver=1_83_0
-pkgrel=3
+pkgver=1.85.0
+_pkgver=1_85_0
+pkgrel=1
 pkgdesc="Free peer-reviewed portable C++ source libraries"
 arch=('x86_64')
 url="https://www.boost.org/"
@@ -12,7 +12,7 @@ makedepends=('icu' 'python3' 'bzip2' 'zlib' 'openmpi' 'zstd')
 source=("https://boostorg.jfrog.io/artifactory/main/release/${pkgver}/source/${pkgbase}_${_pkgver}.tar.bz2"
         'boost-1.81.0-phoenix-multiple-definitions.patch')
 license=('custom')
-sha256sums=('6478edfe2f3305127cffe8caf73ea0176c53769f4bf1585be237eb30798c3b8e'
+sha256sums=('7009fe1faa1697476bdc7027703a2badb84e849b7b0baad5086b087b971f8617'
             '9f83056a04f42d94ed477365194dbef674b7ad9e0661a7ea7392fb03207eaba0')
 
 build() {
@@ -22,7 +22,7 @@ build() {
   cd ${pkgbase}_${_pkgver}
 
   # https://github.com/boostorg/phoenix/issues/111
-  patch -p1 -i ${srcdir}/boost-1.81.0-phoenix-multiple-definitions.patch
+  #patch -p1 -i ${srcdir}/boost-1.81.0-phoenix-multiple-definitions.patch
   ./bootstrap.sh --with-toolset=gcc --with-icu --with-python=/usr/bin/python3
 
   # tools

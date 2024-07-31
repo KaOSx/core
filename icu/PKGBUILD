@@ -1,8 +1,8 @@
 # revert installing randome LICENSE file asap, license install should be fixed with next 74
 pkgname=icu
-pkgver=74.2
-_pkgver=74_2
-__pkgver=74-2
+pkgver=75.1
+_pkgver=75_1
+__pkgver=75-1
 pkgrel=1
 pkgdesc="International Components for Unicode library"
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=('gcc-libs' 'sh')
 makedepends=('python3')
 source=("https://github.com/unicode-org/icu/releases/download/release-${__pkgver}/${pkgname}4c-${_pkgver}-src.tgz"
         'LICENSE')
-md5sums=('342c8bebe704ec96df8bd6bd7040af1c'
+md5sums=('a83c1499e508f73ddbc60002f84ea42a'
          '258ca4d0ca28c5c4d4675147621fac18')
 
 build() {
@@ -36,5 +36,5 @@ package() {
   cd icu/source
   make DESTDIR=${pkgdir} install 
 
-  install -Dm644 ../../LICENSE ${pkgdir}/usr/share/licenses/icu/LICENSE
+  install -Dm644 ../LICENSE ${pkgdir}/usr/share/licenses/icu/LICENSE
 }
