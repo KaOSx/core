@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 
 _basekernel=6.10
 _srcname=linux-6.10
-pkgver=6.10.2
+pkgver=6.10.3
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -33,16 +33,16 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         'dracut-next-install')
 md5sums=('c0ce046a9a0d041e13cf222f81eae574'
-         '558e73dcdbbabe50287ae2c5e0f64f23'
+         '16d906525dbe5888ee26c1364564ad8c'
          'c5074e1f2665c9a3bd044893791bb64a'
-         '1c9f78ce8be381fd027e24ea29139b0e'
-         'dcbcda044f72963b7371f1e0d7092fdf'
-         'b038c977125a70e98218fd666add7e64'
-         '3831059317052284358f5896973bd868'
-         'c9592ac3b820bd88951f81b73c927bf9'
-         '4bb68db87fb201e6f169647a5366012b'
+         'a5bbe54e951edbd83c08bb256e5883c0'
+         '9ab0cd0c50553ded3fc5799e46462b67'
+         '2372bbc04da9425a2e075a594e7b863e'
+         'b5163afe329844ca3ff28bc28fd960b0'
+         'a2a0a9303b952d86f07dd71aef201664'
+         '4c8cf844465617f9d64b97b06cb454da'
          '180e55a128db2641e04374ce07d131a7'
-         'a51c6f31ce959c3f8e4ef12fb64d0bc3'
+         '89cee421ba1c11a21a216312ad3be763'
          '955ce0fe8850f296beb5e9d8640b8c5a'
          'f1917f99f3351b096f93698689c657d7'
          'e19be83ca72175a29b36d8ab08105050'
