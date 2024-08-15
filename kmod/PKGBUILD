@@ -1,6 +1,6 @@
 
 pkgname=kmod
-pkgver=32
+pkgver=33
 pkgrel=1
 #_kver=4.0.5-1
 pkgdesc="Linux kernel module handling"
@@ -8,10 +8,11 @@ arch=('x86_64')
 url='https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git'
 license=('GPL2')
 depends=('glibc' 'openssl' 'zlib' 'zstd')
+makedepends=('scdoc')
 options=('!libtool')
 source=("https://www.kernel.org/pub/linux/utils/kernel/kmod/${pkgname}-${pkgver}.tar.xz"
         'depmod-search.conf')
-sha256sums=('630ed0d92275a88cb9a7bf68f5700e911fdadaf02e051cf2e4680ff8480bd492'
+sha256sums=('dc768b3155172091f56dc69430b5481f2d76ecd9ccb54ead8c2540dbcf5ea9bc'
             '884bf2246f9cd42a4dce9886153d91a7cdfb0dcabcb0f293d31cb33077be76a4')
 
 build() {
@@ -29,7 +30,7 @@ build() {
 
 check() {
   # 1 fail FAIL: testsuite/test-util
-  make -C ${pkgname}-${pkgver} check 
+  make -j1 -C ${pkgname}-${pkgver} check 
 }
 
 package() {
