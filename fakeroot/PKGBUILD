@@ -1,6 +1,6 @@
 
 pkgname=fakeroot
-pkgver=1.35.1
+pkgver=1.36
 pkgrel=1
 pkgdesc="Gives a fake root environment, useful for building packages as a non-privileged user."
 arch=('x86_64')
@@ -12,7 +12,7 @@ depends=('glibc' 'filesystem' 'util-linux' 'sed' 'sh')
 options=('!libtool')
 source=("https://deb.debian.org/debian/pool/main/f/fakeroot/${pkgname}_${pkgver}.orig.tar.gz"
         "https://salsa.debian.org/clint/fakeroot/-/commit/63cca4bbd0b360a523629fbee51e5100a01d2d0b.diff")
-md5sums=('5a75981fd3e805c9f8143bf62103f341'
+md5sums=('557d78e61051de852c49822d4ccc61bc'
          'b920a77eb39334eb97ce568823ca0b18')
 
 build() {
