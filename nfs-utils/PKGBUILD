@@ -1,6 +1,6 @@
 
 pkgname=nfs-utils
-pkgver=2.6.4
+pkgver=2.7.1
 pkgrel=1
 pkgdesc="Support programs for Network File Systems"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('glibc' 'e2fsprogs' 'rpcbind' 'libtirpc' 'libevent' 'device-mapper' 'sq
 makedepends=('pkgconfig' 'autoconf' 'automake' 'rpcsvc-proto')
 source=("https://mirrors.edge.kernel.org/pub/linux/utils/nfs-utils/${pkgver}/${pkgname}-${pkgver}.tar.xz"
         'exports')
-sha256sums=('01b3b0fb9c7d0bbabf5114c736542030748c788ec2fd9734744201e9b0a1119d'
+sha256sums=('885c948a84a58bca4148f459588f9a7369dbb40dcc466f04e455c6b10fd0aa48'
             '610715ed3daedc43b2536f541c7c57e138fb31eab5d837d9a6187a7403e30154')
 
 build() {
