@@ -1,7 +1,7 @@
 
 pkgbase=lvm2
 pkgname=('lvm2' 'device-mapper')
-pkgver=2.03.25
+pkgver=2.03.26
 pkgrel=1
 arch=('x86_64')
 url="https://sourceware.org/lvm2/"
@@ -12,7 +12,7 @@ source=("https://mirrors.kernel.org/sourceware/lvm2/LVM2.${pkgver}.tgz"
         'lvm2_install'
         '11-dm-initramfs.rules'
         'sd-lvm2')
-sha512sums=('0e93de32b18da5d79bf43b5ffa0563bd58dc1b374276e376a0bf485e6f676b12e475fc38b5db182584fd63f91c71df5c5e8f0d747850aad83d4c26d103f680e2'
+sha512sums=('3162d1281e446a8a61e313821dca2d9024dbb8ce54e4dda1ccb337846fc38ebb31156617c15489bf926ba7f67be54b23b7ae05b56737950dad3227c656e8ec95'
             '82e940f906f7bd17eab0ce26af0ff4292e94c1e1c510f0165f5ce7c16660c6b82372a09f0dbc7c042bc6dab356508457e693741e34481b11afcea386a498b3c7'
             'd022aeb42f62445a7f7c4ff103a780527408a78b9d3a737ce76e39fd389c8fdfec5f18d4c5c0b0353b2ec332d80ec3ba5b5f5c43a0c18a3aa74bd8713d611684'
             'eabbc5116a2532983b48af07bc038331c8829d96fa9d44a59bed3c7c4222f34c9b0207c43f80442c71a67517f249bc6a303f4f50bb3438707ecb1eb15885790a')
