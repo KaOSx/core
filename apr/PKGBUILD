@@ -1,6 +1,6 @@
 
 pkgname=apr
-pkgver=1.7.4
+pkgver=1.7.5
 pkgrel=1
 pkgdesc="The Apache Portable Runtime"
 arch=('x86_64')
@@ -9,7 +9,7 @@ depends=('util-linux')
 options=('!libtool')
 license=('APACHE')
 source=("https://www.apache.org/dist/apr/apr-${pkgver}.tar.bz2")
-sha256sums=('fc648de983f3a2a6c9e78dea1f180639bd2fad6c06d556d4367a701fe5c35577')
+sha256sums=('cd0f5d52b9ab1704c72160c5ee3ed5d3d4ca2df4a7f8ab564e3cb352b67232f2')
 
 build() {
   cd apr-${pkgver}
