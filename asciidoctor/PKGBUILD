@@ -1,8 +1,8 @@
 
 pkgname=asciidoctor
 pkgver=2.0.23
-_rubyver=3.2.0
-pkgrel=2
+_rubyver=3.3.0
+pkgrel=3
 pkgdesc='Text processor and publishing toolchain for converting AsciiDoc content to HTML5, DocBook, PDF, and other formats.'
 arch=('x86_64')
 url='https://asciidoctor.org'
