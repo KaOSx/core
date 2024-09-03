@@ -1,8 +1,8 @@
 
 pkgname=openssl
-pkgver=3.3.1
-_pkgver=3.3.1
-pkgrel=2
+pkgver=3.3.2
+_pkgver=3.3.2
+pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 arch=('x86_64')
 url='https://www.openssl.org'
@@ -11,10 +11,10 @@ depends=('perl' 'zlib')
 optdepends=('ca-certificates')
 options=('!makeflags')
 backup=('etc/ssl/openssl.cnf')
-source=("https://www.openssl.org/source/${pkgname}-${_pkgver}.tar.gz"
+source=("https://github.com/openssl/openssl/releases/download/${pkgname}-${_pkgver}/${pkgname}-${_pkgver}.tar.gz"
         'CA.diff'
         'openssl.diff')
-sha256sums=('777cd596284c883375a2a7a11bf5d2786fc5413255efab20c50d6ffe6d020b7e'
+sha256sums=('2e8a40b01979afe8be0bbfb3de5dc1c6709fedb46d6c89c10da114ab5fc3d281'
             '8f2248556951c398334bd16fe944bf0b5acfcbd5d18f7b7975d6b89ff622e4e0'
             '9e7275812f96caa39d7dc2eddfdb8b020b59154827ba60e665f3701985d645de')
 
