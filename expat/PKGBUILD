@@ -1,6 +1,6 @@
 
 pkgname=expat
-pkgver=2.6.2
+pkgver=2.6.3
 pkgrel=1
 pkgdesc="An XML Parser library written in C"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('glibc')
 options=('!libtool')
 # moved to https://github.com/libexpat/libexpat
 source=("https://downloads.sourceforge.net/sourceforge/expat/${pkgname}-${pkgver}.tar.xz")
-sha1sums=('d9e5f953dcacda3c9e69b4886382c3d8847b81bd')
+sha1sums=('4edcf405e881089c7352d2e6bae4d4ffb90bf1e2')
 
 build() {
   cd ${pkgname}-${pkgver}
