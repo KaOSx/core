@@ -1,6 +1,6 @@
 
 pkgname=curl
-pkgver=8.9.1
+pkgver=8.10.0
 pkgrel=1
 pkgdesc="An URL retrival utility and library"
 arch=('x86_64')
@@ -11,7 +11,7 @@ options=('!libtool')
 source=("https://curl.se/download/${pkgname}-${pkgver}.tar.bz2"
         'curlbuild.h'
         "https://github.com/curl/curl/commit/52e822173aa3cd4f610531d32fbf943f026cdca6.diff")
-md5sums=('8feb255a16590f2465926d7627f86583'
+md5sums=('9ece590fa5a494150329a151e3ebe818'
          '751bd433ede935c8fae727377625a8ae'
          'eb90f3c5853eff653a4000983285d796')
 
