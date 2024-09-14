@@ -1,6 +1,6 @@
 
 pkgname=git
-pkgver=2.46.0
+pkgver=2.46.1
 pkgrel=1
 pkgdesc="Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency."
 arch=('x86_64')
@@ -15,8 +15,8 @@ source=("https://www.kernel.org/pub/software/scm/git/git-${pkgver}.tar.xz"
         "https://www.kernel.org/pub/software/scm/git/git-manpages-${pkgver}.tar.xz"
         'git-daemon@.service'
         'git-daemon.socket')
-sha256sums=('7f123462a28b7ca3ebe2607485f7168554c2b10dfc155c7ec46300666ac27f95'
-            'dc118b1d4036e58d5cc4f4e804d903e1e137dac3e9826a246a7e517afd877bd3'
+sha256sums=('888cafb8bd6ab4cbbebc168040a8850eb088f81dc3ac2617195cfc0877f0f543'
+            '3c52e4bae0a737e9c8061afdb45f0a6f24ebc6368dac01aec89fdde63c11bf6a'
             '3bc3250d9e04b05c41975c01f85f512d3386d60b41475cbc7292bc88148852f6'
             'ac4c90d62c44926e6d30d18d97767efc901076d4e0283ed812a349aece72f203')
 
