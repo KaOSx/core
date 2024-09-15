@@ -30,7 +30,7 @@ build() {
 
 check() {
   cd build
-  # 1 tests FAILED:       766 - bsdunzip_test_I (Failed)
+  # no FAILED
   make test
 }
 
