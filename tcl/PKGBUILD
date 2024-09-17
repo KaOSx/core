@@ -1,6 +1,6 @@
 
 pkgname=tcl
-pkgver=8.6.14
+pkgver=8.6.15
 _pkgver=8.6
 pkgrel=1
 pkgdesc="The Tcl scripting language"
@@ -9,7 +9,7 @@ url="https://core.tcl-lang.org/index.html"
 license=('custom')
 depends=('glibc' 'zlib')
 source=("https://sourceforge.net/projects/tcl/files/Tcl/${pkgver}/tcl${pkgver}-src.tar.gz")
-md5sums=('c30b57c6051be28fa928d09aca82841e')
+md5sums=('c13a4d5425b5ae335258342b38ba34c2')
 
 build() {
   cd tcl${pkgver}/unix

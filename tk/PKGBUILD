@@ -1,7 +1,7 @@
 
 pkgname=tk
-pkgver=8.6.14
-_pkgver=8.6.14
+pkgver=8.6.15
+_pkgver=8.6.15
 __pkgver=8.6
 pkgrel=1
 pkgdesc="A windowing toolkit for use with tcl"
@@ -10,17 +10,17 @@ url="https://tcl.sourceforge.net/"
 license=('custom')
 depends=("tcl=${_pkgver}" 'libxss' 'libxft')
 source=("https://downloads.sourceforge.net/sourceforge/tcl/${pkgname}${pkgver}-src.tar.gz")
-md5sums=('cf2aaac0478ef468b48e65c10e6b0d07')
+md5sums=('6d64b6eb021062f378017d403fedcbe6')
 
 build() {
   cd ${pkgname}${_pkgver}/unix
 
   ./configure --prefix=/usr \
-              --mandir=/usr/share/man \
-              --enable-threads \
-              --enable-xft \
-              --enable-64bit
-  
+    --mandir=/usr/share/man \
+    --enable-threads \
+    --enable-xft \
+    --enable-64bit
+
   make
 
   # LFS recommendation http://www.linuxfromscratch.org/blfs/view/svn/general/tk.html
