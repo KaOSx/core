@@ -1,6 +1,6 @@
 
 pkgname=ppp
-pkgver=2.5.0
+pkgver=2.5.1
 pkgrel=1
 pkgdesc="Daemon which implements the Point-to-Point Protocol for dial-up networking"
 arch=('x86_64') 
@@ -9,8 +9,8 @@ license=('custom:GPL/BSD')
 groups=('base')
 depends=('glibc' 'libpcap' 'openssl' 'libxcrypt')
 backup=(etc/ppp/{chap-secrets,pap-secrets,options,ip-up,ip-down})
-source=("https://download.samba.org/pub/ppp/ppp-${pkgver}.tar.gz"
-#source=("https://github.com/paulusmack/ppp/archive/${pkgname}-${pkgver}.tar.gz"
+#source=("https://download.samba.org/pub/ppp/ppp-${pkgver}.tar.gz"
+source=("https://github.com/ppp-project/ppp/archive/refs/tags/${pkgname}-${pkgver}.tar.gz"
         'options'
         'pon'
         'poff'
@@ -25,7 +25,7 @@ source=("https://download.samba.org/pub/ppp/ppp-${pkgver}.tar.gz"
         'ipv6-up.d.iface-config.sh'
         'ppp.service'
         'fix-linux-vs-glibc-headers-compile-error-mess.patch')
-md5sums=('ce5fd7b9f6e1095ae6c0c11365c444eb'
+md5sums=('bd5aaaa2cced0fcb1263af1827e3d4eb'
          '788fea4faa62df13fd3965c0ec571739'
          '48c024f73a80c8b69c4def22f86902cc'
          '2d811f8470ccdea3b8c4505a438483e9'
@@ -42,8 +42,9 @@ md5sums=('ce5fd7b9f6e1095ae6c0c11365c444eb'
          '1400025c09e0084d3fd75eed8574494b')
 
 build() {
-  cd ${pkgname}-${pkgver}
+  cd ppp-${pkgname}-${pkgver}
 
+  ./autogen.sh
   ./configure --prefix=/usr \
     --sysconfdir=/etc \
     --with-system-ca-path=/etc/ca-certificates/ssl/certs \
@@ -52,7 +53,7 @@ build() {
 }
 
 package() {
-  cd ${pkgname}-${pkgver}
+  cd ppp-${pkgname}-${pkgver}
   make DESTDIR=${pkgdir} install 
   #install -D -m644 ${srcdir}/options ${pkgdir}/etc/ppp/options
   install -D -m755 ${srcdir}/ip-up   ${pkgdir}/etc/ppp/ip-up
@@ -69,8 +70,8 @@ package() {
   install -D -m755 ${srcdir}/pon  ${pkgdir}/usr/bin/pon
   install -D -m755 ${srcdir}/poff ${pkgdir}/usr/bin/poff
   install -D -m755 ${srcdir}/plog ${pkgdir}/usr/sbin/plog
-  install -D -m600 etc.ppp/pap-secrets  ${pkgdir}/etc/ppp/pap-secrets
-  install -D -m600 etc.ppp/chap-secrets ${pkgdir}/etc/ppp/chap-secrets
+  install -D -m600 etc.ppp/pap-secrets.example  ${pkgdir}/etc/ppp/pap-secrets
+  install -D -m600 etc.ppp/chap-secrets.example ${pkgdir}/etc/ppp/chap-secrets
   install -D -m644 ${srcdir}/pon.1 ${pkgdir}/usr/share/man/man1/pon.1
   install -d -m755 ${pkgdir}/etc/ppp/peers 
   #chmod 0755 ${pkgdir}/usr/lib/pppd/${pkgver}/*.so
