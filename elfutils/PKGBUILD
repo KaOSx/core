@@ -1,7 +1,7 @@
 
 pkgname=elfutils
 pkgver=0.191
-pkgrel=1
+pkgrel=2
 pkgdesc="Collection of libraries and utilities for working with ELF object files and DWARF debugging information."
 arch=('x86_64')
 url="https://sourceware.org/elfutils/"

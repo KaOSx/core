@@ -1,7 +1,7 @@
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 
 pkgname=binutils
-pkgver=2.42
+pkgver=2.43.1
 _commit=5f62caec8175cf80a29f2bcab2c5077cbfae8c89
 pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
@@ -15,7 +15,7 @@ options=('!libtool' '!distcc' '!ccache')
 #source=("https://github.com/bminor/binutils-gdb/archive/${_commit}.zip"
 source=("https://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.xz"
         "https://github.com/bminor/binutils-gdb/commit/6aa1b7df2fc435ba1b744f20db5c6d3013496249.diff")
-sha256sums=('f6e4d41fd5fc778b06b7891457b3620da5ecea1006c6a4a41ae998109f85a800'
+sha256sums=('13f74202a3c4c51118b797a39ea4200d3f6cfbe224da6d1d95bb938480132dfd'
             '8cc8126661aa3cf62ba32a033284cbc195954f8a467e644f0ae0e561a360084e')
 
 prepare() {

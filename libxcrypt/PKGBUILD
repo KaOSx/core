@@ -1,7 +1,7 @@
 
 pkgname=libxcrypt
 pkgver=4.4.36
-pkgrel=2
+pkgrel=3
 pkgdesc='Extended crypt library for descrypt, md5crypt, bcrypt, and others'
 arch=('x86_64')
 url='https://github.com/besser82/libxcrypt/'

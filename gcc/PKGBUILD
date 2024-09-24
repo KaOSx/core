@@ -4,9 +4,9 @@
 # http://www.linuxfromscratch.org/lfs/view/7.6/chapter06/gcc.html
 
 pkgname=('gcc' 'gcc-libs') 
-pkgver=13.2.1
-_pkgver=13
-__pkgver=13.2.1
+pkgver=14.2.0
+_pkgver=14
+__pkgver=14.2.0
 _snapshot=13-20240203
 _islver=0.24
 pkgrel=1
@@ -17,14 +17,14 @@ url="https://gcc.gnu.org"
 makedepends=('binutils>=2.40' 'libmpc' 'doxygen' 'autogen' 'libxcrypt')
 checkdepends=('dejagnu' 'inetutils')
 options=('!libtool' '!emptydirs')
-#source=("https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
-source=("https://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
+source=("https://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
+#source=("https://gcc.gnu.org/pub/gcc/snapshots/${_snapshot}/gcc-${_snapshot}.tar.xz"
         "https://gcc.gnu.org/pub/gcc/infrastructure/isl-${_islver}.tar.bz2")
-sha512sums=('87541b578e29d658d0cd860bdcdb7c577d5a5ec6ab52b495dc44b073695119e8d17c7c154286251942e89f8f6da34a2784b95a21c8fa4972064bbae0a63770a4'
+sha512sums=('932bdef0cda94bacedf452ab17f103c0cb511ff2cec55e9112fc0328cbf1d803b42595728ea7b200e0a057c03e85626f937012e49a7515bc5dd256b2bf4bc396'
             'aab3bddbda96b801d0f56d2869f943157aad52a6f6e6a61745edd740234c635c38231af20bc3f1a08d416a5e973a90e18249078ed8e4ae2f1d5de57658738e95')
 
-  #_basedir="gcc-${pkgver}"
-  _basedir="gcc-${_snapshot}"
+  _basedir="gcc-${pkgver}"
+  #_basedir="gcc-${_snapshot}"
 
 
 build() {

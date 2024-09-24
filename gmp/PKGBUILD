@@ -1,7 +1,7 @@
 
 pkgname=gmp
 pkgver=6.3.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Free library for arbitrary precision arithmetic, operating on signed integers, rational and floating-point numbers."
 arch=('x86_64')
 url="https://gmplib.org/"

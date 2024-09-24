@@ -1,7 +1,7 @@
 
 pkgname=dejagnu
 pkgver=1.6.3
-pkgrel=3
+pkgrel=4
 pkgdesc="Framework for testing other programs"
 arch=('x86_64')
 url="https://www.gnu.org/software/dejagnu/"
@@ -21,7 +21,7 @@ build() {
 }
 
 check() {
-  # 1 fail ERROR: in testcase ./testsuite/runtest.libs/libs.exp tcl/expect
+  # no fail
   cd ${pkgname}-${pkgver}
 
   make check
