@@ -1,8 +1,8 @@
 # NOTE: requires rebuilt with each new gcc version
 
 pkgname=libtool
-pkgver=2.4.7
-pkgrel=6
+pkgver=2.5.3
+pkgrel=1
 pkgdesc="A generic library support script"
 arch=('x86_64')
 url="https://www.gnu.org/software/libtool"
@@ -16,7 +16,7 @@ conflicts=('libltdl')
 replaces=('libltdl')
 source=("https://ftpmirror.gnu.org/libtool/${pkgname}-${pkgver}.tar.xz"
         'no-clean-gnulib.patch')
-md5sums=('2fc0b6ddcd66a89ed6e45db28fa44232'
+md5sums=('e42b7d9ab875f1d013bba3cdb8a59b58'
          '23c8ef65f19705239f1aa362f429e3ad')
 
 build() {
@@ -30,9 +30,7 @@ build() {
 
 check() {
   cd ${pkgbase}-${pkgver}
-  # 66: Link order test                                 FAILED (link-order.at:106)
-  # see https://src.fedoraproject.org/rpms/libtool/c/74058f9770441b4dd984abf471a00739f0dafaee?branch=rawhide
-  # 169: Run tests with low max_cmd_len                 FAILED (cmdline_wrap.at:48)
+  # No fails
   make check
 }
 
