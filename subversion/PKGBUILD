@@ -1,8 +1,8 @@
 
 pkgname=subversion
-pkgver=1.14.3
+pkgver=1.14.4
 _pythonver=3.11
-pkgrel=3
+pkgrel=1
 pkgdesc="A Modern Concurrent Version Control System"
 arch=('x86_64')
 url="https://subversion.apache.org/"
@@ -18,7 +18,7 @@ source=("https://www.apache.org/dist/subversion/${pkgname}-${pkgver}.tar.bz2"
         'svnserve.tmpfiles'
         'svnserve.service'
         'subversion.rpath.fix.patch')
-sha1sums=('2097d201ad5b9836bc505b5506f8a00c1d63142d'
+sha1sums=('f2f620b173ae1f734f2a29f5c970925f3ebf3777'
           '73b36c046c09cec2093354911c89e3ba8056af6c'
           'ad117bf3b2a838a9a678a93fd8db1a066ad46c41'
           '00cc36e69077a8c45674ead6dd62a7647b3a3b6d'
