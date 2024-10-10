@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 
 _basekernel=6.11
 _srcname=linux-6.11
-pkgver=6.11.2
+pkgver=6.11.3
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -33,7 +33,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         'dracut-next-install')
 md5sums=('612a9feef07be8663098a0a58cddf7a6'
-         '9c22eb01046e0267698b83d253a8222c'
+         '36649cc5bcc0dbd0cd64bc0929ea56bf'
          '2328472ba316800a4f4e1c9eb7d857b2'
          'a5bbe54e951edbd83c08bb256e5883c0'
          '9ab0cd0c50553ded3fc5799e46462b67'
