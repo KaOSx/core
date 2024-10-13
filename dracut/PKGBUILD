@@ -1,6 +1,6 @@
 
 pkgname=dracut
-pkgver=104
+pkgver=105
 pkgrel=1
 _commit=4980bad34775da715a2639b736cba5e65a8a2604
 pkgdesc="Event driven initramfs tool used to create an initramfs image by copying tools and files from an installed system and combining it with the dracut framework"
@@ -18,7 +18,7 @@ source=("https://github.com/dracut-ng/dracut-ng/archive/refs/tags/${pkgver}.tar.
         'kaos.conf'
         'aufs-mount.sh'
         'module-setup.sh')
-sha256sums=('d5d4b8a4d8bb38bf88584937c0c487aa19849698a67caed608e893b148be9798'
+sha256sums=('a5f94012873f589e2efc3659341f5e383ec90419f5c361a6fd3561f946133f69'
             '1b209a69645925372f6fd5aee9bf23510e5f72c797c2f61a0b8e5aa0e90d27f8'
             '5351ed6cff01c8b6498dde09ad67074432e3bea363d5ee2de752a15ea9f3aaea'
             'd99bbc2b013421eb94b7396126533f047585ca45d6755c167b8c8471d5f4fdfd')
