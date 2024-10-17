@@ -1,6 +1,6 @@
 
 pkgname=linux-firmware
-pkgver=20240909
+pkgver=20241017
 _b43=5.100.138
 _legacy=3.130.20.0
 pkgrel=1
@@ -8,19 +8,20 @@ pkgdesc="Firmware files for Linux"
 arch=('x86_64')
 url="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git"
 license=('GPL2' 'GPL3' 'custom')
-makedepends=('b43-fwcutter' 'rdfind')
+makedepends=('b43-fwcutter' 'rdfind' 'python3')
 options=(!strip emptydirs)
 source=("https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/${pkgname}-${pkgver}.tar.xz"
         "http://mirror2.openwrt.org/sources/broadcom-wl-${_b43}.tar.bz2"
         "http://downloads.openwrt.org/sources/wl_apsta-${_legacy}.o")
-sha256sums=('943fbd19883cf8eadf89e0b22422549db056557b1ecd30a56400615971369671'
+sha256sums=('a26c38ef5a83272f2b98ce8bf8ca1865a852a3deea49ce5a8dd804b914351273'
             'f1e7067aac5b62b67b8b6e4c517990277804339ac16065eb13c731ff909ae46f'
             '7dba610b1d96dd14e901bcbce14cd6ecd1b1ac6f5c0035b0d6b6dc46a7c3ef90')
 
 package() {
   cd ${pkgname}-${pkgver}
 
-  make DESTDIR=${pkgdir} install
+  mkdir -p ${pkgdir}/lib/firmware
+  make DESTDIR=${pkgdir} FIRMWAREDIR=/lib/firmware dedup install
 
   install -d ${pkgdir}/usr/share/licenses/${pkgname}
   install -Dm644 LICEN* WHENCE ${pkgdir}/usr/share/licenses/linux-firmware/
