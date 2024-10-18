@@ -8,7 +8,7 @@ pkgdesc="Firmware files for Linux"
 arch=('x86_64')
 url="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git"
 license=('GPL2' 'GPL3' 'custom')
-makedepends=('b43-fwcutter' 'rdfind' 'python3')
+makedepends=('b43-fwcutter' 'rdfind')
 options=(!strip emptydirs)
 source=("https://mirrors.edge.kernel.org/pub/linux/kernel/firmware/${pkgname}-${pkgver}.tar.xz"
         "http://mirror2.openwrt.org/sources/broadcom-wl-${_b43}.tar.bz2"
@@ -17,11 +17,17 @@ sha256sums=('a26c38ef5a83272f2b98ce8bf8ca1865a852a3deea49ce5a8dd804b914351273'
             'f1e7067aac5b62b67b8b6e4c517990277804339ac16065eb13c731ff909ae46f'
             '7dba610b1d96dd14e901bcbce14cd6ecd1b1ac6f5c0035b0d6b6dc46a7c3ef90')
 
+prepare() {
+  cd ${pkgname}-${pkgver}
+  
+  sed -e '/check_whence.py/d' -i copy-firmware.sh
+}
+
 package() {
   cd ${pkgname}-${pkgver}
 
-  mkdir -p ${pkgdir}/lib/firmware
-  make DESTDIR=${pkgdir} FIRMWAREDIR=/lib/firmware dedup install
+
+  make DESTDIR=${pkgdir} install
 
   install -d ${pkgdir}/usr/share/licenses/${pkgname}
   install -Dm644 LICEN* WHENCE ${pkgdir}/usr/share/licenses/linux-firmware/
