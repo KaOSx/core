@@ -1,7 +1,7 @@
 
 pkgname=gettext
 pkgver=0.22.5
-pkgrel=2
+pkgrel=3
 pkgdesc="GNU internationalization library"
 arch=('x86_64')
 url="https://www.gnu.org/software/gettext"
