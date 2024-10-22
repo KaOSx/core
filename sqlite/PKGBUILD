@@ -1,9 +1,9 @@
 
 pkgbase="sqlite"
 pkgname=('sqlite' 'sqlite-doc') 
-_pkgver=3460100
-_docver=3460100
-pkgver=3.46.1
+_pkgver=3470000
+_docver=3470000
+pkgver=3.47.0
 pkgrel=1
 pkgdesc="A C library that implements an SQL database engine"
 arch=('x86_64')
@@ -14,8 +14,8 @@ source=("https://www.sqlite.org/2024/sqlite-src-${_pkgver}.zip"
         "https://www.sqlite.org/2024/sqlite-doc-${_docver}.zip"
         'license.txt')
 options=('!libtool' '!emptydirs' '!makeflags')
-sha1sums=('fed28f837a2e3e6b0bcd75c016edda9f5d940528'
-          '9994b79c33e56067c19c5ca4610e2b5da878f67a'
+sha1sums=('bf0843f48988265a563a697ea765aa4edaa6bd80'
+          '614b2236f37c852cb5619c854699cbd31c43e453'
           'f34f6daa4ab3073d74e774aad21d66878cf26853')
 
 build() {
@@ -36,7 +36,7 @@ build() {
 package_sqlite() {
 
  pkgdesc="A C library that implements an SQL database engine"
- depends=('readline>=6.0.00')
+ depends=('readline')
  provides=("sqlite3=$pkgver" 'sqlite-tcl')
  replaces=('sqlite3' 'sqlite-tcl')
 
