@@ -1,6 +1,6 @@
 
 pkgname=usbutils
-pkgver=017
+pkgver=018
 pkgrel=1
 pkgdesc="USB Device Utilities"
 arch=('x86_64')
@@ -8,25 +8,24 @@ url="https://linux-usb.sourceforge.net/"
 license=('GPL')
 groups=('base')
 depends=('libusb' 'hwids')
+makedepends=('meson' 'ninja')
 source=("https://www.kernel.org/pub/linux/utils/usb/usbutils/${pkgname}-${pkgver}.tar.xz")
 #source=("https://github.com/gregkh/usbutils/archive/refs/tags/v${pkgver}.tar.gz")
-sha256sums=('a6a25ffdcf9103e38d7a44732aca17073f4e602b92e4ae55625231a82702e05b')
+sha256sums=('83f68b59b58547589c00266e82671864627593ab4362d8c807f50eea923cad93')
 
 build() {
-  cd ${pkgname}-${pkgver}
+  mkdir -p build
+  cd build
 
-  #./autogen.sh
-  ./configure --prefix=/usr \
-    --datadir=/usr/share/hwdata \
-    --disable-zlib
-  make
+  meson setup ../${pkgname}-${pkgver} \
+    --prefix=/usr \
+    --buildtype=release \
+    --libexecdir=/usr/lib/at-spi2-core
+  ninja
 }
 
 package() {
-  cd ${pkgname}-${pkgver}
-  make DESTDIR=${pkgdir} install
+  cd build
 
-  # part of hwids 
-  rm -rf ${pkgdir}/usr/{share/hwdata,sbin}
+  DESTDIR=${pkgdir} ninja install
 }
-
