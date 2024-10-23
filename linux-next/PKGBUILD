@@ -5,7 +5,7 @@ _kernelname=${pkgname#linux}
 
 _basekernel=6.11
 _srcname=linux-6.11
-pkgver=6.11.4
+pkgver=6.11.5
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -33,17 +33,17 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/${_srcname}.tar.xz"
         '99-linux-next.hook'
         'dracut-next-install')
 md5sums=('612a9feef07be8663098a0a58cddf7a6'
-         '54e04cad3f29e48b750e7e6437028925'
-         '30f140b6e47b028f4a577b94d91f84a8'
-         'a5bbe54e951edbd83c08bb256e5883c0'
-         '9ab0cd0c50553ded3fc5799e46462b67'
-         '2372bbc04da9425a2e075a594e7b863e'
-         'b5163afe329844ca3ff28bc28fd960b0'
-         'a2a0a9303b952d86f07dd71aef201664'
+         '4fc8e83d507486c28ca1a27f1856dd21'
+         '5c79c7aa5ebe1cfc1beb067d42cf4cc7'
+         '970d057ccce5ffb0d4ed667fa1983496'
+         'b6d2603c9c8c4944e27dfdd2f2cb805f'
+         'b31eba5781054dc7d031eb3c1886b229'
+         '67a3a5cb32994f118ab9f3d137ed966a'
+         '280da716e56b73eefc16ba8f0aa00111'
          '4c8cf844465617f9d64b97b06cb454da'
          '180e55a128db2641e04374ce07d131a7'
-         '89cee421ba1c11a21a216312ad3be763'
-         '955ce0fe8850f296beb5e9d8640b8c5a'
+         '52a0fb1c40fe63be577950e40480eb65'
+         'a0753918fb7a1e2a67f66a5758580f94'
          'f1917f99f3351b096f93698689c657d7'
          'e19be83ca72175a29b36d8ab08105050'
          'fc871b37f1cd4f12ac7b0bab74f8aa5f'
@@ -73,7 +73,7 @@ build() {
   
   cat "${srcdir}/config" > ./.config
 
-  ##cat "${srcdir}/config.aufs" >> ./.config
+  #cat "${srcdir}/config.aufs" >> ./.config
 
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
