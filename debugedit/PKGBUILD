@@ -1,6 +1,6 @@
 
 pkgname=debugedit
-pkgver=5.0
+pkgver=5.1
 pkgrel=1
 pkgdesc='Provides programs and scripts for creating debuginfo and source file distributions'
 arch=('x86_64')
@@ -9,7 +9,7 @@ license=('LGPL2.1')
 groups=('base-devel')
 depends=('elfutils')
 source=("https://sourceware.org/ftp/debugedit/${pkgver}/${pkgname}-${pkgver}.tar.xz")
-sha512sums=('7e7f529eafe41b53f0b5bfc58282fdbfa0dfa93ed7908b70e81942d6d2b6f80fc9c6bff2ed9674fd98947e5750b615f4c8b222544989e2900c5f8ff5ae0efb92')
+sha512sums=('72f4dcc0fba223a85d261aa38400e229f04c7c96adafe455919a8f702d3d7d9cdfb991b403d53f2ac4948ca19eeb43d3d49c0ea2616065657c120647a30575d3')
 
 build() {
     cd ${pkgname}-${pkgver}
