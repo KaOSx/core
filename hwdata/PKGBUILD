@@ -1,7 +1,7 @@
 
 pkgname=hwdata
-pkgver=0.388
-_pkgver=0.388
+pkgver=0.389
+_pkgver=0.389
 pkgrel=1
 pkgdesc="Hardware identification and configuration data"
 url="https://github.com/vcrhonek/hwdata"
@@ -11,7 +11,7 @@ provides=('hwids')
 replaces=('hwids')
 conflicts=('hwids')
 source=("https://github.com/vcrhonek/hwdata/archive/refs/tags/v${_pkgver}.tar.gz")
-md5sums=('d8f4cbdbe9e16e7717b398edffd1a989')
+md5sums=('e6d6a05562b9f37039fd947b41da3cc7')
 
 build() {
   cd ${pkgname}-${_pkgver}
