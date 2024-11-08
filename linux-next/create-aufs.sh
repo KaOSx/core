@@ -5,7 +5,7 @@ rm -Rf aufs-standalone
 git clone https://github.com/sfjro/aufs-standalone.git aufs6-standalone
 cd aufs6-standalone
 git branch -r
-git checkout origin/aufs6.11
+git checkout origin/aufs6.11.2
 
 # modify what you want
 
@@ -15,16 +15,16 @@ git checkout origin/aufs6.11
 rm -v $(find . -type f -name '*.orig')
 grep -qse 'EXPORT_SYMBOL(' aufs6-standalone.patch && \
 sed -i-old -e 's|EXPORT_SYMBOL(|EXPORT_SYMBOL_GPL(|' aufs6-standalone.patch
-rm -rf ../tmp/linux-6.11
-mkdir -p ../tmp/linux-6.11
-cp -a fs ../tmp/linux-6.11
-cp -a include ../tmp/linux-6.11
-cp -a Documentation ../tmp/linux-6.11
-rm ../tmp/linux-6.11/include/uapi/linux/Kbuild
+rm -rf ../tmp/linux-6.11.2
+mkdir -p ../tmp/linux-6.11.2
+cp -a fs ../tmp/linux-6.11.2
+cp -a include ../tmp/linux-6.11.2
+cp -a Documentation ../tmp/linux-6.11.2
+rm ../tmp/linux-6.11.2/include/uapi/linux/Kbuild
 cd ../tmp
-diff -Naur null linux-6.11  | filterdiff | \
-sed -e 's|null\(/include/uapi/linux/Kbuild\)|linux-6.11-old\1|;s|^--- null.*|--- /dev/null|;\|linux-6.11/include/uapi/linux/Kbuild|,${\|@@ -0,0 +1 @@|,$d}' \
-| bzip2 > aufs$(sed -ne 's|#define.*AUFS_VERSION.*"\(.*\)"|\1|p'  linux-6.11/include/uapi/linux/aufs_type.h).patch.bz2
+diff -Naur null linux-6.11.2  | filterdiff | \
+sed -e 's|null\(/include/uapi/linux/Kbuild\)|linux-6.11.2-old\1|;s|^--- null.*|--- /dev/null|;\|linux-6.11.2/include/uapi/linux/Kbuild|,${\|@@ -0,0 +1 @@|,$d}' \
+| bzip2 > aufs$(sed -ne 's|#define.*AUFS_VERSION.*"\(.*\)"|\1|p'  linux-6.11.2/include/uapi/linux/aufs_type.h).patch.bz2
 mv *.bz2 $OLDPWD
 cd $OLDPWD
 mv *patch* ..

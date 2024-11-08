@@ -1,5 +1,5 @@
 SPDX-License-Identifier: GPL-2.0
-aufs6.11 mmap patch
+aufs6.11.2 mmap patch
 
 diff --git a/fs/proc/base.c b/fs/proc/base.c
 index 72a1acd03675..7970af6dde6b 100644
@@ -187,7 +187,7 @@ index 0ca9c1377b68..beacce26df57 100644
  	if (folio->mapping != mapping) {
  		folio_unlock(folio);
 diff --git a/mm/mmap.c b/mm/mmap.c
-index d0dfc85b209b..9cf97aae7e6a 100644
+index 18fddcce03b8..12868dc4ca75 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
 @@ -181,7 +181,7 @@ static void remove_vma(struct vm_area_struct *vma, bool unreachable)
@@ -245,7 +245,7 @@ index d0dfc85b209b..9cf97aae7e6a 100644
  
  	pr_warn_once("%s (%d) uses deprecated remap_file_pages() syscall. See Documentation/mm/remap_file_pages.rst.\n",
  		     current->comm, current->pid);
-@@ -3197,10 +3200,34 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
+@@ -3197,6 +3200,32 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
  	if (vma->vm_flags & VM_LOCKED)
  		flags |= MAP_LOCKED;
  
@@ -253,16 +253,19 @@ index d0dfc85b209b..9cf97aae7e6a 100644
 +	vma_get_file(vma);
 +	file = vma->vm_file;
 +	prfile = vma->vm_prfile;
-+	ret = do_mmap(vma->vm_file, start, size,
-+			prot, flags, /*vm_flags*/0, pgoff, &populate, NULL);
-+	if (!IS_ERR_VALUE(ret) && file && prfile) {
-+		struct vm_area_struct *new_vma;
++	ret = security_mmap_file(vma->vm_file, prot, flags);
++	if (!ret) {
++		ret = do_mmap(vma->vm_file, start, size,
++			      prot, flags, /*vm_flags*/0, pgoff, &populate, NULL);
++		if (!IS_ERR_VALUE(ret) && file && prfile) {
++			struct vm_area_struct *new_vma;
 +
-+		new_vma = find_vma(mm, ret);
-+		if (!new_vma->vm_prfile)
-+			new_vma->vm_prfile = prfile;
-+		if (prfile)
-+			get_file(prfile);
++			new_vma = find_vma(mm, ret);
++			if (!new_vma->vm_prfile)
++				new_vma->vm_prfile = prfile;
++			if (prfile)
++				get_file(prfile);
++		}
 +	}
 +	/*
 +	 * two fput()s instead of vma_fput(vma),
@@ -273,14 +276,17 @@ index d0dfc85b209b..9cf97aae7e6a 100644
 +		fput(prfile);
 +#else
  	file = get_file(vma->vm_file);
- 	ret = do_mmap(vma->vm_file, start, size,
+ 	ret = security_mmap_file(vma->vm_file, prot, flags);
+ 	if (ret)
+@@ -3205,6 +3234,7 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
  			prot, flags, 0, pgoff, &populate, NULL);
+ out_fput:
  	fput(file);
 +#endif /* CONFIG_AUFS_FS */
  out:
  	mmap_write_unlock(mm);
  	if (populate)
-@@ -3551,7 +3578,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+@@ -3555,7 +3585,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
  		if (anon_vma_clone(new_vma, vma))
  			goto out_free_mempol;
  		if (new_vma->vm_file)
@@ -289,7 +295,7 @@ index d0dfc85b209b..9cf97aae7e6a 100644
  		if (new_vma->vm_ops && new_vma->vm_ops->open)
  			new_vma->vm_ops->open(new_vma);
  		if (vma_link(mm, new_vma))
-@@ -3565,7 +3592,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+@@ -3569,7 +3599,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
  		new_vma->vm_ops->close(new_vma);
  
  	if (new_vma->vm_file)

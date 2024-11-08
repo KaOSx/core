@@ -1,5 +1,5 @@
 SPDX-License-Identifier: GPL-2.0
-aufs6.11 loopback patch
+aufs6.11.2 loopback patch
 
 diff --git a/drivers/block/loop.c b/drivers/block/loop.c
 index 479480f25a6c..ba3477c30e29 100644
