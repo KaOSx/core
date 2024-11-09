@@ -1,10 +1,10 @@
 
-_extramodules=6.9.9-1
-_kver="$(cat /lib/modules/extramodules-6.9/version)"
+_extramodules=6.11.7-1
+_kver="$(cat /lib/modules/extramodules-6.11/version)"
 
 pkgname=zfs-headers
 pkgver=2.2.6
-pkgrel=1
+pkgrel=2
 pkgdesc="Kernel headers for the Zettabyte File System."
 arch=('x86_64')
 url="https://zfsonlinux.org/"
