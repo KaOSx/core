@@ -3,7 +3,7 @@ pkgbase=linux
 pkgname=('linux' 'linux-headers' 'linux-docs') 
 _kernelname=${pkgname#linux}
 _basekernel=6.11
-pkgver=6.11.7
+pkgver=6.11.8
 pkgrel=1
 arch=('x86_64')
 url="https://www.kernel.org/"
@@ -30,8 +30,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.11.tar.xz"
         '99-linux.hook'
         'dracut-install')
 md5sums=('612a9feef07be8663098a0a58cddf7a6'
-         'b53937e19176a3ed2061020198adc559'
-         'a64830d4b05c4ce07d815a05c76d2e04'
+         'af1a452e23327a6d6a51ac9a34fd188b'
+         '4672356170c55c6b61cd3d88a1ac4d1f'
          'a9c3e0d8c049387fcb99b8d751d51276'
          'aa086b1eba91853d8d17109a47ff63bf'
          'ed21ff750c425933f537c8a7bc16f48d'
