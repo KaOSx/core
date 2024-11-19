@@ -1,6 +1,6 @@
 
 pkgname=iproute2
-pkgver=6.11.0
+pkgver=6.12.0
 pkgrel=1
 pkgdesc="IP Routing Utilities"
 arch=('x86_64')
@@ -11,7 +11,7 @@ makedepends=('iptables')
 options=('!makeflags')
 source=("https://www.kernel.org/pub/linux/utils/net/iproute2/${pkgname}-${pkgver}.tar.xz"
         'iproute2-fhs.patch')
-sha256sums=('1f795398a04aeaacd06a8f6ace2cfd913c33fa5953ca99daae83bb5c534611c3'
+sha256sums=('bbd141ef7b5d0127cc2152843ba61f274dc32814fa3e0f13e7d07a080bef53d9'
             'a73577ab0e69f4304eafb5b2620bac7654b486fa606a9084948e35703f73e956')
 
 prepare() {
