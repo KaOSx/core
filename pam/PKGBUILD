@@ -1,43 +1,58 @@
 
 pkgname=pam
-pkgver=1.6.1
-pkgrel=2
+pkgver=1.7.0
+pkgrel=1
 pkgdesc="PAM (Pluggable Authentication Modules) library"
 arch=('x86_64')
 license=('GPL2')
 url="https://github.com/linux-pam/linux-pam"
 depends=('glibc' 'cracklib' 'libnsl' 'libtirpc' 'libxcrypt')
-makedepends=('w3m' 'docbook-xml' 'docbook-xsl')
+makedepends=('w3m' 'docbook-xml' 'docbook-xsl' 'meson' 'ninja')
 backup=(etc/security/{access.conf,group.conf,limits.conf,namespace.conf,namespace.init,pam_env.conf,time.conf} etc/pam.d/other etc/default/passwd etc/environment)
 source=("https://github.com/linux-pam/linux-pam/releases/download/v${pkgver}/Linux-PAM-${pkgver}.tar.xz"
         'other')
 options=('!libtool' '!emptydirs')
-md5sums=('8ad1e72d1ff6480d8e0af658e2d7b768'
+md5sums=('c1e41d59d6852e45d0f953c8c8f869d6'
          '6e6c8719e5989d976a14610f340bd33a')
 
 build() {
-  cd Linux-PAM-${pkgver}
+  mkdir -p build
+  cd build
 
-  ./configure \
-    --libdir=/usr/lib \
-    --with-systemdunitdir=/usr/lib/systemd/system \
-    --enable-db=no \
-    --disable-logind \
-    --enable-lastlog
-  make
+  meson setup ../Linux-PAM-${pkgver} \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dlogind=disabled \
+    -Dpam_userdb=disabled \
+    -Dpam_lastlog=enabled \
+    -Ddb=auto \
+    -Dsystemdunitdir=/usr/lib/systemd/system
+  ninja
 }
 
 check() {
-  cd Linux-PAM-${pkgver}
+  cd build
 
-  make check
+  meson test
 }
 
 package() {
-  cd Linux-PAM-${pkgver}
-  make DESTDIR=${pkgdir} install
+  cd build
+
+  DESTDIR=${pkgdir} ninja install
   install -D -m644 ../other ${pkgdir}/etc/pam.d/other
 
-  chmod +s ${pkgdir}/sbin/unix_chkpwd
+  # pam > 1.7 moves to /usr/sbin, temp symlink to avoid breakage
+  install -dm755 ${pkgdir}/sbin
+  for tool in faillock mkhomedir_helper pam_namespace_helper pam_timestamp_check pwhistory_helper unix_chkpwd; do
+    ln -s ../usr/sbin/$tool ${pkgdir}/sbin/$tool
+  done
+
+  chmod +s ${pkgdir}/usr/sbin/unix_chkpwd
 }
+
+
+
+
+
 
