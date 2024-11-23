@@ -1,7 +1,7 @@
 
 # KEEP LIBTOOL FILES!
 pkgname=neon
-pkgver=0.33.0
+pkgver=0.34.0
 pkgrel=1
 pkgdesc="HTTP and WebDAV client library with a C interface"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=('krb5' 'expat' 'ca-certificates')
 makedepends=('xmlto')
 options=('libtool')
 source=("https://notroj.github.io/neon/${pkgname}-${pkgver}.tar.gz")
-sha256sums=('659a5cc9cea05e6e7864094f1e13a77abbbdbab452f04d751a8c16a9447cf4b8')
+sha256sums=('2e3ee8535039966c80764f539d5c9bfee1651a17e2f36e5ca462632181253977')
 
 build() {
   cd ${pkgname}-${pkgver}
