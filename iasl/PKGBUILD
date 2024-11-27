@@ -1,7 +1,7 @@
 
 pkgname=iasl
-pkgver=20240322
-_pkgver=G20240322
+pkgver=20240927
+_pkgver=unix-20240927
 pkgrel=1
 pkgdesc="Intel ACPI Source Language compiler"
 arch=('x86_64')
@@ -11,13 +11,15 @@ depends=('glibc')
 makedepends=('flex' 'bison')
 options=('!makeflags')
 #source=("https://acpica.org/sites/acpica/files/acpica-unix-${pkgver}.tar.gz")
-source=("https://github.com/acpica/acpica/archive/refs/tags/${_pkgver}.tar.gz")
-md5sums=('7fdf42b3699f9f144c5fab935bf9f917')
+# https://www.intel.com/content/www/us/en/developer/topic-technology/open/acpica/download.html
+source=("https://github.com/user-attachments/files/17171019/acpica-unix-20240927.tar.gz")
+#source=("https://github.com/acpica/acpica/archive/refs/tags/${_pkgver}.tar.gz")
+md5sums=('19d159754971702804272236bc8ec0b0')
 
 build() {
   cd acpica-${_pkgver}
   # fails to build with gcc 12, see https://github.com/acpica/acpica/issues/771
-  export CFLAGS="-Wno-dangling-pointer"
+  #export CFLAGS="-Wno-dangling-pointer"
 
   make
 }
