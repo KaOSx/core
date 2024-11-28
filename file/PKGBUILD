@@ -1,6 +1,6 @@
 
 pkgname=file
-pkgver=5.45
+pkgver=5.46
 pkgrel=1
 pkgdesc="File type identification utility"
 arch=('x86_64')
@@ -11,8 +11,8 @@ depends=('glibc' 'zlib')
 options=('!libtool')
 source=("ftp://ftp.astron.com/pub/file/${pkgname}-${pkgver}.tar.gz"
         "https://github.com/file/file/commit/3ebd747de661b244f1acec29495d676dd52e71d5.diff")
-md5sums=('26b2a96d4e3a8938827a1e572afd527a'
-         '228d7753e9989ee59d1fd85783ec3c60')
+md5sums=('459da2d4b534801e2e2861611d823864'
+         'db72fae203b99db18738ef26dbd507ed')
 
 build() {
   cd ${pkgname}-${pkgver}
